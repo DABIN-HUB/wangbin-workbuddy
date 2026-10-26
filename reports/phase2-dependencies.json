@@ -1,0 +1,308 @@
+{
+  "source": "isolated Windows Python 3.12 wheel installation metadata",
+  "packages": [
+    {
+      "name": "beautifulsoup4",
+      "version": "4.15.0",
+      "declared_license": "MIT License",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "metadata_missing": false
+    },
+    {
+      "name": "certifi",
+      "version": "2026.10.23",
+      "declared_license": "MPL-2.0",
+      "license_classifiers": [
+        "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)"
+      ],
+      "metadata_missing": false
+    },
+    {
+      "name": "cffi",
+      "version": "2.1.1",
+      "declared_license": "MIT-0",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "charset-normalizer",
+      "version": "3.5.2",
+      "declared_license": "MIT",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "click",
+      "version": "8.5.0",
+      "declared_license": "BSD-3-Clause",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "cobble",
+      "version": "0.1.4",
+      "declared_license": "",
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "metadata_missing": false
+    },
+    {
+      "name": "cryptography",
+      "version": "50.0.2",
+      "declared_license": "Apache-2.0 OR BSD-3-Clause",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "defusedxml",
+      "version": "0.7.1",
+      "declared_license": "PSFL",
+      "license_classifiers": [
+        "License :: OSI Approved :: Python Software Foundation License"
+      ],
+      "metadata_missing": false
+    },
+    {
+      "name": "et_xmlfile",
+      "version": "2.0.0",
+      "declared_license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "metadata_missing": false
+    },
+    {
+      "name": "flatbuffers",
+      "version": "25.12.19",
+      "declared_license": "Apache 2.0",
+      "license_classifiers": [
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "metadata_missing": false
+    },
+    {
+      "name": "idna",
+      "version": "3.20",
+      "declared_license": "BSD-3-Clause",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "lxml",
+      "version": "6.1.3",
+      "declared_license": "BSD-3-Clause",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "magika",
+      "version": "1.0.3",
+      "declared_license": "Apache-2.0",
+      "license_classifiers": [
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "metadata_missing": false
+    },
+    {
+      "name": "mammoth",
+      "version": "1.13.0",
+      "declared_license": "BSD-2-Clause",
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "metadata_missing": false
+    },
+    {
+      "name": "markdownify",
+      "version": "1.2.3",
+      "declared_license": "",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "metadata_missing": false
+    },
+    {
+      "name": "markitdown",
+      "version": "0.1.9",
+      "declared_license": "MIT",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.4",
+      "declared_license": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "onnxruntime",
+      "version": "1.31.0",
+      "declared_license": "MIT License",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "metadata_missing": false
+    },
+    {
+      "name": "openpyxl",
+      "version": "3.1.5",
+      "declared_license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "metadata_missing": false
+    },
+    {
+      "name": "packaging",
+      "version": "26.3",
+      "declared_license": "Apache-2.0 OR BSD-2-Clause",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "pandas",
+      "version": "3.1.0",
+      "declared_license": "BSD-3-Clause",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "pdfminer.six",
+      "version": "20260107",
+      "declared_license": "MIT",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "pdfplumber",
+      "version": "0.11.10",
+      "declared_license": "",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "metadata_missing": false
+    },
+    {
+      "name": "pillow",
+      "version": "13.0.0",
+      "declared_license": "MIT-CMU",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "pip",
+      "version": "26.2.2",
+      "declared_license": "MIT",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "protobuf",
+      "version": "7.36.2",
+      "declared_license": "3-Clause BSD License",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "pycparser",
+      "version": "3.12",
+      "declared_license": "BSD-3-Clause",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "pypdfium2",
+      "version": "5.14.0",
+      "declared_license": "BSD-3-Clause, Apache-2.0, dependency licenses",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "python-dateutil",
+      "version": "3.0.0",
+      "declared_license": "Dual License",
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License",
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "metadata_missing": false
+    },
+    {
+      "name": "python-pptx",
+      "version": "1.0.2",
+      "declared_license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "metadata_missing": false
+    },
+    {
+      "name": "requests",
+      "version": "2.34.2",
+      "declared_license": "Apache-2.0",
+      "license_classifiers": [
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "metadata_missing": false
+    },
+    {
+      "name": "six",
+      "version": "1.17.0",
+      "declared_license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "metadata_missing": false
+    },
+    {
+      "name": "soupsieve",
+      "version": "3.0.4",
+      "declared_license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "metadata_missing": false
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0",
+      "declared_license": "PSF-2.0",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "tzdata",
+      "version": "2026.5",
+      "declared_license": "Apache-2.0",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "urllib3",
+      "version": "2.8.0",
+      "declared_license": "MIT",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "wangbin-document-cli",
+      "version": "1.1.0",
+      "declared_license": "MIT",
+      "license_classifiers": [],
+      "metadata_missing": false
+    },
+    {
+      "name": "xlsxwriter",
+      "version": "3.3.0",
+      "declared_license": "BSD-2-Clause",
+      "license_classifiers": [],
+      "metadata_missing": false
+    }
+  ],
+  "status": "DECLARED",
+  "note": "Metadata is not a legal compatibility opinion. See docs/third-party-notices.md; platform has not reviewed this distribution."
+}

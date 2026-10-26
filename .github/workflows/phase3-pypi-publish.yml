@@ -1,0 +1,53 @@
+# Prepared for a future owner-authorized PyPI publication; never runs on push/PR.
+# The owner must configure a protected "pypi" GitHub Environment with reviewers
+# and a PyPI Trusted Publisher mapped to this exact workflow/environment first.
+name: Owner-authorized PyPI publication
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Type PUBLISH 1.2.0 after owner license/security review'
+        required: true
+        type: string
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main' && inputs.confirmation == 'PUBLISH 1.2.0'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build and inspect wheel
+        run: |
+          python -m pip install --disable-pip-version-check build twine
+          python -m build --wheel services/document-engine --outdir dist
+          python -m twine check dist/*.whl
+          python -c 'import glob, zipfile; p=glob.glob("dist/*.whl"); assert len(p)==1 and p[0].endswith("wangbin_document_cli-1.2.0-py3-none-any.whl"); a=zipfile.ZipFile(p[0]); assert any(n.endswith("/licenses/LICENSE") for n in a.namelist()); a.close()'
+          sha256sum dist/*.whl
+      - uses: actions/upload-artifact@v4
+        with:
+          name: owner-approved-wheel
+          path: dist/*.whl
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    # A protected Environment/review gate must be configured by the owner.
+    environment:
+      name: pypi
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: owner-approved-wheel
+          path: dist
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/

@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "wangbin-document-service": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["server.js"],
+      "env": {
+        "SERVICE_TOKEN": "${SERVICE_TOKEN}"
+      },
+      "timeout": 30000
+    }
+  }
+}

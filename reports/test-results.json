@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "command": "F:\\ideaWorkSpace\\wangbin-workbuddy\\.venv\\Scripts\\python.exe -m pytest tests -q --tb=short",
+  "exit_code": 0,
+  "duration_seconds": 7.714,
+  "stdout": "................s.......                                                 [100%]\n=========================== short test summary info ===========================\nSKIPPED [1] tests\\test_security.py:38: 当前 Windows 环境未允许创建符号链接\n23 passed, 1 skipped in 6.88s\n",
+  "stderr": ""
+}

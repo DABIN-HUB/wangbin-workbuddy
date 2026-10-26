@@ -1,0 +1,335 @@
+{
+  "checked_at": "2026-10-26T04:07:03.331834+00:00",
+  "platform": "Windows (actual local execution)",
+  "install_mode": "versioned local wheel, PyPI dependencies downloaded into a fresh venv",
+  "clean_env": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean",
+  "test_command": "python -m tooling.phase2_acceptance --clean-env <scratch venv> --missing-env <scratch no-deps venv>",
+  "cases": [
+    {
+      "id": "C01_version",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe version",
+      "evidence": {
+        "exit_code": 0,
+        "status": "success",
+        "error_code": null,
+        "marker_present": true
+      }
+    },
+    {
+      "id": "C02_doctor",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe doctor",
+      "evidence": {
+        "exit_code": 0,
+        "status": "success",
+        "error_code": null,
+        "marker_present": true
+      }
+    },
+    {
+      "id": "C03_status",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe status",
+      "evidence": {
+        "exit_code": 0,
+        "status": "LOCAL_READY",
+        "error_code": null,
+        "marker_present": null
+      }
+    },
+    {
+      "id": "C04_auth_no_account",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe auth",
+      "evidence": {
+        "exit_code": 0,
+        "status": "success",
+        "error_code": null,
+        "marker_present": true
+      }
+    },
+    {
+      "id": "C05_logout_no_delete",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe logout",
+      "evidence": {
+        "exit_code": 0,
+        "status": "success",
+        "error_code": null,
+        "marker_present": true
+      }
+    },
+    {
+      "id": "C06_pdf",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe parse --input \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\\中文 文件.pdf\" --input-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\" --output-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\导出 结果\"",
+      "evidence": {
+        "exit_code": 0,
+        "status": "success",
+        "error_code": null,
+        "marker_present": true
+      }
+    },
+    {
+      "id": "C06_docx",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe parse --input F:\\ideaWorkSpace\\wangbin-workbuddy\\tests\\fixtures\\sample.docx --input-root F:\\ideaWorkSpace\\wangbin-workbuddy\\tests\\fixtures --output-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\导出 结果\"",
+      "evidence": {
+        "exit_code": 0,
+        "status": "success",
+        "error_code": null,
+        "marker_present": true
+      }
+    },
+    {
+      "id": "C06_xlsx",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe parse --input \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\\表格 数据.xlsx\" --input-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\" --output-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\导出 结果\"",
+      "evidence": {
+        "exit_code": 0,
+        "status": "success",
+        "error_code": null,
+        "marker_present": true
+      }
+    },
+    {
+      "id": "C06_pptx",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe parse --input F:\\ideaWorkSpace\\wangbin-workbuddy\\tests\\fixtures\\sample.pptx --input-root F:\\ideaWorkSpace\\wangbin-workbuddy\\tests\\fixtures --output-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\导出 结果\"",
+      "evidence": {
+        "exit_code": 0,
+        "status": "success",
+        "error_code": null,
+        "marker_present": true
+      }
+    },
+    {
+      "id": "C06_html",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe parse --input F:\\ideaWorkSpace\\wangbin-workbuddy\\tests\\fixtures\\sample.html --input-root F:\\ideaWorkSpace\\wangbin-workbuddy\\tests\\fixtures --output-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\导出 结果\"",
+      "evidence": {
+        "exit_code": 0,
+        "status": "success",
+        "error_code": null,
+        "marker_present": true
+      }
+    },
+    {
+      "id": "C06_txt",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe parse --input F:\\ideaWorkSpace\\wangbin-workbuddy\\tests\\fixtures\\sample.txt --input-root F:\\ideaWorkSpace\\wangbin-workbuddy\\tests\\fixtures --output-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\导出 结果\"",
+      "evidence": {
+        "exit_code": 0,
+        "status": "success",
+        "error_code": null,
+        "marker_present": true
+      }
+    },
+    {
+      "id": "C06_markdown",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe parse --input F:\\ideaWorkSpace\\wangbin-workbuddy\\tests\\fixtures\\sample.md --input-root F:\\ideaWorkSpace\\wangbin-workbuddy\\tests\\fixtures --output-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\导出 结果\"",
+      "evidence": {
+        "exit_code": 0,
+        "status": "success",
+        "error_code": null,
+        "marker_present": true
+      }
+    },
+    {
+      "id": "C07_batch_partial",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe batch --files \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\\中文 文件.pdf\" \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\\表格 数据.xlsx\" \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\\missing.pdf\" --input-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\" --output-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\导出 结果\"",
+      "evidence": {
+        "exit_code": 1,
+        "status": "partial_failure",
+        "error_code": null,
+        "marker_present": true
+      }
+    },
+    {
+      "id": "C08_dedup_xlsx",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe deduplicate --input \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\\表格 数据.xlsx\" --input-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\" --output-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\导出 结果\" --format xlsx",
+      "evidence": {
+        "exit_code": 0,
+        "status": "success",
+        "error_code": null,
+        "marker_present": true,
+        "output_validated": true,
+        "output_sha256": "4ff490afe0c4a6c6da9aadf458645219da899632f552d870d709e053adfe36ba"
+      }
+    },
+    {
+      "id": "C08_dedup_csv",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe deduplicate --input \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\\表格 数据.xlsx\" --input-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\" --output-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\导出 结果\" --format csv",
+      "evidence": {
+        "exit_code": 0,
+        "status": "success",
+        "error_code": null,
+        "marker_present": true,
+        "output_validated": true,
+        "output_sha256": "9317eb536fd9f9380b98c251467362a5b424f9bdd9f0537b3f82d5e1e6d9cac2"
+      }
+    },
+    {
+      "id": "C09_corrupt_pdf",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe parse --input F:\\ideaWorkSpace\\wangbin-workbuddy\\tests\\fixtures\\damaged.pdf --input-root F:\\ideaWorkSpace\\wangbin-workbuddy\\tests\\fixtures",
+      "evidence": {
+        "exit_code": 1,
+        "status": "failed",
+        "error_code": "CORRUPT_DOCUMENT",
+        "marker_present": null
+      }
+    },
+    {
+      "id": "C10_wrong_extension",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe parse --input F:\\ideaWorkSpace\\wangbin-workbuddy\\tests\\fixtures\\mismatched.pdf --input-root F:\\ideaWorkSpace\\wangbin-workbuddy\\tests\\fixtures",
+      "evidence": {
+        "exit_code": 1,
+        "status": "failed",
+        "error_code": "MISMATCHED_EXTENSION",
+        "marker_present": null
+      }
+    },
+    {
+      "id": "C11_missing_file",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe parse --input \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\\not-found.txt\" --input-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\"",
+      "evidence": {
+        "exit_code": 1,
+        "status": "failed",
+        "error_code": "FILE_NOT_FOUND",
+        "marker_present": null
+      }
+    },
+    {
+      "id": "C11_missing_root",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe parse --input \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\\中文 文件.pdf\" --input-root C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\root-not-found",
+      "evidence": {
+        "exit_code": 1,
+        "status": "failed",
+        "error_code": "INPUT_ROOT_MISSING",
+        "marker_present": null
+      }
+    },
+    {
+      "id": "C12_outside_root",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe parse --input F:\\ideaWorkSpace\\wangbin-workbuddy\\tests\\fixtures\\sample.txt --input-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\"",
+      "evidence": {
+        "exit_code": 1,
+        "status": "failed",
+        "error_code": "PATH_OUTSIDE_ROOT",
+        "marker_present": null
+      }
+    },
+    {
+      "id": "C13_output_inside_input",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe parse --input \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\\中文 文件.pdf\" --input-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\" --output-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\\nested\"",
+      "evidence": {
+        "exit_code": 1,
+        "status": "failed",
+        "error_code": "OUTPUT_EQUALS_INPUT_ROOT",
+        "marker_present": null
+      }
+    },
+    {
+      "id": "C13_output_file_rejected",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe parse --input \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\\中文 文件.pdf\" --input-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\" --output-root C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\not-a-directory",
+      "evidence": {
+        "exit_code": 1,
+        "status": "failed",
+        "error_code": "OUTPUT_PATH_INVALID",
+        "marker_present": null
+      }
+    },
+    {
+      "id": "C14_oversize",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe parse --input \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\\large.txt\" --input-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\"",
+      "evidence": {
+        "exit_code": 1,
+        "status": "failed",
+        "error_code": "FILE_TOO_LARGE",
+        "marker_present": null
+      }
+    },
+    {
+      "id": "C15_windows_junction",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-clean\\Scripts\\wangbin-document-cli.exe parse --input \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\\junction\\sample.txt\" --input-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\"",
+      "evidence": {
+        "exit_code": 1,
+        "status": "failed",
+        "error_code": "SYMLINK_INPUT",
+        "marker_present": null
+      }
+    },
+    {
+      "id": "C16_windows_symlink",
+      "status": "SKIP",
+      "command": "Path.symlink_to(<scratch target>)",
+      "evidence": {
+        "reason": "OS token lacks symlink creation privilege"
+      }
+    },
+    {
+      "id": "C17_missing_dependencies",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-no-deps\\Scripts\\wangbin-document-cli.exe status",
+      "evidence": {
+        "exit_code": 78,
+        "status": "failed",
+        "error_code": "ENGINE_RUNTIME_MISSING",
+        "marker_present": null
+      }
+    },
+    {
+      "id": "C17_parse_missing_dependencies",
+      "status": "PASS",
+      "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-no-deps\\Scripts\\wangbin-document-cli.exe parse --input \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\\中文 文件.pdf\" --input-root \"C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\wangbin-phase2-accept-4u299n6o\\输入 文件\"",
+      "evidence": {
+        "exit_code": 78,
+        "status": "failed",
+        "error_code": "ENGINE_RUNTIME_MISSING",
+        "marker_present": null
+      }
+    },
+    {
+      "id": "C18_platform_metadata_and_skill_commands",
+      "status": "PASS",
+      "command": "validate_connector + validate_skill + CLI/Skill command consistency",
+      "evidence": {
+        "findings": [],
+        "runtime": {
+          "type": "python",
+          "version": "3.12"
+        }
+      }
+    },
+    {
+      "id": "C19_isolated_install_paths",
+      "status": "PASS",
+      "command": "clean-venv/python -I -c <import origin check> + installed source byte comparison",
+      "evidence": {
+        "inside_clean_venv": true,
+        "matches_current_source": true,
+        "source_env_variables_removed": true
+      }
+    }
+  ],
+  "counts": {
+    "PASS": 28,
+    "FAIL": 0,
+    "SKIP": 1
+  },
+  "status": "PASS"
+}

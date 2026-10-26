@@ -1,0 +1,13 @@
+{
+  "name": "wangbin-document-mcp-template",
+  "name_zh": "wangbin 文档 MCP 模板",
+  "name_en": "wangbin Document MCP Template",
+  "description": "Template for one MCP Server connector; replace the local server with a reviewed implementation before submission.",
+  "description_zh": "单 MCP Server 连接器模板，提交前必须替换为经过审核的真实服务。",
+  "description_en": "Template for one MCP Server connector; replace the sample server before submission.",
+  "source": "wangbin-document-mcp-template",
+  "type": "mcp",
+  "version": "1.0.0",
+  "examples_zh": ["用文档服务读取一个文件", "检查文档处理状态"],
+  "examples_en": ["Read a file with the document service", "Check document processing status"]
+}

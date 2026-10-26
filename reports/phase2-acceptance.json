@@ -1,0 +1,105 @@
+{
+  "version": "1.1.0",
+  "scope": "Windows local clean install + WorkBuddy platform pending",
+  "gates": {
+    "DOCUMENT_ENGINE_PASS": "PASS",
+    "CLEAN_INSTALL_PASS": "PASS",
+    "CLI_RUNTIME_PASS": "PASS",
+    "SKILL_INTEGRATION_PASS": "BLOCKED",
+    "SECURITY_PASS": "BLOCKED",
+    "PACKAGE_VALIDATION_PASS": "PASS",
+    "WORKBUDDY_INSTALL_PASS": "BLOCKED",
+    "WORKBUDDY_E2E_PASS": "BLOCKED",
+    "PUBLISH_READY": "BLOCKED"
+  },
+  "gate_totals": {
+    "PASS": 4,
+    "FAIL": 0,
+    "BLOCKED": 5,
+    "NOT_TESTED": 0
+  },
+  "test_totals": {
+    "PASS": 28,
+    "FAIL": 0,
+    "SKIP": 1
+  },
+  "test_report": "reports/phase2-clean-install.json",
+  "artifacts": {
+    "version": "1.1.0",
+    "status": "PASS",
+    "wheel": {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\dist\\wangbin_document_cli-1.1.0-py3-none-any.whl",
+      "size_bytes": 15287,
+      "sha256": "51071474a8668d5c4ba153896a5cde4d4233881f6042d7b16f305259fda702f9"
+    },
+    "archives": {
+      "skill": {
+        "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\dist\\wangbin-document-assistant-1.1.0-skill-candidate.zip",
+        "size_bytes": 2946,
+        "sha256": "c96a8644047146c595a2267769aadf8b7e6d6532615be4343d34014efb33678c",
+        "members": [
+          {
+            "path": "wangbin-document-assistant/SKILL.md",
+            "size": 2842,
+            "sha256": "d8ff21e52945fbda683b732f4c1125a4fea9be6203566874d6bf6e52dd4f4ef6"
+          },
+          {
+            "path": "wangbin-document-assistant/references/runtime.md",
+            "size": 1611,
+            "sha256": "8f4122d3cb4fded559d930fb1a02a7af41941b6aa32ccd3ffa065341b7520db4"
+          }
+        ]
+      },
+      "connector": {
+        "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\dist\\wangbin-document-cli-1.1.0-connector-candidate.zip",
+        "size_bytes": 4451,
+        "sha256": "e04486c39f804307b98d33eabe5a477c6336910708c260ead8703b7fee305fbf",
+        "members": [
+          {
+            "path": "wangbin-document-cli/cli.json",
+            "size": 519,
+            "sha256": "c42830daa5ffa4875d8b4ed6ba7ff02b5ab1ee5a399b99521bea10100f05b53e"
+          },
+          {
+            "path": "wangbin-document-cli/connector-meta.json",
+            "size": 886,
+            "sha256": "8250301d40a77efff89760af36d4bdb99764c58c0e45f277ed34d6b2f1e0ab60"
+          },
+          {
+            "path": "wangbin-document-cli/icon.svg",
+            "size": 384,
+            "sha256": "9b55c35220d14e091c5b658d8d4d83a328a50fc85f22684194b84acacbf4437f"
+          },
+          {
+            "path": "wangbin-document-cli/skills/wangbin-document-assistant/SKILL.md",
+            "size": 2842,
+            "sha256": "d8ff21e52945fbda683b732f4c1125a4fea9be6203566874d6bf6e52dd4f4ef6"
+          },
+          {
+            "path": "wangbin-document-cli/skills/wangbin-document-assistant/references/runtime.md",
+            "size": 1611,
+            "sha256": "8f4122d3cb4fded559d930fb1a02a7af41941b6aa32ccd3ffa065341b7520db4"
+          }
+        ]
+      }
+    },
+    "platform_install": "BLOCKED",
+    "reason": "The wheel version is not published to an accessible package index; WorkBuddy ZIP parsing and runtime are untested."
+  },
+  "phase1_zip_preserved": true,
+  "platform_facts": {
+    "pypi_package_query": "HTTP 404 on 2026-10-26 (pypi.org/pypi/wangbin-document-cli/json)",
+    "developer_account": "not accessed",
+    "workbuddy_install": "not executed",
+    "chat_e2e": "not executed",
+    "submission": "not executed"
+  },
+  "limits": [
+    "C16 Windows symlink creation denied by current OS token; C15 real junction rejection passed.",
+    "SecurityPolicy timeout is checked after conversion, not a hard parser kill; adversarial memory/TOCTOU limits remain unproven.",
+    "Skill-to-CLI use in WorkBuddy is not tested; local Skill command and metadata checks do not replace it.",
+    "The Python CLI wheel is only local; package index and macOS/Linux runtime are not tested.",
+    "Third-party installed license metadata is inventoried, but detailed redistribution legal review is pending.",
+    "Generic conversion T15 remains SKIP; no OCR or model summary is claimed."
+  ]
+}

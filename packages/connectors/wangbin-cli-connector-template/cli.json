@@ -1,0 +1,25 @@
+{
+  "runtime": {"type": "node", "version": "20"},
+  "init": {
+    "darwin": "npm install -g wangbin-document-cli",
+    "linux": "npm install -g wangbin-document-cli",
+    "win32": "npm install -g wangbin-document-cli"
+  },
+  "auth": {
+    "darwin": "wangbin-document-cli auth login",
+    "linux": "wangbin-document-cli auth login",
+    "win32": "wangbin-document-cli.cmd auth login"
+  },
+  "unAuth": {
+    "darwin": "wangbin-document-cli auth logout",
+    "linux": "wangbin-document-cli auth logout",
+    "win32": "wangbin-document-cli.cmd auth logout"
+  },
+  "status": {
+    "darwin": "wangbin-document-cli auth status",
+    "linux": "wangbin-document-cli auth status",
+    "win32": "wangbin-document-cli.cmd auth status"
+  },
+  "statusMatch": "Logged in",
+  "authUrlDomain": "example.invalid"
+}

@@ -1,0 +1,14 @@
+{
+  "runtime": {"type": "python", "version": "3.12"},
+  "init": {
+    "darwin": "python -m pip install --no-input --disable-pip-version-check --only-binary=:all: wangbin-document-cli==1.2.0",
+    "linux": "python -m pip install --no-input --disable-pip-version-check --only-binary=:all: wangbin-document-cli==1.2.0",
+    "win32": "python -m pip install --no-input --disable-pip-version-check --only-binary=:all: wangbin-document-cli==1.2.0"
+  },
+  "status": {
+    "darwin": "wangbin-document-cli status",
+    "linux": "wangbin-document-cli status",
+    "win32": "wangbin-document-cli.exe status"
+  },
+  "statusMatch": "^LOCAL_READY$"
+}

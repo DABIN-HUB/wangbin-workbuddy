@@ -1,0 +1,8 @@
+{
+  "id": "wangbin-document-assistant",
+  "version": "1.0.0",
+  "author": "wangbin",
+  "kind": "workbuddy-skill-candidate",
+  "official_fields": ["name", "display_name", "display_name_en", "description", "description_zh", "description_en", "version", "author", "allowed-tools", "examples_zh", "examples_en"],
+  "platform_upload_status": "LOCAL_CANDIDATE_ONLY"
+}

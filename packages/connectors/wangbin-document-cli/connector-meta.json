@@ -1,0 +1,14 @@
+{
+  "name": "wangbin AI 万能文档助手（本地 CLI）",
+  "name_zh": "wangbin AI 万能文档助手（本地 CLI）",
+  "name_en": "wangbin AI Document Assistant (Local CLI)",
+  "description": "使用本地 CLI 读取七类办公文档并安全导出表格，无需外部账号。",
+  "description_zh": "使用本地 CLI 读取 PDF、Word、Excel、PPT、HTML 和纯文本并安全导出表格，不上传原始文档。",
+  "description_en": "Process common office documents locally and safely export spreadsheet data without an external account.",
+  "source": "wangbin-document-cli",
+  "type": "cli",
+  "version": "1.2.0",
+  "minWorkbuddyVersion": "5.0.0",
+  "examples_zh": ["读取这份 PDF 并给出要点", "把这份 Excel 去重并导出为新文件"],
+  "examples_en": ["Read this PDF and summarize its key points", "Deduplicate this spreadsheet and export a new file"]
+}

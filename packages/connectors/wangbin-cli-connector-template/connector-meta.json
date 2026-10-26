@@ -1,0 +1,13 @@
+{
+  "name": "wangbin-document-cli-template",
+  "name_zh": "wangbin 文档 CLI 模板",
+  "name_en": "wangbin Document CLI Template",
+  "description": "Template for a cross-platform CLI connector with explicit install and authentication commands.",
+  "description_zh": "包含安装、认证、状态检查和登出命令的跨平台 CLI 连接器模板。",
+  "description_en": "Template for a cross-platform CLI connector with install, auth, status and logout commands.",
+  "source": "wangbin-document-cli-template",
+  "type": "cli",
+  "version": "1.0.0",
+  "examples_zh": ["用 CLI 读取文档", "检查 CLI 登录状态"],
+  "examples_en": ["Read a document with the CLI", "Check CLI login status"]
+}

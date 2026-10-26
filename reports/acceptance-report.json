@@ -1,0 +1,43 @@
+{
+  "project_root": "F:/ideaWorkSpace/wangbin-workbuddy",
+  "product": "wangbin AI 万能文档助手",
+  "skill_id": "wangbin-document-assistant",
+  "version": "1.0.0",
+  "checked_at": "2026-10-26",
+  "test_command": ".venv/Scripts/python.exe -m tooling test",
+  "pytest": {"passed": 23, "failed": 0, "skipped": 1, "duration_seconds": 6.88, "tooling_duration_seconds": 7.714},
+  "acceptance_totals": {"total": 20, "pass": 19, "fail": 0, "skip": 1},
+  "cases": [
+    {"id":"T01","name":"正常 PDF","status":"PASS","evidence":"sample.pdf real MarkItDown extraction"},
+    {"id":"T02","name":"正常 DOCX","status":"PASS","evidence":"sample.docx real MarkItDown extraction"},
+    {"id":"T03","name":"正常 XLSX","status":"PASS","evidence":"sample.xlsx real extraction"},
+    {"id":"T04","name":"正常 PPTX","status":"PASS","evidence":"sample.pptx real MarkItDown extraction"},
+    {"id":"T05","name":"TXT/Markdown","status":"PASS","evidence":"sample.txt and sample.md markers extracted"},
+    {"id":"T06","name":"HTML","status":"PASS","evidence":"sample.html marker extracted"},
+    {"id":"T07","name":"多文件批处理","status":"PASS","evidence":"DocumentEngine.parse_many"},
+    {"id":"T08","name":"空文件","status":"PASS","evidence":"empty.txt warning or structured failure"},
+    {"id":"T09","name":"错误扩展名","status":"PASS","evidence":"MISMATCHED_EXTENSION"},
+    {"id":"T10","name":"损坏文件","status":"PASS","evidence":"CORRUPT_DOCUMENT"},
+    {"id":"T11","name":"超出大小限制","status":"PASS","evidence":"FILE_TOO_LARGE"},
+    {"id":"T12","name":"中文文件名","status":"PASS","evidence":"中文 文件.txt"},
+    {"id":"T13","name":"特殊字符文件名","status":"PASS","evidence":"special [name] #1.txt"},
+    {"id":"T14","name":"不存在文件","status":"PASS","evidence":"FILE_NOT_FOUND"},
+    {"id":"T15","name":"文件转换结果完整性","status":"SKIP","evidence":"通用格式转换未纳入 Phase 1；XLSX/CSV 导出另由 T16 验证"},
+    {"id":"T16","name":"Excel 去重与导出","status":"PASS","evidence":"1 duplicate removed; XLSX/CSV output reopened/read"},
+    {"id":"T17","name":"多文件部分失败","status":"PASS","evidence":"2 success + 1 failure => partial_failure"},
+    {"id":"T18","name":"路径安全","status":"PASS","evidence":"traversal/output/symlink policies; symlink subtest skipped by Windows permission"},
+    {"id":"T19","name":"Skill 元数据校验","status":"PASS","evidence":"tooling validate"},
+    {"id":"T20","name":"发布 ZIP 结构验证","status":"PASS","evidence":"candidate ZIP reopened and hashes validated"}
+  ],
+  "gates": {
+    "PLATFORM_SPEC_PASS":"PASS",
+    "SKILL_SCHEMA_PASS":"PASS",
+    "OPEN_SOURCE_LICENSE_PASS":"PASS",
+    "DOCUMENT_ENGINE_PASS":"PASS",
+    "SECURITY_PASS":"PASS",
+    "INTEGRATION_TEST_PASS":"PASS",
+    "PACKAGE_VALIDATION_PASS":"PASS",
+    "WORKBUDDY_RUNTIME_PASS":"BLOCKED",
+    "PUBLISH_READY":"BLOCKED"
+  }
+}

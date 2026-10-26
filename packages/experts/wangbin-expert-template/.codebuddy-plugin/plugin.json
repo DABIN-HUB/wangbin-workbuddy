@@ -1,0 +1,43 @@
+{
+  "name": "wangbin-document-expert",
+  "version": "1.0.0",
+  "description": "Organizes office documents and reports source facts, actions, and limitations without inventing content.",
+  "author": {
+    "name": "wangbin",
+    "email": "contact@example.com"
+  },
+  "agents": ["./agents/wangbin-document-expert.md"],
+  "expertType": "agent",
+  "agentName": "wangbin-document-expert",
+  "displayName": {
+    "en": "Wangbin Document Expert",
+    "zh": "wangbin 文档专家"
+  },
+  "profession": {
+    "en": "Office Document Processing Expert",
+    "zh": "办公文档处理专家"
+  },
+  "displayDescription": {
+    "en": "Reads common office files, organizes source facts, extracts action items, and reports parsing limits without fabricating content.",
+    "zh": "读取常见办公文件，整理原文事实、提取待办事项，并如实说明解析限制，不编造内容。"
+  },
+  "avatar": "avatars/expert.png",
+  "categoryId": "04-DataAI",
+  "defaultInitPrompt": {
+    "zh": "帮我整理这份办公文档",
+    "en": "Help me organize this office document"
+  },
+  "plugin": "wangbin-document-expert",
+  "tags": [
+    { "en": "Document Processing", "zh": "文档处理" },
+    { "en": "Office Automation", "zh": "办公自动化" },
+    { "en": "Data Organization", "zh": "资料整理" }
+  ],
+  "quickPrompts": [
+    { "en": "Extract key action items", "zh": "提取关键待办事项" },
+    { "en": "Organize this PDF", "zh": "整理这份 PDF" },
+    { "en": "Check spreadsheet duplicates", "zh": "检查表格重复数据" }
+  ],
+  "license": "MIT",
+  "keywords": ["documents", "office", "data"]
+}

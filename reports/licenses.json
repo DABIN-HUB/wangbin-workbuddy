@@ -1,0 +1,59 @@
+{
+  "status": "PASS",
+  "entries": [
+    {
+      "package": "markitdown",
+      "version": "0.1.9",
+      "declared_license": null,
+      "reviewed_license": "MIT",
+      "source": "https://github.com/microsoft/markitdown",
+      "status": "PASS",
+      "note": "上游许可证证据已在第三方声明中记录"
+    },
+    {
+      "package": "openpyxl",
+      "version": "3.1.5",
+      "declared_license": "MIT",
+      "reviewed_license": "MIT",
+      "source": "https://openpyxl.readthedocs.io/",
+      "status": "PASS",
+      "note": "安装元数据与声明一致"
+    },
+    {
+      "package": "PyYAML",
+      "version": "6.0.3",
+      "declared_license": "MIT",
+      "reviewed_license": "MIT",
+      "source": "https://pyyaml.org/",
+      "status": "PASS",
+      "note": "安装元数据与声明一致"
+    },
+    {
+      "package": "pytest",
+      "version": "8.4.2",
+      "declared_license": "MIT",
+      "reviewed_license": "MIT",
+      "source": "https://pytest.org/",
+      "status": "PASS",
+      "note": "安装元数据与声明一致"
+    },
+    {
+      "package": "python-docx",
+      "version": "1.2.0",
+      "declared_license": "MIT",
+      "reviewed_license": "MIT",
+      "source": "https://github.com/python-openxml/python-docx",
+      "status": "PASS",
+      "note": "安装元数据与声明一致"
+    },
+    {
+      "package": "python-pptx",
+      "version": "1.0.2",
+      "declared_license": "MIT",
+      "reviewed_license": "MIT",
+      "source": "https://python-pptx.readthedocs.io/",
+      "status": "PASS",
+      "note": "安装元数据与声明一致"
+    }
+  ]
+}

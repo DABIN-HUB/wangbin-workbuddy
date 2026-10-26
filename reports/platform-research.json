@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-10-26",
+  "method": "official pages fetched directly over HTTPS after web_extract backend failure; official search used for cross-check",
+  "requirements": [
+    {"topic":"skill_structure","source_url":"https://open.workbuddy.cn/docs/skill","status":"PASS","evidence":"SKILL.md required; references/scripts/templates optional","implementation_impact":"candidate uses official directories"},
+    {"topic":"skill_frontmatter","source_url":"https://open.workbuddy.cn/docs/skill","status":"PASS","evidence":"required name/display_name/display_name_en/description/description_zh/description_en/version/author","implementation_impact":"validator checks exact confirmed fields"},
+    {"topic":"skill_zip_root","source_url":"https://open.workbuddy.cn/docs/skill","status":"BLOCKED","evidence":"page describes ZIP parsing but does not explicitly settle exact outer root level","implementation_impact":"candidate uses one resource root; platform upload still needs manual confirmation"},
+    {"topic":"expert_structure","source_url":"https://open.workbuddy.cn/docs/expert","status":"PASS","evidence":".codebuddy-plugin/plugin.json, avatars, agents, README.md","implementation_impact":"template follows official structure"},
+    {"topic":"connector_modes","source_url":"https://open.workbuddy.cn/docs/connector","status":"PASS","evidence":"MCP+Skill or CLI+Skill; one connector cannot mix both","implementation_impact":"separate MCP and CLI templates"},
+    {"topic":"connector_credentials","source_url":"https://open.workbuddy.cn/docs/connector","status":"PASS","evidence":"no hard-coded tokens; token mode uses ${VAR} and password fields","implementation_impact":"templates use placeholders and secret scanner"},
+    {"topic":"personal_developer_eligibility","source_url":"https://open.workbuddy.cn/docs/onboarding","status":"PASS","evidence":"mainland second-generation ID, verified phone, email, face verification; one ID one personal主体","implementation_impact":"qualification is documented but no personal authentication performed"},
+    {"topic":"developer_agreement","source_url":"https://open.workbuddy.cn/docs/developer-agreement","status":"PASS","evidence":"must state capabilities, conditions, dependencies, permissions, data use; no fabricated outcomes or unauthorized data transfer","implementation_impact":"docs and Skill disclose limitations and local-only processing"},
+    {"topic":"monetization","source_url":"https://open.workbuddy.cn/docs/monetization","status":"PASS","evidence":"free or paid Skill/Expert; one-time or monthly paid modes; onboarding and WeChat signing required","implementation_impact":"no pricing or monetization enabled"},
+    {"topic":"platform_runtime","source_url":"https://open.workbuddy.cn/docs/skill; https://open.workbuddy.cn/docs/connector","status":"BLOCKED","evidence":"Skill Bash invocation is documented; Skill dependency hosting is not confirmed. Python runtime is documented for CLI Connector from WorkBuddy 5.0.0.","implementation_impact":"local engine pass does not imply Skill runtime pass"},
+    {"topic":"platform_install_and_review","source_url":"https://open.workbuddy.cn/docs/skill; https://open.workbuddy.cn/docs/expert; https://open.workbuddy.cn/docs/connector","status":"BLOCKED","evidence":"requires authenticated manual platform upload and review","implementation_impact":"no login/upload/review performed"}
+  ]
+}
