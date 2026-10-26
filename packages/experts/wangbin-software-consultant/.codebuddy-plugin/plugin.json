@@ -1,0 +1,43 @@
+{
+  "name": "wangbin-software-consultant",
+  "version": "1.0.0",
+  "description": "Clarifies enterprise software requirements and produces traceable scope, effort and budget reference scenarios without promising a fixed price.",
+  "author": {
+    "name": "wangbin",
+    "email": "contact@example.com"
+  },
+  "agents": ["./agents/wangbin-software-consultant.md"],
+  "expertType": "agent",
+  "agentName": "wangbin-software-consultant",
+  "displayName": {
+    "en": "Wangbin Software Requirements & Budget Consultant",
+    "zh": "Wangbin 企业软件需求分析与报价专家"
+  },
+  "profession": {
+    "en": "Enterprise Software Requirements and Budget Consultant",
+    "zh": "企业软件需求与预算顾问"
+  },
+  "displayDescription": {
+    "en": "Clarifies business needs through conversation, breaks down deliverable modules, and offers transparent effort and budget scenarios with explicit assumptions.",
+    "zh": "通过对话澄清企业软件需求，拆解可验收功能、技术方案与人天工作量，以单价假设提供预算区间和风险提示。"
+  },
+  "avatar": "avatars/expert.png",
+  "categoryId": "12-IndustryConsultant",
+  "defaultInitPrompt": {
+    "zh": "帮我梳理企业软件需求，并估算实施工作量与预算",
+    "en": "Help scope my business software project and estimate effort and budget"
+  },
+  "plugin": "wangbin-software-consultant",
+  "tags": [
+    {"en": "Requirements", "zh": "需求分析"},
+    {"en": "Project Estimation", "zh": "项目估算"},
+    {"en": "Budget Planning", "zh": "预算规划"}
+  ],
+  "quickPrompts": [
+    {"en": "Help scope my business software project and estimate effort and budget", "zh": "帮我梳理企业软件需求，并估算实施工作量与预算"},
+    {"en": "Compare an MVP, standard and custom implementation", "zh": "比较最小版本、标准版和完整定制版的工作量与预算"},
+    {"en": "Draft a software requirements specification from my description", "zh": "根据我的描述生成软件需求说明书和待确认清单"}
+  ],
+  "license": "MIT",
+  "keywords": ["enterprise software", "requirements", "scoping", "estimation"]
+}
