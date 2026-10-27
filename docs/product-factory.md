@@ -18,6 +18,7 @@ python -m tooling.products verify --id wangbin-tender-analyzer
 python -m tooling.products release-check --id wangbin-tender-analyzer
 python -m tooling.products portfolio
 python -m tooling.products upload-list
+python -m tooling.products similarity-check
 ```
 
 `validate` 不带 ID 检查整个注册表，带 ID 检查单个产品。`init` 只对已登记且尚无源目录的产品生效；Connector 还须传 `--connector-mode cli` 或 `mcp`。`register-version` 只附加新版本并选为 active，旧记录不可覆盖；随后须把该产品源码版本字段更新为新版本，并重新校验、测试和打包。已生成的旧 ZIP 不得改写；当前 `verify` 只比对 active 版本与当前源码，历史版本仅保存归档哈希，不能用更新后的源码复验旧包。Expert/Connector 的模板是待完善脚手架：作者、真实服务、授权、头像、说明和许可须人工审查；不能把生成目录视为可发布候选。`test` 只调用该产品登记的测试路径；没有对应测试返回 `NOT_TESTED`，不能偷换为平台运行通过。`package` 只打包指定产品，成员按类型限于受审查目录，稳定排序/时间戳/权限；同名且不同内容的 ZIP/manifest/sidecar 不能覆盖。`verify` 对照当前源码、成员及 SHA-256；产品源变动后必须重新评估是否升版，不要覆盖旧审核版本。`release-check` 的本地候选失败返回非零，但本地通过也不代表平台发布就绪。
@@ -44,6 +45,8 @@ python packages/skills/wangbin-tender-analyzer/scripts/analyze_tender.py --input
 `release-check` 分开列本地校验、产品测试、包完整性、许可证/依赖审查、平台安装/对话及发布。即使本地候选通过，平台安装、真实调用、账号/审核资格及公开发布仍为 `NOT_TESTED`/`BLOCKED`。需要账号所有者在官方授权入口确认：ZIP 解析目录、元数据、安装、调用和证据引文，在不泄露采购正文的前提下保存脱敏回执；若入口会正式提交审核或公开发布，另行取得授权后再操作。不得用本地 pytest 代替这些步骤。软件顾问 Expert 的 `USER_REPORTED_SUBMITTED` 仅依据用户陈述，不等于 APPROVED；其旧候选包与 SHA-256 基线保持不变。
 
 `upload-list` 是只读的组合发布清单命令：它检查每个已登记产品的候选 ZIP 是否存在、文件大小、ZIP 成员、`ZipFile.testzip()`、实际 SHA-256 与台账哈希，并写入 `reports/workbuddy-upload-list.md`。`CAN_ENTER_PLATFORM_TRIAL` 只表示本地候选可以进入人工试传步骤，不表示 WorkBuddy 已安装、能调用、已审核或已发布；缺少 ZIP 时必须显示 `MISSING`。该命令不会上传、提交审核、修改 Tag 或推送 Git。
+
+`similarity-check` 只读比较全部已登记产品（传 `--id` 时比较指定产品与所有注册产品），包括 Python AST 函数形状、输入字段、输出字段和已登记展示元数据；输出四类内部配对标记和五类反同质化门禁状态及人工确认事项。结构相似度是辅助证据，不是 WorkBuddy 官方阈值；命令始终以非零退出码返回 `REVIEW_REQUIRED`，不能据此宣称通过反同质化审核。`release-check` 同时暴露 `ANTI_DUPLICATION_PASS`、`FUNCTIONAL_DISTINCTNESS_PASS`、`INPUT_OUTPUT_DISTINCTNESS_PASS`、`METADATA_DISTINCTNESS_PASS` 和 `INDEPENDENT_VALUE_PASS`，没有人工价值审查时保持 `REVIEW_REQUIRED`。
 
 ## WorkBuddy 发布回复模板
 

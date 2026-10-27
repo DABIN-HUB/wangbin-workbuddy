@@ -607,7 +607,14 @@ def release_check(root: Path, product_id: str) -> dict:
     tests = test_product(root, product_id)
     local_candidate = "PASS" if validation["status"] == archive["status"] == tests["status"] == "PASS" else "BLOCKED"
     license_gate = _license_dependency_gate(_source(root, product), product["type"], product.get("license_policy"))
+    from .similarity import similarity_check
+    similarity = similarity_check(root, product_id)
     gates = {
+        "ANTI_DUPLICATION_PASS": similarity["gates"]["ANTI_DUPLICATION_PASS"],
+        "FUNCTIONAL_DISTINCTNESS_PASS": similarity["gates"]["FUNCTIONAL_DISTINCTNESS_PASS"],
+        "INPUT_OUTPUT_DISTINCTNESS_PASS": similarity["gates"]["INPUT_OUTPUT_DISTINCTNESS_PASS"],
+        "METADATA_DISTINCTNESS_PASS": similarity["gates"]["METADATA_DISTINCTNESS_PASS"],
+        "INDEPENDENT_VALUE_PASS": similarity["gates"]["INDEPENDENT_VALUE_PASS"],
         "LICENSE_PASS": "PASS" if license_gate["status"] == "PASS" else "BLOCKED",
         "LOCAL_TEST_PASS": tests["status"],
         "PACKAGE_VALIDATION_PASS": "PASS" if validation["status"] == archive["status"] == "PASS" else "BLOCKED",
@@ -623,6 +630,7 @@ def release_check(root: Path, product_id: str) -> dict:
             "platform": "BLOCKED", "platform_install": "NOT_TESTED", "platform_dialogue": "NOT_TESTED",
             "review": product["review_status"], "review_evidence": product["review_evidence"],
             "license_and_dependencies": license_gate,
+            "similarity_audit": similarity,
             "gates": gates,
             "publication": "BLOCKED"}
 

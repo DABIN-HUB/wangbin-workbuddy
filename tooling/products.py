@@ -6,11 +6,12 @@ import json
 from pathlib import Path
 
 from . import product_factory as factory
+from .similarity import similarity_check
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(prog="python -m tooling.products")
-    parser.add_argument("command", choices=("list", "init", "validate", "test", "package", "verify", "record", "portfolio", "release-check", "register-version", "upload-list"))
+    parser.add_argument("command", choices=("list", "init", "validate", "test", "package", "verify", "record", "portfolio", "release-check", "register-version", "upload-list", "similarity-check"))
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--id")
     parser.add_argument("--kind", choices=("Skill", "Expert", "Connector"))
@@ -34,6 +35,8 @@ def main() -> int:
             result = factory.portfolio_report(root)
         elif args.command == "upload-list":
             result = factory.upload_list(root)
+        elif args.command == "similarity-check":
+            result = similarity_check(root, args.id)
         elif args.command == "validate" and not args.id:
             problems = factory.validate_catalog(root)
             result = {"status": "PASS" if not problems else "FAIL", "findings": problems}
@@ -60,6 +63,8 @@ def main() -> int:
     except (ValueError, OSError, KeyError) as exc:
         parser.exit(2, f"error: {exc}\n")
     print(json.dumps(result, ensure_ascii=False, indent=2))
+    if args.command == "similarity-check":
+        return 1
     return 0 if result.get("status", "PASS") not in {"FAIL", "BLOCKED"} else 1
 
 
