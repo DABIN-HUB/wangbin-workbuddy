@@ -1,0 +1,91 @@
+{
+  "aging": {
+    "CNY": {
+      "1-30": {
+        "amount": "88.20",
+        "count": 1
+      },
+      "31-60": {
+        "amount": "1200.10",
+        "count": 1
+      },
+      "61-90": {
+        "amount": "0.00",
+        "count": 0
+      },
+      "91+": {
+        "amount": "0.00",
+        "count": 0
+      }
+    },
+    "USD": {
+      "1-30": {
+        "amount": "0.00",
+        "count": 0
+      },
+      "31-60": {
+        "amount": "0.00",
+        "count": 0
+      },
+      "61-90": {
+        "amount": "0.00",
+        "count": 0
+      },
+      "91+": {
+        "amount": "14.05",
+        "count": 1
+      }
+    }
+  },
+  "as_of": "2026-10-27",
+  "basis": "Calendar dates without timezone conversion; overdue only when due_date < as_of and open_balance > 0; invalid rows excluded; no currency conversion or legal conclusion.",
+  "customers": {
+    "CNY": [
+      {
+        "customer_id": "ALPHA",
+        "invoices": 2,
+        "max_days_overdue": 45,
+        "overdue": "1288.30",
+        "priority": "MEDIUM",
+        "recommendation": "Human review of invoice, contract and payment record before any collection action"
+      }
+    ],
+    "USD": [
+      {
+        "customer_id": "GAMMA",
+        "invoices": 1,
+        "max_days_overdue": 118,
+        "overdue": "14.05",
+        "priority": "HIGH",
+        "recommendation": "Human review of invoice, contract and payment record before any collection action"
+      }
+    ]
+  },
+  "issues": [
+    {
+      "code": "INVALID_DATE",
+      "row": 6
+    },
+    {
+      "code": "DUPLICATE_INVOICE",
+      "row": 7
+    }
+  ],
+  "limitations": [
+    "UTF-8 CSV only; no XLSX/PDF/DOCX, formulas or macros are executed.",
+    "Missing invoices or payment records cannot be inferred from this file."
+  ],
+  "platform": "NOT_TESTED",
+  "rejected_rows": 2,
+  "totals": {
+    "CNY": {
+      "open": "1588.30",
+      "overdue": "1288.30"
+    },
+    "USD": {
+      "open": "14.05",
+      "overdue": "14.05"
+    }
+  },
+  "valid_rows": 4
+}
