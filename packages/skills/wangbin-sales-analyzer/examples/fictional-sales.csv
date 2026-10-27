@@ -1,0 +1,7 @@
+order_id,customer,product,order_date,amount,currency
+F-001,Customer-A,Product-X,2026-01-15,120.50,CNY
+F-002,Customer-B,Product-Y,2026-01-31,80,CNY
+F-003,Customer-A,Product-X,2026-02-01,200,CNY
+F-004,Customer-C,Product-Y,2026-02-14,100,CNY
+F-005,Customer-B,Product-Z,2026-02-28,50,CNY
+F-006,Customer-A,Product-Z,2026-02-20,10,USD

@@ -1,0 +1,9 @@
+{
+  "id": "wangbin-sales-analyzer",
+  "version": "0.1.0",
+  "author": "wangbin",
+  "runtime": "python-stdlib",
+  "input_format": "UTF-8 CSV",
+  "supported_formats": ["csv"],
+  "unsupported_formats": ["xlsx", "pdf"]
+}

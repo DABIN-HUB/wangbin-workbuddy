@@ -1,0 +1,172 @@
+{
+  "anomalies": [],
+  "as_of_date": "2026-03-01",
+  "customer_concentration": [
+    {
+      "currency": "CNY",
+      "customer_count": 3,
+      "hhi_pct": "42.77186704",
+      "top_1_share_pct": "58.21980018"
+    },
+    {
+      "currency": "USD",
+      "customer_count": 1,
+      "hhi_pct": "100",
+      "top_1_share_pct": "100"
+    }
+  ],
+  "customer_contribution": [
+    {
+      "currency": "CNY",
+      "customer": "Customer-A",
+      "order_count": 2,
+      "revenue": "320.5",
+      "share_pct": "58.21980018"
+    },
+    {
+      "currency": "CNY",
+      "customer": "Customer-B",
+      "order_count": 2,
+      "revenue": "130",
+      "share_pct": "23.61489555"
+    },
+    {
+      "currency": "CNY",
+      "customer": "Customer-C",
+      "order_count": 1,
+      "revenue": "100",
+      "share_pct": "18.16530427"
+    },
+    {
+      "currency": "USD",
+      "customer": "Customer-A",
+      "order_count": 1,
+      "revenue": "10",
+      "share_pct": "100"
+    }
+  ],
+  "declared_complete_periods": [
+    {
+      "end": "2026-01-31",
+      "start": "2026-01-01"
+    },
+    {
+      "end": "2026-02-28",
+      "start": "2026-02-01"
+    }
+  ],
+  "input_format": "UTF-8 CSV",
+  "invalid_rows": [],
+  "limitations": [
+    "仅支持本地 UTF-8 CSV；XLSX/PDF 当前不支持",
+    "日期按 ISO 8601 date-only 解析，不做时区转换",
+    "币种分开汇总，不进行汇率换算",
+    "MoM/YoY 不从数据行数量推断完整性",
+    "输出不包含原始单元格内容、原始日志或绝对路径"
+  ],
+  "operational_risks": [
+    {
+      "description": "MoM/YoY 仅在 as-of 与可比期间均被明确标记完整时计算",
+      "severity": "MEDIUM",
+      "type": "PERIOD_COMPLETENESS"
+    },
+    {
+      "description": "至少一个币种的单一客户贡献达到或超过80%",
+      "severity": "MEDIUM",
+      "type": "CUSTOMER_CONCENTRATION"
+    },
+    {
+      "description": "未提供成本数据；收入不等于利润，未推断利润或毛利率",
+      "severity": "INFO",
+      "type": "PROFIT_NOT_INFERRED"
+    }
+  ],
+  "period": {
+    "end": "2026-02-28",
+    "start": "2026-01-01"
+  },
+  "period_comparisons": {
+    "mom": "UNKNOWN",
+    "yoy": "UNKNOWN"
+  },
+  "privacy": {
+    "absolute_path_disclosed": false,
+    "execution_scope": "local_script_only",
+    "raw_input_disclosed": false,
+    "remote_upload": false
+  },
+  "product_ranking": [
+    {
+      "currency": "CNY",
+      "order_count": 2,
+      "product": "Product-X",
+      "revenue": "320.5",
+      "share_pct": "58.21980018"
+    },
+    {
+      "currency": "CNY",
+      "order_count": 2,
+      "product": "Product-Y",
+      "revenue": "180",
+      "share_pct": "32.69754768"
+    },
+    {
+      "currency": "CNY",
+      "order_count": 1,
+      "product": "Product-Z",
+      "revenue": "50",
+      "share_pct": "9.08265213"
+    },
+    {
+      "currency": "USD",
+      "order_count": 1,
+      "product": "Product-Z",
+      "revenue": "10",
+      "share_pct": "100"
+    }
+  ],
+  "profit_analysis": {
+    "reason": "成本数据未提供；收入不等于利润，未进行利润或毛利率推断",
+    "status": "UNKNOWN"
+  },
+  "sales_totals": [
+    {
+      "currency": "CNY",
+      "order_count": 5,
+      "revenue": "550.5"
+    },
+    {
+      "currency": "USD",
+      "order_count": 1,
+      "revenue": "10"
+    }
+  ],
+  "sales_trend": [
+    {
+      "currency": "CNY",
+      "order_count": 2,
+      "period": "2026-01",
+      "revenue": "200.5"
+    },
+    {
+      "currency": "CNY",
+      "order_count": 3,
+      "period": "2026-02",
+      "revenue": "350"
+    },
+    {
+      "currency": "USD",
+      "order_count": 1,
+      "period": "2026-02",
+      "revenue": "10"
+    }
+  ],
+  "schema_version": "0.1.0",
+  "summary": {
+    "duplicate_order_ids": [],
+    "input_rows": 6,
+    "invalid_rows": 0,
+    "out_of_range_rows": 0,
+    "valid_rows": 6
+  }
+}
