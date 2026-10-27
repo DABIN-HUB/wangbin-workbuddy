@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "metrics": [
+    {"id":"wangbin-document-assistant","version":"1.0.0","exposures":"UNKNOWN","installs":"UNKNOWN","uses":"UNKNOWN","feedback":"UNKNOWN","review_result":"NOT_TESTED","development_cost":"UNKNOWN","maintenance_cost":"UNKNOWN","evidence":{"review_result":"No platform receipt"}},
+    {"id":"wangbin-document-cli","version":"1.2.0","exposures":"UNKNOWN","installs":"UNKNOWN","uses":"UNKNOWN","feedback":"UNKNOWN","review_result":"BLOCKED","development_cost":"UNKNOWN","maintenance_cost":"UNKNOWN","evidence":{"review_result":"Runtime install has not been platform verified"}},
+    {"id":"wangbin-software-consultant","version":"1.0.0","exposures":"UNKNOWN","installs":"UNKNOWN","uses":"UNKNOWN","feedback":"UNKNOWN","review_result":"USER_REPORTED_SUBMITTED","development_cost":"UNKNOWN","maintenance_cost":"UNKNOWN","evidence":{"review_result":"User report only; no platform receipt"}},
+    {"id":"wangbin-tender-analyzer","version":"0.1.0","exposures":"UNKNOWN","installs":"UNKNOWN","uses":"UNKNOWN","feedback":"UNKNOWN","review_result":"NOT_TESTED","development_cost":"UNKNOWN","maintenance_cost":"UNKNOWN","evidence":{"review_result":"No platform evidence"}},
+    {"id":"wangbin-receivable-analyzer","version":"0.1.0","exposures":"UNKNOWN","installs":"UNKNOWN","uses":"UNKNOWN","feedback":"UNKNOWN","review_result":"NOT_TESTED","development_cost":"UNKNOWN","maintenance_cost":"UNKNOWN","evidence":{"review_result":"Backlog; no platform evidence"}},
+    {"id":"wangbin-requirement-impact","version":"0.1.0","exposures":"UNKNOWN","installs":"UNKNOWN","uses":"UNKNOWN","feedback":"UNKNOWN","review_result":"NOT_TESTED","development_cost":"UNKNOWN","maintenance_cost":"UNKNOWN","evidence":{"review_result":"Backlog; no platform evidence"}},
+    {"id":"wangbin-inventory-analyzer","version":"0.1.0","exposures":"UNKNOWN","installs":"UNKNOWN","uses":"UNKNOWN","feedback":"UNKNOWN","review_result":"NOT_TESTED","development_cost":"UNKNOWN","maintenance_cost":"UNKNOWN","evidence":{"review_result":"Backlog; no platform evidence"}},
+    {"id":"wangbin-industry-research","version":"0.1.0","exposures":"UNKNOWN","installs":"UNKNOWN","uses":"UNKNOWN","feedback":"UNKNOWN","review_result":"NOT_TESTED","development_cost":"UNKNOWN","maintenance_cost":"UNKNOWN","evidence":{"review_result":"Backlog; no platform evidence"}}
+  ]
+}

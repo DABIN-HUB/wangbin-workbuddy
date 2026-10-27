@@ -1,0 +1,354 @@
+{
+  "status": "success_with_warning",
+  "source_name": "fictional-tender.txt",
+  "privacy": {
+    "execution_scope": "local_script_only",
+    "authorization_verified": false,
+    "remote_upload": false,
+    "full_input_persisted": false,
+    "platform_installation": "BLOCKED/NOT_TESTED",
+    "platform_call": "BLOCKED/NOT_TESTED"
+  },
+  "eligibility": [
+    {
+      "name": "资格条件",
+      "status": "待核实",
+      "requirement": "资格条件：投标人须具有独立法人资格，营业执照在有效期内。",
+      "evidence": {
+        "source_name": "fictional-tender.txt",
+        "line": 2,
+        "quote": "资格条件：投标人须具有独立法人资格，营业执照在有效期内。",
+        "label": "redacted excerpt"
+      }
+    },
+    {
+      "name": "资格条件",
+      "status": "待核实",
+      "requirement": "资格条件：近三年完成过1个同类项目，金额不低于100万元。",
+      "evidence": {
+        "source_name": "fictional-tender.txt",
+        "line": 3,
+        "quote": "资格条件：近三年完成过1个同类项目，金额不低于100万元。",
+        "label": "redacted excerpt"
+      }
+    }
+  ],
+  "scoring": [
+    {
+      "name": "评分条款",
+      "status": "待核实",
+      "criterion": "评分办法：技术方案满分30分，其中实施计划10分。",
+      "max_score": 30,
+      "awarded_score": null,
+      "evidence": {
+        "source_name": "fictional-tender.txt",
+        "line": 4,
+        "quote": "评分办法：技术方案满分30分，其中实施计划10分。",
+        "label": "redacted excerpt"
+      }
+    }
+  ],
+  "technical": [
+    {
+      "name": "技术要求",
+      "status": "待核实",
+      "requirement": "技术要求：系统应支持PDF/A格式，检索响应时间不超过2秒。",
+      "evidence": {
+        "source_name": "fictional-tender.txt",
+        "line": 5,
+        "quote": "技术要求：系统应支持PDF/A格式，检索响应时间不超过2秒。",
+        "label": "redacted excerpt"
+      }
+    }
+  ],
+  "dates": [
+    {
+      "name": "投标截止时间",
+      "status": "待核实",
+      "value": "2026年11月20日10:00",
+      "evidence": {
+        "source_name": "fictional-tender.txt",
+        "line": 6,
+        "quote": "投标截止时间：2026年11月20日10:00。",
+        "label": "redacted excerpt"
+      }
+    },
+    {
+      "name": "开标时间",
+      "status": "待核实",
+      "value": null,
+      "evidence": null
+    },
+    {
+      "name": "报名截止时间",
+      "status": "待核实",
+      "value": null,
+      "evidence": null
+    },
+    {
+      "name": "采购文件获取截止时间",
+      "status": "待核实",
+      "value": null,
+      "evidence": null
+    },
+    {
+      "name": "答疑截止时间",
+      "status": "待核实",
+      "value": null,
+      "evidence": null
+    },
+    {
+      "name": "投标保证金截止时间",
+      "status": "待核实",
+      "value": null,
+      "evidence": null
+    },
+    {
+      "name": "合同签订时间",
+      "status": "待核实",
+      "value": null,
+      "evidence": null
+    }
+  ],
+  "checklist": [
+    {
+      "name": "响应：资格条件",
+      "status": "待核实",
+      "requirement": "资格条件：投标人须具有独立法人资格，营业执照在有效期内。",
+      "evidence": {
+        "source_name": "fictional-tender.txt",
+        "line": 2,
+        "quote": "资格条件：投标人须具有独立法人资格，营业执照在有效期内。",
+        "label": "redacted excerpt"
+      }
+    },
+    {
+      "name": "响应：资格条件",
+      "status": "待核实",
+      "requirement": "资格条件：近三年完成过1个同类项目，金额不低于100万元。",
+      "evidence": {
+        "source_name": "fictional-tender.txt",
+        "line": 3,
+        "quote": "资格条件：近三年完成过1个同类项目，金额不低于100万元。",
+        "label": "redacted excerpt"
+      }
+    },
+    {
+      "name": "响应：评分条款",
+      "status": "待核实",
+      "requirement": "评分办法：技术方案满分30分，其中实施计划10分。",
+      "evidence": {
+        "source_name": "fictional-tender.txt",
+        "line": 4,
+        "quote": "评分办法：技术方案满分30分，其中实施计划10分。",
+        "label": "redacted excerpt"
+      }
+    },
+    {
+      "name": "响应：技术要求",
+      "status": "待核实",
+      "requirement": "技术要求：系统应支持PDF/A格式，检索响应时间不超过2秒。",
+      "evidence": {
+        "source_name": "fictional-tender.txt",
+        "line": 5,
+        "quote": "技术要求：系统应支持PDF/A格式，检索响应时间不超过2秒。",
+        "label": "redacted excerpt"
+      }
+    },
+    {
+      "name": "核对：投标截止时间",
+      "status": "待核实",
+      "requirement": "投标截止时间：2026年11月20日10:00",
+      "evidence": {
+        "source_name": "fictional-tender.txt",
+        "line": 6,
+        "quote": "投标截止时间：2026年11月20日10:00。",
+        "label": "redacted excerpt"
+      }
+    },
+    {
+      "name": "核对：开标时间",
+      "status": "待核实",
+      "requirement": "开标时间",
+      "evidence": null
+    },
+    {
+      "name": "核对：报名截止时间",
+      "status": "待核实",
+      "requirement": "报名截止时间",
+      "evidence": null
+    },
+    {
+      "name": "核对：采购文件获取截止时间",
+      "status": "待核实",
+      "requirement": "采购文件获取截止时间",
+      "evidence": null
+    },
+    {
+      "name": "核对：答疑截止时间",
+      "status": "待核实",
+      "requirement": "答疑截止时间",
+      "evidence": null
+    },
+    {
+      "name": "核对：投标保证金截止时间",
+      "status": "待核实",
+      "requirement": "投标保证金截止时间",
+      "evidence": null
+    },
+    {
+      "name": "核对：合同签订时间",
+      "status": "待核实",
+      "requirement": "合同签订时间",
+      "evidence": null
+    },
+    {
+      "name": "核对保证金/押金要求",
+      "status": "待核实",
+      "requirement": "履约保证金：金额以采购人通知为准。",
+      "evidence": {
+        "source_name": "fictional-tender.txt",
+        "line": 7,
+        "quote": "履约保证金：金额以采购人通知为准。",
+        "label": "redacted excerpt"
+      }
+    },
+    {
+      "name": "填写必需表单和函件",
+      "status": "待核实",
+      "requirement": "技术要求：系统应支持PDF/A格式，检索响应时间不超过2秒。",
+      "evidence": {
+        "source_name": "fictional-tender.txt",
+        "line": 5,
+        "quote": "技术要求：系统应支持PDF/A格式，检索响应时间不超过2秒。",
+        "label": "redacted excerpt"
+      }
+    },
+    {
+      "name": "准备附件及证明材料",
+      "status": "待核实",
+      "requirement": "资格条件：投标人须具有独立法人资格，营业执照在有效期内。",
+      "evidence": {
+        "source_name": "fictional-tender.txt",
+        "line": 2,
+        "quote": "资格条件：投标人须具有独立法人资格，营业执照在有效期内。",
+        "label": "redacted excerpt"
+      }
+    },
+    {
+      "name": "核对提交方式、份数和递交要求",
+      "status": "待核实",
+      "requirement": "投标截止时间：2026年11月20日10:00。",
+      "evidence": {
+        "source_name": "fictional-tender.txt",
+        "line": 6,
+        "quote": "投标截止时间：2026年11月20日10:00。",
+        "label": "redacted excerpt"
+      }
+    },
+    {
+      "name": "完成签字、盖章和授权签署",
+      "status": "待核实",
+      "evidence": null
+    }
+  ],
+  "risks": [
+    {
+      "name": "歧义条款",
+      "status": "待核实",
+      "description": "履约保证金：金额以采购人通知为准。",
+      "evidence": {
+        "source_name": "fictional-tender.txt",
+        "line": 7,
+        "quote": "履约保证金：金额以采购人通知为准。",
+        "label": "redacted excerpt"
+      }
+    },
+    {
+      "name": "缺失重要日期",
+      "status": "待核实",
+      "description": "未发现开标时间，需回看采购文件及澄清公告。",
+      "date_name": "开标时间",
+      "evidence": null
+    },
+    {
+      "name": "缺失重要日期",
+      "status": "待核实",
+      "description": "未发现报名截止时间，需回看采购文件及澄清公告。",
+      "date_name": "报名截止时间",
+      "evidence": null
+    },
+    {
+      "name": "缺失重要日期",
+      "status": "待核实",
+      "description": "未发现采购文件获取截止时间，需回看采购文件及澄清公告。",
+      "date_name": "采购文件获取截止时间",
+      "evidence": null
+    },
+    {
+      "name": "缺失重要日期",
+      "status": "待核实",
+      "description": "未发现答疑截止时间，需回看采购文件及澄清公告。",
+      "date_name": "答疑截止时间",
+      "evidence": null
+    },
+    {
+      "name": "缺失重要日期",
+      "status": "待核实",
+      "description": "未发现投标保证金截止时间，需回看采购文件及澄清公告。",
+      "date_name": "投标保证金截止时间",
+      "evidence": null
+    },
+    {
+      "name": "缺失重要日期",
+      "status": "待核实",
+      "description": "未发现合同签订时间，需回看采购文件及澄清公告。",
+      "date_name": "合同签订时间",
+      "evidence": null
+    }
+  ],
+  "limitations": [
+    "本脚本只分析已抽取的 UTF-8 文本；扫描件若未提供可靠 OCR 文本，相关内容待核实。",
+    "复杂版式、页眉页脚、坐标关系可能在文本抽取中丢失，不能据此推定页面位置。",
+    "表格、附件或跨页条款的结构可能丢失，需回看原文件核对。",
+    "引文是限长、已脱敏的上下文摘录，不是输入字节的逐字证明；请回看原文件核对。"
+  ],
+  "evidence": [
+    {
+      "source_name": "fictional-tender.txt",
+      "line": 2,
+      "quote": "资格条件：投标人须具有独立法人资格，营业执照在有效期内。",
+      "label": "redacted excerpt"
+    },
+    {
+      "source_name": "fictional-tender.txt",
+      "line": 3,
+      "quote": "资格条件：近三年完成过1个同类项目，金额不低于100万元。",
+      "label": "redacted excerpt"
+    },
+    {
+      "source_name": "fictional-tender.txt",
+      "line": 4,
+      "quote": "评分办法：技术方案满分30分，其中实施计划10分。",
+      "label": "redacted excerpt"
+    },
+    {
+      "source_name": "fictional-tender.txt",
+      "line": 5,
+      "quote": "技术要求：系统应支持PDF/A格式，检索响应时间不超过2秒。",
+      "label": "redacted excerpt"
+    },
+    {
+      "source_name": "fictional-tender.txt",
+      "line": 6,
+      "quote": "投标截止时间：2026年11月20日10:00。",
+      "label": "redacted excerpt"
+    },
+    {
+      "source_name": "fictional-tender.txt",
+      "line": 7,
+      "quote": "履约保证金：金额以采购人通知为准。",
+      "label": "redacted excerpt"
+    }
+  ]
+}
