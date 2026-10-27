@@ -12,6 +12,7 @@ import yaml
 
 NAME = "wangbin-software-consultant"
 VERSION = "1.0.0"
+MAX_ZH_DISPLAY_NAME_LENGTH = 15
 MEMBERS = (
     ".codebuddy-plugin/plugin.json",
     "agents/wangbin-software-consultant.md",
@@ -53,6 +54,9 @@ def validate_source(source: Path) -> dict[str, object]:
             raise ValueError(f"{key} must provide zh/en strings")
     if not 40 <= len(meta["displayDescription"]["zh"]) <= 50:
         raise ValueError("Chinese market description must be 40-50 characters")
+    display_name_zh = meta["displayName"]["zh"]
+    if len(display_name_zh) > MAX_ZH_DISPLAY_NAME_LENGTH:
+        raise ValueError(f"Chinese displayName must be at most {MAX_ZH_DISPLAY_NAME_LENGTH} characters")
     for key in ("tags", "quickPrompts"):
         values = meta[key]
         if not isinstance(values, list) or len(values) != 3 or any(not isinstance(v, dict) or any(not isinstance(v.get(lang), str) or not v[lang].strip() for lang in ("zh", "en")) for v in values):

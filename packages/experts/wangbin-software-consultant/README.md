@@ -1,4 +1,4 @@
-# Wangbin 企业软件需求分析与报价专家 · 1.0.0
+# 软件需求与报价专家 · 1.0.0
 
 独立 WorkBuddy Expert 候选；无需 Python、MCP、CLI、Docker、数据库或外部 API。仅通过 WorkBuddy 模型对话处理用户提供的文字。不同于仓库中的文档助手，不解析 PDF/Word/Excel，也不生成 Word/PDF 下载文件。平台解析/召唤/模型表现尚未经真实 WorkBuddy 验证。
 
