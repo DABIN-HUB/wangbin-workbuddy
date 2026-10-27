@@ -12,15 +12,26 @@
 
 | 检查 | 实际结果与证据范围 |
 |---|---|
-| 完整项目单测 | `.venv/Scripts/python.exe -m pytest -q`：**64 passed, 4 skipped**。四项跳过均为当前 Windows 运行器无符号链接创建权限，不能据此声称运行过 symlink 攻击测试。 |
+| 完整项目单测 | V1 历史基线为 `.venv/Scripts/python.exe -m pytest -q`：64 passed, 4 skipped；本轮第二批完成后的同一命令：**103 passed, 5 skipped**。跳过项均为当前 Windows 运行器无符号链接创建权限，不能据此声称运行过 symlink 攻击测试。 |
 | 严格 Expert 规则 | `.venv/Scripts/python.exe -m pytest -q packages/experts/wangbin-software-consultant/tests/test_expert_candidate.py`：**36 passed**；既有受保护 ZIP 哈希不变。 |
 | 原有 CLI | 在独立临时仓库副本运行 `python -m tooling validate`、`test`、`package`、`release-check`，四项退出码均为 0；隔离处理避免覆盖正式仓已有 `reports/validate.*`。 |
-| 产品目录与版本 | `python -m tooling.products validate`：PASS，登记 3 个已有资产与 5 个新候选；隔离副本 `register-version --id wangbin-industry-research --version 0.2.0` 后 `validate` PASS、`list` 显示两版且 active 版本为 0.2.0，正式目录未做此次升版。 |
+| 产品目录与版本 | `python -m tooling.products validate`：PASS；当前台账登记 10 个产品，四个第二批财务 Skill 的 0.1.0 候选已写入相对路径和 SHA-256；版本历史仍通过 active version 选择，不把平台状态升级为审核通过。 |
 | 产品级能力 | `validate --id wangbin-tender-analyzer`、`test --id wangbin-tender-analyzer`、`package --id wangbin-tender-analyzer`、`verify --id wangbin-tender-analyzer` 均退出 0。独立脚手架、产品路径冲突与缺失指标场景已由完整单测覆盖；模板和真实服务仍需按产品补全。 |
 | 样例与结构 | 本地脚本对 `fictional-tender.txt` 返回退出码 0，解析 JSON 与 `fictional-tender.expected.json` 一致；包括有证据的资格、评分、技术、日期、响应检查项与风险。该样例为虚构文本，不可替代真实招标文件验收。 |
 | 确定性与归档 | 主仓重建及独立临时副本从相同源码重新打包均得 `2e68809033301c97b02ec7c7fd59f7b477fcd2f1f86d515d69b5fc7b20146bc7`；两处 `verify` PASS。候选哈希持久化于版本台账，归档证据路径为相对路径。 |
 | 发布检查 | `release-check --id wangbin-tender-analyzer`：进程退出非零，状态 `BLOCKED`；归档完整性本地 PASS，平台安装/调用 `BLOCKED`，许可和依赖须人工复核。未制造虚假的 `PASS` 或审核数据。无源码的待开发候选亦为 `BLOCKED`，不能发布。 |
-| 组合数据 | `portfolio` 退出 0，八产品缺失的曝光、安装、使用、反馈、开发成本、维护成本及商业潜力均输出 `UNKNOWN`。详情见 `reports/product-factory-portfolio.md`。 |
+| 组合数据 | `portfolio` 退出 0，十个产品缺失的曝光、安装、使用、反馈、开发成本、维护成本及商业潜力均输出 `UNKNOWN`。详情见 `reports/product-factory-portfolio.md`。 |
+
+## 第二批财务 Skill 候选
+
+| 产品 | 本地专项测试 | 候选 SHA-256 | release-check |
+|---|---:|---|---|
+| `wangbin-receivable-analyzer` | 6 passed | `229b302ae5109639e3379be61cd259549197f9b22e90a8ffbcf43539dfec1929` | `BLOCKED`，local candidate PASS，platform BLOCKED |
+| `wangbin-inventory-analyzer` | 7 passed, 1 skipped（symlink capability） | `b2b7d51998243d819d11237aa2652c486640133bda66a3e75fd6736691b09fdf` | `BLOCKED`，local candidate PASS，platform BLOCKED |
+| `wangbin-purchase-analyzer` | 9 passed | `00aaac8d7104151c1ea06e4f709234b94145ea4fca4972d3b866540814453571` | `BLOCKED`，local candidate PASS，platform BLOCKED |
+| `wangbin-sales-analyzer` | 8 passed | `571664ec2652a917ac1ea06a3b59b97e271d725f03843529228935b910cf62ab` | `BLOCKED`，local candidate PASS，platform BLOCKED |
+
+新增的可选本地 `tooling/financial_xlsx.py` 及其专项测试为 **8 passed**；该工具复用 document-engine 安全边界，不表示普通 Skill 或 WorkBuddy 平台提供 XLSX/Python 运行时。
 
 ## 限制与人工下一步
 
