@@ -10,7 +10,7 @@ from . import product_factory as factory
 
 def main() -> int:
     parser = argparse.ArgumentParser(prog="python -m tooling.products")
-    parser.add_argument("command", choices=("list", "init", "validate", "test", "package", "verify", "record", "portfolio", "release-check", "register-version"))
+    parser.add_argument("command", choices=("list", "init", "validate", "test", "package", "verify", "record", "portfolio", "release-check", "register-version", "upload-list"))
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--id")
     parser.add_argument("--kind", choices=("Skill", "Expert", "Connector"))
@@ -32,6 +32,8 @@ def main() -> int:
             result = factory.load_catalog(root)
         elif args.command == "portfolio":
             result = factory.portfolio_report(root)
+        elif args.command == "upload-list":
+            result = factory.upload_list(root)
         elif args.command == "validate" and not args.id:
             problems = factory.validate_catalog(root)
             result = {"status": "PASS" if not problems else "FAIL", "findings": problems}

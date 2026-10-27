@@ -572,3 +572,176 @@ def release_check(root: Path, product_id: str) -> dict:
             "review": product["review_status"], "review_evidence": product["review_evidence"],
             "license_and_dependencies": license_gate,
             "publication": "BLOCKED"}
+
+
+def _absolute_display_path(path: Path) -> str:
+    """Return a stable absolute path suitable for reports on every host."""
+    return path.absolute().as_posix()
+
+
+def _archive_inventory(root: Path, version: dict, *, product_id: str) -> dict:
+    """Inspect a catalog candidate without rebuilding or modifying it."""
+    candidate = version.get("candidate", "UNKNOWN")
+    result = {
+        "zip_path": None,
+        "exists": False,
+        "size": None,
+        "sha256": "UNKNOWN",
+        "registered_sha256": version.get("sha256", "UNKNOWN"),
+        "sha256_match": "UNKNOWN",
+        "zip_integrity": "MISSING",
+        "members": [],
+    }
+    if candidate == "UNKNOWN":
+        return result
+    try:
+        archive = _safe_relative(root, candidate, label=f"candidate for {product_id}")
+    except ValueError as exc:
+        result.update(zip_integrity="INVALID_PATH", reason=str(exc))
+        return result
+    result["zip_path"] = _absolute_display_path(archive)
+    if not archive.is_file() or archive.is_symlink():
+        return result
+    result["exists"] = True
+    result["size"] = archive.stat().st_size
+    raw = archive.read_bytes()
+    digest = _hash(raw)
+    result["sha256"] = digest
+    registered = version.get("sha256", "UNKNOWN")
+    result["sha256_match"] = "PASS" if registered == digest else ("UNKNOWN" if registered == "UNKNOWN" else "FAIL")
+    try:
+        with zipfile.ZipFile(io.BytesIO(raw)) as zipped:
+            bad = zipped.testzip()
+            result["members"] = zipped.namelist()
+            result["zip_integrity"] = "PASS" if bad is None else "FAIL"
+            if bad is not None:
+                result["reason"] = f"corrupt member: {bad}"
+    except (OSError, zipfile.BadZipFile) as exc:
+        result.update(zip_integrity="FAIL", reason=str(exc))
+    return result
+
+
+def _dependency_inventory(source: Path, kind: str) -> dict:
+    """Report declared dependencies without treating local packages as platform evidence."""
+    declarations = []
+    runtime = "UNKNOWN"
+    for name in ("requirements.txt", "pyproject.toml", "package.json", "cli.json", "mcp.json", "connector-meta.json"):
+        path = source / name
+        if not path.is_file():
+            continue
+        declarations.append(name)
+        if name == "cli.json":
+            try:
+                runtime = _json(path).get("runtime", {}).get("type", "UNKNOWN")
+            except (OSError, json.JSONDecodeError, TypeError, AttributeError):
+                runtime = "UNKNOWN"
+    return {
+        "declared_files": declarations,
+        "additional_install": "DECLARED_OR_UNKNOWN" if declarations else "NONE_DECLARED",
+        "platform_runtime": runtime,
+        "platform_verified": False,
+    }
+
+
+def _upload_state(item: dict, archive: dict, validation: dict, dependency: dict) -> tuple[str, str]:
+    """Keep upload readiness, platform evidence and publication status separate."""
+    if not archive["exists"] or archive["zip_integrity"] == "MISSING":
+        return "MISSING", "candidate ZIP is not present"
+    if archive["zip_integrity"] != "PASS" or archive["sha256_match"] == "FAIL":
+        return "SECURITY_BLOCKED", "ZIP integrity or registered SHA-256 mismatch"
+    if item["review_status"] in {"USER_REPORTED_SUBMITTED", "APPROVED"} or item["status"] in {"SUBMITTED", "APPROVED", "PUBLISHED"}:
+        if item["status"] == "PUBLISHED" and item["review_status"] == "APPROVED":
+            return "OFFICIALLY_PUBLISHED", "direct platform publication evidence is not present in this repository"
+        return "SUBMITTED_REVIEW", "submission is recorded, but platform approval is not verified"
+    if validation["status"] != "PASS":
+        return "SECURITY_BLOCKED", "source validation is not PASS"
+    if item["status"] == "BACKLOG":
+        return "MISSING", "product remains backlog"
+    reason = "local candidate is intact; WorkBuddy installation, invocation and review are unverified"
+    if dependency["additional_install"] == "DECLARED_OR_UNKNOWN":
+        reason += "; declared runtime/dependency review is required"
+    return "CAN_ENTER_PLATFORM_TRIAL", reason
+
+
+def upload_list(root: Path) -> dict:
+    """Build the complete read-only WorkBuddy upload inventory and Markdown report."""
+    catalog = load_catalog(root)
+    products = []
+    for item in catalog["products"]:
+        version = _version_entry(item)
+        archive = _archive_inventory(root, version, product_id=item["id"])
+        try:
+            source = _source(root, item)
+            validation = validate_product(root, item["id"])
+            dependency = _dependency_inventory(source, item["type"]) if source.is_dir() else {
+                "declared_files": [], "additional_install": "UNKNOWN", "platform_runtime": "UNKNOWN", "platform_verified": False,
+            }
+        except (ValueError, OSError, KeyError) as exc:
+            validation = {"status": "BLOCKED", "findings": [str(exc)]}
+            dependency = {"declared_files": [], "additional_install": "UNKNOWN", "platform_runtime": "UNKNOWN", "platform_verified": False}
+        state, reason = _upload_state(item, archive, validation, dependency)
+        products.append({
+            "name": item["name"],
+            "id": item["id"],
+            "type": item["type"],
+            "version": version["version"],
+            "zip_path": archive["zip_path"],
+            "exists": archive["exists"],
+            "size": archive["size"],
+            "sha256": archive["sha256"],
+            "registered_sha256": archive["registered_sha256"],
+            "sha256_match": archive["sha256_match"],
+            "zip_integrity": archive["zip_integrity"],
+            "members": archive["members"],
+            "upload_status": state,
+            "catalog_status": item["status"],
+            "review_status": item["review_status"],
+            "release_gate": "BLOCKED" if state not in {"OFFICIALLY_PUBLISHED"} else "PASS",
+            "validation": validation,
+            "dependencies": dependency,
+            "block_reason": reason,
+        })
+    result = {"status": "REPORT_ONLY", "products": products, "report": "reports/workbuddy-upload-list.md"}
+    _atomic_bytes(root / "reports" / "workbuddy-upload-list.md", _render_upload_report(products).encode("utf-8"))
+    return result
+
+
+def _markdown_cell(value: object) -> str:
+    return str(value if value not in (None, "") else "UNKNOWN").replace("|", "\\|").replace("\n", " ")
+
+
+def _render_upload_report(products: list[dict]) -> str:
+    lines = [
+        "# WorkBuddy 可上传发布清单",
+        "",
+        "> 本清单只记录仓库内候选 ZIP 的本地存在性、归档完整性和 SHA-256。`CAN_ENTER_PLATFORM_TRIAL` 不等于已安装、已调用、已审核或已正式发布；本轮没有自动上传、提交审核或发布。",
+        "",
+        "## 全部产品",
+        "",
+        "| 产品名称 | 产品类型 | 版本 | ZIP 绝对路径 | SHA-256 | 发布状态 | 阻断原因 |",
+        "| --- | --- | --- | --- | --- | --- | --- |",
+    ]
+    for product in products:
+        status = product["upload_status"]
+        gate = product["release_gate"]
+        lines.append("| " + " | ".join([
+            _markdown_cell(product["name"]), _markdown_cell(product["type"]), _markdown_cell(product["version"]),
+            _markdown_cell(product["zip_path"] or "MISSING"), _markdown_cell(product["sha256"]),
+            _markdown_cell(f"{status}; release_gate={gate}"), _markdown_cell(product["block_reason"]),
+        ]) + " |")
+    lines += ["", "## 分类说明", "", "- `CAN_ENTER_PLATFORM_TRIAL`：本地候选存在、ZIP 完整性和登记哈希通过，且源码校验通过；平台安装、调用、审核仍未知。", "- `DECLARED_OR_UNKNOWN`：源码声明了运行时或依赖，是否由 WorkBuddy 提供尚未验证。", "- `SECURITY_BLOCKED`：归档、源码安全、路径或其他本地安全门禁未通过。", "- `SUBMITTED_REVIEW`：仅保留提交证据，不升级为平台批准。", "- `OFFICIALLY_PUBLISHED`：只有直接平台发布证据才可使用；当前仓库没有该证据。", "- `MISSING`：候选 ZIP 尚未生成，不能视为可上传。", "", "## 四个独立财务 Skill", ""]
+    wanted = {"wangbin-receivable-analyzer", "wangbin-inventory-analyzer", "wangbin-purchase-analyzer", "wangbin-sales-analyzer"}
+    for product in products:
+        if product["id"] not in wanted:
+            continue
+        standalone = ("可单独上传试传；运行未验证" if product["upload_status"] in {"CAN_ENTER_PLATFORM_TRIAL", "SUBMITTED_REVIEW"}
+                      else "不可单独上传运行" if product["upload_status"] == "MISSING"
+                      else "不可宣称独立运行")
+        lines += [f"### {product['name']}（`{product['id']}`）", "", f"- 版本：`{product['version']}`", f"- ZIP：`{product['zip_path'] or 'MISSING'}`", f"- 文件存在：`{product['exists']}`；大小：`{product['size'] if product['size'] is not None else 'MISSING'}` bytes", f"- SHA-256：`{product['sha256']}`（登记值匹配：`{product['sha256_match']}`）", f"- ZIP 完整性：`{product['zip_integrity']}`", f"- 当前发布门禁：`{product['release_gate']}`；上传状态：`{product['upload_status']}`", f"- 额外安装依赖：`{product['dependencies']['additional_install']}`；平台运行时：`{product['dependencies']['platform_runtime']}`；平台验证：`{product['dependencies']['platform_verified']}`", f"- 是否可单独上传运行：`{standalone}`（{product['block_reason']}）", "- ZIP 内部文件："]
+        if product["members"]:
+            lines.extend(f"  - `{member}`" for member in product["members"])
+        else:
+            lines.append("  - `MISSING`")
+        lines.append("")
+    lines += ["## 证据边界", "", "- 本清单不把本地 pytest、ZIP 校验或公开文档当作 WorkBuddy 平台安装、真实对话、审核通过或正式发布证据。", "- 生产数据、安装量、调用量、审核结果和成本没有证据时保持 `UNKNOWN`；未自动上传或提交审核。", ""]
+    return "\n".join(lines)
