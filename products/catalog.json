@@ -210,6 +210,58 @@
           "version": "0.1.0"
         }
       ]
+    },
+    {
+      "active_version": "0.1.0",
+      "development": "BACKLOG",
+      "id": "wangbin-purchase-analyzer",
+      "maintenance": "UNKNOWN",
+      "name": "采购价格分析",
+      "published_at": "UNKNOWN",
+      "review_evidence": "No platform evidence",
+      "review_status": "NOT_TESTED",
+      "scenario": "基于授权采购订单按可比口径分析价格与供应商",
+      "status": "BACKLOG",
+      "target_users": "采购及供应链分析人员",
+      "type": "Skill",
+      "validation_metrics": "products/metrics.json",
+      "versions": [
+        {
+          "archive_evidence": "UNKNOWN",
+          "candidate": "UNKNOWN",
+          "date": "UNKNOWN",
+          "published_at": "UNKNOWN",
+          "sha256": "UNKNOWN",
+          "source": "packages/skills/wangbin-purchase-analyzer",
+          "version": "0.1.0"
+        }
+      ]
+    },
+    {
+      "active_version": "0.1.0",
+      "development": "BACKLOG",
+      "id": "wangbin-sales-analyzer",
+      "maintenance": "UNKNOWN",
+      "name": "销售数据分析",
+      "published_at": "UNKNOWN",
+      "review_evidence": "No platform evidence",
+      "review_status": "NOT_TESTED",
+      "scenario": "基于授权销售订单按可比期间分析金额与客户贡献",
+      "status": "BACKLOG",
+      "target_users": "销售及经营分析人员",
+      "type": "Skill",
+      "validation_metrics": "products/metrics.json",
+      "versions": [
+        {
+          "archive_evidence": "UNKNOWN",
+          "candidate": "UNKNOWN",
+          "date": "UNKNOWN",
+          "published_at": "UNKNOWN",
+          "sha256": "UNKNOWN",
+          "source": "packages/skills/wangbin-sales-analyzer",
+          "version": "0.1.0"
+        }
+      ]
     }
   ],
   "schema_version": 1

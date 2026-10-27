@@ -236,7 +236,7 @@ def test_cli_record_and_portfolio_round_trip(tmp_path: Path) -> None:
 def test_cli_lists_registered_products() -> None:
     result = subprocess.run([sys.executable, "-m", "tooling.products", "list", "--root", str(ROOT)], cwd=ROOT, text=True, capture_output=True)
     assert result.returncode == 0, result.stderr
-    assert len(json.loads(result.stdout)["products"]) == 8
+    assert len(json.loads(result.stdout)["products"]) == 10
 
 
 def test_release_check_reports_local_blocked_in_exit_status_and_platform_separately(tmp_path: Path) -> None:
