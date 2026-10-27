@@ -563,9 +563,12 @@ def release_check(root: Path, product_id: str) -> dict:
     archive = verify_package(root, product_id)
     tests = test_product(root, product_id)
     local_candidate = "PASS" if validation["status"] == archive["status"] == tests["status"] == "PASS" else "BLOCKED"
-    return {"id": product_id, "status": local_candidate, "local_validation": validation, "local_tests": tests, "archive": archive,
+    license_gate = _license_dependency_gate(_source(root, product), product["type"])
+    # Aggregate status is publication readiness, not merely ZIP integrity.
+    # Platform installation and dialogue have no verified evidence here.
+    return {"id": product_id, "status": "BLOCKED", "local_validation": validation, "local_tests": tests, "archive": archive,
             "local_candidate": local_candidate,
             "platform": "BLOCKED", "platform_install": "NOT_TESTED", "platform_dialogue": "NOT_TESTED",
             "review": product["review_status"], "review_evidence": product["review_evidence"],
-            "license_and_dependencies": _license_dependency_gate(_source(root, product), product["type"]),
+            "license_and_dependencies": license_gate,
             "publication": "BLOCKED"}

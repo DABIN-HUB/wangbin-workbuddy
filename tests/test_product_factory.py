@@ -250,6 +250,18 @@ def test_release_check_reports_local_blocked_in_exit_status_and_platform_separat
     assert json.loads(cli.stdout)["platform"] == "BLOCKED"
 
 
+def test_release_check_keeps_platform_and_license_blockers_when_local_passes(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    registry(tmp_path)
+    monkeypatch.setattr(factory, "validate_product", lambda root, pid: {"status": "PASS"})
+    monkeypatch.setattr(factory, "verify_package", lambda root, pid: {"status": "PASS"})
+    monkeypatch.setattr(factory, "test_product", lambda root, pid: {"status": "PASS"})
+    result = factory.release_check(tmp_path, "sample-skill")
+    assert result["local_candidate"] == "PASS"
+    assert result["license_and_dependencies"]["status"] == "BLOCKED"
+    assert result["platform"] == "BLOCKED"
+    assert result["status"] == "BLOCKED"
+
+
 def test_register_version_selects_active_without_overwriting_historical_metrics(tmp_path: Path) -> None:
     registry(tmp_path)
     factory.record_metric(tmp_path, "sample-skill", "uses", 1, evidence="v0 observation")
