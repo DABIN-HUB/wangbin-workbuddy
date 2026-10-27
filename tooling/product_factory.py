@@ -643,12 +643,14 @@ def _dependency_inventory(source: Path, kind: str) -> dict:
     }
 
 
-def _upload_state(item: dict, archive: dict, validation: dict, dependency: dict) -> tuple[str, str]:
+def _upload_state(item: dict, archive: dict, validation: dict, dependency: dict, license_gate: dict) -> tuple[str, str]:
     """Keep upload readiness, platform evidence and publication status separate."""
     if not archive["exists"] or archive["zip_integrity"] == "MISSING":
         return "MISSING", "candidate ZIP is not present"
     if archive["zip_integrity"] != "PASS" or archive["sha256_match"] == "FAIL":
         return "SECURITY_BLOCKED", "ZIP integrity or registered SHA-256 mismatch"
+    if license_gate["status"] == "BLOCKED":
+        return "SECURITY_BLOCKED", license_gate["reason"]
     if item["review_status"] in {"USER_REPORTED_SUBMITTED", "APPROVED"} or item["status"] in {"SUBMITTED", "APPROVED", "PUBLISHED"}:
         if item["status"] == "PUBLISHED" and item["review_status"] == "APPROVED":
             return "OFFICIALLY_PUBLISHED", "direct platform publication evidence is not present in this repository"
@@ -676,10 +678,14 @@ def upload_list(root: Path) -> dict:
             dependency = _dependency_inventory(source, item["type"]) if source.is_dir() else {
                 "declared_files": [], "additional_install": "UNKNOWN", "platform_runtime": "UNKNOWN", "platform_verified": False,
             }
+            license_gate = _license_dependency_gate(source, item["type"]) if source.is_dir() else {
+                "status": "BLOCKED", "reason": "source is absent; license/dependency review cannot run",
+            }
         except (ValueError, OSError, KeyError) as exc:
             validation = {"status": "BLOCKED", "findings": [str(exc)]}
             dependency = {"declared_files": [], "additional_install": "UNKNOWN", "platform_runtime": "UNKNOWN", "platform_verified": False}
-        state, reason = _upload_state(item, archive, validation, dependency)
+            license_gate = {"status": "BLOCKED", "reason": str(exc)}
+        state, reason = _upload_state(item, archive, validation, dependency, license_gate)
         products.append({
             "name": item["name"],
             "id": item["id"],
@@ -699,6 +705,7 @@ def upload_list(root: Path) -> dict:
             "release_gate": "BLOCKED" if state not in {"OFFICIALLY_PUBLISHED"} else "PASS",
             "validation": validation,
             "dependencies": dependency,
+            "license_and_dependencies": license_gate,
             "block_reason": reason,
         })
     result = {"status": "REPORT_ONLY", "products": products, "report": "reports/workbuddy-upload-list.md"}
@@ -729,7 +736,16 @@ def _render_upload_report(products: list[dict]) -> str:
             _markdown_cell(product["zip_path"] or "MISSING"), _markdown_cell(product["sha256"]),
             _markdown_cell(f"{status}; release_gate={gate}"), _markdown_cell(product["block_reason"]),
         ]) + " |")
-    lines += ["", "## 分类说明", "", "- `CAN_ENTER_PLATFORM_TRIAL`：本地候选存在、ZIP 完整性和登记哈希通过，且源码校验通过；平台安装、调用、审核仍未知。", "- `DECLARED_OR_UNKNOWN`：源码声明了运行时或依赖，是否由 WorkBuddy 提供尚未验证。", "- `SECURITY_BLOCKED`：归档、源码安全、路径或其他本地安全门禁未通过。", "- `SUBMITTED_REVIEW`：仅保留提交证据，不升级为平台批准。", "- `OFFICIALLY_PUBLISHED`：只有直接平台发布证据才可使用；当前仓库没有该证据。", "- `MISSING`：候选 ZIP 尚未生成，不能视为可上传。", "", "## 四个独立财务 Skill", ""]
+    lines += [
+        "", "## 分类说明", "",
+        "- `CAN_ENTER_PLATFORM_TRIAL`：本地候选存在、ZIP 完整性和登记哈希通过，且源码校验通过；平台安装、调用、审核仍未知。",
+        "- `DECLARED_OR_UNKNOWN`：源码声明了运行时或依赖，是否由 WorkBuddy 提供尚未验证。",
+        "- `SECURITY_BLOCKED`：归档、源码安全、路径、许可证或其他本地安全门禁未通过。",
+        "- `SUBMITTED_REVIEW`：仅保留提交证据，不升级为平台批准。",
+        "- `OFFICIALLY_PUBLISHED`：只有直接平台发布证据才可使用；当前仓库没有该证据。",
+        "- `MISSING`：候选 ZIP 尚未生成，不能视为可上传。",
+        "", "## 四个独立财务 Skill", "",
+    ]
     wanted = {"wangbin-receivable-analyzer", "wangbin-inventory-analyzer", "wangbin-purchase-analyzer", "wangbin-sales-analyzer"}
     for product in products:
         if product["id"] not in wanted:
