@@ -162,25 +162,26 @@
     },
     {
       "active_version": "0.1.0",
-      "development": "BACKLOG",
+      "development": "Local CSV matrix: 7 passed, 1 skipped (symlink capability); WorkBuddy runtime unverified",
       "id": "wangbin-inventory-analyzer",
       "maintenance": "UNKNOWN",
       "name": "库存呆滞分析",
       "published_at": "UNKNOWN",
-      "review_evidence": "UNKNOWN",
+      "review_evidence": "No platform evidence",
       "review_status": "NOT_TESTED",
       "scenario": "基于授权库存记录识别待核实的呆滞风险",
-      "status": "BACKLOG",
+      "status": "TESTED",
       "target_users": "仓储与运营人员",
+      "test_path": "tests/test_inventory_analyzer.py",
       "type": "Skill",
       "validation_metrics": "products/metrics.json",
       "versions": [
         {
-          "archive_evidence": "UNKNOWN",
-          "candidate": "UNKNOWN",
+          "archive_evidence": "dist/wangbin-inventory-analyzer-0.1.0-skill-candidate.zip",
+          "candidate": "dist/wangbin-inventory-analyzer-0.1.0-skill-candidate.zip",
           "date": "UNKNOWN",
           "published_at": "UNKNOWN",
-          "sha256": "UNKNOWN",
+          "sha256": "b2b7d51998243d819d11237aa2652c486640133bda66a3e75fd6736691b09fdf",
           "source": "packages/skills/wangbin-inventory-analyzer",
           "version": "0.1.0"
         }

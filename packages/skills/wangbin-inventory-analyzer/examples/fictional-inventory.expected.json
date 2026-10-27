@@ -1,0 +1,119 @@
+{
+  "anomaly_candidates": [],
+  "anomaly_rules": [
+    "BALANCE_MISMATCH：期初 + 收货 - 发料不等于期末快照。",
+    "DUPLICATE_ID、INVALID_DATE、INVALID_DECIMAL、NEGATIVE_VALUE、FORMULA_CELL_UNSAFE 等输入异常只排除对应行，不回显原始单元格。"
+  ],
+  "assumptions": [
+    "balances 是授权库存快照；每个 item_id + warehouse + currency 取 as-of 前最近快照作为期末库存和估值。",
+    "数量周转率 = 观察区间发料数量 / ((期初快照数量 + 期末快照数量) / 2)；必须同时有不同日期的期初、期末快照和有效发料记录，否则为 UNKNOWN。",
+    "收货和发料按日期纳入期初快照之后至 as-of 的区间；快照不等同于完整盘点证据。",
+    "无移动、慢动和超储均是候选；主数据 max_stock 优先，缺少主数据时不臆测安全库存。"
+  ],
+  "input": {
+    "as_of": "2026-02-28",
+    "source_names": {
+      "balances": "fictional-balances.csv",
+      "issues": "fictional-issues.csv",
+      "master": "fictional-master.csv",
+      "receipts": "fictional-receipts.csv"
+    }
+  },
+  "invalid_rows": [],
+  "inventory": [
+    {
+      "balance_date": "2026-02-28",
+      "beginning_date": "2026-01-01",
+      "beginning_quantity": "100",
+      "currency": "CNY",
+      "issue_quantity": "30",
+      "item_id": "A",
+      "item_name": "青铜齿轮",
+      "movement_count": 2,
+      "quantity": "90",
+      "quantity_turnover": "0.31578947",
+      "receipt_quantity": "20",
+      "turnover_status": "KNOWN",
+      "unit": "pcs",
+      "unit_cost": "2.5",
+      "value": "225",
+      "warehouse": "WH-A"
+    },
+    {
+      "balance_date": "2026-02-28",
+      "beginning_date": "2026-01-01",
+      "beginning_quantity": "50",
+      "currency": "CNY",
+      "issue_quantity": "0",
+      "item_id": "B",
+      "item_name": "蓝色垫片",
+      "movement_count": 0,
+      "quantity": "50",
+      "quantity_turnover": "UNKNOWN",
+      "receipt_quantity": "0",
+      "turnover_status": "UNKNOWN",
+      "unit": "pcs",
+      "unit_cost": "1.1",
+      "value": "55",
+      "warehouse": "WH-A"
+    }
+  ],
+  "inventory_value": [
+    {
+      "currency": "CNY",
+      "quantity": "140",
+      "value": "280"
+    }
+  ],
+  "limitations": [
+    "仅接受 UTF-8 CSV；Excel/XLSX、PDF 和隐式文件发现不在 0.1.0 范围内。",
+    "币种分别汇总，不进行汇率换算；异常和候选不是审计结论。"
+  ],
+  "no_movement_candidates": [
+    {
+      "as_of": "2026-02-28",
+      "currency": "CNY",
+      "item_id": "B",
+      "reason": "在可观察区间内没有有效收货或发料记录；候选需业务核实。",
+      "warehouse": "WH-A"
+    }
+  ],
+  "overstock_candidates": [],
+  "privacy": {
+    "absolute_path_disclosed": false,
+    "execution_scope": "local_script_only",
+    "raw_input_disclosed": false,
+    "remote_upload": false
+  },
+  "schema_version": "0.1.0",
+  "slow_moving_candidates": [
+    {
+      "currency": "CNY",
+      "item_id": "A",
+      "quantity_turnover": "0.31578947",
+      "reason": "数量周转率不高于 1；仅为慢动候选。",
+      "threshold": "1",
+      "warehouse": "WH-A"
+    },
+    {
+      "currency": "CNY",
+      "item_id": "B",
+      "quantity_turnover": "0",
+      "reason": "数量周转率不高于 1；仅为慢动候选。",
+      "threshold": "1",
+      "warehouse": "WH-A"
+    }
+  ],
+  "summary": {
+    "balances_read": 4,
+    "duplicate_ids": [],
+    "invalid_rows": 0,
+    "issues_read": 1,
+    "master_read": 2,
+    "out_of_range_rows": 0,
+    "receipts_read": 1,
+    "valid_balances": 4,
+    "valid_issues": 1,
+    "valid_receipts": 1
+  }
+}

@@ -1,0 +1,2 @@
+receipt_id,item_id,warehouse,receipt_date,quantity,unit_cost,currency
+R-A,A,WH-A,2026-02-10,20,2.50,CNY

@@ -1,0 +1,3 @@
+item_id,item_name,unit,reorder_point,max_stock
+A,青铜齿轮,pcs,20,120
+B,蓝色垫片,pcs,10,100

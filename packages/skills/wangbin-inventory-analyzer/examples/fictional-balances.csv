@@ -1,0 +1,5 @@
+item_id,warehouse,balance_date,quantity,unit_cost,currency
+A,WH-A,2026-01-01,100,2.50,CNY
+A,WH-A,2026-02-28,90,2.50,CNY
+B,WH-A,2026-01-01,50,1.10,CNY
+B,WH-A,2026-02-28,50,1.10,CNY
