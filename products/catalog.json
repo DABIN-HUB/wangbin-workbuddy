@@ -108,7 +108,7 @@
       ]
     },
     {
-      "active_version": "0.1.0",
+      "active_version": "0.1.1",
       "development": "Local CSV matrix: 6 passed; WorkBuddy runtime unverified",
       "id": "wangbin-receivable-analyzer",
       "maintenance": "UNKNOWN",
@@ -131,6 +131,15 @@
           "sha256": "229b302ae5109639e3379be61cd259549197f9b22e90a8ffbcf43539dfec1929",
           "source": "packages/skills/wangbin-receivable-analyzer",
           "version": "0.1.0"
+        },
+        {
+          "archive_evidence": "dist/wangbin-receivable-analyzer-0.1.1-skill-candidate.zip",
+          "candidate": "dist/wangbin-receivable-analyzer-0.1.1-skill-candidate.zip",
+          "date": "2026-10-27",
+          "published_at": "UNKNOWN",
+          "sha256": "1fc44aa4f7d8790ab6b3856977d04abd8906f72fb25587c108fb94f60cd7792e",
+          "source": "packages/skills/wangbin-receivable-analyzer",
+          "version": "0.1.1"
         }
       ]
     },
@@ -161,7 +170,7 @@
       ]
     },
     {
-      "active_version": "0.1.0",
+      "active_version": "0.1.1",
       "development": "Local CSV matrix: 7 passed, 1 skipped (symlink capability); WorkBuddy runtime unverified",
       "id": "wangbin-inventory-analyzer",
       "maintenance": "UNKNOWN",
@@ -184,6 +193,15 @@
           "sha256": "b2b7d51998243d819d11237aa2652c486640133bda66a3e75fd6736691b09fdf",
           "source": "packages/skills/wangbin-inventory-analyzer",
           "version": "0.1.0"
+        },
+        {
+          "archive_evidence": "dist/wangbin-inventory-analyzer-0.1.1-skill-candidate.zip",
+          "candidate": "dist/wangbin-inventory-analyzer-0.1.1-skill-candidate.zip",
+          "date": "2026-10-27",
+          "published_at": "UNKNOWN",
+          "sha256": "1cdd808458ae57780e9b8cad77e26eb784683e3e6772efce1a0980d34ecbe686",
+          "source": "packages/skills/wangbin-inventory-analyzer",
+          "version": "0.1.1"
         }
       ]
     },
@@ -214,7 +232,7 @@
       ]
     },
     {
-      "active_version": "0.1.0",
+      "active_version": "0.1.1",
       "development": "Local CSV matrix: 9 passed; WorkBuddy runtime unverified",
       "id": "wangbin-purchase-analyzer",
       "maintenance": "UNKNOWN",
@@ -237,11 +255,20 @@
           "sha256": "00aaac8d7104151c1ea06e4f709234b94145ea4fca4972d3b866540814453571",
           "source": "packages/skills/wangbin-purchase-analyzer",
           "version": "0.1.0"
+        },
+        {
+          "archive_evidence": "dist/wangbin-purchase-analyzer-0.1.1-skill-candidate.zip",
+          "candidate": "dist/wangbin-purchase-analyzer-0.1.1-skill-candidate.zip",
+          "date": "2026-10-27",
+          "published_at": "UNKNOWN",
+          "sha256": "673f076b51d760c3eaf8d6ad9c30e254846c60a4a23705d297635023e88814e5",
+          "source": "packages/skills/wangbin-purchase-analyzer",
+          "version": "0.1.1"
         }
       ]
     },
     {
-      "active_version": "0.1.0",
+      "active_version": "0.1.1",
       "development": "Local CSV matrix: 8 passed; WorkBuddy runtime unverified",
       "id": "wangbin-sales-analyzer",
       "maintenance": "UNKNOWN",
@@ -264,6 +291,15 @@
           "sha256": "571664ec2652a917ac1ea06a3b59b97e271d725f03843529228935b910cf62ab",
           "source": "packages/skills/wangbin-sales-analyzer",
           "version": "0.1.0"
+        },
+        {
+          "archive_evidence": "dist/wangbin-sales-analyzer-0.1.1-skill-candidate.zip",
+          "candidate": "dist/wangbin-sales-analyzer-0.1.1-skill-candidate.zip",
+          "date": "2026-10-27",
+          "published_at": "UNKNOWN",
+          "sha256": "52c7ee38efe9d46a87ebd89d3f9fd13060d16bebd1ca6e6c480d53ebe883c40d",
+          "source": "packages/skills/wangbin-sales-analyzer",
+          "version": "0.1.1"
         }
       ]
     }

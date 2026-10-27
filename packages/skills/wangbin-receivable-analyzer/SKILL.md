@@ -9,8 +9,10 @@ examples_zh:
 - 按明确基准日核对本地应收账款明细中的逾期发票
 examples_en:
 - Analyze the explicitly selected local receivables CSV at a given as-of date
-version: 0.1.0
+version: 0.1.1
 author: wangbin
+license_candidate: MIT
+license_status: REQUIRES_MANUAL_REVIEW
 allowed-tools: Read, Bash
 ---
 

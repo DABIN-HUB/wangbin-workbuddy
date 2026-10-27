@@ -1,5 +1,7 @@
 {
   "id": "wangbin-receivable-analyzer",
-  "version": "0.1.0",
-  "author": "wangbin"
+  "version": "0.1.1",
+  "author": "wangbin",
+  "license_candidate": "MIT",
+  "license_status": "REQUIRES_MANUAL_REVIEW"
 }

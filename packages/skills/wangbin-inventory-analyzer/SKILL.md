@@ -9,8 +9,10 @@ examples_zh:
   - 请用 2026-02-28 作为 as-of 分析这些库存 CSV。
 examples_en:
   - Analyze these inventory CSV files as of 2026-02-28.
-version: 0.1.0
+version: 0.1.1
 author: Wangbin Research
+license_candidate: MIT
+license_status: REQUIRES_MANUAL_REVIEW
 ---
 
 # 库存呆滞分析

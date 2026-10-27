@@ -1,7 +1,9 @@
 {
   "id": "wangbin-sales-analyzer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "wangbin",
+  "license_candidate": "MIT",
+  "license_status": "REQUIRES_MANUAL_REVIEW",
   "runtime": "python-stdlib",
   "input_format": "UTF-8 CSV",
   "supported_formats": ["csv"],

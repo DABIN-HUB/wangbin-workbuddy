@@ -543,8 +543,9 @@ def _license_dependency_gate(source: Path, kind: str) -> dict:
     if not (source / "LICENSE").is_file():
         return {"status": "BLOCKED", "reason": "license file is absent; no license claim is verified"}
     declarations = []
+    declaration_names = {"requirements.txt", "pyproject.toml", "package.json", "manifest.json", "cli.json", "mcp.json", "connector-meta.json"}
     for path in source.rglob("*"):
-        if path.is_file() and path.suffix.lower() in {".json", ".yaml", ".yml", ".md"}:
+        if path.is_file() and path.name in declaration_names:
             try:
                 text = path.read_text(encoding="utf-8")
             except UnicodeDecodeError:
@@ -649,12 +650,12 @@ def _upload_state(item: dict, archive: dict, validation: dict, dependency: dict,
         return "MISSING", "candidate ZIP is not present"
     if archive["zip_integrity"] != "PASS" or archive["sha256_match"] == "FAIL":
         return "SECURITY_BLOCKED", "ZIP integrity or registered SHA-256 mismatch"
-    if license_gate["status"] == "BLOCKED":
-        return "SECURITY_BLOCKED", license_gate["reason"]
     if item["review_status"] in {"USER_REPORTED_SUBMITTED", "APPROVED"} or item["status"] in {"SUBMITTED", "APPROVED", "PUBLISHED"}:
         if item["status"] == "PUBLISHED" and item["review_status"] == "APPROVED":
             return "OFFICIALLY_PUBLISHED", "direct platform publication evidence is not present in this repository"
         return "SUBMITTED_REVIEW", "submission is recorded, but platform approval is not verified"
+    if license_gate["status"] != "PASS":
+        return "SECURITY_BLOCKED", license_gate["reason"]
     if validation["status"] != "PASS":
         return "SECURITY_BLOCKED", "source validation is not PASS"
     if item["status"] == "BACKLOG":
@@ -753,11 +754,24 @@ def _render_upload_report(products: list[dict]) -> str:
         standalone = ("可单独上传试传；运行未验证" if product["upload_status"] in {"CAN_ENTER_PLATFORM_TRIAL", "SUBMITTED_REVIEW"}
                       else "不可单独上传运行" if product["upload_status"] == "MISSING"
                       else "不可宣称独立运行")
-        lines += [f"### {product['name']}（`{product['id']}`）", "", f"- 版本：`{product['version']}`", f"- ZIP：`{product['zip_path'] or 'MISSING'}`", f"- 文件存在：`{product['exists']}`；大小：`{product['size'] if product['size'] is not None else 'MISSING'}` bytes", f"- SHA-256：`{product['sha256']}`（登记值匹配：`{product['sha256_match']}`）", f"- ZIP 完整性：`{product['zip_integrity']}`", f"- 当前发布门禁：`{product['release_gate']}`；上传状态：`{product['upload_status']}`", f"- 额外安装依赖：`{product['dependencies']['additional_install']}`；平台运行时：`{product['dependencies']['platform_runtime']}`；平台验证：`{product['dependencies']['platform_verified']}`", f"- 是否可单独上传运行：`{standalone}`（{product['block_reason']}）", "- ZIP 内部文件："]
+        lines += [f"### {product['name']}（`{product['id']}`）", "", f"- 版本：`{product['version']}`", f"- ZIP：`{product['zip_path'] or 'MISSING'}`", f"- 文件存在：`{product['exists']}`；大小：`{product['size'] if product['size'] is not None else 'MISSING'}` bytes", f"- SHA-256：`{product['sha256']}`（登记值匹配：`{product['sha256_match']}`）", f"- ZIP 完整性：`{product['zip_integrity']}`", f"- 当前发布门禁：`{product['release_gate']}`；上传状态：`{product['upload_status']}`", f"- 许可证状态：`{product['license_and_dependencies']['status']}`；许可证说明：{product['license_and_dependencies']['reason']}", f"- 额外安装依赖：`{product['dependencies']['additional_install']}`；平台运行时：`{product['dependencies']['platform_runtime']}`；平台验证：`{product['dependencies']['platform_verified']}`", f"- 是否可单独上传运行：`{standalone}`（{product['block_reason']}）", "- ZIP 内部文件："]
         if product["members"]:
             lines.extend(f"  - `{member}`" for member in product["members"])
         else:
             lines.append("  - `MISSING`")
         lines.append("")
-    lines += ["## 证据边界", "", "- 本清单不把本地 pytest、ZIP 校验或公开文档当作 WorkBuddy 平台安装、真实对话、审核通过或正式发布证据。", "- 生产数据、安装量、调用量、审核结果和成本没有证据时保持 `UNKNOWN`；未自动上传或提交审核。", ""]
+    lines += [
+        "## 本轮许可证审查",
+        "",
+        "- 所有权证据：四个产品的源码提交和 manifest 作者字段指向 `wangbin` 或 `Wangbin Research`；这支持仓库内原创性判断，但不等同于本人对外授权意图的法律确认。",
+        "- 第三方代码与依赖：四个 Skill ZIP 内脚本只导入 Python 标准库，未发现第三方源码、付费 API 或独立运行依赖声明；WorkBuddy 是否提供 Python 运行时仍为 `UNKNOWN`。",
+        "- 许可证：四个 0.1.1 候选均包含独立 MIT LICENSE，版权主体候选为 `wangbin`；授权意图和权利归属仍需本人确认，因此许可证门禁为 `REQUIRES_MANUAL_REVIEW`，不能标记为已授权发布。",
+        "- 内容与数据：示例 CSV/JSON 均为 fictional 示例；本轮审查未发现客户、企业或个人敏感数据，也未发现需要保留的第三方版权声明。",
+        "",
+        "## 证据边界",
+        "",
+        "- 本清单不把本地 pytest、ZIP 校验或公开文档当作 WorkBuddy 平台安装、真实对话、审核通过或正式发布证据。",
+        "- 生产数据、安装量、调用量、审核结果和成本没有证据时保持 `UNKNOWN`；未自动上传或提交审核。",
+        "",
+    ]
     return "\n".join(lines)
