@@ -9,13 +9,13 @@ examples_zh:
 - 请使用本地 UTF-8 CSV 分析 2026 年 1 月至 2 月销售收入，按 CNY 和 USD 分开，并仅在我提供完整期间和 as-of 日期时计算 MoM/YoY。
 examples_en:
 - Analyze local UTF-8 CSV revenue for January and February 2026, keep CNY and USD separate, and calculate MoM/YoY only for periods explicitly marked complete with an as-of date.
-version: 0.1.1
+version: 0.1.2
 author: wangbin
-license_candidate: MIT
+license_type: PROPRIETARY
 license_status: REQUIRES_MANUAL_REVIEW
 ---
 
-# 销售收入分析 Skill 0.1.1
+# 销售收入分析 Skill 0.1.2
 
 ## 能力边界
 

@@ -10,12 +10,12 @@
 | Document CLI Connector | Connector | 1.2.0 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-document-cli-1.2.0-connector-candidate.zip | be64b3b619382cbc74686fef6bd64a402f15f380487bde61e41620df66feb0e7 | SECURITY_BLOCKED; release_gate=BLOCKED | license file is absent; no license claim is verified |
 | Software Consultant | Expert | 1.0.0 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-software-consultant-1.0.0-expert-candidate.zip | 577f3089d2f4707178f44ba1e5c395a99853bb9558f3e8c0e752a0e6ba2e30de | SUBMITTED_REVIEW; release_gate=BLOCKED | submission is recorded, but platform approval is not verified |
 | 招标文件分析助手 | Skill | 0.1.0 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-tender-analyzer-0.1.0-skill-candidate.zip | 2e68809033301c97b02ec7c7fd59f7b477fcd2f1f86d515d69b5fc7b20146bc7 | SECURITY_BLOCKED; release_gate=BLOCKED | license file is absent; no license claim is verified |
-| 应收账款逾期分析 | Skill | 0.1.1 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-receivable-analyzer-0.1.1-skill-candidate.zip | 1fc44aa4f7d8790ab6b3856977d04abd8906f72fb25587c108fb94f60cd7792e | SECURITY_BLOCKED; release_gate=BLOCKED | local files declare no independently verified license/dependency approval |
+| 应收账款逾期分析 | Skill | 0.1.2 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-receivable-analyzer-0.1.2-skill-candidate.zip | 3165ecc4d2ce435ac3ed263dc52d4585a89ac46c5b66324b995878d5a26e897f | SECURITY_BLOCKED; release_gate=BLOCKED | license notice is present; account-effective agreement and distribution terms remain unverified |
 | 软件需求变更影响分析 | Skill | 0.1.0 | MISSING | UNKNOWN | MISSING; release_gate=BLOCKED | candidate ZIP is not present |
-| 库存呆滞分析 | Skill | 0.1.1 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-inventory-analyzer-0.1.1-skill-candidate.zip | 1cdd808458ae57780e9b8cad77e26eb784683e3e6772efce1a0980d34ecbe686 | SECURITY_BLOCKED; release_gate=BLOCKED | local files declare no independently verified license/dependency approval |
+| 库存呆滞分析 | Skill | 0.1.2 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-inventory-analyzer-0.1.2-skill-candidate.zip | f2e720d7c544bb4a4d24aa4f01c21a58826965a67f3195c5e8d9020caaeee62c | SECURITY_BLOCKED; release_gate=BLOCKED | license notice is present; account-effective agreement and distribution terms remain unverified |
 | 垂直行业研究报告 | Skill | 0.1.0 | MISSING | UNKNOWN | MISSING; release_gate=BLOCKED | candidate ZIP is not present |
-| 采购价格分析 | Skill | 0.1.1 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-purchase-analyzer-0.1.1-skill-candidate.zip | 673f076b51d760c3eaf8d6ad9c30e254846c60a4a23705d297635023e88814e5 | SECURITY_BLOCKED; release_gate=BLOCKED | local files declare no independently verified license/dependency approval |
-| 销售数据分析 | Skill | 0.1.1 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-sales-analyzer-0.1.1-skill-candidate.zip | 52c7ee38efe9d46a87ebd89d3f9fd13060d16bebd1ca6e6c480d53ebe883c40d | SECURITY_BLOCKED; release_gate=BLOCKED | declarations require manual license and dependency verification |
+| 采购价格分析 | Skill | 0.1.2 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-purchase-analyzer-0.1.2-skill-candidate.zip | 1e0de940a4198a3ea92d86b7fd0a84b999620247e43e74dd76315b4e75621dd4 | SECURITY_BLOCKED; release_gate=BLOCKED | license notice is present; account-effective agreement and distribution terms remain unverified |
+| 销售数据分析 | Skill | 0.1.2 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-sales-analyzer-0.1.2-skill-candidate.zip | 34378ecb2159f8562f71b5c89074e449556c72f74f814e5fc37291f3107f1425 | SECURITY_BLOCKED; release_gate=BLOCKED | license notice is present; account-effective agreement and distribution terms remain unverified |
 
 ## 分类说明
 
@@ -30,15 +30,15 @@
 
 ### 应收账款逾期分析（`wangbin-receivable-analyzer`）
 
-- 版本：`0.1.1`
-- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-receivable-analyzer-0.1.1-skill-candidate.zip`
-- 文件存在：`True`；大小：`7691` bytes
-- SHA-256：`1fc44aa4f7d8790ab6b3856977d04abd8906f72fb25587c108fb94f60cd7792e`（登记值匹配：`PASS`）
+- 版本：`0.1.2`
+- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-receivable-analyzer-0.1.2-skill-candidate.zip`
+- 文件存在：`True`；大小：`7470` bytes
+- SHA-256：`3165ecc4d2ce435ac3ed263dc52d4585a89ac46c5b66324b995878d5a26e897f`（登记值匹配：`PASS`）
 - ZIP 完整性：`PASS`
 - 当前发布门禁：`BLOCKED`；上传状态：`SECURITY_BLOCKED`
-- 许可证状态：`REQUIRES_MANUAL_REVIEW`；许可证说明：local files declare no independently verified license/dependency approval
+- 许可证模型：`PROPRIETARY`；许可证状态：`REQUIRES_MANUAL_REVIEW`；许可证说明：license notice is present; account-effective agreement and distribution terms remain unverified
 - 额外安装依赖：`NONE_DECLARED`；平台运行时：`UNKNOWN`；平台验证：`False`
-- 是否可单独上传运行：`不可宣称独立运行`（local files declare no independently verified license/dependency approval）
+- 是否可单独上传运行：`不可宣称独立运行`（license notice is present; account-effective agreement and distribution terms remain unverified）
 - ZIP 内部文件：
   - `wangbin-receivable-analyzer/LICENSE`
   - `wangbin-receivable-analyzer/SKILL.md`
@@ -49,15 +49,15 @@
 
 ### 库存呆滞分析（`wangbin-inventory-analyzer`）
 
-- 版本：`0.1.1`
-- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-inventory-analyzer-0.1.1-skill-candidate.zip`
-- 文件存在：`True`；大小：`12748` bytes
-- SHA-256：`1cdd808458ae57780e9b8cad77e26eb784683e3e6772efce1a0980d34ecbe686`（登记值匹配：`PASS`）
+- 版本：`0.1.2`
+- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-inventory-analyzer-0.1.2-skill-candidate.zip`
+- 文件存在：`True`；大小：`12535` bytes
+- SHA-256：`f2e720d7c544bb4a4d24aa4f01c21a58826965a67f3195c5e8d9020caaeee62c`（登记值匹配：`PASS`）
 - ZIP 完整性：`PASS`
 - 当前发布门禁：`BLOCKED`；上传状态：`SECURITY_BLOCKED`
-- 许可证状态：`REQUIRES_MANUAL_REVIEW`；许可证说明：local files declare no independently verified license/dependency approval
+- 许可证模型：`PROPRIETARY`；许可证状态：`REQUIRES_MANUAL_REVIEW`；许可证说明：license notice is present; account-effective agreement and distribution terms remain unverified
 - 额外安装依赖：`NONE_DECLARED`；平台运行时：`UNKNOWN`；平台验证：`False`
-- 是否可单独上传运行：`不可宣称独立运行`（local files declare no independently verified license/dependency approval）
+- 是否可单独上传运行：`不可宣称独立运行`（license notice is present; account-effective agreement and distribution terms remain unverified）
 - ZIP 内部文件：
   - `wangbin-inventory-analyzer/LICENSE`
   - `wangbin-inventory-analyzer/SKILL.md`
@@ -71,15 +71,15 @@
 
 ### 采购价格分析（`wangbin-purchase-analyzer`）
 
-- 版本：`0.1.1`
-- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-purchase-analyzer-0.1.1-skill-candidate.zip`
-- 文件存在：`True`；大小：`11734` bytes
-- SHA-256：`673f076b51d760c3eaf8d6ad9c30e254846c60a4a23705d297635023e88814e5`（登记值匹配：`PASS`）
+- 版本：`0.1.2`
+- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-purchase-analyzer-0.1.2-skill-candidate.zip`
+- 文件存在：`True`；大小：`11517` bytes
+- SHA-256：`1e0de940a4198a3ea92d86b7fd0a84b999620247e43e74dd76315b4e75621dd4`（登记值匹配：`PASS`）
 - ZIP 完整性：`PASS`
 - 当前发布门禁：`BLOCKED`；上传状态：`SECURITY_BLOCKED`
-- 许可证状态：`REQUIRES_MANUAL_REVIEW`；许可证说明：local files declare no independently verified license/dependency approval
+- 许可证模型：`PROPRIETARY`；许可证状态：`REQUIRES_MANUAL_REVIEW`；许可证说明：license notice is present; account-effective agreement and distribution terms remain unverified
 - 额外安装依赖：`NONE_DECLARED`；平台运行时：`UNKNOWN`；平台验证：`False`
-- 是否可单独上传运行：`不可宣称独立运行`（local files declare no independently verified license/dependency approval）
+- 是否可单独上传运行：`不可宣称独立运行`（license notice is present; account-effective agreement and distribution terms remain unverified）
 - ZIP 内部文件：
   - `wangbin-purchase-analyzer/LICENSE`
   - `wangbin-purchase-analyzer/SKILL.md`
@@ -90,15 +90,15 @@
 
 ### 销售数据分析（`wangbin-sales-analyzer`）
 
-- 版本：`0.1.1`
-- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-sales-analyzer-0.1.1-skill-candidate.zip`
-- 文件存在：`True`；大小：`10109` bytes
-- SHA-256：`52c7ee38efe9d46a87ebd89d3f9fd13060d16bebd1ca6e6c480d53ebe883c40d`（登记值匹配：`PASS`）
+- 版本：`0.1.2`
+- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-sales-analyzer-0.1.2-skill-candidate.zip`
+- 文件存在：`True`；大小：`9889` bytes
+- SHA-256：`34378ecb2159f8562f71b5c89074e449556c72f74f814e5fc37291f3107f1425`（登记值匹配：`PASS`）
 - ZIP 完整性：`PASS`
 - 当前发布门禁：`BLOCKED`；上传状态：`SECURITY_BLOCKED`
-- 许可证状态：`REQUIRES_MANUAL_REVIEW`；许可证说明：declarations require manual license and dependency verification
+- 许可证模型：`PROPRIETARY`；许可证状态：`REQUIRES_MANUAL_REVIEW`；许可证说明：license notice is present; account-effective agreement and distribution terms remain unverified
 - 额外安装依赖：`NONE_DECLARED`；平台运行时：`UNKNOWN`；平台验证：`False`
-- 是否可单独上传运行：`不可宣称独立运行`（declarations require manual license and dependency verification）
+- 是否可单独上传运行：`不可宣称独立运行`（license notice is present; account-effective agreement and distribution terms remain unverified）
 - ZIP 内部文件：
   - `wangbin-sales-analyzer/LICENSE`
   - `wangbin-sales-analyzer/SKILL.md`
@@ -109,9 +109,10 @@
 
 ## 本轮许可证审查
 
-- 所有权证据：四个产品的源码提交和 manifest 作者字段指向 `wangbin` 或 `Wangbin Research`；这支持仓库内原创性判断，但不等同于本人对外授权意图的法律确认。
+- 所有权证据：四个产品的源码提交和 manifest 作者字段指向 `wangbin` 或 `Wangbin Research`；用户已明确选择保留版权，但该技术证据不单独证明雇佣或共同作者等完整法律权属。
 - 第三方代码与依赖：四个 Skill ZIP 内脚本只导入 Python 标准库，未发现第三方源码、付费 API 或独立运行依赖声明；WorkBuddy 是否提供 Python 运行时仍为 `UNKNOWN`。
-- 许可证：四个 0.1.1 候选均包含独立 MIT LICENSE，版权主体候选为 `wangbin`；授权意图和权利归属仍需本人确认，因此许可证门禁为 `REQUIRES_MANUAL_REVIEW`，不能标记为已授权发布。
+- 授权选择：用户明确决定四个经营分析 Skill 保留版权、不采用 MIT；新候选各自包含独立私有版权声明，历史 0.1.1 MIT 候选不得上传。
+- 权利与协议：仓库内原创性及标准库依赖审查未发现实质性问题；平台有效主协议及资产分发授权条款尚需人工核实。`PROPRIETARY` 不等于平台许可或发布通过；详见 `reports/workbuddy-proprietary-license-review.md`。
 - 内容与数据：示例 CSV/JSON 均为 fictional 示例；本轮审查未发现客户、企业或个人敏感数据，也未发现需要保留的第三方版权声明。
 
 ## 证据边界

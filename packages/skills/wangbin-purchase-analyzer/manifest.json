@@ -1,7 +1,7 @@
 {
   "id": "wangbin-purchase-analyzer",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Wangbin Research",
-  "license_candidate": "MIT",
+  "license_type": "PROPRIETARY",
   "license_status": "REQUIRES_MANUAL_REVIEW"
 }

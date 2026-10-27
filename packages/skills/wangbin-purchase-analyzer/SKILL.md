@@ -9,9 +9,9 @@ examples_zh:
   - 请分析这个 UTF-8 采购 CSV 在 2026-01-01 至 2026-02-28 的价格变化。
 examples_en:
   - Analyze this UTF-8 purchase CSV from 2026-01-01 through 2026-02-28.
-version: 0.1.1
+version: 0.1.2
 author: Wangbin Research
-license_candidate: MIT
+license_type: PROPRIETARY
 license_status: REQUIRES_MANUAL_REVIEW
 ---
 

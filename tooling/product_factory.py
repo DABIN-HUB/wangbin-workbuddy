@@ -118,6 +118,12 @@ def validate_catalog(root: Path) -> list[str]:
             errors.append(f"invalid validation_metrics: {pid}")
         if item.get("review_status") == "APPROVED" and isinstance(item.get("review_evidence"), str):
             errors.append(f"platform approval must have independently verified evidence: {pid}")
+        policy = item.get("license_policy")
+        if policy is not None and (not isinstance(policy, dict) or policy.get("type") not in {"OPEN_SOURCE", "PROPRIETARY"}
+                                   or policy.get("decision") not in {"USER_CONFIRMED", "UNKNOWN"}
+                                   or any(policy.get(key) not in {"PASS", "NOT_VERIFIED", "REQUIRES_MANUAL_REVIEW"}
+                                          for key in ("rights_review", "dependency_review", "platform_agreement"))):
+            errors.append(f"invalid license policy: {pid}")
         active_version = item.get("active_version")
         versions = item.get("versions")
         if not isinstance(versions, list) or not versions:
@@ -308,6 +314,10 @@ def validate_product(root: Path, product_id: str) -> dict:
                 front = yaml.safe_load((source / "SKILL.md").read_text(encoding="utf-8").split("---", 2)[1])
                 if not isinstance(front, dict) or front.get("name") != product_id or str(front.get("version")) != _version(item):
                     findings.append("Skill identity/version mismatch")
+                if (source / "manifest.json").is_file():
+                    meta = _json(source / "manifest.json")
+                    if meta.get("id") != product_id or str(meta.get("version")) != _version(item):
+                        findings.append("Skill manifest identity/version mismatch")
             else:
                 validate_connector(source, checks, issues)
                 meta = _json(source / "connector-meta.json")
@@ -539,9 +549,37 @@ def portfolio_report(root: Path) -> dict:
     return {"products": output, "scope": "observed metrics only; no commercial prediction"}
 
 
-def _license_dependency_gate(source: Path, kind: str) -> dict:
+def _license_dependency_gate(source: Path, kind: str, policy: dict | None = None) -> dict:
+    """Separate the declared licensing model from evidence that permits distribution."""
+    policy = policy or {}
+    model = policy.get("type", "UNKNOWN")
+    if model == "UNKNOWN" and kind == "Expert":
+        plugin = source / ".codebuddy-plugin" / "plugin.json"
+        if plugin.is_file():
+            try:
+                if _json(plugin).get("license") == "MIT":
+                    model = "OPEN_SOURCE"
+            except (OSError, ValueError, json.JSONDecodeError):
+                pass
     if not (source / "LICENSE").is_file():
-        return {"status": "BLOCKED", "reason": "license file is absent; no license claim is verified"}
+        return {"type": model, "status": "BLOCKED", "reason": "license file is absent; no license claim is verified"}
+    if model not in {"OPEN_SOURCE", "PROPRIETARY"}:
+        return {"type": "UNKNOWN", "status": "REQUIRES_MANUAL_REVIEW",
+                "reason": "product-specific license decision and distribution rights are not verified"}
+    if kind == "Skill":
+        try:
+            manifest = _json(source / "manifest.json")
+            front = yaml.safe_load((source / "SKILL.md").read_text(encoding="utf-8").split("---", 2)[1])
+            notice = (source / "LICENSE").read_text(encoding="utf-8")
+        except (OSError, ValueError, IndexError, json.JSONDecodeError, yaml.YAMLError) as exc:
+            return {"type": model, "status": "BLOCKED", "reason": f"license declaration unreadable: {exc}"}
+        if (not isinstance(front, dict) or manifest.get("license_type") != model
+                or front.get("license_type") != model or manifest.get("license_status") != front.get("license_status")
+                or (model == "PROPRIETARY" and ("All rights reserved." not in notice or "MIT License" in notice))):
+            return {"type": model, "status": "BLOCKED", "reason": "license notice, manifest and Skill metadata disagree"}
+        if manifest.get("license_status") != "PASS":
+            return {"type": model, "status": "REQUIRES_MANUAL_REVIEW",
+                    "reason": "license notice is present; account-effective agreement and distribution terms remain unverified"}
     declarations = []
     declaration_names = {"requirements.txt", "pyproject.toml", "package.json", "manifest.json", "cli.json", "mcp.json", "connector-meta.json"}
     for path in source.rglob("*"):
@@ -552,10 +590,14 @@ def _license_dependency_gate(source: Path, kind: str) -> dict:
                 continue
             if re.search(r"(?im)\b(dependencies|runtime|requires|tools|skills)\b", text):
                 declarations.append(path.relative_to(source).as_posix())
-    return {"status": "REQUIRES_MANUAL_REVIEW",
-            "reason": "local files declare no independently verified license/dependency approval" if not declarations
-                      else "declarations require manual license and dependency verification",
-            "declarations": declarations}
+    required = ("decision", "rights_review", "dependency_review", "platform_agreement")
+    if (policy.get("decision") != "USER_CONFIRMED" or any(policy.get(key) != "PASS" for key in required[1:])
+            or not policy.get("platform_agreement_evidence") or not policy.get("rights_review_evidence")
+            or not policy.get("dependency_review_evidence")):
+        return {"type": model, "status": "REQUIRES_MANUAL_REVIEW",
+                "reason": "rights, dependencies or effective platform agreement require verification",
+                "declarations": declarations}
+    return {"type": model, "status": "PASS", "reason": "product-specific review evidence and notice agree", "declarations": declarations}
 
 
 def release_check(root: Path, product_id: str) -> dict:
@@ -564,7 +606,16 @@ def release_check(root: Path, product_id: str) -> dict:
     archive = verify_package(root, product_id)
     tests = test_product(root, product_id)
     local_candidate = "PASS" if validation["status"] == archive["status"] == tests["status"] == "PASS" else "BLOCKED"
-    license_gate = _license_dependency_gate(_source(root, product), product["type"])
+    license_gate = _license_dependency_gate(_source(root, product), product["type"], product.get("license_policy"))
+    gates = {
+        "LICENSE_PASS": "PASS" if license_gate["status"] == "PASS" else "BLOCKED",
+        "LOCAL_TEST_PASS": tests["status"],
+        "PACKAGE_VALIDATION_PASS": "PASS" if validation["status"] == archive["status"] == "PASS" else "BLOCKED",
+        "WORKBUDDY_ZIP_PARSE_PASS": "NOT_TESTED",
+        "WORKBUDDY_RUNTIME_PASS": "NOT_TESTED",
+        "WORKBUDDY_REVIEW_PASS": "NOT_TESTED",
+        "PUBLISH_READY": "BLOCKED",
+    }
     # Aggregate status is publication readiness, not merely ZIP integrity.
     # Platform installation and dialogue have no verified evidence here.
     return {"id": product_id, "status": "BLOCKED", "local_validation": validation, "local_tests": tests, "archive": archive,
@@ -572,6 +623,7 @@ def release_check(root: Path, product_id: str) -> dict:
             "platform": "BLOCKED", "platform_install": "NOT_TESTED", "platform_dialogue": "NOT_TESTED",
             "review": product["review_status"], "review_evidence": product["review_evidence"],
             "license_and_dependencies": license_gate,
+            "gates": gates,
             "publication": "BLOCKED"}
 
 
@@ -679,7 +731,7 @@ def upload_list(root: Path) -> dict:
             dependency = _dependency_inventory(source, item["type"]) if source.is_dir() else {
                 "declared_files": [], "additional_install": "UNKNOWN", "platform_runtime": "UNKNOWN", "platform_verified": False,
             }
-            license_gate = _license_dependency_gate(source, item["type"]) if source.is_dir() else {
+            license_gate = _license_dependency_gate(source, item["type"], item.get("license_policy")) if source.is_dir() else {
                 "status": "BLOCKED", "reason": "source is absent; license/dependency review cannot run",
             }
         except (ValueError, OSError, KeyError) as exc:
@@ -754,7 +806,7 @@ def _render_upload_report(products: list[dict]) -> str:
         standalone = ("可单独上传试传；运行未验证" if product["upload_status"] in {"CAN_ENTER_PLATFORM_TRIAL", "SUBMITTED_REVIEW"}
                       else "不可单独上传运行" if product["upload_status"] == "MISSING"
                       else "不可宣称独立运行")
-        lines += [f"### {product['name']}（`{product['id']}`）", "", f"- 版本：`{product['version']}`", f"- ZIP：`{product['zip_path'] or 'MISSING'}`", f"- 文件存在：`{product['exists']}`；大小：`{product['size'] if product['size'] is not None else 'MISSING'}` bytes", f"- SHA-256：`{product['sha256']}`（登记值匹配：`{product['sha256_match']}`）", f"- ZIP 完整性：`{product['zip_integrity']}`", f"- 当前发布门禁：`{product['release_gate']}`；上传状态：`{product['upload_status']}`", f"- 许可证状态：`{product['license_and_dependencies']['status']}`；许可证说明：{product['license_and_dependencies']['reason']}", f"- 额外安装依赖：`{product['dependencies']['additional_install']}`；平台运行时：`{product['dependencies']['platform_runtime']}`；平台验证：`{product['dependencies']['platform_verified']}`", f"- 是否可单独上传运行：`{standalone}`（{product['block_reason']}）", "- ZIP 内部文件："]
+        lines += [f"### {product['name']}（`{product['id']}`）", "", f"- 版本：`{product['version']}`", f"- ZIP：`{product['zip_path'] or 'MISSING'}`", f"- 文件存在：`{product['exists']}`；大小：`{product['size'] if product['size'] is not None else 'MISSING'}` bytes", f"- SHA-256：`{product['sha256']}`（登记值匹配：`{product['sha256_match']}`）", f"- ZIP 完整性：`{product['zip_integrity']}`", f"- 当前发布门禁：`{product['release_gate']}`；上传状态：`{product['upload_status']}`", f"- 许可证模型：`{product['license_and_dependencies'].get('type', 'UNKNOWN')}`；许可证状态：`{product['license_and_dependencies']['status']}`；许可证说明：{product['license_and_dependencies']['reason']}", f"- 额外安装依赖：`{product['dependencies']['additional_install']}`；平台运行时：`{product['dependencies']['platform_runtime']}`；平台验证：`{product['dependencies']['platform_verified']}`", f"- 是否可单独上传运行：`{standalone}`（{product['block_reason']}）", "- ZIP 内部文件："]
         if product["members"]:
             lines.extend(f"  - `{member}`" for member in product["members"])
         else:
@@ -763,9 +815,10 @@ def _render_upload_report(products: list[dict]) -> str:
     lines += [
         "## 本轮许可证审查",
         "",
-        "- 所有权证据：四个产品的源码提交和 manifest 作者字段指向 `wangbin` 或 `Wangbin Research`；这支持仓库内原创性判断，但不等同于本人对外授权意图的法律确认。",
+        "- 所有权证据：四个产品的源码提交和 manifest 作者字段指向 `wangbin` 或 `Wangbin Research`；用户已明确选择保留版权，但该技术证据不单独证明雇佣或共同作者等完整法律权属。",
         "- 第三方代码与依赖：四个 Skill ZIP 内脚本只导入 Python 标准库，未发现第三方源码、付费 API 或独立运行依赖声明；WorkBuddy 是否提供 Python 运行时仍为 `UNKNOWN`。",
-        "- 许可证：四个 0.1.1 候选均包含独立 MIT LICENSE，版权主体候选为 `wangbin`；授权意图和权利归属仍需本人确认，因此许可证门禁为 `REQUIRES_MANUAL_REVIEW`，不能标记为已授权发布。",
+        "- 授权选择：用户明确决定四个经营分析 Skill 保留版权、不采用 MIT；新候选各自包含独立私有版权声明，历史 0.1.1 MIT 候选不得上传。",
+        "- 权利与协议：仓库内原创性及标准库依赖审查未发现实质性问题；平台有效主协议及资产分发授权条款尚需人工核实。`PROPRIETARY` 不等于平台许可或发布通过；详见 `reports/workbuddy-proprietary-license-review.md`。",
         "- 内容与数据：示例 CSV/JSON 均为 fictional 示例；本轮审查未发现客户、企业或个人敏感数据，也未发现需要保留的第三方版权声明。",
         "",
         "## 证据边界",

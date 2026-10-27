@@ -108,9 +108,18 @@
       ]
     },
     {
-      "active_version": "0.1.1",
+      "active_version": "0.1.2",
       "development": "Local CSV matrix: 6 passed; WorkBuddy runtime unverified",
       "id": "wangbin-receivable-analyzer",
+      "license_policy": {
+        "decision": "USER_CONFIRMED",
+        "dependency_review": "PASS",
+        "dependency_review_evidence": "reports/workbuddy-proprietary-license-review.md",
+        "platform_agreement": "NOT_VERIFIED",
+        "rights_review": "PASS",
+        "rights_review_evidence": "reports/workbuddy-proprietary-license-review.md",
+        "type": "PROPRIETARY"
+      },
       "maintenance": "UNKNOWN",
       "name": "应收账款逾期分析",
       "published_at": "UNKNOWN",
@@ -140,6 +149,15 @@
           "sha256": "1fc44aa4f7d8790ab6b3856977d04abd8906f72fb25587c108fb94f60cd7792e",
           "source": "packages/skills/wangbin-receivable-analyzer",
           "version": "0.1.1"
+        },
+        {
+          "archive_evidence": "dist/wangbin-receivable-analyzer-0.1.2-skill-candidate.zip",
+          "candidate": "dist/wangbin-receivable-analyzer-0.1.2-skill-candidate.zip",
+          "date": "2026-10-27",
+          "published_at": "UNKNOWN",
+          "sha256": "3165ecc4d2ce435ac3ed263dc52d4585a89ac46c5b66324b995878d5a26e897f",
+          "source": "packages/skills/wangbin-receivable-analyzer",
+          "version": "0.1.2"
         }
       ]
     },
@@ -170,9 +188,18 @@
       ]
     },
     {
-      "active_version": "0.1.1",
+      "active_version": "0.1.2",
       "development": "Local CSV matrix: 7 passed, 1 skipped (symlink capability); WorkBuddy runtime unverified",
       "id": "wangbin-inventory-analyzer",
+      "license_policy": {
+        "decision": "USER_CONFIRMED",
+        "dependency_review": "PASS",
+        "dependency_review_evidence": "reports/workbuddy-proprietary-license-review.md",
+        "platform_agreement": "NOT_VERIFIED",
+        "rights_review": "PASS",
+        "rights_review_evidence": "reports/workbuddy-proprietary-license-review.md",
+        "type": "PROPRIETARY"
+      },
       "maintenance": "UNKNOWN",
       "name": "库存呆滞分析",
       "published_at": "UNKNOWN",
@@ -202,6 +229,15 @@
           "sha256": "1cdd808458ae57780e9b8cad77e26eb784683e3e6772efce1a0980d34ecbe686",
           "source": "packages/skills/wangbin-inventory-analyzer",
           "version": "0.1.1"
+        },
+        {
+          "archive_evidence": "dist/wangbin-inventory-analyzer-0.1.2-skill-candidate.zip",
+          "candidate": "dist/wangbin-inventory-analyzer-0.1.2-skill-candidate.zip",
+          "date": "2026-10-27",
+          "published_at": "UNKNOWN",
+          "sha256": "f2e720d7c544bb4a4d24aa4f01c21a58826965a67f3195c5e8d9020caaeee62c",
+          "source": "packages/skills/wangbin-inventory-analyzer",
+          "version": "0.1.2"
         }
       ]
     },
@@ -232,9 +268,18 @@
       ]
     },
     {
-      "active_version": "0.1.1",
+      "active_version": "0.1.2",
       "development": "Local CSV matrix: 9 passed; WorkBuddy runtime unverified",
       "id": "wangbin-purchase-analyzer",
+      "license_policy": {
+        "decision": "USER_CONFIRMED",
+        "dependency_review": "PASS",
+        "dependency_review_evidence": "reports/workbuddy-proprietary-license-review.md",
+        "platform_agreement": "NOT_VERIFIED",
+        "rights_review": "PASS",
+        "rights_review_evidence": "reports/workbuddy-proprietary-license-review.md",
+        "type": "PROPRIETARY"
+      },
       "maintenance": "UNKNOWN",
       "name": "采购价格分析",
       "published_at": "UNKNOWN",
@@ -264,13 +309,31 @@
           "sha256": "673f076b51d760c3eaf8d6ad9c30e254846c60a4a23705d297635023e88814e5",
           "source": "packages/skills/wangbin-purchase-analyzer",
           "version": "0.1.1"
+        },
+        {
+          "archive_evidence": "dist/wangbin-purchase-analyzer-0.1.2-skill-candidate.zip",
+          "candidate": "dist/wangbin-purchase-analyzer-0.1.2-skill-candidate.zip",
+          "date": "2026-10-27",
+          "published_at": "UNKNOWN",
+          "sha256": "1e0de940a4198a3ea92d86b7fd0a84b999620247e43e74dd76315b4e75621dd4",
+          "source": "packages/skills/wangbin-purchase-analyzer",
+          "version": "0.1.2"
         }
       ]
     },
     {
-      "active_version": "0.1.1",
+      "active_version": "0.1.2",
       "development": "Local CSV matrix: 8 passed; WorkBuddy runtime unverified",
       "id": "wangbin-sales-analyzer",
+      "license_policy": {
+        "decision": "USER_CONFIRMED",
+        "dependency_review": "PASS",
+        "dependency_review_evidence": "reports/workbuddy-proprietary-license-review.md",
+        "platform_agreement": "NOT_VERIFIED",
+        "rights_review": "PASS",
+        "rights_review_evidence": "reports/workbuddy-proprietary-license-review.md",
+        "type": "PROPRIETARY"
+      },
       "maintenance": "UNKNOWN",
       "name": "销售数据分析",
       "published_at": "UNKNOWN",
@@ -300,6 +363,15 @@
           "sha256": "52c7ee38efe9d46a87ebd89d3f9fd13060d16bebd1ca6e6c480d53ebe883c40d",
           "source": "packages/skills/wangbin-sales-analyzer",
           "version": "0.1.1"
+        },
+        {
+          "archive_evidence": "dist/wangbin-sales-analyzer-0.1.2-skill-candidate.zip",
+          "candidate": "dist/wangbin-sales-analyzer-0.1.2-skill-candidate.zip",
+          "date": "2026-10-27",
+          "published_at": "UNKNOWN",
+          "sha256": "34378ecb2159f8562f71b5c89074e449556c72f74f814e5fc37291f3107f1425",
+          "source": "packages/skills/wangbin-sales-analyzer",
+          "version": "0.1.2"
         }
       ]
     }

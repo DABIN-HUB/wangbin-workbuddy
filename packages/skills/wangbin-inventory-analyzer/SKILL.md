@@ -9,9 +9,9 @@ examples_zh:
   - 请用 2026-02-28 作为 as-of 分析这些库存 CSV。
 examples_en:
   - Analyze these inventory CSV files as of 2026-02-28.
-version: 0.1.1
+version: 0.1.2
 author: Wangbin Research
-license_candidate: MIT
+license_type: PROPRIETARY
 license_status: REQUIRES_MANUAL_REVIEW
 ---
 
@@ -48,4 +48,4 @@ python scripts/analyze_inventory.py \
 
 缺列或空文件是明确的输入错误；错误类型、非法日期、负值、零发料、重复快照/交易 ID、疑似公式单元格会进入 `invalid_rows` 并排除对应行。超过 `as-of` 的合法行计入 `out_of_range_rows`。结果只保留文件名，不输出绝对路径或原始单元格；拒绝符号链接、非 UTF-8 和超过 1 MiB 文件。
 
-输出包含 `inventory`、`inventory_value`、`no_movement_candidates`、`slow_moving_candidates`、`overstock_candidates`、`anomaly_candidates`、`invalid_rows`、`assumptions` 和 `anomaly_rules`。数量、金额和比率以字符串输出，确保 JSON 确定性和 Decimal 精度。Excel/XLSX、PDF、汇率换算及平台运行时验证不在 0.1.0 范围内。
+输出包含 `inventory`、`inventory_value`、`no_movement_candidates`、`slow_moving_candidates`、`overstock_candidates`、`anomaly_candidates`、`invalid_rows`、`assumptions` 和 `anomaly_rules`。数量、金额和比率以字符串输出，确保 JSON 确定性和 Decimal 精度。Excel/XLSX、PDF、汇率换算及平台运行时验证不在本版本范围内。
