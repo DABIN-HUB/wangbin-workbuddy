@@ -9,7 +9,7 @@ examples_zh:
   - 请分析这个 UTF-8 采购 CSV 在 2026-01-01 至 2026-02-28 的价格变化。
 examples_en:
   - Analyze this UTF-8 purchase CSV from 2026-01-01 through 2026-02-28.
-version: 0.1.2
+version: 0.1.3
 author: Wangbin Research
 license_type: PROPRIETARY
 license_status: REQUIRES_MANUAL_REVIEW
@@ -30,11 +30,12 @@ CSV 必须包含以下列：`order_id, material, supplier, order_date, quantity,
 
 ## 计算边界
 
-- 可比组严格要求 `material + specification + unit + currency + tax_treatment` 五项完全一致。供应商不是可比键，因此同一组可计算不同供应商之间的价格变化和报价价差。
+- 可比组严格要求 `material + specification + unit + currency + tax_treatment` 五项完全一致；缺少或不同规格、单位、币种、税务处理的记录不直接比较。比较期间为命令行给出的起止日期。
 - 采购总额按 `quantity × unit_price` 计算，并按币种分别汇总；绝不跨币种相加。
 - 供应商集中度按币种统计供应商金额占比和 HHI，不把不同币种合并。
 - 同周期趋势将选定日期范围的首尾等长半区间比较；奇数天的中间日期不纳入趋势比较。JSON 中明确列出两个半区间。
-- 报价相邻变动和同一可比组最高/最低报价价差达到 20% 时，输出 `anomaly_candidates`。这只是带阈值和证据订单号的候选，不是舞弊或最终结论。
+- 同一供应商的相邻报价变动写入 `comparable_price_changes.changes`，标记 `comparison_scope=SAME_SUPPLIER`；同一可比组只有至少两个供应商时，才输出 `supplier_quote_spread` 和跨供应商异常候选，标记 `comparison_scope=CROSS_SUPPLIER`。不满足跨供应商条件时不输出节约结论。
+- 价格异常是带阈值、比较期间和订单证据的观察结果/建议调查线索，不是舞弊、节约金额或最终结论。
 - 同一 `material` 但规格、单位、币种或税务处理不同的组输出 `NOT_COMPARABLE`；这些差异不会生成异常候选，也不会被当作价格变化。
 
 ## 校验和隐私

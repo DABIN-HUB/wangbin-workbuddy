@@ -188,3 +188,15 @@ def test_required_skill_files_exist() -> None:
     assert SCRIPT.parent.parent.joinpath("manifest.json").is_file()
     assert EXAMPLE_INPUT.is_file()
     assert EXPECTED_OUTPUT.is_file()
+
+
+def test_market_copy_matches_implemented_sales_boundary() -> None:
+    skill_copy = (SCRIPT.parent.parent / "SKILL.md").read_text(encoding="utf-8")
+    market_copy = (ROOT / "docs" / "financial-skills-market-copy.zh-CN.md").read_text(encoding="utf-8")
+    market_copy_en = (ROOT / "docs" / "financial-skills-market-copy.en-US.md").read_text(encoding="utf-8")
+    for text in (skill_copy, market_copy, market_copy_en):
+        assert "customer/product" not in text.lower() or "not" in text.lower() or "不" in text
+        assert "profit" not in text.lower() or "not" in text.lower() or "不" in text
+    assert "客户或产品的新增、流失、组合迁移和跨期结构异常尚未实现" in skill_copy
+    assert "客户/产品跨期结构异常检测" in skill_copy
+    assert "cross-period structural anomaly detection are not implemented" in market_copy_en.lower()

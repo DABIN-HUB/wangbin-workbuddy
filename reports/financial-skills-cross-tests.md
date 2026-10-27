@@ -1,4 +1,6 @@
-# 四个经营分析 Skill 真实交叉测试记录
+# 四个经营分析 Skill 交叉测试
+
+> 历史测试快照：本文件记录整改前缺口；Phase 9 的专项与全仓回归结果见 `reports/financial-skills-phase9-release-candidate.md`。
 
 日期：2026-10-27
 数据：仓库内四组 fictional UTF-8 CSV；未使用真实客户、供应商或财务数据。

@@ -290,7 +290,7 @@ def _sum_decimal(values: Iterable[Decimal]) -> Decimal:
     return result
 
 
-def _calculate(balances: list[dict[str, Any]], receipts: list[dict[str, Any]], issues: list[dict[str, Any]], masters: dict[str, dict[str, Any]], as_of: date, source_names: dict[str, str], invalid: list[dict[str, Any]], counts: dict[str, int], out_of_range: int, duplicate_ids: list[str]) -> dict[str, Any]:
+def _calculate(balances: list[dict[str, Any]], receipts: list[dict[str, Any]], issues: list[dict[str, Any]], masters: dict[str, dict[str, Any]], as_of: date, source_names: dict[str, str], invalid: list[dict[str, Any]], counts: dict[str, int], out_of_range: int, duplicate_ids: list[str], issues_input_rows: int) -> dict[str, Any]:
     balance_groups: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
     for item in balances:
         balance_groups[_key(item)].append(item)
@@ -303,6 +303,9 @@ def _calculate(balances: list[dict[str, Any]], receipts: list[dict[str, Any]], i
     overstock: list[dict[str, Any]] = []
     anomalies: list[dict[str, Any]] = []
     value_by_currency: dict[str, dict[str, Decimal]] = defaultdict(lambda: {"value": Decimal("0"), "quantity": Decimal("0")})
+    issues_by_key: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
+    for item in issues:
+        issues_by_key[_key(item)].append(item)
 
     for key in sorted(balance_groups):
         item_id, warehouse, currency = key
@@ -311,13 +314,32 @@ def _calculate(balances: list[dict[str, Any]], receipts: list[dict[str, Any]], i
         prior = [snapshot for snapshot in snapshots if snapshot["balance_date"] < ending["balance_date"]]
         beginning = prior[-1] if prior else None
         start_date = beginning["balance_date"] if beginning else ending["balance_date"]
-        item_receipts = [item for item in receipts if (item["item_id"], item["warehouse"], item["currency"]) == key and start_date < item["receipt_date"] <= as_of]
-        item_issues = [item for item in issues if (item["item_id"], item["warehouse"], item["currency"]) == key and start_date < item["issue_date"] <= as_of]
+        item_receipts = [item for item in receipts if (item["item_id"], item["warehouse"], item["currency"]) == key and start_date < item["receipt_date"] <= ending["balance_date"]]
+        item_issues = [item for item in issues if (item["item_id"], item["warehouse"], item["currency"]) == key and start_date < item["issue_date"] <= ending["balance_date"]]
         quantity = ending["quantity"]
         value = quantity * ending["unit_cost"]
         master = masters.get(item_id, {})
         average = (beginning["quantity"] + quantity) / Decimal("2") if beginning else None
-        turnover = _pct(_sum_decimal(item["quantity"] for item in item_issues), average) / Decimal("100") if average else None
+        period_complete = bool(beginning and beginning["balance_date"] < ending["balance_date"] and ending["balance_date"] == as_of)
+        if not period_complete:
+            issue_data_status = "INCOMPLETE_PERIOD"
+            turnover_status = "UNKNOWN_INCOMPLETE_PERIOD" if quantity != 0 else "NO_INVENTORY"
+        elif quantity == 0:
+            issue_data_status = "NOT_APPLICABLE_NO_INVENTORY"
+            turnover_status = "NO_INVENTORY"
+        elif item_issues:
+            issue_data_status = "NONZERO_ISSUE_IN_PERIOD"
+            turnover_status = "KNOWN"
+        elif not issues_input_rows:
+            issue_data_status = "NOT_PROVIDED"
+            turnover_status = "UNKNOWN_NO_ISSUE_DATA"
+        elif issues_by_key.get(key):
+            issue_data_status = "OBSERVED_ZERO"
+            turnover_status = "KNOWN_ZERO"
+        else:
+            issue_data_status = "NO_MATCHING_ITEM_DATA"
+            turnover_status = "UNKNOWN_NO_ISSUE_DATA"
+        turnover = _pct(_sum_decimal(item["quantity"] for item in item_issues), average) / Decimal("100") if turnover_status in {"KNOWN", "KNOWN_ZERO"} and average else None
         # Quantity turnover is outbound quantity divided by average quantity, not a percentage.
         turnover_text = _format_ratio(turnover)
         movement_count = len(item_receipts) + len(item_issues)
@@ -336,16 +358,18 @@ def _calculate(balances: list[dict[str, Any]], receipts: list[dict[str, Any]], i
             "receipt_quantity": _format_decimal(_sum_decimal(item["quantity"] for item in item_receipts)),
             "issue_quantity": _format_decimal(_sum_decimal(item["quantity"] for item in item_issues)),
             "movement_count": movement_count,
-            "quantity_turnover": turnover_text if beginning and item_issues else "UNKNOWN",
-            "turnover_status": "KNOWN" if beginning and item_issues else "UNKNOWN",
+            "quantity_turnover": turnover_text if turnover_status in {"KNOWN", "KNOWN_ZERO"} else "UNKNOWN",
+            "turnover_status": turnover_status,
+            "issue_data_status": issue_data_status,
+            "period_status": "COMPLETE" if period_complete else "INCOMPLETE",
         }
         inventory.append(record)
         value_by_currency[currency]["value"] += value
         value_by_currency[currency]["quantity"] += quantity
 
-        if movement_count == 0:
+        if period_complete and quantity != 0 and turnover_status == "KNOWN_ZERO" and movement_count == 0:
             no_movement.append({"item_id": item_id, "warehouse": warehouse, "currency": currency, "as_of": as_of.isoformat(), "reason": "在可观察区间内没有有效收货或发料记录；候选需业务核实。"})
-        if turnover is not None and turnover <= SLOW_TURNOVER_MAX:
+        if turnover_status in {"KNOWN", "KNOWN_ZERO"} and turnover is not None and quantity != 0 and turnover <= SLOW_TURNOVER_MAX:
             slow_moving.append({"item_id": item_id, "warehouse": warehouse, "currency": currency, "quantity_turnover": _format_ratio(turnover), "threshold": _format_decimal(SLOW_TURNOVER_MAX), "reason": "数量周转率不高于 1；仅为慢动候选。"})
         max_stock = master.get("max_stock")
         if max_stock is not None and quantity > max_stock:
@@ -355,7 +379,7 @@ def _calculate(balances: list[dict[str, Any]], receipts: list[dict[str, Any]], i
             if days_supply > OVERSTOCK_DAYS:
                 overstock.append({"item_id": item_id, "warehouse": warehouse, "currency": currency, "quantity": _format_decimal(quantity), "days_supply": _format_decimal(days_supply), "reason": "按观察期发料量折算的库存覆盖天数超过 90 天；仅为超储候选。"})
 
-        if beginning and beginning["balance_date"] < as_of and ending["balance_date"] <= as_of:
+        if period_complete:
             expected = beginning["quantity"] + _sum_decimal(item["quantity"] for item in item_receipts) - _sum_decimal(item["quantity"] for item in item_issues)
             if expected != quantity:
                 anomalies.append({"type": "BALANCE_MISMATCH", "item_id": item_id, "warehouse": warehouse, "currency": currency, "beginning_quantity": _format_decimal(beginning["quantity"]), "receipts": _format_decimal(_sum_decimal(item["quantity"] for item in item_receipts)), "issues": _format_decimal(_sum_decimal(item["quantity"] for item in item_issues)), "ending_quantity": _format_decimal(quantity), "expected_ending_quantity": _format_decimal(expected), "reason": "期初数量 + 收货 - 发料与期末快照不一致；需核对盘点、损耗和未入账移动。"})
@@ -376,16 +400,17 @@ def _calculate(balances: list[dict[str, Any]], receipts: list[dict[str, Any]], i
         "invalid_rows": invalid,
         "assumptions": [
             "balances 是授权库存快照；每个 item_id + warehouse + currency 取 as-of 前最近快照作为期末库存和估值。",
-            "数量周转率 = 观察区间发料数量 / ((期初快照数量 + 期末快照数量) / 2)；必须同时有不同日期的期初、期末快照和有效发料记录，否则为 UNKNOWN。",
-            "收货和发料按日期纳入期初快照之后至 as-of 的区间；快照不等同于完整盘点证据。",
-            "无移动、慢动和超储均是候选；主数据 max_stock 优先，缺少主数据时不臆测安全库存。",
+            "数量周转率 = 完整统计期间发料数量 / ((期初快照数量 + 期末快照数量) / 2)；缺少期初快照、期末快照不在 as-of 或没有出库数据时保持 UNKNOWN。",
+            "已知统计期间内没有出库记录且出库文件对该物料有可观察记录时，quantity_turnover=0、turnover_status=KNOWN_ZERO；没有提供出库数据时绝不以 0 代替 UNKNOWN。",
+            "无移动和慢动候选只使用 COMPLETE 且周转证据已知的期间；无库存或跨期/缺少完整快照时不生成这两类候选。",
+            "主数据 max_stock 优先，缺少主数据时不臆测安全库存。",
         ],
         "anomaly_rules": [
             "BALANCE_MISMATCH：期初 + 收货 - 发料不等于期末快照。",
             "DUPLICATE_ID、INVALID_DATE、INVALID_DECIMAL、NEGATIVE_VALUE、FORMULA_CELL_UNSAFE 等输入异常只排除对应行，不回显原始单元格。",
         ],
         "privacy": {"execution_scope": "local_script_only", "remote_upload": False, "absolute_path_disclosed": False, "raw_input_disclosed": False},
-        "limitations": ["仅接受 UTF-8 CSV；Excel/XLSX、PDF 和隐式文件发现不在 0.1.0 范围内。", "币种分别汇总，不进行汇率换算；异常和候选不是审计结论。"],
+        "limitations": ["仅接受 UTF-8 CSV；Excel/XLSX、PDF 和隐式文件发现不在 0.1.0 范围内。", "币种分别汇总，不进行汇率换算；异常和候选不是审计结论。", "issues 文件只有表头时表示没有提供出库数据；仅凭空文件不能证明统计期间内出库量为零。"],
     }
 
 
@@ -435,7 +460,7 @@ def analyze_csv(balances_path: str | Path, receipts_path: str | Path, issues_pat
     counts = {"balances_read": len(raw_sources["balances"][0]), "receipts_read": len(raw_sources["receipts"][0]), "issues_read": len(raw_sources["issues"][0]), "valid_balances": len(parsed["balances"]), "valid_receipts": len(parsed["receipts"]), "valid_issues": len(parsed["issues"])}
     if master_path is not None:
         counts["master_read"] = master_count
-    return _calculate(parsed["balances"], parsed["receipts"], parsed["issues"], masters, as_of_value, source_names, invalid, counts, out_of_range, sorted(set(duplicate_ids)))
+    return _calculate(parsed["balances"], parsed["receipts"], parsed["issues"], masters, as_of_value, source_names, invalid, counts, out_of_range, sorted(set(duplicate_ids)), len(raw_sources["issues"][0]))
 
 
 def _build_parser() -> argparse.ArgumentParser:

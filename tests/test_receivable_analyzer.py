@@ -39,6 +39,9 @@ def test_amounts_aging_customer_priority_and_decimal_precision(tmp_path: Path) -
     assert data["aging"]["USD"]["91+"]["amount"] == "2.00"
     assert data["customers"]["CNY"][0]["customer_id"] == "c1"
     assert data["customers"]["CNY"][0]["priority"] in {"HIGH", "MEDIUM", "REVIEW"}
+    assert data["priority_scope"] == "CUSTOMER_LEVEL"
+    assert data["customers"]["CNY"][0]["priority_scope"] == "CUSTOMER"
+    assert "invoice-by-invoice" in data["priority_basis"]
     assert data["valid_rows"] == 4
     assert data["issues"] == []
     assert run(path).stdout == result.stdout
@@ -71,6 +74,24 @@ def test_duplicate_invalid_date_negative_missing_and_formula_are_excluded(tmp_pa
     assert all("row" in issue and "code" in issue for issue in data["issues"])
     assert "999" not in result.stdout and "c6" not in result.stdout
     assert str(tmp_path) not in result.stdout + result.stderr
+
+
+def test_customer_priority_aggregates_overdue_invoices_but_excludes_current_and_negative(tmp_path: Path) -> None:
+    path = csv_file(tmp_path, HEADER + "late-a,c1,2026-09-01,10.00,CNY\n"
+                    "late-b,c1,2026-08-01,20.00,CNY\n"
+                    "current,c1,2026-10-27,99.00,CNY\n"
+                    "negative,c1,2026-08-01,-5.00,CNY\n")
+    result = run(path)
+    assert result.returncode == 0, result.stderr
+    data = json.loads(result.stdout)
+    customer = data["customers"]["CNY"][0]
+    assert customer["customer_id"] == "c1"
+    assert customer["overdue"] == "30.00"
+    assert customer["invoices"] == 2
+    assert customer["priority_scope"] == "CUSTOMER"
+    assert data["totals"]["CNY"] == {"open": "129.00", "overdue": "30.00"}
+    assert any(issue["code"] == "INVALID_AMOUNT" for issue in data["issues"])
+    assert "negative" not in result.stdout
 
 
 def test_header_only_large_input_symlink_and_non_utf8(tmp_path: Path) -> None:

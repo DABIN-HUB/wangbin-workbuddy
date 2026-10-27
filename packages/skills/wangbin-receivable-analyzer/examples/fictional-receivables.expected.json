@@ -47,7 +47,8 @@
         "max_days_overdue": 45,
         "overdue": "1288.30",
         "priority": "MEDIUM",
-        "recommendation": "Human review of invoice, contract and payment record before any collection action"
+        "priority_scope": "CUSTOMER",
+        "recommendation": "Customer-level review candidate; inspect individual invoices, contract and payment record before any collection action"
       }
     ],
     "USD": [
@@ -57,7 +58,8 @@
         "max_days_overdue": 118,
         "overdue": "14.05",
         "priority": "HIGH",
-        "recommendation": "Human review of invoice, contract and payment record before any collection action"
+        "priority_scope": "CUSTOMER",
+        "recommendation": "Customer-level review candidate; inspect individual invoices, contract and payment record before any collection action"
       }
     ]
   },
@@ -76,6 +78,8 @@
     "Missing invoices or payment records cannot be inferred from this file."
   ],
   "platform": "NOT_TESTED",
+  "priority_basis": "Customers are ranked by same-currency overdue balance, then customer ID; this is a customer-level review candidate and not an invoice-by-invoice collection plan.",
+  "priority_scope": "CUSTOMER_LEVEL",
   "rejected_rows": 2,
   "totals": {
     "CNY": {

@@ -1,5 +1,7 @@
 # 四个经营分析 Skill 发布建议与最终验收
 
+> 历史报告：本文记录 `0.1.2` 候选整改前状态，不代表 Phase 9 的当前候选结论。当前状态见 `reports/financial-skills-phase9-release-candidate.md` 和 `reports/workbuddy-upload-list.md`。
+
 日期：2026-10-27
 候选版本：四个均为 `0.1.2`。
 审计基线：`b2dd61354665ec80e4afe8598eadc9ab755883e1`。

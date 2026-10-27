@@ -3,10 +3,12 @@
     {
       "change_pct": "200",
       "currency": "CNY",
-      "explanation": "同一物料、规格、单位、币种及税务处理组内的相邻报价变动达到20%阈值；仅为候选，需业务复核。",
+      "evidence_status": "OBSERVATION_REQUIRES_REVIEW",
+      "explanation": "同一物料、规格、单位、币种及税务处理下同一供应商的相邻报价变动达到20%阈值；这是观察结果和建议调查线索，不是舞弊结论。",
       "from_order_id": "O6",
       "material": "Bolt",
       "specification": "M3",
+      "supplier": "Supplier-A",
       "tax_treatment": "EX",
       "threshold_pct": "20",
       "to_order_id": "O7",
@@ -14,39 +16,20 @@
       "unit": "pcs"
     },
     {
-      "change_pct": "20",
+      "comparison_period": {
+        "end": "2026-02-28",
+        "start": "2026-01-01"
+      },
+      "comparison_scope": "CROSS_SUPPLIER",
       "currency": "CNY",
-      "explanation": "同一物料、规格、单位、币种及税务处理组内的相邻报价变动达到20%阈值；仅为候选，需业务复核。",
-      "from_order_id": "O1",
-      "material": "Steel",
-      "specification": "304",
-      "tax_treatment": "EX",
-      "threshold_pct": "20",
-      "to_order_id": "O2",
-      "type": "PRICE_CHANGE",
-      "unit": "kg"
-    },
-    {
-      "currency": "CNY",
-      "explanation": "同一可比组内供应商报价最高与最低价差达到20%阈值；不跨币种、单位、规格或税务处理判定。",
-      "material": "Bolt",
-      "max_order_id": "O7",
-      "min_order_id": "O6",
-      "specification": "M3",
-      "spread_pct": "200",
-      "tax_treatment": "EX",
-      "threshold_pct": "20",
-      "type": "SUPPLIER_QUOTE_SPREAD",
-      "unit": "pcs"
-    },
-    {
-      "currency": "CNY",
-      "explanation": "同一可比组内供应商报价最高与最低价差达到20%阈值；不跨币种、单位、规格或税务处理判定。",
+      "evidence_status": "OBSERVATION_REQUIRES_REVIEW",
+      "explanation": "同一物料、规格、单位、币种及税务处理、同一比较期间内不同供应商报价最高与最低价差达到20%阈值；这是观察结果和建议调查线索，不是已确认节约金额。",
       "material": "Steel",
       "max_order_id": "O2",
       "min_order_id": "O1",
       "specification": "304",
       "spread_pct": "20",
+      "supplier_count": 3,
       "tax_treatment": "EX",
       "threshold_pct": "20",
       "type": "SUPPLIER_QUOTE_SPREAD",
@@ -59,9 +42,11 @@
         {
           "change_absolute": "0.2",
           "change_pct": "200",
+          "comparison_scope": "SAME_SUPPLIER",
           "from_date": "2026-01-10",
           "from_order_id": "O6",
           "from_price": "0.1",
+          "supplier": "Supplier-A",
           "to_date": "2026-02-10",
           "to_order_id": "O7",
           "to_price": "0.3"
@@ -88,28 +73,7 @@
       "unit": "pcs"
     },
     {
-      "changes": [
-        {
-          "change_absolute": "2",
-          "change_pct": "20",
-          "from_date": "2026-01-01",
-          "from_order_id": "O1",
-          "from_price": "10",
-          "to_date": "2026-01-15",
-          "to_order_id": "O2",
-          "to_price": "12"
-        },
-        {
-          "change_absolute": "-1",
-          "change_pct": "-8.333333333333333333333333333",
-          "from_date": "2026-01-15",
-          "from_order_id": "O2",
-          "from_price": "12",
-          "to_date": "2026-02-01",
-          "to_order_id": "O3",
-          "to_price": "11"
-        }
-      ],
+      "changes": [],
       "currency": "CNY",
       "material": "Steel",
       "observations": [
@@ -248,7 +212,8 @@
   "invalid_rows": [],
   "limitations": [
     "Excel/XLSX 未启用；请先导出为 UTF-8 CSV。",
-    "异常仅是可解释候选，不代表舞弊或最终结论。"
+    "同一供应商多次报价属于 SAME_SUPPLIER 价格波动；supplier_quote_spread 只有至少两个供应商且五项可比键一致时才输出，不满足条件时不产生跨供应商节约结论。",
+    "异常仅是可解释的观察结果和建议调查线索，不代表舞弊、节约金额或最终结论。"
   ],
   "privacy": {
     "absolute_path_disclosed": false,
@@ -370,27 +335,11 @@
   ],
   "supplier_quote_spread": [
     {
-      "currency": "CNY",
-      "material": "Bolt",
-      "max_quote": {
-        "order_date": "2026-02-10",
-        "order_id": "O7",
-        "supplier": "Supplier-A",
-        "unit_price": "0.3"
+      "comparison_period": {
+        "end": "2026-02-28",
+        "start": "2026-01-01"
       },
-      "min_quote": {
-        "order_date": "2026-01-10",
-        "order_id": "O6",
-        "supplier": "Supplier-A",
-        "unit_price": "0.1"
-      },
-      "specification": "M3",
-      "spread": "0.2",
-      "spread_pct": "200",
-      "tax_treatment": "EX",
-      "unit": "pcs"
-    },
-    {
+      "comparison_scope": "CROSS_SUPPLIER",
       "currency": "CNY",
       "material": "Steel",
       "max_quote": {
@@ -408,6 +357,7 @@
       "specification": "304",
       "spread": "2",
       "spread_pct": "20",
+      "supplier_count": 3,
       "tax_treatment": "EX",
       "unit": "kg"
     }

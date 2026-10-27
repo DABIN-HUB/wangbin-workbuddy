@@ -9,7 +9,7 @@ examples_zh:
 - 按明确基准日核对本地应收账款明细中的逾期发票
 examples_en:
 - Analyze the explicitly selected local receivables CSV at a given as-of date
-version: 0.1.2
+version: 0.1.3
 author: wangbin
 license_type: PROPRIETARY
 license_status: REQUIRES_MANUAL_REVIEW
@@ -34,7 +34,7 @@ python packages/skills/wangbin-receivable-analyzer/scripts/analyze_receivables.p
 
 - 对每种币种独立计算 `totals.open`（有效行未结总额）和 `totals.overdue`（到期日严格早于基准日、余额大于零），绝不跨币种相加或换汇；金额用 `Decimal` 保留两位。
 - `aging` 以逾期日历天数分 `1-30`、`31-60`、`61-90`、`91+`，到期当日不逾期。每桶的金额及发票数只来自有效且逾期的行。
-- `customers` 按同币种逾期余额降序、客户 ID 稳定排序；超 90 天为高优先级核查，其余为中优先级，均是**人工核对建议**，不是自动催收、信用判断或法律建议。
+- `customers` 按同币种逾期余额降序、客户 ID 稳定排序；超 90 天为高优先级核查，其余为中优先级，输出明确标记 `priority_scope=CUSTOMER`。这是**客户级人工核对建议**，不是逐发票回款优先级、自动催收计划、信用判断或法律建议；若需逐发票安排，必须由人员结合付款记录和合同另行制定。
 - 重复 `invoice_id` 只保留首个出现的记录；缺字段、无效日期、非法币种、负数/非有限/超过两位小数的余额及公式样式内容均从统计排除，`issues` 仅列文本行号和固定错误码，不回显原行或本机路径。没有任何有效数据时返回非零码而非伪造零额结论。
 - 计算输出仅写标准输出，不主动上传或记录原始明细日志；**输出仍含客户 ID 和聚合金额**，必须由获授权人员妥善保管。生成的 CSV 不执行公式、宏或任何输入代码。
 

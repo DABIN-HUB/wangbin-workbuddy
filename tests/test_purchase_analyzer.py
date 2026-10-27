@@ -67,12 +67,18 @@ def test_normal_calculation_uses_same_comparable_group_and_decimal_totals(tmp_pa
         {"currency": "USD", "order_count": 1, "quantity": "1", "total": "99.99"},
     ]
     steel = next(item for item in result["comparable_price_changes"] if item["material"] == "Steel" and item["tax_treatment"] == "EX")
-    assert steel["changes"][0]["from_price"] == "10"
-    assert steel["changes"][0]["to_price"] == "12"
-    assert steel["changes"][0]["change_pct"] == "20"
+    assert steel["changes"] == []
     bolt = next(item for item in result["comparable_price_changes"] if item["material"] == "Bolt")
     assert bolt["changes"][0]["change_pct"] == "200"
+    assert bolt["changes"][0]["supplier"] == "Supplier-A"
+    assert bolt["changes"][0]["comparison_scope"] == "SAME_SUPPLIER"
     assert any(item["type"] == "PRICE_CHANGE" and item["material"] == "Bolt" for item in result["anomaly_candidates"])
+    assert any(item["type"] == "SUPPLIER_QUOTE_SPREAD" and item["material"] == "Steel" for item in result["anomaly_candidates"])
+    assert not any(item["type"] == "SUPPLIER_QUOTE_SPREAD" and item["material"] == "Bolt" for item in result["anomaly_candidates"])
+    steel_spread = next(item for item in result["supplier_quote_spread"] if item["material"] == "Steel" and item["tax_treatment"] == "EX")
+    assert steel_spread["comparison_scope"] == "CROSS_SUPPLIER"
+    assert steel_spread["supplier_count"] == 3
+    assert steel_spread["comparison_period"] == {"start": "2026-01-01", "end": "2026-02-28"}
     assert any(item["status"] == "NOT_COMPARABLE" and "tax_treatment" in item["different_fields"] for item in result["incompatible_group_differences"])
     assert not any(item["material"] == "Steel" and item["type"] == "PRICE_CHANGE" and item.get("order_id") == "O4" for item in result["anomaly_candidates"])
     trend = next(item for item in result["same_period_trend"] if item["currency"] == "CNY")
@@ -107,6 +113,23 @@ def test_missing_empty_and_wrong_type_rows_are_reported_without_crashing(tmp_pat
     assert result["summary"]["invalid_rows"] == 3
     assert {item["code"] for item in result["invalid_rows"]} == {"MISSING_FIELD", "INVALID_DECIMAL"}
     assert all("not-a-number" not in json.dumps(item, ensure_ascii=False) for item in result["invalid_rows"])
+
+
+def test_missing_unit_is_not_comparable_and_same_supplier_changes_are_not_spreads(tmp_path: Path) -> None:
+    analyzer = load_analyzer()
+    path = tmp_path / "comparison-boundaries.csv"
+    write_csv(path, [
+        row("S1", supplier="Supplier-A", unit_price="10", order_date="2026-01-01"),
+        row("S2", supplier="Supplier-A", unit_price="15", order_date="2026-01-15"),
+        row("MISSING-UNIT", supplier="Supplier-B", unit="", unit_price="12"),
+    ])
+    result = analyzer.analyze_csv(path, "2026-01-01", "2026-01-31")
+    group = next(item for item in result["comparable_price_changes"] if item["material"] == "Steel")
+    assert len(group["changes"]) == 1
+    assert group["changes"][0]["comparison_scope"] == "SAME_SUPPLIER"
+    assert result["supplier_quote_spread"] == []
+    assert result["summary"]["invalid_rows"] == 1
+    assert result["invalid_rows"][0]["code"] == "MISSING_FIELD"
 
 
 def test_duplicate_ids_invalid_dates_and_negative_values_are_excluded(tmp_path: Path) -> None:

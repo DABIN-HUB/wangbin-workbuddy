@@ -10,12 +10,12 @@
 | Document CLI Connector | Connector | 1.2.0 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-document-cli-1.2.0-connector-candidate.zip | be64b3b619382cbc74686fef6bd64a402f15f380487bde61e41620df66feb0e7 | SECURITY_BLOCKED; release_gate=BLOCKED | license file is absent; no license claim is verified |
 | Software Consultant | Expert | 1.0.0 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-software-consultant-1.0.0-expert-candidate.zip | 577f3089d2f4707178f44ba1e5c395a99853bb9558f3e8c0e752a0e6ba2e30de | SUBMITTED_REVIEW; release_gate=BLOCKED | submission is recorded, but platform approval is not verified |
 | 招标文件分析助手 | Skill | 0.1.0 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-tender-analyzer-0.1.0-skill-candidate.zip | 2e68809033301c97b02ec7c7fd59f7b477fcd2f1f86d515d69b5fc7b20146bc7 | SECURITY_BLOCKED; release_gate=BLOCKED | license file is absent; no license claim is verified |
-| 应收账款逾期分析 | Skill | 0.1.2 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-receivable-analyzer-0.1.2-skill-candidate.zip | 3165ecc4d2ce435ac3ed263dc52d4585a89ac46c5b66324b995878d5a26e897f | SECURITY_BLOCKED; release_gate=BLOCKED | license notice is present; account-effective agreement and distribution terms remain unverified |
+| 应收账款逾期分析 | Skill | 0.1.3 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-receivable-analyzer-0.1.3-skill-candidate.zip | d4177a8e5657061fd3630780cee88b07e3524c144e0c3bec8be0dfde2278e171 | SECURITY_BLOCKED; release_gate=BLOCKED | license notice is present; account-effective agreement and distribution terms remain unverified |
 | 软件需求变更影响分析 | Skill | 0.1.0 | MISSING | UNKNOWN | MISSING; release_gate=BLOCKED | candidate ZIP is not present |
-| 库存呆滞分析 | Skill | 0.1.2 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-inventory-analyzer-0.1.2-skill-candidate.zip | f2e720d7c544bb4a4d24aa4f01c21a58826965a67f3195c5e8d9020caaeee62c | SECURITY_BLOCKED; release_gate=BLOCKED | license notice is present; account-effective agreement and distribution terms remain unverified |
+| 库存呆滞分析 | Skill | 0.1.3 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-inventory-analyzer-0.1.3-skill-candidate.zip | b99e839de10e7bd8533b2387a99b38c48cdf9360f14919608b35ae8694be17a0 | SECURITY_BLOCKED; release_gate=BLOCKED | license notice is present; account-effective agreement and distribution terms remain unverified |
 | 垂直行业研究报告 | Skill | 0.1.0 | MISSING | UNKNOWN | MISSING; release_gate=BLOCKED | candidate ZIP is not present |
-| 采购价格分析 | Skill | 0.1.2 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-purchase-analyzer-0.1.2-skill-candidate.zip | 1e0de940a4198a3ea92d86b7fd0a84b999620247e43e74dd76315b4e75621dd4 | SECURITY_BLOCKED; release_gate=BLOCKED | license notice is present; account-effective agreement and distribution terms remain unverified |
-| 销售数据分析 | Skill | 0.1.2 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-sales-analyzer-0.1.2-skill-candidate.zip | 34378ecb2159f8562f71b5c89074e449556c72f74f814e5fc37291f3107f1425 | SECURITY_BLOCKED; release_gate=BLOCKED | license notice is present; account-effective agreement and distribution terms remain unverified |
+| 采购价格分析 | Skill | 0.1.3 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-purchase-analyzer-0.1.3-skill-candidate.zip | 37376d189e9b97847e2a6d9943c171ef1c05f225d93234680c54853e641630ec | SECURITY_BLOCKED; release_gate=BLOCKED | license notice is present; account-effective agreement and distribution terms remain unverified |
+| 销售数据分析 | Skill | 0.1.3 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-sales-analyzer-0.1.3-skill-candidate.zip | 60b3d66cb0a5f88d5499f1ab875cd579de951633e691f18f94b58bdd74af2d3d | SECURITY_BLOCKED; release_gate=BLOCKED | license notice is present; account-effective agreement and distribution terms remain unverified |
 
 ## 分类说明
 
@@ -30,10 +30,11 @@
 
 ### 应收账款逾期分析（`wangbin-receivable-analyzer`）
 
-- 版本：`0.1.2`
-- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-receivable-analyzer-0.1.2-skill-candidate.zip`
-- 文件存在：`True`；大小：`7470` bytes
-- SHA-256：`3165ecc4d2ce435ac3ed263dc52d4585a89ac46c5b66324b995878d5a26e897f`（登记值匹配：`PASS`）
+- 版本：`0.1.3`
+- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-receivable-analyzer-0.1.3-skill-candidate.zip`
+- 文件存在：`True`；大小：`7777` bytes
+- SHA-256：`d4177a8e5657061fd3630780cee88b07e3524c144e0c3bec8be0dfde2278e171`（登记值匹配：`PASS`）
+- ZIP 成员数量：`6`
 - ZIP 完整性：`PASS`
 - 当前发布门禁：`BLOCKED`；上传状态：`SECURITY_BLOCKED`
 - 许可证模型：`PROPRIETARY`；许可证状态：`REQUIRES_MANUAL_REVIEW`；许可证说明：license notice is present; account-effective agreement and distribution terms remain unverified
@@ -49,10 +50,11 @@
 
 ### 库存呆滞分析（`wangbin-inventory-analyzer`）
 
-- 版本：`0.1.2`
-- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-inventory-analyzer-0.1.2-skill-candidate.zip`
-- 文件存在：`True`；大小：`12535` bytes
-- SHA-256：`f2e720d7c544bb4a4d24aa4f01c21a58826965a67f3195c5e8d9020caaeee62c`（登记值匹配：`PASS`）
+- 版本：`0.1.3`
+- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-inventory-analyzer-0.1.3-skill-candidate.zip`
+- 文件存在：`True`；大小：`13281` bytes
+- SHA-256：`b99e839de10e7bd8533b2387a99b38c48cdf9360f14919608b35ae8694be17a0`（登记值匹配：`PASS`）
+- ZIP 成员数量：`9`
 - ZIP 完整性：`PASS`
 - 当前发布门禁：`BLOCKED`；上传状态：`SECURITY_BLOCKED`
 - 许可证模型：`PROPRIETARY`；许可证状态：`REQUIRES_MANUAL_REVIEW`；许可证说明：license notice is present; account-effective agreement and distribution terms remain unverified
@@ -71,10 +73,11 @@
 
 ### 采购价格分析（`wangbin-purchase-analyzer`）
 
-- 版本：`0.1.2`
-- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-purchase-analyzer-0.1.2-skill-candidate.zip`
-- 文件存在：`True`；大小：`11517` bytes
-- SHA-256：`1e0de940a4198a3ea92d86b7fd0a84b999620247e43e74dd76315b4e75621dd4`（登记值匹配：`PASS`）
+- 版本：`0.1.3`
+- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-purchase-analyzer-0.1.3-skill-candidate.zip`
+- 文件存在：`True`；大小：`12071` bytes
+- SHA-256：`37376d189e9b97847e2a6d9943c171ef1c05f225d93234680c54853e641630ec`（登记值匹配：`PASS`）
+- ZIP 成员数量：`6`
 - ZIP 完整性：`PASS`
 - 当前发布门禁：`BLOCKED`；上传状态：`SECURITY_BLOCKED`
 - 许可证模型：`PROPRIETARY`；许可证状态：`REQUIRES_MANUAL_REVIEW`；许可证说明：license notice is present; account-effective agreement and distribution terms remain unverified
@@ -90,10 +93,11 @@
 
 ### 销售数据分析（`wangbin-sales-analyzer`）
 
-- 版本：`0.1.2`
-- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-sales-analyzer-0.1.2-skill-candidate.zip`
-- 文件存在：`True`；大小：`9889` bytes
-- SHA-256：`34378ecb2159f8562f71b5c89074e449556c72f74f814e5fc37291f3107f1425`（登记值匹配：`PASS`）
+- 版本：`0.1.3`
+- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-sales-analyzer-0.1.3-skill-candidate.zip`
+- 文件存在：`True`；大小：`10033` bytes
+- SHA-256：`60b3d66cb0a5f88d5499f1ab875cd579de951633e691f18f94b58bdd74af2d3d`（登记值匹配：`PASS`）
+- ZIP 成员数量：`6`
 - ZIP 完整性：`PASS`
 - 当前发布门禁：`BLOCKED`；上传状态：`SECURITY_BLOCKED`
 - 许可证模型：`PROPRIETARY`；许可证状态：`REQUIRES_MANUAL_REVIEW`；许可证说明：license notice is present; account-effective agreement and distribution terms remain unverified

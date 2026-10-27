@@ -1,4 +1,6 @@
-# 四个经营分析 Skill 同质化代码与元数据审计
+# 四个经营分析 Skill 反同质化审计
+
+> 历史审计快照：其中的问题描述对应整改前版本；Phase 9 当前实现与文案证据见 `reports/financial-skills-phase9-release-candidate.md`。
 
 日期：2026-10-27
 仓库基线：`b2dd61354665ec80e4afe8598eadc9ab755883e1`

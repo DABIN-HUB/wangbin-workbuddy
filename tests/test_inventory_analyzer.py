@@ -99,7 +99,7 @@ def test_normal_balances_value_candidates_and_complete_turnover(tmp_path: Path) 
     item_a = next(item for item in result["inventory"] if item["item_id"] == "A")
     assert item_a["quantity"] == "90" and item_a["value"] == "225"
     assert item_a["quantity_turnover"] == "0.31578947"
-    assert any(item["item_id"] == "B" for item in result["no_movement_candidates"])
+    assert not any(item["item_id"] == "B" for item in result["no_movement_candidates"])
     assert any(item["item_id"] == "C" for item in result["overstock_candidates"])
     assert result["anomaly_candidates"] == []
 
@@ -109,9 +109,66 @@ def test_turnover_is_unknown_without_comparable_evidence_and_master_is_optional(
     paths = make_inputs(tmp_path, balances=[balance("A")], receipts=[], issues=[])
     result = analyzer.analyze_csv(paths["balances"], paths["receipts"], paths["issues"], "2026-01-31")
     assert result["inventory"][0]["quantity_turnover"] == "UNKNOWN"
-    assert result["inventory"][0]["turnover_status"] == "UNKNOWN"
+    assert result["inventory"][0]["turnover_status"] == "UNKNOWN_INCOMPLETE_PERIOD"
     assert result["overstock_candidates"] == []
     assert result["assumptions"]
+
+
+def test_missing_issue_data_is_not_treated_as_zero_turnover(tmp_path: Path) -> None:
+    analyzer = load_analyzer()
+    paths = make_inputs(
+        tmp_path,
+        balances=[balance("A", balance_date="2026-01-01"), balance("A", balance_date="2026-01-31")],
+        receipts=[],
+        issues=[],
+    )
+    result = analyzer.analyze_csv(paths["balances"], paths["receipts"], paths["issues"], "2026-01-31")
+    item = result["inventory"][0]
+    assert item["turnover_status"] == "UNKNOWN_NO_ISSUE_DATA"
+    assert item["issue_data_status"] == "NOT_PROVIDED"
+    assert item["quantity_turnover"] == "UNKNOWN"
+    assert result["slow_moving_candidates"] == []
+    assert result["no_movement_candidates"] == []
+
+
+def test_known_zero_issue_period_and_no_inventory_are_distinct(tmp_path: Path) -> None:
+    analyzer = load_analyzer()
+    paths = make_inputs(
+        tmp_path,
+        balances=[
+            balance("A", balance_date="2025-12-31", quantity="10"),
+            balance("A", balance_date="2026-01-31", quantity="10"),
+            balance("EMPTY", balance_date="2025-12-31", quantity="0"),
+            balance("EMPTY", balance_date="2026-01-31", quantity="0"),
+        ],
+        receipts=[],
+        issues=[issue("OLD", item_id="A", issue_date="2025-12-01", quantity="1")],
+    )
+    result = analyzer.analyze_csv(paths["balances"], paths["receipts"], paths["issues"], "2026-01-31")
+    known_zero = next(item for item in result["inventory"] if item["item_id"] == "A")
+    no_inventory = next(item for item in result["inventory"] if item["item_id"] == "EMPTY")
+    assert known_zero["turnover_status"] == "KNOWN_ZERO"
+    assert known_zero["quantity_turnover"] == "0"
+    assert any(item["item_id"] == "A" for item in result["slow_moving_candidates"])
+    assert no_inventory["turnover_status"] == "NO_INVENTORY"
+    assert no_inventory["quantity_turnover"] == "UNKNOWN"
+    assert not any(item["item_id"] == "EMPTY" for item in result["slow_moving_candidates"] + result["no_movement_candidates"])
+
+
+def test_latest_snapshot_before_as_of_is_incomplete_cross_period(tmp_path: Path) -> None:
+    analyzer = load_analyzer()
+    paths = make_inputs(
+        tmp_path,
+        balances=[balance("A", balance_date="2026-01-01"), balance("A", balance_date="2026-01-31")],
+        receipts=[],
+        issues=[issue("I1", issue_date="2026-01-15")],
+    )
+    result = analyzer.analyze_csv(paths["balances"], paths["receipts"], paths["issues"], "2026-02-28")
+    item = result["inventory"][0]
+    assert item["period_status"] == "INCOMPLETE"
+    assert item["turnover_status"] == "UNKNOWN_INCOMPLETE_PERIOD"
+    assert result["slow_moving_candidates"] == []
+    assert result["no_movement_candidates"] == []
 
 
 def test_missing_columns_and_empty_input_are_fatal(tmp_path: Path) -> None:

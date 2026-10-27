@@ -260,30 +260,40 @@ def _calculate(rows: list[dict[str, Any]], start: date, end: date, source_name: 
         items = groups[key]
         observations = [_quote(item) for item in items]
         changes = []
-        for previous, current in zip(items, items[1:]):
-            absolute = current["unit_price"] - previous["unit_price"]
-            percentage = _pct(absolute, previous["unit_price"])
-            changes.append({
-                "from_order_id": previous["order_id"], "to_order_id": current["order_id"],
-                "from_date": previous["order_date"].isoformat(), "to_date": current["order_date"].isoformat(),
-                "from_price": _format_decimal(previous["unit_price"]), "to_price": _format_decimal(current["unit_price"]),
-                "change_absolute": _format_decimal(absolute), "change_pct": _format_decimal(percentage),
-            })
-            if percentage is not None and abs(percentage) >= COMPARABLE_CHANGE_THRESHOLD:
-                anomalies.append({
-                    "type": "PRICE_CHANGE", **_group_object(key),
+        items_by_supplier: dict[str, list[dict[str, Any]]] = defaultdict(list)
+        for item in items:
+            items_by_supplier[item["supplier"]].append(item)
+        for supplier in sorted(items_by_supplier):
+            supplier_items = items_by_supplier[supplier]
+            for previous, current in zip(supplier_items, supplier_items[1:]):
+                absolute = current["unit_price"] - previous["unit_price"]
+                percentage = _pct(absolute, previous["unit_price"])
+                changes.append({
+                    "supplier": supplier,
+                    "comparison_scope": "SAME_SUPPLIER",
                     "from_order_id": previous["order_id"], "to_order_id": current["order_id"],
-                    "change_pct": _format_decimal(percentage), "threshold_pct": _format_decimal(COMPARABLE_CHANGE_THRESHOLD),
-                    "explanation": "同一物料、规格、单位、币种及税务处理组内的相邻报价变动达到20%阈值；仅为候选，需业务复核。",
+                    "from_date": previous["order_date"].isoformat(), "to_date": current["order_date"].isoformat(),
+                    "from_price": _format_decimal(previous["unit_price"]), "to_price": _format_decimal(current["unit_price"]),
+                    "change_absolute": _format_decimal(absolute), "change_pct": _format_decimal(percentage),
                 })
+                if percentage is not None and abs(percentage) >= COMPARABLE_CHANGE_THRESHOLD:
+                    anomalies.append({
+                        "type": "PRICE_CHANGE", **_group_object(key),
+                        "supplier": supplier, "from_order_id": previous["order_id"], "to_order_id": current["order_id"],
+                        "change_pct": _format_decimal(percentage), "threshold_pct": _format_decimal(COMPARABLE_CHANGE_THRESHOLD),
+                        "evidence_status": "OBSERVATION_REQUIRES_REVIEW",
+                        "explanation": "同一物料、规格、单位、币种及税务处理下同一供应商的相邻报价变动达到20%阈值；这是观察结果和建议调查线索，不是舞弊结论。",
+                    })
         comparable.append({**_group_object(key), "observations": observations, "changes": changes})
-        if len(items) >= 2:
+        if len(items_by_supplier) >= 2:
             minimum = min(items, key=lambda item: (item["unit_price"], item["supplier"], item["order_id"]))
             maximum = max(items, key=lambda item: (item["unit_price"], item["supplier"], item["order_id"]))
             spread = maximum["unit_price"] - minimum["unit_price"]
             spread_pct = _pct(spread, minimum["unit_price"])
             spreads.append({
                 **_group_object(key), "min_quote": _quote(minimum), "max_quote": _quote(maximum),
+                "comparison_scope": "CROSS_SUPPLIER", "supplier_count": len(items_by_supplier),
+                "comparison_period": {"start": start.isoformat(), "end": end.isoformat()},
                 "spread": _format_decimal(spread), "spread_pct": _format_decimal(spread_pct),
             })
             if spread_pct is not None and spread_pct >= COMPARABLE_CHANGE_THRESHOLD:
@@ -291,7 +301,10 @@ def _calculate(rows: list[dict[str, Any]], start: date, end: date, source_name: 
                     "type": "SUPPLIER_QUOTE_SPREAD", **_group_object(key),
                     "min_order_id": minimum["order_id"], "max_order_id": maximum["order_id"],
                     "spread_pct": _format_decimal(spread_pct), "threshold_pct": _format_decimal(COMPARABLE_CHANGE_THRESHOLD),
-                    "explanation": "同一可比组内供应商报价最高与最低价差达到20%阈值；不跨币种、单位、规格或税务处理判定。",
+                    "comparison_scope": "CROSS_SUPPLIER", "supplier_count": len(items_by_supplier),
+                    "comparison_period": {"start": start.isoformat(), "end": end.isoformat()},
+                    "evidence_status": "OBSERVATION_REQUIRES_REVIEW",
+                    "explanation": "同一物料、规格、单位、币种及税务处理、同一比较期间内不同供应商报价最高与最低价差达到20%阈值；这是观察结果和建议调查线索，不是已确认节约金额。",
                 })
 
     incompatible = []
@@ -347,7 +360,7 @@ def _calculate(rows: list[dict[str, Any]], start: date, end: date, source_name: 
         "invalid_rows": invalid,
         "privacy": {"execution_scope": "local_script_only", "remote_upload": False, "absolute_path_disclosed": False,
                     "raw_rows_disclosed": False, "identifiers_in_output": True},
-        "limitations": ["Excel/XLSX 未启用；请先导出为 UTF-8 CSV。", "异常仅是可解释候选，不代表舞弊或最终结论。"],
+        "limitations": ["Excel/XLSX 未启用；请先导出为 UTF-8 CSV。", "同一供应商多次报价属于 SAME_SUPPLIER 价格波动；supplier_quote_spread 只有至少两个供应商且五项可比键一致时才输出，不满足条件时不产生跨供应商节约结论。", "异常仅是可解释的观察结果和建议调查线索，不代表舞弊、节约金额或最终结论。"],
     }
 
 

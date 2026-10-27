@@ -144,6 +144,8 @@ def analyze(text: str, as_of: date) -> dict:
     return {
         "as_of": as_of.isoformat(),
         "basis": "Calendar dates without timezone conversion; overdue only when due_date < as_of and open_balance > 0; invalid rows excluded; no currency conversion or legal conclusion.",
+        "priority_scope": "CUSTOMER_LEVEL",
+        "priority_basis": "Customers are ranked by same-currency overdue balance, then customer ID; this is a customer-level review candidate and not an invoice-by-invoice collection plan.",
         "totals": {currency: {key: f"{value:.2f}" for key, value in totals[currency].items()} for currency in currencies},
         "aging": {currency: {bucket: {"amount": f"{aging[currency][bucket]['amount']:.2f}",
                                        "count": aging[currency][bucket]["count"]} for bucket in BUCKETS} for currency in currencies},
@@ -151,7 +153,8 @@ def analyze(text: str, as_of: date) -> dict:
             {"customer_id": name, "overdue": f"{stats['overdue']:.2f}",
              "invoices": stats["invoices"], "max_days_overdue": stats["max_days_overdue"],
              "priority": "HIGH" if stats["max_days_overdue"] > 90 else "MEDIUM",
-             "recommendation": "Human review of invoice, contract and payment record before any collection action"}
+             "priority_scope": "CUSTOMER",
+             "recommendation": "Customer-level review candidate; inspect individual invoices, contract and payment record before any collection action"}
             for name, stats in sorted(customers[currency].items(), key=lambda item: (-item[1]["overdue"], item[0]))]
             for currency in currencies},
         "valid_rows": valid, "rejected_rows": len(issues), "issues": issues,
