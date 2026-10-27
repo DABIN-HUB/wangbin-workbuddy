@@ -1,0 +1,8 @@
+order_id,material,supplier,order_date,quantity,unit_price,unit,specification,currency,tax_treatment
+O1,Steel,Supplier-A,2026-01-01,2,10.00,kg,304,CNY,EX
+O2,Steel,Supplier-B,2026-01-15,3,12.00,kg,304,CNY,EX
+O3,Steel,Supplier-C,2026-02-01,1,11.00,kg,304,CNY,EX
+O4,Steel,Supplier-D,2026-02-15,1,20.00,kg,304,CNY,INCLUSIVE
+O5,Steel,Supplier-E,2026-02-20,1,99.99,kg,304,USD,EX
+O6,Bolt,Supplier-A,2026-01-10,10,0.10,pcs,M3,CNY,EX
+O7,Bolt,Supplier-A,2026-02-10,10,0.30,pcs,M3,CNY,EX

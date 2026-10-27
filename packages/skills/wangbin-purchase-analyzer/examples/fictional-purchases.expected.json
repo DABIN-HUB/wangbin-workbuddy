@@ -1,0 +1,415 @@
+{
+  "anomaly_candidates": [
+    {
+      "change_pct": "200",
+      "currency": "CNY",
+      "explanation": "同一物料、规格、单位、币种及税务处理组内的相邻报价变动达到20%阈值；仅为候选，需业务复核。",
+      "from_order_id": "O6",
+      "material": "Bolt",
+      "specification": "M3",
+      "tax_treatment": "EX",
+      "threshold_pct": "20",
+      "to_order_id": "O7",
+      "type": "PRICE_CHANGE",
+      "unit": "pcs"
+    },
+    {
+      "change_pct": "20",
+      "currency": "CNY",
+      "explanation": "同一物料、规格、单位、币种及税务处理组内的相邻报价变动达到20%阈值；仅为候选，需业务复核。",
+      "from_order_id": "O1",
+      "material": "Steel",
+      "specification": "304",
+      "tax_treatment": "EX",
+      "threshold_pct": "20",
+      "to_order_id": "O2",
+      "type": "PRICE_CHANGE",
+      "unit": "kg"
+    },
+    {
+      "currency": "CNY",
+      "explanation": "同一可比组内供应商报价最高与最低价差达到20%阈值；不跨币种、单位、规格或税务处理判定。",
+      "material": "Bolt",
+      "max_order_id": "O7",
+      "min_order_id": "O6",
+      "specification": "M3",
+      "spread_pct": "200",
+      "tax_treatment": "EX",
+      "threshold_pct": "20",
+      "type": "SUPPLIER_QUOTE_SPREAD",
+      "unit": "pcs"
+    },
+    {
+      "currency": "CNY",
+      "explanation": "同一可比组内供应商报价最高与最低价差达到20%阈值；不跨币种、单位、规格或税务处理判定。",
+      "material": "Steel",
+      "max_order_id": "O2",
+      "min_order_id": "O1",
+      "specification": "304",
+      "spread_pct": "20",
+      "tax_treatment": "EX",
+      "threshold_pct": "20",
+      "type": "SUPPLIER_QUOTE_SPREAD",
+      "unit": "kg"
+    }
+  ],
+  "comparable_price_changes": [
+    {
+      "changes": [
+        {
+          "change_absolute": "0.2",
+          "change_pct": "200",
+          "from_date": "2026-01-10",
+          "from_order_id": "O6",
+          "from_price": "0.1",
+          "to_date": "2026-02-10",
+          "to_order_id": "O7",
+          "to_price": "0.3"
+        }
+      ],
+      "currency": "CNY",
+      "material": "Bolt",
+      "observations": [
+        {
+          "order_date": "2026-01-10",
+          "order_id": "O6",
+          "supplier": "Supplier-A",
+          "unit_price": "0.1"
+        },
+        {
+          "order_date": "2026-02-10",
+          "order_id": "O7",
+          "supplier": "Supplier-A",
+          "unit_price": "0.3"
+        }
+      ],
+      "specification": "M3",
+      "tax_treatment": "EX",
+      "unit": "pcs"
+    },
+    {
+      "changes": [
+        {
+          "change_absolute": "2",
+          "change_pct": "20",
+          "from_date": "2026-01-01",
+          "from_order_id": "O1",
+          "from_price": "10",
+          "to_date": "2026-01-15",
+          "to_order_id": "O2",
+          "to_price": "12"
+        },
+        {
+          "change_absolute": "-1",
+          "change_pct": "-8.333333333333333333333333333",
+          "from_date": "2026-01-15",
+          "from_order_id": "O2",
+          "from_price": "12",
+          "to_date": "2026-02-01",
+          "to_order_id": "O3",
+          "to_price": "11"
+        }
+      ],
+      "currency": "CNY",
+      "material": "Steel",
+      "observations": [
+        {
+          "order_date": "2026-01-01",
+          "order_id": "O1",
+          "supplier": "Supplier-A",
+          "unit_price": "10"
+        },
+        {
+          "order_date": "2026-01-15",
+          "order_id": "O2",
+          "supplier": "Supplier-B",
+          "unit_price": "12"
+        },
+        {
+          "order_date": "2026-02-01",
+          "order_id": "O3",
+          "supplier": "Supplier-C",
+          "unit_price": "11"
+        }
+      ],
+      "specification": "304",
+      "tax_treatment": "EX",
+      "unit": "kg"
+    },
+    {
+      "changes": [],
+      "currency": "CNY",
+      "material": "Steel",
+      "observations": [
+        {
+          "order_date": "2026-02-15",
+          "order_id": "O4",
+          "supplier": "Supplier-D",
+          "unit_price": "20"
+        }
+      ],
+      "specification": "304",
+      "tax_treatment": "INCLUSIVE",
+      "unit": "kg"
+    },
+    {
+      "changes": [],
+      "currency": "USD",
+      "material": "Steel",
+      "observations": [
+        {
+          "order_date": "2026-02-20",
+          "order_id": "O5",
+          "supplier": "Supplier-E",
+          "unit_price": "99.99"
+        }
+      ],
+      "specification": "304",
+      "tax_treatment": "EX",
+      "unit": "kg"
+    }
+  ],
+  "incompatible_group_differences": [
+    {
+      "different_fields": [
+        "tax_treatment"
+      ],
+      "group_a": {
+        "currency": "CNY",
+        "material": "Steel",
+        "specification": "304",
+        "tax_treatment": "EX",
+        "unit": "kg"
+      },
+      "group_b": {
+        "currency": "CNY",
+        "material": "Steel",
+        "specification": "304",
+        "tax_treatment": "INCLUSIVE",
+        "unit": "kg"
+      },
+      "material": "Steel",
+      "reason": "仅在 material、specification、unit、currency、tax_treatment 完全一致时比较；本组差异不可作为异常。",
+      "status": "NOT_COMPARABLE"
+    },
+    {
+      "different_fields": [
+        "currency"
+      ],
+      "group_a": {
+        "currency": "CNY",
+        "material": "Steel",
+        "specification": "304",
+        "tax_treatment": "EX",
+        "unit": "kg"
+      },
+      "group_b": {
+        "currency": "USD",
+        "material": "Steel",
+        "specification": "304",
+        "tax_treatment": "EX",
+        "unit": "kg"
+      },
+      "material": "Steel",
+      "reason": "仅在 material、specification、unit、currency、tax_treatment 完全一致时比较；本组差异不可作为异常。",
+      "status": "NOT_COMPARABLE"
+    },
+    {
+      "different_fields": [
+        "currency",
+        "tax_treatment"
+      ],
+      "group_a": {
+        "currency": "CNY",
+        "material": "Steel",
+        "specification": "304",
+        "tax_treatment": "INCLUSIVE",
+        "unit": "kg"
+      },
+      "group_b": {
+        "currency": "USD",
+        "material": "Steel",
+        "specification": "304",
+        "tax_treatment": "EX",
+        "unit": "kg"
+      },
+      "material": "Steel",
+      "reason": "仅在 material、specification、unit、currency、tax_treatment 完全一致时比较；本组差异不可作为异常。",
+      "status": "NOT_COMPARABLE"
+    }
+  ],
+  "input": {
+    "date_range": {
+      "end": "2026-02-28",
+      "start": "2026-01-01"
+    },
+    "source_name": "fictional-purchases.csv"
+  },
+  "invalid_rows": [],
+  "limitations": [
+    "Excel/XLSX 未启用；请先导出为 UTF-8 CSV。",
+    "异常仅是可解释候选，不代表舞弊或最终结论。"
+  ],
+  "privacy": {
+    "absolute_path_disclosed": false,
+    "execution_scope": "local_script_only",
+    "identifiers_in_output": true,
+    "raw_rows_disclosed": false,
+    "remote_upload": false
+  },
+  "purchasing_totals": [
+    {
+      "currency": "CNY",
+      "order_count": 6,
+      "quantity": "27",
+      "total": "91"
+    },
+    {
+      "currency": "USD",
+      "order_count": 1,
+      "quantity": "1",
+      "total": "99.99"
+    }
+  ],
+  "same_period_trend": [
+    {
+      "change": {
+        "absolute": "-23",
+        "pct": "-40.35087719298245614035087719"
+      },
+      "currency": "CNY",
+      "first_period": {
+        "end": "2026-01-29",
+        "order_count": 3,
+        "start": "2026-01-01",
+        "total": "57"
+      },
+      "method": "selected date range 的首尾等长半区间；奇数天的中间日期不纳入比较",
+      "second_period": {
+        "end": "2026-02-28",
+        "order_count": 3,
+        "start": "2026-01-31",
+        "total": "34"
+      }
+    },
+    {
+      "change": {
+        "absolute": "99.99",
+        "pct": null
+      },
+      "currency": "USD",
+      "first_period": {
+        "end": "2026-01-29",
+        "order_count": 0,
+        "start": "2026-01-01",
+        "total": "0"
+      },
+      "method": "selected date range 的首尾等长半区间；奇数天的中间日期不纳入比较",
+      "second_period": {
+        "end": "2026-02-28",
+        "order_count": 1,
+        "start": "2026-01-31",
+        "total": "99.99"
+      }
+    }
+  ],
+  "schema_version": "0.1.0",
+  "summary": {
+    "currencies": [
+      "CNY",
+      "USD"
+    ],
+    "duplicate_order_ids": [],
+    "invalid_rows": 0,
+    "out_of_range_rows": 0,
+    "rows_read": 7,
+    "valid_rows": 7
+  },
+  "supplier_concentration": [
+    {
+      "currency": "CNY",
+      "hhi": "0.2889747615022340297065571791",
+      "suppliers": [
+        {
+          "share_pct": "39.56043956043956043956043956",
+          "supplier": "Supplier-B",
+          "total": "36"
+        },
+        {
+          "share_pct": "26.37362637362637362637362637",
+          "supplier": "Supplier-A",
+          "total": "24"
+        },
+        {
+          "share_pct": "21.97802197802197802197802198",
+          "supplier": "Supplier-D",
+          "total": "20"
+        },
+        {
+          "share_pct": "12.08791208791208791208791209",
+          "supplier": "Supplier-C",
+          "total": "11"
+        }
+      ],
+      "top_supplier_share_pct": "39.56043956043956043956043956",
+      "total": "91"
+    },
+    {
+      "currency": "USD",
+      "hhi": "1",
+      "suppliers": [
+        {
+          "share_pct": "100",
+          "supplier": "Supplier-E",
+          "total": "99.99"
+        }
+      ],
+      "top_supplier_share_pct": "100",
+      "total": "99.99"
+    }
+  ],
+  "supplier_quote_spread": [
+    {
+      "currency": "CNY",
+      "material": "Bolt",
+      "max_quote": {
+        "order_date": "2026-02-10",
+        "order_id": "O7",
+        "supplier": "Supplier-A",
+        "unit_price": "0.3"
+      },
+      "min_quote": {
+        "order_date": "2026-01-10",
+        "order_id": "O6",
+        "supplier": "Supplier-A",
+        "unit_price": "0.1"
+      },
+      "specification": "M3",
+      "spread": "0.2",
+      "spread_pct": "200",
+      "tax_treatment": "EX",
+      "unit": "pcs"
+    },
+    {
+      "currency": "CNY",
+      "material": "Steel",
+      "max_quote": {
+        "order_date": "2026-01-15",
+        "order_id": "O2",
+        "supplier": "Supplier-B",
+        "unit_price": "12"
+      },
+      "min_quote": {
+        "order_date": "2026-01-01",
+        "order_id": "O1",
+        "supplier": "Supplier-A",
+        "unit_price": "10"
+      },
+      "specification": "304",
+      "spread": "2",
+      "spread_pct": "20",
+      "tax_treatment": "EX",
+      "unit": "kg"
+    }
+  ]
+}
