@@ -17,6 +17,7 @@ MEMBERS = (
     "agents/wangbin-software-consultant.md",
     "avatars/expert.png",
     "README.md",
+    "LICENSE",
 )
 _REQUIRED = (
     "name", "version", "description", "author", "agents", "expertType",

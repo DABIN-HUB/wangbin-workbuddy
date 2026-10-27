@@ -12,7 +12,9 @@
 
 ## 平台结构与授权边界
 
-`plugin.json` 的 `expertType=agent`、`agentName`、`agents` 相互对应；`displayName`/`profession` 双语；`defaultInitPrompt` 与第一条 `quickPrompts` 两种语言完全一致；分类 `12-IndustryConsultant`。Agent Markdown 带有名称、描述、双语显示名/职业的 frontmatter，不声明 `skills`、`dependencies`、`tools` 或外部运行时。图形头像为原创 512×512 PNG，与旧文档专家不是同一图形。目录根层级为 `wangbin-software-consultant/{.codebuddy-plugin,agents,avatars,README.md}`；官方专家示例采用这一结构，**是否在目标账号私有上传界面接受 ZIP 尚未实测**。[1]
+本 Expert 目录中的发布资产按目录内 `LICENSE` 采用 MIT 授权；该授权仅覆盖本候选包内的 Expert 资产，不扩展或重新声明仓库其他目录、历史文档引擎或任何未随包分发的专有代码。`plugin.json` 的 `license=MIT` 与该范围一致；正式发布前仍应由权利人确认授权范围。
+
+`plugin.json` 的 `expertType=agent`、`agentName`、`agents` 相互对应；`displayName`/`profession` 双语；`defaultInitPrompt` 与第一条 `quickPrompts` 两种语言完全一致；分类 `12-IndustryConsultant`。Agent Markdown 带有名称、描述、双语显示名/职业的 frontmatter，不声明 `skills`、`dependencies`、`tools` 或外部运行时。图形头像为原创 512×512 PNG，与旧文档专家不是同一图形。目录根层级为 `wangbin-software-consultant/{.codebuddy-plugin,agents,avatars,README.md,LICENSE}`；官方专家示例采用这一结构，**是否在目标账号私有上传界面接受 ZIP 尚未实测**。[1]
 
 公开入驻说明存在个人主体认证，但没有保证本账号已获得此 Expert 的提交权限；须本人登录核实。[3]
 
@@ -24,7 +26,7 @@
 
 ## 研发与验收
 
-包内只有四项运行资产：`.codebuddy-plugin/plugin.json`、`agents/wangbin-software-consultant.md`、`avatars/expert.png`、`README.md`。独立质量场景与结构测试保存在 `tests/`（不打入 ZIP）；`tooling/phase5_expert_packager.py` 只读取本专家路径，并在 `dist/` 生成独立候选和侧车哈希。全局 `dist/` 仍忽略，Phase 1～4 历史文件不被更新。测试分静态结构/算术基线、模拟模型对话及真实 WorkBuddy 对话：后者必须在授权的私有环境人工执行，否则保持 BLOCKED。详见 `reports/phase5-software-consultant.md`。
+包内有四项运行资产和一份授权声明：`.codebuddy-plugin/plugin.json`、`agents/wangbin-software-consultant.md`、`avatars/expert.png`、`README.md`、`LICENSE`。独立质量场景与结构测试保存在 `tests/`（不打入 ZIP）；`tooling/phase5_expert_packager.py` 只读取本专家路径，并在 `dist/` 生成独立候选和侧车哈希。全局 `dist/` 仍忽略，Phase 1～4 历史文件不被更新。测试分静态结构/算术基线、模拟模型对话及真实 WorkBuddy 对话：后者必须在授权的私有环境人工执行，否则保持 BLOCKED。详见 `reports/phase5-software-consultant.md`。
 
 ## 使用边界
 
