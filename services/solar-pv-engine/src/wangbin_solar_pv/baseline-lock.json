@@ -1,0 +1,19 @@
+{
+  "lock_version": 1,
+  "git_baseline": "b475c5e5b3d107625acb8e531a623d142060a194",
+  "normalization": "UTF-8 without BOM; CRLF to LF",
+  "files": {
+    "00-original-user-baseline.md": "4af609040ca4e800b16d561b86a8a33c54226d175581b54aa00110158c5d09f2",
+    "00-baseline-manifest.json": "33845de976ec13345320b79ff7045e86a39bf2194a427b5cd28169238d1defec",
+    "01-product-requirements.md": "2bbda5ab6d34e2b21c8b8806335986522d75de3a90e8c2e677d4c2ae8075357c",
+    "03-input-data-dictionary.md": "fcc1eac5641f941adbd6fd4fab216050344b2ae4e0590d8e9549682117ab8148",
+    "03-input-fields.json": "393140cc57b5934041c3fece2c9c185c03c7876afaa3403ce317d795d6112a1b",
+    "05-formulas.json": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331",
+    "05-formula-extensions.json": "14bb789c908f4f883910fd517fd2cf55cf0719739f9fdd84e4dc61b111252007",
+    "05-field-bindings.json": "4ef6171f063f402963d61edc9647c7565c9ec9338099f62424a77e3507521533",
+    "06-glossary.json": "fa29129d43f54a9b84ef6915e7bca99baa7a2a9a16ddab16beb3edec2e4d3ea5",
+    "06-glossary-extensions.json": "108f2a0fc11e07286a571bdf4a9a1c2ba63e1e9deae81558c4407bb1f9b85b61",
+    "07-category-boundaries.md": "ee935418c0a7ef55544f6f97fddf71bcb62f6b906d0c19256b871f8d02b086a8",
+    "08-baseline-contract.json": "b3616e8ca7deab31b41118f0ffd0a8202c763c54371a9a6949e5d97bdecb140c"
+  }
+}

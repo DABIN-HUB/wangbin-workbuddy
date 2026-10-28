@@ -1,0 +1,7 @@
+{
+  "source_attachment": "pasted_content_2026-10-28_05-10-19-819_027970.txt",
+  "original_sha256": "ba6c7733bf7953fb691010e8569ce3716b5e616c0451303df6802d4790b1b62b",
+  "normalized_sha256": "4620a69a861a1d703fe683c88bf3f29aef0c312ea684365aafe63e831d7bf973",
+  "baseline_head": "b475c5e5b3d107625acb8e531a623d142060a194",
+  "scope": "Phase2A-2E only; tests explicitly authorized; no Phase3"
+}

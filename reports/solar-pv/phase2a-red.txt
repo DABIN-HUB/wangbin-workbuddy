@@ -1,0 +1,180 @@
+FFFFFFFFFFF                                                              [100%]
+================================== FAILURES ===================================
+______________ test_runtime_catalog_has_exact_frozen_469_fields _______________
+
+    def test_runtime_catalog_has_exact_frozen_469_fields():
+>       catalog, _ = api()
+                     ^^^^^
+
+tests\solar-pv\test_catalog_schema.py:18:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def api():
+>       from wangbin_solar_pv.catalog import Catalog
+E       ModuleNotFoundError: No module named 'wangbin_solar_pv'
+
+tests\solar-pv\test_catalog_schema.py:12: ModuleNotFoundError
+________ test_all_fields_metadata_covers_the_fifteen_required_concepts ________
+
+    def test_all_fields_metadata_covers_the_fifteen_required_concepts():
+>       catalog, _ = api()
+                     ^^^^^
+
+tests\solar-pv\test_catalog_schema.py:28:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def api():
+>       from wangbin_solar_pv.catalog import Catalog
+E       ModuleNotFoundError: No module named 'wangbin_solar_pv'
+
+tests\solar-pv\test_catalog_schema.py:12: ModuleNotFoundError
+_______ test_schema_202012_includes_all_469_envelopes_and_exact_arrays ________
+
+    def test_schema_202012_includes_all_469_envelopes_and_exact_arrays():
+>       catalog, _ = api()
+                     ^^^^^
+
+tests\solar-pv\test_catalog_schema.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def api():
+>       from wangbin_solar_pv.catalog import Catalog
+E       ModuleNotFoundError: No module named 'wangbin_solar_pv'
+
+tests\solar-pv\test_catalog_schema.py:12: ModuleNotFoundError
+_________ test_new_project_serializes_without_inventing_input_values __________
+
+    def test_new_project_serializes_without_inventing_input_values():
+>       catalog, model = api()
+                         ^^^^^
+
+tests\solar-pv\test_catalog_schema.py:54:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def api():
+>       from wangbin_solar_pv.catalog import Catalog
+E       ModuleNotFoundError: No module named 'wangbin_solar_pv'
+
+tests\solar-pv\test_catalog_schema.py:12: ModuleNotFoundError
+____ test_project_rejects_unsupported_versions_and_unknown_shape[version] _____
+
+mutation = 'version'
+
+    @pytest.mark.parametrize("mutation", ["version", "baseline", "extra", "unknown", "child_at_root"])
+    def test_project_rejects_unsupported_versions_and_unknown_shape(mutation):
+>       catalog, model = api()
+                         ^^^^^
+
+tests\solar-pv\test_catalog_schema.py:64:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def api():
+>       from wangbin_solar_pv.catalog import Catalog
+E       ModuleNotFoundError: No module named 'wangbin_solar_pv'
+
+tests\solar-pv\test_catalog_schema.py:12: ModuleNotFoundError
+____ test_project_rejects_unsupported_versions_and_unknown_shape[baseline] ____
+
+mutation = 'baseline'
+
+    @pytest.mark.parametrize("mutation", ["version", "baseline", "extra", "unknown", "child_at_root"])
+    def test_project_rejects_unsupported_versions_and_unknown_shape(mutation):
+>       catalog, model = api()
+                         ^^^^^
+
+tests\solar-pv\test_catalog_schema.py:64:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def api():
+>       from wangbin_solar_pv.catalog import Catalog
+E       ModuleNotFoundError: No module named 'wangbin_solar_pv'
+
+tests\solar-pv\test_catalog_schema.py:12: ModuleNotFoundError
+_____ test_project_rejects_unsupported_versions_and_unknown_shape[extra] ______
+
+mutation = 'extra'
+
+    @pytest.mark.parametrize("mutation", ["version", "baseline", "extra", "unknown", "child_at_root"])
+    def test_project_rejects_unsupported_versions_and_unknown_shape(mutation):
+>       catalog, model = api()
+                         ^^^^^
+
+tests\solar-pv\test_catalog_schema.py:64:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def api():
+>       from wangbin_solar_pv.catalog import Catalog
+E       ModuleNotFoundError: No module named 'wangbin_solar_pv'
+
+tests\solar-pv\test_catalog_schema.py:12: ModuleNotFoundError
+____ test_project_rejects_unsupported_versions_and_unknown_shape[unknown] _____
+
+mutation = 'unknown'
+
+    @pytest.mark.parametrize("mutation", ["version", "baseline", "extra", "unknown", "child_at_root"])
+    def test_project_rejects_unsupported_versions_and_unknown_shape(mutation):
+>       catalog, model = api()
+                         ^^^^^
+
+tests\solar-pv\test_catalog_schema.py:64:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def api():
+>       from wangbin_solar_pv.catalog import Catalog
+E       ModuleNotFoundError: No module named 'wangbin_solar_pv'
+
+tests\solar-pv\test_catalog_schema.py:12: ModuleNotFoundError
+_ test_project_rejects_unsupported_versions_and_unknown_shape[child_at_root] __
+
+mutation = 'child_at_root'
+
+    @pytest.mark.parametrize("mutation", ["version", "baseline", "extra", "unknown", "child_at_root"])
+    def test_project_rejects_unsupported_versions_and_unknown_shape(mutation):
+>       catalog, model = api()
+                         ^^^^^
+
+tests\solar-pv\test_catalog_schema.py:64:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def api():
+>       from wangbin_solar_pv.catalog import Catalog
+E       ModuleNotFoundError: No module named 'wangbin_solar_pv'
+
+tests\solar-pv\test_catalog_schema.py:12: ModuleNotFoundError
+_ test_json_roundtrip_preserves_exact_decimal_numbers_and_duplicate_rejection _
+
+    def test_json_roundtrip_preserves_exact_decimal_numbers_and_duplicate_rejection():
+>       from wangbin_solar_pv.serialization import dumps, loads
+E       ModuleNotFoundError: No module named 'wangbin_solar_pv'
+
+tests\solar-pv\test_catalog_schema.py:82: ModuleNotFoundError
+_____ test_catalog_rejects_baseline_drift_and_never_mutates_frozen_files ______
+
+tmp_path = WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase2-20261028/pytest-red-a/test_catalog_rejects_baseline_0')
+
+    def test_catalog_rejects_baseline_drift_and_never_mutates_frozen_files(tmp_path):
+        import shutil
+>       catalog, _ = api()
+                     ^^^^^
+
+tests\solar-pv\test_catalog_schema.py:96:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def api():
+>       from wangbin_solar_pv.catalog import Catalog
+E       ModuleNotFoundError: No module named 'wangbin_solar_pv'
+
+tests\solar-pv\test_catalog_schema.py:12: ModuleNotFoundError
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_catalog_schema.py::test_runtime_catalog_has_exact_frozen_469_fields
+FAILED tests/solar-pv/test_catalog_schema.py::test_all_fields_metadata_covers_the_fifteen_required_concepts
+FAILED tests/solar-pv/test_catalog_schema.py::test_schema_202012_includes_all_469_envelopes_and_exact_arrays
+FAILED tests/solar-pv/test_catalog_schema.py::test_new_project_serializes_without_inventing_input_values
+FAILED tests/solar-pv/test_catalog_schema.py::test_project_rejects_unsupported_versions_and_unknown_shape[version]
+FAILED tests/solar-pv/test_catalog_schema.py::test_project_rejects_unsupported_versions_and_unknown_shape[baseline]
+FAILED tests/solar-pv/test_catalog_schema.py::test_project_rejects_unsupported_versions_and_unknown_shape[extra]
+FAILED tests/solar-pv/test_catalog_schema.py::test_project_rejects_unsupported_versions_and_unknown_shape[unknown]
+FAILED tests/solar-pv/test_catalog_schema.py::test_project_rejects_unsupported_versions_and_unknown_shape[child_at_root]
+FAILED tests/solar-pv/test_catalog_schema.py::test_json_roundtrip_preserves_exact_decimal_numbers_and_duplicate_rejection
+FAILED tests/solar-pv/test_catalog_schema.py::test_catalog_rejects_baseline_drift_and_never_mutates_frozen_files
+11 failed in 0.72s
