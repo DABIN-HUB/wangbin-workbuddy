@@ -1,0 +1,12 @@
+..F                                                                      [100%]
+================================== FAILURES ===================================
+_______ test_explicit_source_row_identifier_is_not_repaired_or_replaced _______
+tests\solar-pv\test_parser_intake.py:33: in test_explicit_source_row_identifier_is_not_repaired_or_replaced
+    assert result['status']=='PARTIAL'
+E   AssertionError: assert 'PARSED' == 'PARTIAL'
+E
+E     - PARTIAL
+E     + PARSED
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_parser_intake.py::test_explicit_source_row_identifier_is_not_repaired_or_replaced
+1 failed, 2 passed in 8.82s

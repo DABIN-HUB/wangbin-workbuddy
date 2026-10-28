@@ -46,3 +46,25 @@ applicability独立于证据status，使用字段ID/可选row_id、受控rule_id
 JSON默认32MiB/64层、有界数字表示；纯units函数无应用层有效数字截断，二者资源边界不同。容器行/附件大小均需显式限制，超限返回原因而非静默截断。超过512顶点或多环/洞的复杂几何保留数据但要求专项拓扑复核，不声称通用GIS有效性。IANA数据库Windows新包显式依赖tzdata，不改变旧产品依赖。
 
 本地测试资料明确SYNTHETIC；旧产品测试在scratch副本执行，历史包/旧源码与测试保持保护哈希。安装、外部访问/许可、真实数据、四文件渲染和平台等门禁分别报告，不以单测数替代。
+
+## 7. 本地多轮资料事务
+
+IntakeSession.new/from_dict接收分类与版本化项目；submit、revise、resolve、review、remove、accept_candidates分别处理补充、显式修订、冲突选择、人工证据复核、带理由移除及已解析候选的显式选择。每个请求有不可修复的原样submission_id与内容摘要；同ID同内容幂等，不同内容拒绝；expected_revision阻止旧版本覆盖。草稿副本先通过结构、来源、关联及分类校验，再一次性替换会话；失败不留下半次提交。
+
+用户入口仅能写用户提供、明确假设或未知的输入，不接受CALCULATED来源或直接VERIFIED声明。提取候选也不等于已核实；人工review是另一个带复核人、理由和授权声明的操作，不可把ASSUMPTION/UNKNOWN/CONFLICT升级成事实。修改位置/分类使已核实的相关资源/并网/屋顶等证据回到待核，保留原值、旧候选与失效历史。修改目标回收期不改变其他输入，也不生成投资或发电量。
+
+普通冲突之外还比较金额的价格年/税含、测量期、适用期和地理口径；相同金额不表示同口径。UNKNOWN资料被实际补齐不是冲突，新UNKNOWN不自动擦除已有事实。显式修订或移除都保留历史候选。金额单位缩放可单独记录normalization.currency，不为“100万元转元”虚构价格年或税基，也不自动换汇。
+
+## 8. 六格式受限提取的真实边界
+
+DOCX只处理正文段落和可重建的简单表格，定位paragraph/table/row/cell，不声称页码；PDF页码来自实际extract_pages，页内仅文本片段定位，版面需复核；XLSX真实工作表/单元格，CSV含多行字段的实际物理行跨度/列，TXT/MD实际行号。XML数值直接取已审查的worksheet数字token构造Decimal，避免openpyxl中间float静默舍位。
+
+仅确定性完整字段ID、唯一中文目录名和少量明确标签别名；重复组表头必须完整字段ID，不猜一般自然语言、枚举或MW对应MWp。数值需明确单位；金额规范转换还需先显式声明文档币种，缺失或冲突返回待确认。未提供技术row_id时才按附件摘要/实际源行派生；已给出的ID原样保留，非法/重复ID返回PARTIAL待核，不替用户修复。
+
+parse_attachment输出PARSED/PARTIAL/NEEDS_OCR/FAILED/BLOCKED及未经核实的候选；PARSED仅表示受支持内容已提取，不代表项目字段合法或证据真实。accept_candidates还要通过完整输入校验；复杂表格、图片、扫描/无文本及无法判定的单位不补0、不猜页。来源登记包含真实采集时间、实际定位、附件摘要；用户选入后完整SHA-256与basename登记到受控history，并进入source_snapshot.attachments，无需持久化原文或绝对路径。
+
+安全检查和读取使用同一私有稳定快照。公共SecurityPolicy做已支持格式/容器检查；新包额外拒绝链接/硬链接/路径逃逸、宏/XLM/OLE/DDE、重复ZIP成员/XML实体、活动PDF对象（含压缩对象与转义名字）、公式及外链。纯带符号数值不是公式，表达式和实际公式节点仍拒绝。独立spawn worker及父墙钟超时限制解析，子输出/日志被抑制，只传受限JSON；不声称Windows硬内存/后代进程问题已解决。默认最多20,000解析单元格、8MiB提取文本/输出，JSON仍32MiB；超限明确阻断，不静默截断，大曲线需后续受控流式/分块方案，不能拿本地小样证明全年15分钟文件的吞吐能力。
+
+## 9. Phase 3 移交而非计算结果
+
+IntakeSession.export输出solar-pv-input-export/1.0.0，含完整project、normalized_inputs、逐原子provenance_records、source_snapshot/source_snapshot_id、input_hash、scenario_config与input_maturity。input_hash用sha256/solar-pv-input-v1覆盖规范输入/基线/来源快照/适用性，不依赖导出当时的墙钟。反序列化后可重现；这不是12-canonical-result-contract的计算结果JSON，没有run_id/result_hash或财务指标。calculation_status=NOT_IMPLEMENTED、result_contract_status=NOT_CREATED，不能据此生成四文件正式成果。

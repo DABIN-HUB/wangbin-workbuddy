@@ -1,0 +1,38 @@
+{
+  "scope": "SYNTHETIC_INPUT_ONLY_NOT_A_REAL_PROJECT",
+  "artifact": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\SYNTHETIC-cli-demo-ad915edw\\normalized.json",
+  "steps": [
+    {
+      "command": "'C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe' 'F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\solar_pv.py' --workspace 'C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\SYNTHETIC-cli-demo-ad915edw' new --project-id SYNTHETIC-DEMO --pv-type industrial_rooftop --state project.json",
+      "output": "{\"duplicate\":false,\"maturity\":{\"calculation_status\":\"NOT_IMPLEMENTED\",\"current_level\":\"L1_DRAFT\",\"level_scope\":\"INPUT_EVIDENCE_ONLY\",\"qualified_level\":null},\"next_questions\":[{\"field_ids\":[\"site.address\",\"site.latitude\",\"site.longitude\"],\"priority\":1,\"question_id\":\"Q-LOCATION\",\"question_zh\":\"请补充具体屋顶/地块地址，或一对有坐标系依据的经纬度；只有城市时保持站址待核。\"},{\"field_ids\":[\"site.total_area\",\"site.usable_area\",\"system.dc_capacity\"],\"priority\":2,\"question_id\":\"Q-SIZE\",\"question_zh\":\"请提供面积或已有直流装机计划之一；预算可暂缺，不要求先知道投资。\"},{\"field_ids\":[\"project.sales_mode\"],\"priority\":3,\"question_id\":\"Q-SALES\",\"question_zh\":\"计划自用余电上网、全额售电、离网还是尚待比较？\"},{\"field_ids\":[\"targets.payback_years\",\"targets.project_irr\",\"targets.equity_irr\"],\"priority\":4,\"question_id\":\"Q-TARGET\",\"question_zh\":\"是否有回收期或IRR门槛？它们仅作目标，不反推客观参数；未定也可继续补资料。\"},{\"field_ids\":[\"project.has_storage\"],\"priority\":5,\"question_id\":\"Q-STORAGE\",\"question_zh\":\"是否包含储能？未知时不会自动按无储能处理。\"}],\"revision\":0}",
+      "exit_code": 0,
+      "error": null
+    },
+    {
+      "command": "'C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe' 'F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\solar_pv.py' --workspace 'C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\SYNTHETIC-cli-demo-ad915edw' submit --state project.json --input round1.json --expected-revision 0",
+      "output": "{\"duplicate\":false,\"maturity\":{\"calculation_status\":\"NOT_IMPLEMENTED\",\"current_level\":\"L1_DRAFT\",\"level_scope\":\"INPUT_EVIDENCE_ONLY\",\"qualified_level\":null},\"next_questions\":[{\"field_ids\":[\"project.sales_mode\"],\"priority\":3,\"question_id\":\"Q-SALES\",\"question_zh\":\"计划自用余电上网、全额售电、离网还是尚待比较？\"},{\"field_ids\":[\"project.has_storage\"],\"priority\":5,\"question_id\":\"Q-STORAGE\",\"question_zh\":\"是否包含储能？未知时不会自动按无储能处理。\"},{\"field_ids\":[\"finance.debt_ratio\"],\"priority\":6,\"question_id\":\"Q-DEBT\",\"question_zh\":\"是否使用贷款？明确无债请登记比例0；缺协议不等于无债。\"},{\"field_ids\":[\"site.address\"],\"priority\":10,\"question_id\":\"Q-FIELD-site.address\",\"question_zh\":\"请补充或复核“具体地块/屋顶地址”的资料、单位与来源；未知请明确标记，不填猜测值。\"},{\"field_ids\":[\"site.area_basis\"],\"priority\":10,\"question_id\":\"Q-FIELD-site.area_basis\",\"question_zh\":\"请补充或复核“面积测算依据”的资料、单位与来源；未知请明确标记，不填猜测值。\"}],\"revision\":1}",
+      "exit_code": 0,
+      "error": null
+    },
+    {
+      "command": "'C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe' 'F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\solar_pv.py' --workspace 'C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\SYNTHETIC-cli-demo-ad915edw' submit --state project.json --input round1.json --expected-revision 0",
+      "output": "{\"duplicate\":true,\"maturity\":{\"calculation_status\":\"NOT_IMPLEMENTED\",\"current_level\":\"L1_DRAFT\",\"level_scope\":\"INPUT_EVIDENCE_ONLY\",\"qualified_level\":null},\"next_questions\":[{\"field_ids\":[\"project.sales_mode\"],\"priority\":3,\"question_id\":\"Q-SALES\",\"question_zh\":\"计划自用余电上网、全额售电、离网还是尚待比较？\"},{\"field_ids\":[\"project.has_storage\"],\"priority\":5,\"question_id\":\"Q-STORAGE\",\"question_zh\":\"是否包含储能？未知时不会自动按无储能处理。\"},{\"field_ids\":[\"finance.debt_ratio\"],\"priority\":6,\"question_id\":\"Q-DEBT\",\"question_zh\":\"是否使用贷款？明确无债请登记比例0；缺协议不等于无债。\"},{\"field_ids\":[\"site.address\"],\"priority\":10,\"question_id\":\"Q-FIELD-site.address\",\"question_zh\":\"请补充或复核“具体地块/屋顶地址”的资料、单位与来源；未知请明确标记，不填猜测值。\"},{\"field_ids\":[\"site.area_basis\"],\"priority\":10,\"question_id\":\"Q-FIELD-site.area_basis\",\"question_zh\":\"请补充或复核“面积测算依据”的资料、单位与来源；未知请明确标记，不填猜测值。\"}],\"revision\":1}",
+      "exit_code": 0,
+      "error": null
+    },
+    {
+      "command": "'C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe' 'F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\solar_pv.py' --workspace 'C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\SYNTHETIC-cli-demo-ad915edw' status --state project.json",
+      "output": "{\"duplicate\":false,\"maturity\":{\"calculation_status\":\"NOT_IMPLEMENTED\",\"current_level\":\"L1_DRAFT\",\"level_scope\":\"INPUT_EVIDENCE_ONLY\",\"qualified_level\":null},\"next_questions\":[{\"field_ids\":[\"project.sales_mode\"],\"priority\":3,\"question_id\":\"Q-SALES\",\"question_zh\":\"计划自用余电上网、全额售电、离网还是尚待比较？\"},{\"field_ids\":[\"project.has_storage\"],\"priority\":5,\"question_id\":\"Q-STORAGE\",\"question_zh\":\"是否包含储能？未知时不会自动按无储能处理。\"},{\"field_ids\":[\"finance.debt_ratio\"],\"priority\":6,\"question_id\":\"Q-DEBT\",\"question_zh\":\"是否使用贷款？明确无债请登记比例0；缺协议不等于无债。\"},{\"field_ids\":[\"site.address\"],\"priority\":10,\"question_id\":\"Q-FIELD-site.address\",\"question_zh\":\"请补充或复核“具体地块/屋顶地址”的资料、单位与来源；未知请明确标记，不填猜测值。\"},{\"field_ids\":[\"site.area_basis\"],\"priority\":10,\"question_id\":\"Q-FIELD-site.area_basis\",\"question_zh\":\"请补充或复核“面积测算依据”的资料、单位与来源；未知请明确标记，不填猜测值。\"}],\"revision\":1}",
+      "exit_code": 0,
+      "error": null
+    },
+    {
+      "command": "'C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe' 'F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\solar_pv.py' --workspace 'C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\SYNTHETIC-cli-demo-ad915edw' export --state project.json --output normalized.json",
+      "output": "{\"duplicate\":false,\"maturity\":{\"calculation_status\":\"NOT_IMPLEMENTED\",\"current_level\":\"L1_DRAFT\",\"level_scope\":\"INPUT_EVIDENCE_ONLY\",\"qualified_level\":null},\"next_questions\":[{\"field_ids\":[\"project.sales_mode\"],\"priority\":3,\"question_id\":\"Q-SALES\",\"question_zh\":\"计划自用余电上网、全额售电、离网还是尚待比较？\"},{\"field_ids\":[\"project.has_storage\"],\"priority\":5,\"question_id\":\"Q-STORAGE\",\"question_zh\":\"是否包含储能？未知时不会自动按无储能处理。\"},{\"field_ids\":[\"finance.debt_ratio\"],\"priority\":6,\"question_id\":\"Q-DEBT\",\"question_zh\":\"是否使用贷款？明确无债请登记比例0；缺协议不等于无债。\"},{\"field_ids\":[\"site.address\"],\"priority\":10,\"question_id\":\"Q-FIELD-site.address\",\"question_zh\":\"请补充或复核“具体地块/屋顶地址”的资料、单位与来源；未知请明确标记，不填猜测值。\"},{\"field_ids\":[\"site.area_basis\"],\"priority\":10,\"question_id\":\"Q-FIELD-site.area_basis\",\"question_zh\":\"请补充或复核“面积测算依据”的资料、单位与来源；未知请明确标记，不填猜测值。\"}],\"revision\":1}",
+      "exit_code": 0,
+      "error": null
+    }
+  ],
+  "input_hash": "b54d8625b96cf71fb2f2ea02c9981d32a03f17d023585915a05a09ab24cb239c",
+  "calculation_status": "NOT_IMPLEMENTED"
+}

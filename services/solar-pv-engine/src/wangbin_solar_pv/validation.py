@@ -134,7 +134,7 @@ def validate_record(record, catalog, *, scalar_item=False):
             policy = normalization.get("rounding_policy") or {}
             try:
                 replay = convert_unit(record.get("original_value"), record.get("original_unit"), record.get("unit"),
-                    currency=(record.get("economic_basis") or {}).get("currency"),
+                    currency=normalization.get("currency") or (record.get("economic_basis") or {}).get("currency"),
                     decimal_places=policy.get("decimal_places"), rounding=policy.get("rounding"))
                 if replay.value != value or replay.rule_id != normalization.get("rule_id") or replay.exact != normalization.get("exact"):
                     issue("NORMALIZATION_REPLAY_MISMATCH", "规范值与已声明的原值/单位/转换规则不符")
@@ -203,6 +203,12 @@ def validate_project(project, catalog):
         # No arithmetic/graph checks on malformed records; preserve issues, not exceptions.
         return result
     for record in instances.values():
+        if record.get("status") == "CONFLICT" and (len(record.get("candidate_ids", [])) < 2 or any(cid not in project.candidates for cid in record.get("candidate_ids", []))):
+            result.append(Issue("CONFLICT_CANDIDATES_REQUIRED", record["field_id"], "来源冲突必须保留至少两个真实候选记录"))
+        currency = (record.get("normalization") or {}).get("currency") or (record.get("economic_basis") or {}).get("currency")
+        project_currency = _value(project, "project.currency")
+        if isinstance(record.get("unit"), str) and record["unit"].startswith("currency") and currency and project_currency and currency != project_currency:
+            result.append(Issue("CURRENCY_CONTEXT_MISMATCH", record["field_id"], "金额币种与项目口径不同；单位缩放不能冒充汇率转换"))
         if record.get("provenance_kind") == "C":
             upstream = [instances.get(k) for k in record.get("upstream_instance_ids", [])]
             if any(item is None for item in upstream):

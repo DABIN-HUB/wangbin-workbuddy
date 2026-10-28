@@ -69,7 +69,8 @@ def evidence_properties():
             "maturity_ceiling": {"enum": ["L1", "L2"]}, "noncritical": {"type": "boolean"},
             "decision_invariant": {"type": "boolean"}}, "required": ["reason", "method", "maturity_ceiling", "noncritical", "decision_invariant"]},
         "normalization": {"type": ["object", "null"], "additionalProperties": False, "properties": {
-            "rule_id": string, "exact": {"type": "boolean"}, "rounding_policy": {"type": ["object", "null"]}},
+            "rule_id": string, "exact": {"type": "boolean"}, "rounding_policy": {"type": ["object", "null"]},
+            "currency": {"type": ["string", "null"], "pattern": "^[A-Z]{3}$"}},
             "required": ["rule_id", "exact", "rounding_policy"]},
         "economic_basis": {"type": ["object", "null"], "additionalProperties": False, "properties": {
             "currency": {"type": "string", "pattern": "^[A-Z]{3}$"}, "price_year": {"type": "integer", "minimum": 1900, "maximum": 2200},

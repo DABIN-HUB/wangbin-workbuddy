@@ -1,0 +1,19 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+_____ test_parsed_candidate_acceptance_keeps_sha_and_is_not_verification ______
+tests\solar-pv\test_parser_intake.py:17: in test_parsed_candidate_acceptance_keeps_sha_and_is_not_verification
+    assert s.export()['source_snapshot']['attachments'][0]['sha256']==parsed['sha256']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'attachments'
+___ test_explicit_document_currency_scales_quote_without_inventing_tax_year ___
+tests\solar-pv\test_parser_intake.py:24: in test_explicit_document_currency_scales_quote_without_inventing_tax_year
+    assert result['status']=='PARSED',result
+E   AssertionError: {'attachment_id': 'att-bdfd1d23916d2134', 'candidates': [{'assumption': None, 'candidate_ids': [], 'confidence_basis':...'calculations': False, 'mode': 'LOCAL_INPUT_CANDIDATES_ONLY', 'network': False, 'ocr': False, ...}, 'error': None, ...}
+E   assert 'PARTIAL' == 'PARSED'
+E
+E     - PARSED
+E     + PARTIAL
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_parser_intake.py::test_parsed_candidate_acceptance_keeps_sha_and_is_not_verification
+FAILED tests/solar-pv/test_parser_intake.py::test_explicit_document_currency_scales_quote_without_inventing_tax_year
+2 failed in 6.93s

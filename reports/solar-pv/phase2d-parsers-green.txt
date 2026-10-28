@@ -1,0 +1,5 @@
+...............................ss..............................          [100%]
+- generated xml file: C:\Users\wangbin\AppData\Local\hermes\cache\scratch\solar-pv-phase2-20261028\parsers-junit.xml -
+=========================== short test summary info ===========================
+SKIPPED [2] tests\solar-pv\test_parser_security.py:89: Windows symlink privilege unavailable: OSError
+61 passed, 2 skipped in 144.24s (0:02:24)

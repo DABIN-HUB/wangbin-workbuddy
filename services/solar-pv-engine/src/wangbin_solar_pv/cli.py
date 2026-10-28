@@ -1,0 +1,152 @@
+"""Local JSON intake commands; output never logs complete project records."""
+from __future__ import annotations
+
+import argparse
+from pathlib import Path
+import sys
+
+from .catalog import Catalog
+from .errors import ContractError
+from .intake import IntakeSession
+from .local_files import Workspace
+from .serialization import dumps
+
+
+class _Parser(argparse.ArgumentParser):
+    def error(self, message):
+        # argparse's default embeds user arguments/paths in diagnostic text.
+        raise ContractError("CLI_ARGUMENT_ERROR")
+
+
+def _parser():
+    parser = _Parser(description="光伏本地资料收集 / local JSON intake；不计算、不联网。",
+                     epilog="KNOWN_LIMIT：不是操作系统沙箱；Windows无openat/强制目录隔离，目录竞态仍有边界。仅供私有本地目录；ACL由用户管理，不得作为公开不可信服务。")
+    parser.add_argument("--workspace", required=True, help="已存在的授权私有目录；JSON路径均相对此目录")
+    parser.add_argument("--baseline-dir", help="冻结基线目录；源码默认docs/solar-pv，安装后可显式提供")
+    commands = parser.add_subparsers(dest="command", required=True)
+    new = commands.add_parser("new", help="新建项目，不覆盖已有文件")
+    new.add_argument("--project-id", required=True)
+    new.add_argument("--pv-type", required=True)
+    new.add_argument("--state", required=True)
+    status = commands.add_parser("status", help="只读revision、输入成熟度和下一轮问题")
+    status.add_argument("--state", required=True)
+    export = commands.add_parser("export", help="完整数据仅写入指定私有JSON文件；不覆盖")
+    export.add_argument("--state", required=True)
+    export.add_argument("--output", required=True)
+    for command in ("submit", "revise", "resolve", "review", "remove", "accept"):
+        examples = {
+            "submit": '{"submission_id":"round1","updates":[{"field_id":"site.total_area","value":1000,"unit":"m2"}]}',
+            "revise": 'submission_id, updates, reason（非空修订原因）',
+            "resolve": 'submission_id, field_id, candidate_id, reviewer, reason',
+            "review": 'submission_id, field_id, reviewer, reason, license_status="AUTHORIZED"',
+            "remove": 'submission_id, field_ids（数组）, reason',
+            "accept": '{"submission_id":"accept1","parsed_file":"parsed.json","indices":[0]}；索引从0开始，只确认选中候选，不核实真实性',
+        }
+        operation = commands.add_parser(command, help="独立事务；JSON含submission_id，revise/remove须reason", epilog=examples[command])
+        operation.add_argument("--state", required=True)
+        operation.add_argument("--input", required=True, help="JSON packet；未知键拒绝；数字更新须显式unit")
+        operation.add_argument("--expected-revision", required=True, type=int)
+    parse = commands.add_parser("parse", help="只解析附件候选，不修改项目；PARTIAL退出3，NEEDS_OCR退出4")
+    parse.add_argument("--attachment", required=True, help="附件路径；相对路径以input-root为基准")
+    parse.add_argument("--input-root", required=True, help="显式授权附件根目录；相对路径以workspace为基准")
+    parse.add_argument("--output", required=True, help="候选JSON私有输出；不覆盖")
+    parse.add_argument("--encoding", default="utf-8-sig", help="文本显式编码，默认utf-8-sig；不猜测")
+    return parser
+
+
+def _summary(result):
+    maturity = result["maturity"]
+    return {"revision": result["revision"], "duplicate": result.get("duplicate", False),
+            "maturity": {"current_level": maturity["current_level"], "qualified_level": maturity["qualified_level"],
+                         "level_scope": "INPUT_EVIDENCE_ONLY", "calculation_status": "NOT_IMPLEMENTED"},
+            "next_questions": maturity["next_questions"]}
+
+
+def _apply(session, command, packet, revision, workspace):
+    required = {
+        "submit": {"submission_id", "updates"},
+        "revise": {"submission_id", "updates", "reason"},
+        "resolve": {"submission_id", "field_id", "candidate_id", "reviewer", "reason"},
+        "review": {"submission_id", "field_id", "reviewer", "reason", "license_status"},
+        "remove": {"submission_id", "field_ids", "reason"},
+        "accept": {"submission_id", "parsed_file", "indices"},
+    }[command]
+    allowed = required | {"action"} | ({"reason"} if command == "submit" else set())
+    if (not isinstance(packet, dict) or not required <= packet.keys() or packet.keys() - allowed
+            or ("action" in packet and packet["action"] != command)):
+        raise ContractError("INVALID_COMMAND_PACKET")
+    kwargs = {key: value for key, value in packet.items() if key != "action"}
+    if command == "accept":
+        if not isinstance(kwargs["parsed_file"], str) or not kwargs["parsed_file"]:
+            raise ContractError("INVALID_COMMAND_PACKET")
+        parsed, _ = workspace.read(kwargs.pop("parsed_file"))
+        if not isinstance(parsed, dict):
+            raise ContractError("INVALID_COMMAND_PACKET")
+        return session.accept_candidates(**kwargs, parsed=parsed, expected_revision=revision)
+    return getattr(session, command)(**kwargs, expected_revision=revision)
+
+
+def _parse(args, workspace, catalog):
+    from .parsers import parse_attachment
+
+    output = workspace.path(args.output)
+    if output.exists():
+        raise ContractError("OUTPUT_EXISTS")
+    input_root = workspace.root / Path(args.input_root)
+    attachment = input_root / Path(args.attachment)
+    parsed = parse_attachment(attachment, input_root, catalog=catalog, work_root=workspace.root, encoding=args.encoding)
+    workspace.create(args.output, parsed)
+    print(dumps({"status": parsed["status"], "candidate_count": len(parsed["candidates"]),
+                 "quality_notes": parsed["quality_notes"], "calculation_status": "NOT_IMPLEMENTED"}))
+    if parsed["status"] in {"FAILED", "BLOCKED"}:
+        raise ContractError((parsed.get("error") or {}).get("code", "ATTACHMENT_PARSE_FAILED"))
+    if parsed["status"] == "NEEDS_OCR":
+        return 4
+    return 0 if parsed["status"] == "PARSED" and parsed["candidates"] else 3
+
+
+def main(argv=None):
+    catalog = None
+    try:
+        args = _parser().parse_args(argv)
+        workspace = Workspace(args.workspace)
+        catalog = Catalog(args.baseline_dir)
+        if args.command == "parse":
+            return _parse(args, workspace, catalog)
+        if args.command == "new":
+            session = IntakeSession.new(args.project_id, args.pv_type, catalog)
+            workspace.create(args.state, session.project.to_dict())
+        elif args.command in {"status", "export"}:
+            state, _ = workspace.read(args.state)
+            session = IntakeSession.from_dict(state, catalog)
+            if args.command == "export":
+                workspace.create(args.output, session.export())
+        else:
+            packet, _ = workspace.read(args.input)
+            with workspace.lock(args.state):
+                state, previous_digest = workspace.read(args.state)
+                session = IntakeSession.from_dict(state, catalog)
+                result = _apply(session, args.command, packet, args.expected_revision, workspace)
+                if not result["duplicate"]:
+                    workspace.replace(args.state, session.project.to_dict(), previous_digest)
+                print(dumps(_summary(result)))
+                return 0
+        print(dumps(_summary(session.status())))
+        return 0
+    except ContractError as exc:
+        # Only catalog field identifiers may leave the boundary, never raw paths.
+        field = exc.field_id if catalog is not None and isinstance(exc.field_id, str) and exc.field_id in catalog.fields else None
+        print(dumps({"error": {"code": exc.code, "field_id": field}}), file=sys.stderr)
+        return 2
+    except FileNotFoundError:
+        print('{"error":{"code":"FILE_NOT_FOUND","field_id":null}}', file=sys.stderr)
+        return 2
+    except PermissionError:
+        print('{"error":{"code":"LOCAL_PERMISSION_DENIED","field_id":null}}', file=sys.stderr)
+        return 2
+    except OSError:
+        print('{"error":{"code":"LOCAL_IO_ERROR","field_id":null}}', file=sys.stderr)
+        return 2
+    except Exception:
+        print('{"error":{"code":"LOCAL_OPERATION_FAILED","field_id":null}}', file=sys.stderr)
+        return 2

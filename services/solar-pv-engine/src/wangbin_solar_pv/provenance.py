@@ -11,7 +11,7 @@ SOURCE_KINDS = {"USER_PROVIDED": "U", "DOCUMENT_EXTRACTED": "D", "EXTERNAL_SOURC
                 "CALCULATED": "C", "ASSUMPTION": "U", "UNKNOWN": None}
 
 
-def make_record(catalog, field_id, value, *, source_kind, original_unit=None, field_instance_id=None, **metadata):
+def make_record(catalog, field_id, value, *, source_kind, original_unit=None, field_instance_id=None, currency=None, **metadata):
     if field_id not in catalog.fields:
         raise ContractError("UNKNOWN_FIELD", field_id)
     if source_kind not in SOURCE_KINDS:
@@ -25,7 +25,8 @@ def make_record(catalog, field_id, value, *, source_kind, original_unit=None, fi
     normalization = None
     if value is not None and field["type"] in {"number", "integer"} and raw_unit != unit:
         from .units import convert_unit
-        conversion = convert_unit(value, raw_unit, unit, currency=(metadata.get("economic_basis") or {}).get("currency"),
+        conversion_currency = currency or (metadata.get("economic_basis") or {}).get("currency")
+        conversion = convert_unit(value, raw_unit, unit, currency=conversion_currency,
                                   decimal_places=metadata.pop("decimal_places", None), rounding=metadata.pop("rounding", None))
         normalized = conversion.value
         if field["type"] == "integer":
@@ -33,7 +34,7 @@ def make_record(catalog, field_id, value, *, source_kind, original_unit=None, fi
                 raise ContractError("INTEGER_CONVERSION_NOT_EXACT", field_id)
             normalized = int(normalized)
         transformation.append(conversion.rule_id)
-        normalization = {"rule_id": conversion.rule_id, "exact": conversion.exact, "rounding_policy": conversion.rounding_policy}
+        normalization = {"rule_id": conversion.rule_id, "exact": conversion.exact, "rounding_policy": conversion.rounding_policy, "currency": conversion_currency}
     record = {
         "field_id": field_id, "field_instance_id": field_instance_id or field_id,
         "value": normalized, "unit": unit, "original_value": deepcopy(value), "original_unit": raw_unit,
@@ -57,6 +58,23 @@ def make_record(catalog, field_id, value, *, source_kind, original_unit=None, fi
     return record
 
 
+def _logical_value(value):
+    if isinstance(value, list):
+        return [_logical_value(item) for item in value]
+    if isinstance(value, dict):
+        if "field_id" in value and "value" in value:
+            return {key: _logical_value(value.get(key)) for key in ("field_id", "value", "unit", "economic_basis")}
+        return {key: _logical_value(item) for key, item in value.items()}
+    return value
+
+
+def _incompatible(a, b):
+    if digest(_logical_value(a["value"])) != digest(_logical_value(b["value"])) or a["unit"] != b["unit"]:
+        return True
+    return any(a.get(key) is not None and b.get(key) is not None and a[key] != b[key]
+               for key in ("economic_basis", "measurement_period", "effective_from", "effective_to", "geography"))
+
+
 def register_candidate(project, record, catalog, *, replacement_reason=None):
     from .validation import validate_record
     errors = [i for i in validate_record(record, catalog) if i.severity == "ERROR"]
@@ -75,7 +93,10 @@ def register_candidate(project, record, catalog, *, replacement_reason=None):
         project.candidates.setdefault(previous_id, deepcopy(current))
         previous_ids = [previous_id]
     all_ids = list(dict.fromkeys([*previous_ids, candidate_id]))
-    if current and (current["status"] == "CONFLICT" or digest(current["value"]) != digest(candidate["value"])) and not replacement_reason:
+    if current and current["status"] != "CONFLICT" and candidate["status"] == "UNKNOWN" and current["status"] != "UNKNOWN" and not replacement_reason:
+        selected = deepcopy(current)
+        selected["candidate_ids"] = all_ids
+    elif current and current["status"] != "UNKNOWN" and (current["status"] == "CONFLICT" or _incompatible(current, candidate)) and not replacement_reason:
         selected = deepcopy(current)
         selected.update(value=None, status="CONFLICT", candidate_ids=all_ids,
                         confidence_basis="来源候选冲突，需有证据选择，未自动取平均或取有利值")
@@ -106,6 +127,7 @@ def source_snapshot(project, catalog):
     from .validation import iter_records
     records = [deepcopy(r) for r, _ in iter_records(project.values, catalog)]
     candidates = deepcopy(project.candidates)
-    snapshot = {"baseline_version": project.baseline_version, "records": records, "candidates": candidates,
+    attachments=[deepcopy(event) for event in project.history if event.get("event")=="attachment_registered"]
+    snapshot = {"baseline_version": project.baseline_version, "records": records, "candidates": candidates,"attachments":attachments,
                 "resolutions": deepcopy(project.resolutions)}
     return {"source_snapshot_id": "sources-" + digest(snapshot), **snapshot}

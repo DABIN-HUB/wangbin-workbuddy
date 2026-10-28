@@ -1,0 +1,32 @@
+FFF                                                                      [100%]
+================================== FAILURES ===================================
+_______ test_unknown_can_be_filled_without_creating_a_conflicting_fact ________
+tests\solar-pv\test_source_merge.py:15: in test_unknown_can_be_filled_without_creating_a_conflicting_fact
+    assert p.values["site.total_area"]["status"]=="UNVERIFIED"
+E   AssertionError: assert 'CONFLICT' == 'UNVERIFIED'
+E
+E     - UNVERIFIED
+E     + CONFLICT
+______ test_equal_amount_in_two_price_years_is_not_silently_overwritten _______
+tests\solar-pv\test_source_merge.py:24: in test_equal_amount_in_two_price_years_is_not_silently_overwritten
+    assert p.values["capex.user_budget"]["status"]=="CONFLICT"
+E   AssertionError: assert 'UNVERIFIED' == 'CONFLICT'
+E
+E     - CONFLICT
+E     + UNVERIFIED
+_____ test_currency_unit_scaling_does_not_invent_price_year_or_tax_status _____
+tests\solar-pv\test_source_merge.py:28: in test_currency_unit_scaling_does_not_invent_price_year_or_tax_status
+    r=make_record(CAT,"capex.user_budget",100,source_kind="USER_PROVIDED",source_id="SYNTHETIC",
+services\solar-pv-engine\src\wangbin_solar_pv\provenance.py:28: in make_record
+    conversion = convert_unit(value, raw_unit, unit, currency=(metadata.get("economic_basis") or {}).get("currency"),
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:167: in convert_unit
+    target_dimension, target_scale = _unit_spec(target_unit, currency)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:80: in _unit_spec
+    raise ContractError("UNIT_CURRENCY_REQUIRED")
+E   wangbin_solar_pv.errors.ContractError: UNIT_CURRENCY_REQUIRED
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_source_merge.py::test_unknown_can_be_filled_without_creating_a_conflicting_fact
+FAILED tests/solar-pv/test_source_merge.py::test_equal_amount_in_two_price_years_is_not_silently_overwritten
+FAILED tests/solar-pv/test_source_merge.py::test_currency_unit_scaling_does_not_invent_price_year_or_tax_status
+3 failed in 0.94s

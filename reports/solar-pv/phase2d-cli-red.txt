@@ -1,0 +1,296 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+_______ test_new_and_status_are_real_commands_without_private_data_logs _______
+
+tmp_path = WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase2-20261028/pytest-cli-red/test_new_and_status_are_real_c0')
+
+    def test_new_and_status_are_real_commands_without_private_data_logs(tmp_path):
+>       result = new(tmp_path)
+                 ^^^^^^^^^^^^^
+
+tests\solar-pv\test_cli.py:49:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\solar-pv\test_cli.py:32: in new
+    return run_cli(root, "new", "--project-id", "SYNTHETIC", "--pv-type", "industrial_rooftop", "--state", "project.json")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+workspace = WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase2-20261028/pytest-cli-red/test_new_and_status_are_real_c0')
+expected = 0
+args = ('new', '--project-id', 'SYNTHETIC', '--pv-type', 'industrial_rooftop', '--state', ...)
+env = {'AI_AGENT': 'hermes-agent', 'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPCODE_VM_OPTIONS': 'D:\\Program Files\\JetBrains\\IntelliJ IDEA 2024.1\\jetbra\\vmoptions\\appcode.vmoptions', 'APPDATA': 'C:\\Users\\wangbin\\AppData\\Roaming', ...}
+result = CompletedProcess(args=['C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-v...aWorkSpace\\\\wangbin-workbuddy\\\\services\\\\solar-pv-engine\\\\solar_pv.py': [Errno 2] No such file or directory\n")
+
+    def run_cli(workspace, *args, expected=0):
+        env = dict(os.environ, PYTHONUTF8="1", PYTHONDONTWRITEBYTECODE="1")
+        result = subprocess.run([sys.executable, str(ENTRY), "--workspace", str(workspace), *map(str, args)],
+                                cwd=workspace, env=env, capture_output=True, text=True, encoding="utf-8", timeout=60)
+>       assert result.returncode == expected, (result.returncode, result.stdout, result.stderr)
+E       AssertionError: (2, '', "C:\\Users\\wangbin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe: can't open file 'F:\\\\ideaWorkSpace\\\\wangbin-workbuddy\\\\services\\\\solar-pv-engine\\\\solar_pv.py': [Errno 2] No such file or directory
+E         ")
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-v...aWorkSpace\\\\wangbin-workbuddy\\\\services\\\\solar-pv-engine\\\\solar_pv.py': [Errno 2] No such file or directory\n").returncode
+
+tests\solar-pv\test_cli.py:21: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_cli.py::test_new_and_status_are_real_commands_without_private_data_logs
+1 failed in 0.34s
+.F                                                                       [100%]
+================================== FAILURES ===================================
+_ test_multiround_cli_conflict_revision_idempotency_review_remove_and_export __
+
+tmp_path = WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase2-20261028/pytest-cli-rounds-red/test_multiround_cli_conflict_r0')
+
+    def test_multiround_cli_conflict_revision_idempotency_review_remove_and_export(tmp_path):
+        new(tmp_path)
+        first = {"submission_id": "round1", "updates": [{"field_id": "site.total_area", "value": 1000, "unit": "m2"}]}
+>       assert json.loads(update(tmp_path, "submit", first, 0).stdout)["revision"] == 1
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\solar-pv\test_cli.py:69:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\solar-pv\test_cli.py:62: in update
+    return run_cli(root, command, "--state", "project.json", "--input", packet(root, data),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+workspace = WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase2-20261028/pytest-cli-rounds-red/test_multiround_cli_conflict_r0')
+expected = 0
+args = ('submit', '--state', 'project.json', '--input', 'packet.json', '--expected-revision', ...)
+env = {'AI_AGENT': 'hermes-agent', 'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPCODE_VM_OPTIONS': 'D:\\Program Files\\JetBrains\\IntelliJ IDEA 2024.1\\jetbra\\vmoptions\\appcode.vmoptions', 'APPDATA': 'C:\\Users\\wangbin\\AppData\\Roaming', ...}
+result = CompletedProcess(args=['C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-v...-expected-revision', '0'], returncode=2, stdout='', stderr='{"error":{"code":"CLI_ARGUMENT_ERROR","field_id":null}}\n')
+
+    def run_cli(workspace, *args, expected=0):
+        env = dict(os.environ, PYTHONUTF8="1", PYTHONDONTWRITEBYTECODE="1")
+        result = subprocess.run([sys.executable, str(ENTRY), "--workspace", str(workspace), *map(str, args)],
+                                cwd=workspace, env=env, capture_output=True, text=True, encoding="utf-8", timeout=60)
+>       assert result.returncode == expected, (result.returncode, result.stdout, result.stderr)
+E       AssertionError: (2, '', '{"error":{"code":"CLI_ARGUMENT_ERROR","field_id":null}}
+E         ')
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-v...-expected-revision', '0'], returncode=2, stdout='', stderr='{"error":{"code":"CLI_ARGUMENT_ERROR","field_id":null}}\n').returncode
+
+tests\solar-pv\test_cli.py:21: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_cli.py::test_multiround_cli_conflict_revision_idempotency_review_remove_and_export
+1 failed, 1 passed in 2.61s
+FF                                                                       [100%]
+================================== FAILURES ===================================
+___________ test_real_txt_parse_then_explicit_accept_is_not_review ____________
+
+tmp_path = WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase2-20261028/pytest-cli-parse-red/test_real_txt_parse_then_expli0')
+
+    def test_real_txt_parse_then_explicit_accept_is_not_review(tmp_path):
+        new(tmp_path)
+        original = (tmp_path / "project.json").read_bytes()
+        (tmp_path / "SYNTHETIC.txt").write_text("项目名称：SYNTHETIC屋顶\n直流装机：1.25 MWp\n", encoding="utf-8")
+>       result = run_cli(tmp_path, "parse", "--attachment", "SYNTHETIC.txt", "--input-root", str(tmp_path), "--output", "parsed.json")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\solar-pv\test_cli.py:102:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+workspace = WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase2-20261028/pytest-cli-parse-red/test_real_txt_parse_then_expli0')
+expected = 0
+args = ('parse', '--attachment', 'SYNTHETIC.txt', '--input-root', 'C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\pytest-cli-parse-red\\test_real_txt_parse_then_expli0', '--output', ...)
+env = {'AI_AGENT': 'hermes-agent', 'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPCODE_VM_OPTIONS': 'D:\\Program Files\\JetBrains\\IntelliJ IDEA 2024.1\\jetbra\\vmoptions\\appcode.vmoptions', 'APPDATA': 'C:\\Users\\wangbin\\AppData\\Roaming', ...}
+result = CompletedProcess(args=['C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-v...--output', 'parsed.json'], returncode=2, stdout='', stderr='{"error":{"code":"CLI_ARGUMENT_ERROR","field_id":null}}\n')
+
+    def run_cli(workspace, *args, expected=0):
+        env = dict(os.environ, PYTHONUTF8="1", PYTHONDONTWRITEBYTECODE="1")
+        result = subprocess.run([sys.executable, str(ENTRY), "--workspace", str(workspace), *map(str, args)],
+                                cwd=workspace, env=env, capture_output=True, text=True, encoding="utf-8", timeout=60)
+>       assert result.returncode == expected, (result.returncode, result.stdout, result.stderr)
+E       AssertionError: (2, '', '{"error":{"code":"CLI_ARGUMENT_ERROR","field_id":null}}
+E         ')
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-v...--output', 'parsed.json'], returncode=2, stdout='', stderr='{"error":{"code":"CLI_ARGUMENT_ERROR","field_id":null}}\n').returncode
+
+tests\solar-pv\test_cli.py:21: AssertionError
+__________ test_parse_no_deterministic_candidates_is_nonzero_partial __________
+
+tmp_path = WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase2-20261028/pytest-cli-parse-red/test_parse_no_deterministic_ca0')
+
+    def test_parse_no_deterministic_candidates_is_nonzero_partial(tmp_path):
+        (tmp_path / "SYNTHETIC.txt").write_text("SYNTHETIC ordinary prose without declared engineering data", encoding="utf-8")
+>       result = run_cli(tmp_path, "parse", "--attachment", "SYNTHETIC.txt", "--input-root", str(tmp_path), "--output", "parsed.json", expected=3)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\solar-pv\test_cli.py:122:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+workspace = WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase2-20261028/pytest-cli-parse-red/test_parse_no_deterministic_ca0')
+expected = 3
+args = ('parse', '--attachment', 'SYNTHETIC.txt', '--input-root', 'C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\pytest-cli-parse-red\\test_parse_no_deterministic_ca0', '--output', ...)
+env = {'AI_AGENT': 'hermes-agent', 'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPCODE_VM_OPTIONS': 'D:\\Program Files\\JetBrains\\IntelliJ IDEA 2024.1\\jetbra\\vmoptions\\appcode.vmoptions', 'APPDATA': 'C:\\Users\\wangbin\\AppData\\Roaming', ...}
+result = CompletedProcess(args=['C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-v...--output', 'parsed.json'], returncode=2, stdout='', stderr='{"error":{"code":"CLI_ARGUMENT_ERROR","field_id":null}}\n')
+
+    def run_cli(workspace, *args, expected=0):
+        env = dict(os.environ, PYTHONUTF8="1", PYTHONDONTWRITEBYTECODE="1")
+        result = subprocess.run([sys.executable, str(ENTRY), "--workspace", str(workspace), *map(str, args)],
+                                cwd=workspace, env=env, capture_output=True, text=True, encoding="utf-8", timeout=60)
+>       assert result.returncode == expected, (result.returncode, result.stdout, result.stderr)
+E       AssertionError: (2, '', '{"error":{"code":"CLI_ARGUMENT_ERROR","field_id":null}}
+E         ')
+E       assert 2 == 3
+E        +  where 2 = CompletedProcess(args=['C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-v...--output', 'parsed.json'], returncode=2, stdout='', stderr='{"error":{"code":"CLI_ARGUMENT_ERROR","field_id":null}}\n').returncode
+
+tests\solar-pv\test_cli.py:21: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_cli.py::test_real_txt_parse_then_explicit_accept_is_not_review
+FAILED tests/solar-pv/test_cli.py::test_parse_no_deterministic_candidates_is_nonzero_partial
+2 failed, 2 deselected in 1.49s
+..............F......F.F......F.......                                   [100%]
+================================== FAILURES ===================================
+_______ test_command_error_contract_and_atomic_rejection[bad-path-type] _______
+
+tmp_path = WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase2-20261028/pytest-cli-security-red/test_command_error_contract_an5')
+command = 'accept', extra = {'indices': [0], 'parsed_file': 123}
+code = 'INVALID_COMMAND_PACKET'
+
+    @pytest.mark.parametrize("command,extra,code", [
+        ("submit", {"updates": [{"field_id": "site.total_area", "value": 1}]}, "UNIT_REQUIRED"),
+        ("revise", {"updates": [{"field_id": "site.total_area", "value": 1, "unit": "m2"}], "reason": ""}, "CHANGE_REASON_REQUIRED"),
+        ("review", {"field_id": "project.pv_type", "reviewer": "SYNTHETIC", "reason": "SYNTHETIC", "license_status": "UNKNOWN"}, "REVIEW_EVIDENCE_REQUIRED"),
+        ("submit", {"updates": [], "unexpected": "SYNTHETIC"}, "INVALID_COMMAND_PACKET"),
+        ("submit", {"updates": [], "action": "review"}, "INVALID_COMMAND_PACKET"),
+        ("accept", {"parsed_file": 123, "indices": [0]}, "INVALID_COMMAND_PACKET"),
+    ], ids=["unit", "revision-reason", "review-evidence", "unknown-key", "action-mismatch", "bad-path-type"])
+    def test_command_error_contract_and_atomic_rejection(tmp_path, command, extra, code):
+        new(tmp_path)
+        original = (tmp_path / "project.json").read_bytes()
+        path = packet(tmp_path, {"submission_id": "invalid", **extra})
+>       detail = error(tmp_path, command, "--state", "project.json", "--input", path, "--expected-revision", 0, code=code)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\solar-pv\test_cli.py:164:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase2-20261028/pytest-cli-security-red/test_command_error_contract_an5')
+code = 'INVALID_COMMAND_PACKET'
+args = ('accept', '--state', 'project.json', '--input', 'packet.json', '--expected-revision', ...)
+result = CompletedProcess(args=['C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-v...ected-revision', '0'], returncode=2, stdout='', stderr='{"error":{"code":"LOCAL_OPERATION_FAILED","field_id":null}}\n')
+data = {'error': {'code': 'LOCAL_OPERATION_FAILED', 'field_id': None}}
+
+    def error(root, *args, code):
+        result = run_cli(root, *args, expected=2)
+        data = json.loads(result.stderr)
+>       assert data["error"]["code"] == code
+E       AssertionError: assert 'LOCAL_OPERATION_FAILED' == 'INVALID_COMMAND_PACKET'
+E
+E         - INVALID_COMMAND_PACKET
+E         + LOCAL_OPERATION_FAILED
+
+tests\solar-pv\test_cli.py:42: AssertionError
+_____________________ test_state_path_boundary[reserved] ______________________
+
+tmp_path = WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase2-20261028/pytest-cli-security-red/test_state_path_boundary_reser0')
+path = 'NUL.json', code = 'INVALID_LOCAL_PATH'
+
+    @pytest.mark.parametrize("path,code", [
+        ("../project.json", "PATH_TRAVERSAL"),
+        ("nested/../project.json", "PATH_TRAVERSAL"),
+        (".env", "JSON_PATH_REQUIRED"),
+        ("project.txt", "JSON_PATH_REQUIRED"),
+        ("stream.json:secret", "INVALID_LOCAL_PATH"),
+        ("NUL.json", "INVALID_LOCAL_PATH"),
+        ("missing/project.json", "PARENT_DIRECTORY_REQUIRED"),
+    ], ids=["parent", "embedded-parent", "env", "suffix", "ads", "reserved", "parent-missing"])
+    def test_state_path_boundary(tmp_path, path, code):
+        (tmp_path / ".env").write_text("SYNTHETIC_PRIVATE_CANARY", encoding="utf-8")
+        result = run_cli(tmp_path, "status", "--state", path, expected=2)
+>       assert json.loads(result.stderr)["error"]["code"] == code
+E       AssertionError: assert 'PATH_OUTSIDE_WORKSPACE' == 'INVALID_LOCAL_PATH'
+E
+E         - INVALID_LOCAL_PATH
+E         + PATH_OUTSIDE_WORKSPACE
+
+tests\solar-pv\test_cli.py:199: AssertionError
+______ test_workspace_must_exist_and_absolute_outside_paths_are_rejected ______
+
+tmp_path = WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase2-20261028/pytest-cli-security-red/test_workspace_must_exist_and_0')
+
+    def test_workspace_must_exist_and_absolute_outside_paths_are_rejected(tmp_path):
+        error(tmp_path, "--workspace", str(tmp_path / "missing"), "status", "--state", "project.json", code="WORKSPACE_REQUIRED")
+        error(tmp_path, "status", "--state", str(tmp_path.parent / "outside.json"), code="PATH_OUTSIDE_WORKSPACE")
+>       error(tmp_path, "status", "--state", "missing.json", code="FILE_NOT_FOUND")
+
+tests\solar-pv\test_cli.py:206:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase2-20261028/pytest-cli-security-red/test_workspace_must_exist_and_0')
+code = 'FILE_NOT_FOUND', args = ('status', '--state', 'missing.json')
+result = CompletedProcess(args=['C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-v...ate', 'missing.json'], returncode=2, stdout='', stderr='{"error":{"code":"LOCAL_OPERATION_FAILED","field_id":null}}\n')
+data = {'error': {'code': 'LOCAL_OPERATION_FAILED', 'field_id': None}}
+
+    def error(root, *args, code):
+        result = run_cli(root, *args, expected=2)
+        data = json.loads(result.stderr)
+>       assert data["error"]["code"] == code
+E       AssertionError: assert 'LOCAL_OPERATION_FAILED' == 'FILE_NOT_FOUND'
+E
+E         - FILE_NOT_FOUND
+E         + LOCAL_OPERATION_FAILED
+
+tests\solar-pv\test_cli.py:42: AssertionError
+_______________ test_future_schema_rejected_instead_of_migrated _______________
+
+tmp_path = WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase2-20261028/pytest-cli-security-red/test_future_schema_rejected_in0')
+
+    def test_future_schema_rejected_instead_of_migrated(tmp_path):
+        new(tmp_path)
+        project = read(tmp_path)
+        project["schema_version"] = "solar-pv-project/999.0.0"
+        packet(tmp_path, project, "future.json")
+        result = run_cli(tmp_path, "status", "--state", "future.json", expected=2)
+>       assert json.loads(result.stderr)["error"]["code"] in {"UNSUPPORTED_SCHEMA_VERSION", "PROJECT_SCHEMA"}
+E       AssertionError: assert 'SCHEMA_VALIDATION_FAILED' in {'PROJECT_SCHEMA', 'UNSUPPORTED_SCHEMA_VERSION'}
+
+tests\solar-pv\test_cli.py:245: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_cli.py::test_command_error_contract_and_atomic_rejection[bad-path-type]
+FAILED tests/solar-pv/test_cli.py::test_state_path_boundary[reserved] - Asser...
+FAILED tests/solar-pv/test_cli.py::test_workspace_must_exist_and_absolute_outside_paths_are_rejected
+FAILED tests/solar-pv/test_cli.py::test_future_schema_rejected_instead_of_migrated
+4 failed, 34 passed in 56.84s
+Fsss...F.....                                                            [100%]
+================================== FAILURES ===================================
+_________ test_source_entry_module_entry_and_help_are_cwd_independent _________
+
+tmp_path = WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase2-20261028/pytest-cli-boundary-red/test_source_entry_module_entry0')
+
+    def test_source_entry_module_entry_and_help_are_cwd_independent(tmp_path):
+        env = dict(os.environ, PYTHONPATH=str(SOURCE), PYTHONUTF8="1", PYTHONDONTWRITEBYTECODE="1")
+        result = subprocess.run([sys.executable, "-m", "wangbin_solar_pv", "--help"], cwd=tmp_path, env=env,
+                                capture_output=True, text=True, encoding="utf-8", timeout=30)
+        assert result.returncode == 0
+        assert "--workspace" in result.stdout and "--baseline-dir" in result.stdout
+        assert "不计算、不联网" in result.stdout
+        help_result = run_cli(tmp_path, "accept", "--help")
+        assert "parsed_file" in help_result.stdout and "indices" in help_result.stdout
+>       assert "KNOWN_LIMIT" in result.stdout and "沙箱" in result.stdout
+E       AssertionError: assert ('KNOWN_LIMIT' in 'usage: __main__.py [-h] --workspace WORKSPACE [--baseline-dir BASELINE_DIR]\n                   {new,status,export,su...   已存在的授权私有目录；JSON路径均相对此目录\n  --baseline-dir BASELINE_DIR\n                        冻结基线目录；源码默认docs/solar-pv，安装后可显式提供\n')
+E        +  where 'usage: __main__.py [-h] --workspace WORKSPACE [--baseline-dir BASELINE_DIR]\n                   {new,status,export,su...   已存在的授权私有目录；JSON路径均相对此目录\n  --baseline-dir BASELINE_DIR\n                        冻结基线目录；源码默认docs/solar-pv，安装后可显式提供\n' = CompletedProcess(args=['C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-v...录；JSON路径均相对此目录\n  --baseline-dir BASELINE_DIR\n                        冻结基线目录；源码默认docs/solar-pv，安装后可显式提供\n', stderr='').stdout
+
+tests\solar-pv\test_cli.py:325: AssertionError
+_____ test_arbitrary_unknown_field_is_not_echoed_as_public_error_field_id _____
+
+tmp_path = WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase2-20261028/pytest-cli-boundary-red/test_arbitrary_unknown_field_i0')
+
+    def test_arbitrary_unknown_field_is_not_echoed_as_public_error_field_id(tmp_path):
+        new(tmp_path)
+        path = packet(tmp_path, {"submission_id": "resolve-invalid", "field_id": "synthetic_private_canary.secret",
+                                 "candidate_id": "absent", "reviewer": "SYNTHETIC", "reason": "SYNTHETIC"})
+        result = run_cli(tmp_path, "resolve", "--state", "project.json", "--input", path, "--expected-revision", 0, expected=2)
+>       assert json.loads(result.stderr) == {"error": {"code": "INVALID_CONFLICT_CHOICE", "field_id": None}}
+E       AssertionError: assert {'error': {'c...nary.secret'}} == {'error': {'c...ld_id': None}}
+E
+E         Differing items:
+E         {'error': {'code': 'INVALID_CONFLICT_CHOICE', 'field_id': 'synthetic_private_canary.secret'}} != {'error': {'code': 'INVALID_CONFLICT_CHOICE', 'field_id': None}}
+E         Use -v to get more diff
+
+tests\solar-pv\test_cli.py:396: AssertionError
+=========================== short test summary info ===========================
+SKIPPED [3] tests\solar-pv\test_cli.py:337: Windows symlink privilege unavailable: 22
+FAILED tests/solar-pv/test_cli.py::test_source_entry_module_entry_and_help_are_cwd_independent
+FAILED tests/solar-pv/test_cli.py::test_arbitrary_unknown_field_is_not_echoed_as_public_error_field_id
+2 failed, 8 passed, 3 skipped, 37 deselected in 21.19s

@@ -1,0 +1,89 @@
+FFFFFFFFFFF                                                              [100%]
+================================== FAILURES ===================================
+__ test_minimal_round_normalizes_capacity_and_never_derives_cost_from_target __
+tests\solar-pv\test_intake.py:17: in test_minimal_round_normalizes_capacity_and_never_derives_cost_from_target
+    s=session()
+      ^^^^^^^^^
+tests\solar-pv\test_intake.py:12: in session
+    from wangbin_solar_pv.intake import IntakeSession
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.intake'
+___ test_submission_is_idempotent_but_id_reuse_with_other_data_is_rejected ____
+tests\solar-pv\test_intake.py:29: in test_submission_is_idempotent_but_id_reuse_with_other_data_is_rejected
+    s=session();updates=[{"field_id":"site.total_area","value":1000,"unit":"m2"}]
+      ^^^^^^^^^
+tests\solar-pv\test_intake.py:12: in session
+    from wangbin_solar_pv.intake import IntakeSession
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.intake'
+____ test_invalid_batch_is_atomic_and_revision_conflict_does_not_override _____
+tests\solar-pv\test_intake.py:39: in test_invalid_batch_is_atomic_and_revision_conflict_does_not_override
+    s=session();before=s.project.to_dict()
+      ^^^^^^^^^
+tests\solar-pv\test_intake.py:12: in session
+    from wangbin_solar_pv.intake import IntakeSession
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.intake'
+__ test_conflicting_round_preserves_candidates_and_requires_reviewed_choice ___
+tests\solar-pv\test_intake.py:49: in test_conflicting_round_preserves_candidates_and_requires_reviewed_choice
+    s=session()
+      ^^^^^^^^^
+tests\solar-pv\test_intake.py:12: in session
+    from wangbin_solar_pv.intake import IntakeSession
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.intake'
+____ test_explicit_correction_retains_old_candidate_without_fake_conflict _____
+tests\solar-pv\test_intake.py:62: in test_explicit_correction_retains_old_candidate_without_fake_conflict
+    s=session();s.submit("first",[{"field_id":"site.total_area","value":1000,"unit":"m2"}],expected_revision=0)
+      ^^^^^^^^^
+tests\solar-pv\test_intake.py:12: in session
+    from wangbin_solar_pv.intake import IntakeSession
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.intake'
+_ test_unknown_to_known_is_not_a_conflict_and_unknown_cannot_erase_known_fact _
+tests\solar-pv\test_intake.py:69: in test_unknown_to_known_is_not_a_conflict_and_unknown_cannot_erase_known_fact
+    s=session()
+      ^^^^^^^^^
+tests\solar-pv\test_intake.py:12: in session
+    from wangbin_solar_pv.intake import IntakeSession
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.intake'
+_______ test_user_cannot_submit_calculated_or_verified_claims_directly ________
+tests\solar-pv\test_intake.py:78: in test_user_cannot_submit_calculated_or_verified_claims_directly
+    s=session()
+      ^^^^^^^^^
+tests\solar-pv\test_intake.py:12: in session
+    from wangbin_solar_pv.intake import IntakeSession
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.intake'
+_ test_explicit_review_is_separate_from_extraction_and_never_promotes_assumptions _
+tests\solar-pv\test_intake.py:86: in test_explicit_review_is_separate_from_extraction_and_never_promotes_assumptions
+    s=session();s.submit("name",[{"field_id":"project.name","value":"SYNTHETIC"}],expected_revision=0)
+      ^^^^^^^^^
+tests\solar-pv\test_intake.py:12: in session
+    from wangbin_solar_pv.intake import IntakeSession
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.intake'
+_ test_numeric_units_are_explicit_and_currency_conversion_has_no_invented_tax_basis _
+tests\solar-pv\test_intake.py:93: in test_numeric_units_are_explicit_and_currency_conversion_has_no_invented_tax_basis
+    s=session()
+      ^^^^^^^^^
+tests\solar-pv\test_intake.py:12: in session
+    from wangbin_solar_pv.intake import IntakeSession
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.intake'
+_______ test_raw_object_array_and_predecessors_get_per_atom_provenance ________
+tests\solar-pv\test_intake.py:103: in test_raw_object_array_and_predecessors_get_per_atom_provenance
+    s=session();s.submit("tasks",[{"field_id":"schedule.tasks","value":[{"row_id":"start","fields":{
+      ^^^^^^^^^
+tests\solar-pv\test_intake.py:12: in session
+    from wangbin_solar_pv.intake import IntakeSession
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.intake'
+______ test_export_is_versioned_exact_and_has_no_fake_calculation_result ______
+tests\solar-pv\test_intake.py:112: in test_export_is_versioned_exact_and_has_no_fake_calculation_result
+    from wangbin_solar_pv.intake import IntakeSession
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.intake'
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_intake.py::test_minimal_round_normalizes_capacity_and_never_derives_cost_from_target
+FAILED tests/solar-pv/test_intake.py::test_submission_is_idempotent_but_id_reuse_with_other_data_is_rejected
+FAILED tests/solar-pv/test_intake.py::test_invalid_batch_is_atomic_and_revision_conflict_does_not_override
+FAILED tests/solar-pv/test_intake.py::test_conflicting_round_preserves_candidates_and_requires_reviewed_choice
+FAILED tests/solar-pv/test_intake.py::test_explicit_correction_retains_old_candidate_without_fake_conflict
+FAILED tests/solar-pv/test_intake.py::test_unknown_to_known_is_not_a_conflict_and_unknown_cannot_erase_known_fact
+FAILED tests/solar-pv/test_intake.py::test_user_cannot_submit_calculated_or_verified_claims_directly
+FAILED tests/solar-pv/test_intake.py::test_explicit_review_is_separate_from_extraction_and_never_promotes_assumptions
+FAILED tests/solar-pv/test_intake.py::test_numeric_units_are_explicit_and_currency_conversion_has_no_invented_tax_basis
+FAILED tests/solar-pv/test_intake.py::test_raw_object_array_and_predecessors_get_per_atom_provenance
+FAILED tests/solar-pv/test_intake.py::test_export_is_versioned_exact_and_has_no_fake_calculation_result
+11 failed in 0.39s
