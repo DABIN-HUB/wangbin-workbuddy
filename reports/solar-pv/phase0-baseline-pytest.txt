@@ -1,0 +1,47 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.0, pytest-8.4.2, pluggy-1.7.0
+rootdir: C:\Users\wangbin\AppData\Local\hermes\cache\scratch\solar-pv-audit-20261028\repo-baseline
+configfile: pyproject.toml
+collected 150 items
+
+tests\test_batch_processing.py ..                                        [  1%]
+tests\test_document_engine_real_formats.py ...........                   [  8%]
+tests\test_financial_xlsx.py ........                                    [ 14%]
+tests\test_inventory_analyzer.py ..........s                             [ 21%]
+tests\test_phase3_security_limits.py .F......                            [ 26%]
+tests\test_product_factory.py .........s.............s.                  [ 43%]
+tests\test_purchase_analyzer.py ..........                               [ 50%]
+tests\test_receivable_analyzer.py .......                                [ 54%]
+tests\test_sales_analyzer.py .........                                   [ 60%]
+tests\test_security.py ...s                                              [ 63%]
+tests\test_spreadsheets.py ....                                          [ 66%]
+tests\test_tender_analyzer.py .....s......                               [ 74%]
+tests\test_tooling.py ...                                                [ 76%]
+packages\experts\wangbin-software-consultant\tests\test_expert_candidate.py . [ 76%]
+...................................                                      [100%]
+
+================================== FAILURES ===================================
+_______________ test_capacity_is_enforced_across_cli_processes ________________
+
+    def test_capacity_is_enforced_across_cli_processes() -> None:
+        with hold_resource_slot(), hold_resource_slot():
+            busy = subprocess.run(
+                [sys.executable, "-m", "wangbin_document_cli.main", "parse", "--input", str(FIXTURES / "sample.txt"), "--input-root", str(FIXTURES)],
+                capture_output=True, text=True, timeout=30,
+                env={**os.environ, "PYTHONPATH": str(Path(__file__).resolve().parents[1] / "services" / "document-engine" / "src"),
+                     "WANGBIN_ENGINE_SRC": "", "PYTHONNOUSERSITE": "1"},
+            )
+>           assert busy.returncode == 1
+E           assert 78 == 1
+E            +  where 78 = CompletedProcess(args=['F:\\ideaWorkSpace\\wangbin-workbuddy\\.venv\\Scripts\\python.exe', '-m', 'wangbin_document_cli...安装或修复 CLI 及其声明的 Python 依赖",\n    "issues": [\n      "wangbin-document-cli: NOT_INSTALLED"\n    ]\n  }\n}\n', stderr='').returncode
+
+tests\test_phase3_security_limits.py:42: AssertionError
+- generated xml file: C:\Users\wangbin\AppData\Local\hermes\cache\scratch\solar-pv-audit-20261028\baseline-junit.xml -
+=========================== short test summary info ===========================
+SKIPPED [1] tests\test_inventory_analyzer.py:247: symlinks unavailable
+SKIPPED [1] tests\test_product_factory.py:143: symlinks unavailable
+SKIPPED [1] tests\test_product_factory.py:300: symlinks unavailable
+SKIPPED [1] tests\test_security.py:38: 当前 Windows 环境未允许创建符号链接
+SKIPPED [1] tests\test_tender_analyzer.py:190: symlink creation is unavailable on this Windows runner
+FAILED tests/test_phase3_security_limits.py::test_capacity_is_enforced_across_cli_processes
+================== 1 failed, 144 passed, 5 skipped in 45.20s ==================
