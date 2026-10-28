@@ -1,0 +1,43 @@
+.....F.FFFFF.                                                            [100%]
+================================== FAILURES ===================================
+____ test_source_metadata_is_per_atom_and_duplicate_instances_are_rejected ____
+tests\solar-pv\test_input_consistency.py:57: in test_source_metadata_is_per_atom_and_duplicate_instances_are_rejected
+    assert "FIELD_SCHEMA" in codes(p)
+E   AssertionError: assert 'FIELD_SCHEMA' in {'DUPLICATE_INSTANCE_ID'}
+E    +  where {'DUPLICATE_INSTANCE_ID'} = codes(ProjectData(schema_version='solar-pv-project/1.0.0', baseline_version='1.0.0', baseline_hashes={'00-original-user-base...onomic_basis': None, 'normalization': None}}, candidates={}, resolutions=[], revision=0, submission_ids={}, history=[]))
+_______ test_tariff_halves_cover_a_day_without_overlap_or_midnight_wrap _______
+tests\solar-pv\test_input_consistency.py:75: in test_tariff_halves_cover_a_day_without_overlap_or_midnight_wrap
+    assert "TARIFF_OVERLAP" in codes(p)
+E   AssertionError: assert 'TARIFF_OVERLAP' in set()
+E    +  where set() = codes(ProjectData(schema_version='solar-pv-project/1.0.0', baseline_version='1.0.0', baseline_hashes={'00-original-user-base...onomic_basis': None, 'normalization': None}}, candidates={}, resolutions=[], revision=0, submission_ids={}, history=[]))
+__________ test_cash_metadata_cannot_mix_price_year_tax_or_currency ___________
+tests\solar-pv\test_input_consistency.py:86: in test_cash_metadata_cannot_mix_price_year_tax_or_currency
+    assert "ECONOMIC_BASIS_CONFLICT" in codes(p)
+E   AssertionError: assert 'ECONOMIC_BASIS_CONFLICT' in set()
+E    +  where set() = codes(ProjectData(schema_version='solar-pv-project/1.0.0', baseline_version='1.0.0', baseline_hashes={'00-original-user-base...onomic_basis': None, 'normalization': None}}, candidates={}, resolutions=[], revision=0, submission_ids={}, history=[]))
+______ test_negative_price_needs_contract_rule_instead_of_absolute_value ______
+tests\solar-pv\test_input_consistency.py:93: in test_negative_price_needs_contract_rule_instead_of_absolute_value
+    assert "NEGATIVE_PRICE_REQUIRES_RULE" in codes(p)
+E   AssertionError: assert 'NEGATIVE_PRICE_REQUIRES_RULE' in set()
+E    +  where set() = codes(ProjectData(schema_version='solar-pv-project/1.0.0', baseline_version='1.0.0', baseline_hashes={'00-original-user-base...onomic_basis': None, 'normalization': None}}, candidates={}, resolutions=[], revision=0, submission_ids={}, history=[]))
+_________ test_quote_amount_lineage_cannot_point_to_another_cost_row __________
+tests\solar-pv\test_input_consistency.py:106: in test_quote_amount_lineage_cannot_point_to_another_cost_row
+    assert "AMOUNT_LINEAGE_ROW_MISMATCH" in codes(p)
+E   AssertionError: assert 'AMOUNT_LINEAGE_ROW_MISMATCH' in set()
+E    +  where set() = codes(ProjectData(schema_version='solar-pv-project/1.0.0', baseline_version='1.0.0', baseline_hashes={'00-original-user-base...onomic_basis': None, 'normalization': None}}, candidates={}, resolutions=[], revision=0, submission_ids={}, history=[]))
+___ test_wrong_month_days_and_duplicate_months_are_not_filled_or_corrected ____
+tests\solar-pv\test_input_consistency.py:115: in test_wrong_month_days_and_duplicate_months_are_not_filled_or_corrected
+    assert {"RESOURCE_MONTH_DUPLICATE","MONTH_DAYS_MISMATCH"}<=codes(p)
+E   AssertionError: assert {'MONTH_DAYS_...TH_DUPLICATE'} <= set()
+E
+E     Extra items in the left set:
+E     'MONTH_DAYS_MISMATCH'
+E     'RESOURCE_MONTH_DUPLICATE'
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_input_consistency.py::test_source_metadata_is_per_atom_and_duplicate_instances_are_rejected
+FAILED tests/solar-pv/test_input_consistency.py::test_tariff_halves_cover_a_day_without_overlap_or_midnight_wrap
+FAILED tests/solar-pv/test_input_consistency.py::test_cash_metadata_cannot_mix_price_year_tax_or_currency
+FAILED tests/solar-pv/test_input_consistency.py::test_negative_price_needs_contract_rule_instead_of_absolute_value
+FAILED tests/solar-pv/test_input_consistency.py::test_quote_amount_lineage_cannot_point_to_another_cost_row
+FAILED tests/solar-pv/test_input_consistency.py::test_wrong_month_days_and_duplicate_months_are_not_filled_or_corrected
+6 failed, 7 passed in 1.77s

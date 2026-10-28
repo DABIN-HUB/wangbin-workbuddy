@@ -1,0 +1,22 @@
+FFF                                                                      [100%]
+================================== FAILURES ===================================
+___ test_evidence_timestamp_always_requires_explicit_timezone[last_updated] ___
+tests\solar-pv\test_metadata_formats.py:12: in test_evidence_timestamp_always_requires_explicit_timezone
+    assert any(i.code=="FIELD_SCHEMA" for i in validate_record(r,cat))
+E   assert False
+E    +  where False = any(<generator object test_evidence_timestamp_always_requires_explicit_timezone.<locals>.<genexpr> at 0x0000022E0952B9F0>)
+___ test_evidence_timestamp_always_requires_explicit_timezone[retrieved_at] ___
+tests\solar-pv\test_metadata_formats.py:12: in test_evidence_timestamp_always_requires_explicit_timezone
+    assert any(i.code=="FIELD_SCHEMA" for i in validate_record(r,cat))
+E   assert False
+E    +  where False = any(<generator object test_evidence_timestamp_always_requires_explicit_timezone.<locals>.<genexpr> at 0x0000022E090A7C60>)
+_________ test_normalization_cannot_be_a_silently_mislabeled_identity _________
+tests\solar-pv\test_metadata_formats.py:18: in test_normalization_cannot_be_a_silently_mislabeled_identity
+    assert any(i.code=="NORMALIZATION_REPLAY_MISMATCH" for i in validate_record(r,cat))
+E   assert False
+E    +  where False = any(<generator object test_normalization_cannot_be_a_silently_mislabeled_identity.<locals>.<genexpr> at 0x0000022E094E13C0>)
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_metadata_formats.py::test_evidence_timestamp_always_requires_explicit_timezone[last_updated]
+FAILED tests/solar-pv/test_metadata_formats.py::test_evidence_timestamp_always_requires_explicit_timezone[retrieved_at]
+FAILED tests/solar-pv/test_metadata_formats.py::test_normalization_cannot_be_a_silently_mislabeled_identity
+3 failed in 1.05s

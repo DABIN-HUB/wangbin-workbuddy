@@ -13,7 +13,11 @@ STRING_OR_NULL = {"type": ["string", "null"]}
 
 
 def _number(_, value):
-    return not isinstance(value, bool) and isinstance(value, (int, float, Decimal)) and (value.is_finite() if isinstance(value, Decimal) else math.isfinite(value))
+    if isinstance(value, bool):
+        return False
+    if isinstance(value, int):
+        return True
+    return isinstance(value, (float, Decimal)) and (value.is_finite() if isinstance(value, Decimal) else math.isfinite(value))
 
 
 def _integer(_, value):
@@ -22,6 +26,15 @@ def _integer(_, value):
 
 
 StrictValidator = validators.extend(Draft202012Validator, type_checker=Draft202012Validator.TYPE_CHECKER.redefine("number", _number).redefine("integer", _integer))
+
+
+def format_checker():
+    # jsonschema's optional RFC3339 dependency must not decide evidence validity.
+    from .units import validate_date, validate_datetime
+    checker = FormatChecker()
+    checker.checks("date", raises=ContractError)(lambda value: not isinstance(value, str) or bool(validate_date(value)))
+    checker.checks("date-time", raises=ContractError)(lambda value: not isinstance(value, str) or bool(validate_datetime(value)))
+    return checker
 
 
 def evidence_properties():
@@ -55,6 +68,9 @@ def evidence_properties():
             "reason": string, "method": string, "lower": {}, "upper": {},
             "maturity_ceiling": {"enum": ["L1", "L2"]}, "noncritical": {"type": "boolean"},
             "decision_invariant": {"type": "boolean"}}, "required": ["reason", "method", "maturity_ceiling", "noncritical", "decision_invariant"]},
+        "normalization": {"type": ["object", "null"], "additionalProperties": False, "properties": {
+            "rule_id": string, "exact": {"type": "boolean"}, "rounding_policy": {"type": ["object", "null"]}},
+            "required": ["rule_id", "exact", "rounding_policy"]},
         "economic_basis": {"type": ["object", "null"], "additionalProperties": False, "properties": {
             "currency": {"type": "string", "pattern": "^[A-Z]{3}$"}, "price_year": {"type": "integer", "minimum": 1900, "maximum": 2200},
             "tax_basis": {"enum": ["inclusive", "exclusive", "not_applicable"]}, "price_basis": {"enum": ["nominal", "real"]}},
@@ -112,7 +128,7 @@ def build_schema(catalog) -> dict:
 
 
 def validate_shape(data, catalog):
-    validator = StrictValidator(catalog.project_schema(), format_checker=FormatChecker())
+    validator = StrictValidator(catalog.project_schema(), format_checker=format_checker())
     error = next(validator.iter_errors(data), None)
     if error is not None:
         # jsonschema's default text includes actual values. Never expose it.

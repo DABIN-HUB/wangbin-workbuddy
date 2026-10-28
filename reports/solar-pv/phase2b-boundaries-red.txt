@@ -1,0 +1,2937 @@
+........................................................................ [ 16%]
+........................................................................ [ 33%]
+........................................................................ [ 49%]
+........................................................................ [ 66%]
+........................................................................ [ 82%]
+........................................................................ [ 99%]
+FFF                                                                      [100%]
+================================== FAILURES ===================================
+___ test_invalid_numbers_are_reported_not_crashed_or_logged_as_real_values ____
+tests\solar-pv\test_boundaries_and_records.py:36: in test_invalid_numbers_are_reported_not_crashed_or_logged_as_real_values
+    issues=validate_project(p,CAT)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:206: in validate_project
+    result.extend(validate_input_relations(project, catalog))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\consistency.py:50: in validate_input_relations
+    if Fraction(str(quantity))*Fraction(str(price))!=Fraction(str(amount)):
+                                                     ^^^^^^^^^^^^^^^^^^^^^
+C:\Users\wangbin\AppData\Local\Programs\Python\Python312\Lib\fractions.py:239: in __new__
+    raise ValueError('Invalid literal for Fraction: %r' %
+E   ValueError: Invalid literal for Fraction: 'NaN'
+____ test_task_graph_long_chain_does_not_depend_on_python_recursion_limit _____
+tests\solar-pv\test_boundaries_and_records.py:50: in test_task_graph_long_chain_does_not_depend_on_python_recursion_limit
+    assert not [i for i in validate_project(p,CAT) if i.severity=="ERROR"]
+                           ^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:202: in validate_project
+    result.extend(_validate_tasks(project))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:240: in _validate_tasks
+    if any(visit(task) for task in graph):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:240: in <genexpr>
+    if any(visit(task) for task in graph):
+           ^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\validation.py:236: in visit
+    if visit(ref):
+       ^^^^^^^^^^
+E   RecursionError: maximum recursion depth exceeded
+________ test_single_numeric_confidence_is_not_an_evidence_explanation ________
+tests\solar-pv\test_boundaries_and_records.py:56: in test_single_numeric_confidence_is_not_an_evidence_explanation
+    assert any(i.code=="CONFIDENCE_BASIS_REQUIRED" for i in validate_record(r,CAT))
+E   assert False
+E    +  where False = any(<generator object test_single_numeric_confidence_is_not_an_evidence_explanation.<locals>.<genexpr> at 0x000001DB4C600AD0>)
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_boundaries_and_records.py::test_invalid_numbers_are_reported_not_crashed_or_logged_as_real_values
+FAILED tests/solar-pv/test_boundaries_and_records.py::test_task_graph_long_chain_does_not_depend_on_python_recursion_limit
+FAILED tests/solar-pv/test_boundaries_and_records.py::test_single_numeric_confidence_is_not_an_evidence_explanation
+3 failed, 432 passed in 10.34s
