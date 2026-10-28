@@ -1,0 +1,27 @@
+{
+  "baseline_version": "1.0.0",
+  "frozen_at": "2026-10-28",
+  "origin": "用户提供的完整总提示词，全文保留第0至11节；规范化仅CRLF→LF及可选BOM移除，不删减正文",
+  "original_filename": "hermes-完整提示词.md",
+  "user_referenced_title": "Hermes-光伏预可研专家-完整开发总提示词.md",
+  "original_bytes": 35790,
+  "original_sha256": "4af609040ca4e800b16d561b86a8a33c54226d175581b54aa00110158c5d09f2",
+  "normalized_utf8_sha256": "4af609040ca4e800b16d561b86a8a33c54226d175581b54aa00110158c5d09f2",
+  "baseline_file": "00-original-user-baseline.md",
+  "baseline_sections": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "scope": "Phase 0 + Phase 1; Phase 2+ NOT_STARTED",
+  "change_control": "原文不可静默改写。新增/澄清通过带原requirement_id的变更记录与用户批准；不得删减，状态与证据独立；后续会话从README及验收矩阵恢复。"
+}

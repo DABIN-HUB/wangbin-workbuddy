@@ -1,0 +1,52 @@
+{
+  "scope": "Phase 0/1 persisted documentation/index integrity only; no calculation/rendering/platform acceptance",
+  "mode": "baseline",
+  "status": "PASS",
+  "baseline_document_integrity": "PASS",
+  "checks": 19209,
+  "passed_checks": 19209,
+  "failed_checks": 0,
+  "errors": [],
+  "counts": {
+    "requirements": 1208,
+    "original_baseline_lines_traced": 140,
+    "fields": 469,
+    "formulas": 89,
+    "formula_field_bindings": 281,
+    "glossary_terms": 189,
+    "acceptance_specifications": 1207,
+    "source_records": 49,
+    "chapters": 18,
+    "chapter_subitems": 100,
+    "appendices": 13,
+    "appendix_subitems": 26,
+    "core_workbook_sheets": 29,
+    "protected_files": 288
+  },
+  "product_gates": {
+    "DOCUMENT_COMPLETENESS": "NOT_IMPLEMENTED",
+    "CALCULATION_CORRECTNESS": "NOT_IMPLEMENTED",
+    "DATA_AUTHENTICITY": "NOT_TESTED",
+    "RUNTIME_COMPATIBILITY": "NOT_TESTED",
+    "WORKBUDDY_INSTALL_CALL": "NOT_TESTED",
+    "PLATFORM_REVIEW": "NOT_TESTED"
+  },
+  "release_status": "BLOCKED",
+  "release_blockers": [
+    "DOCUMENT_COMPLETENESS",
+    "CALCULATION_CORRECTNESS",
+    "DATA_AUTHENTICITY",
+    "RUNTIME_COMPATIBILITY",
+    "WORKBUDDY_INSTALL_CALL",
+    "PLATFORM_REVIEW",
+    "UNVERIFIED_PRODUCT_REQUIREMENTS"
+  ],
+  "not_claimed": [
+    "numerical correctness",
+    "authentic project data",
+    "four actual deliverables",
+    "WorkBuddy installation or invocation",
+    "platform review",
+    "OS sandbox security"
+  ]
+}

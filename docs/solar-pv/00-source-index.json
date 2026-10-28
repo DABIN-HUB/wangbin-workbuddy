@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0.0",
+  "source_sets": [
+    {
+      "file": "04-sources.json",
+      "key": "sources",
+      "scope": "专业研究cohort"
+    },
+    {
+      "file": "00-official-access.json",
+      "key": "sources",
+      "scope": "平台及政策"
+    },
+    {
+      "file": "05-additional-sources.json",
+      "key": "sources",
+      "scope": "损失公式帮助页"
+    }
+  ],
+  "normative_sources": {
+    "USER-BASELINE": "00-original-user-baseline.md",
+    "METHOD-CONTRACT-v1": "05-formula-registry.md"
+  },
+  "unknown_project_source_policy": "上述均为研究/规范来源，不表示项目输入真实；具体项目来源尚未采集时为UNKNOWN，不能选研究样例冒充本站实测"
+}

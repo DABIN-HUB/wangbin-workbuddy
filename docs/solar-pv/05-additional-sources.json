@@ -1,0 +1,43 @@
+{
+  "sources": [
+    {
+      "source_id": "SRC-PV-LOSS",
+      "title": "PVWatts System Losses",
+      "url": "https://pvwatts.nlr.gov/docs/help_system_sysloss.php",
+      "access_status": "BODY_READ",
+      "section": "System Losses",
+      "relationship": "仅支持未显式建模损失相乘及温度、逆变不应重复纳入系统损失；不采纳页面默认值",
+      "retrieval_method": "curl -L 直接读取 HTML 正文；web_extract 后端不支持已如实记录",
+      "retrieved_date": "2026-10-28",
+      "verbatim_evidence": "Do not include inverter conversion losses in the system loss percentage.",
+      "applicability": "只支撑损失组合与避免重复扣温度/逆变损失，不将默认损失数值作项目假设",
+      "license_status": "REQUIRES_REVIEW；仅元数据和短句证据，不收录全文",
+      "type": "technical_help",
+      "author": "PVWatts/NREL（现NLR官方域名）",
+      "date": "UNKNOWN",
+      "region": "方法说明非站址数据",
+      "pv_type": [
+        "all_grid_connected"
+      ],
+      "capacity": null,
+      "chapters": [
+        "System Losses"
+      ],
+      "inputs": [
+        "system.losses"
+      ],
+      "formulas": [
+        "F-LOSS-COMPOSITE"
+      ],
+      "tables": [],
+      "quality": "仅有限损失说明正文；标准/整模型验证待复核",
+      "accessible_pages": "HTML正文",
+      "body_verified": true,
+      "full_text_readable": true,
+      "structure_extracted": true,
+      "is_real_project": false,
+      "provenance": "子代理实际curl直连阅读，非搜索摘要；父任务只核对索引而未重新取此页"
+    }
+  ],
+  "count_scope": "单条公式研究额外帮助页，不计入04的37条研究cohort"
+}

@@ -1,0 +1,504 @@
+{
+  "baseline_version": "1.0.0",
+  "required_document_files": [
+    "00-original-user-baseline.md",
+    "00-baseline-manifest.json",
+    "00-repo-audit.md",
+    "00-reuse-matrix.md",
+    "01-product-requirements.md",
+    "02-report-outline-18-chapters.md",
+    "03-input-data-dictionary.md",
+    "03-input-fields.json",
+    "08-field-contract-digests.json",
+    "04-source-registry.md",
+    "04-sources.json",
+    "04-source-chapter-comparison.csv",
+    "05-formula-registry.md",
+    "05-formulas.json",
+    "05-formula-extensions.json",
+    "05-field-bindings.json",
+    "06-glossary-zh-en.md",
+    "06-glossary.json",
+    "06-glossary-extensions.json",
+    "07-category-boundaries.md",
+    "08-requirement-traceability.csv",
+    "08-acceptance-cases.json",
+    "08-derived-acceptance-cases.json",
+    "08-acceptance-design.md",
+    "09-risk-and-compliance.md",
+    "10-four-file-acceptance.md",
+    "11-phased-roadmap.md",
+    "12-canonical-result-contract.md",
+    "README.md",
+    "verify_baseline.py"
+  ],
+  "pv_types": [
+    "industrial_rooftop",
+    "utility_scale_ground",
+    "agri_pv",
+    "fishery_pv",
+    "pv_storage",
+    "public_rooftop",
+    "residential_pv",
+    "pv_carport_bipv",
+    "desert_mining"
+  ],
+  "chapter_ids": [
+    "CH01",
+    "CH02",
+    "CH03",
+    "CH04",
+    "CH05",
+    "CH06",
+    "CH07",
+    "CH08",
+    "CH09",
+    "CH10",
+    "CH11",
+    "CH12",
+    "CH13",
+    "CH14",
+    "CH15",
+    "CH16",
+    "CH17",
+    "CH18"
+  ],
+  "appendix_ids": [
+    "APP01",
+    "APP02",
+    "APP03",
+    "APP04",
+    "APP05",
+    "APP06",
+    "APP07",
+    "APP08",
+    "APP09",
+    "APP10",
+    "APP11",
+    "APP12",
+    "APP13"
+  ],
+  "formula_files": [
+    "05-formulas.json",
+    "05-formula-extensions.json"
+  ],
+  "glossary_files": [
+    "06-glossary.json",
+    "06-glossary-extensions.json"
+  ],
+  "case_files": [
+    "08-acceptance-cases.json",
+    "08-derived-acceptance-cases.json"
+  ],
+  "outputs": {
+    "F01": {
+      "name": "项目名称-光伏预可研报告.docx",
+      "format": "DOCX"
+    },
+    "F02": {
+      "name": "项目名称-光伏预可研报告.pdf",
+      "format": "PDF"
+    },
+    "F03": {
+      "name": "项目名称-测算模型.xlsx",
+      "format": "XLSX"
+    },
+    "F04": {
+      "name": "项目名称-资料来源与假设清单.xlsx",
+      "format": "XLSX"
+    }
+  },
+  "sheets": [
+    {
+      "sheet_id": "M01",
+      "file_id": "F03",
+      "logical_name": "项目参数",
+      "physical_name": "项目参数",
+      "chapter_ids": [
+        "CH01",
+        "CH02",
+        "CH03",
+        "CH06",
+        "CH16"
+      ],
+      "test_id": "T-SHEET-M01",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M02",
+      "file_id": "F03",
+      "logical_name": "术语和公式说明",
+      "physical_name": "术语和公式说明",
+      "chapter_ids": [
+        "CH02",
+        "APP11",
+        "APP12"
+      ],
+      "test_id": "T-SHEET-M02",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M03",
+      "file_id": "F03",
+      "logical_name": "数据质量",
+      "physical_name": "数据质量",
+      "chapter_ids": [
+        "CH01",
+        "CH02",
+        "CH17",
+        "APP13"
+      ],
+      "test_id": "T-SHEET-M03",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M04",
+      "file_id": "F03",
+      "logical_name": "资源月度",
+      "physical_name": "资源月度",
+      "chapter_ids": [
+        "CH05",
+        "APP02"
+      ],
+      "test_id": "T-SHEET-M04",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M05",
+      "file_id": "F03",
+      "logical_name": "系统容量与损耗",
+      "physical_name": "系统容量与损耗",
+      "chapter_ids": [
+        "CH06",
+        "CH07",
+        "CH08",
+        "APP03"
+      ],
+      "test_id": "T-SHEET-M05",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M06",
+      "file_id": "F03",
+      "logical_name": "发电预测-月度",
+      "physical_name": "发电预测-月度",
+      "chapter_ids": [
+        "CH08",
+        "APP02"
+      ],
+      "test_id": "T-SHEET-M06",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M07",
+      "file_id": "F03",
+      "logical_name": "逐年衰减",
+      "physical_name": "逐年衰减",
+      "chapter_ids": [
+        "CH08",
+        "CH15",
+        "APP03",
+        "APP05"
+      ],
+      "test_id": "T-SHEET-M07",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M08",
+      "file_id": "F03",
+      "logical_name": "负荷与消纳",
+      "physical_name": "负荷与消纳",
+      "chapter_ids": [
+        "CH10",
+        "APP02"
+      ],
+      "test_id": "T-SHEET-M08",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M09",
+      "file_id": "F03",
+      "logical_name": "电价与收入",
+      "physical_name": "电价与收入",
+      "chapter_ids": [
+        "CH10",
+        "CH16"
+      ],
+      "test_id": "T-SHEET-M09",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M10",
+      "file_id": "F03",
+      "logical_name": "CAPEX",
+      "physical_name": "CAPEX",
+      "chapter_ids": [
+        "CH14",
+        "APP04"
+      ],
+      "test_id": "T-SHEET-M10",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M11",
+      "file_id": "F03",
+      "logical_name": "OPEX",
+      "physical_name": "OPEX",
+      "chapter_ids": [
+        "CH15",
+        "APP05"
+      ],
+      "test_id": "T-SHEET-M11",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M12",
+      "file_id": "F03",
+      "logical_name": "折旧与税费",
+      "physical_name": "折旧与税费",
+      "chapter_ids": [
+        "CH15",
+        "CH16",
+        "APP05"
+      ],
+      "test_id": "T-SHEET-M12",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M13",
+      "file_id": "F03",
+      "logical_name": "融资与偿债",
+      "physical_name": "融资与偿债",
+      "chapter_ids": [
+        "CH14",
+        "CH16",
+        "APP07"
+      ],
+      "test_id": "T-SHEET-M13",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M14",
+      "file_id": "F03",
+      "logical_name": "项目现金流",
+      "physical_name": "项目现金流",
+      "chapter_ids": [
+        "CH16",
+        "APP06"
+      ],
+      "test_id": "T-SHEET-M14",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M15",
+      "file_id": "F03",
+      "logical_name": "资本金现金流",
+      "physical_name": "资本金现金流",
+      "chapter_ids": [
+        "CH16",
+        "APP06"
+      ],
+      "test_id": "T-SHEET-M15",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M16",
+      "file_id": "F03",
+      "logical_name": "财务指标",
+      "physical_name": "财务指标",
+      "chapter_ids": [
+        "CH01",
+        "CH16",
+        "CH18"
+      ],
+      "test_id": "T-SHEET-M16",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M17",
+      "file_id": "F03",
+      "logical_name": "敏感性",
+      "physical_name": "敏感性",
+      "chapter_ids": [
+        "CH17",
+        "APP08"
+      ],
+      "test_id": "T-SHEET-M17",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M18",
+      "file_id": "F03",
+      "logical_name": "方案比较",
+      "physical_name": "方案比较",
+      "chapter_ids": [
+        "CH06",
+        "CH17",
+        "CH18"
+      ],
+      "test_id": "T-SHEET-M18",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "M19",
+      "file_id": "F03",
+      "logical_name": "一致性校验",
+      "physical_name": "一致性校验",
+      "chapter_ids": [
+        "CH01",
+        "CH08",
+        "CH14",
+        "CH16",
+        "APP13"
+      ],
+      "test_id": "T-SHEET-M19",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "S01",
+      "file_id": "F04",
+      "logical_name": "输入台账",
+      "physical_name": "输入台账",
+      "chapter_ids": [
+        "CH02",
+        "APP01"
+      ],
+      "test_id": "T-SHEET-S01",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "S02",
+      "file_id": "F04",
+      "logical_name": "气象与地理来源",
+      "physical_name": "气象与地理来源",
+      "chapter_ids": [
+        "CH04",
+        "CH05",
+        "APP02"
+      ],
+      "test_id": "T-SHEET-S02",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "S03",
+      "file_id": "F04",
+      "logical_name": "政策适用性",
+      "physical_name": "政策适用性",
+      "chapter_ids": [
+        "CH02",
+        "CH09",
+        "CH10",
+        "CH12",
+        "CH15",
+        "APP09"
+      ],
+      "test_id": "T-SHEET-S03",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "S04",
+      "file_id": "F04",
+      "logical_name": "设备与成本来源",
+      "physical_name": "设备与成本来源",
+      "chapter_ids": [
+        "CH07",
+        "CH14",
+        "CH15",
+        "APP03",
+        "APP04"
+      ],
+      "test_id": "T-SHEET-S04",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "S05",
+      "file_id": "F04",
+      "logical_name": "案例对标",
+      "physical_name": "案例对标",
+      "chapter_ids": [
+        "CH02",
+        "CH05",
+        "CH14",
+        "APP01"
+      ],
+      "test_id": "T-SHEET-S05",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "S06",
+      "file_id": "F04",
+      "logical_name": "假设清单",
+      "physical_name": "假设清单",
+      "chapter_ids": [
+        "CH02",
+        "CH17",
+        "APP10"
+      ],
+      "test_id": "T-SHEET-S06",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "S07",
+      "file_id": "F04",
+      "logical_name": "冲突与缺口",
+      "physical_name": "冲突与缺口",
+      "chapter_ids": [
+        "CH17",
+        "CH18",
+        "APP10"
+      ],
+      "test_id": "T-SHEET-S07",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "S08",
+      "file_id": "F04",
+      "logical_name": "变更与复核记录",
+      "physical_name": "变更与复核记录",
+      "chapter_ids": [
+        "CH02",
+        "CH18",
+        "APP13"
+      ],
+      "test_id": "T-SHEET-S08",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "S09",
+      "file_id": "F04",
+      "logical_name": "变量/术语词典",
+      "physical_name": "变量-术语词典",
+      "chapter_ids": [
+        "APP11",
+        "APP12"
+      ],
+      "test_id": "T-SHEET-S09",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "sheet_id": "S10",
+      "file_id": "F04",
+      "logical_name": "资料授权说明",
+      "physical_name": "资料授权说明",
+      "chapter_ids": [
+        "CH02",
+        "APP01",
+        "APP13"
+      ],
+      "test_id": "T-SHEET-S10",
+      "status": "NOT_IMPLEMENTED"
+    }
+  ],
+  "product_gates": {
+    "DOCUMENT_COMPLETENESS": "NOT_IMPLEMENTED",
+    "CALCULATION_CORRECTNESS": "NOT_IMPLEMENTED",
+    "DATA_AUTHENTICITY": "NOT_TESTED",
+    "RUNTIME_COMPATIBILITY": "NOT_TESTED",
+    "WORKBUDDY_INSTALL_CALL": "NOT_TESTED",
+    "PLATFORM_REVIEW": "NOT_TESTED"
+  },
+  "release_status": "BLOCKED",
+  "source_index": "00-source-index.json",
+  "matrix_rows": 1208,
+  "status_policy": "基线冻结FROZEN≠实现PASS，PLANNED用例不是已实现测试；当前除审计/冻结工作外产品需求未关闭"
+}

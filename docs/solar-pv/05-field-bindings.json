@@ -1,0 +1,6395 @@
+{
+  "schema_version": "1.0.0",
+  "policy": "输入字典与公式域分离；本表显式闭合引用，不将中间计算账簿充作原始用户输入。支持input_field_ids是模型来源依赖，不等于每项均直接代入。无生产计算实现/测试PASS。",
+  "bindings": [
+    {
+      "formula_field_id": "assets.capitalized_additions",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "本年转入该账簿的资产新增原值"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "assets.depreciation",
+        "assets.replacements",
+        "capex.items"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-ASSET-BOOK-VALUE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "assets.closing_book_value",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "财务年末资产账面/计税净值，账簿类型明确"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "assets.depreciation",
+        "assets.replacements",
+        "capex.items"
+      ],
+      "producer_formula_ids": [
+        "F-ASSET-BOOK-VALUE"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "assets.disposal_book_value",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "报废/处置转出的资产净值，不是现金收入"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "assets.depreciation",
+        "assets.replacements",
+        "capex.items"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-ASSET-BOOK-VALUE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "assets.opening_book_value",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "该年期初同一账簿资产净值"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "assets.depreciation",
+        "assets.replacements",
+        "capex.items"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-ASSET-BOOK-VALUE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "capacity.ac_kw",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "全部逆变器额定有功交流容量之和",
+        "逆变器额定交流有功容量",
+        "同一逆变器聚合组额定交流有功容量",
+        "千瓦级额定容量，保持 AC 标签"
+      ],
+      "units": [
+        "kWac"
+      ],
+      "input_field_ids": [
+        "system.ac_capacity"
+      ],
+      "producer_formula_ids": [
+        "F-AC-CAPACITY"
+      ],
+      "consumer_formula_ids": [
+        "F-DC-AC-RATIO",
+        "F-AC-INVERTER-POWER",
+        "F-UNIT-AC-CAPACITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "capacity.dc_ac_ratio",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "直流额定容量除以逆变器交流额定容量"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "system.dc_ac_ratio"
+      ],
+      "producer_formula_ids": [
+        "F-DC-AC-RATIO"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "capacity.dc_kwp",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "组件阵列在标准测试条件下的额定直流容量",
+        "标准测试条件组件峰值容量，数值以 kW 表示",
+        "组件阵列直流额定容量，以 kW 的数值参与运算",
+        "组件直流额定容量数值",
+        "同期可比直流额定容量",
+        "直流峰值装机容量",
+        "千瓦级额定容量，保持 DC 标签"
+      ],
+      "units": [
+        "kWp"
+      ],
+      "input_field_ids": [
+        "system.dc_capacity"
+      ],
+      "producer_formula_ids": [
+        "F-DC-CAPACITY"
+      ],
+      "consumer_formula_ids": [
+        "F-DC-AC-RATIO",
+        "F-FIRST-YEAR-ENERGY",
+        "F-DC-TIME-POWER",
+        "F-PR-OBSERVED",
+        "F-UNIT-INVESTMENT",
+        "F-UNIT-DC-CAPACITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "capex.equity_asset_cash_annual",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "实际资产付款及更换，融资利息和融资费用已单列 INT/FF 因此不在此扣"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "capex.items",
+        "assets.replacements",
+        "finance.debt_schedule"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-EQUITY-AVAILABLE-CASH-FLOW"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "capex.item_ids",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "互斥且完整的分类清单"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "capex.items.row_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CAPEX-TOTAL"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "capex.items.amount",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "第 i 类可追溯投资金额",
+        "同币种同税边界第i成本项金额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "capex.items.amount"
+      ],
+      "producer_formula_ids": [
+        "F-CAPEX-ITEM-AMOUNT"
+      ],
+      "consumer_formula_ids": [
+        "F-CAPEX-TOTAL"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "capex.items.quantity",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "第i项工程量/设备数量"
+      ],
+      "units": [
+        "按quantity_unit"
+      ],
+      "input_field_ids": [
+        "capex.items.quantity"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CAPEX-ITEM-AMOUNT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "capex.items.unit_price",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "匹配工程量单位的单价"
+      ],
+      "units": [
+        "元/quantity_unit"
+      ],
+      "input_field_ids": [
+        "capex.items.unit_price"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CAPEX-ITEM-AMOUNT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "capex.payable_net_closing",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "期末资本应付款减预付款净额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "capex.items",
+        "capex.includes_construction_interest",
+        "finance.cashflow_timing"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CAPEX-PAYMENT-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "capex.payable_net_opening",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "期初资本应付款减预付款净额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "capex.items",
+        "capex.includes_construction_interest",
+        "finance.cashflow_timing"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CAPEX-PAYMENT-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "capex.scope_accrued_amount",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "同范围同税价确认的累计资产采购和服务金额，已剥离非付现/融资项"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "capex.items",
+        "capex.includes_construction_interest",
+        "finance.cashflow_timing"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CAPEX-PAYMENT-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "capex.scope_cash_payments",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "本范围当年资本付款，不含重复融资现金项"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "capex.items",
+        "capex.includes_construction_interest",
+        "finance.cashflow_timing"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CAPEX-PAYMENT-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "capex.scope_year_ids",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "该投资范围完整付款评价期"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "capex.items",
+        "capex.includes_construction_interest",
+        "finance.cashflow_timing"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CAPEX-PAYMENT-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "capex.total",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "投资估算总额，边界由清单标识",
+        "已说明含税、土地、储能和融资边界的投资估算"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "capex.items",
+        "capex.includes_construction_interest",
+        "finance.cashflow_timing"
+      ],
+      "producer_formula_ids": [
+        "F-CAPEX-TOTAL"
+      ],
+      "consumer_formula_ids": [
+        "F-UNIT-INVESTMENT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "capex.unit_dc",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "按直流容量计的单位投资"
+      ],
+      "units": [
+        "元/kWp"
+      ],
+      "input_field_ids": [
+        "capex.items",
+        "capex.includes_construction_interest",
+        "finance.cashflow_timing"
+      ],
+      "producer_formula_ids": [
+        "F-UNIT-INVESTMENT"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "capex.unlevered_cash_annual",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "当年工程资本付款及资本化更新替换，不含融资资金流和资本化借款利息",
+        "无杠杆工程及资本更换现金支出"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "capex.items",
+        "capex.includes_construction_interest",
+        "assets.replacements"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-PROJECT-CASH-FLOW",
+        "F-LIFECYCLE-COST"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "checks.capex_payment_residual",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "投资范围内现金付款与权责确认金额桥的残差"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.working_capital",
+        "finance.debt_schedule",
+        "capex.items"
+      ],
+      "producer_formula_ids": [
+        "F-CAPEX-PAYMENT-BALANCE"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "checks.cash_closing",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "项目主体期末非受限现金余额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.working_capital",
+        "finance.debt_schedule",
+        "capex.items"
+      ],
+      "producer_formula_ids": [
+        "F-CASH-FUNDING-BALANCE"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "checks.cash_opening",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "项目主体期初非受限现金余额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.working_capital",
+        "finance.debt_schedule",
+        "capex.items"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CASH-FUNDING-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "checks.energy_balance_residual",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "电量守恒残差，应在声明的容差内为零"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [
+        "finance.working_capital",
+        "finance.debt_schedule",
+        "capex.items"
+      ],
+      "producer_formula_ids": [
+        "F-ENERGY-BALANCE"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "checks.storage_load_balance",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "公式等式的残差/断言输出，按本条validation_method解释"
+      ],
+      "units": [
+        "见公式unit"
+      ],
+      "input_field_ids": [
+        "finance.working_capital",
+        "finance.debt_schedule",
+        "capex.items"
+      ],
+      "producer_formula_ids": [
+        "F-STORAGE-LOAD-BALANCE"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "checks.storage_pv_balance",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "公式等式的残差/断言输出，按本条validation_method解释"
+      ],
+      "units": [
+        "见公式unit"
+      ],
+      "input_field_ids": [
+        "finance.working_capital",
+        "finance.debt_schedule",
+        "capex.items"
+      ],
+      "producer_formula_ids": [
+        "F-STORAGE-PV-BALANCE"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "constants.kilo_scale",
+      "kind": "DEFINITION_CONSTANT",
+      "definition_zh": [
+        "十进制千倍单位换算系数，定义值 1000，非经验参数",
+        "十进制千倍换算系数，定义值 1000"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-UNIT-KW-MW",
+        "F-UNIT-KWH-MWH",
+        "F-UNIT-IRRADIANCE-W-KW",
+        "F-UNIT-COST-WP-KWP",
+        "F-UNIT-DC-CAPACITY",
+        "F-UNIT-AC-CAPACITY"
+      ],
+      "constant_definition": {
+        "value": "1000",
+        "unit": "1",
+        "basis": "SI十进制前缀精确定义，不能用于kW与kWh跨量纲转换"
+      },
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "constants.stc_cell_temperature_c",
+      "kind": "DEFINITION_CONSTANT",
+      "definition_zh": [
+        "标准测试条件电池温度"
+      ],
+      "units": [
+        "°C"
+      ],
+      "input_field_ids": [],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DC-TIME-POWER"
+      ],
+      "constant_definition": {
+        "value": null,
+        "unit": "°C",
+        "basis": "设备/标准测试条件定义；实施前核对手册及适用标准，不从环境温度代入"
+      },
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "constants.stc_irradiance_kw_m2",
+      "kind": "DEFINITION_CONSTANT",
+      "definition_zh": [
+        "标准测试条件参考辐照度，固定定义为 1 kW/m²",
+        "标准参考辐照度"
+      ],
+      "units": [
+        "kW/m²"
+      ],
+      "input_field_ids": [],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-FIRST-YEAR-ENERGY",
+        "F-DC-TIME-POWER",
+        "F-PR-OBSERVED"
+      ],
+      "constant_definition": {
+        "value": "1",
+        "unit": "kW/m²",
+        "basis": "USER-BASELINE §6组2明确参考定义，不是站址实测"
+      },
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "consumption.curtailed_kwh",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "因本时段消纳或送出约束未交付的电量",
+        "限发电量",
+        "同节点可用但受约束限发电量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [],
+      "producer_formula_ids": [
+        "F-CURTAILED-ENERGY"
+      ],
+      "consumer_formula_ids": [
+        "F-ENERGY-BALANCE",
+        "F-STORAGE-PV-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "consumption.export_kwh",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "计量点实际可上网电量",
+        "同点上网电量",
+        "上网电量",
+        "同边界实际上网电量",
+        "可结算上网电量",
+        "投资方有权结算的上网电量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [],
+      "producer_formula_ids": [
+        "F-EXPORTED-ENERGY"
+      ],
+      "consumer_formula_ids": [
+        "F-CURTAILED-ENERGY",
+        "F-ENERGY-BALANCE",
+        "F-DELIVERED-ENERGY",
+        "F-ENERGY-REVENUE",
+        "F-PPA-REVENUE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "consumption.host_delivery_kwh",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "向场所业主交付并按 PPA 计价的电量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [
+        "load.series",
+        "project.ownership_mode",
+        "tariff.contract_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-PPA-REVENUE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "consumption.load_coverage_ratio",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "被光伏自用覆盖的总负荷比例"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [],
+      "producer_formula_ids": [
+        "F-LOAD-COVERAGE-RATIO"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "consumption.self_kwh",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "该时段物理匹配的自用电量",
+        "同点自用电量",
+        "自用电量",
+        "合法计量边界内的自用电量",
+        "时段自用电量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [],
+      "producer_formula_ids": [
+        "F-SELF-CONSUMPTION"
+      ],
+      "consumer_formula_ids": [
+        "F-EXPORTED-ENERGY",
+        "F-CURTAILED-ENERGY",
+        "F-ENERGY-BALANCE",
+        "F-DELIVERED-ENERGY",
+        "F-SELF-CONSUMPTION-RATIO",
+        "F-LOAD-COVERAGE-RATIO",
+        "F-ENERGY-REVENUE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "consumption.self_ratio",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "以实际交付电量为分母的自用比例"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [],
+      "producer_formula_ids": [
+        "F-SELF-CONSUMPTION-RATIO"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "debt.annual_interest_rate",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "合同该子期间年化利率"
+      ],
+      "units": [
+        "1/年"
+      ],
+      "input_field_ids": [
+        "finance.loan_rate",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DEBT-INTEREST"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "debt.capitalized_unpaid_fees",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "按合同转为本金但未付现的融资费用"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule",
+        "finance.loan_agreement_id",
+        "finance.cfads_definition"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DEBT-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "debt.capitalized_unpaid_interest",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "按合同资本化转本金但未付现的利息",
+        "转入贷款本金的利息"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule",
+        "finance.loan_agreement_id",
+        "finance.cfads_definition"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DEBT-BALANCE",
+        "F-INTEREST-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "debt.cash_drawdown",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "债务现金提款，非资本化利息记账增加",
+        "实际现金提款"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule.drawdown"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-EQUITY-AVAILABLE-CASH-FLOW",
+        "F-DEBT-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "debt.cfads",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "按融资协议可用于偿债的当期现金流",
+        "同周期协议口径可用于偿债现金"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule",
+        "finance.loan_agreement_id",
+        "finance.cfads_definition"
+      ],
+      "producer_formula_ids": [
+        "F-CFADS"
+      ],
+      "consumer_formula_ids": [
+        "F-DSCR"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "debt.cfads_adjustments",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "有合同依据的其他 CFADS 调整，可正可负"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.cfads_definition",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CFADS"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "debt.cfads_mandatory_capex",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "协议要求在偿债前扣除的维护性资本开支"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.cfads_definition",
+        "assets.replacements"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CFADS"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "debt.cfads_working_capital_change",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "协议要求的未重计营运资金或储备净增"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.cfads_definition",
+        "finance.working_capital"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CFADS"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "debt.closing_balance",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "期末贷款本金余额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule",
+        "finance.loan_agreement_id",
+        "finance.cfads_definition"
+      ],
+      "producer_formula_ids": [
+        "F-DEBT-BALANCE"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "debt.daycount_year_fraction",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "按合同日计数法计算的年分数"
+      ],
+      "units": [
+        "年"
+      ],
+      "input_field_ids": [
+        "finance.loan_agreement_id",
+        "finance.debt_schedule.date"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DEBT-INTEREST"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "debt.documented_writeoff",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "有法律凭据的本金豁免/其他非现金核销，默认不假设存在"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule",
+        "finance.loan_agreement_id",
+        "finance.cfads_definition"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DEBT-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "debt.dscr",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "当期可供偿债现金除以合同债务服务"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule",
+        "finance.loan_agreement_id",
+        "finance.cfads_definition"
+      ],
+      "producer_formula_ids": [
+        "F-DSCR"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "debt.finance_fees_paid",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "付现融资费用，未在资产付款/利息中重复计入"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule.fees"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-EQUITY-AVAILABLE-CASH-FLOW"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "debt.interest_accrued",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "财务年度利息计提额，不必等于付现利息",
+        "本期利息计提"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule",
+        "finance.loan_agreement_id",
+        "finance.cfads_definition"
+      ],
+      "producer_formula_ids": [
+        "F-DEBT-INTEREST"
+      ],
+      "consumer_formula_ids": [
+        "F-INTEREST-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "debt.interest_due",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "本期应付利息"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule.interest"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DEBT-SERVICE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "debt.interest_paid",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "本期实际付现债务利息，含建设期支付部分",
+        "现金支付利息"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule.interest"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-EQUITY-AVAILABLE-CASH-FLOW",
+        "F-INTEREST-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。计划与实际支付在运行时按情景分列；不能将合同应付款冒称实际已支付。"
+    },
+    {
+      "formula_field_id": "debt.interest_payable_closing",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "期末未付且未资本化的应付利息"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule",
+        "finance.loan_agreement_id",
+        "finance.cfads_definition"
+      ],
+      "producer_formula_ids": [
+        "F-INTEREST-BALANCE"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "debt.interest_payable_opening",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "期初应付利息"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule",
+        "finance.loan_agreement_id",
+        "finance.cfads_definition"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-INTEREST-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "debt.interest_principal_base",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "合同计息子期间实际本金基数"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule",
+        "finance.loan_agreement_id",
+        "finance.cfads_definition"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DEBT-INTEREST"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "debt.interest_subperiod_ids",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "该财务年全部无重叠计息子期间集合"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule",
+        "finance.loan_agreement_id",
+        "finance.cfads_definition"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DEBT-INTEREST"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "debt.opening_balance",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "期初贷款本金余额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule",
+        "finance.loan_agreement_id",
+        "finance.cfads_definition"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DEBT-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "debt.principal_due",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "本期应还本金"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule.principal"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DEBT-SERVICE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "debt.principal_paid",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "本期实际付现归还本金",
+        "本期实际归还本金"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule.principal"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-EQUITY-AVAILABLE-CASH-FLOW",
+        "F-DEBT-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。计划与实际支付在运行时按情景分列；不能将合同应付款冒称实际已支付。"
+    },
+    {
+      "formula_field_id": "debt.service_due",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "当期合同应还的债务服务，而非因拖欠变少的实际支付",
+        "同周期合同应付本金、利息及协议费用合计"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule",
+        "finance.loan_agreement_id",
+        "finance.cfads_definition"
+      ],
+      "producer_formula_ids": [
+        "F-DEBT-SERVICE"
+      ],
+      "consumer_formula_ids": [
+        "F-DSCR"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "debt.service_fees_due",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "融资协议纳入服务口径的应付费用"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_schedule.fees"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DEBT-SERVICE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "decision.calculated_metric",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "有效的确定性测算指标，不得倒改输入迎合目标"
+      ],
+      "units": [
+        "原指标单位"
+      ],
+      "input_field_ids": [
+        "targets.payback_basis",
+        "targets.project_irr",
+        "targets.equity_irr"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-INVESTMENT-HURDLE-GAP"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。按目标metric_id选取同口径已计算财务结果，目标值不是其生产输入。"
+    },
+    {
+      "formula_field_id": "decision.metric_gap",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "测算值减用户门槛的原始差距"
+      ],
+      "units": [
+        "与 M 同单位"
+      ],
+      "input_field_ids": [],
+      "producer_formula_ids": [
+        "F-INVESTMENT-HURDLE-GAP"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "decision.target_metric",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "用户目标，如 IRR 下限或回收期上限"
+      ],
+      "units": [
+        "原指标单位"
+      ],
+      "input_field_ids": [
+        "targets.payback_years",
+        "targets.project_irr",
+        "targets.equity_irr",
+        "targets.budget_ceiling"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-INVESTMENT-HURDLE-GAP"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "degradation.annual_fraction",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "每完整运营年的相对衰减比例"
+      ],
+      "units": [
+        "1（每个年度步长的比例）"
+      ],
+      "input_field_ids": [
+        "system.annual_degradation"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-ANNUAL-DEGRADATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "degradation.annual_retention",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "相对铭牌基准的当年性能系数"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "system.degradation_segments",
+        "assets.replacements"
+      ],
+      "producer_formula_ids": [
+        "F-PIECEWISE-DEGRADATION"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "degradation.initial_fraction",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "首年初始性能损失比例"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "system.first_year_degradation"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-INITIAL-DEGRADATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "degradation.previous_retention",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "上一运营年末性能系数"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "system.degradation_segments",
+        "assets.replacements"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-PIECEWISE-DEGRADATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "degradation.replacement_uplift",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "设备更换带来的净性能修复量，占同一原始基准容量比例"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "assets.replacements.performance_reset"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-PIECEWISE-DEGRADATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "degradation.yearly_fraction",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "当年度分段衰减比例"
+      ],
+      "units": [
+        "1（每个年度步长的比例）"
+      ],
+      "input_field_ids": [
+        "system.degradation_segments.rate",
+        "system.degradation_segments.from_year",
+        "system.degradation_segments.to_year"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-PIECEWISE-DEGRADATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "depreciation.asset_annual",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "资产类别 a 在符合计提条件财务年 y 的年度折旧额",
+        "本年该账簿折旧额"
+      ],
+      "units": [
+        "元/财务年",
+        "元"
+      ],
+      "input_field_ids": [
+        "assets.depreciation",
+        "tax.regime_reference"
+      ],
+      "producer_formula_ids": [
+        "F-STRAIGHT-LINE-DEPRECIATION"
+      ],
+      "consumer_formula_ids": [
+        "F-ASSET-BOOK-VALUE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "depreciation.asset_basis",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "该资产依法/按会计政策确认的折旧原值，含不可抵扣税而非全部投资"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "assets.depreciation.depreciable_basis"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STRAIGHT-LINE-DEPRECIATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "depreciation.asset_life_years",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "该资产适用折旧年限"
+      ],
+      "units": [
+        "年"
+      ],
+      "input_field_ids": [
+        "assets.depreciation.depreciation_years"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STRAIGHT-LINE-DEPRECIATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "depreciation.asset_residual",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "该资产预计计税/会计残值，政策分开建账"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "assets.depreciation.residual_value"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STRAIGHT-LINE-DEPRECIATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "depreciation.tax_annual",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "本年允许税前扣除的折旧"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "assets.depreciation",
+        "tax.regime_reference"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-TAXABLE-INCOME-PROJECT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "energy.annual_kwh",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "第 y 个运营年同边界电量",
+        "选定计量点年度交流电量",
+        "选定边界年度交流电量",
+        "第y运营年交流电量"
+      ],
+      "units": [
+        "kWh"
+      ],
+      "input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.losses",
+        "system.capacity_boundary"
+      ],
+      "producer_formula_ids": [
+        "F-ANNUAL-DEGRADATION"
+      ],
+      "consumer_formula_ids": [
+        "F-EQUIVALENT-HOURS",
+        "F-CAPACITY-FACTOR",
+        "F-PR-OBSERVED",
+        "F-AVERAGE-ANNUAL-ENERGY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "energy.auxiliary_kw",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "尚未扣除的站用功率"
+      ],
+      "units": [
+        "kW"
+      ],
+      "input_field_ids": [
+        "system.losses",
+        "system.topology"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-AVAILABLE-ENERGY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "energy.available_kwh",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "同一计量点时段内限发前可用交流电量",
+        "同计量点限发前可用电量",
+        "同点限发前电量",
+        "限发前可用电量",
+        "光伏交付至耦合节点电量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.losses",
+        "system.capacity_boundary"
+      ],
+      "producer_formula_ids": [
+        "F-AVAILABLE-ENERGY"
+      ],
+      "consumer_formula_ids": [
+        "F-SELF-CONSUMPTION",
+        "F-EXPORTED-ENERGY",
+        "F-CURTAILED-ENERGY",
+        "F-ENERGY-BALANCE",
+        "F-STORAGE-PV-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "energy.boundary_id",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "已登记的可用、自用、上网、限发或交付边界标签"
+      ],
+      "units": [
+        "标签"
+      ],
+      "input_field_ids": [
+        "system.capacity_boundary",
+        "grid.metering_boundary"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-ENERGY-AGGREGATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "energy.boundary_interval_kwh",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "边界 b 的时段电量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.losses",
+        "system.capacity_boundary"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-ENERGY-AGGREGATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "energy.capacity_factor",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "指定年度和容量口径的容量因子，不是现金流"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.losses",
+        "system.capacity_boundary"
+      ],
+      "producer_formula_ids": [
+        "F-CAPACITY-FACTOR"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "energy.dc_power_kw",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "时段平均直流输出功率",
+        "该组时段直流输入功率"
+      ],
+      "units": [
+        "kW"
+      ],
+      "input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.losses",
+        "system.capacity_boundary"
+      ],
+      "producer_formula_ids": [
+        "F-DC-TIME-POWER"
+      ],
+      "consumer_formula_ids": [
+        "F-AC-INVERTER-POWER"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "energy.delivered_annual_kwh",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "第 y 年同项目边界可利用交付电量",
+        "同年自用加上网电量，不含弃光",
+        "同项目计量点可利用交付电量，建设无发电期显式为零"
+      ],
+      "units": [
+        "kWh"
+      ],
+      "input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.losses",
+        "system.capacity_boundary"
+      ],
+      "producer_formula_ids": [
+        "F-DELIVERED-ENERGY"
+      ],
+      "consumer_formula_ids": [
+        "F-SELF-CONSUMPTION-RATIO",
+        "F-LCOE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "energy.equivalent_hours",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "年度等效满功率小时"
+      ],
+      "units": [
+        "h"
+      ],
+      "input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.losses",
+        "system.capacity_boundary"
+      ],
+      "producer_formula_ids": [
+        "F-EQUIVALENT-HOURS"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "energy.first_year_ac_kwh",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "首个完整运营年的交流电量",
+        "已计初始衰减的首年同边界电量",
+        "已计初始衰减的首年电量"
+      ],
+      "units": [
+        "kWh"
+      ],
+      "input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.losses",
+        "system.capacity_boundary"
+      ],
+      "producer_formula_ids": [
+        "F-FIRST-YEAR-ENERGY",
+        "F-INITIAL-DEGRADATION"
+      ],
+      "consumer_formula_ids": [
+        "F-ANNUAL-DEGRADATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。多方法输出需显式选择且防重复扣减，禁止并行覆盖。"
+    },
+    {
+      "formula_field_id": "energy.first_year_pre_initial_kwh",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "未计初始衰减的首年同边界电量"
+      ],
+      "units": [
+        "kWh"
+      ],
+      "input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.losses",
+        "system.capacity_boundary"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-INITIAL-DEGRADATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "energy.inverter_ac_power_kw",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "逆变器交流输出平均功率",
+        "逆变器端交流功率"
+      ],
+      "units": [
+        "kW"
+      ],
+      "input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.losses",
+        "system.capacity_boundary"
+      ],
+      "producer_formula_ids": [
+        "F-AC-INVERTER-POWER"
+      ],
+      "consumer_formula_ids": [
+        "F-AVAILABLE-ENERGY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "energy.mean_annual_kwh",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "评价范围同边界年均电量"
+      ],
+      "units": [
+        "kWh/年"
+      ],
+      "input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.losses",
+        "system.capacity_boundary"
+      ],
+      "producer_formula_ids": [
+        "F-AVERAGE-ANNUAL-ENERGY"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "energy.period_totals_kwh",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "边界 b、汇总期 p 的电量"
+      ],
+      "units": [
+        "kWh"
+      ],
+      "input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.losses",
+        "system.capacity_boundary"
+      ],
+      "producer_formula_ids": [
+        "F-ENERGY-AGGREGATION"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "energy.pr_assumed",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "与输出计量点、首年初始损失和限发边界一致的性能比"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "system.losses",
+        "resource.model_method"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-FIRST-YEAR-ENERGY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "energy.pr_observed",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "同年同容量同计量点的性能比"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.losses",
+        "system.capacity_boundary"
+      ],
+      "producer_formula_ids": [
+        "F-PR-OBSERVED"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "energy.reference_capacity_kw",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "与指标标签一致的 DC 或 AC 参考容量",
+        "标签明确的 DC/AC 参考容量"
+      ],
+      "units": [
+        "kW"
+      ],
+      "input_field_ids": [
+        "system.capacity_boundary",
+        "system.dc_capacity",
+        "system.ac_capacity"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-EQUIVALENT-HOURS",
+        "F-CAPACITY-FACTOR"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "environment.avoided_emissions",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "声明反事实边界的避免排放估算"
+      ],
+      "units": [
+        "tCO2e"
+      ],
+      "input_field_ids": [],
+      "producer_formula_ids": [
+        "F-EMISSIONS-AVOIDED"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "environment.eligible_energy",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "该因子适用的电量，不默认全部理论发电量"
+      ],
+      "units": [
+        "kWh"
+      ],
+      "input_field_ids": [
+        "environment.factor_period",
+        "system.capacity_boundary",
+        "environment.approval_reference"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-EMISSIONS-AVOIDED"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "environment.grid_emission_factor",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "同地区同年份边界电网因子"
+      ],
+      "units": [
+        "tCO2e/kWh"
+      ],
+      "input_field_ids": [
+        "environment.grid_emission_factor"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-EMISSIONS-AVOIDED"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "equipment.inverters.ids",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "本方案安装的逆变器有限集合"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "system.inverter_model",
+        "system.inverter_count"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-AC-CAPACITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "equipment.inverters.rated_ac_kw",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "第 j 台逆变器额定交流有功功率"
+      ],
+      "units": [
+        "kWac"
+      ],
+      "input_field_ids": [
+        "system.inverter_unit_ac",
+        "system.inverter_count"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-AC-CAPACITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "equipment.module_count",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "同一规格组件的整数块数"
+      ],
+      "units": [
+        "块"
+      ],
+      "input_field_ids": [
+        "system.module_count"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DC-CAPACITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "equipment.module_power_kwp",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "该规格单块组件额定峰值功率"
+      ],
+      "units": [
+        "kWp/块"
+      ],
+      "input_field_ids": [
+        "system.module_power"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DC-CAPACITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "equipment.power_temperature_coefficient",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "组件功率相对温度系数，可为负"
+      ],
+      "units": [
+        "1/°C"
+      ],
+      "input_field_ids": [
+        "system.temperature_coefficient"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DC-TIME-POWER"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "equity.contributions",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "本期股东实际出资及追加资金",
+        "股东实际出资及追加"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_ratio",
+        "finance.debt_schedule",
+        "project.ownership_mode",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-EQUITY-INVESTOR-CASH-FLOW",
+        "F-CASH-FUNDING-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "equity.distributions",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "当期实际或计划可合法支付的股东分配",
+        "主体支付的股东分配，终期清算支付也应归入对应账户用途"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_ratio",
+        "finance.debt_schedule",
+        "project.ownership_mode",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-EQUITY-INVESTOR-CASH-FLOW",
+        "F-CASH-FUNDING-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "equity.exit_receipts",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "未含在分配中的投资者退出或终期清算回款"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.debt_ratio",
+        "finance.debt_schedule",
+        "project.ownership_mode",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-EQUITY-INVESTOR-CASH-FLOW"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "finance.cash_event_ids",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "完整评价现金事件集合，含基期和终期"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "capex.items.payment_date",
+        "finance.debt_schedule.date"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DATED-NPV"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.cash_event_year_fraction",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "事件日至基准日的合同年分数，可为非整数"
+      ],
+      "units": [
+        "年/年"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "schedule.construction_start",
+        "project.evaluation_date"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DATED-NPV"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.cash_flow_basis",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "项目税前、项目税后、股东实际收付中的一个完整口径标签",
+        "唯一现金流口径",
+        "项目/股权及税前后唯一口径",
+        "项目/股权唯一口径",
+        "项目或股权的唯一口径",
+        "项目/股权及税前后口径"
+      ],
+      "units": [
+        "枚举"
+      ],
+      "input_field_ids": [
+        "project.cashflow_tax_basis",
+        "project.ownership_mode"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-NPV",
+        "F-DATED-NPV",
+        "F-CUMULATIVE-CASH-FLOW",
+        "F-STATIC-PAYBACK",
+        "F-DISCOUNTED-CUMULATIVE-CASH",
+        "F-DYNAMIC-PAYBACK",
+        "F-BREAK-EVEN-PRICE",
+        "F-WORST-CASH-YEAR"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.cumulative_cash_flow",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "截至时点 n 的未折现累计净现金流"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [
+        "F-CUMULATIVE-CASH-FLOW"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.dated_cash_flows",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "第 k 个实际现金事件的金额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DATED-NPV"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.dated_npv",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "按实际支付时点折现的净现值"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [
+        "F-DATED-NPV"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.discounted_cumulative_cash",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "截至 n 的折现累计净现金流"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [
+        "F-DISCOUNTED-CUMULATIVE-CASH"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.discounted_recovery_year_cash_flow",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "回收年度未折现净现金流"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DYNAMIC-PAYBACK"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "finance.dynamic_payback_years",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "自基期起动态首次回收期"
+      ],
+      "units": [
+        "年"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [
+        "F-DYNAMIC-PAYBACK"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.equity_available_cash_flow",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "融资后可供股权的现金余缺，负值表示需股东追加资金",
+        "已计经营、税、资本支出、提款、本息及融资费用的股权可用余缺"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [
+        "F-EQUITY-AVAILABLE-CASH-FLOW"
+      ],
+      "consumer_formula_ids": [
+        "F-CASH-FUNDING-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.equity_investor_cash_flow",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "投资者视角净现金流，用于实际资本金 IRR",
+        "真实股东出资为负、分配和退出为正的投资者现金流"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [
+        "F-EQUITY-INVESTOR-CASH-FLOW"
+      ],
+      "consumer_formula_ids": [
+        "F-IRR-EQUITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.equity_irr_root_set",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "投资者资本金 IRR 实根集合"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [
+        "F-IRR-EQUITY"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.equity_terminal_cash",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "处置及未在 ΔW 中回收的终期现金"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "assets.depreciation.residual_value",
+        "assets.replacements.salvage",
+        "finance.working_capital",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-EQUITY-AVAILABLE-CASH-FLOW"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.first_discounted_recovery_year",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "折现累计首次负转非负的年度终点"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DYNAMIC-PAYBACK"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "finance.first_recovery_year",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "第一个使累计净流由负转非负的年度终点"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STATIC-PAYBACK"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "finance.general_inflation",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "与币种和评价期对应的一般年通胀率假设"
+      ],
+      "units": [
+        "1（每年度有效比例，非连续时间倒数单位）"
+      ],
+      "input_field_ids": [
+        "finance.inflation_rate"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-NOMINAL-REAL-RATE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.irr_search_domain",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "事前声明的实数搜索域，必须位于 r>−1；域外根不声称不存在",
+        "事前声明并记录的 r>−1 实数搜索域"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "scenarios.options",
+        "project.cashflow_tax_basis"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-IRR-PROJECT",
+        "F-IRR-EQUITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.lcoe",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "声明成本与交付边界的平准化度电成本"
+      ],
+      "units": [
+        "元/kWh"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [
+        "F-LCOE"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.nominal_discount_rate",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "名义年折现率"
+      ],
+      "units": [
+        "1（每年度有效比例，非连续时间倒数单位）"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [
+        "F-NOMINAL-REAL-RATE"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.npv",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "口径 b 的年末现金流净现值",
+        "同一税/融资口径的净现值函数"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [
+        "F-NPV"
+      ],
+      "consumer_formula_ids": [
+        "F-BREAK-EVEN-PRICE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.pre_discounted_recovery_cumulative",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "前一年末负折现累计净流"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DYNAMIC-PAYBACK"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "finance.pre_recovery_cumulative_cash",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "此前一年末负累计净现金流"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STATIC-PAYBACK"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "finance.project_cash_flow",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "项目投资视角税后无杠杆增量净现金流",
+        "所得税后无杠杆项目现金流"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "consumer_formula_ids": [
+        "F-PROJECT-PRETAX-CASH-FLOW"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.project_irr_cash_flow",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "同口径项目投资无杠杆现金流，明确税前或税后，不含融资"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-IRR-PROJECT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.project_irr_root_set",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "项目投资 IRR 的全部可识别实根集合，不是任意单根百分比"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [
+        "F-IRR-PROJECT"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.project_operating_cash_benefit",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "增量经营现金利益：到账经营收入加确认的自用避免支出，不含融资",
+        "经营现金利益，不含融资"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "project.ownership_mode",
+        "project.sales_mode",
+        "tariff.periods",
+        "revenue.other_items"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-PROJECT-CASH-FLOW",
+        "F-EQUITY-AVAILABLE-CASH-FLOW",
+        "F-CFADS"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.project_pretax_cash_flow",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "仅加回项目所得税的税前无杠杆现金流"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [
+        "F-PROJECT-PRETAX-CASH-FLOW"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.project_terminal_cash",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "期末处置净现金和未在 ΔW 中回收的残余资金，税务影响进 T",
+        "净残值回收及未在 ΔW 中回收的营运资金"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "assets.depreciation.residual_value",
+        "assets.replacements.salvage",
+        "finance.working_capital"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-PROJECT-CASH-FLOW",
+        "F-LIFECYCLE-COST"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.real_discount_rate",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "不含一般通胀的实际年折现率"
+      ],
+      "units": [
+        "1（每年度有效比例，非连续时间倒数单位）"
+      ],
+      "input_field_ids": [
+        "finance.project_discount_rate",
+        "finance.equity_discount_rate",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-NOMINAL-REAL-RATE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.recovery_year_cash_flow",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "首次回收年度的正净现金流"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STATIC-PAYBACK"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "finance.selected_cash_flow",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "已选项目税前/税后或股东实际现金流，口径不混合",
+        "同一口径各期净现金流",
+        "同口径财务净现金流",
+        "选定口径当年净现金流"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "project.cashflow_tax_basis",
+        "project.ownership_mode"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-NPV",
+        "F-CUMULATIVE-CASH-FLOW",
+        "F-DISCOUNTED-CUMULATIVE-CASH",
+        "F-WORST-CASH-YEAR"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.selected_discount_rate",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "与口径 b 匹配的每年折现率",
+        "同口径年化折现率",
+        "同口径年度折现率",
+        "同口径年折现率",
+        "同一口径折现率"
+      ],
+      "units": [
+        "1（每年度有效比例，非连续时间倒数单位）"
+      ],
+      "input_field_ids": [
+        "finance.project_discount_rate",
+        "finance.equity_discount_rate",
+        "project.price_basis",
+        "project.cashflow_tax_basis"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-NPV",
+        "F-DATED-NPV",
+        "F-DISCOUNTED-CUMULATIVE-CASH",
+        "F-DYNAMIC-PAYBACK",
+        "F-BREAK-EVEN-PRICE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.static_payback_years",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "自评价基期起静态首次回收的年数"
+      ],
+      "units": [
+        "年"
+      ],
+      "input_field_ids": [
+        "finance.cashflow_timing",
+        "project.evaluation_years",
+        "project.cashflow_tax_basis",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [
+        "F-STATIC-PAYBACK"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "finance.tax_basis",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "P 无杠杆项目或 E 融资主体的互斥口径",
+        "P/E 税务评估口径",
+        "P/E 口径",
+        "P 无杠杆项目或 E 融资主体"
+      ],
+      "units": [
+        "枚举"
+      ],
+      "input_field_ids": [
+        "project.cashflow_tax_basis"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-INCOME-TAX-ACCRUAL",
+        "F-TAX-LOSS-BALANCE",
+        "F-TAX-CASH-BRIDGE",
+        "F-OTHER-CASH-TAXES",
+        "F-CASH-TAX-TOTAL"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "grid.export_limit_kw",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "时段有效上网有功功率限额"
+      ],
+      "units": [
+        "kW"
+      ],
+      "input_field_ids": [
+        "grid.export_power_limit"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-EXPORT-LIMIT-ENERGY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "grid.export_limit_kwh",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "该时段允许的最大上网电量",
+        "同区间上网电量上限"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [],
+      "producer_formula_ids": [
+        "F-EXPORT-LIMIT-ENERGY"
+      ],
+      "consumer_formula_ids": [
+        "F-EXPORTED-ENERGY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "grid.power_factor",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "同工况功率因数"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "grid.power_factor"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-TRANSFORMER-ACTIVE-LIMIT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "grid.transformer_active_limit",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "在声明工况功率因数下的有功容量上限"
+      ],
+      "units": [
+        "kW"
+      ],
+      "input_field_ids": [],
+      "producer_formula_ids": [
+        "F-TRANSFORMER-ACTIVE-LIMIT"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "grid.transformer_capacity",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "变压器额定视在容量"
+      ],
+      "units": [
+        "kVA"
+      ],
+      "input_field_ids": [
+        "grid.transformer_capacity"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-TRANSFORMER-ACTIVE-LIMIT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "lcoe.cost_subsidy_offset",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "明确选择为成本抵减且未计收入的有依据补贴"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "capex.items",
+        "opex.items",
+        "tax.regime_reference",
+        "assets.replacements",
+        "system.capacity_boundary"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-LIFECYCLE-COST"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "lcoe.cost_taxes",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "选定成本税费，税前 LCOE 不含所得税；税后模型需独立收入税基"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "capex.items",
+        "opex.items",
+        "tax.regime_reference",
+        "assets.replacements",
+        "system.capacity_boundary"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-LIFECYCLE-COST"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "lcoe.discount_rate",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "与成本币种/名义实际口径相容的 LCOE 年折现率"
+      ],
+      "units": [
+        "1（每年度有效比例，非连续时间倒数单位）"
+      ],
+      "input_field_ids": [
+        "finance.project_discount_rate",
+        "project.price_basis"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-LCOE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "lcoe.project_cost_annual",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "选定税费/补贴边界的项目生命周期净成本",
+        "本条选定无杠杆税前所得税生命周期净成本"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "capex.items",
+        "opex.items",
+        "tax.regime_reference",
+        "assets.replacements",
+        "system.capacity_boundary"
+      ],
+      "producer_formula_ids": [
+        "F-LIFECYCLE-COST"
+      ],
+      "consumer_formula_ids": [
+        "F-LCOE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "load.interval_kwh",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "同计量点可由光伏供给的负荷电量",
+        "时段负荷",
+        "该节点负荷电量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [
+        "load.series.energy",
+        "load.series.power",
+        "load.series.interval_minutes",
+        "load.series.timestamp"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-SELF-CONSUMPTION",
+        "F-LOAD-COVERAGE-RATIO",
+        "F-STORAGE-LOAD-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "losses.ac_retention",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "交流线损剩余比例"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "system.losses",
+        "system.unavailability"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-AVAILABLE-ENERGY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "losses.active_ids",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "实际采用且互斥的损失项有限集合"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "system.losses",
+        "system.unavailability"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-LOSS-COMPOSITE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "losses.availability",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "未在功率输出中模拟的设备可用状态或等效可用比例"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "system.unavailability",
+        "system.losses"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-AVAILABLE-ENERGY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "losses.dc_retention",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "尚未计入其他模型的失配和直流线损剩余比例"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "system.losses",
+        "system.unavailability"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DC-TIME-POWER"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "losses.export_line_retention",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "送出线路损失剩余比例"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "system.losses",
+        "system.unavailability"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-AVAILABLE-ENERGY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "losses.independent_rates",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "第 k 个尚未在其他环节扣除的独立损失率，按小数"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "system.losses",
+        "system.unavailability"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-LOSS-COMPOSITE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "losses.inverter_efficiency",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "工况相关转换效率"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "system.inverter_efficiency"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-AC-INVERTER-POWER"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "losses.retention_factor",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "选定独立损失项的剩余比例"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "system.losses",
+        "system.unavailability"
+      ],
+      "producer_formula_ids": [
+        "F-LOSS-COMPOSITE"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "losses.transformer_retention",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "变压器损失剩余比例"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "system.losses",
+        "system.unavailability"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-AVAILABLE-ENERGY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "model.selected_method_version",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "已版本化确定性完整计算模型映射，不是生成式数值"
+      ],
+      "units": [
+        "函数"
+      ],
+      "input_field_ids": [
+        "resource.model_method",
+        "system.losses.method"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-SCENARIO-METRIC"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "opex.cash_annual",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "当年现金运营费用合计",
+        "现金经营支出，不含折旧、已在自用避免支出扣除项和单列税",
+        "现金运营支出",
+        "现金运营支出，不含折旧",
+        "协议口径现金运营支出"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "opex.items",
+        "finance.inflation_rate"
+      ],
+      "producer_formula_ids": [
+        "F-ANNUAL-OPEX"
+      ],
+      "consumer_formula_ids": [
+        "F-PROJECT-CASH-FLOW",
+        "F-EQUITY-AVAILABLE-CASH-FLOW",
+        "F-LIFECYCLE-COST",
+        "F-CFADS"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "opex.item_ids",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "本年费用分类集合，用符号 O_y 的花体集合形式区分金额"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "opex.items.row_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-ANNUAL-OPEX"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "opex.items.base_amount",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "基准时点第 k 项费用"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "opex.items.base_amount"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-OPEX-ESCALATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "opex.items.cash_amount",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "当年分类现金费用，维修、清洗、保险、运维、租金等"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "opex.items",
+        "finance.inflation_rate"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-ANNUAL-OPEX"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "opex.items.escalated_amount",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "第 k 项第 y 财务年的费用"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "opex.items",
+        "finance.inflation_rate"
+      ],
+      "producer_formula_ids": [
+        "F-OPEX-ESCALATION"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "opex.items.escalation_rates",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "第 a 年适用于第 k 项的价格递增率"
+      ],
+      "units": [
+        "1（每个年度步长的比例）"
+      ],
+      "input_field_ids": [
+        "opex.items.escalation_rate",
+        "finance.inflation_rate"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-OPEX-ESCALATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "resource.cell_temperature_c",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "电池片工作温度，不是直接用环境温度"
+      ],
+      "units": [
+        "°C"
+      ],
+      "input_field_ids": [
+        "resource.timeseries.ambient_temperature",
+        "resource.timeseries.wind_speed",
+        "system.module_model",
+        "resource.model_method"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DC-TIME-POWER"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。工作电池温度子模型尚待方法复核；未核验前逐时温度计算BLOCKED，不把环境温度直接等同电池片温度。"
+    },
+    {
+      "formula_field_id": "resource.effective_poa_kw_m2",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "遮挡、灰尘和雪处理后的有效阵列面辐照度"
+      ],
+      "units": [
+        "kW/m²"
+      ],
+      "input_field_ids": [
+        "resource.timeseries.poa",
+        "system.losses"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DC-TIME-POWER"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "resource.poa_irradiance_kw_m2",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "时段 t 的阵列面平均辐照度，输入需先规范为 kW/m²"
+      ],
+      "units": [
+        "kW/m²"
+      ],
+      "input_field_ids": [
+        "resource.timeseries.poa",
+        "resource.timeseries.interval_minutes"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-POA-IRRADIATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "resource.poa_irradiation_kwh_m2",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "第 y 年阵列面累计辐照量",
+        "同年同阵列面累计辐照量",
+        "同年阵列面累计辐照量"
+      ],
+      "units": [
+        "kWh/m²"
+      ],
+      "input_field_ids": [
+        "resource.monthly.poa",
+        "resource.timeseries.poa"
+      ],
+      "producer_formula_ids": [
+        "F-POA-IRRADIATION"
+      ],
+      "consumer_formula_ids": [
+        "F-FIRST-YEAR-ENERGY",
+        "F-PR-OBSERVED"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "revenue.annual_benefit",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "自持项目年度经济收益，按同一税价口径"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tariff.contract_id",
+        "tariff.periods",
+        "revenue.other_items"
+      ],
+      "producer_formula_ids": [
+        "F-ENERGY-REVENUE"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "revenue.cash_receipts",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "实际或预测年度销售现金到账总额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tariff.contract_id",
+        "tariff.periods",
+        "revenue.other_items"
+      ],
+      "producer_formula_ids": [
+        "F-CASH-RECEIPTS"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "revenue.invoiced_gross",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "本年确认的含税应收售电/服务款，不含自用节省"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tariff.contract_id",
+        "tariff.periods",
+        "revenue.other_items"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CASH-RECEIPTS"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "revenue.other_benefit",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "有来源且未重计的其他年度收益",
+        "第三方投资方有权获得的其他收益"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "revenue.other_items.amount",
+        "revenue.other_items.exclusive_boundary"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-ENERGY-REVENUE",
+        "F-PPA-REVENUE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "revenue.other_cash",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "未含在发票应收款的其他现金收入"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "revenue.other_items.amount",
+        "revenue.other_items.contract_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CASH-RECEIPTS"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "revenue.ppa_benefit",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "第三方投资方年度合同经济收入"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tariff.contract_id",
+        "tariff.periods",
+        "revenue.other_items"
+      ],
+      "producer_formula_ids": [
+        "F-PPA-REVENUE"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "revenue.taxable_net",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "项目增量不含增值税应税收入/利益，按适用规则调整"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tariff.contract_id",
+        "tariff.periods",
+        "revenue.other_items"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-TAXABLE-INCOME-PROJECT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "risk.cash_year_scope",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "被比较的有效年份集合，需明确仅运营期或含建设期"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "risk.items",
+        "project.evaluation_years"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-WORST-CASH-YEAR"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "risk.worst_cash_years",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "达到最小净现金流的全部年份，允许并列"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "risk.items",
+        "project.evaluation_years"
+      ],
+      "producer_formula_ids": [
+        "F-WORST-CASH-YEAR"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "sensitivity.break_even_price_roots",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "满足 NPV=0 的电价根集合"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "scenarios.options",
+        "targets.project_irr",
+        "targets.equity_irr"
+      ],
+      "producer_formula_ids": [
+        "F-BREAK-EVEN-PRICE"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "sensitivity.elasticity",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "基准归一化敏感性系数"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "scenarios.options",
+        "targets.project_irr",
+        "targets.equity_irr"
+      ],
+      "producer_formula_ids": [
+        "F-SENSITIVITY-ELASTICITY"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "sensitivity.factor_base_value",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "该因素基准输入",
+        "基准因素值"
+      ],
+      "units": [
+        "该因素原单位",
+        "因素原单位"
+      ],
+      "input_field_ids": [
+        "scenarios.options.changed_field_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-SINGLE-FACTOR-SENSITIVITY",
+        "F-SENSITIVITY-ELASTICITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "sensitivity.factor_delta",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "单因素扰动额，非伪造真实输入"
+      ],
+      "units": [
+        "该因素原单位"
+      ],
+      "input_field_ids": [
+        "scenarios.options.changed_value_text"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-SINGLE-FACTOR-SENSITIVITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "sensitivity.factor_perturbed_value",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "扰动因素值"
+      ],
+      "units": [
+        "因素原单位"
+      ],
+      "input_field_ids": [
+        "scenarios.options.changed_value_text"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-SENSITIVITY-ELASTICITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "sensitivity.frozen_other_inputs",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "其余外生输入冻结的完整基准向量"
+      ],
+      "units": [
+        "混合单位逐字段"
+      ],
+      "input_field_ids": [
+        "scenarios.options"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-SINGLE-FACTOR-SENSITIVITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "sensitivity.metric_absolute_change",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "仅扰动 x 后指标 M 的绝对变化"
+      ],
+      "units": [
+        "与 M 同单位"
+      ],
+      "input_field_ids": [
+        "scenarios.options",
+        "targets.project_irr",
+        "targets.equity_irr"
+      ],
+      "producer_formula_ids": [
+        "F-SINGLE-FACTOR-SENSITIVITY"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "sensitivity.metric_base",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "基准有效指标值"
+      ],
+      "units": [
+        "指标原单位"
+      ],
+      "input_field_ids": [
+        "scenarios.options",
+        "targets.project_irr",
+        "targets.equity_irr"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-SENSITIVITY-ELASTICITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "sensitivity.metric_definition",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "完整模型输出函数，只能返回有效数值指标"
+      ],
+      "units": [
+        "元或比例或年或元/kWh"
+      ],
+      "input_field_ids": [
+        "scenarios.options.kind"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-SINGLE-FACTOR-SENSITIVITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "sensitivity.metric_perturbed",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "扰动后有效指标值"
+      ],
+      "units": [
+        "指标原单位"
+      ],
+      "input_field_ids": [
+        "scenarios.options",
+        "targets.project_irr",
+        "targets.equity_irr"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-SENSITIVITY-ELASTICITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "sensitivity.price_cash_flow_vector",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "固定其他外生输入、电价为 p 时完整重算的现金流向量"
+      ],
+      "units": [
+        "元/期"
+      ],
+      "input_field_ids": [
+        "scenarios.options",
+        "targets.project_irr",
+        "targets.equity_irr"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-BREAK-EVEN-PRICE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "sensitivity.price_search_domain",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "有业务依据且事前声明的允许电价域，可含合法负价"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "scenarios.options"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-BREAK-EVEN-PRICE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "sensitivity.scenario_fixed_inputs",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "情景 s 维持基准的其余外生参数"
+      ],
+      "units": [
+        "混合单位逐字段"
+      ],
+      "input_field_ids": [
+        "scenarios.options"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-SCENARIO-METRIC"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "sensitivity.scenario_id",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "悲观、基准、乐观或合同定义情景标识"
+      ],
+      "units": [
+        "枚举"
+      ],
+      "input_field_ids": [
+        "scenarios.options.scenario_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-SCENARIO-METRIC"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "sensitivity.scenario_inputs",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "情景 s 中明确扰动的全部外生因素向量"
+      ],
+      "units": [
+        "混合单位逐字段"
+      ],
+      "input_field_ids": [
+        "scenarios.options"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-SCENARIO-METRIC"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "sensitivity.scenario_metrics",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "情景 s 的完整有效指标向量"
+      ],
+      "units": [
+        "逐指标原单位"
+      ],
+      "input_field_ids": [
+        "scenarios.options",
+        "targets.project_irr",
+        "targets.equity_irr"
+      ],
+      "producer_formula_ids": [
+        "F-SCENARIO-METRIC"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "site.exclusion_area",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "互不重叠排除区域面积，i为有效排除区ID"
+      ],
+      "units": [
+        "m²"
+      ],
+      "input_field_ids": [
+        "site.exclusion_area"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-USABLE-AREA"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "site.total_area",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "同一边界总面积"
+      ],
+      "units": [
+        "m²"
+      ],
+      "input_field_ids": [
+        "site.total_area"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-USABLE-AREA"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "site.usable_area",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "净可利用面积"
+      ],
+      "units": [
+        "m²"
+      ],
+      "input_field_ids": [
+        "site.usable_area"
+      ],
+      "producer_formula_ids": [
+        "F-USABLE-AREA"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.available_capacity",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "同一时段退化后的可用能量容量"
+      ],
+      "units": [
+        "kWh"
+      ],
+      "input_field_ids": [
+        "storage.dispatch.usable_capacity"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STORAGE-SOC"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.battery_to_load",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "储能输出端供负荷电量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [
+        "storage.dispatch.discharge_to_load"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STORAGE-LOAD-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.charge_efficiency",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "充电单向效率"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "storage.charge_efficiency"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STORAGE-ENERGY-UPDATE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.charge_energy_limit",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "输入边界单时段最大充电量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [],
+      "producer_formula_ids": [
+        "F-STORAGE-CHARGE-LIMIT"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.charge_input",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "充电端输入电量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [
+        "storage.dispatch.charge_from_pv",
+        "storage.dispatch.charge_from_grid"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STORAGE-ENERGY-UPDATE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.charge_power",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "同边界充电功率限制"
+      ],
+      "units": [
+        "kW"
+      ],
+      "input_field_ids": [
+        "storage.charge_power"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STORAGE-CHARGE-LIMIT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.cycle_reference_capacity",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "设备协议声明的循环参考可用容量"
+      ],
+      "units": [
+        "kWh"
+      ],
+      "input_field_ids": [
+        "storage.cycle_definition",
+        "storage.nominal_energy"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STORAGE-CYCLE-COUNT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.discharge_efficiency",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "放电单向效率"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "storage.discharge_efficiency"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STORAGE-ENERGY-UPDATE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.discharge_energy_limit",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "输出边界单时段最大放电量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [],
+      "producer_formula_ids": [
+        "F-STORAGE-DISCHARGE-LIMIT"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.discharge_output",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "放电端交付电量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [
+        "storage.dispatch.discharge_to_load",
+        "storage.dispatch.discharge_to_export"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STORAGE-ENERGY-UPDATE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.discharge_power",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "输出边界放电功率限制"
+      ],
+      "units": [
+        "kW"
+      ],
+      "input_field_ids": [
+        "storage.discharge_power"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STORAGE-DISCHARGE-LIMIT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.equivalent_cycles",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "本定义的累计等效完整循环数"
+      ],
+      "units": [
+        "次"
+      ],
+      "input_field_ids": [],
+      "producer_formula_ids": [
+        "F-STORAGE-CYCLE-COUNT"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.grid_to_load",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "电网直接购电供负荷电量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [
+        "load.series",
+        "storage.dispatch"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STORAGE-LOAD-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.internal_auxiliary_energy",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "本边界从电池内扣除的辅机电量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [
+        "storage.dispatch.auxiliary_energy",
+        "storage.coupling"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STORAGE-ENERGY-UPDATE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.internal_discharge_energy",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "电池内边界放电消耗能量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [
+        "storage.dispatch.discharge_to_load",
+        "storage.dispatch.discharge_to_export",
+        "storage.discharge_efficiency"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STORAGE-CYCLE-COUNT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.pv_charge",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "同节点向充电端交付电量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [
+        "storage.dispatch.charge_from_pv"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STORAGE-PV-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.pv_direct_export",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "PV直接外送电量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [
+        "storage.dispatch",
+        "grid.export_power_limit"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STORAGE-PV-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.pv_direct_load",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "直接向负荷交付的PV电量",
+        "PV直接供负荷电量"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [
+        "storage.dispatch",
+        "load.series"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STORAGE-PV-BALANCE",
+        "F-STORAGE-LOAD-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.self_discharge_energy",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "电池内能量边界自放电损失"
+      ],
+      "units": [
+        "kWh/时段"
+      ],
+      "input_field_ids": [
+        "storage.self_discharge_rate",
+        "storage.dispatch.stored_energy_begin"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STORAGE-ENERGY-UPDATE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.soc",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "按当期可用容量定义的荷电状态"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [],
+      "producer_formula_ids": [
+        "F-STORAGE-SOC"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.state_energy_begin",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "时段初电池内能量",
+        "电池内储能"
+      ],
+      "units": [
+        "kWh"
+      ],
+      "input_field_ids": [
+        "storage.dispatch.stored_energy_begin"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-STORAGE-ENERGY-UPDATE",
+        "F-STORAGE-SOC"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "storage.state_energy_end",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "相邻时段末电池内能量"
+      ],
+      "units": [
+        "kWh"
+      ],
+      "input_field_ids": [
+        "storage.dispatch.stored_energy_end"
+      ],
+      "producer_formula_ids": [
+        "F-STORAGE-ENERGY-UPDATE"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "tariff.avoidable_price",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "确实可避免的边际购电单价，不含不可减少固定费"
+      ],
+      "units": [
+        "元/kWh"
+      ],
+      "input_field_ids": [
+        "tariff.periods.avoidable_price",
+        "tariff.non_avoidable_charges"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-ENERGY-REVENUE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "tariff.export_price",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "合同/交易规则的售电结算单价，可在有依据时为负",
+        "上网结算价"
+      ],
+      "units": [
+        "元/kWh"
+      ],
+      "input_field_ids": [
+        "tariff.periods.sale_price",
+        "tariff.market_series.sale_price"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-ENERGY-REVENUE",
+        "F-PPA-REVENUE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "tariff.ppa_price",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "合同约定的对业主售电单价"
+      ],
+      "units": [
+        "元/kWh"
+      ],
+      "input_field_ids": [
+        "tariff.ppa_price"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-PPA-REVENUE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "tax.cash_total_selected",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "选定项目/主体口径现金税净额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [
+        "F-CASH-TAX-TOTAL"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "tax.deductible_finance_fees",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "本年允许税前扣除的融资费用"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-TAXABLE-INCOME-EQUITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.deductible_interest",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "本年税法允许扣除的债务利息，非必等于现金利息"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-TAXABLE-INCOME-EQUITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.deductible_opex",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "依法允许扣除的当期经营费用"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-TAXABLE-INCOME-PROJECT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.equity_base_pre_losses",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "融资后主体应税利润初始基数"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [
+        "F-TAXABLE-INCOME-EQUITY"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "tax.equity_cash_total",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "考虑合法利息税盾的实际主体现金税总额，税价桥口径与项目流一致",
+        "协议口径实际现金税，不重复税价桥"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-EQUITY-AVAILABLE-CASH-FLOW",
+        "F-CFADS"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.exclusive_amount",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "不含增值税的单项金额或单价"
+      ],
+      "units": [
+        "与输入同金额单位"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [
+        "F-TAX-EXCLUSIVE-AMOUNT"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "tax.inclusive_amount",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "同项含税金额或单价"
+      ],
+      "units": [
+        "元或元/kWh"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-TAX-EXCLUSIVE-AMOUNT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.income_cash_paid",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "该年所得税现金净支出，合法退税可为负",
+        "同口径现金所得税"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [
+        "F-TAX-CASH-BRIDGE"
+      ],
+      "consumer_formula_ids": [
+        "F-CASH-TAX-TOTAL"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "tax.income_charge",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "本年按已核验规则计提的所得税",
+        "当年计提的所得税"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [
+        "F-INCOME-TAX-ACCRUAL"
+      ],
+      "consumer_formula_ids": [
+        "F-TAX-CASH-BRIDGE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "tax.income_payable_closing",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "期末应交所得税负债"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-TAX-CASH-BRIDGE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.income_payable_opening",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "期初应交所得税负债"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-TAX-CASH-BRIDGE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.income_prepaid_closing",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "期末预缴/可退所得税资产"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-TAX-CASH-BRIDGE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.income_prepaid_opening",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "期初预缴/可退所得税资产"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-TAX-CASH-BRIDGE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.income_rate",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "该主体/口径当年有效所得税率，优惠须有适用性证据"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "tax.corporate_income_rate"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-INCOME-TAX-ACCRUAL"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "tax.losses_closing",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "本年末可用税务亏损余额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [
+        "F-TAX-LOSS-BALANCE"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "tax.losses_expired",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "本年过期/不得再结转的亏损额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-TAX-LOSS-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.losses_opening",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "本年初亏损余额，含逐批期限台账"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-TAX-LOSS-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.losses_used",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "本年依法允许使用的历史亏损额",
+        "本年实际使用的历史亏损"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-INCOME-TAX-ACCRUAL",
+        "F-TAX-LOSS-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.other_adjustments",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "处置收益及其他应税调整净额，可正可负"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-TAXABLE-INCOME-PROJECT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.other_cash_total",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "除已单列所得税及增值税净缴退税以外的现金税费",
+        "未在经营费用/资产中重复的其他现金税费"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [
+        "F-OTHER-CASH-TAXES"
+      ],
+      "consumer_formula_ids": [
+        "F-CASH-TAX-TOTAL"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "tax.other_deductions",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "本年可扣除摊销及其他非利息扣减"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-TAXABLE-INCOME-PROJECT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.other_item_ids",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "适用于该主体年度的税费集合"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-OTHER-CASH-TAXES"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.other_items_cash",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "依法适用的第 k 项现金税费，如有依据的附加/土地等"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-OTHER-CASH-TAXES"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.project_base_pre_losses",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "不计融资利息的项目应税利润初始基数，未扣亏损结转",
+        "同经营边界无杠杆税基"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [
+        "F-TAXABLE-INCOME-PROJECT"
+      ],
+      "consumer_formula_ids": [
+        "F-TAXABLE-INCOME-EQUITY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "tax.project_cash_total",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "无杠杆现金税负：项目所得税、其他税费和适配税价桥后的增值税净缴退"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.project_income_cash_paid",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "同一项目口径实际/模拟所得税现金缴纳净额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-PROJECT-PRETAX-CASH-FLOW"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.selected_base_pre_losses",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "未扣结转亏损的应税利润基数",
+        "本年应税利润初始基数"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-INCOME-TAX-ACCRUAL",
+        "F-TAX-LOSS-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.vat_cash_basis_adjustment",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "如收付采用不含税口径，用于补回销项/进项收付的桥接净额；含税全现金口径时为零"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CASH-TAX-TOTAL"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.vat_cash_paid",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "本期实际缴纳的增值税",
+        "本期增值税实际缴纳额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-VAT-CREDIT-BALANCE",
+        "F-CASH-TAX-TOTAL"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.vat_cash_refund",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "本期取得的合法留抵退税",
+        "本期增值税实际退税额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-VAT-CREDIT-BALANCE",
+        "F-CASH-TAX-TOTAL"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.vat_credit_closing",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "期末可用留抵余额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [
+        "F-VAT-CREDIT-BALANCE"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "tax.vat_credit_opening",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "期初可用留抵余额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-VAT-CREDIT-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.vat_input_eligible",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "本期合法可抵扣进项税额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-VAT-CREDIT-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.vat_output",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "本期销项税额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.incentive_reference",
+        "tax.vat_recovery_timing",
+        "assets.depreciation",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-VAT-CREDIT-BALANCE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "tax.vat_rate",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "该项该生效期适用的增值税税率"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "tax.vat_output_rate",
+        "tariff.periods.vat_rate",
+        "capex.items.vat_rate"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-TAX-EXCLUSIVE-AMOUNT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "time.aggregation_period",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "月、资源年或运营年的汇总期"
+      ],
+      "units": [
+        "期间"
+      ],
+      "input_field_ids": [
+        "resource.timeseries.timestamp",
+        "resource.timeseries.interval_minutes",
+        "load.series.timestamp",
+        "load.series.interval_minutes",
+        "project.evaluation_years",
+        "site.timezone",
+        "schedule.commissioning_date"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-ENERGY-AGGREGATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "time.cumulative_end_year",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "被评估的累计终点，0…N",
+        "累计终点索引"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "resource.timeseries.timestamp",
+        "resource.timeseries.interval_minutes",
+        "load.series.timestamp",
+        "load.series.interval_minutes",
+        "project.evaluation_years",
+        "site.timezone",
+        "schedule.commissioning_date"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CUMULATIVE-CASH-FLOW",
+        "F-DISCOUNTED-CUMULATIVE-CASH"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "time.escalation_year",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "从基准到评价年的完整年度步数"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "resource.timeseries.timestamp",
+        "resource.timeseries.interval_minutes",
+        "load.series.timestamp",
+        "load.series.interval_minutes",
+        "project.evaluation_years",
+        "site.timezone",
+        "schedule.commissioning_date"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-OPEX-ESCALATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "time.financial_end_year",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "最后一个财务年度时点，含建设及终期",
+        "最后评价时点",
+        "终期评价时点",
+        "评价期最后一个财务年度时点，限制首次交叉搜索范围",
+        "末期评价年度"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "project.evaluation_years",
+        "schedule.construction_start",
+        "schedule.commissioning_date"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-NPV",
+        "F-IRR-PROJECT",
+        "F-IRR-EQUITY",
+        "F-STATIC-PAYBACK",
+        "F-DYNAMIC-PAYBACK",
+        "F-LCOE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "time.interval_hours",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "时段 t 实际持续小时数",
+        "时段持续小时数",
+        "同一时段时长",
+        "时段实际持续时间"
+      ],
+      "units": [
+        "h"
+      ],
+      "input_field_ids": [
+        "resource.timeseries.timestamp",
+        "resource.timeseries.interval_minutes",
+        "load.series.timestamp",
+        "load.series.interval_minutes",
+        "project.evaluation_years",
+        "site.timezone",
+        "schedule.commissioning_date"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-POA-IRRADIATION",
+        "F-AVAILABLE-ENERGY",
+        "F-EXPORT-LIMIT-ENERGY",
+        "F-STORAGE-CHARGE-LIMIT",
+        "F-STORAGE-DISCHARGE-LIMIT"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "time.operating_interval_ids",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "第 y 个运营年的完整时段集合",
+        "运营年 y 的时段集合",
+        "运营年 y 同一覆盖时段集合"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "resource.timeseries.timestamp",
+        "resource.timeseries.interval_minutes",
+        "load.series.timestamp",
+        "load.series.interval_minutes",
+        "project.evaluation_years",
+        "site.timezone",
+        "schedule.commissioning_date"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-DELIVERED-ENERGY",
+        "F-SELF-CONSUMPTION-RATIO",
+        "F-LOAD-COVERAGE-RATIO"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "time.operating_year",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "从 1 起的完整运营年整数序号"
+      ],
+      "units": [
+        "1"
+      ],
+      "input_field_ids": [
+        "resource.timeseries.timestamp",
+        "resource.timeseries.interval_minutes",
+        "load.series.timestamp",
+        "load.series.interval_minutes",
+        "project.evaluation_years",
+        "site.timezone",
+        "schedule.commissioning_date"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-ANNUAL-DEGRADATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "time.operating_year_count",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "明确的完整运营年数量"
+      ],
+      "units": [
+        "年"
+      ],
+      "input_field_ids": [
+        "project.evaluation_years"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-AVERAGE-ANNUAL-ENERGY"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "time.period_interval_ids",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "归属该期的完整时段有限集合"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "resource.timeseries.timestamp",
+        "resource.timeseries.interval_minutes",
+        "load.series.timestamp",
+        "load.series.interval_minutes",
+        "project.evaluation_years",
+        "site.timezone",
+        "schedule.commissioning_date"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-ENERGY-AGGREGATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "time.resource_intervals",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "资源年 y 的无重叠完整时间段集合"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "resource.timeseries.timestamp",
+        "resource.timeseries.interval_minutes",
+        "load.series.timestamp",
+        "load.series.interval_minutes",
+        "project.evaluation_years",
+        "site.timezone",
+        "schedule.commissioning_date"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-POA-IRRADIATION"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "time.settlement_interval_ids",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "该运营年合法结算时段集合",
+        "运营年 y 的结算时段集合"
+      ],
+      "units": [
+        "集合"
+      ],
+      "input_field_ids": [
+        "resource.timeseries.timestamp",
+        "resource.timeseries.interval_minutes",
+        "load.series.timestamp",
+        "load.series.interval_minutes",
+        "project.evaluation_years",
+        "site.timezone",
+        "schedule.commissioning_date"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-ENERGY-REVENUE",
+        "F-PPA-REVENUE"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "time.year_hours",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "该评价年度的实际覆盖小时数"
+      ],
+      "units": [
+        "h"
+      ],
+      "input_field_ids": [
+        "resource.timeseries.timestamp",
+        "resource.timeseries.interval_minutes",
+        "load.series.timestamp",
+        "load.series.interval_minutes",
+        "project.evaluation_years",
+        "site.timezone",
+        "schedule.commissioning_date"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CAPACITY-FACTOR"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "units.ac_mw",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "兆瓦级额定容量，保持 AC 标签"
+      ],
+      "units": [
+        "MWac"
+      ],
+      "input_field_ids": [
+        "system.dc_capacity",
+        "system.ac_capacity",
+        "resource.monthly",
+        "capex.items"
+      ],
+      "producer_formula_ids": [
+        "F-UNIT-AC-CAPACITY"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "units.cost_per_kwp",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "规范化后的同一物理量或单位成本"
+      ],
+      "units": [
+        "元/kWp"
+      ],
+      "input_field_ids": [
+        "system.dc_capacity",
+        "system.ac_capacity",
+        "resource.monthly",
+        "capex.items"
+      ],
+      "producer_formula_ids": [
+        "F-UNIT-COST-WP-KWP"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "units.cost_per_wp",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "待转换原值，保持 DC/AC 或峰值标签"
+      ],
+      "units": [
+        "元/Wp"
+      ],
+      "input_field_ids": [
+        "system.dc_capacity",
+        "system.ac_capacity",
+        "resource.monthly",
+        "capex.items"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-UNIT-COST-WP-KWP"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "units.dc_mwp",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "兆瓦级额定容量，保持 DC 标签"
+      ],
+      "units": [
+        "MWp"
+      ],
+      "input_field_ids": [
+        "system.dc_capacity",
+        "system.ac_capacity",
+        "resource.monthly",
+        "capex.items"
+      ],
+      "producer_formula_ids": [
+        "F-UNIT-DC-CAPACITY"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "units.energy_kwh",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "待转换原值，保持 DC/AC 或峰值标签"
+      ],
+      "units": [
+        "kWh"
+      ],
+      "input_field_ids": [
+        "system.dc_capacity",
+        "system.ac_capacity",
+        "resource.monthly",
+        "capex.items"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-UNIT-KWH-MWH"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "units.energy_mwh",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "规范化后的同一物理量或单位成本"
+      ],
+      "units": [
+        "MWh"
+      ],
+      "input_field_ids": [
+        "system.dc_capacity",
+        "system.ac_capacity",
+        "resource.monthly",
+        "capex.items"
+      ],
+      "producer_formula_ids": [
+        "F-UNIT-KWH-MWH"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "units.irradiance_kw_m2",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "规范化后的同一物理量或单位成本"
+      ],
+      "units": [
+        "kW/m²"
+      ],
+      "input_field_ids": [
+        "system.dc_capacity",
+        "system.ac_capacity",
+        "resource.monthly",
+        "capex.items"
+      ],
+      "producer_formula_ids": [
+        "F-UNIT-IRRADIANCE-W-KW"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "units.irradiance_w_m2",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "待转换原值，保持 DC/AC 或峰值标签"
+      ],
+      "units": [
+        "W/m²"
+      ],
+      "input_field_ids": [
+        "system.dc_capacity",
+        "system.ac_capacity",
+        "resource.monthly",
+        "capex.items"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-UNIT-IRRADIANCE-W-KW"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "units.power_kw",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "待转换原值，保持 DC/AC 或峰值标签"
+      ],
+      "units": [
+        "kW"
+      ],
+      "input_field_ids": [
+        "system.dc_capacity",
+        "system.ac_capacity",
+        "resource.monthly",
+        "capex.items"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-UNIT-KW-MW"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "units.power_mw",
+      "kind": "CALCULATED_OR_VALIDATED_LEDGER_OUTPUT",
+      "definition_zh": [
+        "规范化后的同一物理量或单位成本"
+      ],
+      "units": [
+        "MW"
+      ],
+      "input_field_ids": [
+        "system.dc_capacity",
+        "system.ac_capacity",
+        "resource.monthly",
+        "capex.items"
+      ],
+      "producer_formula_ids": [
+        "F-UNIT-KW-MW"
+      ],
+      "consumer_formula_ids": [],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "working_capital.advances_change",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "期末减期初经营预收款增加额"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.working_capital",
+        "finance.cashflow_timing"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CASH-RECEIPTS"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    },
+    {
+      "formula_field_id": "working_capital.equity_net_change",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "未在其他现金项扣过的经营营运资金和约定受限储备净增"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.working_capital",
+        "finance.loan_agreement_id"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-EQUITY-AVAILABLE-CASH-FLOW"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "working_capital.project_net_change",
+      "kind": "NORMALIZED_INPUT_OR_EXPLICIT_TRANSFORM",
+      "definition_zh": [
+        "经营营运资金净增加，不含已按现金收入/支出桥扣过部分和单列税务资产负债",
+        "未重计的营运资金净增"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.working_capital"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-PROJECT-CASH-FLOW",
+        "F-LIFECYCLE-COST"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。"
+    },
+    {
+      "formula_field_id": "working_capital.receivables_change",
+      "kind": "CALCULATION_LEDGER_STATE",
+      "definition_zh": [
+        "期末减期初经营应收款增加额，含对应税项"
+      ],
+      "units": [
+        "元"
+      ],
+      "input_field_ids": [
+        "finance.working_capital",
+        "finance.cashflow_timing"
+      ],
+      "producer_formula_ids": [],
+      "consumer_formula_ids": [
+        "F-CASH-RECEIPTS"
+      ],
+      "constant_definition": null,
+      "contract_status": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+      "note": "公式域字段与03原始/规范输入并非一对一；此映射不表示运行时已实现。账务/时间/求根/敏感性状态必须由所列支持输入及公式图确定性产生，不能凭空作为用户已提供数据；详细账簿算法在Phase3复核。"
+    }
+  ]
+}

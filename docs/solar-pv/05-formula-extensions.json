@@ -1,0 +1,973 @@
+{
+  "schema_version": "1.0.0",
+  "scope": "补齐原文中布局/均值/变配电/减排/光储的逐符号方法设计；不是引擎或已验证算法",
+  "engine_status": "NOT_IMPLEMENTED",
+  "numerical_validation_status": "PLANNED",
+  "formulas": [
+    {
+      "formula_id": "F-STORAGE-ENERGY-UPDATE",
+      "baseline_group": "EXTENSION",
+      "chinese_name": "储能时段储能更新",
+      "english_name": "Battery stored energy update",
+      "latex": "B_(t+1) = B_t + eta_ch × E_ch,t − E_dis,t / eta_dis − E_sd,t − E_aux,t",
+      "text_equation": "B_(t+1) = B_t + eta_ch × E_ch,t − E_dis,t / eta_dis − E_sd,t − E_aux,t",
+      "every_symbol_definition": [
+        {
+          "symbol": "B_(t+1)",
+          "definition_zh": "相邻时段末电池内能量",
+          "unit": "kWh",
+          "field_id": "storage.state_energy_end",
+          "role": "output"
+        },
+        {
+          "symbol": "B_t",
+          "definition_zh": "时段初电池内能量",
+          "unit": "kWh",
+          "field_id": "storage.state_energy_begin",
+          "role": "input"
+        },
+        {
+          "symbol": "eta_ch",
+          "definition_zh": "充电单向效率",
+          "unit": "1",
+          "field_id": "storage.charge_efficiency",
+          "role": "input"
+        },
+        {
+          "symbol": "E_ch,t",
+          "definition_zh": "充电端输入电量",
+          "unit": "kWh/时段",
+          "field_id": "storage.charge_input",
+          "role": "input"
+        },
+        {
+          "symbol": "E_dis,t",
+          "definition_zh": "放电端交付电量",
+          "unit": "kWh/时段",
+          "field_id": "storage.discharge_output",
+          "role": "input"
+        },
+        {
+          "symbol": "eta_dis",
+          "definition_zh": "放电单向效率",
+          "unit": "1",
+          "field_id": "storage.discharge_efficiency",
+          "role": "input"
+        },
+        {
+          "symbol": "E_sd,t",
+          "definition_zh": "电池内能量边界自放电损失",
+          "unit": "kWh/时段",
+          "field_id": "storage.self_discharge_energy",
+          "role": "input"
+        },
+        {
+          "symbol": "E_aux,t",
+          "definition_zh": "本边界从电池内扣除的辅机电量",
+          "unit": "kWh/时段",
+          "field_id": "storage.internal_auxiliary_energy",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "t": "按同一时区排序且无重漏的时段索引；t+1为相邻时段末/下一时段初",
+        "y": "评价期运营年，从1开始；构建年时间另登记",
+        "标签": "PV光伏，grid电网，self自用，exp外送，curt限发，ch充电，dis放电，aux辅机，use可用，nom铭牌，min/max上下界；仅本式出现者生效，不是相乘字母"
+      },
+      "superscript_definition": "上标如出现仅表示指数/边界标签；本条无未定义上标",
+      "set_and_range_definition": [
+        "t∈T；T为实际覆盖、时长/时区一致的有限时段集合。y=1..N，N为project.evaluation_years；本式未出现的集合不参与计算。"
+      ],
+      "unit": "kWh",
+      "input_field_ids": [
+        "storage.state_energy_begin",
+        "storage.charge_efficiency",
+        "storage.charge_input",
+        "storage.discharge_output",
+        "storage.discharge_efficiency",
+        "storage.self_discharge_energy",
+        "storage.internal_auxiliary_energy"
+      ],
+      "output_field_id": "storage.state_energy_end",
+      "calculation_boundary": "独立储能模型；充/放电量端口明示，PCS已含效率不重扣；外部供电辅机不能再扣电池内能量。",
+      "assumptions": [
+        "0<效率≤1；时段连续；充放电互斥；不能用无储能min模型代表光储。"
+      ],
+      "precedence": [
+        "未知/冲突不得代0；该扩展只冻结方法，所需设备/气象/法规/合同与独立数值校验在实施阶段复核。"
+      ],
+      "source_reference": [
+        {
+          "reference": "USER-BASELINE §2/§3/§4/§6/§7/§8",
+          "relationship": "用户要求的计算边界及物理/代数定义；不是已核标准条款"
+        }
+      ],
+      "sample_case": {
+        "kind": "SYMBOLIC",
+        "status": "PLANNED",
+        "expected_relation": "B_(t+1) = B_t + eta_ch × E_ch,t − E_dis,t / eta_dis − E_sd,t − E_aux,t"
+      },
+      "test_id": "T-STORAGE-ENERGY-UPDATE",
+      "test_status": "PLANNED",
+      "report_chapter_ids": [
+        "CH07",
+        "CH08",
+        "CH10"
+      ],
+      "validation_method": "独立推导/参考算法、单位及相应边界/能量或成本守恒；不以相同引擎生成expected。",
+      "status": "METHOD_FROZEN_NUMERICAL_VALIDATION_PENDING",
+      "implementation_stage": "Phase 8",
+      "review_status": "PHASE1_METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-STORAGE-SOC",
+      "baseline_group": "EXTENSION",
+      "chinese_name": "储能荷电状态",
+      "english_name": "Battery state of charge",
+      "latex": "SOC_t = B_t / C_use,t",
+      "text_equation": "SOC_t = B_t / C_use,t",
+      "every_symbol_definition": [
+        {
+          "symbol": "SOC_t",
+          "definition_zh": "按当期可用容量定义的荷电状态",
+          "unit": "1",
+          "field_id": "storage.soc",
+          "role": "output"
+        },
+        {
+          "symbol": "B_t",
+          "definition_zh": "电池内储能",
+          "unit": "kWh",
+          "field_id": "storage.state_energy_begin",
+          "role": "input"
+        },
+        {
+          "symbol": "C_use,t",
+          "definition_zh": "同一时段退化后的可用能量容量",
+          "unit": "kWh",
+          "field_id": "storage.available_capacity",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "t": "按同一时区排序且无重漏的时段索引；t+1为相邻时段末/下一时段初",
+        "y": "评价期运营年，从1开始；构建年时间另登记",
+        "标签": "PV光伏，grid电网，self自用，exp外送，curt限发，ch充电，dis放电，aux辅机，use可用，nom铭牌，min/max上下界；仅本式出现者生效，不是相乘字母"
+      },
+      "superscript_definition": "上标如出现仅表示指数/边界标签；本条无未定义上标",
+      "set_and_range_definition": [
+        "t∈T；T为实际覆盖、时长/时区一致的有限时段集合。y=1..N，N为project.evaluation_years；本式未出现的集合不参与计算。"
+      ],
+      "unit": "1",
+      "input_field_ids": [
+        "storage.state_energy_begin",
+        "storage.available_capacity"
+      ],
+      "output_field_id": "storage.soc",
+      "calculation_boundary": "当前可用容量分母，非始终不变铭牌容量。",
+      "assumptions": [
+        "C_use,t>0；SOC_min≤SOC_t≤SOC_max；初始终端SOC独立条件，净耗用须入经济处理。"
+      ],
+      "precedence": [
+        "未知/冲突不得代0；该扩展只冻结方法，所需设备/气象/法规/合同与独立数值校验在实施阶段复核。"
+      ],
+      "source_reference": [
+        {
+          "reference": "USER-BASELINE §2/§3/§4/§6/§7/§8",
+          "relationship": "用户要求的计算边界及物理/代数定义；不是已核标准条款"
+        }
+      ],
+      "sample_case": {
+        "kind": "SYMBOLIC",
+        "status": "PLANNED",
+        "expected_relation": "SOC_t = B_t / C_use,t"
+      },
+      "test_id": "T-STORAGE-SOC",
+      "test_status": "PLANNED",
+      "report_chapter_ids": [
+        "CH07",
+        "CH10"
+      ],
+      "validation_method": "独立推导/参考算法、单位及相应边界/能量或成本守恒；不以相同引擎生成expected。",
+      "status": "METHOD_FROZEN_NUMERICAL_VALIDATION_PENDING",
+      "implementation_stage": "Phase 8",
+      "review_status": "PHASE1_METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-STORAGE-CHARGE-LIMIT",
+      "baseline_group": "EXTENSION",
+      "chinese_name": "储能充电能量上限",
+      "english_name": "Battery charge energy limit",
+      "latex": "E_ch,max,t = P_ch,max,t × delta_t",
+      "text_equation": "E_ch,max,t = P_ch,max,t × delta_t",
+      "every_symbol_definition": [
+        {
+          "symbol": "E_ch,max,t",
+          "definition_zh": "输入边界单时段最大充电量",
+          "unit": "kWh/时段",
+          "field_id": "storage.charge_energy_limit",
+          "role": "output"
+        },
+        {
+          "symbol": "P_ch,max,t",
+          "definition_zh": "同边界充电功率限制",
+          "unit": "kW",
+          "field_id": "storage.charge_power",
+          "role": "input"
+        },
+        {
+          "symbol": "delta_t",
+          "definition_zh": "时段实际持续时间",
+          "unit": "h",
+          "field_id": "time.interval_hours",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "t": "按同一时区排序且无重漏的时段索引；t+1为相邻时段末/下一时段初",
+        "y": "评价期运营年，从1开始；构建年时间另登记",
+        "标签": "PV光伏，grid电网，self自用，exp外送，curt限发，ch充电，dis放电，aux辅机，use可用，nom铭牌，min/max上下界；仅本式出现者生效，不是相乘字母"
+      },
+      "superscript_definition": "上标如出现仅表示指数/边界标签；本条无未定义上标",
+      "set_and_range_definition": [
+        "t∈T；T为实际覆盖、时长/时区一致的有限时段集合。y=1..N，N为project.evaluation_years；本式未出现的集合不参与计算。"
+      ],
+      "unit": "kWh/时段",
+      "input_field_ids": [
+        "storage.charge_power",
+        "time.interval_hours"
+      ],
+      "output_field_id": "storage.charge_energy_limit",
+      "calculation_boundary": "功率/能量上限同时受SOC可用裕量和变流器边界限制。",
+      "assumptions": [
+        "实际E_ch不超过本上限及SOC能量裕量；不把kW直接当kWh。"
+      ],
+      "precedence": [
+        "未知/冲突不得代0；该扩展只冻结方法，所需设备/气象/法规/合同与独立数值校验在实施阶段复核。"
+      ],
+      "source_reference": [
+        {
+          "reference": "USER-BASELINE §2/§3/§4/§6/§7/§8",
+          "relationship": "用户要求的计算边界及物理/代数定义；不是已核标准条款"
+        }
+      ],
+      "sample_case": {
+        "kind": "SYMBOLIC",
+        "status": "PLANNED",
+        "expected_relation": "E_ch,max,t = P_ch,max,t × delta_t"
+      },
+      "test_id": "T-STORAGE-CHARGE-LIMIT",
+      "test_status": "PLANNED",
+      "report_chapter_ids": [
+        "CH07",
+        "CH10"
+      ],
+      "validation_method": "独立推导/参考算法、单位及相应边界/能量或成本守恒；不以相同引擎生成expected。",
+      "status": "METHOD_FROZEN_NUMERICAL_VALIDATION_PENDING",
+      "implementation_stage": "Phase 8",
+      "review_status": "PHASE1_METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-STORAGE-DISCHARGE-LIMIT",
+      "baseline_group": "EXTENSION",
+      "chinese_name": "储能放电能量上限",
+      "english_name": "Battery discharge energy limit",
+      "latex": "E_dis,max,t = P_dis,max,t × delta_t",
+      "text_equation": "E_dis,max,t = P_dis,max,t × delta_t",
+      "every_symbol_definition": [
+        {
+          "symbol": "E_dis,max,t",
+          "definition_zh": "输出边界单时段最大放电量",
+          "unit": "kWh/时段",
+          "field_id": "storage.discharge_energy_limit",
+          "role": "output"
+        },
+        {
+          "symbol": "P_dis,max,t",
+          "definition_zh": "输出边界放电功率限制",
+          "unit": "kW",
+          "field_id": "storage.discharge_power",
+          "role": "input"
+        },
+        {
+          "symbol": "delta_t",
+          "definition_zh": "时段实际持续时间",
+          "unit": "h",
+          "field_id": "time.interval_hours",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "t": "按同一时区排序且无重漏的时段索引；t+1为相邻时段末/下一时段初",
+        "y": "评价期运营年，从1开始；构建年时间另登记",
+        "标签": "PV光伏，grid电网，self自用，exp外送，curt限发，ch充电，dis放电，aux辅机，use可用，nom铭牌，min/max上下界；仅本式出现者生效，不是相乘字母"
+      },
+      "superscript_definition": "上标如出现仅表示指数/边界标签；本条无未定义上标",
+      "set_and_range_definition": [
+        "t∈T；T为实际覆盖、时长/时区一致的有限时段集合。y=1..N，N为project.evaluation_years；本式未出现的集合不参与计算。"
+      ],
+      "unit": "kWh/时段",
+      "input_field_ids": [
+        "storage.discharge_power",
+        "time.interval_hours"
+      ],
+      "output_field_id": "storage.discharge_energy_limit",
+      "calculation_boundary": "与SOC/功率下限和端口效率共同验收。",
+      "assumptions": [
+        "实际放电不能超过SOC储能和边界上限；不免费耗尽初始SOC。"
+      ],
+      "precedence": [
+        "未知/冲突不得代0；该扩展只冻结方法，所需设备/气象/法规/合同与独立数值校验在实施阶段复核。"
+      ],
+      "source_reference": [
+        {
+          "reference": "USER-BASELINE §2/§3/§4/§6/§7/§8",
+          "relationship": "用户要求的计算边界及物理/代数定义；不是已核标准条款"
+        }
+      ],
+      "sample_case": {
+        "kind": "SYMBOLIC",
+        "status": "PLANNED",
+        "expected_relation": "E_dis,max,t = P_dis,max,t × delta_t"
+      },
+      "test_id": "T-STORAGE-DISCHARGE-LIMIT",
+      "test_status": "PLANNED",
+      "report_chapter_ids": [
+        "CH07",
+        "CH10"
+      ],
+      "validation_method": "独立推导/参考算法、单位及相应边界/能量或成本守恒；不以相同引擎生成expected。",
+      "status": "METHOD_FROZEN_NUMERICAL_VALIDATION_PENDING",
+      "implementation_stage": "Phase 8",
+      "review_status": "PHASE1_METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-STORAGE-PV-BALANCE",
+      "baseline_group": "EXTENSION",
+      "chinese_name": "光储光伏节点守恒",
+      "english_name": "PV node energy balance",
+      "latex": "E_pv,t = E_direct,t + E_pv_ch,t + E_pv_exp,t + E_curt,t",
+      "text_equation": "E_pv,t = E_direct,t + E_pv_ch,t + E_pv_exp,t + E_curt,t",
+      "every_symbol_definition": [
+        {
+          "symbol": "E_pv,t",
+          "definition_zh": "光伏交付至耦合节点电量",
+          "unit": "kWh/时段",
+          "field_id": "energy.available_kwh",
+          "role": "input"
+        },
+        {
+          "symbol": "E_direct,t",
+          "definition_zh": "直接向负荷交付的PV电量",
+          "unit": "kWh/时段",
+          "field_id": "storage.pv_direct_load",
+          "role": "input"
+        },
+        {
+          "symbol": "E_pv_ch,t",
+          "definition_zh": "同节点向充电端交付电量",
+          "unit": "kWh/时段",
+          "field_id": "storage.pv_charge",
+          "role": "input"
+        },
+        {
+          "symbol": "E_pv_exp,t",
+          "definition_zh": "PV直接外送电量",
+          "unit": "kWh/时段",
+          "field_id": "storage.pv_direct_export",
+          "role": "input"
+        },
+        {
+          "symbol": "E_curt,t",
+          "definition_zh": "同节点可用但受约束限发电量",
+          "unit": "kWh/时段",
+          "field_id": "consumption.curtailed_kwh",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "t": "按同一时区排序且无重漏的时段索引；t+1为相邻时段末/下一时段初",
+        "y": "评价期运营年，从1开始；构建年时间另登记",
+        "标签": "PV光伏，grid电网，self自用，exp外送，curt限发，ch充电，dis放电，aux辅机，use可用，nom铭牌，min/max上下界；仅本式出现者生效，不是相乘字母"
+      },
+      "superscript_definition": "上标如出现仅表示指数/边界标签；本条无未定义上标",
+      "set_and_range_definition": [
+        "t∈T；T为实际覆盖、时长/时区一致的有限时段集合。y=1..N，N为project.evaluation_years；本式未出现的集合不参与计算。"
+      ],
+      "unit": "kWh/时段",
+      "input_field_ids": [
+        "energy.available_kwh",
+        "storage.pv_direct_load",
+        "storage.pv_charge",
+        "storage.pv_direct_export",
+        "consumption.curtailed_kwh"
+      ],
+      "output_field_id": "checks.storage_pv_balance",
+      "calculation_boundary": "光伏至储能耦合点，同节点电量，额外变换损耗须在节点台账独立列出。",
+      "assumptions": [
+        "各路径非负，不把网充放电当PV直接自用；检查残差=左−右。"
+      ],
+      "precedence": [
+        "未知/冲突不得代0；该扩展只冻结方法，所需设备/气象/法规/合同与独立数值校验在实施阶段复核。"
+      ],
+      "source_reference": [
+        {
+          "reference": "USER-BASELINE §2/§3/§4/§6/§7/§8",
+          "relationship": "用户要求的计算边界及物理/代数定义；不是已核标准条款"
+        }
+      ],
+      "sample_case": {
+        "kind": "SYMBOLIC",
+        "status": "PLANNED",
+        "expected_relation": "E_pv,t = E_direct,t + E_pv_ch,t + E_pv_exp,t + E_curt,t"
+      },
+      "test_id": "T-STORAGE-PV-BALANCE",
+      "test_status": "PLANNED",
+      "report_chapter_ids": [
+        "CH08",
+        "CH10"
+      ],
+      "validation_method": "独立推导/参考算法、单位及相应边界/能量或成本守恒；不以相同引擎生成expected。",
+      "status": "METHOD_FROZEN_NUMERICAL_VALIDATION_PENDING",
+      "implementation_stage": "Phase 8",
+      "review_status": "PHASE1_METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-STORAGE-LOAD-BALANCE",
+      "baseline_group": "EXTENSION",
+      "chinese_name": "光储负荷节点守恒",
+      "english_name": "Load node energy balance",
+      "latex": "L_t = E_direct,t + E_bat_load,t + E_grid_load,t",
+      "text_equation": "L_t = E_direct,t + E_bat_load,t + E_grid_load,t",
+      "every_symbol_definition": [
+        {
+          "symbol": "L_t",
+          "definition_zh": "该节点负荷电量",
+          "unit": "kWh/时段",
+          "field_id": "load.interval_kwh",
+          "role": "input"
+        },
+        {
+          "symbol": "E_direct,t",
+          "definition_zh": "PV直接供负荷电量",
+          "unit": "kWh/时段",
+          "field_id": "storage.pv_direct_load",
+          "role": "input"
+        },
+        {
+          "symbol": "E_bat_load,t",
+          "definition_zh": "储能输出端供负荷电量",
+          "unit": "kWh/时段",
+          "field_id": "storage.battery_to_load",
+          "role": "input"
+        },
+        {
+          "symbol": "E_grid_load,t",
+          "definition_zh": "电网直接购电供负荷电量",
+          "unit": "kWh/时段",
+          "field_id": "storage.grid_to_load",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "t": "按同一时区排序且无重漏的时段索引；t+1为相邻时段末/下一时段初",
+        "y": "评价期运营年，从1开始；构建年时间另登记",
+        "标签": "PV光伏，grid电网，self自用，exp外送，curt限发，ch充电，dis放电，aux辅机，use可用，nom铭牌，min/max上下界；仅本式出现者生效，不是相乘字母"
+      },
+      "superscript_definition": "上标如出现仅表示指数/边界标签；本条无未定义上标",
+      "set_and_range_definition": [
+        "t∈T；T为实际覆盖、时长/时区一致的有限时段集合。y=1..N，N为project.evaluation_years；本式未出现的集合不参与计算。"
+      ],
+      "unit": "kWh/时段",
+      "input_field_ids": [
+        "load.interval_kwh",
+        "storage.pv_direct_load",
+        "storage.battery_to_load",
+        "storage.grid_to_load"
+      ],
+      "output_field_id": "checks.storage_load_balance",
+      "calculation_boundary": "负荷节点单独计量，若系统不可满足负荷需另列未供电项而非强制伪平衡。",
+      "assumptions": [
+        "检查残差左−右，电网购电有真实成本；直接PV与电池输出不重计自用。"
+      ],
+      "precedence": [
+        "未知/冲突不得代0；该扩展只冻结方法，所需设备/气象/法规/合同与独立数值校验在实施阶段复核。"
+      ],
+      "source_reference": [
+        {
+          "reference": "USER-BASELINE §2/§3/§4/§6/§7/§8",
+          "relationship": "用户要求的计算边界及物理/代数定义；不是已核标准条款"
+        }
+      ],
+      "sample_case": {
+        "kind": "SYMBOLIC",
+        "status": "PLANNED",
+        "expected_relation": "L_t = E_direct,t + E_bat_load,t + E_grid_load,t"
+      },
+      "test_id": "T-STORAGE-LOAD-BALANCE",
+      "test_status": "PLANNED",
+      "report_chapter_ids": [
+        "CH10"
+      ],
+      "validation_method": "独立推导/参考算法、单位及相应边界/能量或成本守恒；不以相同引擎生成expected。",
+      "status": "METHOD_FROZEN_NUMERICAL_VALIDATION_PENDING",
+      "implementation_stage": "Phase 8",
+      "review_status": "PHASE1_METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-STORAGE-CYCLE-COUNT",
+      "baseline_group": "EXTENSION",
+      "chinese_name": "等效完整循环计数",
+      "english_name": "Equivalent full cycle count",
+      "latex": "n_eq = sum_t(E_dis,internal,t) / C_ref",
+      "text_equation": "n_eq = sum_t(E_dis,internal,t) / C_ref",
+      "every_symbol_definition": [
+        {
+          "symbol": "n_eq",
+          "definition_zh": "本定义的累计等效完整循环数",
+          "unit": "次",
+          "field_id": "storage.equivalent_cycles",
+          "role": "output"
+        },
+        {
+          "symbol": "E_dis,internal,t",
+          "definition_zh": "电池内边界放电消耗能量",
+          "unit": "kWh/时段",
+          "field_id": "storage.internal_discharge_energy",
+          "role": "input"
+        },
+        {
+          "symbol": "C_ref",
+          "definition_zh": "设备协议声明的循环参考可用容量",
+          "unit": "kWh",
+          "field_id": "storage.cycle_reference_capacity",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "t": "按同一时区排序且无重漏的时段索引；t+1为相邻时段末/下一时段初",
+        "y": "评价期运营年，从1开始；构建年时间另登记",
+        "标签": "PV光伏，grid电网，self自用，exp外送，curt限发，ch充电，dis放电，aux辅机，use可用，nom铭牌，min/max上下界；仅本式出现者生效，不是相乘字母"
+      },
+      "superscript_definition": "上标如出现仅表示指数/边界标签；本条无未定义上标",
+      "set_and_range_definition": [
+        "t∈T；T为实际覆盖、时长/时区一致的有限时段集合。y=1..N，N为project.evaluation_years；本式未出现的集合不参与计算。"
+      ],
+      "unit": "次",
+      "input_field_ids": [
+        "storage.internal_discharge_energy",
+        "storage.cycle_reference_capacity"
+      ],
+      "output_field_id": "storage.equivalent_cycles",
+      "calculation_boundary": "仅当设备循环协议采用累计放电量定义时使用；其他吞吐/雨流计数须另注册，不混成统一事实。",
+      "assumptions": [
+        "参考容量>0，厂家依据与SOC深度条件明确；退化映射须正式曲线，不给无依据统一年衰减。"
+      ],
+      "precedence": [
+        "未知/冲突不得代0；该扩展只冻结方法，所需设备/气象/法规/合同与独立数值校验在实施阶段复核。"
+      ],
+      "source_reference": [
+        {
+          "reference": "USER-BASELINE §2/§3/§4/§6/§7/§8",
+          "relationship": "用户要求的计算边界及物理/代数定义；不是已核标准条款"
+        }
+      ],
+      "sample_case": {
+        "kind": "SYMBOLIC",
+        "status": "PLANNED",
+        "expected_relation": "n_eq = sum_t(E_dis,internal,t) / C_ref"
+      },
+      "test_id": "T-STORAGE-CYCLE-COUNT",
+      "test_status": "PLANNED",
+      "report_chapter_ids": [
+        "CH07",
+        "CH15"
+      ],
+      "validation_method": "独立推导/参考算法、单位及相应边界/能量或成本守恒；不以相同引擎生成expected。",
+      "status": "METHOD_FROZEN_NUMERICAL_VALIDATION_PENDING",
+      "implementation_stage": "Phase 8",
+      "review_status": "PHASE1_METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-USABLE-AREA",
+      "baseline_group": "EXTENSION",
+      "chinese_name": "可利用面积核算",
+      "english_name": "Usable area accounting",
+      "latex": "A_use = A_total − sum_i(A_excl,i)",
+      "text_equation": "A_use = A_total − sum_i(A_excl,i)",
+      "every_symbol_definition": [
+        {
+          "symbol": "A_use",
+          "definition_zh": "净可利用面积",
+          "unit": "m²",
+          "field_id": "site.usable_area",
+          "role": "input"
+        },
+        {
+          "symbol": "A_total",
+          "definition_zh": "同一边界总面积",
+          "unit": "m²",
+          "field_id": "site.total_area",
+          "role": "input"
+        },
+        {
+          "symbol": "A_excl,i",
+          "definition_zh": "互不重叠排除区域面积，i为有效排除区ID",
+          "unit": "m²",
+          "field_id": "site.exclusion_area",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "t": "按同一时区排序且无重漏的时段索引；t+1为相邻时段末/下一时段初",
+        "y": "评价期运营年，从1开始；构建年时间另登记",
+        "标签": "PV光伏，grid电网，self自用，exp外送，curt限发，ch充电，dis放电，aux辅机，use可用，nom铭牌，min/max上下界；仅本式出现者生效，不是相乘字母"
+      },
+      "superscript_definition": "上标如出现仅表示指数/边界标签；本条无未定义上标",
+      "set_and_range_definition": [
+        "t∈T；T为实际覆盖、时长/时区一致的有限时段集合。y=1..N，N为project.evaluation_years；本式未出现的集合不参与计算。"
+      ],
+      "unit": "m²",
+      "input_field_ids": [
+        "site.total_area",
+        "site.exclusion_area"
+      ],
+      "output_field_id": "site.usable_area",
+      "calculation_boundary": "边界坐标系/投影与面积同一，排除区先做空间并集去重后计算。",
+      "assumptions": [
+        "各区非负；排除区重叠不能重复扣；城市/照片不能替代可靠面积证据。"
+      ],
+      "precedence": [
+        "未知/冲突不得代0；该扩展只冻结方法，所需设备/气象/法规/合同与独立数值校验在实施阶段复核。"
+      ],
+      "source_reference": [
+        {
+          "reference": "USER-BASELINE §2/§3/§4/§6/§7/§8",
+          "relationship": "用户要求的计算边界及物理/代数定义；不是已核标准条款"
+        }
+      ],
+      "sample_case": {
+        "kind": "SYMBOLIC",
+        "status": "PLANNED",
+        "expected_relation": "A_use = A_total − sum_i(A_excl,i)"
+      },
+      "test_id": "T-USABLE-AREA",
+      "test_status": "PLANNED",
+      "report_chapter_ids": [
+        "CH04",
+        "CH06"
+      ],
+      "validation_method": "独立推导/参考算法、单位及相应边界/能量或成本守恒；不以相同引擎生成expected。",
+      "status": "METHOD_FROZEN_NUMERICAL_VALIDATION_PENDING",
+      "implementation_stage": "Phase 3",
+      "review_status": "PHASE1_METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-AVERAGE-ANNUAL-ENERGY",
+      "baseline_group": "EXTENSION",
+      "chinese_name": "评价期年均电量",
+      "english_name": "Average annual energy",
+      "latex": "E_mean = sum_(y=1..N)(E_y) / N",
+      "text_equation": "E_mean = sum_(y=1..N)(E_y) / N",
+      "every_symbol_definition": [
+        {
+          "symbol": "E_mean",
+          "definition_zh": "评价范围同边界年均电量",
+          "unit": "kWh/年",
+          "field_id": "energy.mean_annual_kwh",
+          "role": "output"
+        },
+        {
+          "symbol": "E_y",
+          "definition_zh": "第y运营年交流电量",
+          "unit": "kWh",
+          "field_id": "energy.annual_kwh",
+          "role": "input"
+        },
+        {
+          "symbol": "N",
+          "definition_zh": "明确的完整运营年数量",
+          "unit": "年",
+          "field_id": "time.operating_year_count",
+          "role": "input"
+        },
+        {
+          "symbol": "y",
+          "definition_zh": "从1至N的运营年索引",
+          "unit": "1",
+          "field_id": null,
+          "role": "index_or_constant"
+        }
+      ],
+      "subscript_definition": {
+        "t": "按同一时区排序且无重漏的时段索引；t+1为相邻时段末/下一时段初",
+        "y": "评价期运营年，从1开始；构建年时间另登记",
+        "标签": "PV光伏，grid电网，self自用，exp外送，curt限发，ch充电，dis放电，aux辅机，use可用，nom铭牌，min/max上下界；仅本式出现者生效，不是相乘字母"
+      },
+      "superscript_definition": "上标如出现仅表示指数/边界标签；本条无未定义上标",
+      "set_and_range_definition": [
+        "t∈T；T为实际覆盖、时长/时区一致的有限时段集合。y=1..N，N为project.evaluation_years；本式未出现的集合不参与计算。"
+      ],
+      "unit": "kWh/年",
+      "input_field_ids": [
+        "energy.annual_kwh",
+        "time.operating_year_count"
+      ],
+      "output_field_id": "energy.mean_annual_kwh",
+      "calculation_boundary": "完整运营年算术均值；含不足年采用时长加权并另注册方法，不以建设年补0混淆。",
+      "assumptions": [
+        "N>0；年均不得与首年电量混称。"
+      ],
+      "precedence": [
+        "未知/冲突不得代0；该扩展只冻结方法，所需设备/气象/法规/合同与独立数值校验在实施阶段复核。"
+      ],
+      "source_reference": [
+        {
+          "reference": "USER-BASELINE §2/§3/§4/§6/§7/§8",
+          "relationship": "用户要求的计算边界及物理/代数定义；不是已核标准条款"
+        }
+      ],
+      "sample_case": {
+        "kind": "SYMBOLIC",
+        "status": "PLANNED",
+        "expected_relation": "E_mean = sum_(y=1..N)(E_y) / N"
+      },
+      "test_id": "T-AVERAGE-ANNUAL-ENERGY",
+      "test_status": "PLANNED",
+      "report_chapter_ids": [
+        "CH01",
+        "CH08"
+      ],
+      "validation_method": "独立推导/参考算法、单位及相应边界/能量或成本守恒；不以相同引擎生成expected。",
+      "status": "METHOD_FROZEN_NUMERICAL_VALIDATION_PENDING",
+      "implementation_stage": "Phase 3",
+      "review_status": "PHASE1_METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-EMISSIONS-AVOIDED",
+      "baseline_group": "EXTENSION",
+      "chinese_name": "有边界的减排估算",
+      "english_name": "Boundary specific avoided emissions",
+      "latex": "M_avoided,y = E_eligible,y × EF_grid,y",
+      "text_equation": "M_avoided,y = E_eligible,y × EF_grid,y",
+      "every_symbol_definition": [
+        {
+          "symbol": "M_avoided,y",
+          "definition_zh": "声明反事实边界的避免排放估算",
+          "unit": "tCO2e",
+          "field_id": "environment.avoided_emissions",
+          "role": "output"
+        },
+        {
+          "symbol": "E_eligible,y",
+          "definition_zh": "该因子适用的电量，不默认全部理论发电量",
+          "unit": "kWh",
+          "field_id": "environment.eligible_energy",
+          "role": "input"
+        },
+        {
+          "symbol": "EF_grid,y",
+          "definition_zh": "同地区同年份边界电网因子",
+          "unit": "tCO2e/kWh",
+          "field_id": "environment.grid_emission_factor",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "t": "按同一时区排序且无重漏的时段索引；t+1为相邻时段末/下一时段初",
+        "y": "评价期运营年，从1开始；构建年时间另登记",
+        "标签": "PV光伏，grid电网，self自用，exp外送，curt限发，ch充电，dis放电，aux辅机，use可用，nom铭牌，min/max上下界；仅本式出现者生效，不是相乘字母"
+      },
+      "superscript_definition": "上标如出现仅表示指数/边界标签；本条无未定义上标",
+      "set_and_range_definition": [
+        "t∈T；T为实际覆盖、时长/时区一致的有限时段集合。y=1..N，N为project.evaluation_years；本式未出现的集合不参与计算。"
+      ],
+      "unit": "tCO2e",
+      "input_field_ids": [
+        "environment.eligible_energy",
+        "environment.grid_emission_factor"
+      ],
+      "output_field_id": "environment.avoided_emissions",
+      "calculation_boundary": "仅适用因子匹配时估算，生命周期/运行边际/平均排放因子不可混用；储能网充影响单独。",
+      "assumptions": [
+        "因子及有效期必须来源；不是碳资产认证，不默认产生碳现金收益。"
+      ],
+      "precedence": [
+        "未知/冲突不得代0；该扩展只冻结方法，所需设备/气象/法规/合同与独立数值校验在实施阶段复核。"
+      ],
+      "source_reference": [
+        {
+          "reference": "USER-BASELINE §2/§3/§4/§6/§7/§8",
+          "relationship": "用户要求的计算边界及物理/代数定义；不是已核标准条款"
+        }
+      ],
+      "sample_case": {
+        "kind": "SYMBOLIC",
+        "status": "PLANNED",
+        "expected_relation": "M_avoided,y = E_eligible,y × EF_grid,y"
+      },
+      "test_id": "T-EMISSIONS-AVOIDED",
+      "test_status": "PLANNED",
+      "report_chapter_ids": [
+        "CH12"
+      ],
+      "validation_method": "独立推导/参考算法、单位及相应边界/能量或成本守恒；不以相同引擎生成expected。",
+      "status": "METHOD_FROZEN_NUMERICAL_VALIDATION_PENDING",
+      "implementation_stage": "Phase 3",
+      "review_status": "PHASE1_METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-TRANSFORMER-ACTIVE-LIMIT",
+      "baseline_group": "EXTENSION",
+      "chinese_name": "变压器有功容量校核",
+      "english_name": "Transformer active power limit",
+      "latex": "P_tr = S_tr × PF",
+      "text_equation": "P_tr = S_tr × PF",
+      "every_symbol_definition": [
+        {
+          "symbol": "P_tr",
+          "definition_zh": "在声明工况功率因数下的有功容量上限",
+          "unit": "kW",
+          "field_id": "grid.transformer_active_limit",
+          "role": "output"
+        },
+        {
+          "symbol": "S_tr",
+          "definition_zh": "变压器额定视在容量",
+          "unit": "kVA",
+          "field_id": "grid.transformer_capacity",
+          "role": "input"
+        },
+        {
+          "symbol": "PF",
+          "definition_zh": "同工况功率因数",
+          "unit": "1",
+          "field_id": "grid.power_factor",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "t": "按同一时区排序且无重漏的时段索引；t+1为相邻时段末/下一时段初",
+        "y": "评价期运营年，从1开始；构建年时间另登记",
+        "标签": "PV光伏，grid电网，self自用，exp外送，curt限发，ch充电，dis放电，aux辅机，use可用，nom铭牌，min/max上下界；仅本式出现者生效，不是相乘字母"
+      },
+      "superscript_definition": "上标如出现仅表示指数/边界标签；本条无未定义上标",
+      "set_and_range_definition": [
+        "t∈T；T为实际覆盖、时长/时区一致的有限时段集合。y=1..N，N为project.evaluation_years；本式未出现的集合不参与计算。"
+      ],
+      "unit": "kW",
+      "input_field_ids": [
+        "grid.transformer_capacity",
+        "grid.power_factor"
+      ],
+      "output_field_id": "grid.transformer_active_limit",
+      "calculation_boundary": "只是有功换算；可用接入还需负荷占用/电网限制/无功和温升核查，不能因此认定许可。",
+      "assumptions": [
+        "0<PF≤1；不能用直流kWp直接与kVA比较。"
+      ],
+      "precedence": [
+        "未知/冲突不得代0；该扩展只冻结方法，所需设备/气象/法规/合同与独立数值校验在实施阶段复核。"
+      ],
+      "source_reference": [
+        {
+          "reference": "USER-BASELINE §2/§3/§4/§6/§7/§8",
+          "relationship": "用户要求的计算边界及物理/代数定义；不是已核标准条款"
+        }
+      ],
+      "sample_case": {
+        "kind": "SYMBOLIC",
+        "status": "PLANNED",
+        "expected_relation": "P_tr = S_tr × PF"
+      },
+      "test_id": "T-TRANSFORMER-ACTIVE-LIMIT",
+      "test_status": "PLANNED",
+      "report_chapter_ids": [
+        "CH09"
+      ],
+      "validation_method": "独立推导/参考算法、单位及相应边界/能量或成本守恒；不以相同引擎生成expected。",
+      "status": "METHOD_FROZEN_NUMERICAL_VALIDATION_PENDING",
+      "implementation_stage": "Phase 3",
+      "review_status": "PHASE1_METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-CAPEX-ITEM-AMOUNT",
+      "baseline_group": "EXTENSION",
+      "chinese_name": "投资分项金额",
+      "english_name": "Capital cost item amount",
+      "latex": "C_i = q_i × u_i",
+      "text_equation": "C_i = q_i × u_i",
+      "every_symbol_definition": [
+        {
+          "symbol": "C_i",
+          "definition_zh": "同币种同税边界第i成本项金额",
+          "unit": "元",
+          "field_id": "capex.items.amount",
+          "role": "input"
+        },
+        {
+          "symbol": "q_i",
+          "definition_zh": "第i项工程量/设备数量",
+          "unit": "按quantity_unit",
+          "field_id": "capex.items.quantity",
+          "role": "input"
+        },
+        {
+          "symbol": "u_i",
+          "definition_zh": "匹配工程量单位的单价",
+          "unit": "元/quantity_unit",
+          "field_id": "capex.items.unit_price",
+          "role": "input"
+        },
+        {
+          "symbol": "i",
+          "definition_zh": "成本明细行ID，非乘法符号",
+          "unit": "1",
+          "field_id": null,
+          "role": "index_or_constant"
+        }
+      ],
+      "subscript_definition": {
+        "t": "按同一时区排序且无重漏的时段索引；t+1为相邻时段末/下一时段初",
+        "y": "评价期运营年，从1开始；构建年时间另登记",
+        "标签": "PV光伏，grid电网，self自用，exp外送，curt限发，ch充电，dis放电，aux辅机，use可用，nom铭牌，min/max上下界；仅本式出现者生效，不是相乘字母"
+      },
+      "superscript_definition": "上标如出现仅表示指数/边界标签；本条无未定义上标",
+      "set_and_range_definition": [
+        "t∈T；T为实际覆盖、时长/时区一致的有限时段集合。y=1..N，N为project.evaluation_years；本式未出现的集合不参与计算。"
+      ],
+      "unit": "元",
+      "input_field_ids": [
+        "capex.items.quantity",
+        "capex.items.unit_price"
+      ],
+      "output_field_id": "capex.items.amount",
+      "calculation_boundary": "数量、单价、金额税与币种一致再比较；总包固定金额可独立提供而不是伪造工程量。",
+      "assumptions": [
+        "复核差额并保留约定舍入；无报价不能从预算推为真实分项价。"
+      ],
+      "precedence": [
+        "未知/冲突不得代0；该扩展只冻结方法，所需设备/气象/法规/合同与独立数值校验在实施阶段复核。"
+      ],
+      "source_reference": [
+        {
+          "reference": "USER-BASELINE §2/§3/§4/§6/§7/§8",
+          "relationship": "用户要求的计算边界及物理/代数定义；不是已核标准条款"
+        }
+      ],
+      "sample_case": {
+        "kind": "SYMBOLIC",
+        "status": "PLANNED",
+        "expected_relation": "C_i = q_i × u_i"
+      },
+      "test_id": "T-CAPEX-ITEM-AMOUNT",
+      "test_status": "PLANNED",
+      "report_chapter_ids": [
+        "CH14"
+      ],
+      "validation_method": "独立推导/参考算法、单位及相应边界/能量或成本守恒；不以相同引擎生成expected。",
+      "status": "METHOD_FROZEN_NUMERICAL_VALIDATION_PENDING",
+      "implementation_stage": "Phase 3",
+      "review_status": "PHASE1_METHOD_REVIEW_REQUIRED"
+    }
+  ]
+}

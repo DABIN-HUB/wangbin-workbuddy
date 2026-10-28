@@ -1,0 +1,1219 @@
+{
+  "schema_version": "1.0.0",
+  "scope": "冻结验收设计，非已实现测试",
+  "cases": [
+    {
+      "test_id": "T-NUM-ROOF-1MW",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop"
+      ],
+      "title": "1MWp虚构工业屋顶全周期",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "对独立算法/人工推导核对容量、月度电量、25年及用户指定年限、税费、两套现金流、全部指标；绝不冒充真实站址",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-NUM-GROUND",
+      "stage": "Phase 6",
+      "pv_types": [
+        "utility_scale_ground"
+      ],
+      "title": "集中地面独立全周期",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "以地面土地/升压送出/全额售电模型及独立数值参考核对，不调用屋顶负荷收益规则",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-MISSING-MINIMAL",
+      "stage": "Phase 2",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "仅城市/面积/预算",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "只生成L1初筛/缺口；装机投资不强制已知；不能宣布L2决策就绪",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-MISSING-LOAD",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "无负荷时序",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "真实自用率UNKNOWN；假设情景独立命名，年总电量不能当真实自用率",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-MISSING-GRID",
+      "stage": "Phase 2",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "无并网意见",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "条件情景+PENDING_VERIFICATION，不得声明具备并网资格",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-MISSING-TARIFF",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "无电价",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "收入/财务UNKNOWN或显式情景，不伪造当前地区电价",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-API-FAILURE",
+      "stage": "Phase 4",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "外部资源不可用",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "超时/有限重试/配额/覆盖/许可失败显式UNAVAILABLE，不生成模拟真实数据",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-CONFLICT",
+      "stage": "Phase 2",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "来源冲突",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "同field不同来源均保留、CONFLICT、请求核实；不能择优迎合目标",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-POLICY-EXPIRED",
+      "stage": "Phase 4",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "政策过期或区域不符",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "剔除不适用规则，标待核实；年份/地区/投产日期/许可齐全后才选用",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-BENCHMARK",
+      "stage": "Phase 4",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "不同年/口径对标",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "历史成本/异地电量仅对标且声明不可直接作为本站值",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-BOUND-AREA",
+      "stage": "Phase 2",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "零/负面积",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "以字段契约拒绝无效建设面积，未知面积与0不能混同",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-BOUND-PRICE",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "负价格/负收入",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "按合同/市场允许范围验证，保留真实负收入，不静默取绝对值/截零",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-BOUND-UNITS",
+      "stage": "Phase 2",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "kW/MW/Wh/辐照单位",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "显式单位转换，kW≠kWh、W每平方米≠kWh每平方米、MWp≠MWac、元/Wp≠元/kWp",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-BOUND-TEMP",
+      "stage": "Phase 2",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "温度单位",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "摄氏/开尔文转换与物理范围明示，不能错将温度系数单位混用",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-BOUND-LEAP",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "闰年/时区/时段",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "按真实时间轴小时及15分钟粒度匹配；缺失/重复时段必须报错或显式处理",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-BOUND-TRANSFORMER",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "装机超变压器/接入",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "明确DC/AC和接入功率约束，不以DC铭牌容量直接判AC送出可行",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-BOUND-SELF",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "无证据高自用率",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "要求匹配时序或ASSUMED场景；不自动接受高比例作真实结果",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-IRR-NOROOT",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "IRR无根",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "无符号变化/无解输出不可计算及原因；不得生成百分比",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-IRR-MULTIROOT",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "IRR多根",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "识别多根并拒绝唯一数值，记录根区间及方法，不能只报第一根",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-PAYBACK-NEVER",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "评价期不回收",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "静态/动态各自标期内未回收；插值起点和建设期定义可追溯",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-DEPRECIATION-BOUND",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "折旧超资产原值",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "折旧期/残值/资产分类和年度累计校验，不超折旧基数且不重复扣经营现金",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-DEBT-ZERO",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "零债务服务",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "无债DSCR不适用；零分母不强制给0或无穷，分列原因",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-CURTAILMENT-EXTREME",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "极端限发",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "可用=自用+上网+限发且非负；LCOE分母使用真实可交付边界",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-ISOLATION-INCOME",
+      "stage": "Phase 6",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground"
+      ],
+      "title": "屋顶/地面收益隔离",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "屋顶自用避免购电价不泄漏到地面全额上网；不同价税边界不能共用默认",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-ISOLATION-CIVIL",
+      "stage": "Phase 6",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground"
+      ],
+      "title": "土地/屋顶隔离",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "地面必须土地/基础/送出，屋顶必须结构/荷载/产权，缺项不能跨类型补齐",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-ISOLATION-UNIMPLEMENTED",
+      "stage": "Phase 2",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "未实现分类",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "农光/渔光/储能及P2未实现时返回NOT_IMPLEMENTED；不降级套P0并报PASS",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-FILES-LEGAL",
+      "stage": "Phase 5",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "四文件存在/合法",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "DOCX/PDF/两个XLSX实际格式重开可读；空文件/假扩展名/部分失败必须失败",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-FILES-CHAPTERS",
+      "stage": "Phase 5",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "18章及附录完整",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "全部稳定CH/APP存在，无资料也保留待核实/不适用及理由",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-FILES-SYMBOLS",
+      "stage": "Phase 5",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "公式逐符号",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "每个正文/工作簿公式变量/上下标/单位/范围/边界/来源可闭合，公式下有释义表",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-FILES-TERMS",
+      "stage": "Phase 5",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "术语首次释义",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "所有专业英文首现含中文全称/英文全称/缩写，附录词表一致",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-FILES-IDENTITY",
+      "stage": "Phase 5",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "五标识与关键值同源",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "model_version/run_id/input_hash/source_snapshot_id/result_hash一致；从canonical JSON逐指标核对报告/表图/Excel/年度数据",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-FILES-PDF-TEXT",
+      "stage": "Phase 5",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "PDF可检索与视觉",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "真实转换，中文文本可检索、章数一致、页数合理；样本页图/公式/跨页长表视觉审查留证",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-FILES-DOCX-EDIT",
+      "stage": "Phase 5",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "DOCX编辑与排版",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "可编辑，目录域/公式/表/图编号/引用/页眉页脚/脚注/分页正确，不乱码/越界/漏图",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-FILES-XLSX-VALUES",
+      "stage": "Phase 5",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "Excel计算状态",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "静态快照明示，或实测重算/缓存机制；无空公式缓存冒充结果；输入和计算样式不同",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-FILES-PDF-MISSING",
+      "stage": "Phase 5",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "缺PDF转换器",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "明确FAIL/BLOCKED并保留已完成产物，不改后缀/伪造PDF/返回整体成功",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-PROP-CAPEX",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "投资单调性",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "其他客观条件及相关税边界不变，增CAPEX通常不提高项目NPV；例外须有数学/边界证据",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-PROP-ENERGY",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "发电与收入因果",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "同结算条件下降低发电不得增加电量收入；负价等例外必须明确限定前提并独立验收",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-PROP-BALANCE",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "能量守恒",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "固定负荷/上网约束，逐时段和年度自用+上网+限发=可用，各项非负，容差有依据",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-PROP-RECALCULATE",
+      "stage": "Phase 5",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "变更重算",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "改变输入或来源快照后相关结果/hash/四文件重算，不混旧版本",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-PROP-TARGET",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "禁止迎合门槛",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "只改用户目标回收期/IRR不改变客观光照/成本/电量/现金收益，仅评价结论可能变",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-SEC-TRAVERSAL",
+      "stage": "Phase 2",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "路径/链接越权",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "拒绝穿越/越界/符号链接及未经授权网络地址，不把venv/路径白名单当沙箱",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-SEC-OFFICE",
+      "stage": "Phase 2",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "压缩炸弹/宏",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "限制Office成员/展开比/大小/时间/内存，宏与恶意外链拒绝；安全边界实测",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-SEC-INJECTION",
+      "stage": "Phase 5",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "公式注入/外链",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "用户字符串以文本输出，不执行=+@等注入，不写宏和未经审查的外部恶意链接",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-SEC-LOGS",
+      "stage": "Phase 2",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "日志隐私",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "原始商业附件不入公开日志/仓库，密钥脱敏，不在错误堆栈泄露正文",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-SEC-LICENSE",
+      "stage": "Phase 7",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "权利/依赖/网络副作用",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "每依赖/数据/标准许可审查独立；未知REQUIRES_REVIEW；未经授权不外传或部署",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-PUBLISH-ATOMIC",
+      "stage": "Phase 5",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "事务发布与防覆盖",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "安全文件名、授权根、临时产物验后原子发布；四文件部分失败不整体成功、不覆盖旧成果",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-PLATFORM-INSTALL",
+      "stage": "Phase 7",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "真实安装调用",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "确切包hash的私有安装/召唤/运行依赖/附件路径/文件回传实测；本地pytest不能代替",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-PLATFORM-REVIEW",
+      "stage": "Phase 7",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "官方审核独立",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "未获授权不提交审核；真实回执与候选版本绑定，本地PASS/用户说提交均不能等同审核通过",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-DECISION-VETO",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "合规安全优先",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "已证实权属/结构/消防/并网阻断不被高IRR抵消；严重未决不能肯定可行",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-STORAGE-SOC",
+      "stage": "Phase 8",
+      "pv_types": [
+        "pv_storage"
+      ],
+      "title": "储能独立时序",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "SOC能量/功率/时步/充放电效率/循环退化/更换、互斥与收益不重计有独立参考",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-FIN-CASHFLOW",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "项目/股权现金流隔离",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "项目IRR排除债务现金流，股权计入融资/债务服务；税务及建设期/更换/营运资金/残值分别核对",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-FIN-LCOE",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "LCOE同边界",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "成本税费/融资/补贴边界固定，与同边界交付电量折现；非理论电量或不同比口径",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-FIN-DEBT-BALANCE",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "投资与债务余额",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "投资各类合计、资金来源/使用、期初债务+借入-偿还=期末、利息/费和CFADS独立核对",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-FIN-SENSITIVITY",
+      "stage": "Phase 3",
+      "pv_types": [
+        "industrial_rooftop",
+        "utility_scale_ground",
+        "agri_pv",
+        "fishery_pv",
+        "pv_storage",
+        "public_rooftop",
+        "residential_pv",
+        "pv_carport_bipv",
+        "desert_mining"
+      ],
+      "title": "情景/阈值",
+      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "expected": "投资/电价/发电/利用或自用/限发/OPEX/利率单因素及悲观基准乐观组合、盈亏平衡、最差现金流年份均数值验证",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-CATEGORY-INDUSTRIAL_ROOFTOP",
+      "stage": "Phase 5",
+      "pv_types": [
+        "industrial_rooftop"
+      ],
+      "title": "industrial_rooftop独立分类全链路",
+      "method": "独立schema/methodology/template/scenario-specific计算和四文件验收；反串用所有其他分类",
+      "expected": "本类型18章+专项字段/附录/独立数字参考/四真实文件+一致性；不借P0结果标通过",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-CATEGORY-UTILITY_SCALE_GROUND",
+      "stage": "Phase 6",
+      "pv_types": [
+        "utility_scale_ground"
+      ],
+      "title": "utility_scale_ground独立分类全链路",
+      "method": "独立schema/methodology/template/scenario-specific计算和四文件验收；反串用所有其他分类",
+      "expected": "本类型18章+专项字段/附录/独立数字参考/四真实文件+一致性；不借P0结果标通过",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-CATEGORY-AGRI_PV",
+      "stage": "Phase 8",
+      "pv_types": [
+        "agri_pv"
+      ],
+      "title": "agri_pv独立分类全链路",
+      "method": "独立schema/methodology/template/scenario-specific计算和四文件验收；反串用所有其他分类",
+      "expected": "本类型18章+专项字段/附录/独立数字参考/四真实文件+一致性；不借P0结果标通过",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-CATEGORY-FISHERY_PV",
+      "stage": "Phase 8",
+      "pv_types": [
+        "fishery_pv"
+      ],
+      "title": "fishery_pv独立分类全链路",
+      "method": "独立schema/methodology/template/scenario-specific计算和四文件验收；反串用所有其他分类",
+      "expected": "本类型18章+专项字段/附录/独立数字参考/四真实文件+一致性；不借P0结果标通过",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-CATEGORY-PV_STORAGE",
+      "stage": "Phase 8",
+      "pv_types": [
+        "pv_storage"
+      ],
+      "title": "pv_storage独立分类全链路",
+      "method": "独立schema/methodology/template/scenario-specific计算和四文件验收；反串用所有其他分类",
+      "expected": "本类型18章+专项字段/附录/独立数字参考/四真实文件+一致性；不借P0结果标通过",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-CATEGORY-PUBLIC_ROOFTOP",
+      "stage": "Phase 8",
+      "pv_types": [
+        "public_rooftop"
+      ],
+      "title": "public_rooftop独立分类全链路",
+      "method": "独立schema/methodology/template/scenario-specific计算和四文件验收；反串用所有其他分类",
+      "expected": "本类型18章+专项字段/附录/独立数字参考/四真实文件+一致性；不借P0结果标通过",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-CATEGORY-RESIDENTIAL_PV",
+      "stage": "Phase 8",
+      "pv_types": [
+        "residential_pv"
+      ],
+      "title": "residential_pv独立分类全链路",
+      "method": "独立schema/methodology/template/scenario-specific计算和四文件验收；反串用所有其他分类",
+      "expected": "本类型18章+专项字段/附录/独立数字参考/四真实文件+一致性；不借P0结果标通过",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-CATEGORY-PV_CARPORT_BIPV",
+      "stage": "Phase 8",
+      "pv_types": [
+        "pv_carport_bipv"
+      ],
+      "title": "pv_carport_bipv独立分类全链路",
+      "method": "独立schema/methodology/template/scenario-specific计算和四文件验收；反串用所有其他分类",
+      "expected": "本类型18章+专项字段/附录/独立数字参考/四真实文件+一致性；不借P0结果标通过",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    },
+    {
+      "test_id": "T-CATEGORY-DESERT_MINING",
+      "stage": "Phase 8",
+      "pv_types": [
+        "desert_mining"
+      ],
+      "title": "desert_mining独立分类全链路",
+      "method": "独立schema/methodology/template/scenario-specific计算和四文件验收；反串用所有其他分类",
+      "expected": "本类型18章+专项字段/附录/独立数字参考/四真实文件+一致性；不借P0结果标通过",
+      "status": "PLANNED",
+      "executor": null,
+      "evidence": null
+    }
+  ]
+}

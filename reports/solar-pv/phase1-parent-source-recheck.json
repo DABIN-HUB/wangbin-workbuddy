@@ -1,0 +1,95 @@
+{
+  "sources": [
+    {
+      "source_id": "SRC-PV-001",
+      "url": "https://hbba.sacinfo.org.cn/stdDetail/d000c5b3cf7353ac4eb7f9219d1d031b",
+      "verification_scope": "父代理重新GET与封面/元数据抽查，不重做整书语义审读",
+      "retrieval_tool": "requests HTTPS/HTTP original origin; web.run unavailable",
+      "http_status": 200,
+      "response_bytes": 19042,
+      "response_sha256": "19f5e0d1eecfed0d0ed86ede6ec005a57c141e5e0af2b603e2d2a2c9cea4dbd8",
+      "body_accessible": true,
+      "body_read_result": "官方标准标题/现行元数据或原报告前三物理页已实际读取；全文范围沿用研究索引，未做逐页人工审阅"
+    },
+    {
+      "source_id": "SRC-PV-002",
+      "url": "https://hbba.sacinfo.org.cn/stdDetail/926f539f12644210fae18d9b5e9a8b02",
+      "verification_scope": "父代理重新GET与封面/元数据抽查，不重做整书语义审读",
+      "retrieval_tool": "requests HTTPS/HTTP original origin; web.run unavailable",
+      "http_status": 200,
+      "response_bytes": 19039,
+      "response_sha256": "fbe642d4faac33d8bcdb93e5d6d7d47fd87a18a4f617b9cce59ab232f1b5171e",
+      "body_accessible": true,
+      "body_read_result": "官方标准标题/现行元数据或原报告前三物理页已实际读取；全文范围沿用研究索引，未做逐页人工审阅"
+    },
+    {
+      "source_id": "SRC-PV-004",
+      "url": "https://docs.nlr.gov/docs/fy14osti/62641.pdf",
+      "verification_scope": "父代理重新GET与封面/元数据抽查，不重做整书语义审读",
+      "retrieval_tool": "requests HTTPS/HTTP original origin; web.run unavailable",
+      "http_status": 200,
+      "response_bytes": 730688,
+      "response_sha256": "e0cfe867e06bb7364951de7b283563cf3e8612189eb873348a97ae5b99a63fee",
+      "physical_pages": 20,
+      "reviewed_physical_pages": [
+        1,
+        2,
+        3
+      ],
+      "body_accessible": true,
+      "body_read_result": "官方标准标题/现行元数据或原报告前三物理页已实际读取；全文范围沿用研究索引，未做逐页人工审阅"
+    },
+    {
+      "source_id": "SRC-PV-014",
+      "url": "https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2026/Jul/IRENA_TEC_RPGC_2025_Executive_summary_2026.pdf",
+      "verification_scope": "父代理重新GET与封面/元数据抽查，不重做整书语义审读",
+      "retrieval_tool": "requests HTTPS/HTTP original origin; web.run unavailable",
+      "http_status": 200,
+      "response_bytes": 2737306,
+      "response_sha256": "2046b4146b69197a6d62f769a50fd76b87c31f558fbc8b8c4f621339e8b46905",
+      "physical_pages": 12,
+      "reviewed_physical_pages": [
+        1,
+        2,
+        3
+      ],
+      "body_accessible": true,
+      "body_read_result": "官方标准标题/现行元数据或原报告前三物理页已实际读取；全文范围沿用研究索引，未做逐页人工审阅"
+    },
+    {
+      "source_id": "SRC-PV-016",
+      "url": "http://static.cninfo.com.cn/finalpage/2014-05-09/64002859.PDF",
+      "verification_scope": "父代理重新GET与封面/元数据抽查，不重做整书语义审读",
+      "retrieval_tool": "requests HTTPS/HTTP original origin; web.run unavailable",
+      "http_status": 200,
+      "response_bytes": 1880011,
+      "response_sha256": "d37b27a7a7e52b01a485597d594bd8bd603f02a8b19a18f6686a893089260dfb",
+      "physical_pages": 202,
+      "reviewed_physical_pages": [
+        1,
+        2,
+        3
+      ],
+      "body_accessible": true,
+      "body_read_result": "官方标准标题/现行元数据或原报告前三物理页已实际读取；全文范围沿用研究索引，未做逐页人工审阅"
+    },
+    {
+      "source_id": "SRC-PV-033",
+      "url": "https://arena.gov.au/assets/2017/02/pilot-landfill-solar-report-feasibility-study.pdf",
+      "verification_scope": "父代理重新GET与封面/元数据抽查，不重做整书语义审读",
+      "retrieval_tool": "requests HTTPS/HTTP original origin; web.run unavailable",
+      "http_status": 200,
+      "response_bytes": 1766869,
+      "response_sha256": "e0488ced98c7e7362531c0c586507b59224c561ecacd811c3e2ac6c6d0348b9d",
+      "physical_pages": 32,
+      "reviewed_physical_pages": [
+        1,
+        2,
+        3
+      ],
+      "body_accessible": true,
+      "body_read_result": "官方标准标题/现行元数据或原报告前三物理页已实际读取；全文范围沿用研究索引，未做逐页人工审阅"
+    }
+  ],
+  "full_report_copy_in_repo": false
+}
