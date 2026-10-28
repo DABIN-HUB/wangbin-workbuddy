@@ -1,0 +1,46 @@
+{
+  "contract_id": "solar-pv-input-category/pv_carport_bipv/1.0.0",
+  "pv_type": "pv_carport_bipv",
+  "name_zh": "车棚/BIPV",
+  "priority": "P2",
+  "input_contract_status": "IMPLEMENTED",
+  "calculation_status": "NOT_IMPLEMENTED",
+  "e2e_status": "NOT_IMPLEMENTED",
+  "basis": [
+    "03-input-fields.json",
+    "07-category-boundaries.md"
+  ],
+  "required_special_field_ids": [
+    "roof.structure_type",
+    "roof.material",
+    "roof.age",
+    "roof.remaining_life",
+    "roof.allowable_additional_load",
+    "roof.design_added_load",
+    "roof.slope",
+    "roof.azimuth",
+    "roof.structure_report_id",
+    "roof.fire_access_reference",
+    "roof.waterproof_plan",
+    "carport_bipv.subtype",
+    "carport_bipv.building_function",
+    "carport_bipv.minimum_clearance",
+    "carport_bipv.fire_rating_reference",
+    "carport_bipv.waterproof_reference",
+    "carport_bipv.wind_load_reference",
+    "carport_bipv.replaced_material_cost",
+    "carport_bipv.incremental_cost_boundary",
+    "carport_bipv.ev_load_reference"
+  ],
+  "forbidden_field_prefixes": [],
+  "forbidden_field_ids": [],
+  "allowed_sales_modes": [
+    "self_use_surplus_export",
+    "full_export",
+    "off_grid",
+    "hybrid",
+    "undecided"
+  ],
+  "subtype_field_id": "carport_bipv.subtype",
+  "restriction": "carport/bipv_roof/bipv_facade必须显式选择，未知不得默认屋顶；净空、防水、防火、抗风、建材认证及增量成本独立，充电收益不自动归光伏。 本文件仅为输入契约，不是业务模板；计算、四文件E2E及平台能力全部NOT_IMPLEMENTED。"
+}

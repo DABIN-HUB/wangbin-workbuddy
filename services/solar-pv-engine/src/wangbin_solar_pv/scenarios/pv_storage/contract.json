@@ -1,0 +1,62 @@
+{
+  "contract_id": "solar-pv-input-category/pv_storage/1.0.0",
+  "pv_type": "pv_storage",
+  "name_zh": "光储一体",
+  "priority": "P1",
+  "input_contract_status": "IMPLEMENTED",
+  "calculation_status": "NOT_IMPLEMENTED",
+  "e2e_status": "NOT_IMPLEMENTED",
+  "basis": [
+    "03-input-fields.json",
+    "07-category-boundaries.md"
+  ],
+  "required_special_field_ids": [
+    "storage.energy_capacity",
+    "storage.nominal_energy",
+    "storage.charge_power",
+    "storage.discharge_power",
+    "storage.charge_efficiency",
+    "storage.discharge_efficiency",
+    "storage.soc_min",
+    "storage.soc_max",
+    "storage.soc_initial",
+    "storage.soc_terminal",
+    "storage.self_discharge_rate",
+    "storage.calendar_fade",
+    "storage.cycle_fade",
+    "storage.cycle_life",
+    "storage.reserve_energy",
+    "storage.auxiliary_power",
+    "storage.coupling",
+    "storage.dispatch_mode",
+    "storage.grid_charging",
+    "storage.simultaneous_charge_discharge",
+    "storage.base_pv_type",
+    "storage.connection_boundary",
+    "storage.dispatch_contract_id",
+    "storage.fire_safety_reference",
+    "storage.replacement_rule",
+    "storage.cycle_definition"
+  ],
+  "forbidden_field_prefixes": [],
+  "forbidden_field_ids": [],
+  "allowed_sales_modes": [
+    "self_use_surplus_export",
+    "full_export",
+    "off_grid",
+    "hybrid",
+    "undecided"
+  ],
+  "subtype_field_id": null,
+  "restriction": "按storage.base_pv_type显式组合八种非储能基座输入；未填基座保持UNKNOWN，不能默认屋顶。输入组合不代表已验收基座或储能计算支持；必须独立SOC/调度/效率/退化/收益分账，禁止无储能模型替代。地面基座继续拒绝屋顶和工业负荷；self_consumption/hybrid或向负荷放电方案须另立规则，当前拒绝冲突方案而不调用无储能模型。 本文件仅为输入契约，不是业务模板；计算、四文件E2E及平台能力全部NOT_IMPLEMENTED。",
+  "allowed_base_pv_types": [
+    "industrial_rooftop",
+    "utility_scale_ground",
+    "agri_pv",
+    "fishery_pv",
+    "public_rooftop",
+    "residential_pv",
+    "pv_carport_bipv",
+    "desert_mining"
+  ]
+}

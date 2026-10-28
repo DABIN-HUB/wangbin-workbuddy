@@ -1,0 +1,512 @@
+........................................................................ [ 24%]
+........................................................................ [ 48%]
+........................................................................ [ 72%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 96%]
+FFFFFFFFFFFF                                                             [100%]
+================================== FAILURES ===================================
+____________________ test_real_calendar_dates[2024-02-29] _____________________
+tests\solar-pv\test_units.py:261: in test_real_calendar_dates
+    assert units().validate_date(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+____________________ test_real_calendar_dates[2000-02-29] _____________________
+tests\solar-pv\test_units.py:261: in test_real_calendar_dates
+    assert units().validate_date(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+____________________ test_real_calendar_dates[2026-10-28] _____________________
+tests\solar-pv\test_units.py:261: in test_real_calendar_dates
+    assert units().validate_date(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+____________________ test_real_calendar_dates[1900-03-01] _____________________
+tests\solar-pv\test_units.py:261: in test_real_calendar_dates
+    assert units().validate_date(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+____________________ test_real_calendar_dates[0001-01-01] _____________________
+tests\solar-pv\test_units.py:261: in test_real_calendar_dates
+    assert units().validate_date(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+____________________ test_real_calendar_dates[9999-12-31] _____________________
+tests\solar-pv\test_units.py:261: in test_real_calendar_dates
+    assert units().validate_date(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+____ test_invalid_calendar_or_noncanonical_dates_are_rejected[2023-02-29] _____
+tests\solar-pv\test_units.py:269: in test_invalid_calendar_or_noncanonical_dates_are_rejected
+    units().validate_date(value)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+____ test_invalid_calendar_or_noncanonical_dates_are_rejected[1900-02-29] _____
+tests\solar-pv\test_units.py:269: in test_invalid_calendar_or_noncanonical_dates_are_rejected
+    units().validate_date(value)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+____ test_invalid_calendar_or_noncanonical_dates_are_rejected[2026-04-31] _____
+tests\solar-pv\test_units.py:269: in test_invalid_calendar_or_noncanonical_dates_are_rejected
+    units().validate_date(value)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+____ test_invalid_calendar_or_noncanonical_dates_are_rejected[2026-00-10] _____
+tests\solar-pv\test_units.py:269: in test_invalid_calendar_or_noncanonical_dates_are_rejected
+    units().validate_date(value)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+____ test_invalid_calendar_or_noncanonical_dates_are_rejected[2026-13-01] _____
+tests\solar-pv\test_units.py:269: in test_invalid_calendar_or_noncanonical_dates_are_rejected
+    units().validate_date(value)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+____ test_invalid_calendar_or_noncanonical_dates_are_rejected[2026-01-00] _____
+tests\solar-pv\test_units.py:269: in test_invalid_calendar_or_noncanonical_dates_are_rejected
+    units().validate_date(value)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+____ test_invalid_calendar_or_noncanonical_dates_are_rejected[0000-01-01] _____
+tests\solar-pv\test_units.py:269: in test_invalid_calendar_or_noncanonical_dates_are_rejected
+    units().validate_date(value)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+____ test_invalid_calendar_or_noncanonical_dates_are_rejected[20261028_0] _____
+tests\solar-pv\test_units.py:269: in test_invalid_calendar_or_noncanonical_dates_are_rejected
+    units().validate_date(value)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+____ test_invalid_calendar_or_noncanonical_dates_are_rejected[2026-W44-3] _____
+tests\solar-pv\test_units.py:269: in test_invalid_calendar_or_noncanonical_dates_are_rejected
+    units().validate_date(value)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+_____ test_invalid_calendar_or_noncanonical_dates_are_rejected[2026-1-01] _____
+tests\solar-pv\test_units.py:269: in test_invalid_calendar_or_noncanonical_dates_are_rejected
+    units().validate_date(value)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+_ test_invalid_calendar_or_noncanonical_dates_are_rejected[2026-10-28T00:00:00Z] _
+tests\solar-pv\test_units.py:269: in test_invalid_calendar_or_noncanonical_dates_are_rejected
+    units().validate_date(value)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+____ test_invalid_calendar_or_noncanonical_dates_are_rejected[ 2026-10-28] ____
+tests\solar-pv\test_units.py:269: in test_invalid_calendar_or_noncanonical_dates_are_rejected
+    units().validate_date(value)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+_ test_invalid_calendar_or_noncanonical_dates_are_rejected[\uff12\uff10\uff12\uff16-\uff11\uff10-\uff12\uff18] _
+tests\solar-pv\test_units.py:269: in test_invalid_calendar_or_noncanonical_dates_are_rejected
+    units().validate_date(value)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+_______ test_invalid_calendar_or_noncanonical_dates_are_rejected[None] ________
+tests\solar-pv\test_units.py:269: in test_invalid_calendar_or_noncanonical_dates_are_rejected
+    units().validate_date(value)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+____ test_invalid_calendar_or_noncanonical_dates_are_rejected[20261028_1] _____
+tests\solar-pv\test_units.py:269: in test_invalid_calendar_or_noncanonical_dates_are_rejected
+    units().validate_date(value)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_date'
+___________________ test_daily_start_time_boundaries[00:00] ___________________
+tests\solar-pv\test_units.py:275: in test_daily_start_time_boundaries
+    assert units().validate_time(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+___________________ test_daily_start_time_boundaries[23:59] ___________________
+tests\solar-pv\test_units.py:275: in test_daily_start_time_boundaries
+    assert units().validate_time(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+_________________ test_daily_start_time_boundaries[00:00:00] __________________
+tests\solar-pv\test_units.py:275: in test_daily_start_time_boundaries
+    assert units().validate_time(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+______________ test_daily_start_time_boundaries[23:59:59.123456] ______________
+tests\solar-pv\test_units.py:275: in test_daily_start_time_boundaries
+    assert units().validate_time(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+________________ test_only_explicit_end_time_can_use_24[24:00] ________________
+tests\solar-pv\test_units.py:280: in test_only_explicit_end_time_can_use_24
+    assert units().validate_time(value, allow_24=True) == value
+           ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+______________ test_only_explicit_end_time_can_use_24[24:00:00] _______________
+tests\solar-pv\test_units.py:280: in test_only_explicit_end_time_can_use_24
+    assert units().validate_time(value, allow_24=True) == value
+           ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+___________ test_only_explicit_end_time_can_use_24[24:00:00.000000] ___________
+tests\solar-pv\test_units.py:280: in test_only_explicit_end_time_can_use_24
+    assert units().validate_time(value, allow_24=True) == value
+           ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+______________ test_invalid_daily_times_even_in_end_mode[24:01] _______________
+tests\solar-pv\test_units.py:290: in test_invalid_daily_times_even_in_end_mode
+    units().validate_time(value, allow_24=True)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+_____________ test_invalid_daily_times_even_in_end_mode[24:00:01] _____________
+tests\solar-pv\test_units.py:290: in test_invalid_daily_times_even_in_end_mode
+    units().validate_time(value, allow_24=True)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+_________ test_invalid_daily_times_even_in_end_mode[24:00:00.000001] __________
+tests\solar-pv\test_units.py:290: in test_invalid_daily_times_even_in_end_mode
+    units().validate_time(value, allow_24=True)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+______________ test_invalid_daily_times_even_in_end_mode[25:00] _______________
+tests\solar-pv\test_units.py:290: in test_invalid_daily_times_even_in_end_mode
+    units().validate_time(value, allow_24=True)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+______________ test_invalid_daily_times_even_in_end_mode[23:60] _______________
+tests\solar-pv\test_units.py:290: in test_invalid_daily_times_even_in_end_mode
+    units().validate_time(value, allow_24=True)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+_____________ test_invalid_daily_times_even_in_end_mode[23:59:60] _____________
+tests\solar-pv\test_units.py:290: in test_invalid_daily_times_even_in_end_mode
+    units().validate_time(value, allow_24=True)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+_______________ test_invalid_daily_times_even_in_end_mode[9:00] _______________
+tests\solar-pv\test_units.py:290: in test_invalid_daily_times_even_in_end_mode
+    units().validate_time(value, allow_24=True)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+_______________ test_invalid_daily_times_even_in_end_mode[0900] _______________
+tests\solar-pv\test_units.py:290: in test_invalid_daily_times_even_in_end_mode
+    units().validate_time(value, allow_24=True)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+______________ test_invalid_daily_times_even_in_end_mode[00:00Z] ______________
+tests\solar-pv\test_units.py:290: in test_invalid_daily_times_even_in_end_mode
+    units().validate_time(value, allow_24=True)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+___________ test_invalid_daily_times_even_in_end_mode[12:30+08:00] ____________
+tests\solar-pv\test_units.py:290: in test_invalid_daily_times_even_in_end_mode
+    units().validate_time(value, allow_24=True)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+_________ test_invalid_daily_times_even_in_end_mode[12:30:00.1234567] _________
+tests\solar-pv\test_units.py:290: in test_invalid_daily_times_even_in_end_mode
+    units().validate_time(value, allow_24=True)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+____________ test_invalid_daily_times_even_in_end_mode[12:30:00.] _____________
+tests\solar-pv\test_units.py:290: in test_invalid_daily_times_even_in_end_mode
+    units().validate_time(value, allow_24=True)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+______________ test_invalid_daily_times_even_in_end_mode[ 12:30] ______________
+tests\solar-pv\test_units.py:290: in test_invalid_daily_times_even_in_end_mode
+    units().validate_time(value, allow_24=True)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+____ test_invalid_daily_times_even_in_end_mode[\uff11\uff12:\uff13\uff10] _____
+tests\solar-pv\test_units.py:290: in test_invalid_daily_times_even_in_end_mode
+    units().validate_time(value, allow_24=True)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+______________ test_invalid_daily_times_even_in_end_mode[-01:00] ______________
+tests\solar-pv\test_units.py:290: in test_invalid_daily_times_even_in_end_mode
+    units().validate_time(value, allow_24=True)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+_______________ test_invalid_daily_times_even_in_end_mode[None] _______________
+tests\solar-pv\test_units.py:290: in test_invalid_daily_times_even_in_end_mode
+    units().validate_time(value, allow_24=True)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+_______________ test_invalid_daily_times_even_in_end_mode[1230] _______________
+tests\solar-pv\test_units.py:290: in test_invalid_daily_times_even_in_end_mode
+    units().validate_time(value, allow_24=True)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+__ test_datetime_requires_real_calendar_and_utc_offset[2024-02-29T00:00:00Z] __
+tests\solar-pv\test_units.py:297: in test_datetime_requires_real_calendar_and_utc_offset
+    assert units().validate_datetime(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+_ test_datetime_requires_real_calendar_and_utc_offset[2026-10-28T12:30:45+08:00] _
+tests\solar-pv\test_units.py:297: in test_datetime_requires_real_calendar_and_utc_offset
+    assert units().validate_datetime(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+_ test_datetime_requires_real_calendar_and_utc_offset[2026-10-28T12:30:45.123456-04:00] _
+tests\solar-pv\test_units.py:297: in test_datetime_requires_real_calendar_and_utc_offset
+    assert units().validate_datetime(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+_ test_datetime_requires_real_calendar_and_utc_offset[0001-01-01T00:00:00+00:00] _
+tests\solar-pv\test_units.py:297: in test_datetime_requires_real_calendar_and_utc_offset
+    assert units().validate_datetime(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+_ test_invalid_or_naive_datetime_is_not_implicitly_localized[2023-02-29T00:00:00Z] _
+tests\solar-pv\test_units.py:308: in test_invalid_or_naive_datetime_is_not_implicitly_localized
+    units().validate_datetime(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+_ test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T24:00:00Z] _
+tests\solar-pv\test_units.py:308: in test_invalid_or_naive_datetime_is_not_implicitly_localized
+    units().validate_datetime(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+_ test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00:60Z] _
+tests\solar-pv\test_units.py:308: in test_invalid_or_naive_datetime_is_not_implicitly_localized
+    units().validate_datetime(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+_ test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00:00+24:00] _
+tests\solar-pv\test_units.py:308: in test_invalid_or_naive_datetime_is_not_implicitly_localized
+    units().validate_datetime(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+_ test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00:00+08:60] _
+tests\solar-pv\test_units.py:308: in test_invalid_or_naive_datetime_is_not_implicitly_localized
+    units().validate_datetime(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+_ test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00:00-00:00] _
+tests\solar-pv\test_units.py:308: in test_invalid_or_naive_datetime_is_not_implicitly_localized
+    units().validate_datetime(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+_ test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00:00] _
+tests\solar-pv\test_units.py:308: in test_invalid_or_naive_datetime_is_not_implicitly_localized
+    units().validate_datetime(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+___ test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28] ____
+tests\solar-pv\test_units.py:308: in test_invalid_or_naive_datetime_is_not_implicitly_localized
+    units().validate_datetime(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+_ test_invalid_or_naive_datetime_is_not_implicitly_localized[20261028T120000Z] _
+tests\solar-pv\test_units.py:308: in test_invalid_or_naive_datetime_is_not_implicitly_localized
+    units().validate_datetime(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+_ test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28 12:00:00Z] _
+tests\solar-pv\test_units.py:308: in test_invalid_or_naive_datetime_is_not_implicitly_localized
+    units().validate_datetime(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+_ test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00Z] _
+tests\solar-pv\test_units.py:308: in test_invalid_or_naive_datetime_is_not_implicitly_localized
+    units().validate_datetime(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+_ test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00:00+0800] _
+tests\solar-pv\test_units.py:308: in test_invalid_or_naive_datetime_is_not_implicitly_localized
+    units().validate_datetime(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+_ test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00:00.1234567Z] _
+tests\solar-pv\test_units.py:308: in test_invalid_or_naive_datetime_is_not_implicitly_localized
+    units().validate_datetime(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+_ test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00:00[Asia/Shanghai]] _
+tests\solar-pv\test_units.py:308: in test_invalid_or_naive_datetime_is_not_implicitly_localized
+    units().validate_datetime(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+______ test_invalid_or_naive_datetime_is_not_implicitly_localized[None] _______
+tests\solar-pv\test_units.py:308: in test_invalid_or_naive_datetime_is_not_implicitly_localized
+    units().validate_datetime(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+_______ test_invalid_or_naive_datetime_is_not_implicitly_localized[123] _______
+tests\solar-pv\test_units.py:308: in test_invalid_or_naive_datetime_is_not_implicitly_localized
+    units().validate_datetime(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+__________ test_naive_datetime_only_when_caller_explicitly_allows_it __________
+tests\solar-pv\test_units.py:314: in test_naive_datetime_only_when_caller_explicitly_allows_it
+    assert units().validate_datetime(value, timezone_required=False) == value
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_datetime'
+______________________ test_real_iana_timezone_keys[UTC] ______________________
+tests\solar-pv\test_units.py:321: in test_real_iana_timezone_keys
+    assert units().validate_timezone(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_timezone'
+_________________ test_real_iana_timezone_keys[Asia/Shanghai] _________________
+tests\solar-pv\test_units.py:321: in test_real_iana_timezone_keys
+    assert units().validate_timezone(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_timezone'
+_______________ test_real_iana_timezone_keys[America/New_York] ________________
+tests\solar-pv\test_units.py:321: in test_real_iana_timezone_keys
+    assert units().validate_timezone(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_timezone'
+___________________ test_real_iana_timezone_keys[Etc/GMT+8] ___________________
+tests\solar-pv\test_units.py:321: in test_real_iana_timezone_keys
+    assert units().validate_timezone(value) == value
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_timezone'
+___________ test_fake_offset_and_path_timezone_keys_are_rejected[] ____________
+tests\solar-pv\test_units.py:328: in test_fake_offset_and_path_timezone_keys_are_rejected
+    units().validate_timezone(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_timezone'
+___ test_fake_offset_and_path_timezone_keys_are_rejected[Asia/NotARealZone] ___
+tests\solar-pv\test_units.py:328: in test_fake_offset_and_path_timezone_keys_are_rejected
+    units().validate_timezone(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_timezone'
+_______ test_fake_offset_and_path_timezone_keys_are_rejected[UTC+08:00] _______
+tests\solar-pv\test_units.py:328: in test_fake_offset_and_path_timezone_keys_are_rejected
+    units().validate_timezone(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_timezone'
+________ test_fake_offset_and_path_timezone_keys_are_rejected[+08:00] _________
+tests\solar-pv\test_units.py:328: in test_fake_offset_and_path_timezone_keys_are_rejected
+    units().validate_timezone(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_timezone'
+__________ test_fake_offset_and_path_timezone_keys_are_rejected[CST] __________
+tests\solar-pv\test_units.py:328: in test_fake_offset_and_path_timezone_keys_are_rejected
+    units().validate_timezone(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_timezone'
+________ test_fake_offset_and_path_timezone_keys_are_rejected[../UTC] _________
+tests\solar-pv\test_units.py:328: in test_fake_offset_and_path_timezone_keys_are_rejected
+    units().validate_timezone(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_timezone'
+____ test_fake_offset_and_path_timezone_keys_are_rejected[/etc/localtime] _____
+tests\solar-pv\test_units.py:328: in test_fake_offset_and_path_timezone_keys_are_rejected
+    units().validate_timezone(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_timezone'
+____ test_fake_offset_and_path_timezone_keys_are_rejected[ Asia/Shanghai] _____
+tests\solar-pv\test_units.py:328: in test_fake_offset_and_path_timezone_keys_are_rejected
+    units().validate_timezone(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_timezone'
+_________ test_fake_offset_and_path_timezone_keys_are_rejected[None] __________
+tests\solar-pv\test_units.py:328: in test_fake_offset_and_path_timezone_keys_are_rejected
+    units().validate_timezone(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_timezone'
+________ test_fake_offset_and_path_timezone_keys_are_rejected[value9] _________
+tests\solar-pv\test_units.py:328: in test_fake_offset_and_path_timezone_keys_are_rejected
+    units().validate_timezone(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_timezone'
+___________ test_fake_offset_and_path_timezone_keys_are_rejected[8] ___________
+tests\solar-pv\test_units.py:328: in test_fake_offset_and_path_timezone_keys_are_rejected
+    units().validate_timezone(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_timezone'
+_______________ test_validation_mode_flags_require_booleans[1] ________________
+tests\solar-pv\test_units.py:335: in test_validation_mode_flags_require_booleans
+    units().validate_time("24:00", allow_24=flag)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+______________ test_validation_mode_flags_require_booleans[yes] _______________
+tests\solar-pv\test_units.py:335: in test_validation_mode_flags_require_booleans
+    units().validate_time("24:00", allow_24=flag)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+______________ test_validation_mode_flags_require_booleans[None] ______________
+tests\solar-pv\test_units.py:335: in test_validation_mode_flags_require_booleans
+    units().validate_time("24:00", allow_24=flag)
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.units' has no attribute 'validate_time'
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_units.py::test_real_calendar_dates[2024-02-29] - A...
+FAILED tests/solar-pv/test_units.py::test_real_calendar_dates[2000-02-29] - A...
+FAILED tests/solar-pv/test_units.py::test_real_calendar_dates[2026-10-28] - A...
+FAILED tests/solar-pv/test_units.py::test_real_calendar_dates[1900-03-01] - A...
+FAILED tests/solar-pv/test_units.py::test_real_calendar_dates[0001-01-01] - A...
+FAILED tests/solar-pv/test_units.py::test_real_calendar_dates[9999-12-31] - A...
+FAILED tests/solar-pv/test_units.py::test_invalid_calendar_or_noncanonical_dates_are_rejected[2023-02-29]
+FAILED tests/solar-pv/test_units.py::test_invalid_calendar_or_noncanonical_dates_are_rejected[1900-02-29]
+FAILED tests/solar-pv/test_units.py::test_invalid_calendar_or_noncanonical_dates_are_rejected[2026-04-31]
+FAILED tests/solar-pv/test_units.py::test_invalid_calendar_or_noncanonical_dates_are_rejected[2026-00-10]
+FAILED tests/solar-pv/test_units.py::test_invalid_calendar_or_noncanonical_dates_are_rejected[2026-13-01]
+FAILED tests/solar-pv/test_units.py::test_invalid_calendar_or_noncanonical_dates_are_rejected[2026-01-00]
+FAILED tests/solar-pv/test_units.py::test_invalid_calendar_or_noncanonical_dates_are_rejected[0000-01-01]
+FAILED tests/solar-pv/test_units.py::test_invalid_calendar_or_noncanonical_dates_are_rejected[20261028_0]
+FAILED tests/solar-pv/test_units.py::test_invalid_calendar_or_noncanonical_dates_are_rejected[2026-W44-3]
+FAILED tests/solar-pv/test_units.py::test_invalid_calendar_or_noncanonical_dates_are_rejected[2026-1-01]
+FAILED tests/solar-pv/test_units.py::test_invalid_calendar_or_noncanonical_dates_are_rejected[2026-10-28T00:00:00Z]
+FAILED tests/solar-pv/test_units.py::test_invalid_calendar_or_noncanonical_dates_are_rejected[ 2026-10-28]
+FAILED tests/solar-pv/test_units.py::test_invalid_calendar_or_noncanonical_dates_are_rejected[\uff12\uff10\uff12\uff16-\uff11\uff10-\uff12\uff18]
+FAILED tests/solar-pv/test_units.py::test_invalid_calendar_or_noncanonical_dates_are_rejected[None]
+FAILED tests/solar-pv/test_units.py::test_invalid_calendar_or_noncanonical_dates_are_rejected[20261028_1]
+FAILED tests/solar-pv/test_units.py::test_daily_start_time_boundaries[00:00]
+FAILED tests/solar-pv/test_units.py::test_daily_start_time_boundaries[23:59]
+FAILED tests/solar-pv/test_units.py::test_daily_start_time_boundaries[00:00:00]
+FAILED tests/solar-pv/test_units.py::test_daily_start_time_boundaries[23:59:59.123456]
+FAILED tests/solar-pv/test_units.py::test_only_explicit_end_time_can_use_24[24:00]
+FAILED tests/solar-pv/test_units.py::test_only_explicit_end_time_can_use_24[24:00:00]
+FAILED tests/solar-pv/test_units.py::test_only_explicit_end_time_can_use_24[24:00:00.000000]
+FAILED tests/solar-pv/test_units.py::test_invalid_daily_times_even_in_end_mode[24:01]
+FAILED tests/solar-pv/test_units.py::test_invalid_daily_times_even_in_end_mode[24:00:01]
+FAILED tests/solar-pv/test_units.py::test_invalid_daily_times_even_in_end_mode[24:00:00.000001]
+FAILED tests/solar-pv/test_units.py::test_invalid_daily_times_even_in_end_mode[25:00]
+FAILED tests/solar-pv/test_units.py::test_invalid_daily_times_even_in_end_mode[23:60]
+FAILED tests/solar-pv/test_units.py::test_invalid_daily_times_even_in_end_mode[23:59:60]
+FAILED tests/solar-pv/test_units.py::test_invalid_daily_times_even_in_end_mode[9:00]
+FAILED tests/solar-pv/test_units.py::test_invalid_daily_times_even_in_end_mode[0900]
+FAILED tests/solar-pv/test_units.py::test_invalid_daily_times_even_in_end_mode[00:00Z]
+FAILED tests/solar-pv/test_units.py::test_invalid_daily_times_even_in_end_mode[12:30+08:00]
+FAILED tests/solar-pv/test_units.py::test_invalid_daily_times_even_in_end_mode[12:30:00.1234567]
+FAILED tests/solar-pv/test_units.py::test_invalid_daily_times_even_in_end_mode[12:30:00.]
+FAILED tests/solar-pv/test_units.py::test_invalid_daily_times_even_in_end_mode[ 12:30]
+FAILED tests/solar-pv/test_units.py::test_invalid_daily_times_even_in_end_mode[\uff11\uff12:\uff13\uff10]
+FAILED tests/solar-pv/test_units.py::test_invalid_daily_times_even_in_end_mode[-01:00]
+FAILED tests/solar-pv/test_units.py::test_invalid_daily_times_even_in_end_mode[None]
+FAILED tests/solar-pv/test_units.py::test_invalid_daily_times_even_in_end_mode[1230]
+FAILED tests/solar-pv/test_units.py::test_datetime_requires_real_calendar_and_utc_offset[2024-02-29T00:00:00Z]
+FAILED tests/solar-pv/test_units.py::test_datetime_requires_real_calendar_and_utc_offset[2026-10-28T12:30:45+08:00]
+FAILED tests/solar-pv/test_units.py::test_datetime_requires_real_calendar_and_utc_offset[2026-10-28T12:30:45.123456-04:00]
+FAILED tests/solar-pv/test_units.py::test_datetime_requires_real_calendar_and_utc_offset[0001-01-01T00:00:00+00:00]
+FAILED tests/solar-pv/test_units.py::test_invalid_or_naive_datetime_is_not_implicitly_localized[2023-02-29T00:00:00Z]
+FAILED tests/solar-pv/test_units.py::test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T24:00:00Z]
+FAILED tests/solar-pv/test_units.py::test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00:60Z]
+FAILED tests/solar-pv/test_units.py::test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00:00+24:00]
+FAILED tests/solar-pv/test_units.py::test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00:00+08:60]
+FAILED tests/solar-pv/test_units.py::test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00:00-00:00]
+FAILED tests/solar-pv/test_units.py::test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00:00]
+FAILED tests/solar-pv/test_units.py::test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28]
+FAILED tests/solar-pv/test_units.py::test_invalid_or_naive_datetime_is_not_implicitly_localized[20261028T120000Z]
+FAILED tests/solar-pv/test_units.py::test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28 12:00:00Z]
+FAILED tests/solar-pv/test_units.py::test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00Z]
+FAILED tests/solar-pv/test_units.py::test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00:00+0800]
+FAILED tests/solar-pv/test_units.py::test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00:00.1234567Z]
+FAILED tests/solar-pv/test_units.py::test_invalid_or_naive_datetime_is_not_implicitly_localized[2026-10-28T12:00:00[Asia/Shanghai]]
+FAILED tests/solar-pv/test_units.py::test_invalid_or_naive_datetime_is_not_implicitly_localized[None]
+FAILED tests/solar-pv/test_units.py::test_invalid_or_naive_datetime_is_not_implicitly_localized[123]
+FAILED tests/solar-pv/test_units.py::test_naive_datetime_only_when_caller_explicitly_allows_it
+FAILED tests/solar-pv/test_units.py::test_real_iana_timezone_keys[UTC] - Attr...
+FAILED tests/solar-pv/test_units.py::test_real_iana_timezone_keys[Asia/Shanghai]
+FAILED tests/solar-pv/test_units.py::test_real_iana_timezone_keys[America/New_York]
+FAILED tests/solar-pv/test_units.py::test_real_iana_timezone_keys[Etc/GMT+8]
+FAILED tests/solar-pv/test_units.py::test_fake_offset_and_path_timezone_keys_are_rejected[]
+FAILED tests/solar-pv/test_units.py::test_fake_offset_and_path_timezone_keys_are_rejected[Asia/NotARealZone]
+FAILED tests/solar-pv/test_units.py::test_fake_offset_and_path_timezone_keys_are_rejected[UTC+08:00]
+FAILED tests/solar-pv/test_units.py::test_fake_offset_and_path_timezone_keys_are_rejected[+08:00]
+FAILED tests/solar-pv/test_units.py::test_fake_offset_and_path_timezone_keys_are_rejected[CST]
+FAILED tests/solar-pv/test_units.py::test_fake_offset_and_path_timezone_keys_are_rejected[../UTC]
+FAILED tests/solar-pv/test_units.py::test_fake_offset_and_path_timezone_keys_are_rejected[/etc/localtime]
+FAILED tests/solar-pv/test_units.py::test_fake_offset_and_path_timezone_keys_are_rejected[ Asia/Shanghai]
+FAILED tests/solar-pv/test_units.py::test_fake_offset_and_path_timezone_keys_are_rejected[None]
+FAILED tests/solar-pv/test_units.py::test_fake_offset_and_path_timezone_keys_are_rejected[value9]
+FAILED tests/solar-pv/test_units.py::test_fake_offset_and_path_timezone_keys_are_rejected[8]
+FAILED tests/solar-pv/test_units.py::test_validation_mode_flags_require_booleans[1]
+FAILED tests/solar-pv/test_units.py::test_validation_mode_flags_require_booleans[yes]
+FAILED tests/solar-pv/test_units.py::test_validation_mode_flags_require_booleans[None]
+84 failed, 216 passed in 1.62s

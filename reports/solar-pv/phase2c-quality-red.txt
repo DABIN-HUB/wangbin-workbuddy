@@ -1,0 +1,36 @@
+FFFF                                                                     [100%]
+================================== FAILURES ===================================
+_________ test_closed_polygon_and_self_intersection_are_distinguished _________
+tests\solar-pv\test_quality.py:23: in test_closed_polygon_and_self_intersection_are_distinguished
+    assert "POLYGON_SELF_INTERSECTION" not in issues(good)
+                                              ^^^^^^^^^^^^
+tests\solar-pv\test_quality.py:10: in issues
+    from wangbin_solar_pv.quality import assess_input_quality
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.quality'
+_______________ test_open_ring_is_reported_not_silently_closed ________________
+tests\solar-pv\test_quality.py:30: in test_open_ring_is_reported_not_silently_closed
+    assert "POLYGON_NOT_CLOSED" in issues(p)
+                                   ^^^^^^^^^
+tests\solar-pv\test_quality.py:10: in issues
+    from wangbin_solar_pv.quality import assess_input_quality
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.quality'
+__________ test_usable_capacity_is_not_implicitly_converted_from_kva __________
+tests\solar-pv\test_quality.py:38: in test_usable_capacity_is_not_implicitly_converted_from_kva
+    assert "TRANSFORMER_LIMIT_EXCEEDED" in issues(p)
+                                           ^^^^^^^^^
+tests\solar-pv\test_quality.py:10: in issues
+    from wangbin_solar_pv.quality import assess_input_quality
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.quality'
+____________ test_evidence_expiry_and_grid_rejection_are_explicit _____________
+tests\solar-pv\test_quality.py:48: in test_evidence_expiry_and_grid_rejection_are_explicit
+    assert "GRID_OPINION_EXPIRED" in issues(p)
+                                     ^^^^^^^^^
+tests\solar-pv\test_quality.py:10: in issues
+    from wangbin_solar_pv.quality import assess_input_quality
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.quality'
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_quality.py::test_closed_polygon_and_self_intersection_are_distinguished
+FAILED tests/solar-pv/test_quality.py::test_open_ring_is_reported_not_silently_closed
+FAILED tests/solar-pv/test_quality.py::test_usable_capacity_is_not_implicitly_converted_from_kva
+FAILED tests/solar-pv/test_quality.py::test_evidence_expiry_and_grid_rejection_are_explicit
+4 failed in 1.10s

@@ -1,0 +1,639 @@
+EEEEEEEEEEEEEEE                                                          [100%]
+=================================== ERRORS ====================================
+_ ERROR at setup of test_independent_contract_identity_and_non_calculation_status[industrial_rooftop] _
+tests\solar-pv\test_categories.py:30: in api
+    assert importlib.util.find_spec("wangbin_solar_pv.categories") is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+E    +  where None = <function find_spec at 0x00000208EACAF1A0>('wangbin_solar_pv.categories')
+E    +    where <function find_spec at 0x00000208EACAF1A0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ ERROR at setup of test_independent_contract_identity_and_non_calculation_status[utility_scale_ground] _
+tests\solar-pv\test_categories.py:30: in api
+    assert importlib.util.find_spec("wangbin_solar_pv.categories") is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+E    +  where None = <function find_spec at 0x00000208EACAF1A0>('wangbin_solar_pv.categories')
+E    +    where <function find_spec at 0x00000208EACAF1A0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ ERROR at setup of test_independent_contract_identity_and_non_calculation_status[agri_pv] _
+tests\solar-pv\test_categories.py:30: in api
+    assert importlib.util.find_spec("wangbin_solar_pv.categories") is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+E    +  where None = <function find_spec at 0x00000208EACAF1A0>('wangbin_solar_pv.categories')
+E    +    where <function find_spec at 0x00000208EACAF1A0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ ERROR at setup of test_independent_contract_identity_and_non_calculation_status[fishery_pv] _
+tests\solar-pv\test_categories.py:30: in api
+    assert importlib.util.find_spec("wangbin_solar_pv.categories") is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+E    +  where None = <function find_spec at 0x00000208EACAF1A0>('wangbin_solar_pv.categories')
+E    +    where <function find_spec at 0x00000208EACAF1A0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ ERROR at setup of test_independent_contract_identity_and_non_calculation_status[pv_storage] _
+tests\solar-pv\test_categories.py:30: in api
+    assert importlib.util.find_spec("wangbin_solar_pv.categories") is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+E    +  where None = <function find_spec at 0x00000208EACAF1A0>('wangbin_solar_pv.categories')
+E    +    where <function find_spec at 0x00000208EACAF1A0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ ERROR at setup of test_independent_contract_identity_and_non_calculation_status[public_rooftop] _
+tests\solar-pv\test_categories.py:30: in api
+    assert importlib.util.find_spec("wangbin_solar_pv.categories") is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+E    +  where None = <function find_spec at 0x00000208EACAF1A0>('wangbin_solar_pv.categories')
+E    +    where <function find_spec at 0x00000208EACAF1A0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ ERROR at setup of test_independent_contract_identity_and_non_calculation_status[residential_pv] _
+tests\solar-pv\test_categories.py:30: in api
+    assert importlib.util.find_spec("wangbin_solar_pv.categories") is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+E    +  where None = <function find_spec at 0x00000208EACAF1A0>('wangbin_solar_pv.categories')
+E    +    where <function find_spec at 0x00000208EACAF1A0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ ERROR at setup of test_independent_contract_identity_and_non_calculation_status[pv_carport_bipv] _
+tests\solar-pv\test_categories.py:30: in api
+    assert importlib.util.find_spec("wangbin_solar_pv.categories") is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+E    +  where None = <function find_spec at 0x00000208EACAF1A0>('wangbin_solar_pv.categories')
+E    +    where <function find_spec at 0x00000208EACAF1A0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ ERROR at setup of test_independent_contract_identity_and_non_calculation_status[desert_mining] _
+tests\solar-pv\test_categories.py:30: in api
+    assert importlib.util.find_spec("wangbin_solar_pv.categories") is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+E    +  where None = <function find_spec at 0x00000208EACAF1A0>('wangbin_solar_pv.categories')
+E    +    where <function find_spec at 0x00000208EACAF1A0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ ERROR at setup of test_unknown_category_cannot_select_a_file_or_silently_downgrade[unknown] _
+tests\solar-pv\test_categories.py:30: in api
+    assert importlib.util.find_spec("wangbin_solar_pv.categories") is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+E    +  where None = <function find_spec at 0x00000208EACAF1A0>('wangbin_solar_pv.categories')
+E    +    where <function find_spec at 0x00000208EACAF1A0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ ERROR at setup of test_unknown_category_cannot_select_a_file_or_silently_downgrade[PV_STORAGE] _
+tests\solar-pv\test_categories.py:30: in api
+    assert importlib.util.find_spec("wangbin_solar_pv.categories") is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+E    +  where None = <function find_spec at 0x00000208EACAF1A0>('wangbin_solar_pv.categories')
+E    +    where <function find_spec at 0x00000208EACAF1A0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ ERROR at setup of test_unknown_category_cannot_select_a_file_or_silently_downgrade[../industrial_rooftop] _
+tests\solar-pv\test_categories.py:30: in api
+    assert importlib.util.find_spec("wangbin_solar_pv.categories") is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+E    +  where None = <function find_spec at 0x00000208EACAF1A0>('wangbin_solar_pv.categories')
+E    +    where <function find_spec at 0x00000208EACAF1A0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ ERROR at setup of test_unknown_category_cannot_select_a_file_or_silently_downgrade[] _
+tests\solar-pv\test_categories.py:30: in api
+    assert importlib.util.find_spec("wangbin_solar_pv.categories") is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+E    +  where None = <function find_spec at 0x00000208EACAF1A0>('wangbin_solar_pv.categories')
+E    +    where <function find_spec at 0x00000208EACAF1A0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ ERROR at setup of test_unknown_category_cannot_select_a_file_or_silently_downgrade[None] _
+tests\solar-pv\test_categories.py:30: in api
+    assert importlib.util.find_spec("wangbin_solar_pv.categories") is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+E    +  where None = <function find_spec at 0x00000208EACAF1A0>('wangbin_solar_pv.categories')
+E    +    where <function find_spec at 0x00000208EACAF1A0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ ERROR at setup of test_unknown_category_cannot_select_a_file_or_silently_downgrade[pv_type5] _
+tests\solar-pv\test_categories.py:30: in api
+    assert importlib.util.find_spec("wangbin_solar_pv.categories") is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+E    +  where None = <function find_spec at 0x00000208EACAF1A0>('wangbin_solar_pv.categories')
+E    +    where <function find_spec at 0x00000208EACAF1A0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+=========================== short test summary info ===========================
+ERROR tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[industrial_rooftop]
+ERROR tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[utility_scale_ground]
+ERROR tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[agri_pv]
+ERROR tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[fishery_pv]
+ERROR tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[pv_storage]
+ERROR tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[public_rooftop]
+ERROR tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[residential_pv]
+ERROR tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[pv_carport_bipv]
+ERROR tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[desert_mining]
+ERROR tests/solar-pv/test_categories.py::test_unknown_category_cannot_select_a_file_or_silently_downgrade[unknown]
+ERROR tests/solar-pv/test_categories.py::test_unknown_category_cannot_select_a_file_or_silently_downgrade[PV_STORAGE]
+ERROR tests/solar-pv/test_categories.py::test_unknown_category_cannot_select_a_file_or_silently_downgrade[../industrial_rooftop]
+ERROR tests/solar-pv/test_categories.py::test_unknown_category_cannot_select_a_file_or_silently_downgrade[]
+ERROR tests/solar-pv/test_categories.py::test_unknown_category_cannot_select_a_file_or_silently_downgrade[None]
+ERROR tests/solar-pv/test_categories.py::test_unknown_category_cannot_select_a_file_or_silently_downgrade[pv_type5]
+15 errors in 0.71s
+FFFFFFFFFFFFFFF                                                          [100%]
+================================== FAILURES ===================================
+_ test_independent_contract_identity_and_non_calculation_status[industrial_rooftop] _
+tests\solar-pv\test_categories.py:37: in test_independent_contract_identity_and_non_calculation_status
+    assert api is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+_ test_independent_contract_identity_and_non_calculation_status[utility_scale_ground] _
+tests\solar-pv\test_categories.py:37: in test_independent_contract_identity_and_non_calculation_status
+    assert api is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+___ test_independent_contract_identity_and_non_calculation_status[agri_pv] ____
+tests\solar-pv\test_categories.py:37: in test_independent_contract_identity_and_non_calculation_status
+    assert api is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+__ test_independent_contract_identity_and_non_calculation_status[fishery_pv] __
+tests\solar-pv\test_categories.py:37: in test_independent_contract_identity_and_non_calculation_status
+    assert api is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+__ test_independent_contract_identity_and_non_calculation_status[pv_storage] __
+tests\solar-pv\test_categories.py:37: in test_independent_contract_identity_and_non_calculation_status
+    assert api is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+_ test_independent_contract_identity_and_non_calculation_status[public_rooftop] _
+tests\solar-pv\test_categories.py:37: in test_independent_contract_identity_and_non_calculation_status
+    assert api is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+_ test_independent_contract_identity_and_non_calculation_status[residential_pv] _
+tests\solar-pv\test_categories.py:37: in test_independent_contract_identity_and_non_calculation_status
+    assert api is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+_ test_independent_contract_identity_and_non_calculation_status[pv_carport_bipv] _
+tests\solar-pv\test_categories.py:37: in test_independent_contract_identity_and_non_calculation_status
+    assert api is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+_ test_independent_contract_identity_and_non_calculation_status[desert_mining] _
+tests\solar-pv\test_categories.py:37: in test_independent_contract_identity_and_non_calculation_status
+    assert api is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+__ test_unknown_category_cannot_select_a_file_or_silently_downgrade[unknown] __
+tests\solar-pv\test_categories.py:54: in test_unknown_category_cannot_select_a_file_or_silently_downgrade
+    assert api is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+_ test_unknown_category_cannot_select_a_file_or_silently_downgrade[PV_STORAGE] _
+tests\solar-pv\test_categories.py:54: in test_unknown_category_cannot_select_a_file_or_silently_downgrade
+    assert api is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+_ test_unknown_category_cannot_select_a_file_or_silently_downgrade[../industrial_rooftop] _
+tests\solar-pv\test_categories.py:54: in test_unknown_category_cannot_select_a_file_or_silently_downgrade
+    assert api is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+_____ test_unknown_category_cannot_select_a_file_or_silently_downgrade[] ______
+tests\solar-pv\test_categories.py:54: in test_unknown_category_cannot_select_a_file_or_silently_downgrade
+    assert api is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+___ test_unknown_category_cannot_select_a_file_or_silently_downgrade[None] ____
+tests\solar-pv\test_categories.py:54: in test_unknown_category_cannot_select_a_file_or_silently_downgrade
+    assert api is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+_ test_unknown_category_cannot_select_a_file_or_silently_downgrade[pv_type5] __
+tests\solar-pv\test_categories.py:54: in test_unknown_category_cannot_select_a_file_or_silently_downgrade
+    assert api is not None, "category input-contract API is not implemented"
+E   AssertionError: category input-contract API is not implemented
+E   assert None is not None
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[industrial_rooftop]
+FAILED tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[utility_scale_ground]
+FAILED tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[agri_pv]
+FAILED tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[fishery_pv]
+FAILED tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[pv_storage]
+FAILED tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[public_rooftop]
+FAILED tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[residential_pv]
+FAILED tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[pv_carport_bipv]
+FAILED tests/solar-pv/test_categories.py::test_independent_contract_identity_and_non_calculation_status[desert_mining]
+FAILED tests/solar-pv/test_categories.py::test_unknown_category_cannot_select_a_file_or_silently_downgrade[unknown]
+FAILED tests/solar-pv/test_categories.py::test_unknown_category_cannot_select_a_file_or_silently_downgrade[PV_STORAGE]
+FAILED tests/solar-pv/test_categories.py::test_unknown_category_cannot_select_a_file_or_silently_downgrade[../industrial_rooftop]
+FAILED tests/solar-pv/test_categories.py::test_unknown_category_cannot_select_a_file_or_silently_downgrade[]
+FAILED tests/solar-pv/test_categories.py::test_unknown_category_cannot_select_a_file_or_silently_downgrade[None]
+FAILED tests/solar-pv/test_categories.py::test_unknown_category_cannot_select_a_file_or_silently_downgrade[pv_type5]
+15 failed in 0.42s
+...............FFFFFFFFFFFFFFFFFFFFFFFFF                                 [100%]
+================================== FAILURES ===================================
+_ test_storage_composes_exact_selected_base_fields_without_claiming_calculation[industrial_rooftop] _
+tests\solar-pv\test_categories.py:65: in test_storage_composes_exact_selected_base_fields_without_claiming_calculation
+    assert set(storage["allowed_field_ids"]) == set(base_contract["allowed_field_ids"]) | storage_only
+E   AssertionError: assert {'assets.depr...ce_date', ...} == {'assets.depr...ce_date', ...}
+E
+E     Extra items in the right set:
+E     'roof.material'
+E     'roof.age'
+E     'roof.structure_type'
+E     'roof.azimuth'
+E     'roof.remaining_life'...
+E
+E     ...Full output truncated (7 lines hidden), use '-vv' to show
+_ test_storage_composes_exact_selected_base_fields_without_claiming_calculation[utility_scale_ground] _
+tests\solar-pv\test_categories.py:65: in test_storage_composes_exact_selected_base_fields_without_claiming_calculation
+    assert set(storage["allowed_field_ids"]) == set(base_contract["allowed_field_ids"]) | storage_only
+E   AssertionError: assert {'assets.depr...ce_date', ...} == {'assets.depr...ce_date', ...}
+E
+E     Extra items in the left set:
+E     'load.meter_boundary'
+E     'tariff.periods.avoidable_price'
+E     'load.work_schedule'
+E     'load.monthly_bills.row_id'
+E     'load.monthly_bills.attachment_id'...
+E
+E     ...Full output truncated (26 lines hidden), use '-vv' to show
+_ test_storage_composes_exact_selected_base_fields_without_claiming_calculation[agri_pv] _
+tests\solar-pv\test_categories.py:65: in test_storage_composes_exact_selected_base_fields_without_claiming_calculation
+    assert set(storage["allowed_field_ids"]) == set(base_contract["allowed_field_ids"]) | storage_only
+E   AssertionError: assert {'assets.depr...ce_date', ...} == {'agri.agricu...earance', ...}
+E
+E     Extra items in the right set:
+E     'agri.yield_impact_reference'
+E     'agri.irrigation_plan'
+E     'agri.machine_access_width'
+E     'agri.minimum_light_transmission'
+E     'agri.production_baseline'...
+E
+E     ...Full output truncated (5 lines hidden), use '-vv' to show
+_ test_storage_composes_exact_selected_base_fields_without_claiming_calculation[fishery_pv] _
+tests\solar-pv\test_categories.py:65: in test_storage_composes_exact_selected_base_fields_without_claiming_calculation
+    assert set(storage["allowed_field_ids"]) == set(base_contract["allowed_field_ids"]) | storage_only
+E   AssertionError: assert {'assets.depr...ce_date', ...} == {'assets.depr...ce_date', ...}
+E
+E     Extra items in the right set:
+E     'fishery.production_baseline'
+E     'fishery.water_rights_reference'
+E     'fishery.access_plan'
+E     'fishery.water_level_variation'
+E     'fishery.corrosion_class'...
+E
+E     ...Full output truncated (5 lines hidden), use '-vv' to show
+_ test_storage_composes_exact_selected_base_fields_without_claiming_calculation[public_rooftop] _
+tests\solar-pv\test_categories.py:65: in test_storage_composes_exact_selected_base_fields_without_claiming_calculation
+    assert set(storage["allowed_field_ids"]) == set(base_contract["allowed_field_ids"]) | storage_only
+E   AssertionError: assert {'assets.depr...ce_date', ...} == {'assets.depr...ce_date', ...}
+E
+E     Extra items in the right set:
+E     'public.occupancy_schedule'
+E     'roof.material'
+E     'roof.age'
+E     'public.asset_authorization'
+E     'roof.structure_type'...
+E
+E     ...Full output truncated (12 lines hidden), use '-vv' to show
+_ test_storage_composes_exact_selected_base_fields_without_claiming_calculation[residential_pv] _
+tests\solar-pv\test_categories.py:65: in test_storage_composes_exact_selected_base_fields_without_claiming_calculation
+    assert set(storage["allowed_field_ids"]) == set(base_contract["allowed_field_ids"]) | storage_only
+E   AssertionError: assert {'assets.depr...ce_date', ...} == {'assets.depr...ce_date', ...}
+E
+E     Extra items in the right set:
+E     'residential.connection_standard'
+E     'roof.material'
+E     'roof.age'
+E     'roof.structure_type'
+E     'residential.consumer_contract_reference'...
+E
+E     ...Full output truncated (12 lines hidden), use '-vv' to show
+_ test_storage_composes_exact_selected_base_fields_without_claiming_calculation[pv_carport_bipv] _
+tests\solar-pv\test_categories.py:65: in test_storage_composes_exact_selected_base_fields_without_claiming_calculation
+    assert set(storage["allowed_field_ids"]) == set(base_contract["allowed_field_ids"]) | storage_only
+E   AssertionError: assert {'assets.depr...ce_date', ...} == {'assets.depr...ce_date', ...}
+E
+E     Extra items in the right set:
+E     'carport_bipv.replaced_material_cost'
+E     'roof.structure_report_id'
+E     'carport_bipv.waterproof_reference'
+E     'carport_bipv.wind_load_reference'
+E     'roof.material'...
+E
+E     ...Full output truncated (16 lines hidden), use '-vv' to show
+_ test_storage_composes_exact_selected_base_fields_without_claiming_calculation[desert_mining] _
+tests\solar-pv\test_categories.py:65: in test_storage_composes_exact_selected_base_fields_without_claiming_calculation
+    assert set(storage["allowed_field_ids"]) == set(base_contract["allowed_field_ids"]) | storage_only
+E   AssertionError: assert {'assets.depr...ce_date', ...} == {'assets.depr...ce_date', ...}
+E
+E     Extra items in the right set:
+E     'desert_mining.subsidence_reference'
+E     'desert_mining.restoration_obligation'
+E     'desert_mining.land_rehabilitation_cost'
+E     'desert_mining.transmission_reference'
+E     'desert_mining.subtype'...
+E
+E     ...Full output truncated (4 lines hidden), use '-vv' to show
+_______ test_recursive_or_invalid_storage_base_is_rejected[pv_storage] ________
+tests\solar-pv\test_categories.py:74: in test_recursive_or_invalid_storage_base_is_rejected
+    with pytest.raises(ContractError) as exc:
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+_________ test_recursive_or_invalid_storage_base_is_rejected[unknown] _________
+tests\solar-pv\test_categories.py:74: in test_recursive_or_invalid_storage_base_is_rejected
+    with pytest.raises(ContractError) as exc:
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+_________ test_recursive_or_invalid_storage_base_is_rejected[AGRI_PV] _________
+tests\solar-pv\test_categories.py:74: in test_recursive_or_invalid_storage_base_is_rejected
+    with pytest.raises(ContractError) as exc:
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+____________ test_recursive_or_invalid_storage_base_is_rejected[] _____________
+tests\solar-pv\test_categories.py:74: in test_recursive_or_invalid_storage_base_is_rejected
+    with pytest.raises(ContractError) as exc:
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+__________ test_recursive_or_invalid_storage_base_is_rejected[base4] __________
+tests\solar-pv\test_categories.py:74: in test_recursive_or_invalid_storage_base_is_rejected
+    with pytest.raises(ContractError) as exc:
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+____________ test_recursive_or_invalid_storage_base_is_rejected[1] ____________
+tests\solar-pv\test_categories.py:74: in test_recursive_or_invalid_storage_base_is_rejected
+    with pytest.raises(ContractError) as exc:
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+_____________ test_storage_missing_base_does_not_assume_a_rooftop _____________
+tests\solar-pv\test_categories.py:81: in test_storage_missing_base_does_not_assume_a_rooftop
+    assert result["base_pv_type"] is None and result["base_input_status"] == "UNKNOWN"
+           ^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'base_pv_type'
+_ test_category_schema_preserves_all_definitions_and_only_filters_root_keys[industrial_rooftop] _
+tests\solar-pv\test_categories.py:92: in test_category_schema_preserves_all_definitions_and_only_filters_root_keys
+    schema = api.category_schema(pv_type, catalog)
+             ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.categories' has no attribute 'category_schema'
+_ test_category_schema_preserves_all_definitions_and_only_filters_root_keys[utility_scale_ground] _
+tests\solar-pv\test_categories.py:92: in test_category_schema_preserves_all_definitions_and_only_filters_root_keys
+    schema = api.category_schema(pv_type, catalog)
+             ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.categories' has no attribute 'category_schema'
+_ test_category_schema_preserves_all_definitions_and_only_filters_root_keys[agri_pv] _
+tests\solar-pv\test_categories.py:92: in test_category_schema_preserves_all_definitions_and_only_filters_root_keys
+    schema = api.category_schema(pv_type, catalog)
+             ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.categories' has no attribute 'category_schema'
+_ test_category_schema_preserves_all_definitions_and_only_filters_root_keys[fishery_pv] _
+tests\solar-pv\test_categories.py:92: in test_category_schema_preserves_all_definitions_and_only_filters_root_keys
+    schema = api.category_schema(pv_type, catalog)
+             ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.categories' has no attribute 'category_schema'
+_ test_category_schema_preserves_all_definitions_and_only_filters_root_keys[pv_storage] _
+tests\solar-pv\test_categories.py:92: in test_category_schema_preserves_all_definitions_and_only_filters_root_keys
+    schema = api.category_schema(pv_type, catalog)
+             ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.categories' has no attribute 'category_schema'
+_ test_category_schema_preserves_all_definitions_and_only_filters_root_keys[public_rooftop] _
+tests\solar-pv\test_categories.py:92: in test_category_schema_preserves_all_definitions_and_only_filters_root_keys
+    schema = api.category_schema(pv_type, catalog)
+             ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.categories' has no attribute 'category_schema'
+_ test_category_schema_preserves_all_definitions_and_only_filters_root_keys[residential_pv] _
+tests\solar-pv\test_categories.py:92: in test_category_schema_preserves_all_definitions_and_only_filters_root_keys
+    schema = api.category_schema(pv_type, catalog)
+             ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.categories' has no attribute 'category_schema'
+_ test_category_schema_preserves_all_definitions_and_only_filters_root_keys[pv_carport_bipv] _
+tests\solar-pv\test_categories.py:92: in test_category_schema_preserves_all_definitions_and_only_filters_root_keys
+    schema = api.category_schema(pv_type, catalog)
+             ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.categories' has no attribute 'category_schema'
+_ test_category_schema_preserves_all_definitions_and_only_filters_root_keys[desert_mining] _
+tests\solar-pv\test_categories.py:92: in test_category_schema_preserves_all_definitions_and_only_filters_root_keys
+    schema = api.category_schema(pv_type, catalog)
+             ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.categories' has no attribute 'category_schema'
+_ test_storage_schema_uses_selected_base_and_retains_frozen_base_field_definition _
+tests\solar-pv\test_categories.py:107: in test_storage_schema_uses_selected_base_and_retains_frozen_base_field_definition
+    schema = api.category_schema("pv_storage", catalog, base_pv_type="agri_pv")
+             ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.categories' has no attribute 'category_schema'
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_categories.py::test_storage_composes_exact_selected_base_fields_without_claiming_calculation[industrial_rooftop]
+FAILED tests/solar-pv/test_categories.py::test_storage_composes_exact_selected_base_fields_without_claiming_calculation[utility_scale_ground]
+FAILED tests/solar-pv/test_categories.py::test_storage_composes_exact_selected_base_fields_without_claiming_calculation[agri_pv]
+FAILED tests/solar-pv/test_categories.py::test_storage_composes_exact_selected_base_fields_without_claiming_calculation[fishery_pv]
+FAILED tests/solar-pv/test_categories.py::test_storage_composes_exact_selected_base_fields_without_claiming_calculation[public_rooftop]
+FAILED tests/solar-pv/test_categories.py::test_storage_composes_exact_selected_base_fields_without_claiming_calculation[residential_pv]
+FAILED tests/solar-pv/test_categories.py::test_storage_composes_exact_selected_base_fields_without_claiming_calculation[pv_carport_bipv]
+FAILED tests/solar-pv/test_categories.py::test_storage_composes_exact_selected_base_fields_without_claiming_calculation[desert_mining]
+FAILED tests/solar-pv/test_categories.py::test_recursive_or_invalid_storage_base_is_rejected[pv_storage]
+FAILED tests/solar-pv/test_categories.py::test_recursive_or_invalid_storage_base_is_rejected[unknown]
+FAILED tests/solar-pv/test_categories.py::test_recursive_or_invalid_storage_base_is_rejected[AGRI_PV]
+FAILED tests/solar-pv/test_categories.py::test_recursive_or_invalid_storage_base_is_rejected[]
+FAILED tests/solar-pv/test_categories.py::test_recursive_or_invalid_storage_base_is_rejected[base4]
+FAILED tests/solar-pv/test_categories.py::test_recursive_or_invalid_storage_base_is_rejected[1]
+FAILED tests/solar-pv/test_categories.py::test_storage_missing_base_does_not_assume_a_rooftop
+FAILED tests/solar-pv/test_categories.py::test_category_schema_preserves_all_definitions_and_only_filters_root_keys[industrial_rooftop]
+FAILED tests/solar-pv/test_categories.py::test_category_schema_preserves_all_definitions_and_only_filters_root_keys[utility_scale_ground]
+FAILED tests/solar-pv/test_categories.py::test_category_schema_preserves_all_definitions_and_only_filters_root_keys[agri_pv]
+FAILED tests/solar-pv/test_categories.py::test_category_schema_preserves_all_definitions_and_only_filters_root_keys[fishery_pv]
+FAILED tests/solar-pv/test_categories.py::test_category_schema_preserves_all_definitions_and_only_filters_root_keys[pv_storage]
+FAILED tests/solar-pv/test_categories.py::test_category_schema_preserves_all_definitions_and_only_filters_root_keys[public_rooftop]
+FAILED tests/solar-pv/test_categories.py::test_category_schema_preserves_all_definitions_and_only_filters_root_keys[residential_pv]
+FAILED tests/solar-pv/test_categories.py::test_category_schema_preserves_all_definitions_and_only_filters_root_keys[pv_carport_bipv]
+FAILED tests/solar-pv/test_categories.py::test_category_schema_preserves_all_definitions_and_only_filters_root_keys[desert_mining]
+FAILED tests/solar-pv/test_categories.py::test_storage_schema_uses_selected_base_and_retains_frozen_base_field_definition
+25 failed, 15 passed in 1.35s
+........................................F
+================================== FAILURES ===================================
+_ test_all_nine_types_validate_as_drafts_without_claiming_business_acceptance[industrial_rooftop] _
+tests\solar-pv\test_categories.py:129: in test_all_nine_types_validate_as_drafts_without_claiming_business_acceptance
+    issues = api.validate_category(project, catalog)
+             ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'wangbin_solar_pv.categories' has no attribute 'validate_category'
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_categories.py::test_all_nine_types_validate_as_drafts_without_claiming_business_acceptance[industrial_rooftop]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 40 passed in 4.15s
+........................................................................ [ 36%]
+........................................................................ [ 72%]
+.........................F.FFF.......FF.FFFFFFFF.....F..                 [100%]
+================================== FAILURES ===================================
+_ test_ground_only_full_export_or_explicitly_pending_draft[self_use_surplus_export] _
+tests\solar-pv\test_categories.py:205: in test_ground_only_full_export_or_explicitly_pending_draft
+    assert ("CATEGORY_SALES_MODE_INVALID" in codes(issues, "ERROR")) == (mode not in {"full_export", "undecided"})
+E   AssertionError: assert ('CATEGORY_SALES_MODE_INVALID' in set()) == ('self_use_surplus_export' not in {'full_export', 'undecided'})
+E    +  where set() = codes([Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'ERROR')
+_____ test_ground_only_full_export_or_explicitly_pending_draft[off_grid] ______
+tests\solar-pv\test_categories.py:205: in test_ground_only_full_export_or_explicitly_pending_draft
+    assert ("CATEGORY_SALES_MODE_INVALID" in codes(issues, "ERROR")) == (mode not in {"full_export", "undecided"})
+E   AssertionError: assert ('CATEGORY_SALES_MODE_INVALID' in set()) == ('off_grid' not in {'full_export', 'undecided'})
+E    +  where set() = codes([Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'ERROR')
+______ test_ground_only_full_export_or_explicitly_pending_draft[hybrid] _______
+tests\solar-pv\test_categories.py:205: in test_ground_only_full_export_or_explicitly_pending_draft
+    assert ("CATEGORY_SALES_MODE_INVALID" in codes(issues, "ERROR")) == (mode not in {"full_export", "undecided"})
+E   AssertionError: assert ('CATEGORY_SALES_MODE_INVALID' in set()) == ('hybrid' not in {'full_export', 'undecided'})
+E    +  where set() = codes([Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'ERROR')
+_____ test_ground_only_full_export_or_explicitly_pending_draft[undecided] _____
+tests\solar-pv\test_categories.py:206: in test_ground_only_full_export_or_explicitly_pending_draft
+    assert ("CATEGORY_SALES_MODE_UNKNOWN" in codes(issues, "WARNING")) == (mode == "undecided")
+E   AssertionError: assert ('CATEGORY_SALES_MODE_UNKNOWN' in {'CATEGORY_SPECIAL_UNKNOWN', 'NOT_IMPLEMENTED'}) == ('undecided' == 'undecided'
+E    +  where {'CATEGORY_SPECIAL_UNKNOWN', 'NOT_IMPLEMENTED'} = codes([Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'WARNING')
+E
+E       undecided)
+_ test_ground_rejects_rooftop_costs_and_avoidable_price_nested_in_shared_arrays[capex.items-category-roof_reinforcement] _
+tests\solar-pv\test_categories.py:229: in test_ground_rejects_rooftop_costs_and_avoidable_price_nested_in_shared_arrays
+    target = next(i for i in issues if i.code == expected and i.field_id == fid)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   StopIteration
+_ test_ground_rejects_rooftop_costs_and_avoidable_price_nested_in_shared_arrays[opex.items-category-roof_rent] _
+tests\solar-pv\test_categories.py:229: in test_ground_rejects_rooftop_costs_and_avoidable_price_nested_in_shared_arrays
+    target = next(i for i in issues if i.code == expected and i.field_id == fid)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   StopIteration
+________ test_ground_rejects_self_use_or_roof_income_models[self_use] _________
+tests\solar-pv\test_categories.py:237: in test_ground_rejects_self_use_or_roof_income_models
+    assert "CATEGORY_REVENUE_NOT_ALLOWED" in codes(api.validate_category(project, catalog), "ERROR")
+E   AssertionError: assert 'CATEGORY_REVENUE_NOT_ALLOWED' in set()
+E    +  where set() = codes([Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'ERROR')
+E    +    where [Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...] = <function validate_category at 0x0000021D9325CE00>(ProjectData(schema_version='solar-pv-project/1.0.0', baseline_version='1.0.0', baseline_hashes={'00-original-user-base...e, 'normalization': None}}, candidates={}, resolutions=[], revision=0, submission_ids={}, history=[], applicability={}), <wangbin_solar_pv.catalog.Catalog object at 0x0000021D921297F0>)
+E    +      where <function validate_category at 0x0000021D9325CE00> = <module 'wangbin_solar_pv.categories' from 'F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\src\\wangbin_solar_pv\\categories.py'>.validate_category
+____ test_ground_rejects_self_use_or_roof_income_models[self_use_savings] _____
+tests\solar-pv\test_categories.py:237: in test_ground_rejects_self_use_or_roof_income_models
+    assert "CATEGORY_REVENUE_NOT_ALLOWED" in codes(api.validate_category(project, catalog), "ERROR")
+E   AssertionError: assert 'CATEGORY_REVENUE_NOT_ALLOWED' in set()
+E    +  where set() = codes([Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'ERROR')
+E    +    where [Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...] = <function validate_category at 0x0000021D9325CE00>(ProjectData(schema_version='solar-pv-project/1.0.0', baseline_version='1.0.0', baseline_hashes={'00-original-user-base...e, 'normalization': None}}, candidates={}, resolutions=[], revision=0, submission_ids={}, history=[], applicability={}), <wangbin_solar_pv.catalog.Catalog object at 0x0000021D921297F0>)
+E    +      where <function validate_category at 0x0000021D9325CE00> = <module 'wangbin_solar_pv.categories' from 'F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\src\\wangbin_solar_pv\\categories.py'>.validate_category
+____ test_ground_rejects_self_use_or_roof_income_models[self_consumption] _____
+tests\solar-pv\test_categories.py:237: in test_ground_rejects_self_use_or_roof_income_models
+    assert "CATEGORY_REVENUE_NOT_ALLOWED" in codes(api.validate_category(project, catalog), "ERROR")
+E   AssertionError: assert 'CATEGORY_REVENUE_NOT_ALLOWED' in set()
+E    +  where set() = codes([Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'ERROR')
+E    +    where [Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...] = <function validate_category at 0x0000021D9325CE00>(ProjectData(schema_version='solar-pv-project/1.0.0', baseline_version='1.0.0', baseline_hashes={'00-original-user-base...e, 'normalization': None}}, candidates={}, resolutions=[], revision=0, submission_ids={}, history=[], applicability={}), <wangbin_solar_pv.catalog.Catalog object at 0x0000021D921297F0>)
+E    +      where <function validate_category at 0x0000021D9325CE00> = <module 'wangbin_solar_pv.categories' from 'F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\src\\wangbin_solar_pv\\categories.py'>.validate_category
+__ test_ground_rejects_self_use_or_roof_income_models[avoided_purchase_cost] __
+tests\solar-pv\test_categories.py:237: in test_ground_rejects_self_use_or_roof_income_models
+    assert "CATEGORY_REVENUE_NOT_ALLOWED" in codes(api.validate_category(project, catalog), "ERROR")
+E   AssertionError: assert 'CATEGORY_REVENUE_NOT_ALLOWED' in set()
+E    +  where set() = codes([Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'ERROR')
+E    +    where [Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...] = <function validate_category at 0x0000021D9325CE00>(ProjectData(schema_version='solar-pv-project/1.0.0', baseline_version='1.0.0', baseline_hashes={'00-original-user-base...e, 'normalization': None}}, candidates={}, resolutions=[], revision=0, submission_ids={}, history=[], applicability={}), <wangbin_solar_pv.catalog.Catalog object at 0x0000021D921297F0>)
+E    +      where <function validate_category at 0x0000021D9325CE00> = <module 'wangbin_solar_pv.categories' from 'F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\src\\wangbin_solar_pv\\categories.py'>.validate_category
+_______ test_ground_rejects_self_use_or_roof_income_models[roof_lease] ________
+tests\solar-pv\test_categories.py:237: in test_ground_rejects_self_use_or_roof_income_models
+    assert "CATEGORY_REVENUE_NOT_ALLOWED" in codes(api.validate_category(project, catalog), "ERROR")
+E   AssertionError: assert 'CATEGORY_REVENUE_NOT_ALLOWED' in set()
+E    +  where set() = codes([Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'ERROR')
+E    +    where [Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...] = <function validate_category at 0x0000021D9325CE00>(ProjectData(schema_version='solar-pv-project/1.0.0', baseline_version='1.0.0', baseline_hashes={'00-original-user-base...e, 'normalization': None}}, candidates={}, resolutions=[], revision=0, submission_ids={}, history=[], applicability={}), <wangbin_solar_pv.catalog.Catalog object at 0x0000021D921297F0>)
+E    +      where <function validate_category at 0x0000021D9325CE00> = <module 'wangbin_solar_pv.categories' from 'F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\src\\wangbin_solar_pv\\categories.py'>.validate_category
+________ test_ground_rejects_self_use_or_roof_income_models[roof_rent] ________
+tests\solar-pv\test_categories.py:237: in test_ground_rejects_self_use_or_roof_income_models
+    assert "CATEGORY_REVENUE_NOT_ALLOWED" in codes(api.validate_category(project, catalog), "ERROR")
+E   AssertionError: assert 'CATEGORY_REVENUE_NOT_ALLOWED' in set()
+E    +  where set() = codes([Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'ERROR')
+E    +    where [Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...] = <function validate_category at 0x0000021D9325CE00>(ProjectData(schema_version='solar-pv-project/1.0.0', baseline_version='1.0.0', baseline_hashes={'00-original-user-base...e, 'normalization': None}}, candidates={}, resolutions=[], revision=0, submission_ids={}, history=[], applicability={}), <wangbin_solar_pv.catalog.Catalog object at 0x0000021D921297F0>)
+E    +      where <function validate_category at 0x0000021D9325CE00> = <module 'wangbin_solar_pv.categories' from 'F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\src\\wangbin_solar_pv\\categories.py'>.validate_category
+_ test_ground_rejects_self_use_or_roof_income_models[\u4f01\u4e1a\u81ea\u7528\u8282\u7701] _
+tests\solar-pv\test_categories.py:237: in test_ground_rejects_self_use_or_roof_income_models
+    assert "CATEGORY_REVENUE_NOT_ALLOWED" in codes(api.validate_category(project, catalog), "ERROR")
+E   AssertionError: assert 'CATEGORY_REVENUE_NOT_ALLOWED' in set()
+E    +  where set() = codes([Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'ERROR')
+E    +    where [Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...] = <function validate_category at 0x0000021D9325CE00>(ProjectData(schema_version='solar-pv-project/1.0.0', baseline_version='1.0.0', baseline_hashes={'00-original-user-base...e, 'normalization': None}}, candidates={}, resolutions=[], revision=0, submission_ids={}, history=[], applicability={}), <wangbin_solar_pv.catalog.Catalog object at 0x0000021D921297F0>)
+E    +      where <function validate_category at 0x0000021D9325CE00> = <module 'wangbin_solar_pv.categories' from 'F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\src\\wangbin_solar_pv\\categories.py'>.validate_category
+_ test_ground_rejects_self_use_or_roof_income_models[\u5c4b\u9876\u79df\u8d41] _
+tests\solar-pv\test_categories.py:237: in test_ground_rejects_self_use_or_roof_income_models
+    assert "CATEGORY_REVENUE_NOT_ALLOWED" in codes(api.validate_category(project, catalog), "ERROR")
+E   AssertionError: assert 'CATEGORY_REVENUE_NOT_ALLOWED' in set()
+E    +  where set() = codes([Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'ERROR')
+E    +    where [Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...] = <function validate_category at 0x0000021D9325CE00>(ProjectData(schema_version='solar-pv-project/1.0.0', baseline_version='1.0.0', baseline_hashes={'00-original-user-base...e, 'normalization': None}}, candidates={}, resolutions=[], revision=0, submission_ids={}, history=[], applicability={}), <wangbin_solar_pv.catalog.Catalog object at 0x0000021D921297F0>)
+E    +      where <function validate_category at 0x0000021D9325CE00> = <module 'wangbin_solar_pv.categories' from 'F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\src\\wangbin_solar_pv\\categories.py'>.validate_category
+_ test_ground_unknown_other_income_requires_review_not_automatic_business_support _
+tests\solar-pv\test_categories.py:257: in test_ground_unknown_other_income_requires_review_not_automatic_business_support
+    assert "CATEGORY_REVENUE_REVIEW_REQUIRED" in codes(issues, "WARNING")
+E   AssertionError: assert 'CATEGORY_REVENUE_REVIEW_REQUIRED' in {'CATEGORY_SPECIAL_UNKNOWN', 'NOT_IMPLEMENTED'}
+E    +  where {'CATEGORY_SPECIAL_UNKNOWN', 'NOT_IMPLEMENTED'} = codes([Issue(code='CATEGORY_SPECIAL_UNKNOWN', field_id='site.land_classification', message='专项资料待核；保留草稿，不代表专项契约义务已满足', sever...UNKNOWN', field_id='grid.upgrade_plan', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'WARNING')
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_categories.py::test_ground_only_full_export_or_explicitly_pending_draft[self_use_surplus_export]
+FAILED tests/solar-pv/test_categories.py::test_ground_only_full_export_or_explicitly_pending_draft[off_grid]
+FAILED tests/solar-pv/test_categories.py::test_ground_only_full_export_or_explicitly_pending_draft[hybrid]
+FAILED tests/solar-pv/test_categories.py::test_ground_only_full_export_or_explicitly_pending_draft[undecided]
+FAILED tests/solar-pv/test_categories.py::test_ground_rejects_rooftop_costs_and_avoidable_price_nested_in_shared_arrays[capex.items-category-roof_reinforcement]
+FAILED tests/solar-pv/test_categories.py::test_ground_rejects_rooftop_costs_and_avoidable_price_nested_in_shared_arrays[opex.items-category-roof_rent]
+FAILED tests/solar-pv/test_categories.py::test_ground_rejects_self_use_or_roof_income_models[self_use]
+FAILED tests/solar-pv/test_categories.py::test_ground_rejects_self_use_or_roof_income_models[self_use_savings]
+FAILED tests/solar-pv/test_categories.py::test_ground_rejects_self_use_or_roof_income_models[self_consumption]
+FAILED tests/solar-pv/test_categories.py::test_ground_rejects_self_use_or_roof_income_models[avoided_purchase_cost]
+FAILED tests/solar-pv/test_categories.py::test_ground_rejects_self_use_or_roof_income_models[roof_lease]
+FAILED tests/solar-pv/test_categories.py::test_ground_rejects_self_use_or_roof_income_models[roof_rent]
+FAILED tests/solar-pv/test_categories.py::test_ground_rejects_self_use_or_roof_income_models[\u4f01\u4e1a\u81ea\u7528\u8282\u7701]
+FAILED tests/solar-pv/test_categories.py::test_ground_rejects_self_use_or_roof_income_models[\u5c4b\u9876\u79df\u8d41]
+FAILED tests/solar-pv/test_categories.py::test_ground_unknown_other_income_requires_review_not_automatic_business_support
+15 failed, 185 passed in 7.30s
+........................................................................ [ 32%]
+........................................................................ [ 64%]
+........................................................F...FF........FF [ 96%]
+F.FFF..                                                                  [100%]
+================================== FAILURES ===================================
+___ test_storage_validator_rejects_illegal_base_or_warns_when_missing[None] ___
+tests\solar-pv\test_categories.py:280: in test_storage_validator_rejects_illegal_base_or_warns_when_missing
+    assert "STORAGE_BASE_UNKNOWN" in codes(issues, "WARNING")
+E   AssertionError: assert 'STORAGE_BASE_UNKNOWN' in {'CATEGORY_SALES_MODE_UNKNOWN', 'CATEGORY_SPECIAL_UNKNOWN', 'NOT_IMPLEMENTED'}
+E    +  where {'CATEGORY_SALES_MODE_UNKNOWN', 'CATEGORY_SPECIAL_UNKNOWN', 'NOT_IMPLEMENTED'} = codes([Issue(code='CATEGORY_SALES_MODE_UNKNOWN', field_id='project.sales_mode', message='销售模式待核；不视为已确定售电方案', severity='WARNI..., field_id='storage.charge_efficiency', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'WARNING')
+_ test_storage_unknown_or_conflicted_base_is_not_inferred_from_other_inputs[UNKNOWN] _
+tests\solar-pv\test_categories.py:293: in test_storage_unknown_or_conflicted_base_is_not_inferred_from_other_inputs
+    assert "STORAGE_BASE_UNKNOWN" in codes(issues, "WARNING")
+E   AssertionError: assert 'STORAGE_BASE_UNKNOWN' in {'CATEGORY_SALES_MODE_UNKNOWN', 'CATEGORY_SPECIAL_UNKNOWN', 'NOT_IMPLEMENTED'}
+E    +  where {'CATEGORY_SALES_MODE_UNKNOWN', 'CATEGORY_SPECIAL_UNKNOWN', 'NOT_IMPLEMENTED'} = codes([Issue(code='CATEGORY_SALES_MODE_UNKNOWN', field_id='project.sales_mode', message='销售模式待核；不视为已确定售电方案', severity='WARNI...N', field_id='storage.discharge_power', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'WARNING')
+_ test_storage_unknown_or_conflicted_base_is_not_inferred_from_other_inputs[CONFLICT] _
+tests\solar-pv\test_categories.py:293: in test_storage_unknown_or_conflicted_base_is_not_inferred_from_other_inputs
+    assert "STORAGE_BASE_UNKNOWN" in codes(issues, "WARNING")
+E   AssertionError: assert 'STORAGE_BASE_UNKNOWN' in {'CATEGORY_SALES_MODE_UNKNOWN', 'CATEGORY_SPECIAL_UNKNOWN', 'NOT_IMPLEMENTED'}
+E    +  where {'CATEGORY_SALES_MODE_UNKNOWN', 'CATEGORY_SPECIAL_UNKNOWN', 'NOT_IMPLEMENTED'} = codes([Issue(code='CATEGORY_SALES_MODE_UNKNOWN', field_id='project.sales_mode', message='销售模式待核；不视为已确定售电方案', severity='WARNI...N', field_id='storage.discharge_power', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'WARNING')
+_ test_storage_ground_base_inherits_ground_cost_and_revenue_boundaries[capex.items-category-roof_reinforcement-CATEGORY_COST_NOT_ALLOWED] _
+tests\solar-pv\test_categories.py:325: in test_storage_ground_base_inherits_ground_cost_and_revenue_boundaries
+    assert expected in codes(api.validate_category(project, catalog), "ERROR")
+E   AssertionError: assert 'CATEGORY_COST_NOT_ALLOWED' in set()
+E    +  where set() = codes([Issue(code='CATEGORY_SALES_MODE_UNKNOWN', field_id='project.sales_mode', message='销售模式待核；不视为已确定售电方案', severity='WARNI..., field_id='storage.charge_efficiency', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'ERROR')
+E    +    where [Issue(code='CATEGORY_SALES_MODE_UNKNOWN', field_id='project.sales_mode', message='销售模式待核；不视为已确定售电方案', severity='WARNI..., field_id='storage.charge_efficiency', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...] = <function validate_category at 0x000001EAE0E25BC0>(ProjectData(schema_version='solar-pv-project/1.0.0', baseline_version='1.0.0', baseline_hashes={'00-original-user-base...e, 'normalization': None}}, candidates={}, resolutions=[], revision=0, submission_ids={}, history=[], applicability={}), <wangbin_solar_pv.catalog.Catalog object at 0x000001EAE0756AE0>)
+E    +      where <function validate_category at 0x000001EAE0E25BC0> = <module 'wangbin_solar_pv.categories' from 'F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\src\\wangbin_solar_pv\\categories.py'>.validate_category
+_ test_storage_ground_base_inherits_ground_cost_and_revenue_boundaries[opex.items-category-roof_rent-CATEGORY_COST_NOT_ALLOWED] _
+tests\solar-pv\test_categories.py:325: in test_storage_ground_base_inherits_ground_cost_and_revenue_boundaries
+    assert expected in codes(api.validate_category(project, catalog), "ERROR")
+E   AssertionError: assert 'CATEGORY_COST_NOT_ALLOWED' in set()
+E    +  where set() = codes([Issue(code='CATEGORY_SALES_MODE_UNKNOWN', field_id='project.sales_mode', message='销售模式待核；不视为已确定售电方案', severity='WARNI..., field_id='storage.charge_efficiency', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'ERROR')
+E    +    where [Issue(code='CATEGORY_SALES_MODE_UNKNOWN', field_id='project.sales_mode', message='销售模式待核；不视为已确定售电方案', severity='WARNI..., field_id='storage.charge_efficiency', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...] = <function validate_category at 0x000001EAE0E25BC0>(ProjectData(schema_version='solar-pv-project/1.0.0', baseline_version='1.0.0', baseline_hashes={'00-original-user-base...e, 'normalization': None}}, candidates={}, resolutions=[], revision=0, submission_ids={}, history=[], applicability={}), <wangbin_solar_pv.catalog.Catalog object at 0x000001EAE0756AE0>)
+E    +      where <function validate_category at 0x000001EAE0E25BC0> = <module 'wangbin_solar_pv.categories' from 'F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\src\\wangbin_solar_pv\\categories.py'>.validate_category
+_ test_storage_ground_base_inherits_ground_cost_and_revenue_boundaries[revenue.other_items-kind-self_use_savings-CATEGORY_REVENUE_NOT_ALLOWED] _
+tests\solar-pv\test_categories.py:325: in test_storage_ground_base_inherits_ground_cost_and_revenue_boundaries
+    assert expected in codes(api.validate_category(project, catalog), "ERROR")
+E   AssertionError: assert 'CATEGORY_REVENUE_NOT_ALLOWED' in set()
+E    +  where set() = codes([Issue(code='CATEGORY_SALES_MODE_UNKNOWN', field_id='project.sales_mode', message='销售模式待核；不视为已确定售电方案', severity='WARNI..., field_id='storage.charge_efficiency', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'ERROR')
+E    +    where [Issue(code='CATEGORY_SALES_MODE_UNKNOWN', field_id='project.sales_mode', message='销售模式待核；不视为已确定售电方案', severity='WARNI..., field_id='storage.charge_efficiency', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...] = <function validate_category at 0x000001EAE0E25BC0>(ProjectData(schema_version='solar-pv-project/1.0.0', baseline_version='1.0.0', baseline_hashes={'00-original-user-base...e, 'normalization': None}}, candidates={}, resolutions=[], revision=0, submission_ids={}, history=[], applicability={}), <wangbin_solar_pv.catalog.Catalog object at 0x000001EAE0756AE0>)
+E    +      where <function validate_category at 0x000001EAE0E25BC0> = <module 'wangbin_solar_pv.categories' from 'F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\src\\wangbin_solar_pv\\categories.py'>.validate_category
+_ test_ground_storage_self_consumption_dispatch_is_an_explicit_scheme_conflict[self_consumption] _
+tests\solar-pv\test_categories.py:332: in test_ground_storage_self_consumption_dispatch_is_an_explicit_scheme_conflict
+    assert "STORAGE_BASE_DISPATCH_CONFLICT" in codes(issues, "ERROR")
+E   AssertionError: assert 'STORAGE_BASE_DISPATCH_CONFLICT' in set()
+E    +  where set() = codes([Issue(code='CATEGORY_SALES_MODE_UNKNOWN', field_id='project.sales_mode', message='销售模式待核；不视为已确定售电方案', severity='WARNI..., field_id='storage.charge_efficiency', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'ERROR')
+_ test_ground_storage_self_consumption_dispatch_is_an_explicit_scheme_conflict[hybrid] _
+tests\solar-pv\test_categories.py:332: in test_ground_storage_self_consumption_dispatch_is_an_explicit_scheme_conflict
+    assert "STORAGE_BASE_DISPATCH_CONFLICT" in codes(issues, "ERROR")
+E   AssertionError: assert 'STORAGE_BASE_DISPATCH_CONFLICT' in set()
+E    +  where set() = codes([Issue(code='CATEGORY_SALES_MODE_UNKNOWN', field_id='project.sales_mode', message='销售模式待核；不视为已确定售电方案', severity='WARNI..., field_id='storage.charge_efficiency', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'ERROR')
+_ test_ground_storage_positive_discharge_to_load_is_not_a_no_storage_fallback _
+tests\solar-pv\test_categories.py:339: in test_ground_storage_positive_discharge_to_load_is_not_a_no_storage_fallback
+    assert "STORAGE_BASE_DISPATCH_CONFLICT" in codes(api.validate_category(project, catalog), "ERROR")
+E   AssertionError: assert 'STORAGE_BASE_DISPATCH_CONFLICT' in set()
+E    +  where set() = codes([Issue(code='CATEGORY_SALES_MODE_UNKNOWN', field_id='project.sales_mode', message='销售模式待核；不视为已确定售电方案', severity='WARNI..., field_id='storage.charge_efficiency', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...], 'ERROR')
+E    +    where [Issue(code='CATEGORY_SALES_MODE_UNKNOWN', field_id='project.sales_mode', message='销售模式待核；不视为已确定售电方案', severity='WARNI..., field_id='storage.charge_efficiency', message='专项资料待核；保留草稿，不代表专项契约义务已满足', severity='WARNING', instance_id=None), ...] = <function validate_category at 0x000001EAE0E25BC0>(ProjectData(schema_version='solar-pv-project/1.0.0', baseline_version='1.0.0', baseline_hashes={'00-original-user-base...e, 'normalization': None}}, candidates={}, resolutions=[], revision=0, submission_ids={}, history=[], applicability={}), <wangbin_solar_pv.catalog.Catalog object at 0x000001EAE0756AE0>)
+E    +      where <function validate_category at 0x000001EAE0E25BC0> = <module 'wangbin_solar_pv.categories' from 'F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\src\\wangbin_solar_pv\\categories.py'>.validate_category
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_categories.py::test_storage_validator_rejects_illegal_base_or_warns_when_missing[None]
+FAILED tests/solar-pv/test_categories.py::test_storage_unknown_or_conflicted_base_is_not_inferred_from_other_inputs[UNKNOWN]
+FAILED tests/solar-pv/test_categories.py::test_storage_unknown_or_conflicted_base_is_not_inferred_from_other_inputs[CONFLICT]
+FAILED tests/solar-pv/test_categories.py::test_storage_ground_base_inherits_ground_cost_and_revenue_boundaries[capex.items-category-roof_reinforcement-CATEGORY_COST_NOT_ALLOWED]
+FAILED tests/solar-pv/test_categories.py::test_storage_ground_base_inherits_ground_cost_and_revenue_boundaries[opex.items-category-roof_rent-CATEGORY_COST_NOT_ALLOWED]
+FAILED tests/solar-pv/test_categories.py::test_storage_ground_base_inherits_ground_cost_and_revenue_boundaries[revenue.other_items-kind-self_use_savings-CATEGORY_REVENUE_NOT_ALLOWED]
+FAILED tests/solar-pv/test_categories.py::test_ground_storage_self_consumption_dispatch_is_an_explicit_scheme_conflict[self_consumption]
+FAILED tests/solar-pv/test_categories.py::test_ground_storage_self_consumption_dispatch_is_an_explicit_scheme_conflict[hybrid]
+FAILED tests/solar-pv/test_categories.py::test_ground_storage_positive_discharge_to_load_is_not_a_no_storage_fallback
+9 failed, 214 passed in 6.17s

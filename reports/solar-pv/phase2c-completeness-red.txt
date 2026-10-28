@@ -1,0 +1,12 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+___ test_city_area_budget_are_accepted_as_a_draft_without_fake_coordinates ____
+tests\solar-pv\test_completeness.py:24: in test_city_area_budget_are_accepted_as_a_draft_without_fake_coordinates
+    old=deepcopy(p.to_dict()); result=evaluate(p)
+                                      ^^^^^^^^^^^
+tests\solar-pv\test_completeness.py:13: in evaluate
+    from wangbin_solar_pv.completeness import evaluate_completeness
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.completeness'
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_completeness.py::test_city_area_budget_are_accepted_as_a_draft_without_fake_coordinates
+1 failed, 9 deselected in 0.58s

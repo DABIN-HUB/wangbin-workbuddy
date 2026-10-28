@@ -1,0 +1,34 @@
+{
+  "contract_id": "solar-pv-input-category/desert_mining/1.0.0",
+  "pv_type": "desert_mining",
+  "name_zh": "荒漠/矿区",
+  "priority": "P2",
+  "input_contract_status": "IMPLEMENTED",
+  "calculation_status": "NOT_IMPLEMENTED",
+  "e2e_status": "NOT_IMPLEMENTED",
+  "basis": [
+    "03-input-fields.json",
+    "07-category-boundaries.md"
+  ],
+  "required_special_field_ids": [
+    "desert_mining.subtype",
+    "desert_mining.restoration_obligation",
+    "desert_mining.subsidence_reference",
+    "desert_mining.sand_dust_reference",
+    "desert_mining.water_supply",
+    "desert_mining.soil_reference",
+    "desert_mining.transmission_reference",
+    "desert_mining.land_rehabilitation_cost"
+  ],
+  "forbidden_field_prefixes": [],
+  "forbidden_field_ids": [],
+  "allowed_sales_modes": [
+    "self_use_surplus_export",
+    "full_export",
+    "off_grid",
+    "hybrid",
+    "undecided"
+  ],
+  "subtype_field_id": "desert_mining.subtype",
+  "restriction": "desert/active_mine/closed_mine必须显式选择；生态、矿安、采空沉降、积尘供水和复垦费用独立，不以普通地面通过替代矿区验收。 本文件仅为输入契约，不是业务模板；计算、四文件E2E及平台能力全部NOT_IMPLEMENTED。"
+}

@@ -1,0 +1,42 @@
+{
+  "contract_id": "solar-pv-input-category/public_rooftop/1.0.0",
+  "pv_type": "public_rooftop",
+  "name_zh": "公共建筑",
+  "priority": "P2",
+  "input_contract_status": "IMPLEMENTED",
+  "calculation_status": "NOT_IMPLEMENTED",
+  "e2e_status": "NOT_IMPLEMENTED",
+  "basis": [
+    "03-input-fields.json",
+    "07-category-boundaries.md"
+  ],
+  "required_special_field_ids": [
+    "roof.structure_type",
+    "roof.material",
+    "roof.age",
+    "roof.remaining_life",
+    "roof.allowable_additional_load",
+    "roof.design_added_load",
+    "roof.slope",
+    "roof.azimuth",
+    "roof.structure_report_id",
+    "roof.fire_access_reference",
+    "roof.waterproof_plan",
+    "public.asset_authorization",
+    "public.procurement_reference",
+    "public.occupancy_schedule",
+    "public.fire_evacuation_reference",
+    "public.budget_approval"
+  ],
+  "forbidden_field_prefixes": [],
+  "forbidden_field_ids": [],
+  "allowed_sales_modes": [
+    "self_use_surplus_export",
+    "full_export",
+    "off_grid",
+    "hybrid",
+    "undecided"
+  ],
+  "subtype_field_id": null,
+  "restriction": "公共资产授权、采购预算、人员消防及公共使用负荷独立；不得默认企业税负或用工业屋顶合格替代公共授权。 本文件仅为输入契约，不是业务模板；计算、四文件E2E及平台能力全部NOT_IMPLEMENTED。"
+}

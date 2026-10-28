@@ -1,0 +1,32 @@
+........................................................................ [ 23%]
+........................................................................ [ 47%]
+........................................................................ [ 71%]
+........................................................................ [ 95%]
+............FF                                                           [100%]
+================================== FAILURES ===================================
+_ test_large_finite_numbers_do_not_hit_integer_string_conversion_limits[False] _
+tests\solar-pv\test_units.py:347: in test_large_finite_numbers_do_not_hit_integer_string_conversion_limits
+    result = units().convert_unit(value, "kW", "W")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:154: in convert_unit
+    number = _number(value)
+             ^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:102: in _number
+    decimal = value if isinstance(value, Decimal) else Decimal(str(value))
+                                                               ^^^^^^^^^^
+E   ValueError: Exceeds the limit (4300 digits) for integer string conversion; use sys.set_int_max_str_digits() to increase the limit
+_ test_large_finite_numbers_do_not_hit_integer_string_conversion_limits[True] _
+tests\solar-pv\test_units.py:347: in test_large_finite_numbers_do_not_hit_integer_string_conversion_limits
+    result = units().convert_unit(value, "kW", "W")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:174: in convert_unit
+    result = _decimal(rational) if policy is None else _round_decimal(rational, decimal_places, rounding)
+             ^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:121: in _decimal
+    digits = tuple(int(digit) for digit in str(coefficient))
+                                           ^^^^^^^^^^^^^^^^
+E   ValueError: Exceeds the limit (4300 digits) for integer string conversion; use sys.set_int_max_str_digits() to increase the limit
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_units.py::test_large_finite_numbers_do_not_hit_integer_string_conversion_limits[False]
+FAILED tests/solar-pv/test_units.py::test_large_finite_numbers_do_not_hit_integer_string_conversion_limits[True]
+2 failed, 300 passed in 0.86s

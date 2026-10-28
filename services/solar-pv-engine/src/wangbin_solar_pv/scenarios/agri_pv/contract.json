@@ -1,0 +1,35 @@
+{
+  "contract_id": "solar-pv-input-category/agri_pv/1.0.0",
+  "pv_type": "agri_pv",
+  "name_zh": "农光互补",
+  "priority": "P1",
+  "input_contract_status": "IMPLEMENTED",
+  "calculation_status": "NOT_IMPLEMENTED",
+  "e2e_status": "NOT_IMPLEMENTED",
+  "basis": [
+    "03-input-fields.json",
+    "07-category-boundaries.md"
+  ],
+  "required_special_field_ids": [
+    "agri.crop_species",
+    "agri.production_baseline",
+    "agri.agricultural_compliance",
+    "agri.minimum_light_transmission",
+    "agri.design_light_transmission",
+    "agri.machine_clearance",
+    "agri.machine_access_width",
+    "agri.yield_impact_reference",
+    "agri.irrigation_plan"
+  ],
+  "forbidden_field_prefixes": [],
+  "forbidden_field_ids": [],
+  "allowed_sales_modes": [
+    "self_use_surplus_export",
+    "full_export",
+    "off_grid",
+    "hybrid",
+    "undecided"
+  ],
+  "subtype_field_id": null,
+  "restriction": "农业持续生产、用地合规、透光、行距和农机净空为独立前提；农业收入无独立合同和排他边界不得计入光伏收益。 本文件仅为输入契约，不是业务模板；计算、四文件E2E及平台能力全部NOT_IMPLEMENTED。"
+}

@@ -1,0 +1,37 @@
+{
+  "contract_id": "solar-pv-input-category/industrial_rooftop/1.0.0",
+  "pv_type": "industrial_rooftop",
+  "name_zh": "工商业屋顶分布式",
+  "priority": "P0",
+  "input_contract_status": "IMPLEMENTED",
+  "calculation_status": "NOT_IMPLEMENTED",
+  "e2e_status": "NOT_IMPLEMENTED",
+  "basis": [
+    "03-input-fields.json",
+    "07-category-boundaries.md"
+  ],
+  "required_special_field_ids": [
+    "roof.structure_type",
+    "roof.material",
+    "roof.age",
+    "roof.remaining_life",
+    "roof.allowable_additional_load",
+    "roof.design_added_load",
+    "roof.slope",
+    "roof.azimuth",
+    "roof.structure_report_id",
+    "roof.fire_access_reference",
+    "roof.waterproof_plan"
+  ],
+  "forbidden_field_prefixes": [],
+  "forbidden_field_ids": [],
+  "allowed_sales_modes": [
+    "self_use_surplus_export",
+    "full_export",
+    "off_grid",
+    "hybrid",
+    "undecided"
+  ],
+  "subtype_field_id": null,
+  "restriction": "产权、结构、荷载与屋面寿命先决；按实际时序评价企业负荷；五种销售模式均可采集，全额售电不得自动产生企业购电节省。 本文件仅为输入契约，不是业务模板；计算、四文件E2E及平台能力全部NOT_IMPLEMENTED。"
+}

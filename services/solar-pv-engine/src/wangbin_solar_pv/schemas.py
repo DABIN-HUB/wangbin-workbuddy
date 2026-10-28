@@ -107,6 +107,7 @@ def _value_schema(field, catalog):
 
 
 def build_schema(catalog) -> dict:
+    from .applicability import RULE_FIELDS
     definitions = {fid: _envelope(field, _value_schema(field, catalog)) for fid, field in catalog.fields.items()}
     root_fields = {fid: {"$ref": "#/$defs/" + fid} for fid, field in catalog.fields.items() if not field.get("repeat_group")}
     record_union = {"anyOf": [{"$ref": "#/$defs/" + fid} for fid in catalog.fields]}
@@ -121,10 +122,19 @@ def build_schema(catalog) -> dict:
         "revision": {"type": "integer", "minimum": 0},
         "submission_ids": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
         "history": {"type": "array", "items": {"type": "object"}},
+        "applicability": {"type": "object", "additionalProperties": {
+            "type": "object", "additionalProperties": False, "properties": {
+                "field_id": {"enum": list(catalog.fields)}, "row_id": STRING_OR_NULL,
+                "status": {"enum": ["APPLICABLE", "NOT_APPLICABLE", "PENDING"]},
+                "rule_id": {"enum": list(RULE_FIELDS)}, "reason": {"type": "string", "minLength": 1},
+                "reviewer": {"type": "string", "minLength": 1},
+                "evidence_source_ids": {"type": "array", "minItems": 1, "uniqueItems": True, "items": {"type": "string", "minLength": 1}},
+                "reviewed_at": {"type": "string", "format": "date-time"}},
+            "required": ["field_id", "row_id", "status", "rule_id", "reason", "reviewer", "evidence_source_ids", "reviewed_at"]}},
     }
     return {"$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "urn:wangbin:solar-pv:project:1.0.0",
             "title": "wangbin光伏项目输入契约（不是计算结果）", "type": "object", "additionalProperties": False,
-            "properties": properties, "required": list(properties), "$defs": definitions}
+            "properties": properties, "required": [key for key in properties if key != "applicability"], "$defs": definitions}
 
 
 def validate_shape(data, catalog):

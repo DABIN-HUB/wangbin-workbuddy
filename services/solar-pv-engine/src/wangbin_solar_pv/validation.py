@@ -152,6 +152,8 @@ def validate_record(record, catalog, *, scalar_item=False):
                     if isinstance(child, dict) and child.get("field_id") != child_key:
                         issue("ROW_FIELD_ID_MISMATCH", "行字段键与信封ID不符")
                 row_field = row.get("fields", {}).get(fid + ".row_id", {})
+                if not row_field:
+                    issue("ROW_ID_PROVENANCE_MISSING", "对象数组row_id也必须有独立原子来源记录")
                 if row_field.get("value") is not None and row_field["value"] != row.get("row_id"):
                     issue("ROW_ID_MISMATCH", "行标识与row_id原子记录不符")
             if len(row_ids) != len(set(row_ids)):

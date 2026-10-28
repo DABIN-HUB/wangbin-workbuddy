@@ -1,0 +1,132 @@
+FFFFFFFFFFFFFFFF                                                         [100%]
+================================== FAILURES ===================================
+_ test_all_97_conditional_fields_have_specific_machine_condition_and_baseline_reference _
+tests\solar-pv\test_conditions.py:23: in test_all_97_conditional_fields_have_specific_machine_condition_and_baseline_reference
+    registry,_,_=api(); data=registry(CAT)
+                 ^^^^^
+tests\solar-pv\test_conditions.py:18: in api
+    from wangbin_solar_pv.conditions import condition_registry,condition_state,effective_requirement
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.conditions'
+_ test_load_trigger_uses_actual_sales_mode_not_absence_of_curve[full_export-F] _
+tests\solar-pv\test_conditions.py:33: in test_load_trigger_uses_actual_sales_mode_not_absence_of_curve
+    _,state,_=api()
+              ^^^^^
+tests\solar-pv\test_conditions.py:18: in api
+    from wangbin_solar_pv.conditions import condition_registry,condition_state,effective_requirement
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.conditions'
+_ test_load_trigger_uses_actual_sales_mode_not_absence_of_curve[self_use_surplus_export-T] _
+tests\solar-pv\test_conditions.py:33: in test_load_trigger_uses_actual_sales_mode_not_absence_of_curve
+    _,state,_=api()
+              ^^^^^
+tests\solar-pv\test_conditions.py:18: in api
+    from wangbin_solar_pv.conditions import condition_registry,condition_state,effective_requirement
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.conditions'
+__ test_load_trigger_uses_actual_sales_mode_not_absence_of_curve[off_grid-T] __
+tests\solar-pv\test_conditions.py:33: in test_load_trigger_uses_actual_sales_mode_not_absence_of_curve
+    _,state,_=api()
+              ^^^^^
+tests\solar-pv\test_conditions.py:18: in api
+    from wangbin_solar_pv.conditions import condition_registry,condition_state,effective_requirement
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.conditions'
+_ test_load_trigger_uses_actual_sales_mode_not_absence_of_curve[undecided-U] __
+tests\solar-pv\test_conditions.py:33: in test_load_trigger_uses_actual_sales_mode_not_absence_of_curve
+    _,state,_=api()
+              ^^^^^
+tests\solar-pv\test_conditions.py:18: in api
+    from wangbin_solar_pv.conditions import condition_registry,condition_state,effective_requirement
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.conditions'
+____ test_load_trigger_uses_actual_sales_mode_not_absence_of_curve[None-U] ____
+tests\solar-pv\test_conditions.py:33: in test_load_trigger_uses_actual_sales_mode_not_absence_of_curve
+    _,state,_=api()
+              ^^^^^
+tests\solar-pv\test_conditions.py:18: in api
+    from wangbin_solar_pv.conditions import condition_registry,condition_state,effective_requirement
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.conditions'
+____________________ test_debt_unknown_is_not_zero[None-U] ____________________
+tests\solar-pv\test_conditions.py:39: in test_debt_unknown_is_not_zero
+    _,state,_=api();assert state("IN-C06",project("full_export",debt),CAT)["truth"]==expected
+              ^^^^^
+tests\solar-pv\test_conditions.py:18: in api
+    from wangbin_solar_pv.conditions import condition_registry,condition_state,effective_requirement
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.conditions'
+_____________________ test_debt_unknown_is_not_zero[0-F] ______________________
+tests\solar-pv\test_conditions.py:39: in test_debt_unknown_is_not_zero
+    _,state,_=api();assert state("IN-C06",project("full_export",debt),CAT)["truth"]==expected
+              ^^^^^
+tests\solar-pv\test_conditions.py:18: in api
+    from wangbin_solar_pv.conditions import condition_registry,condition_state,effective_requirement
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.conditions'
+____________________ test_debt_unknown_is_not_zero[0.5-T] _____________________
+tests\solar-pv\test_conditions.py:39: in test_debt_unknown_is_not_zero
+    _,state,_=api();assert state("IN-C06",project("full_export",debt),CAT)["truth"]==expected
+              ^^^^^
+tests\solar-pv\test_conditions.py:18: in api
+    from wangbin_solar_pv.conditions import condition_registry,condition_state,effective_requirement
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.conditions'
+_____________________ test_debt_unknown_is_not_zero[1-T] ______________________
+tests\solar-pv\test_conditions.py:39: in test_debt_unknown_is_not_zero
+    _,state,_=api();assert state("IN-C06",project("full_export",debt),CAT)["truth"]==expected
+              ^^^^^
+tests\solar-pv\test_conditions.py:18: in api
+    from wangbin_solar_pv.conditions import condition_registry,condition_state,effective_requirement
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.conditions'
+_______ test_explicit_debt_plan_overrides_zero_ratio_and_is_not_waived ________
+tests\solar-pv\test_conditions.py:43: in test_explicit_debt_plan_overrides_zero_ratio_and_is_not_waived
+    _,state,require=api();p=project("full_export",0)
+                    ^^^^^
+tests\solar-pv\test_conditions.py:18: in api
+    from wangbin_solar_pv.conditions import condition_registry,condition_state,effective_requirement
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.conditions'
+________ test_fixed_and_market_prices_are_alternatives_not_both_waived ________
+tests\solar-pv\test_conditions.py:50: in test_fixed_and_market_prices_are_alternatives_not_both_waived
+    _,_,require=api();p=project("full_export",0)
+                ^^^^^
+tests\solar-pv\test_conditions.py:18: in api
+    from wangbin_solar_pv.conditions import condition_registry,condition_state,effective_requirement
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.conditions'
+__ test_pure_export_does_not_require_avoidable_price_load_or_debt_agreement ___
+tests\solar-pv\test_conditions.py:59: in test_pure_export_does_not_require_avoidable_price_load_or_debt_agreement
+    _,_,require=api();p=project("full_export",0)
+                ^^^^^
+tests\solar-pv\test_conditions.py:18: in api
+    from wangbin_solar_pv.conditions import condition_registry,condition_state,effective_requirement
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.conditions'
+________________ test_off_grid_sale_price_is_not_manufactured _________________
+tests\solar-pv\test_conditions.py:67: in test_off_grid_sale_price_is_not_manufactured
+    _,_,require=api();p=project("off_grid",0)
+                ^^^^^
+tests\solar-pv\test_conditions.py:18: in api
+    from wangbin_solar_pv.conditions import condition_registry,condition_state,effective_requirement
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.conditions'
+_ test_array_items_inherit_parent_condition_but_empty_roots_do_not_create_rows _
+tests\solar-pv\test_conditions.py:72: in test_array_items_inherit_parent_condition_but_empty_roots_do_not_create_rows
+    _,_,require=api();p=project("full_export",0)
+                ^^^^^
+tests\solar-pv\test_conditions.py:18: in api
+    from wangbin_solar_pv.conditions import condition_registry,condition_state,effective_requirement
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.conditions'
+____ test_unknown_model_method_does_not_silently_select_monthly_or_hourly _____
+tests\solar-pv\test_conditions.py:78: in test_unknown_model_method_does_not_silently_select_monthly_or_hourly
+    _,_,require=api();p=project("full_export",0)
+                ^^^^^
+tests\solar-pv\test_conditions.py:18: in api
+    from wangbin_solar_pv.conditions import condition_registry,condition_state,effective_requirement
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.conditions'
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_conditions.py::test_all_97_conditional_fields_have_specific_machine_condition_and_baseline_reference
+FAILED tests/solar-pv/test_conditions.py::test_load_trigger_uses_actual_sales_mode_not_absence_of_curve[full_export-F]
+FAILED tests/solar-pv/test_conditions.py::test_load_trigger_uses_actual_sales_mode_not_absence_of_curve[self_use_surplus_export-T]
+FAILED tests/solar-pv/test_conditions.py::test_load_trigger_uses_actual_sales_mode_not_absence_of_curve[off_grid-T]
+FAILED tests/solar-pv/test_conditions.py::test_load_trigger_uses_actual_sales_mode_not_absence_of_curve[undecided-U]
+FAILED tests/solar-pv/test_conditions.py::test_load_trigger_uses_actual_sales_mode_not_absence_of_curve[None-U]
+FAILED tests/solar-pv/test_conditions.py::test_debt_unknown_is_not_zero[None-U]
+FAILED tests/solar-pv/test_conditions.py::test_debt_unknown_is_not_zero[0-F]
+FAILED tests/solar-pv/test_conditions.py::test_debt_unknown_is_not_zero[0.5-T]
+FAILED tests/solar-pv/test_conditions.py::test_debt_unknown_is_not_zero[1-T]
+FAILED tests/solar-pv/test_conditions.py::test_explicit_debt_plan_overrides_zero_ratio_and_is_not_waived
+FAILED tests/solar-pv/test_conditions.py::test_fixed_and_market_prices_are_alternatives_not_both_waived
+FAILED tests/solar-pv/test_conditions.py::test_pure_export_does_not_require_avoidable_price_load_or_debt_agreement
+FAILED tests/solar-pv/test_conditions.py::test_off_grid_sale_price_is_not_manufactured
+FAILED tests/solar-pv/test_conditions.py::test_array_items_inherit_parent_condition_but_empty_roots_do_not_create_rows
+FAILED tests/solar-pv/test_conditions.py::test_unknown_model_method_does_not_silently_select_monthly_or_hourly
+16 failed in 0.38s

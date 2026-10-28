@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 from . import SCHEMA_VERSION
@@ -23,12 +23,13 @@ class ProjectData:
     revision: int
     submission_ids: dict[str, str]
     history: list[dict]
+    applicability: dict[str, dict] = field(default_factory=dict)
 
     @classmethod
     def new(cls, project_id, pv_type, catalog):
         return cls.from_dict({"schema_version": SCHEMA_VERSION, "baseline_version": catalog.baseline_version,
             "baseline_hashes": deepcopy(catalog.baseline_hashes), "project_id": project_id, "pv_type": pv_type,
-            "values": {}, "candidates": {}, "resolutions": [], "revision": 0, "submission_ids": {}, "history": []}, catalog)
+            "values": {}, "candidates": {}, "resolutions": [], "revision": 0, "submission_ids": {}, "history": [], "applicability": {}}, catalog)
 
     @classmethod
     def from_dict(cls, data, catalog):

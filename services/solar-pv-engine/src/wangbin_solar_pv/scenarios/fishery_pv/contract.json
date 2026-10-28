@@ -1,0 +1,35 @@
+{
+  "contract_id": "solar-pv-input-category/fishery_pv/1.0.0",
+  "pv_type": "fishery_pv",
+  "name_zh": "渔光互补",
+  "priority": "P1",
+  "input_contract_status": "IMPLEMENTED",
+  "calculation_status": "NOT_IMPLEMENTED",
+  "e2e_status": "NOT_IMPLEMENTED",
+  "basis": [
+    "03-input-fields.json",
+    "07-category-boundaries.md"
+  ],
+  "required_special_field_ids": [
+    "fishery.water_rights_reference",
+    "fishery.production_baseline",
+    "fishery.water_depth",
+    "fishery.water_level_variation",
+    "fishery.corrosion_class",
+    "fishery.foundation_method",
+    "fishery.access_plan",
+    "fishery.water_quality_reference",
+    "fishery.production_impact_reference"
+  ],
+  "forbidden_field_prefixes": [],
+  "forbidden_field_ids": [],
+  "allowed_sales_modes": [
+    "self_use_surplus_export",
+    "full_export",
+    "off_grid",
+    "hybrid",
+    "undecided"
+  ],
+  "subtype_field_id": null,
+  "restriction": "水域/养殖权、水位水深、防腐、水质、生产影响和水上施工运维独立；不得用普通地面成本或无依据水面增益替代。 本文件仅为输入契约，不是业务模板；计算、四文件E2E及平台能力全部NOT_IMPLEMENTED。"
+}

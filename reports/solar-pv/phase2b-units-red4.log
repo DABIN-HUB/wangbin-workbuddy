@@ -1,0 +1,174 @@
+........................................................................ [ 33%]
+........................................................................ [ 66%]
+...............................FFFFFFFFFFFFFFFFFFFFF.................... [100%]
+================================== FAILURES ===================================
+_ test_money_and_price_scaling_without_exchange_or_valuation[CNY-\u5143-value0-None-125.5] _
+tests\solar-pv\test_units.py:226: in test_money_and_price_scaling_without_exchange_or_valuation
+    result = units().convert_unit(value, source, target, currency=currency)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:133: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_money_and_price_scaling_without_exchange_or_valuation[\u5143-CNY-value1-None-125.5] _
+tests\solar-pv\test_units.py:226: in test_money_and_price_scaling_without_exchange_or_valuation
+    result = units().convert_unit(value, source, target, currency=currency)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:133: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_money_and_price_scaling_without_exchange_or_valuation[\u4e07\u5143-\u5143-value2-None-12500] _
+tests\solar-pv\test_units.py:226: in test_money_and_price_scaling_without_exchange_or_valuation
+    result = units().convert_unit(value, source, target, currency=currency)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:133: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_money_and_price_scaling_without_exchange_or_valuation[\u5143-\u4e07\u5143-12500-None-1.25] _
+tests\solar-pv\test_units.py:226: in test_money_and_price_scaling_without_exchange_or_valuation
+    result = units().convert_unit(value, source, target, currency=currency)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:133: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_money_and_price_scaling_without_exchange_or_valuation[\u4e07\u5143-currency-value4-CNY-12500] _
+tests\solar-pv\test_units.py:226: in test_money_and_price_scaling_without_exchange_or_valuation
+    result = units().convert_unit(value, source, target, currency=currency)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:133: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_money_and_price_scaling_without_exchange_or_valuation[currency-\u4e07\u5143-12500-CNY-1.25] _
+tests\solar-pv\test_units.py:226: in test_money_and_price_scaling_without_exchange_or_valuation
+    result = units().convert_unit(value, source, target, currency=currency)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:133: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_money_and_price_scaling_without_exchange_or_valuation[currency-currency-value6-USD-10.25] _
+tests\solar-pv\test_units.py:226: in test_money_and_price_scaling_without_exchange_or_valuation
+    result = units().convert_unit(value, source, target, currency=currency)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:133: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_money_and_price_scaling_without_exchange_or_valuation[\u5143/Wp-\u4e07\u5143/MWp-value7-None-320] _
+tests\solar-pv\test_units.py:226: in test_money_and_price_scaling_without_exchange_or_valuation
+    result = units().convert_unit(value, source, target, currency=currency)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:133: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_money_and_price_scaling_without_exchange_or_valuation[\u4e07\u5143/MWp-\u5143/Wp-320-None-3.2] _
+tests\solar-pv\test_units.py:226: in test_money_and_price_scaling_without_exchange_or_valuation
+    result = units().convert_unit(value, source, target, currency=currency)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:133: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_money_and_price_scaling_without_exchange_or_valuation[\u5143/kWp-\u5143/Wp-3200-None-3.2] _
+tests\solar-pv\test_units.py:226: in test_money_and_price_scaling_without_exchange_or_valuation
+    result = units().convert_unit(value, source, target, currency=currency)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:133: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_money_and_price_scaling_without_exchange_or_valuation[\u5143/Wp-\u5143/kWp-value10-None-3200] _
+tests\solar-pv\test_units.py:226: in test_money_and_price_scaling_without_exchange_or_valuation
+    result = units().convert_unit(value, source, target, currency=currency)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:133: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_money_and_price_scaling_without_exchange_or_valuation[currency/kWh-\u5143/kWh-value11-CNY-0.45] _
+tests\solar-pv\test_units.py:226: in test_money_and_price_scaling_without_exchange_or_valuation
+    result = units().convert_unit(value, source, target, currency=currency)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:133: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_money_and_price_scaling_without_exchange_or_valuation[\u5143/kWh-currency/kWh-value12-CNY-0.45] _
+tests\solar-pv\test_units.py:226: in test_money_and_price_scaling_without_exchange_or_valuation
+    result = units().convert_unit(value, source, target, currency=currency)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:133: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_money_and_price_scaling_without_exchange_or_valuation[currency/unit-currency/unit-value13-EUR-12.25] _
+tests\solar-pv\test_units.py:226: in test_money_and_price_scaling_without_exchange_or_valuation
+    result = units().convert_unit(value, source, target, currency=currency)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:133: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_money_and_price_scaling_without_exchange_or_valuation[currency/year-currency/year-value14-USD-12500.5] _
+tests\solar-pv\test_units.py:226: in test_money_and_price_scaling_without_exchange_or_valuation
+    result = units().convert_unit(value, source, target, currency=currency)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:133: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_money_and_price_scaling_without_exchange_or_valuation[currency/kWh-currency/kWh-value15-USD--0.1] _
+tests\solar-pv\test_units.py:226: in test_money_and_price_scaling_without_exchange_or_valuation
+    result = units().convert_unit(value, source, target, currency=currency)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:133: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_money_and_price_scaling_without_exchange_or_valuation[\u5143-\u4e07\u5143-0-CNY-0] _
+tests\solar-pv\test_units.py:226: in test_money_and_price_scaling_without_exchange_or_valuation
+    result = units().convert_unit(value, source, target, currency=currency)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:133: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_______ test_unresolved_currency_is_rejected_even_on_identity[currency] _______
+tests\solar-pv\test_units.py:236: in test_unresolved_currency_is_rejected_even_on_identity
+    assert error.value.code == "UNIT_CURRENCY_REQUIRED"
+E   AssertionError: assert 'UNIT_UNKNOWN' == 'UNIT_CURRENCY_REQUIRED'
+E
+E     - UNIT_CURRENCY_REQUIRED
+E     + UNIT_UNKNOWN
+_____ test_unresolved_currency_is_rejected_even_on_identity[currency/kWh] _____
+tests\solar-pv\test_units.py:236: in test_unresolved_currency_is_rejected_even_on_identity
+    assert error.value.code == "UNIT_CURRENCY_REQUIRED"
+E   AssertionError: assert 'UNIT_UNKNOWN' == 'UNIT_CURRENCY_REQUIRED'
+E
+E     - UNIT_CURRENCY_REQUIRED
+E     + UNIT_UNKNOWN
+____ test_unresolved_currency_is_rejected_even_on_identity[currency/year] _____
+tests\solar-pv\test_units.py:236: in test_unresolved_currency_is_rejected_even_on_identity
+    assert error.value.code == "UNIT_CURRENCY_REQUIRED"
+E   AssertionError: assert 'UNIT_UNKNOWN' == 'UNIT_CURRENCY_REQUIRED'
+E
+E     - UNIT_CURRENCY_REQUIRED
+E     + UNIT_UNKNOWN
+____ test_unresolved_currency_is_rejected_even_on_identity[currency/unit] _____
+tests\solar-pv\test_units.py:236: in test_unresolved_currency_is_rejected_even_on_identity
+    assert error.value.code == "UNIT_CURRENCY_REQUIRED"
+E   AssertionError: assert 'UNIT_UNKNOWN' == 'UNIT_CURRENCY_REQUIRED'
+E
+E     - UNIT_CURRENCY_REQUIRED
+E     + UNIT_UNKNOWN
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_units.py::test_money_and_price_scaling_without_exchange_or_valuation[CNY-\u5143-value0-None-125.5]
+FAILED tests/solar-pv/test_units.py::test_money_and_price_scaling_without_exchange_or_valuation[\u5143-CNY-value1-None-125.5]
+FAILED tests/solar-pv/test_units.py::test_money_and_price_scaling_without_exchange_or_valuation[\u4e07\u5143-\u5143-value2-None-12500]
+FAILED tests/solar-pv/test_units.py::test_money_and_price_scaling_without_exchange_or_valuation[\u5143-\u4e07\u5143-12500-None-1.25]
+FAILED tests/solar-pv/test_units.py::test_money_and_price_scaling_without_exchange_or_valuation[\u4e07\u5143-currency-value4-CNY-12500]
+FAILED tests/solar-pv/test_units.py::test_money_and_price_scaling_without_exchange_or_valuation[currency-\u4e07\u5143-12500-CNY-1.25]
+FAILED tests/solar-pv/test_units.py::test_money_and_price_scaling_without_exchange_or_valuation[currency-currency-value6-USD-10.25]
+FAILED tests/solar-pv/test_units.py::test_money_and_price_scaling_without_exchange_or_valuation[\u5143/Wp-\u4e07\u5143/MWp-value7-None-320]
+FAILED tests/solar-pv/test_units.py::test_money_and_price_scaling_without_exchange_or_valuation[\u4e07\u5143/MWp-\u5143/Wp-320-None-3.2]
+FAILED tests/solar-pv/test_units.py::test_money_and_price_scaling_without_exchange_or_valuation[\u5143/kWp-\u5143/Wp-3200-None-3.2]
+FAILED tests/solar-pv/test_units.py::test_money_and_price_scaling_without_exchange_or_valuation[\u5143/Wp-\u5143/kWp-value10-None-3200]
+FAILED tests/solar-pv/test_units.py::test_money_and_price_scaling_without_exchange_or_valuation[currency/kWh-\u5143/kWh-value11-CNY-0.45]
+FAILED tests/solar-pv/test_units.py::test_money_and_price_scaling_without_exchange_or_valuation[\u5143/kWh-currency/kWh-value12-CNY-0.45]
+FAILED tests/solar-pv/test_units.py::test_money_and_price_scaling_without_exchange_or_valuation[currency/unit-currency/unit-value13-EUR-12.25]
+FAILED tests/solar-pv/test_units.py::test_money_and_price_scaling_without_exchange_or_valuation[currency/year-currency/year-value14-USD-12500.5]
+FAILED tests/solar-pv/test_units.py::test_money_and_price_scaling_without_exchange_or_valuation[currency/kWh-currency/kWh-value15-USD--0.1]
+FAILED tests/solar-pv/test_units.py::test_money_and_price_scaling_without_exchange_or_valuation[\u5143-\u4e07\u5143-0-CNY-0]
+FAILED tests/solar-pv/test_units.py::test_unresolved_currency_is_rejected_even_on_identity[currency]
+FAILED tests/solar-pv/test_units.py::test_unresolved_currency_is_rejected_even_on_identity[currency/kWh]
+FAILED tests/solar-pv/test_units.py::test_unresolved_currency_is_rejected_even_on_identity[currency/year]
+FAILED tests/solar-pv/test_units.py::test_unresolved_currency_is_rejected_even_on_identity[currency/unit]
+21 failed, 195 passed in 0.75s

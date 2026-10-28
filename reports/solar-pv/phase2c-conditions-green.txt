@@ -1,0 +1,3 @@
+................                                                         [100%]
+- generated xml file: C:\Users\wangbin\AppData\Local\hermes\cache\scratch\solar-pv-phase2-20261028\phase2c-conditions-junit.xml -
+16 passed in 1.57s

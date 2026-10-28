@@ -1,0 +1,781 @@
+............................................FFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 45%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF............FFFFFFFFFFFFFF [ 91%]
+FFFFFFFFFFFFF                                                            [100%]
+================================== FAILURES ===================================
+____________ test_nonmonetary_scale_families[m2-m\xb2-value0-12.5] ____________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+________ test_nonmonetary_scale_families[\u516c\u9877-m2-value1-12500] ________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_______ test_nonmonetary_scale_families[m\xb2-\u516c\u9877-12500-1.25] ________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+______________ test_nonmonetary_scale_families[\u4ea9-m2-3-2000] ______________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+______________ test_nonmonetary_scale_families[m2-\u4ea9-2000-3] ______________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+__________ test_nonmonetary_scale_families[\u516c\u9877-\u4ea9-1-15] __________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+__________ test_nonmonetary_scale_families[\u4ea9-\u516c\u9877-15-1] __________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_______________ test_nonmonetary_scale_families[%-1-12.5-0.125] _______________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+______________ test_nonmonetary_scale_families[1-%-value8-12.5] _______________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+__________________ test_nonmonetary_scale_families[%-1-0-0] ___________________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_________________ test_nonmonetary_scale_families[%-1-100-1] __________________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_______________ test_nonmonetary_scale_families[m-km-1250-1.25] _______________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_____________ test_nonmonetary_scale_families[km-m-value12-1250] ______________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_____________ test_nonmonetary_scale_families[minute-hour-90-1.5] _____________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+___________ test_nonmonetary_scale_families[hour-minute-value14-90] ___________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_______________ test_nonmonetary_scale_families[day-hour-2-48] ________________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_______________ test_nonmonetary_scale_families[hour-day-48-2] ________________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_____________ test_nonmonetary_scale_families[day-minute-1-1440] ______________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_____________ test_nonmonetary_scale_families[minute-day-1440-1] ______________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_______________ test_nonmonetary_scale_families[m/s-km/h-10-36] _______________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_______________ test_nonmonetary_scale_families[km/h-m/s-36-10] _______________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+________________ test_nonmonetary_scale_families[m/s-km/h-0-0] ________________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+___________ test_nonmonetary_scale_families[W/m2-kW/m\xb2-850-0.85] ___________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_________ test_nonmonetary_scale_families[kW/m2-W/m\xb2-value23-850] __________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+______ test_nonmonetary_scale_families[kWh/m\xb2-kWh/m2-value24-123.45] _______
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+______________ test_nonmonetary_scale_families[kV-V-value25-400] ______________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+________________ test_nonmonetary_scale_families[V-kV-400-0.4] ________________
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+____ test_nonmonetary_scale_families[kgCO2e/kWh-tCO2e/kWh-value27-0.00055] ____
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_____ test_nonmonetary_scale_families[tCO2e/kWh-kgCO2e/kWh-value28-0.55] ______
+tests\solar-pv\test_units.py:86: in test_nonmonetary_scale_families
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+____________ test_frozen_units_support_known_identity_only[0-None] ____________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:69: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+____________ test_frozen_units_support_known_identity_only[0-year] ____________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+___________ test_frozen_units_support_known_identity_only[0-degree] ___________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_____________ test_frozen_units_support_known_identity_only[0-A] ______________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+____________ test_frozen_units_support_known_identity_only[0-kVA] _____________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_____________ test_frozen_units_support_known_identity_only[0-kg] _____________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+___________ test_frozen_units_support_known_identity_only[0-kN/m2] ____________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+___________ test_frozen_units_support_known_identity_only[0-piece] ____________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+___________ test_frozen_units_support_known_identity_only[0-1/degC] ___________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+___________ test_frozen_units_support_known_identity_only[0-1/hour] ___________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+___________ test_frozen_units_support_known_identity_only[0-1/year] ___________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+__________ test_frozen_units_support_known_identity_only[0-1/cycle] ___________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+___________ test_frozen_units_support_known_identity_only[0-cycle] ____________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+___________ test_frozen_units_support_known_identity_only[0-kWh/m2] ___________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+____________ test_frozen_units_support_known_identity_only[0-W/m2] ____________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_________ test_frozen_units_support_known_identity_only[value1-None] __________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:69: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_________ test_frozen_units_support_known_identity_only[value1-year] __________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+________ test_frozen_units_support_known_identity_only[value1-degree] _________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+___________ test_frozen_units_support_known_identity_only[value1-A] ___________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+__________ test_frozen_units_support_known_identity_only[value1-kVA] __________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+__________ test_frozen_units_support_known_identity_only[value1-kg] ___________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_________ test_frozen_units_support_known_identity_only[value1-kN/m2] _________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_________ test_frozen_units_support_known_identity_only[value1-piece] _________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+________ test_frozen_units_support_known_identity_only[value1-1/degC] _________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+________ test_frozen_units_support_known_identity_only[value1-1/hour] _________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+________ test_frozen_units_support_known_identity_only[value1-1/year] _________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+________ test_frozen_units_support_known_identity_only[value1-1/cycle] ________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_________ test_frozen_units_support_known_identity_only[value1-cycle] _________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+________ test_frozen_units_support_known_identity_only[value1-kWh/m2] _________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_________ test_frozen_units_support_known_identity_only[value1-W/m2] __________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_________ test_frozen_units_support_known_identity_only[value2-None] __________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:69: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_________ test_frozen_units_support_known_identity_only[value2-year] __________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+________ test_frozen_units_support_known_identity_only[value2-degree] _________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+___________ test_frozen_units_support_known_identity_only[value2-A] ___________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+__________ test_frozen_units_support_known_identity_only[value2-kVA] __________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+__________ test_frozen_units_support_known_identity_only[value2-kg] ___________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_________ test_frozen_units_support_known_identity_only[value2-kN/m2] _________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_________ test_frozen_units_support_known_identity_only[value2-piece] _________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+________ test_frozen_units_support_known_identity_only[value2-1/degC] _________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+________ test_frozen_units_support_known_identity_only[value2-1/hour] _________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+________ test_frozen_units_support_known_identity_only[value2-1/year] _________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+________ test_frozen_units_support_known_identity_only[value2-1/cycle] ________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_________ test_frozen_units_support_known_identity_only[value2-cycle] _________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+________ test_frozen_units_support_known_identity_only[value2-kWh/m2] _________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_________ test_frozen_units_support_known_identity_only[value2-W/m2] __________
+tests\solar-pv\test_units.py:95: in test_frozen_units_support_known_identity_only
+    assert units().convert_unit(value, unit, unit).value == Decimal(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+______ test_nonterminating_decimal_requires_explicit_rounding[\u4ea9-m2] ______
+tests\solar-pv\test_units.py:113: in test_nonterminating_decimal_requires_explicit_rounding
+    assert error.value.code == "UNIT_ROUNDING_REQUIRED"
+E   AssertionError: assert 'UNIT_UNKNOWN' == 'UNIT_ROUNDING_REQUIRED'
+E
+E     - UNIT_ROUNDING_REQUIRED
+E     + UNIT_UNKNOWN
+_____ test_nonterminating_decimal_requires_explicit_rounding[minute-hour] _____
+tests\solar-pv\test_units.py:113: in test_nonterminating_decimal_requires_explicit_rounding
+    assert error.value.code == "UNIT_ROUNDING_REQUIRED"
+E   AssertionError: assert 'UNIT_UNKNOWN' == 'UNIT_ROUNDING_REQUIRED'
+E
+E     - UNIT_ROUNDING_REQUIRED
+E     + UNIT_UNKNOWN
+______ test_nonterminating_decimal_requires_explicit_rounding[km/h-m/s] _______
+tests\solar-pv\test_units.py:113: in test_nonterminating_decimal_requires_explicit_rounding
+    assert error.value.code == "UNIT_ROUNDING_REQUIRED"
+E   AssertionError: assert 'UNIT_UNKNOWN' == 'UNIT_ROUNDING_REQUIRED'
+E
+E     - UNIT_ROUNDING_REQUIRED
+E     + UNIT_UNKNOWN
+_____ test_rational_rounding_and_audit_policy[ROUND_DOWN-666.66--666.66] ______
+tests\solar-pv\test_units.py:124: in test_rational_rounding_and_audit_policy
+    result = units().convert_unit(value, "亩", "m2", decimal_places=2, rounding=mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+______ test_rational_rounding_and_audit_policy[ROUND_UP-666.67--666.67] _______
+tests\solar-pv\test_units.py:124: in test_rational_rounding_and_audit_policy
+    result = units().convert_unit(value, "亩", "m2", decimal_places=2, rounding=mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+____ test_rational_rounding_and_audit_policy[ROUND_CEILING-666.67--666.66] ____
+tests\solar-pv\test_units.py:124: in test_rational_rounding_and_audit_policy
+    result = units().convert_unit(value, "亩", "m2", decimal_places=2, rounding=mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_____ test_rational_rounding_and_audit_policy[ROUND_FLOOR-666.66--666.67] _____
+tests\solar-pv\test_units.py:124: in test_rational_rounding_and_audit_policy
+    result = units().convert_unit(value, "亩", "m2", decimal_places=2, rounding=mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+____ test_rational_rounding_and_audit_policy[ROUND_HALF_UP-666.67--666.67] ____
+tests\solar-pv\test_units.py:124: in test_rational_rounding_and_audit_policy
+    result = units().convert_unit(value, "亩", "m2", decimal_places=2, rounding=mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+___ test_rational_rounding_and_audit_policy[ROUND_HALF_DOWN-666.67--666.67] ___
+tests\solar-pv\test_units.py:124: in test_rational_rounding_and_audit_policy
+    result = units().convert_unit(value, "亩", "m2", decimal_places=2, rounding=mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+___ test_rational_rounding_and_audit_policy[ROUND_HALF_EVEN-666.67--666.67] ___
+tests\solar-pv\test_units.py:124: in test_rational_rounding_and_audit_policy
+    result = units().convert_unit(value, "亩", "m2", decimal_places=2, rounding=mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_____ test_rational_rounding_and_audit_policy[ROUND_05UP-666.66--666.66] ______
+tests\solar-pv\test_units.py:124: in test_rational_rounding_and_audit_policy
+    result = units().convert_unit(value, "亩", "m2", decimal_places=2, rounding=mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+____ test_rounding_exact_decimal_ties_and_05up[1.245-ROUND_HALF_EVEN-1.24] ____
+tests\solar-pv\test_units.py:139: in test_rounding_exact_decimal_ties_and_05up
+    assert result.value == Decimal(expected)
+E   AssertionError: assert Decimal('1.245') == Decimal('1.24')
+E    +  where Decimal('1.245') = Conversion(value=Decimal('1.245'), source_unit='W', target_unit='W', rule_id='unit/v1:W->W', exact=True, rounding_policy=None).value
+E    +  and   Decimal('1.24') = Decimal('1.24')
+____ test_rounding_exact_decimal_ties_and_05up[1.255-ROUND_HALF_EVEN-1.26] ____
+tests\solar-pv\test_units.py:139: in test_rounding_exact_decimal_ties_and_05up
+    assert result.value == Decimal(expected)
+E   AssertionError: assert Decimal('1.255') == Decimal('1.26')
+E    +  where Decimal('1.255') = Conversion(value=Decimal('1.255'), source_unit='W', target_unit='W', rule_id='unit/v1:W->W', exact=True, rounding_policy=None).value
+E    +  and   Decimal('1.26') = Decimal('1.26')
+____ test_rounding_exact_decimal_ties_and_05up[-1.245-ROUND_HALF_UP--1.25] ____
+tests\solar-pv\test_units.py:139: in test_rounding_exact_decimal_ties_and_05up
+    assert result.value == Decimal(expected)
+E   AssertionError: assert Decimal('-1.245') == Decimal('-1.25')
+E    +  where Decimal('-1.245') = Conversion(value=Decimal('-1.245'), source_unit='W', target_unit='W', rule_id='unit/v1:W->W', exact=True, rounding_policy=None).value
+E    +  and   Decimal('-1.25') = Decimal('-1.25')
+____ test_rounding_exact_decimal_ties_and_05up[1.245-ROUND_HALF_DOWN-1.24] ____
+tests\solar-pv\test_units.py:139: in test_rounding_exact_decimal_ties_and_05up
+    assert result.value == Decimal(expected)
+E   AssertionError: assert Decimal('1.245') == Decimal('1.24')
+E    +  where Decimal('1.245') = Conversion(value=Decimal('1.245'), source_unit='W', target_unit='W', rule_id='unit/v1:W->W', exact=True, rounding_policy=None).value
+E    +  and   Decimal('1.24') = Decimal('1.24')
+______ test_rounding_exact_decimal_ties_and_05up[1.2501-ROUND_05UP-1.26] ______
+tests\solar-pv\test_units.py:139: in test_rounding_exact_decimal_ties_and_05up
+    assert result.value == Decimal(expected)
+E   AssertionError: assert Decimal('1.2501') == Decimal('1.26')
+E    +  where Decimal('1.2501') = Conversion(value=Decimal('1.2501'), source_unit='W', target_unit='W', rule_id='unit/v1:W->W', exact=True, rounding_policy=None).value
+E    +  and   Decimal('1.26') = Decimal('1.26')
+_____ test_rounding_exact_decimal_ties_and_05up[-1.2501-ROUND_05UP--1.26] _____
+tests\solar-pv\test_units.py:139: in test_rounding_exact_decimal_ties_and_05up
+    assert result.value == Decimal(expected)
+E   AssertionError: assert Decimal('-1.2501') == Decimal('-1.26')
+E    +  where Decimal('-1.2501') = Conversion(value=Decimal('-1.2501'), source_unit='W', target_unit='W', rule_id='unit/v1:W->W', exact=True, rounding_policy=None).value
+E    +  and   Decimal('-1.26') = Decimal('-1.26')
+_ test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs0] _
+tests\solar-pv\test_units.py:154: in test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity
+    with pytest.raises(ContractError):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+_ test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs1] _
+tests\solar-pv\test_units.py:154: in test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity
+    with pytest.raises(ContractError):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+_ test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs2] _
+tests\solar-pv\test_units.py:154: in test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity
+    with pytest.raises(ContractError):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+_ test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs3] _
+tests\solar-pv\test_units.py:154: in test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity
+    with pytest.raises(ContractError):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+_ test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs4] _
+tests\solar-pv\test_units.py:154: in test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity
+    with pytest.raises(ContractError):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+_ test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs5] _
+tests\solar-pv\test_units.py:154: in test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity
+    with pytest.raises(ContractError):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+_ test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs6] _
+tests\solar-pv\test_units.py:154: in test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity
+    with pytest.raises(ContractError):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+_ test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs7] _
+tests\solar-pv\test_units.py:154: in test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity
+    with pytest.raises(ContractError):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+_ test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs8] _
+tests\solar-pv\test_units.py:154: in test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity
+    with pytest.raises(ContractError):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+______ test_explicit_policy_exact_flag_and_decimal_context_independence _______
+tests\solar-pv\test_units.py:161: in test_explicit_policy_exact_flag_and_decimal_context_independence
+    result = units().convert_unit(1, "亩", "m2", decimal_places=12, rounding="ROUND_HALF_UP")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:71: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[m2-m\xb2-value0-12.5]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[\u516c\u9877-m2-value1-12500]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[m\xb2-\u516c\u9877-12500-1.25]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[\u4ea9-m2-3-2000]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[m2-\u4ea9-2000-3]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[\u516c\u9877-\u4ea9-1-15]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[\u4ea9-\u516c\u9877-15-1]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[%-1-12.5-0.125]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[1-%-value8-12.5]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[%-1-0-0]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[%-1-100-1]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[m-km-1250-1.25]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[km-m-value12-1250]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[minute-hour-90-1.5]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[hour-minute-value14-90]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[day-hour-2-48]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[hour-day-48-2]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[day-minute-1-1440]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[minute-day-1440-1]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[m/s-km/h-10-36]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[km/h-m/s-36-10]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[m/s-km/h-0-0]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[W/m2-kW/m\xb2-850-0.85]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[kW/m2-W/m\xb2-value23-850]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[kWh/m\xb2-kWh/m2-value24-123.45]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[kV-V-value25-400]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[V-kV-400-0.4]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[kgCO2e/kWh-tCO2e/kWh-value27-0.00055]
+FAILED tests/solar-pv/test_units.py::test_nonmonetary_scale_families[tCO2e/kWh-kgCO2e/kWh-value28-0.55]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[0-None]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[0-year]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[0-degree]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[0-A]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[0-kVA]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[0-kg]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[0-kN/m2]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[0-piece]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[0-1/degC]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[0-1/hour]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[0-1/year]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[0-1/cycle]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[0-cycle]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[0-kWh/m2]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[0-W/m2]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value1-None]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value1-year]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value1-degree]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value1-A]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value1-kVA]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value1-kg]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value1-kN/m2]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value1-piece]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value1-1/degC]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value1-1/hour]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value1-1/year]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value1-1/cycle]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value1-cycle]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value1-kWh/m2]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value1-W/m2]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value2-None]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value2-year]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value2-degree]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value2-A]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value2-kVA]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value2-kg]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value2-kN/m2]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value2-piece]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value2-1/degC]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value2-1/hour]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value2-1/year]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value2-1/cycle]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value2-cycle]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value2-kWh/m2]
+FAILED tests/solar-pv/test_units.py::test_frozen_units_support_known_identity_only[value2-W/m2]
+FAILED tests/solar-pv/test_units.py::test_nonterminating_decimal_requires_explicit_rounding[\u4ea9-m2]
+FAILED tests/solar-pv/test_units.py::test_nonterminating_decimal_requires_explicit_rounding[minute-hour]
+FAILED tests/solar-pv/test_units.py::test_nonterminating_decimal_requires_explicit_rounding[km/h-m/s]
+FAILED tests/solar-pv/test_units.py::test_rational_rounding_and_audit_policy[ROUND_DOWN-666.66--666.66]
+FAILED tests/solar-pv/test_units.py::test_rational_rounding_and_audit_policy[ROUND_UP-666.67--666.67]
+FAILED tests/solar-pv/test_units.py::test_rational_rounding_and_audit_policy[ROUND_CEILING-666.67--666.66]
+FAILED tests/solar-pv/test_units.py::test_rational_rounding_and_audit_policy[ROUND_FLOOR-666.66--666.67]
+FAILED tests/solar-pv/test_units.py::test_rational_rounding_and_audit_policy[ROUND_HALF_UP-666.67--666.67]
+FAILED tests/solar-pv/test_units.py::test_rational_rounding_and_audit_policy[ROUND_HALF_DOWN-666.67--666.67]
+FAILED tests/solar-pv/test_units.py::test_rational_rounding_and_audit_policy[ROUND_HALF_EVEN-666.67--666.67]
+FAILED tests/solar-pv/test_units.py::test_rational_rounding_and_audit_policy[ROUND_05UP-666.66--666.66]
+FAILED tests/solar-pv/test_units.py::test_rounding_exact_decimal_ties_and_05up[1.245-ROUND_HALF_EVEN-1.24]
+FAILED tests/solar-pv/test_units.py::test_rounding_exact_decimal_ties_and_05up[1.255-ROUND_HALF_EVEN-1.26]
+FAILED tests/solar-pv/test_units.py::test_rounding_exact_decimal_ties_and_05up[-1.245-ROUND_HALF_UP--1.25]
+FAILED tests/solar-pv/test_units.py::test_rounding_exact_decimal_ties_and_05up[1.245-ROUND_HALF_DOWN-1.24]
+FAILED tests/solar-pv/test_units.py::test_rounding_exact_decimal_ties_and_05up[1.2501-ROUND_05UP-1.26]
+FAILED tests/solar-pv/test_units.py::test_rounding_exact_decimal_ties_and_05up[-1.2501-ROUND_05UP--1.26]
+FAILED tests/solar-pv/test_units.py::test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs0]
+FAILED tests/solar-pv/test_units.py::test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs1]
+FAILED tests/solar-pv/test_units.py::test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs2]
+FAILED tests/solar-pv/test_units.py::test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs3]
+FAILED tests/solar-pv/test_units.py::test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs4]
+FAILED tests/solar-pv/test_units.py::test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs5]
+FAILED tests/solar-pv/test_units.py::test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs6]
+FAILED tests/solar-pv/test_units.py::test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs7]
+FAILED tests/solar-pv/test_units.py::test_incomplete_or_invalid_rounding_policy_is_rejected_even_on_identity[kwargs8]
+FAILED tests/solar-pv/test_units.py::test_explicit_policy_exact_flag_and_decimal_context_independence
+101 failed, 56 passed in 1.42s

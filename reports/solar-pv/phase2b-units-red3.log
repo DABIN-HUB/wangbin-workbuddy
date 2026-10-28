@@ -1,0 +1,150 @@
+........................................................................ [ 41%]
+........................................................................ [ 82%]
+.............FFFFFFFFFFFFFFFFFF                                          [100%]
+================================== FAILURES ===================================
+_ test_absolute_temperature_affine_conversion_and_absolute_zero[degC-K-0-273.15] _
+tests\solar-pv\test_units.py:180: in test_absolute_temperature_affine_conversion_and_absolute_zero
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:126: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_absolute_temperature_affine_conversion_and_absolute_zero[K-degC-value1-0] _
+tests\solar-pv\test_units.py:180: in test_absolute_temperature_affine_conversion_and_absolute_zero
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:126: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_absolute_temperature_affine_conversion_and_absolute_zero[degC-degF-100-212] _
+tests\solar-pv\test_units.py:180: in test_absolute_temperature_affine_conversion_and_absolute_zero
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:126: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_absolute_temperature_affine_conversion_and_absolute_zero[degF-degC-212-100] _
+tests\solar-pv\test_units.py:180: in test_absolute_temperature_affine_conversion_and_absolute_zero
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:126: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_absolute_temperature_affine_conversion_and_absolute_zero[degF-K-32-273.15] _
+tests\solar-pv\test_units.py:180: in test_absolute_temperature_affine_conversion_and_absolute_zero
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:126: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_absolute_temperature_affine_conversion_and_absolute_zero[K-degF-value5-32] _
+tests\solar-pv\test_units.py:180: in test_absolute_temperature_affine_conversion_and_absolute_zero
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:126: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_absolute_temperature_affine_conversion_and_absolute_zero[degC-\xb0C-value6--40] _
+tests\solar-pv\test_units.py:180: in test_absolute_temperature_affine_conversion_and_absolute_zero
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:126: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_absolute_temperature_affine_conversion_and_absolute_zero[\xb0C-degF-value7--40] _
+tests\solar-pv\test_units.py:180: in test_absolute_temperature_affine_conversion_and_absolute_zero
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:126: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_absolute_temperature_affine_conversion_and_absolute_zero[K-degC-0--273.15] _
+tests\solar-pv\test_units.py:180: in test_absolute_temperature_affine_conversion_and_absolute_zero
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:126: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_absolute_temperature_affine_conversion_and_absolute_zero[degC-K-value9-0] _
+tests\solar-pv\test_units.py:180: in test_absolute_temperature_affine_conversion_and_absolute_zero
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:126: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_absolute_temperature_affine_conversion_and_absolute_zero[degF-K-value10-0] _
+tests\solar-pv\test_units.py:180: in test_absolute_temperature_affine_conversion_and_absolute_zero
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:126: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_absolute_temperature_affine_conversion_and_absolute_zero[K-degF-0--459.67] _
+tests\solar-pv\test_units.py:180: in test_absolute_temperature_affine_conversion_and_absolute_zero
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:126: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_absolute_temperature_affine_conversion_and_absolute_zero[degF-degF-value12--459.67] _
+tests\solar-pv\test_units.py:180: in test_absolute_temperature_affine_conversion_and_absolute_zero
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\units.py:126: in convert_unit
+    raise ContractError("UNIT_UNKNOWN")
+E   wangbin_solar_pv.errors.ContractError: UNIT_UNKNOWN
+_ test_temperature_below_absolute_zero_is_rejected_on_identity_too[K-value0] __
+tests\solar-pv\test_units.py:189: in test_temperature_below_absolute_zero_is_rejected_on_identity_too
+    assert error.value.code == "UNIT_TEMPERATURE_RANGE"
+E   AssertionError: assert 'UNIT_UNKNOWN' == 'UNIT_TEMPERATURE_RANGE'
+E
+E     - UNIT_TEMPERATURE_RANGE
+E     + UNIT_UNKNOWN
+_ test_temperature_below_absolute_zero_is_rejected_on_identity_too[degC-value1] _
+tests\solar-pv\test_units.py:189: in test_temperature_below_absolute_zero_is_rejected_on_identity_too
+    assert error.value.code == "UNIT_TEMPERATURE_RANGE"
+E   AssertionError: assert 'UNIT_UNKNOWN' == 'UNIT_TEMPERATURE_RANGE'
+E
+E     - UNIT_TEMPERATURE_RANGE
+E     + UNIT_UNKNOWN
+_ test_temperature_below_absolute_zero_is_rejected_on_identity_too[degF-value2] _
+tests\solar-pv\test_units.py:189: in test_temperature_below_absolute_zero_is_rejected_on_identity_too
+    assert error.value.code == "UNIT_TEMPERATURE_RANGE"
+E   AssertionError: assert 'UNIT_UNKNOWN' == 'UNIT_TEMPERATURE_RANGE'
+E
+E     - UNIT_TEMPERATURE_RANGE
+E     + UNIT_UNKNOWN
+____________ test_temperature_nonterminating_and_explicit_rounding ____________
+tests\solar-pv\test_units.py:195: in test_temperature_nonterminating_and_explicit_rounding
+    assert error.value.code == "UNIT_ROUNDING_REQUIRED"
+E   AssertionError: assert 'UNIT_UNKNOWN' == 'UNIT_ROUNDING_REQUIRED'
+E
+E     - UNIT_ROUNDING_REQUIRED
+E     + UNIT_UNKNOWN
+_____ test_temperature_rounding_cannot_create_below_absolute_zero_result ______
+tests\solar-pv\test_units.py:203: in test_temperature_rounding_cannot_create_below_absolute_zero_result
+    assert error.value.code == "UNIT_TEMPERATURE_RANGE"
+E   AssertionError: assert 'UNIT_UNKNOWN' == 'UNIT_TEMPERATURE_RANGE'
+E
+E     - UNIT_TEMPERATURE_RANGE
+E     + UNIT_UNKNOWN
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_units.py::test_absolute_temperature_affine_conversion_and_absolute_zero[degC-K-0-273.15]
+FAILED tests/solar-pv/test_units.py::test_absolute_temperature_affine_conversion_and_absolute_zero[K-degC-value1-0]
+FAILED tests/solar-pv/test_units.py::test_absolute_temperature_affine_conversion_and_absolute_zero[degC-degF-100-212]
+FAILED tests/solar-pv/test_units.py::test_absolute_temperature_affine_conversion_and_absolute_zero[degF-degC-212-100]
+FAILED tests/solar-pv/test_units.py::test_absolute_temperature_affine_conversion_and_absolute_zero[degF-K-32-273.15]
+FAILED tests/solar-pv/test_units.py::test_absolute_temperature_affine_conversion_and_absolute_zero[K-degF-value5-32]
+FAILED tests/solar-pv/test_units.py::test_absolute_temperature_affine_conversion_and_absolute_zero[degC-\xb0C-value6--40]
+FAILED tests/solar-pv/test_units.py::test_absolute_temperature_affine_conversion_and_absolute_zero[\xb0C-degF-value7--40]
+FAILED tests/solar-pv/test_units.py::test_absolute_temperature_affine_conversion_and_absolute_zero[K-degC-0--273.15]
+FAILED tests/solar-pv/test_units.py::test_absolute_temperature_affine_conversion_and_absolute_zero[degC-K-value9-0]
+FAILED tests/solar-pv/test_units.py::test_absolute_temperature_affine_conversion_and_absolute_zero[degF-K-value10-0]
+FAILED tests/solar-pv/test_units.py::test_absolute_temperature_affine_conversion_and_absolute_zero[K-degF-0--459.67]
+FAILED tests/solar-pv/test_units.py::test_absolute_temperature_affine_conversion_and_absolute_zero[degF-degF-value12--459.67]
+FAILED tests/solar-pv/test_units.py::test_temperature_below_absolute_zero_is_rejected_on_identity_too[K-value0]
+FAILED tests/solar-pv/test_units.py::test_temperature_below_absolute_zero_is_rejected_on_identity_too[degC-value1]
+FAILED tests/solar-pv/test_units.py::test_temperature_below_absolute_zero_is_rejected_on_identity_too[degF-value2]
+FAILED tests/solar-pv/test_units.py::test_temperature_nonterminating_and_explicit_rounding
+FAILED tests/solar-pv/test_units.py::test_temperature_rounding_cannot_create_below_absolute_zero_result
+18 failed, 157 passed in 1.07s

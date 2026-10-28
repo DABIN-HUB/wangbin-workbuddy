@@ -1,0 +1,42 @@
+{
+  "contract_id": "solar-pv-input-category/residential_pv/1.0.0",
+  "pv_type": "residential_pv",
+  "name_zh": "户用",
+  "priority": "P2",
+  "input_contract_status": "IMPLEMENTED",
+  "calculation_status": "NOT_IMPLEMENTED",
+  "e2e_status": "NOT_IMPLEMENTED",
+  "basis": [
+    "03-input-fields.json",
+    "07-category-boundaries.md"
+  ],
+  "required_special_field_ids": [
+    "roof.structure_type",
+    "roof.material",
+    "roof.age",
+    "roof.remaining_life",
+    "roof.allowable_additional_load",
+    "roof.design_added_load",
+    "roof.slope",
+    "roof.azimuth",
+    "roof.structure_report_id",
+    "roof.fire_access_reference",
+    "roof.waterproof_plan",
+    "residential.property_consent",
+    "residential.connection_standard",
+    "residential.retail_tariff_reference",
+    "residential.household_load_reference",
+    "residential.consumer_contract_reference"
+  ],
+  "forbidden_field_prefixes": [],
+  "forbidden_field_ids": [],
+  "allowed_sales_modes": [
+    "self_use_surplus_export",
+    "full_export",
+    "off_grid",
+    "hybrid",
+    "undecided"
+  ],
+  "subtype_field_id": null,
+  "restriction": "产权及共有人同意、低压接入、家庭负荷和消费者合同独立；不默认工业PPA、企业税制或三班负荷。 本文件仅为输入契约，不是业务模板；计算、四文件E2E及平台能力全部NOT_IMPLEMENTED。"
+}

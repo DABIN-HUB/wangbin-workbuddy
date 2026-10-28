@@ -1,0 +1,44 @@
+{
+  "contract_id": "solar-pv-input-category/utility_scale_ground/1.0.0",
+  "pv_type": "utility_scale_ground",
+  "name_zh": "集中式地面",
+  "priority": "P0",
+  "input_contract_status": "IMPLEMENTED",
+  "calculation_status": "NOT_IMPLEMENTED",
+  "e2e_status": "NOT_IMPLEMENTED",
+  "basis": [
+    "03-input-fields.json",
+    "07-category-boundaries.md"
+  ],
+  "required_special_field_ids": [
+    "site.land_classification",
+    "site.boundary_attachment_id",
+    "site.boundary_vertices",
+    "site.terrain_slope",
+    "site.geotechnical_reference",
+    "grid.upgrade_plan",
+    "grid.line_length"
+  ],
+  "forbidden_field_prefixes": [
+    "roof.",
+    "load."
+  ],
+  "forbidden_field_ids": [
+    "tariff.non_avoidable_charges",
+    "tariff.periods.avoidable_price"
+  ],
+  "forbidden_values": {
+    "capex.items.category": ["roof_reinforcement"],
+    "opex.items.category": ["roof_rent"]
+  },
+  "revenue_kind_forbidden_markers": [
+    "self_use", "self_consumption", "avoided_purchase", "roof_", "自用", "屋顶"
+  ],
+  "revenue_other_items_review_required": true,
+  "allowed_sales_modes": [
+    "full_export",
+    "undecided"
+  ],
+  "subtype_field_id": null,
+  "restriction": "土地边界、坡度、地勘、集电升压和送出独立；只接受全额售电或undecided待核草稿，拒绝屋顶、工业负荷、自用节省和屋租/加固成本。共享375字段的ALL仅为目录范围，不表示所有类别无条件适用；保留原定义，仅收窄数据用途。 本文件仅为输入契约，不是业务模板；计算、四文件E2E及平台能力全部NOT_IMPLEMENTED。"
+}

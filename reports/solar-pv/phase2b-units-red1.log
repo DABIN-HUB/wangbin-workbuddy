@@ -1,0 +1,488 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF                             [100%]
+================================== FAILURES ===================================
+______ test_power_energy_exact_forward_reverse_boundary[W-kW-1250-1.25] _______
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_____ test_power_energy_exact_forward_reverse_boundary[kW-W-value1-1250] ______
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+______ test_power_energy_exact_forward_reverse_boundary[MW-GW-2500-2.5] _______
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_____ test_power_energy_exact_forward_reverse_boundary[GW-W-2-2000000000] _____
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_____ test_power_energy_exact_forward_reverse_boundary[Wp-kWp-615-0.615] ______
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_____ test_power_energy_exact_forward_reverse_boundary[kWp-Wp-value5-615] _____
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+____ test_power_energy_exact_forward_reverse_boundary[MWp-kWp-value6-1500] ____
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_____ test_power_energy_exact_forward_reverse_boundary[Wac-kWac-2500-2.5] _____
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+___ test_power_energy_exact_forward_reverse_boundary[kWac-Wac-value8-2500] ____
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+____ test_power_energy_exact_forward_reverse_boundary[MWac-GWac-1250-1.25] ____
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_____ test_power_energy_exact_forward_reverse_boundary[GWac-MWac-2-2000] ______
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+______ test_power_energy_exact_forward_reverse_boundary[Wh-kWh-250-0.25] ______
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+____ test_power_energy_exact_forward_reverse_boundary[kWh-Wh-value12-250] _____
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_____ test_power_energy_exact_forward_reverse_boundary[MWh-GWh-1500-1.5] ______
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+______ test_power_energy_exact_forward_reverse_boundary[GWh-MWh-3-3000] _______
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_________ test_power_energy_exact_forward_reverse_boundary[kW-W-0-0] __________
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_______ test_power_energy_exact_forward_reverse_boundary[kW-W--2--2000] _______
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_______ test_power_energy_exact_forward_reverse_boundary[kW-W-0.1-100] ________
+tests\solar-pv\test_units.py:29: in test_power_energy_exact_forward_reverse_boundary
+    result = units().convert_unit(value, source, target)
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+________ test_unknown_and_physical_boundaries_are_not_aliases[kW-kWp] _________
+tests\solar-pv\test_units.py:46: in test_unknown_and_physical_boundaries_are_not_aliases
+    units().convert_unit(1, source, target)
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_______ test_unknown_and_physical_boundaries_are_not_aliases[kWp-kWac] ________
+tests\solar-pv\test_units.py:46: in test_unknown_and_physical_boundaries_are_not_aliases
+    units().convert_unit(1, source, target)
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+________ test_unknown_and_physical_boundaries_are_not_aliases[kWac-kW] ________
+tests\solar-pv\test_units.py:46: in test_unknown_and_physical_boundaries_are_not_aliases
+    units().convert_unit(1, source, target)
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+________ test_unknown_and_physical_boundaries_are_not_aliases[kWh-kW] _________
+tests\solar-pv\test_units.py:46: in test_unknown_and_physical_boundaries_are_not_aliases
+    units().convert_unit(1, source, target)
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_________ test_unknown_and_physical_boundaries_are_not_aliases[Wh-Wp] _________
+tests\solar-pv\test_units.py:46: in test_unknown_and_physical_boundaries_are_not_aliases
+    units().convert_unit(1, source, target)
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+________ test_unknown_and_physical_boundaries_are_not_aliases[kW-kVA] _________
+tests\solar-pv\test_units.py:46: in test_unknown_and_physical_boundaries_are_not_aliases
+    units().convert_unit(1, source, target)
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+__ test_unknown_and_physical_boundaries_are_not_aliases[imaginary-imaginary] __
+tests\solar-pv\test_units.py:46: in test_unknown_and_physical_boundaries_are_not_aliases
+    units().convert_unit(1, source, target)
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_________ test_unknown_and_physical_boundaries_are_not_aliases[kw-kW] _________
+tests\solar-pv\test_units.py:46: in test_unknown_and_physical_boundaries_are_not_aliases
+    units().convert_unit(1, source, target)
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_________ test_unknown_and_physical_boundaries_are_not_aliases[ W-W] __________
+tests\solar-pv\test_units.py:46: in test_unknown_and_physical_boundaries_are_not_aliases
+    units().convert_unit(1, source, target)
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+___________ test_unknown_and_physical_boundaries_are_not_aliases[-] ___________
+tests\solar-pv\test_units.py:46: in test_unknown_and_physical_boundaries_are_not_aliases
+    units().convert_unit(1, source, target)
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+________ test_unknown_and_physical_boundaries_are_not_aliases[None-1] _________
+tests\solar-pv\test_units.py:46: in test_unknown_and_physical_boundaries_are_not_aliases
+    units().convert_unit(1, source, target)
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+______ test_unknown_and_physical_boundaries_are_not_aliases[source11-W] _______
+tests\solar-pv\test_units.py:46: in test_unknown_and_physical_boundaries_are_not_aliases
+    units().convert_unit(1, source, target)
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+___________________ test_strict_finite_numeric_inputs[True] ___________________
+tests\solar-pv\test_units.py:54: in test_strict_finite_numeric_inputs
+    units().convert_unit(value, "W", "W")
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+__________________ test_strict_finite_numeric_inputs[False] ___________________
+tests\solar-pv\test_units.py:54: in test_strict_finite_numeric_inputs
+    units().convert_unit(value, "W", "W")
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+___________________ test_strict_finite_numeric_inputs[1.25] ___________________
+tests\solar-pv\test_units.py:54: in test_strict_finite_numeric_inputs
+    units().convert_unit(value, "W", "W")
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+___________________ test_strict_finite_numeric_inputs[None] ___________________
+tests\solar-pv\test_units.py:54: in test_strict_finite_numeric_inputs
+    units().convert_unit(value, "W", "W")
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+__________________ test_strict_finite_numeric_inputs[value4] __________________
+tests\solar-pv\test_units.py:54: in test_strict_finite_numeric_inputs
+    units().convert_unit(value, "W", "W")
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+__________________ test_strict_finite_numeric_inputs[value5] __________________
+tests\solar-pv\test_units.py:54: in test_strict_finite_numeric_inputs
+    units().convert_unit(value, "W", "W")
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+___________________ test_strict_finite_numeric_inputs[nan] ____________________
+tests\solar-pv\test_units.py:54: in test_strict_finite_numeric_inputs
+    units().convert_unit(value, "W", "W")
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+___________________ test_strict_finite_numeric_inputs[inf] ____________________
+tests\solar-pv\test_units.py:54: in test_strict_finite_numeric_inputs
+    units().convert_unit(value, "W", "W")
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+___________________ test_strict_finite_numeric_inputs[-inf] ___________________
+tests\solar-pv\test_units.py:54: in test_strict_finite_numeric_inputs
+    units().convert_unit(value, "W", "W")
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+__________________ test_strict_finite_numeric_inputs[value9] __________________
+tests\solar-pv\test_units.py:54: in test_strict_finite_numeric_inputs
+    units().convert_unit(value, "W", "W")
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_________________ test_strict_finite_numeric_inputs[value10] __________________
+tests\solar-pv\test_units.py:54: in test_strict_finite_numeric_inputs
+    units().convert_unit(value, "W", "W")
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_________________ test_strict_finite_numeric_inputs[value11] __________________
+tests\solar-pv\test_units.py:54: in test_strict_finite_numeric_inputs
+    units().convert_unit(value, "W", "W")
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_________________ test_strict_finite_numeric_inputs[value12] __________________
+tests\solar-pv\test_units.py:54: in test_strict_finite_numeric_inputs
+    units().convert_unit(value, "W", "W")
+    ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+_____________ test_decimal_context_must_not_truncate_exact_values _____________
+tests\solar-pv\test_units.py:61: in test_decimal_context_must_not_truncate_exact_values
+    result = units().convert_unit(value, "kW", "W")
+             ^^^^^^^
+tests\solar-pv\test_units.py:12: in units
+    assert util.find_spec("wangbin_solar_pv.units") is not None, "Phase 2B units module is missing"
+E   AssertionError: Phase 2B units module is missing
+E   assert None is not None
+E    +  where None = <function find_spec at 0x0000022D9761F060>('wangbin_solar_pv.units')
+E    +    where <function find_spec at 0x0000022D9761F060> = util.find_spec
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[W-kW-1250-1.25]
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[kW-W-value1-1250]
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[MW-GW-2500-2.5]
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[GW-W-2-2000000000]
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[Wp-kWp-615-0.615]
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[kWp-Wp-value5-615]
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[MWp-kWp-value6-1500]
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[Wac-kWac-2500-2.5]
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[kWac-Wac-value8-2500]
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[MWac-GWac-1250-1.25]
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[GWac-MWac-2-2000]
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[Wh-kWh-250-0.25]
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[kWh-Wh-value12-250]
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[MWh-GWh-1500-1.5]
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[GWh-MWh-3-3000]
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[kW-W-0-0]
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[kW-W--2--2000]
+FAILED tests/solar-pv/test_units.py::test_power_energy_exact_forward_reverse_boundary[kW-W-0.1-100]
+FAILED tests/solar-pv/test_units.py::test_unknown_and_physical_boundaries_are_not_aliases[kW-kWp]
+FAILED tests/solar-pv/test_units.py::test_unknown_and_physical_boundaries_are_not_aliases[kWp-kWac]
+FAILED tests/solar-pv/test_units.py::test_unknown_and_physical_boundaries_are_not_aliases[kWac-kW]
+FAILED tests/solar-pv/test_units.py::test_unknown_and_physical_boundaries_are_not_aliases[kWh-kW]
+FAILED tests/solar-pv/test_units.py::test_unknown_and_physical_boundaries_are_not_aliases[Wh-Wp]
+FAILED tests/solar-pv/test_units.py::test_unknown_and_physical_boundaries_are_not_aliases[kW-kVA]
+FAILED tests/solar-pv/test_units.py::test_unknown_and_physical_boundaries_are_not_aliases[imaginary-imaginary]
+FAILED tests/solar-pv/test_units.py::test_unknown_and_physical_boundaries_are_not_aliases[kw-kW]
+FAILED tests/solar-pv/test_units.py::test_unknown_and_physical_boundaries_are_not_aliases[ W-W]
+FAILED tests/solar-pv/test_units.py::test_unknown_and_physical_boundaries_are_not_aliases[-]
+FAILED tests/solar-pv/test_units.py::test_unknown_and_physical_boundaries_are_not_aliases[None-1]
+FAILED tests/solar-pv/test_units.py::test_unknown_and_physical_boundaries_are_not_aliases[source11-W]
+FAILED tests/solar-pv/test_units.py::test_strict_finite_numeric_inputs[True]
+FAILED tests/solar-pv/test_units.py::test_strict_finite_numeric_inputs[False]
+FAILED tests/solar-pv/test_units.py::test_strict_finite_numeric_inputs[1.25]
+FAILED tests/solar-pv/test_units.py::test_strict_finite_numeric_inputs[None]
+FAILED tests/solar-pv/test_units.py::test_strict_finite_numeric_inputs[value4]
+FAILED tests/solar-pv/test_units.py::test_strict_finite_numeric_inputs[value5]
+FAILED tests/solar-pv/test_units.py::test_strict_finite_numeric_inputs[nan]
+FAILED tests/solar-pv/test_units.py::test_strict_finite_numeric_inputs[inf]
+FAILED tests/solar-pv/test_units.py::test_strict_finite_numeric_inputs[-inf]
+FAILED tests/solar-pv/test_units.py::test_strict_finite_numeric_inputs[value9]
+FAILED tests/solar-pv/test_units.py::test_strict_finite_numeric_inputs[value10]
+FAILED tests/solar-pv/test_units.py::test_strict_finite_numeric_inputs[value11]
+FAILED tests/solar-pv/test_units.py::test_strict_finite_numeric_inputs[value12]
+FAILED tests/solar-pv/test_units.py::test_decimal_context_must_not_truncate_exact_values
+44 failed in 0.53s

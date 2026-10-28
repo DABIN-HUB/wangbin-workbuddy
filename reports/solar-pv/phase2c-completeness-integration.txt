@@ -1,0 +1,22 @@
+.FF.......                                                               [100%]
+================================== FAILURES ===================================
+____ test_declared_l2_without_irrelevant_load_or_debt_is_input_ready_only _____
+tests\solar-pv\test_completeness.py:34: in test_declared_l2_without_irrelevant_load_or_debt_is_input_ready_only
+    assert r["current_level"]=="L2",r
+E   AssertionError: {'assessment_basis': 'DECLARED_EVIDENCE_WITH_LOCAL_STRUCTURE_AND_CONSISTENCY_CHECKS', 'available_fields': [{'field_id'...ce_tax': {'qualified_level': 'L3', 'scope': 'input evidence only'}, ...}, 'calculation_status': 'NOT_IMPLEMENTED', ...}
+E   assert 'L1' == 'L2'
+E
+E     - L2
+E     + L1
+_ test_declared_l3_requires_survey_polygon_and_deeper_evidence_not_attachment_count _
+tests\solar-pv\test_completeness.py:43: in test_declared_l3_requires_survey_polygon_and_deeper_evidence_not_attachment_count
+    assert r["current_level"]=="L3",r
+E   AssertionError: {'assessment_basis': 'DECLARED_EVIDENCE_WITH_LOCAL_STRUCTURE_AND_CONSISTENCY_CHECKS', 'available_fields': [{'field_id'...ce_tax': {'qualified_level': 'L3', 'scope': 'input evidence only'}, ...}, 'calculation_status': 'NOT_IMPLEMENTED', ...}
+E   assert 'L1' == 'L3'
+E
+E     - L3
+E     + L1
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_completeness.py::test_declared_l2_without_irrelevant_load_or_debt_is_input_ready_only
+FAILED tests/solar-pv/test_completeness.py::test_declared_l3_requires_survey_polygon_and_deeper_evidence_not_attachment_count
+2 failed, 8 passed in 9.48s

@@ -1,0 +1,14 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+______ test_safe_nonapplicability_requires_source_review_and_known_rule _______
+tests\solar-pv\test_applicability.py:10: in test_safe_nonapplicability_requires_source_review_and_known_rule
+    from wangbin_solar_pv.applicability import is_not_applicable,validate_applicability
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.applicability'
+_ test_safety_or_resource_cannot_be_waived_by_arbitrary_not_applicable_claim __
+tests\solar-pv\test_applicability.py:24: in test_safety_or_resource_cannot_be_waived_by_arbitrary_not_applicable_claim
+    from wangbin_solar_pv.applicability import validate_applicability
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.applicability'
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_applicability.py::test_safe_nonapplicability_requires_source_review_and_known_rule
+FAILED tests/solar-pv/test_applicability.py::test_safety_or_resource_cannot_be_waived_by_arbitrary_not_applicable_claim
+2 failed in 0.35s
