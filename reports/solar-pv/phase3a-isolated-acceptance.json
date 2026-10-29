@@ -1,0 +1,56 @@
+{
+  "phase": "3A",
+  "status": "FOUNDATION_CONTRACT_PASS_ISOLATED_SNAPSHOT_NOT_PHASE3_NUMERICAL_PASS",
+  "authorization": "是来自我的其他任务，允许按已验证的隔离快照验收 Phase 3A并仅提交光伏范围，明确排除这 4 个文件",
+  "starting_head": "554c08859489d5fa2d8447f94c6494c9ed4bdb2a",
+  "excluded_other_task_paths": [
+    "packages/skills/wangbin-receivable-analyzer/SKILL.md",
+    "packages/skills/wangbin-receivable-analyzer/manifest.json",
+    "products/catalog.json",
+    "reports/workbuddy-upload-list.md"
+  ],
+  "excluded_worktree_hashes_before_commit": {
+    "packages/skills/wangbin-receivable-analyzer/SKILL.md": "8a5ee4eb54a4f6a08d3ab7cccf792c12d5f01ab3fb4ab0de8dc926149087a945",
+    "packages/skills/wangbin-receivable-analyzer/manifest.json": "0a9459ab33f0f3bbc1c538535b994218e6ad92792901a39c3e4e94eaf777762b",
+    "products/catalog.json": "d74f3fa9f00184ee64f8452862958c3ef11f7848378ed42657e4b5fbc91def27",
+    "reports/workbuddy-upload-list.md": "6d0df16f21a4cf7a3a87eef1b90fb2f7d26fd1457f124066707281f9ff0ec586"
+  },
+  "isolated_snapshot": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\3a-final3-repo",
+  "protected_comparison": {
+    "isolated_snapshot": {
+      "protected_count": 288,
+      "missing": [],
+      "changed": []
+    },
+    "live_worktree": {
+      "protected_count": 288,
+      "missing": [],
+      "changed": [
+        "packages/skills/wangbin-receivable-analyzer/SKILL.md",
+        "packages/skills/wangbin-receivable-analyzer/manifest.json",
+        "products/catalog.json",
+        "reports/workbuddy-upload-list.md"
+      ]
+    }
+  },
+  "source_manifest": "reports/solar-pv/phase3a-evidence/3a-final3-source-hashes.json",
+  "source_files_reverified": 88,
+  "source_drift": [],
+  "existing_evidence_hashes_reverified": 55,
+  "full_regression_record": {
+    "tests": 3283,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 6,
+    "passed": 3277
+  },
+  "tests_rerun_for_this_authorization": false,
+  "production_package_python_files_compiled_now": 33,
+  "isolated_baseline_exit_code": 0,
+  "isolated_baseline_evidence": "reports/solar-pv/phase3a-evidence/3a-authorized-isolated-baseline.json",
+  "live_worktree_protection_pass_claimed": false,
+  "mathematical_formulas_numerically_accepted": 0,
+  "full_synthetic_projects_completed": 0,
+  "release_status": "BLOCKED",
+  "commit_policy": "Only solar-scoped paths; exclude all four other-task files, preserve their worktree bytes, verify exact staging and commit contents. No push, upload, publication, deployment, or Phase3B production changes."
+}

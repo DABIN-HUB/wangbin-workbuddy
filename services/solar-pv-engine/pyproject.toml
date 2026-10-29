@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "wangbin-solar-pv-input"
-version = "0.2.0"
-description = "Local-only solar PV Phase 2 input contracts; no generation or finance calculations"
+version = "0.3.0"
+description = "Local solar PV input contracts and versioned deterministic calculation layer"
 requires-python = ">=3.12,<3.15"
 authors = [{name = "wangbin"}]
 dependencies = ["jsonschema==4.26.0", "wangbin-document-cli==1.2.0", "openpyxl==3.1.5", "python-docx==1.2.0", "pdfminer.six==20260107", "defusedxml==0.7.1", "tzdata==2026.5; sys_platform == 'win32'"]
@@ -17,4 +17,4 @@ wangbin-solar-pv-input = "wangbin_solar_pv.cli:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-wangbin_solar_pv = ["baseline-lock.json", "scenarios/*/contract.json"]
+wangbin_solar_pv = ["baseline-lock.json", "definition-errata.json", "definition-lock.json", "scenarios/*/contract.json", "calculation/schema/*.json", "calculation/execution-evidence.json"]

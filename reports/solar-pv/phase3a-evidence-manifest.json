@@ -1,0 +1,311 @@
+{
+  "scope": "CONTRACT_AND_CAPACITY_EVIDENCE_NOT_FORMULA_NUMERICAL_ACCEPTANCE",
+  "files": [
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-evidence.json",
+      "bytes": 34977,
+      "sha256": "62b38e87fbe722be1865e243c1429f1640c3eed098319fa1cc06ea0e8a315ab7"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d3-evidence/receipt-final4.json",
+      "bytes": 8601,
+      "sha256": "a71e5e5db03d4e3a6c287455d27355d30fe784b5177697d9de8429191715b7b4"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d3-evidence/final4.xml",
+      "bytes": 17138,
+      "sha256": "cabcd62fbae1466b62455f27cb4460c615d8182e41322bf2698f826426eecf52"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d3-evidence/final4.log",
+      "bytes": 3956,
+      "sha256": "4c00b832978668106b91c88c8a80590928c4d258e567aca5a4ca3f615ae63ac5"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-integration-focused2.log",
+      "bytes": 585,
+      "sha256": "49a31229b57ec0b327308b392ca051f15c1d72d180acf9d1c0871700902423b6"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-integration-focused2.xml",
+      "bytes": 27800,
+      "sha256": "35249ff80fa19e3e95a31acff01eccda001398e92fddab84abd2952b6c2c4607"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-bundle-ingress-green.log",
+      "bytes": 102,
+      "sha256": "63fd0d535e7e88f2d82cb0d41dffe4a42c9516bfd9dca9bf244b65b3d5449d16"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-review-red.log",
+      "bytes": 5098,
+      "sha256": "6b036e1ca7958f9310531b713b777264e75cde0b6cd60567ac68e7787c20b036"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-review-green.log",
+      "bytes": 305,
+      "sha256": "f0ce32edd9eda57a49fd23883cbe5937267adefc5856971a02df41c8e455ee0e"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-review-green.xml",
+      "bytes": 13816,
+      "sha256": "dc3768fba5c8d72f1a69816fdb635ba2c9dd0212f9c8dd40d9dcb9bdde36e57d"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-negative-zero-red2.log",
+      "bytes": 1228,
+      "sha256": "c854ddeaa6c939ff405e03efe451f428ee651dce3277a0c7970b6ac4e5a22490"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-negative-zero-green.log",
+      "bytes": 322,
+      "sha256": "3ad3e8c7c1c5fd4bad22038056842e3b4692c483a2c045f6739f6956263b5ccc"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-negative-zero-green.xml",
+      "bytes": 15612,
+      "sha256": "34b57e9045b3a8355b042f08af5e43a610e5a9169142d3ac98e0934ba41d3828"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-final2.xml",
+      "bytes": 528969,
+      "sha256": "8ff383c65438e023c123149d53c7b8864faaba578b7fa2c822ef222f1123f78b"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-final2.log",
+      "bytes": 5555,
+      "sha256": "d564ded853c19f3785a057a01044d8b445786cacb2601b60d6183cf83a61e598"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-final2-run-receipt.json",
+      "bytes": 841,
+      "sha256": "19e576ba25ad16cbd676d3815d091be86911d237b512f67ebbb032c951aa5d56"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-final2-source-hashes.json",
+      "bytes": 11398,
+      "sha256": "eb96537fc3f31c1e717f0434765d97218774efad7ab0bd16d30843ba667b75ea"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-history-fixture-green.xml",
+      "bytes": 411,
+      "sha256": "470f19be4f02371e85e0c6e8a909428a60720be777b751ca0946a66fb8b7e3cb"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-history-fixture-green.log",
+      "bytes": 231,
+      "sha256": "7703b32c2ebd61a6616583c4b58d2fc5a69a365ac60f50f9bce3c720d3037440"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-final2-wheel-receipt.json",
+      "bytes": 3312,
+      "sha256": "d39afc865520d7e8aee82e8c274bbcadcad6bfb95f53e9ea31f2b31e9f585cc4"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-legacy.log",
+      "bytes": 875,
+      "sha256": "887b3402219c56565b28dc8b828cedd68a0e1cd3e9692f17edec12abe8ea1c85"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-negative-zero-baseline.json",
+      "bytes": 1508,
+      "sha256": "1b9c25f2ff009997a4961e9ab7ba6f55838beefcc06992b6283c6239e972ebc6"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-e01-green.log",
+      "bytes": 100,
+      "sha256": "bdd06e656945fb77227e15de476f9f291031c9b68dd2911f37ba1c136210d69b"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-e01-red.log",
+      "bytes": 931,
+      "sha256": "c02f2cbf1215c9f4aeceb905136bcc0654ff8dbca2bcacd54330bce1624b319f"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-e02-green-final.log",
+      "bytes": 114,
+      "sha256": "08cac7879641e6707c5338b2965195100941358930136781c5ebb0cba15cbcfb"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-e02-green.log",
+      "bytes": 1785,
+      "sha256": "b677f79057b8e5064f474a804c6467d1725e54f85bf06ffb4484a81452786efc"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-e02-red.log",
+      "bytes": 906,
+      "sha256": "b9a89f0c743d2975f7c54f01a4d3f2a821abdb9921b2435ab19f405a1ffdb9b3"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-e03-green.log",
+      "bytes": 114,
+      "sha256": "135f4f9de02b450d342cb318f252b509e7803d998d7e68b6dd4718b9bda6745c"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-e03-red.log",
+      "bytes": 879,
+      "sha256": "ec68b58414c2861d89cdd7cc4331ad05ed2d363e3c8299f6440566702b445eee"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-e04-green.log",
+      "bytes": 114,
+      "sha256": "a68dcf9fa91be960f561ee7409612c2a79689fd5feb7208d6185d300742710b4"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-e04-red.log",
+      "bytes": 1060,
+      "sha256": "95a206dbdd9e20f30776b51e7a823a6bc198558f4a89eb8fa632b16e60d497fb"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-e05-green.log",
+      "bytes": 114,
+      "sha256": "16d8d263e922a0b4d25d3a48ff92cbb6c15880276a6bdf019e6f1ddc53162fa6"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-e05-red.log",
+      "bytes": 1084,
+      "sha256": "33c1db46e4859ca41d30a0b14a9aa439ee7ac79db08319a5faed10a1252b4112"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-e06-green.log",
+      "bytes": 114,
+      "sha256": "cfd602f31efcfdd9f1921d795e29cbabed92973a053309c87f7443a9e7843d8a"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-e06-red.log",
+      "bytes": 1219,
+      "sha256": "bbcce18dacadcaabf4b80ea7470a78a0e602182fbe1c2f2189285568366edffb"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-final-new-tests-complete.log",
+      "bytes": 242,
+      "sha256": "3318356d6cca77cb7c09edb78e6ca1585a4a73625fcf7b53c1bb0703ab3b1677"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-final-new-tests.log",
+      "bytes": 233,
+      "sha256": "71656588f0e62f5d15697c5cd5adc4252edaf5f786ccf626eeab884c256664cf"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-formula-regression.log",
+      "bytes": 652,
+      "sha256": "a69e8c6ec6a86cacdfd94eabf35dfa2f6c0bfba496dc4e34bdf7d1f5a020dd9f"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-identity-hardening-green.log",
+      "bytes": 101,
+      "sha256": "5286d6e4587446ed707b87fe1b71ab8b03283fe2c85b639f016018ecca73169d"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-identity-hardening-red.log",
+      "bytes": 5567,
+      "sha256": "688f521747a81d87e1ebb344dea0a7039ce0834ea0e0f65815a1dbf0ecdc911a"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-identity-schema-rows-green.log",
+      "bytes": 101,
+      "sha256": "5f4355ad2c4143aa491b82d763a7ed086ad9f73c8e83ffc04b1186189c94c5e5"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-identity-schema-rows-red.log",
+      "bytes": 21504,
+      "sha256": "57620b00fca6d3bd59239302ceb43916175c52e3911114f3552dfbd3398de4e0"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/d1-public-tamper-red.log",
+      "bytes": 2351,
+      "sha256": "d4937df861bd394a64828ffc4de9dfe32f0068571d7ecd1dfe6629db7b6e8993"
+    }
+  ],
+  "final3_evidence_files": [
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-final3.log",
+      "bytes": 4296,
+      "sha256": "ac0f7cb15075e110c72d417cb3a905f1ace7aaa269e7eb53c1c68cbfd79d02b0"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-final3.xml",
+      "bytes": 527779,
+      "sha256": "e443df961940e5acbdd6b094fe95b27a4cdc3f19663730fc457fc3c1255d97ee"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-final3-source-hashes.json",
+      "bytes": 11398,
+      "sha256": "eb96537fc3f31c1e717f0434765d97218774efad7ab0bd16d30843ba667b75ea"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-final3-run-receipt.json",
+      "bytes": 1062,
+      "sha256": "625757d89fabf4159bf15951c03525819cfb558b368685cd5e168e66c253bd13"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-production-and-wheel-source.json",
+      "bytes": 1031,
+      "sha256": "d7404bbf63abfc764f72f05c31322e026ad4614152018b5d8265c225f3fb6d8d"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-legacy.xml",
+      "bytes": 22143,
+      "sha256": "bb65411c9e51c3f82e19186eb42cf96e7b2a10ceffc7324a4b2ac8c1e3bf1887"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-complete-baseline.json",
+      "bytes": 1508,
+      "sha256": "1b9c25f2ff009997a4961e9ab7ba6f55838beefcc06992b6283c6239e972ebc6"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-complete-release.json",
+      "bytes": 1510,
+      "sha256": "eb3e4c48bdd184b85c379f2544235dc862bf8585d0250557b67ac3af3e718773"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/capacity-8760.json",
+      "bytes": 1877,
+      "sha256": "0dffc690a8530d75fc74b8390520c1cc88fed5305cf723704224e9dabc720bb2"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/capacity-35040.json",
+      "bytes": 1889,
+      "sha256": "4d0b88106990821c3602e52f9f793f9696cf87eb17364cc9dcb08e17ab689cbb"
+    }
+  ],
+  "final3_result": {
+    "passed": 3277,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 6,
+    "exit_code": 0,
+    "snapshot_source_changed_by_verification": []
+  },
+  "precommit_blocker_evidence": [
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-before-commit-baseline.json",
+      "bytes": 1849,
+      "sha256": "26970d50e5348212d1c32e43cbb454f0d275250efd23eafcf9ce0d3de2bf3e7e"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-precommit-protection-blocker.json",
+      "bytes": 552,
+      "sha256": "d84fdac0addae9c55bbacc1629cf81479c76c4060696842929da50aa01e61902"
+    }
+  ],
+  "authorized_isolated_acceptance_evidence": [
+    {
+      "file": "reports/solar-pv/phase3a-isolated-acceptance.json",
+      "bytes": 2609,
+      "sha256": "1f9f1949faa75ae4c403b9328e96c23e8d6c23996dd9ef593396384617248c2f"
+    },
+    {
+      "file": "reports/solar-pv/phase3a-evidence/3a-authorized-isolated-baseline.json",
+      "bytes": 1456,
+      "sha256": "968b8f527e145409a23fb8c45ccce7ec186feca15199c5a3a88e61184ffe6f51"
+    }
+  ],
+  "requested_but_not_found": [],
+  "final2_result": {
+    "passed": 3276,
+    "failed": 1,
+    "skipped": 6,
+    "reason": "Historical fixture missing in initial isolated no-.git snapshot; retained as failure. Fixture repaired without changing assertions; complete final3 exit0 supersedes it."
+  }
+}

@@ -19,7 +19,7 @@ class _Parser(argparse.ArgumentParser):
 
 
 def _parser():
-    parser = _Parser(description="光伏本地资料收集 / local JSON intake；不计算、不联网。",
+    parser = _Parser(description="光伏私有本地资料与计算契约 / local intake and calculation contracts；资料收集阶段不计算、不联网；契约导出不运行项目。",
                      epilog="KNOWN_LIMIT：不是操作系统沙箱；Windows无openat/强制目录隔离，目录竞态仍有边界。仅供私有本地目录；ACL由用户管理，不得作为公开不可信服务。")
     parser.add_argument("--workspace", required=True, help="已存在的授权私有目录；JSON路径均相对此目录")
     parser.add_argument("--baseline-dir", help="冻结基线目录；源码默认docs/solar-pv，安装后可显式提供")
@@ -37,6 +37,9 @@ def _parser():
     formula.add_argument("--formula-id", required=True)
     formula.add_argument("--state", help="可选私有项目JSON；省略时不评价是否缺数据")
     formula.add_argument("--output", help="完整定义和实例元数据写私有JSON，不覆盖；stdout只输出摘要")
+    for name in ("calculation-schema", "method-schema", "calculation-formulas"):
+        contract = commands.add_parser(name, help="导出版本化计算契约或真实公式执行库存；不运行项目、不升级门禁")
+        contract.add_argument("--output", required=True, help="授权私有JSON输出，不覆盖")
     for command in ("submit", "revise", "resolve", "review", "remove", "accept"):
         examples = {
             "submit": '{"submission_id":"round1","updates":[{"field_id":"site.total_area","value":1000,"unit":"m2"}]}',
@@ -115,6 +118,26 @@ def main(argv=None):
         args = _parser().parse_args(argv)
         workspace = Workspace(args.workspace)
         catalog = Catalog(args.baseline_dir)
+        if args.command in {"calculation-schema", "method-schema", "calculation-formulas"}:
+            if args.command == "calculation-formulas":
+                from .calculation.execution_registry import execution_inventory
+                inventory = execution_inventory(catalog)
+                workspace.create(args.output, {"definition_version": catalog.definition_version,
+                                              "definition_hash": catalog.definition_hash, "formulas": inventory})
+                print(dumps({"status": "CONTRACT_EXPORTED", "formula_count": len(inventory),
+                             "implemented_tested": sum(row["status"] == "IMPLEMENTED_TESTED" for row in inventory),
+                             "scope": "EVIDENCE_BACKED_REGISTRY_NOT_PROJECT_COMPUTATION"}))
+            else:
+                if args.command == "calculation-schema":
+                    from .calculation.result_contract import result_schema
+                    schema = result_schema()
+                else:
+                    from .calculation.method_config import method_schema
+                    schema = method_schema()
+                workspace.create(args.output, schema)
+                print(dumps({"status": "CONTRACT_EXPORTED", "schema_version": schema["$id"],
+                             "numerical_validation": "NOT_PERFORMED_BY_THIS_COMMAND"}))
+            return 0
         if args.command == "formula":
             from .formula_bindings import FormulaBindings
             project = IntakeSession.from_dict(workspace.read(args.state)[0], catalog).project if args.state else None

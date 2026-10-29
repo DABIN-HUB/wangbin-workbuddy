@@ -38,11 +38,21 @@ class FormulaBindings:
         if project.pv_type not in field["pv_types"] or req["requirement"]=="NOT_APPLICABLE":
             result["availability"]="NOT_APPLICABLE"
             return result
-        found=[(r,rid) for r,rid in iter_records(project.values,self.catalog) if r["field_id"]==fid]
+        found=[(record,scalar) for record,scalar in iter_records(project.values,self.catalog) if record["field_id"]==fid]
+        # iter_records' second value is a scalar-array flag, never a row ID.
+        # Recover row context from the actual table, not by parsing instance IDs.
+        row_by_instance={}
+        if parent:
+            rows=project.values.get(parent,{}).get("value")
+            if isinstance(rows,list):
+                for row in rows:
+                    for atom,_ in iter_records(row["fields"],self.catalog):
+                        row_by_instance[id(atom)]=row["row_id"]
         missing=[];invalid=False;statuses=[]
-        for record,rid in found:
+        for record,scalar_item in found:
+            rid=row_by_instance.get(id(record))
             status=record["status"];statuses.append(status)
-            errors=[i.code for i in validate_record(record,self.catalog,scalar_item=field["type"]=="array" and not isinstance(record.get("value"),list)) if i.severity=="ERROR"]
+            errors=[i.code for i in validate_record(record,self.catalog,scalar_item=scalar_item) if i.severity=="ERROR"]
             invalid=invalid or bool(errors)
             result["instances"].append({"field_instance_id":record["field_instance_id"],"row_id":rid,"status":status,
                 "unit":record["unit"],"source_id":record["source_id"],"source_kind":record["source_kind"],"issue_codes":errors})
@@ -84,7 +94,7 @@ class FormulaBindings:
         else:
             status="INPUTS_PRESENT_TRANSFORM_NOT_IMPLEMENTED"
         missing=[fid for fid in binding["input_field_ids"] if any(x["field_id"]==fid and x["missing_instances"] for x in inputs)]
-        return {"binding":binding,"binding_status":status,"data_type":{"kind":kind,
+        return {**self.catalog.definition_identity(),"binding":binding,"binding_status":status,"data_type":{"kind":kind,
             "input_types":[{"field_id":x["field_id"],"type":x["type"],"repeat_group":x["repeat_group"]} for x in inputs],
             "formula_ledger_type":"NOT_DECLARED_IN_FROZEN_MAPPING" if kind in _LEDGER else "EXPLICIT_INPUT_OR_CONSTANT_DEFINITION"},
             "supporting_inputs":inputs,"missing_input_field_ids":missing,
@@ -120,7 +130,7 @@ class FormulaBindings:
         applicable=set(self.catalog.pv_types)
         for fid in input_ids:
             applicable.intersection_update(self.catalog.fields[fid]["pv_types"])
-        return {"schema_version":"solar-pv-formula-input-query/1.0.0","formula":formula,"symbols":symbols,
+        return {**self.catalog.definition_identity(),"schema_version":"solar-pv-formula-input-query/1.0.0","formula":formula,"symbols":symbols,
             "formula_id":formula_id,"name_zh":formula["chinese_name"],"explanation_zh":formula["calculation_boundary"],
             "required_parameters":sorted(set(required)),"conditional_parameters":sorted(set(conditional)),
             "missing_input_field_ids":sorted({fid for s in symbols if s["definition"]["role"]!="output" for fid in s["missing_input_field_ids"]}),

@@ -1,0 +1,23 @@
+{
+  "phase": "3A",
+  "status": "RESOLVED_BY_USER_AUTHORIZED_ISOLATED_ACCEPTANCE",
+  "head_at_detection": "554c08859489d5fa2d8447f94c6494c9ed4bdb2a",
+  "origin_of_changes": "USER_CONFIRMED_OTHER_TASK",
+  "protected_count": 288,
+  "protected_changed": [
+    "packages/skills/wangbin-receivable-analyzer/SKILL.md",
+    "packages/skills/wangbin-receivable-analyzer/manifest.json",
+    "products/catalog.json",
+    "reports/workbuddy-upload-list.md"
+  ],
+  "latest_baseline_checks": {"total": 20163, "passed": 20159, "failed": 4},
+  "latest_guard_exit_code": 1,
+  "secret_pattern_findings": [],
+  "solar_final_source_regression": {"passed": 3277, "failed": 0, "skipped": 6, "exit_code": 0},
+  "solar_source_matches_verified_snapshot": true,
+  "staging_index_at_detection": "EMPTY",
+  "action_taken": "Accept Phase3A against the verified isolated snapshot, commit only solar-scope files, and exclude the four protected paths. Preserve their worktree contents; do not claim that the live-worktree protection check passed.",
+  "user_authorization": "是来自我的其他任务，允许按已验证的隔离快照验收 Phase 3A并仅提交光伏范围，明确排除这 4 个文件",
+  "acceptance_receipt": "reports/solar-pv/phase3a-isolated-acceptance.json",
+  "human_confirmation_needed": null
+}

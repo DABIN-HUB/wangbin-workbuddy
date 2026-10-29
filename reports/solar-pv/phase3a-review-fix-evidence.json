@@ -1,0 +1,60 @@
+{
+  "scope": "PHASE3A_CONTRACT_REGRESSIONS_NOT_FORMULA_NUMERICAL_ACCEPTANCE",
+  "original_review": "deleg_9286198d",
+  "original_fix_review": "deleg_512dc00a",
+  "original_review_findings_closed_by_independent_static_review": 4,
+  "additional_finding": {
+    "id": "DECIMAL_INTEGER_NEGATIVE_ZERO_ROUNDTRIP",
+    "severity": "P2",
+    "status": "CLOSED_RED_GREEN_AND_INDEPENDENT_STATIC_REVIEW",
+    "red_log": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\3a-negative-zero-red2.log",
+    "green_junit": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\3a-negative-zero-green.xml",
+    "new_review": "deleg_9007a866"
+  },
+  "green_counts": {
+    "tests": 89,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "current_source_sha256": {
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/common.py": "f41c33f34ed3ddb4e40841727282a331128a52a438a9ba18bf2a7d6850234c64",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/method_config.py": "4b219f6233586b7f54a5b4d2f091b0fdc539a14f1188a9a5a013dc73838ff1c1",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/execution_registry.py": "bab7074ac9b5d441463a7ddf841187fa86160ecef92b4a9c57b1f3d160feae41",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/result_contract.py": "0a4cb4a5df645066b9fcbd44799f8934e4545bf3d0199633b1d3357fc65eba0c",
+    "tests/solar-pv/test_calculation_review_regressions.py": "4afb1ea1b3bb5df95a37062ccd958f8fcfbe53c728b015daaf424b86cc7f9e46"
+  },
+  "full_regression": {
+    "final2": {
+      "exit_code": 1,
+      "passed": 3276,
+      "failed": 1,
+      "skipped": 6,
+      "reason": "Isolated no-.git snapshot lacked the pinned historical Catalog fixture; no production assertion failed after fixture retrieval.",
+      "source_changed_during_run": false,
+      "counts_as_full_pass": false
+    },
+    "historical_fixture_repair": {
+      "pinned_commit": "554c08859489d5fa2d8447f94c6494c9ed4bdb2a",
+      "method": "Separate scratch bare object database fetched from local source only; git show bytes compared equal. No test or production edit.",
+      "failed_case_rerun_exit_code": 0,
+      "junit": "reports/solar-pv/phase3a-evidence/3a-history-fixture-green.xml"
+    },
+    "final3": {
+      "status": "PASS_EXIT_0",
+      "passed": 3277,
+      "failed": 0,
+      "skipped": 6,
+      "source_changed_by_verification": false,
+      "session_id": "proc_3759f9da1d58",
+      "frozen_source_manifest": "3a-final3-source-hashes.json"
+    }
+  },
+  "formula_numerical_pass": 0,
+  "maturity": {
+    "real_project": "NOT_EVALUATED",
+    "four_files": "NOT_IMPLEMENTED",
+    "platform": "NOT_VERIFIED",
+    "release": "BLOCKED"
+  }
+}

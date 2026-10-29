@@ -1,0 +1,321 @@
+{
+  "phase": "3A",
+  "status": "FOUNDATION_CONTRACT_PASS_ISOLATED_SNAPSHOT_NOT_PHASE3_NUMERICAL_PASS",
+  "acceptance_scope": "User-authorized verified isolated snapshot; four confirmed other-task protected files excluded from this commit, without rollback or overwrite. Live-worktree protection is not represented as PASS.",
+  "isolated_acceptance_receipt": "reports/solar-pv/phase3a-isolated-acceptance.json",
+  "precommit_blocker": "reports/solar-pv/phase3a-precommit-blocker.json",
+  "starting_head": "554c08859489d5fa2d8447f94c6494c9ed4bdb2a",
+  "definition_identity": {
+    "definition_version": "solar-pv-formula-definitions/1.0.1",
+    "definition_hash": "617a2e9d314c095bd2ec893939c930a2323be6fd7805da12bf6d6fdd70274808",
+    "definition_manifest": {
+      "schema_version": "solar-pv-definition-manifest/1.0.0",
+      "definition_version": "solar-pv-formula-definitions/1.0.1",
+      "frozen_definition_version": "solar-pv-formula-definitions/1.0.0",
+      "baseline_hashes": {
+        "00-original-user-baseline.md": "4af609040ca4e800b16d561b86a8a33c54226d175581b54aa00110158c5d09f2",
+        "00-baseline-manifest.json": "33845de976ec13345320b79ff7045e86a39bf2194a427b5cd28169238d1defec",
+        "01-product-requirements.md": "2bbda5ab6d34e2b21c8b8806335986522d75de3a90e8c2e677d4c2ae8075357c",
+        "03-input-data-dictionary.md": "fcc1eac5641f941adbd6fd4fab216050344b2ae4e0590d8e9549682117ab8148",
+        "03-input-fields.json": "393140cc57b5934041c3fece2c9c185c03c7876afaa3403ce317d795d6112a1b",
+        "05-formulas.json": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331",
+        "05-formula-extensions.json": "14bb789c908f4f883910fd517fd2cf55cf0719739f9fdd84e4dc61b111252007",
+        "05-field-bindings.json": "4ef6171f063f402963d61edc9647c7565c9ec9338099f62424a77e3507521533",
+        "06-glossary.json": "fa29129d43f54a9b84ef6915e7bca99baa7a2a9a16ddab16beb3edec2e4d3ea5",
+        "06-glossary-extensions.json": "108f2a0fc11e07286a571bdf4a9a1c2ba63e1e9deae81558c4407bb1f9b85b61",
+        "07-category-boundaries.md": "ee935418c0a7ef55544f6f97fddf71bcb62f6b906d0c19256b871f8d02b086a8",
+        "08-baseline-contract.json": "b3616e8ca7deab31b41118f0ffd0a8202c763c54371a9a6949e5d97bdecb140c"
+      },
+      "frozen_definition_hash": "9255ca88892365ca2af963ad78f12428be740bf7aff00f1ecfdd418d7688a112",
+      "errata_hash": "425b9a3cde0ec1b2c7ba81a2418ad5967416271cef0d2e9048efa6abeadddecd",
+      "effective_definition_hash": "58cfd167bcee7180e9727495be77768416323f8f82df798b910638a79faac003",
+      "input_schema_hash": "0487863362dc09ce4a47619c18ec0066e5e140a9269d17635669f0605f711fdc",
+      "patches": [
+        {
+          "id": "E01",
+          "target_kind": "formula",
+          "target_id": "F-USABLE-AREA",
+          "source_file": "05-formula-extensions.json",
+          "reason_zh": "净可利用面积为本式输出；原始独立提供面积与计算值分离，不改面积方程或候选证据。",
+          "changes": [
+            {
+              "path": [
+                "every_symbol_definition",
+                0,
+                "role"
+              ],
+              "before": "input",
+              "after": "output"
+            }
+          ]
+        },
+        {
+          "id": "E02",
+          "target_kind": "formula",
+          "target_id": "F-CAPEX-ITEM-AMOUNT",
+          "source_file": "05-formula-extensions.json",
+          "reason_zh": "分项金额为数量乘单价的计算输出；原报价仍为独立候选证据，不覆盖报价或更改方程。",
+          "changes": [
+            {
+              "path": [
+                "every_symbol_definition",
+                0,
+                "role"
+              ],
+              "before": "input",
+              "after": "output"
+            }
+          ]
+        },
+        {
+          "id": "E03",
+          "target_kind": "formula",
+          "target_id": "F-NOMINAL-REAL-RATE",
+          "source_file": "05-formulas.json",
+          "reason_zh": "根单位与逐符号年度有效比例统一；保留年度步长、复利口径及同税/风险/币种边界，不把年度比例改为连续时间倒数。",
+          "changes": [
+            {
+              "path": [
+                "unit"
+              ],
+              "before": "1/年",
+              "after": "1"
+            },
+            {
+              "path": [
+                "dimensional_check"
+              ],
+              "before": "输出单位为 1/年；每个输入的单位见 every_symbol_definition，同量纲才能相加；比率以小数存储，百分号仅展示。",
+              "after": "输出为无量纲年度有效比例（单位1）；年度步长与复利口径保持不变，1+r_nom=(1+r_real)(1+π)各项均无量纲，不是连续时间1/年；比率以小数存储，百分号仅展示。"
+            }
+          ]
+        },
+        {
+          "id": "E04",
+          "target_kind": "formula",
+          "target_id": "F-ENERGY-AGGREGATION",
+          "source_file": "05-formulas.json",
+          "reason_zh": "b与完整符号和原主下标规则一致，表示能量物理边界；不改变时段汇总或混用财务口径。",
+          "changes": [
+            {
+              "path": [
+                "subscript_definition",
+                "逐个下标词素"
+              ],
+              "before": "b=互斥的项目/股权及税前后完整口径索引；p=月/年汇总期间索引；t=同一时间粒度的时段索引",
+              "after": "b=同一物理能量边界（已登记的可用、自用、上网、限发或交付边界）；p=月/年汇总期间索引；t=同一时间粒度的时段索引"
+            }
+          ]
+        },
+        {
+          "id": "E05",
+          "target_kind": "formula",
+          "target_id": "F-BREAK-EVEN-PRICE",
+          "source_file": "05-formulas.json",
+          "reason_zh": "p为事前允许域内待求的指定结算电价，而非月/年索引；保留全链重算、允许域与全部根集合规则。",
+          "changes": [
+            {
+              "path": [
+                "subscript_definition",
+                "逐个下标词素"
+              ],
+              "before": "star=盈亏平衡根集合标签，相当于上标 *，不是乘方；b=互斥的项目/股权及税前后完整口径索引；p=月/年汇总期间索引",
+              "after": "star=盈亏平衡根集合标签，相当于上标 *，不是乘方；b=互斥的项目/股权及税前后完整口径索引；p=待求结算电价，只调整事前指定电价项，在允许价格域P内求全部有效根"
+            }
+          ]
+        },
+        {
+          "id": "E06",
+          "target_kind": "binding",
+          "target_id": "checks.energy_balance_residual",
+          "source_file": "05-field-bindings.json",
+          "reason_zh": "从F-ENERGY-BALANCE的四个输入域沿冻结producer_formula_ids及公式input_field_ids取可达原始支持血缘并去重；支持清单不是全部同时必需，也不表示转换、账簿或能量模型已执行。不得以投资/融资信息作为电量守恒前提。",
+          "changes": [
+            {
+              "path": [
+                "input_field_ids"
+              ],
+              "before": [
+                "finance.working_capital",
+                "finance.debt_schedule",
+                "capex.items"
+              ],
+              "after": [
+                "grid.export_power_limit",
+                "load.series.energy",
+                "load.series.interval_minutes",
+                "load.series.power",
+                "load.series.timestamp",
+                "project.evaluation_years",
+                "resource.model_method",
+                "resource.monthly",
+                "resource.timeseries",
+                "resource.timeseries.ambient_temperature",
+                "resource.timeseries.interval_minutes",
+                "resource.timeseries.poa",
+                "resource.timeseries.timestamp",
+                "resource.timeseries.wind_speed",
+                "schedule.commissioning_date",
+                "site.timezone",
+                "system.ac_capacity",
+                "system.capacity_boundary",
+                "system.dc_capacity",
+                "system.inverter_count",
+                "system.inverter_efficiency",
+                "system.inverter_model",
+                "system.inverter_unit_ac",
+                "system.losses",
+                "system.module_count",
+                "system.module_model",
+                "system.module_power",
+                "system.temperature_coefficient",
+                "system.topology",
+                "system.unavailability"
+              ]
+            }
+          ]
+        }
+      ],
+      "compatibility": {
+        "frozen": "INPUT_ONLY_RECALCULATE",
+        "current": "EXACT_IDENTITY"
+      }
+    }
+  },
+  "formula_statistics": {
+    "registered": 89,
+    "phase3_applicable": 82,
+    "implemented_tested": 0,
+    "phase3_not_implemented": 82,
+    "phase8_deferred_not_implemented": 7,
+    "project_not_applicable": "NOT_EVALUATED",
+    "blocked_method_review": "NOT_EVALUATED_NO_PROJECT_CALCULATION",
+    "numerical_validation_failed": "NOT_EVALUATED_NO_NUMERICAL_EXECUTORS"
+  },
+  "full_regression": {
+    "passed": 3277,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 6,
+    "exit_code": 0,
+    "snapshot_source_changed_by_verification": []
+  },
+  "legacy_regression": {
+    "passed": 145,
+    "failed": 0,
+    "skipped": 5,
+    "expert_cases_included": 36,
+    "isolated_without_git": true
+  },
+  "compiled_production_modules": 33,
+  "installed_wheel_source_mismatches": [],
+  "independent_review": {
+    "original_findings_closed": 4,
+    "additional_decimal_negative_zero_closed": true,
+    "numerical_review": "NOT_PERFORMED_NO_EXECUTORS"
+  },
+  "capacity_metrics": [
+    {
+      "synthetic": true,
+      "source_hashes": {
+        "timeseries_bundle.py": "2518080881cd1803a21668b2dbf108970c7790ba36320fd00c30c38617baaf44",
+        "timeseries_private.py": "1900080dad800102b15ffc5fdda4d2effcd13c810605885e838f1d2e2b42fff6",
+        "timeseries_tokens.py": "ae38af8fb855394833e914396ea3816001bcdbf8e3d1c49a14a04166c52a0077",
+        "validation.py": "48312752dada7abb2a143c9953f8c6bf3d04632ca5b907c6b4a6bd4528ebe37c",
+        "serialization.py": "198444210200e243f9ffa515613bafeed695e4c56f07c25193feb30b2ae3618f",
+        "schemas.py": "3bb5c8f4ae59e88c31fc6305000c0304e127ecc31d0a399a5d1a22dfda322e19",
+        "provenance.py": "b02b01ad2ccc03fd5967ab010a3bde908cf5f71e9e2d578cd755e52fbd5f9bc5",
+        "intake.py": "661b0848d068a7f86060ecbea53c6d215ea40630eb19510d4b6043078777685e"
+      },
+      "input_module_version": "0.3.0",
+      "rows": 8760,
+      "atoms_validated_each_write_and_read": 52560,
+      "interval_minutes": 60,
+      "sum_kWh": "21900.00",
+      "disk_bytes": 54153998,
+      "write_seconds": 42.15996209997684,
+      "full_read_validation_seconds": 39.44714160007425,
+      "iteration_sum_seconds": 11.15449419990182,
+      "write_rows_per_second": 207.7800729333391,
+      "validated_read_rows_per_second": 222.06932225435347,
+      "write_MiB_per_second": 1.2249839528044502,
+      "validated_read_MiB_per_second": 1.309227359155935,
+      "start_working_set_bytes": 419733504,
+      "end_working_set_bytes": 423157760,
+      "start_os_peak_bytes": 453160960,
+      "actual_os_peak_bytes": 456712192,
+      "read_stats": {
+        "rows_validated": 8760,
+        "atoms_validated": 52560,
+        "input_bytes": 54153998,
+        "disk_bytes": 54153998,
+        "peak_disk_reserved_bytes": 56591194,
+        "elapsed_seconds": 39.438000000081956,
+        "peak_working_set_bytes": 426311680,
+        "os_peak_working_set_bytes": 456105984
+      },
+      "content_hash": "c6a2657bf1ea8d16ce95ebfc29f32ad1b6e2b832bd99036e4300de80bf3e31c7"
+    },
+    {
+      "synthetic": true,
+      "source_hashes": {
+        "timeseries_bundle.py": "2518080881cd1803a21668b2dbf108970c7790ba36320fd00c30c38617baaf44",
+        "timeseries_private.py": "1900080dad800102b15ffc5fdda4d2effcd13c810605885e838f1d2e2b42fff6",
+        "timeseries_tokens.py": "ae38af8fb855394833e914396ea3816001bcdbf8e3d1c49a14a04166c52a0077",
+        "validation.py": "48312752dada7abb2a143c9953f8c6bf3d04632ca5b907c6b4a6bd4528ebe37c",
+        "serialization.py": "198444210200e243f9ffa515613bafeed695e4c56f07c25193feb30b2ae3618f",
+        "schemas.py": "3bb5c8f4ae59e88c31fc6305000c0304e127ecc31d0a399a5d1a22dfda322e19",
+        "provenance.py": "b02b01ad2ccc03fd5967ab010a3bde908cf5f71e9e2d578cd755e52fbd5f9bc5",
+        "intake.py": "661b0848d068a7f86060ecbea53c6d215ea40630eb19510d4b6043078777685e"
+      },
+      "input_module_version": "0.3.0",
+      "rows": 35040,
+      "atoms_validated_each_write_and_read": 210240,
+      "interval_minutes": 15,
+      "sum_kWh": "21900.000",
+      "disk_bytes": 216813204,
+      "write_seconds": 152.68281689984724,
+      "full_read_validation_seconds": 153.79705880000256,
+      "iteration_sum_seconds": 46.66324370005168,
+      "write_rows_per_second": 229.49537290096367,
+      "validated_read_rows_per_second": 227.83270547173439,
+      "write_MiB_per_second": 1.3542400403064327,
+      "validated_read_MiB_per_second": 1.3444287278694396,
+      "start_working_set_bytes": 423157760,
+      "end_working_set_bytes": 425627648,
+      "start_os_peak_bytes": 456712192,
+      "actual_os_peak_bytes": 456712192,
+      "read_stats": {
+        "rows_validated": 35040,
+        "atoms_validated": 210240,
+        "input_bytes": 216813204,
+        "disk_bytes": 216813204,
+        "peak_disk_reserved_bytes": 226627298,
+        "elapsed_seconds": 153.7970000000205,
+        "peak_working_set_bytes": 423608320,
+        "os_peak_working_set_bytes": 456712192
+      },
+      "content_hash": "a4096aaff8ba23c7e956576a9d158650df348bc43016e6895c3eb4374867f013"
+    }
+  ],
+  "evidence_manifest": "reports/solar-pv/phase3a-evidence-manifest.json",
+  "synthetic_projects": {
+    "industrial_rooftop": "NOT_IMPLEMENTED",
+    "utility_scale_ground": "NOT_IMPLEMENTED"
+  },
+  "maturity": {
+    "phase3_calculation_engine": "NOT_IMPLEMENTED",
+    "real_project": "NOT_EVALUATED",
+    "four_files": "NOT_IMPLEMENTED",
+    "platform": "NOT_VERIFIED",
+    "release": "BLOCKED"
+  },
+  "limitations": [
+    "6 symlink privilege skips are not passes; NTFS junction/hardlink were exercised",
+    "D3 capacity summation is not PV yield or financial project calculation",
+    "Budgets use cooperative checkpoints, not an OS sandbox",
+    "OS lifetime peak includes the whole regression process",
+    "Real tax/financing/data licensing still require evidence",
+    "Phase3B-G and 82 formula numerical acceptance remain outstanding"
+  ]
+}

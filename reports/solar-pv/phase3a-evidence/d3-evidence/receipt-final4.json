@@ -1,0 +1,244 @@
+{
+  "schema_version": "SYNTHETIC-d3-verification-receipt/1",
+  "source_hashes": {
+    "services/solar-pv-engine/src/wangbin_solar_pv/timeseries_bundle.py": "2518080881cd1803a21668b2dbf108970c7790ba36320fd00c30c38617baaf44",
+    "services/solar-pv-engine/src/wangbin_solar_pv/timeseries_private.py": "1900080dad800102b15ffc5fdda4d2effcd13c810605885e838f1d2e2b42fff6",
+    "services/solar-pv-engine/src/wangbin_solar_pv/timeseries_tokens.py": "ae38af8fb855394833e914396ea3816001bcdbf8e3d1c49a14a04166c52a0077",
+    "tests/solar-pv/test_timeseries_bundle.py": "e835bd636e031eaf66d7054ce6b9cafcf0ca0d9ecbc24da9ecace4cb39a897a8",
+    "tests/solar-pv/test_timeseries_bundle_security.py": "937f5e93e530b7369ec55850ad2db6b5c00c2ba0f78d60b8c31cbb584d43b433",
+    "tests/solar-pv/test_timeseries_bundle_capacity.py": "81b8f63c2df95cb2f14a454c0fd7437e1dee88bd7082d43910101d13169b5312"
+  },
+  "new_tests": {
+    "tests": 115,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1
+  },
+  "capacity_metrics": [
+    {
+      "synthetic": true,
+      "source_hashes": {
+        "timeseries_bundle.py": "2518080881cd1803a21668b2dbf108970c7790ba36320fd00c30c38617baaf44",
+        "timeseries_private.py": "1900080dad800102b15ffc5fdda4d2effcd13c810605885e838f1d2e2b42fff6",
+        "timeseries_tokens.py": "ae38af8fb855394833e914396ea3816001bcdbf8e3d1c49a14a04166c52a0077",
+        "validation.py": "48312752dada7abb2a143c9953f8c6bf3d04632ca5b907c6b4a6bd4528ebe37c",
+        "serialization.py": "198444210200e243f9ffa515613bafeed695e4c56f07c25193feb30b2ae3618f",
+        "schemas.py": "3bb5c8f4ae59e88c31fc6305000c0304e127ecc31d0a399a5d1a22dfda322e19",
+        "provenance.py": "b02b01ad2ccc03fd5967ab010a3bde908cf5f71e9e2d578cd755e52fbd5f9bc5",
+        "intake.py": "661b0848d068a7f86060ecbea53c6d215ea40630eb19510d4b6043078777685e"
+      },
+      "input_module_version": "0.3.0",
+      "rows": 8760,
+      "atoms_validated_each_write_and_read": 52560,
+      "interval_minutes": 60,
+      "sum_kWh": "21900.00",
+      "disk_bytes": 54153998,
+      "write_seconds": 40.55552139994688,
+      "full_read_validation_seconds": 45.88967159995809,
+      "iteration_sum_seconds": 12.539568200008944,
+      "write_rows_per_second": 216.00018191386076,
+      "validated_read_rows_per_second": 190.89262778703346,
+      "write_MiB_per_second": 1.2734462593639118,
+      "validated_read_MiB_per_second": 1.1254226762294501,
+      "start_working_set_bytes": 68435968,
+      "end_working_set_bytes": 68952064,
+      "start_os_peak_bytes": 102821888,
+      "actual_os_peak_bytes": 102821888,
+      "read_stats": {
+        "rows_validated": 8760,
+        "atoms_validated": 52560,
+        "input_bytes": 54153998,
+        "disk_bytes": 54153998,
+        "peak_disk_reserved_bytes": 56591194,
+        "elapsed_seconds": 45.890000000130385,
+        "peak_working_set_bytes": 74072064,
+        "os_peak_working_set_bytes": 102821888
+      },
+      "content_hash": "c1b1fb5a054ae9d7d2ed562318964ec474228eb32abc9c2118c3bd806ad3064d"
+    },
+    {
+      "synthetic": true,
+      "source_hashes": {
+        "timeseries_bundle.py": "2518080881cd1803a21668b2dbf108970c7790ba36320fd00c30c38617baaf44",
+        "timeseries_private.py": "1900080dad800102b15ffc5fdda4d2effcd13c810605885e838f1d2e2b42fff6",
+        "timeseries_tokens.py": "ae38af8fb855394833e914396ea3816001bcdbf8e3d1c49a14a04166c52a0077",
+        "validation.py": "48312752dada7abb2a143c9953f8c6bf3d04632ca5b907c6b4a6bd4528ebe37c",
+        "serialization.py": "198444210200e243f9ffa515613bafeed695e4c56f07c25193feb30b2ae3618f",
+        "schemas.py": "3bb5c8f4ae59e88c31fc6305000c0304e127ecc31d0a399a5d1a22dfda322e19",
+        "provenance.py": "b02b01ad2ccc03fd5967ab010a3bde908cf5f71e9e2d578cd755e52fbd5f9bc5",
+        "intake.py": "661b0848d068a7f86060ecbea53c6d215ea40630eb19510d4b6043078777685e"
+      },
+      "input_module_version": "0.3.0",
+      "rows": 35040,
+      "atoms_validated_each_write_and_read": 210240,
+      "interval_minutes": 15,
+      "sum_kWh": "21900.000",
+      "disk_bytes": 216813204,
+      "write_seconds": 181.81366390013136,
+      "full_read_validation_seconds": 181.54974599997513,
+      "iteration_sum_seconds": 46.76580170006491,
+      "write_rows_per_second": 192.72478893141476,
+      "validated_read_rows_per_second": 193.004951932044,
+      "write_MiB_per_second": 1.137258771849652,
+      "validated_read_MiB_per_second": 1.138911998877581,
+      "start_working_set_bytes": 68997120,
+      "end_working_set_bytes": 68558848,
+      "start_os_peak_bytes": 102821888,
+      "actual_os_peak_bytes": 102821888,
+      "read_stats": {
+        "rows_validated": 35040,
+        "atoms_validated": 210240,
+        "input_bytes": 216813204,
+        "disk_bytes": 216813204,
+        "peak_disk_reserved_bytes": 226627298,
+        "elapsed_seconds": 181.54699999978766,
+        "peak_working_set_bytes": 73478144,
+        "os_peak_working_set_bytes": 102821888
+      },
+      "content_hash": "6486dcd178c768922e691a278f174ecba1f8ea9a6f015e08950227a7a61cfc1e"
+    }
+  ],
+  "tdd_receipts": {
+    "red1": {
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0
+    },
+    "green1": {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "red2-budget": {
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0
+    },
+    "green2": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "red3-api": {
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0
+    },
+    "green3": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "red4": {
+      "tests": 92,
+      "failures": 4,
+      "errors": 0,
+      "skipped": 1
+    },
+    "green4": {
+      "tests": 96,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1
+    },
+    "red5": {
+      "tests": 6,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0
+    },
+    "red6": {
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0
+    },
+    "red7": {
+      "tests": 3,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0
+    },
+    "red8": {
+      "tests": 6,
+      "failures": 5,
+      "errors": 0,
+      "skipped": 0
+    },
+    "green8": {
+      "tests": 109,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1
+    },
+    "red9": {
+      "tests": 2,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0
+    },
+    "red10": {
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0
+    },
+    "red11": {
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0
+    },
+    "green11": {
+      "tests": 113,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1
+    }
+  },
+  "prerequisite_error_receipts_not_claimed_as_product_RED": [
+    "red2.xml",
+    "red3.xml"
+  ],
+  "protected_legacy_source_LF_equivalent": {
+    "services/solar-pv-engine/src/wangbin_solar_pv/models.py": true,
+    "services/solar-pv-engine/src/wangbin_solar_pv/schemas.py": true,
+    "services/solar-pv-engine/src/wangbin_solar_pv/serialization.py": true,
+    "services/solar-pv-engine/src/wangbin_solar_pv/validation.py": true,
+    "services/solar-pv-engine/src/wangbin_solar_pv/provenance.py": true,
+    "services/solar-pv-engine/src/wangbin_solar_pv/intake.py": true,
+    "services/solar-pv-engine/src/wangbin_solar_pv/local_files.py": true
+  },
+  "changed_legacy_tests": [],
+  "git_head": "554c08859489d5fa2d8447f94c6494c9ed4bdb2a",
+  "interrupted_superseded_runs": [
+    "capacity-final",
+    "final2",
+    "final3"
+  ],
+  "limitations": [
+    "Cooperative local operations; no OS sandbox or malicious-directory-race guarantee.",
+    "Budget memory uses actual process working set and lifetime high-water mark, not memory reservation.",
+    "Caller iterables/native calls cannot be preempted while blocked; over-time operation is rejected on return.",
+    "Cross-resource/load/tariff alignment must be checked by the calculation consumer.",
+    "Native Windows symlink test may skip without privilege; actual NTFS junction and hardlink tests run."
+  ],
+  "legacy_regression": {
+    "tests": 3019,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 5
+  },
+  "legacy_failures": [
+    {
+      "classname": "tests.solar-pv.test_cli",
+      "name": "test_source_entry_module_entry_and_help_are_cwd_independent"
+    }
+  ]
+}

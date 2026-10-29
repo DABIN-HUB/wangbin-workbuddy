@@ -1,6 +1,6 @@
 # Phase 3 确定性工程与财务引擎实施计划
 
-> 使用executing-plans / test-driven-development / verification-before-completion。用户已授权Phase3A—3G、真实数值测试及各子阶段本地提交；不进入Phase4—8。本计划不代表计算已实现。当前处于3A启动审阅，关键方法/契约决策需按用户要求批准后才实施，不擅自改冻结定义。
+> 使用executing-plans / test-driven-development / verification-before-completion。用户已授权Phase3A—3G、真实数值测试及各子阶段本地提交；不进入Phase4—8。本计划不代表计算已实现。2026-10-29用户已正式批准18号文件D1/D2/D3推荐方案，同范围不再重复请示，进入3A实施。详见19-phase3-approved-implementation-contract.md；新实质性冲突仍需另行审批。
 
 **Goal:** 同仓库既有solar-pv-engine内实现和专业验收P0屋顶/地面两套独立计算链、Phase3适用公式、完整现金流/指标/重算及唯一结果JSON；交付两个实际运行SYNTHETIC案例，真实发布门禁仍分离。
 
@@ -43,11 +43,11 @@
 
 拟新增：计算公共类型、输入导出完整性验证、precision/errors、execution_registry、result_contract及schemas/calculation-result.schema.json；不提前登记空壳执行器为成功。
 
-- [x] 完成两路只读审计并由主任务复核差异，保存18-phase3-preimplementation-review.md；D1—D3批准尚待用户决定，先于受影响实现。
-- [ ] 逐89公式保存完整方法/符号/单位/源/条件/前后依赖、拟模块、82本阶段/7后续及真实状态；定义执行登记和测试证据协议。
-- [ ] 先写RED：输入hash/snapshot/scenario/基线/字段/状态篡改拒绝；结果根和metric类型；JSON往返/未来版本拒绝；run/time不影响result_hash，业务变化必改变hash。
-- [ ] 实现有效输入与结果Schema/验证/hash，明确BLOCKED结果不伪造指标，保留89公式真实状态。
-- [ ] 编译、相关测试、Phase2/旧回归、保护/隐私/diff；报告后本地commit并读回SHA。
+- [x] 完成两路只读审计并由主任务复核差异，保存18-phase3-preimplementation-review.md；D1—D3已于2026-10-29获用户正式批准，授权与并行接口记录见19号文档。
+- [x] 逐89公式保存完整方法/符号/单位/源/条件/前后依赖、拟模块、82本阶段/7后续及真实状态；定义执行登记和测试证据协议。当前有效映射见reports/solar-pv/phase3a-effective-execution-mapping.json；注册不等数值实现。
+- [x] 先写RED：输入hash/snapshot/scenario/基线/字段/状态篡改拒绝；结果根和metric类型；JSON往返/未来版本拒绝；run/time不影响result_hash，业务变化必改变hash。追加独立审阅4项回归及Decimal整数负零RED→GREEN，并由最终源码全量验收覆盖。
+- [x] 实现有效输入与结果Schema/验证/hash，明确BLOCKED结果不伪造指标，保留89公式真实状态。架构和边界见20-phase3-calculation-architecture.md。
+- [x] 编译33个生产模块、完整最终源码3277/0/6、旧回归145/0/5通过。用户确认4个旧文件来自其他任务并批准隔离快照验收及仅提交光伏；隔离快照288保护文件哈希未变、基线复跑exit0，4处明确排除且不回滚。报告见phase3a-review-and-acceptance.md及phase3a-isolated-acceptance.json；准确提交SHA由Git读回。
 
 ## Phase 3B：工程与发电
 
@@ -114,4 +114,4 @@
 
 ## 当前状态
 
-启动审阅/基线回归、原文归档、89条库存、本计划及双路差异复核已经执行。当前BLOCKED_PENDING_USER_APPROVAL，待D1—D3批准；未实现计算模块，未生成计算结果或两个数值案例，不标记3A完成或Phase3通过。启动审计提交只是经过保护/回归审查的文档阶段性成果，不是计算阶段完成。
+Phase3A基础契约按用户明确授权的已验证隔离快照本地验收通过：final3完整最终源码3277 passed/0 failed/6 skipped、旧回归145/0/5、33个生产模块编译及实际wheel源码一致，独立审阅5项关闭。复核源码无漂移、隔离快照288保护文件哈希不变且基线exit0。实时工作区4个旧文件已由用户确认来自其他任务，本次仅提交光伏、明确排除4处且不回滚；不把实时工作区保护失败改称PASS。授权及复核见reports/solar-pv/phase3a-isolated-acceptance.json与验收报告。3B仍仅21号只读准备，未新增数学实现；仍为0条公式数值验收、两完整项目未完成，四文件/真实项目/平台不提前PASS。

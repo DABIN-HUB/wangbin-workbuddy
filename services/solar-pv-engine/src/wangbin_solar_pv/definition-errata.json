@@ -1,0 +1,152 @@
+{
+  "schema_version": "solar-pv-definition-errata/1.0.0",
+  "definition_version": "solar-pv-formula-definitions/1.0.1",
+  "frozen_definition_version": "solar-pv-formula-definitions/1.0.0",
+  "approval_reference": "19-phase3-approved-implementation-contract.md#D1",
+  "items": [
+    {
+      "id": "E01",
+      "target_kind": "formula",
+      "target_id": "F-USABLE-AREA",
+      "source_file": "05-formula-extensions.json",
+      "reason_zh": "净可利用面积为本式输出；原始独立提供面积与计算值分离，不改面积方程或候选证据。",
+      "changes": [
+        {
+          "path": [
+            "every_symbol_definition",
+            0,
+            "role"
+          ],
+          "before": "input",
+          "after": "output"
+        }
+      ]
+    },
+    {
+      "id": "E02",
+      "target_kind": "formula",
+      "target_id": "F-CAPEX-ITEM-AMOUNT",
+      "source_file": "05-formula-extensions.json",
+      "reason_zh": "分项金额为数量乘单价的计算输出；原报价仍为独立候选证据，不覆盖报价或更改方程。",
+      "changes": [
+        {
+          "path": [
+            "every_symbol_definition",
+            0,
+            "role"
+          ],
+          "before": "input",
+          "after": "output"
+        }
+      ]
+    },
+    {
+      "id": "E03",
+      "target_kind": "formula",
+      "target_id": "F-NOMINAL-REAL-RATE",
+      "source_file": "05-formulas.json",
+      "reason_zh": "根单位与逐符号年度有效比例统一；保留年度步长、复利口径及同税/风险/币种边界，不把年度比例改为连续时间倒数。",
+      "changes": [
+        {
+          "path": [
+            "unit"
+          ],
+          "before": "1/年",
+          "after": "1"
+        },
+        {
+          "path": [
+            "dimensional_check"
+          ],
+          "before": "输出单位为 1/年；每个输入的单位见 every_symbol_definition，同量纲才能相加；比率以小数存储，百分号仅展示。",
+          "after": "输出为无量纲年度有效比例（单位1）；年度步长与复利口径保持不变，1+r_nom=(1+r_real)(1+π)各项均无量纲，不是连续时间1/年；比率以小数存储，百分号仅展示。"
+        }
+      ]
+    },
+    {
+      "id": "E04",
+      "target_kind": "formula",
+      "target_id": "F-ENERGY-AGGREGATION",
+      "source_file": "05-formulas.json",
+      "reason_zh": "b与完整符号和原主下标规则一致，表示能量物理边界；不改变时段汇总或混用财务口径。",
+      "changes": [
+        {
+          "path": [
+            "subscript_definition",
+            "逐个下标词素"
+          ],
+          "before": "b=互斥的项目/股权及税前后完整口径索引；p=月/年汇总期间索引；t=同一时间粒度的时段索引",
+          "after": "b=同一物理能量边界（已登记的可用、自用、上网、限发或交付边界）；p=月/年汇总期间索引；t=同一时间粒度的时段索引"
+        }
+      ]
+    },
+    {
+      "id": "E05",
+      "target_kind": "formula",
+      "target_id": "F-BREAK-EVEN-PRICE",
+      "source_file": "05-formulas.json",
+      "reason_zh": "p为事前允许域内待求的指定结算电价，而非月/年索引；保留全链重算、允许域与全部根集合规则。",
+      "changes": [
+        {
+          "path": [
+            "subscript_definition",
+            "逐个下标词素"
+          ],
+          "before": "star=盈亏平衡根集合标签，相当于上标 *，不是乘方；b=互斥的项目/股权及税前后完整口径索引；p=月/年汇总期间索引",
+          "after": "star=盈亏平衡根集合标签，相当于上标 *，不是乘方；b=互斥的项目/股权及税前后完整口径索引；p=待求结算电价，只调整事前指定电价项，在允许价格域P内求全部有效根"
+        }
+      ]
+    },
+    {
+      "id": "E06",
+      "target_kind": "binding",
+      "target_id": "checks.energy_balance_residual",
+      "source_file": "05-field-bindings.json",
+      "reason_zh": "从F-ENERGY-BALANCE的四个输入域沿冻结producer_formula_ids及公式input_field_ids取可达原始支持血缘并去重；支持清单不是全部同时必需，也不表示转换、账簿或能量模型已执行。不得以投资/融资信息作为电量守恒前提。",
+      "changes": [
+        {
+          "path": [
+            "input_field_ids"
+          ],
+          "before": [
+            "finance.working_capital",
+            "finance.debt_schedule",
+            "capex.items"
+          ],
+          "after": [
+            "grid.export_power_limit",
+            "load.series.energy",
+            "load.series.interval_minutes",
+            "load.series.power",
+            "load.series.timestamp",
+            "project.evaluation_years",
+            "resource.model_method",
+            "resource.monthly",
+            "resource.timeseries",
+            "resource.timeseries.ambient_temperature",
+            "resource.timeseries.interval_minutes",
+            "resource.timeseries.poa",
+            "resource.timeseries.timestamp",
+            "resource.timeseries.wind_speed",
+            "schedule.commissioning_date",
+            "site.timezone",
+            "system.ac_capacity",
+            "system.capacity_boundary",
+            "system.dc_capacity",
+            "system.inverter_count",
+            "system.inverter_efficiency",
+            "system.inverter_model",
+            "system.inverter_unit_ac",
+            "system.losses",
+            "system.module_count",
+            "system.module_model",
+            "system.module_power",
+            "system.temperature_coefficient",
+            "system.topology",
+            "system.unavailability"
+          ]
+        }
+      ]
+    }
+  ]
+}

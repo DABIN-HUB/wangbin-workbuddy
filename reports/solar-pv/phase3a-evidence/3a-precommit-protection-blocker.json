@@ -1,0 +1,17 @@
+{
+  "protected_count": 288,
+  "protected_changed": [
+    "packages/skills/wangbin-receivable-analyzer/SKILL.md",
+    "packages/skills/wangbin-receivable-analyzer/manifest.json",
+    "products/catalog.json",
+    "reports/workbuddy-upload-list.md"
+  ],
+  "outside_scope": [
+    "packages/skills/wangbin-receivable-analyzer/SKILL.md",
+    "packages/skills/wangbin-receivable-analyzer/manifest.json",
+    "products/catalog.json",
+    "reports/workbuddy-upload-list.md"
+  ],
+  "changed_files_scanned": 81,
+  "secret_pattern_findings": []
+}

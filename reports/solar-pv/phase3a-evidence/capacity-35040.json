@@ -1,0 +1,41 @@
+{
+  "synthetic": true,
+  "source_hashes": {
+    "timeseries_bundle.py": "2518080881cd1803a21668b2dbf108970c7790ba36320fd00c30c38617baaf44",
+    "timeseries_private.py": "1900080dad800102b15ffc5fdda4d2effcd13c810605885e838f1d2e2b42fff6",
+    "timeseries_tokens.py": "ae38af8fb855394833e914396ea3816001bcdbf8e3d1c49a14a04166c52a0077",
+    "validation.py": "48312752dada7abb2a143c9953f8c6bf3d04632ca5b907c6b4a6bd4528ebe37c",
+    "serialization.py": "198444210200e243f9ffa515613bafeed695e4c56f07c25193feb30b2ae3618f",
+    "schemas.py": "3bb5c8f4ae59e88c31fc6305000c0304e127ecc31d0a399a5d1a22dfda322e19",
+    "provenance.py": "b02b01ad2ccc03fd5967ab010a3bde908cf5f71e9e2d578cd755e52fbd5f9bc5",
+    "intake.py": "661b0848d068a7f86060ecbea53c6d215ea40630eb19510d4b6043078777685e"
+  },
+  "input_module_version": "0.3.0",
+  "rows": 35040,
+  "atoms_validated_each_write_and_read": 210240,
+  "interval_minutes": 15,
+  "sum_kWh": "21900.000",
+  "disk_bytes": 216813204,
+  "write_seconds": 152.68281689984724,
+  "full_read_validation_seconds": 153.79705880000256,
+  "iteration_sum_seconds": 46.66324370005168,
+  "write_rows_per_second": 229.49537290096367,
+  "validated_read_rows_per_second": 227.83270547173439,
+  "write_MiB_per_second": 1.3542400403064327,
+  "validated_read_MiB_per_second": 1.3444287278694396,
+  "start_working_set_bytes": 423157760,
+  "end_working_set_bytes": 425627648,
+  "start_os_peak_bytes": 456712192,
+  "actual_os_peak_bytes": 456712192,
+  "read_stats": {
+    "rows_validated": 35040,
+    "atoms_validated": 210240,
+    "input_bytes": 216813204,
+    "disk_bytes": 216813204,
+    "peak_disk_reserved_bytes": 226627298,
+    "elapsed_seconds": 153.7970000000205,
+    "peak_working_set_bytes": 423608320,
+    "os_peak_working_set_bytes": 456712192
+  },
+  "content_hash": "a4096aaff8ba23c7e956576a9d158650df348bc43016e6895c3eb4374867f013"
+}

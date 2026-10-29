@@ -1,0 +1,823 @@
+{
+  "started_at": "2026-10-29T11:37:47.898930+08:00",
+  "completed_at": "2026-10-29T11:37:51.040018+08:00",
+  "head": "554c08859489d5fa2d8447f94c6494c9ed4bdb2a",
+  "scope": "D1_APPROVED_METADATA_ONLY; NOT_NUMERICAL_IMPLEMENTATION_OR_VALIDATION",
+  "files_read_completely": [
+    {
+      "file": "00-baseline-manifest.json",
+      "bytes_read": 977,
+      "all_lines_read": 27,
+      "normalized_sha256": "33845de976ec13345320b79ff7045e86a39bf2194a427b5cd28169238d1defec",
+      "locked_hash_match": true,
+      "all_json_nodes_visited": 25
+    },
+    {
+      "file": "00-original-user-baseline.md",
+      "bytes_read": 35790,
+      "all_lines_read": 213,
+      "normalized_sha256": "4af609040ca4e800b16d561b86a8a33c54226d175581b54aa00110158c5d09f2",
+      "locked_hash_match": true
+    },
+    {
+      "file": "01-product-requirements.md",
+      "bytes_read": 9273,
+      "all_lines_read": 65,
+      "normalized_sha256": "2bbda5ab6d34e2b21c8b8806335986522d75de3a90e8c2e677d4c2ae8075357c",
+      "locked_hash_match": true
+    },
+    {
+      "file": "03-input-data-dictionary.md",
+      "bytes_read": 215547,
+      "all_lines_read": 793,
+      "normalized_sha256": "fcc1eac5641f941adbd6fd4fab216050344b2ae4e0590d8e9549682117ab8148",
+      "locked_hash_match": true
+    },
+    {
+      "file": "03-input-fields.json",
+      "bytes_read": 593148,
+      "all_lines_read": 21435,
+      "normalized_sha256": "393140cc57b5934041c3fece2c9c185c03c7876afaa3403ce317d795d6112a1b",
+      "locked_hash_match": true,
+      "all_json_nodes_visited": 17591
+    },
+    {
+      "file": "05-additional-sources.json",
+      "bytes_read": 1732,
+      "all_lines_read": 43,
+      "normalized_sha256": "80ae973645919c39721f7f7e205a797d3dc804bcbd17702ef35e39fc9f4b15f7",
+      "all_json_nodes_visited": 36
+    },
+    {
+      "file": "05-extension-formulas.md",
+      "bytes_read": 20743,
+      "all_lines_read": 253,
+      "normalized_sha256": "6f9f17ef73ed9501b3f76de5042c6c50de57ee2e6adfc61d981490eda299e6a0"
+    },
+    {
+      "file": "05-field-bindings.json",
+      "bytes_read": 222309,
+      "all_lines_read": 6395,
+      "normalized_sha256": "4ef6171f063f402963d61edc9647c7565c9ec9338099f62424a77e3507521533",
+      "locked_hash_match": true,
+      "all_json_nodes_visited": 4972
+    },
+    {
+      "file": "05-formula-extensions.json",
+      "bytes_read": 40985,
+      "all_lines_read": 973,
+      "normalized_sha256": "14bb789c908f4f883910fd517fd2cf55cf0719739f9fdd84e4dc61b111252007",
+      "locked_hash_match": true,
+      "all_json_nodes_visited": 793
+    },
+    {
+      "file": "05-formula-registry.md",
+      "bytes_read": 273007,
+      "all_lines_read": 3984,
+      "normalized_sha256": "b52600de2084450376e36e11968861e972363d4c71f05f7ed0d3b57bccbffd33"
+    },
+    {
+      "file": "05-formulas.json",
+      "bytes_read": 490989,
+      "all_lines_read": 9593,
+      "normalized_sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331",
+      "locked_hash_match": true,
+      "all_json_nodes_visited": 7953
+    },
+    {
+      "file": "05-unit-and-field-bindings.md",
+      "bytes_read": 6213,
+      "all_lines_read": 31,
+      "normalized_sha256": "621482bd5a33d271b0401b97566b88ab358ad0975cc7c04f72c4ec85bb365ae7"
+    },
+    {
+      "file": "06-glossary-extensions.json",
+      "bytes_read": 14387,
+      "all_lines_read": 290,
+      "normalized_sha256": "108f2a0fc11e07286a571bdf4a9a1c2ba63e1e9deae81558c4407bb1f9b85b61",
+      "locked_hash_match": true,
+      "all_json_nodes_visited": 256
+    },
+    {
+      "file": "06-glossary.json",
+      "bytes_read": 157126,
+      "all_lines_read": 2597,
+      "normalized_sha256": "fa29129d43f54a9b84ef6915e7bca99baa7a2a9a16ddab16beb3edec2e4d3ea5",
+      "locked_hash_match": true,
+      "all_json_nodes_visited": 2336
+    },
+    {
+      "file": "07-category-boundaries.md",
+      "bytes_read": 31298,
+      "all_lines_read": 254,
+      "normalized_sha256": "ee935418c0a7ef55544f6f97fddf71bcb62f6b906d0c19256b871f8d02b086a8",
+      "locked_hash_match": true
+    },
+    {
+      "file": "08-baseline-contract.json",
+      "bytes_read": 11331,
+      "all_lines_read": 504,
+      "normalized_sha256": "b3616e8ca7deab31b41118f0ffd0a8202c763c54371a9a6949e5d97bdecb140c",
+      "locked_hash_match": true,
+      "all_json_nodes_visited": 431
+    }
+  ],
+  "namespace_counts": {
+    "fields": 469,
+    "formulas": 89,
+    "formula_domain_bindings": 281
+  },
+  "baseline_file_count": 12,
+  "definition_identity": {
+    "definition_version": "solar-pv-formula-definitions/1.0.1",
+    "definition_hash": "617a2e9d314c095bd2ec893939c930a2323be6fd7805da12bf6d6fdd70274808",
+    "definition_manifest": {
+      "schema_version": "solar-pv-definition-manifest/1.0.0",
+      "definition_version": "solar-pv-formula-definitions/1.0.1",
+      "frozen_definition_version": "solar-pv-formula-definitions/1.0.0",
+      "baseline_hashes": {
+        "00-original-user-baseline.md": "4af609040ca4e800b16d561b86a8a33c54226d175581b54aa00110158c5d09f2",
+        "00-baseline-manifest.json": "33845de976ec13345320b79ff7045e86a39bf2194a427b5cd28169238d1defec",
+        "01-product-requirements.md": "2bbda5ab6d34e2b21c8b8806335986522d75de3a90e8c2e677d4c2ae8075357c",
+        "03-input-data-dictionary.md": "fcc1eac5641f941adbd6fd4fab216050344b2ae4e0590d8e9549682117ab8148",
+        "03-input-fields.json": "393140cc57b5934041c3fece2c9c185c03c7876afaa3403ce317d795d6112a1b",
+        "05-formulas.json": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331",
+        "05-formula-extensions.json": "14bb789c908f4f883910fd517fd2cf55cf0719739f9fdd84e4dc61b111252007",
+        "05-field-bindings.json": "4ef6171f063f402963d61edc9647c7565c9ec9338099f62424a77e3507521533",
+        "06-glossary.json": "fa29129d43f54a9b84ef6915e7bca99baa7a2a9a16ddab16beb3edec2e4d3ea5",
+        "06-glossary-extensions.json": "108f2a0fc11e07286a571bdf4a9a1c2ba63e1e9deae81558c4407bb1f9b85b61",
+        "07-category-boundaries.md": "ee935418c0a7ef55544f6f97fddf71bcb62f6b906d0c19256b871f8d02b086a8",
+        "08-baseline-contract.json": "b3616e8ca7deab31b41118f0ffd0a8202c763c54371a9a6949e5d97bdecb140c"
+      },
+      "frozen_definition_hash": "9255ca88892365ca2af963ad78f12428be740bf7aff00f1ecfdd418d7688a112",
+      "errata_hash": "425b9a3cde0ec1b2c7ba81a2418ad5967416271cef0d2e9048efa6abeadddecd",
+      "effective_definition_hash": "58cfd167bcee7180e9727495be77768416323f8f82df798b910638a79faac003",
+      "input_schema_hash": "0487863362dc09ce4a47619c18ec0066e5e140a9269d17635669f0605f711fdc",
+      "patches": [
+        {
+          "id": "E01",
+          "target_kind": "formula",
+          "target_id": "F-USABLE-AREA",
+          "source_file": "05-formula-extensions.json",
+          "reason_zh": "\u51c0\u53ef\u5229\u7528\u9762\u79ef\u4e3a\u672c\u5f0f\u8f93\u51fa\uff1b\u539f\u59cb\u72ec\u7acb\u63d0\u4f9b\u9762\u79ef\u4e0e\u8ba1\u7b97\u503c\u5206\u79bb\uff0c\u4e0d\u6539\u9762\u79ef\u65b9\u7a0b\u6216\u5019\u9009\u8bc1\u636e\u3002",
+          "changes": [
+            {
+              "path": [
+                "every_symbol_definition",
+                0,
+                "role"
+              ],
+              "before": "input",
+              "after": "output"
+            }
+          ]
+        },
+        {
+          "id": "E02",
+          "target_kind": "formula",
+          "target_id": "F-CAPEX-ITEM-AMOUNT",
+          "source_file": "05-formula-extensions.json",
+          "reason_zh": "\u5206\u9879\u91d1\u989d\u4e3a\u6570\u91cf\u4e58\u5355\u4ef7\u7684\u8ba1\u7b97\u8f93\u51fa\uff1b\u539f\u62a5\u4ef7\u4ecd\u4e3a\u72ec\u7acb\u5019\u9009\u8bc1\u636e\uff0c\u4e0d\u8986\u76d6\u62a5\u4ef7\u6216\u66f4\u6539\u65b9\u7a0b\u3002",
+          "changes": [
+            {
+              "path": [
+                "every_symbol_definition",
+                0,
+                "role"
+              ],
+              "before": "input",
+              "after": "output"
+            }
+          ]
+        },
+        {
+          "id": "E03",
+          "target_kind": "formula",
+          "target_id": "F-NOMINAL-REAL-RATE",
+          "source_file": "05-formulas.json",
+          "reason_zh": "\u6839\u5355\u4f4d\u4e0e\u9010\u7b26\u53f7\u5e74\u5ea6\u6709\u6548\u6bd4\u4f8b\u7edf\u4e00\uff1b\u4fdd\u7559\u5e74\u5ea6\u6b65\u957f\u3001\u590d\u5229\u53e3\u5f84\u53ca\u540c\u7a0e/\u98ce\u9669/\u5e01\u79cd\u8fb9\u754c\uff0c\u4e0d\u628a\u5e74\u5ea6\u6bd4\u4f8b\u6539\u4e3a\u8fde\u7eed\u65f6\u95f4\u5012\u6570\u3002",
+          "changes": [
+            {
+              "path": [
+                "unit"
+              ],
+              "before": "1/\u5e74",
+              "after": "1"
+            },
+            {
+              "path": [
+                "dimensional_check"
+              ],
+              "before": "\u8f93\u51fa\u5355\u4f4d\u4e3a 1/\u5e74\uff1b\u6bcf\u4e2a\u8f93\u5165\u7684\u5355\u4f4d\u89c1 every_symbol_definition\uff0c\u540c\u91cf\u7eb2\u624d\u80fd\u76f8\u52a0\uff1b\u6bd4\u7387\u4ee5\u5c0f\u6570\u5b58\u50a8\uff0c\u767e\u5206\u53f7\u4ec5\u5c55\u793a\u3002",
+              "after": "\u8f93\u51fa\u4e3a\u65e0\u91cf\u7eb2\u5e74\u5ea6\u6709\u6548\u6bd4\u4f8b\uff08\u5355\u4f4d1\uff09\uff1b\u5e74\u5ea6\u6b65\u957f\u4e0e\u590d\u5229\u53e3\u5f84\u4fdd\u6301\u4e0d\u53d8\uff0c1+r_nom=(1+r_real)(1+\u03c0)\u5404\u9879\u5747\u65e0\u91cf\u7eb2\uff0c\u4e0d\u662f\u8fde\u7eed\u65f6\u95f41/\u5e74\uff1b\u6bd4\u7387\u4ee5\u5c0f\u6570\u5b58\u50a8\uff0c\u767e\u5206\u53f7\u4ec5\u5c55\u793a\u3002"
+            }
+          ]
+        },
+        {
+          "id": "E04",
+          "target_kind": "formula",
+          "target_id": "F-ENERGY-AGGREGATION",
+          "source_file": "05-formulas.json",
+          "reason_zh": "b\u4e0e\u5b8c\u6574\u7b26\u53f7\u548c\u539f\u4e3b\u4e0b\u6807\u89c4\u5219\u4e00\u81f4\uff0c\u8868\u793a\u80fd\u91cf\u7269\u7406\u8fb9\u754c\uff1b\u4e0d\u6539\u53d8\u65f6\u6bb5\u6c47\u603b\u6216\u6df7\u7528\u8d22\u52a1\u53e3\u5f84\u3002",
+          "changes": [
+            {
+              "path": [
+                "subscript_definition",
+                "\u9010\u4e2a\u4e0b\u6807\u8bcd\u7d20"
+              ],
+              "before": "b=\u4e92\u65a5\u7684\u9879\u76ee/\u80a1\u6743\u53ca\u7a0e\u524d\u540e\u5b8c\u6574\u53e3\u5f84\u7d22\u5f15\uff1bp=\u6708/\u5e74\u6c47\u603b\u671f\u95f4\u7d22\u5f15\uff1bt=\u540c\u4e00\u65f6\u95f4\u7c92\u5ea6\u7684\u65f6\u6bb5\u7d22\u5f15",
+              "after": "b=\u540c\u4e00\u7269\u7406\u80fd\u91cf\u8fb9\u754c\uff08\u5df2\u767b\u8bb0\u7684\u53ef\u7528\u3001\u81ea\u7528\u3001\u4e0a\u7f51\u3001\u9650\u53d1\u6216\u4ea4\u4ed8\u8fb9\u754c\uff09\uff1bp=\u6708/\u5e74\u6c47\u603b\u671f\u95f4\u7d22\u5f15\uff1bt=\u540c\u4e00\u65f6\u95f4\u7c92\u5ea6\u7684\u65f6\u6bb5\u7d22\u5f15"
+            }
+          ]
+        },
+        {
+          "id": "E05",
+          "target_kind": "formula",
+          "target_id": "F-BREAK-EVEN-PRICE",
+          "source_file": "05-formulas.json",
+          "reason_zh": "p\u4e3a\u4e8b\u524d\u5141\u8bb8\u57df\u5185\u5f85\u6c42\u7684\u6307\u5b9a\u7ed3\u7b97\u7535\u4ef7\uff0c\u800c\u975e\u6708/\u5e74\u7d22\u5f15\uff1b\u4fdd\u7559\u5168\u94fe\u91cd\u7b97\u3001\u5141\u8bb8\u57df\u4e0e\u5168\u90e8\u6839\u96c6\u5408\u89c4\u5219\u3002",
+          "changes": [
+            {
+              "path": [
+                "subscript_definition",
+                "\u9010\u4e2a\u4e0b\u6807\u8bcd\u7d20"
+              ],
+              "before": "star=\u76c8\u4e8f\u5e73\u8861\u6839\u96c6\u5408\u6807\u7b7e\uff0c\u76f8\u5f53\u4e8e\u4e0a\u6807 *\uff0c\u4e0d\u662f\u4e58\u65b9\uff1bb=\u4e92\u65a5\u7684\u9879\u76ee/\u80a1\u6743\u53ca\u7a0e\u524d\u540e\u5b8c\u6574\u53e3\u5f84\u7d22\u5f15\uff1bp=\u6708/\u5e74\u6c47\u603b\u671f\u95f4\u7d22\u5f15",
+              "after": "star=\u76c8\u4e8f\u5e73\u8861\u6839\u96c6\u5408\u6807\u7b7e\uff0c\u76f8\u5f53\u4e8e\u4e0a\u6807 *\uff0c\u4e0d\u662f\u4e58\u65b9\uff1bb=\u4e92\u65a5\u7684\u9879\u76ee/\u80a1\u6743\u53ca\u7a0e\u524d\u540e\u5b8c\u6574\u53e3\u5f84\u7d22\u5f15\uff1bp=\u5f85\u6c42\u7ed3\u7b97\u7535\u4ef7\uff0c\u53ea\u8c03\u6574\u4e8b\u524d\u6307\u5b9a\u7535\u4ef7\u9879\uff0c\u5728\u5141\u8bb8\u4ef7\u683c\u57dfP\u5185\u6c42\u5168\u90e8\u6709\u6548\u6839"
+            }
+          ]
+        },
+        {
+          "id": "E06",
+          "target_kind": "binding",
+          "target_id": "checks.energy_balance_residual",
+          "source_file": "05-field-bindings.json",
+          "reason_zh": "\u4eceF-ENERGY-BALANCE\u7684\u56db\u4e2a\u8f93\u5165\u57df\u6cbf\u51bb\u7ed3producer_formula_ids\u53ca\u516c\u5f0finput_field_ids\u53d6\u53ef\u8fbe\u539f\u59cb\u652f\u6301\u8840\u7f18\u5e76\u53bb\u91cd\uff1b\u652f\u6301\u6e05\u5355\u4e0d\u662f\u5168\u90e8\u540c\u65f6\u5fc5\u9700\uff0c\u4e5f\u4e0d\u8868\u793a\u8f6c\u6362\u3001\u8d26\u7c3f\u6216\u80fd\u91cf\u6a21\u578b\u5df2\u6267\u884c\u3002\u4e0d\u5f97\u4ee5\u6295\u8d44/\u878d\u8d44\u4fe1\u606f\u4f5c\u4e3a\u7535\u91cf\u5b88\u6052\u524d\u63d0\u3002",
+          "changes": [
+            {
+              "path": [
+                "input_field_ids"
+              ],
+              "before": [
+                "finance.working_capital",
+                "finance.debt_schedule",
+                "capex.items"
+              ],
+              "after": [
+                "grid.export_power_limit",
+                "load.series.energy",
+                "load.series.interval_minutes",
+                "load.series.power",
+                "load.series.timestamp",
+                "project.evaluation_years",
+                "resource.model_method",
+                "resource.monthly",
+                "resource.timeseries",
+                "resource.timeseries.ambient_temperature",
+                "resource.timeseries.interval_minutes",
+                "resource.timeseries.poa",
+                "resource.timeseries.timestamp",
+                "resource.timeseries.wind_speed",
+                "schedule.commissioning_date",
+                "site.timezone",
+                "system.ac_capacity",
+                "system.capacity_boundary",
+                "system.dc_capacity",
+                "system.inverter_count",
+                "system.inverter_efficiency",
+                "system.inverter_model",
+                "system.inverter_unit_ac",
+                "system.losses",
+                "system.module_count",
+                "system.module_model",
+                "system.module_power",
+                "system.temperature_coefficient",
+                "system.topology",
+                "system.unavailability"
+              ]
+            }
+          ]
+        }
+      ],
+      "compatibility": {
+        "frozen": "INPUT_ONLY_RECALCULATE",
+        "current": "EXACT_IDENTITY"
+      }
+    }
+  },
+  "hard_lock_hash": "058a01916a16070b34a771560286a5f337831354066b4e0325a616c2365361cd",
+  "input_schema_comparison": {
+    "equal": true,
+    "legacy_hash": "0487863362dc09ce4a47619c18ec0066e5e140a9269d17635669f0605f711fdc",
+    "effective_hash": "0487863362dc09ce4a47619c18ec0066e5e140a9269d17635669f0605f711fdc"
+  },
+  "legacy_project_and_export_revalidation": {
+    "validation_errors": [],
+    "full_export_equal": true,
+    "input_hash_old": "cf5b904737056f4db742aa6a7047a48a8d08f24f01f4c7cc646dd5a6a9b9a87c",
+    "input_hash_current": "cf5b904737056f4db742aa6a7047a48a8d08f24f01f4c7cc646dd5a6a9b9a87c",
+    "source_snapshot_id_old": "sources-8742882f6d816f333f453c60b2bd8edd0034d605e6bb43a92dc8c5a7bbc32667",
+    "source_snapshot_id_current": "sources-8742882f6d816f333f453c60b2bd8edd0034d605e6bb43a92dc8c5a7bbc32667",
+    "hash_algorithm_version": "sha256/solar-pv-input-v1"
+  },
+  "compatibility": {
+    "legacy": {
+      "version": "solar-pv-formula-definitions/1.0.0",
+      "definition_hash": "9255ca88892365ca2af963ad78f12428be740bf7aff00f1ecfdd418d7688a112",
+      "current_definition_version": "solar-pv-formula-definitions/1.0.1",
+      "current_definition_hash": "617a2e9d314c095bd2ec893939c930a2323be6fd7805da12bf6d6fdd70274808",
+      "status": "INPUT_ONLY_RECALCULATE",
+      "input_compatible": true,
+      "results_compatible": false,
+      "requires_recalculation": true,
+      "migration_policy": "PRESERVE_INPUT_AND_OLD_RESULT_HASHES; EXPLICIT_NEW_CALCULATION_ONLY"
+    },
+    "current": {
+      "version": "solar-pv-formula-definitions/1.0.1",
+      "definition_hash": "617a2e9d314c095bd2ec893939c930a2323be6fd7805da12bf6d6fdd70274808",
+      "current_definition_version": "solar-pv-formula-definitions/1.0.1",
+      "current_definition_hash": "617a2e9d314c095bd2ec893939c930a2323be6fd7805da12bf6d6fdd70274808",
+      "status": "EXACT_IDENTITY",
+      "input_compatible": true,
+      "results_compatible": true,
+      "requires_recalculation": false,
+      "migration_policy": "PRESERVE_INPUT_AND_OLD_RESULT_HASHES; EXPLICIT_NEW_CALCULATION_ONLY"
+    }
+  },
+  "six_red_green_cycles": [
+    {
+      "id": "E01",
+      "red": {
+        "command": [
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-temp-e01-red",
+          "tests/solar-pv/test_definition_errata.py",
+          "-k",
+          "e01",
+          "-q"
+        ],
+        "started_at": "2026-10-29T10:59:15.373285+08:00",
+        "ended_at": "2026-10-29T10:59:16.445674+08:00",
+        "seconds": 1.0711596999317408,
+        "exit_code": 1,
+        "log": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-e01-red.log",
+        "pytest_counts": {
+          "failed": 1,
+          "passed": 0,
+          "skipped": 0,
+          "deselected": 0
+        }
+      },
+      "green": {
+        "command": [
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-temp-e01-green",
+          "tests/solar-pv/test_definition_errata.py",
+          "-k",
+          "e01",
+          "-q"
+        ],
+        "started_at": "2026-10-29T11:03:04.986256+08:00",
+        "ended_at": "2026-10-29T11:03:06.575997+08:00",
+        "seconds": 1.588713699951768,
+        "exit_code": 0,
+        "log": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-e01-green.log",
+        "pytest_counts": {
+          "failed": 0,
+          "passed": 1,
+          "skipped": 0,
+          "deselected": 0
+        }
+      }
+    },
+    {
+      "id": "E02",
+      "red": {
+        "command": [
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-temp-e02-red",
+          "tests/solar-pv/test_definition_errata.py",
+          "-k",
+          "e02",
+          "-q"
+        ],
+        "started_at": "2026-10-29T11:09:08.690355+08:00",
+        "ended_at": "2026-10-29T11:09:10.572404+08:00",
+        "seconds": 1.881427900167182,
+        "exit_code": 1,
+        "log": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-e02-red.log",
+        "pytest_counts": {
+          "failed": 1,
+          "passed": 0,
+          "skipped": 0,
+          "deselected": 1
+        }
+      },
+      "green": {
+        "command": [
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-temp-e02-green-final",
+          "tests/solar-pv/test_definition_errata.py",
+          "-k",
+          "e02",
+          "-q"
+        ],
+        "started_at": "2026-10-29T11:15:46.825845+08:00",
+        "ended_at": "2026-10-29T11:15:48.393592+08:00",
+        "seconds": 1.5662609001155943,
+        "exit_code": 0,
+        "log": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-e02-green-final.log",
+        "pytest_counts": {
+          "failed": 0,
+          "passed": 1,
+          "skipped": 0,
+          "deselected": 1
+        }
+      }
+    },
+    {
+      "id": "E03",
+      "red": {
+        "command": [
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-temp-e03-red",
+          "tests/solar-pv/test_definition_errata.py",
+          "-k",
+          "e03",
+          "-q"
+        ],
+        "started_at": "2026-10-29T11:21:22.576675+08:00",
+        "ended_at": "2026-10-29T11:21:24.211747+08:00",
+        "seconds": 1.6340099000371993,
+        "exit_code": 1,
+        "log": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-e03-red.log",
+        "pytest_counts": {
+          "failed": 1,
+          "passed": 0,
+          "skipped": 0,
+          "deselected": 2
+        }
+      },
+      "green": {
+        "command": [
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-temp-e03-green",
+          "tests/solar-pv/test_definition_errata.py",
+          "-k",
+          "e03",
+          "-q"
+        ],
+        "started_at": "2026-10-29T11:22:05.575438+08:00",
+        "ended_at": "2026-10-29T11:22:06.917128+08:00",
+        "seconds": 1.34083820017986,
+        "exit_code": 0,
+        "log": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-e03-green.log",
+        "pytest_counts": {
+          "failed": 0,
+          "passed": 1,
+          "skipped": 0,
+          "deselected": 2
+        }
+      }
+    },
+    {
+      "id": "E04",
+      "red": {
+        "command": [
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-temp-e04-red",
+          "tests/solar-pv/test_definition_errata.py",
+          "-k",
+          "e04",
+          "-q"
+        ],
+        "started_at": "2026-10-29T11:22:27.313332+08:00",
+        "ended_at": "2026-10-29T11:22:28.826694+08:00",
+        "seconds": 1.5126007001381367,
+        "exit_code": 1,
+        "log": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-e04-red.log",
+        "pytest_counts": {
+          "failed": 1,
+          "passed": 0,
+          "skipped": 0,
+          "deselected": 3
+        }
+      },
+      "green": {
+        "command": [
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-temp-e04-green",
+          "tests/solar-pv/test_definition_errata.py",
+          "-k",
+          "e04",
+          "-q"
+        ],
+        "started_at": "2026-10-29T11:23:06.053337+08:00",
+        "ended_at": "2026-10-29T11:23:07.391851+08:00",
+        "seconds": 1.337428699946031,
+        "exit_code": 0,
+        "log": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-e04-green.log",
+        "pytest_counts": {
+          "failed": 0,
+          "passed": 1,
+          "skipped": 0,
+          "deselected": 3
+        }
+      }
+    },
+    {
+      "id": "E05",
+      "red": {
+        "command": [
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-temp-e05-red",
+          "tests/solar-pv/test_definition_errata.py",
+          "-k",
+          "e05",
+          "-q"
+        ],
+        "started_at": "2026-10-29T11:23:45.101653+08:00",
+        "ended_at": "2026-10-29T11:23:46.732773+08:00",
+        "seconds": 1.630396000109613,
+        "exit_code": 1,
+        "log": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-e05-red.log",
+        "pytest_counts": {
+          "failed": 1,
+          "passed": 0,
+          "skipped": 0,
+          "deselected": 4
+        }
+      },
+      "green": {
+        "command": [
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-temp-e05-green",
+          "tests/solar-pv/test_definition_errata.py",
+          "-k",
+          "e05",
+          "-q"
+        ],
+        "started_at": "2026-10-29T11:24:19.770227+08:00",
+        "ended_at": "2026-10-29T11:24:21.081646+08:00",
+        "seconds": 1.3107818998396397,
+        "exit_code": 0,
+        "log": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-e05-green.log",
+        "pytest_counts": {
+          "failed": 0,
+          "passed": 1,
+          "skipped": 0,
+          "deselected": 4
+        }
+      }
+    },
+    {
+      "id": "E06",
+      "red": {
+        "command": [
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-temp-e06-red",
+          "tests/solar-pv/test_definition_errata.py",
+          "-k",
+          "e06",
+          "-q"
+        ],
+        "started_at": "2026-10-29T11:24:50.802554+08:00",
+        "ended_at": "2026-10-29T11:24:52.252020+08:00",
+        "seconds": 1.4491480998694897,
+        "exit_code": 1,
+        "log": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-e06-red.log",
+        "pytest_counts": {
+          "failed": 1,
+          "passed": 0,
+          "skipped": 0,
+          "deselected": 5
+        }
+      },
+      "green": {
+        "command": [
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-temp-e06-green",
+          "tests/solar-pv/test_definition_errata.py",
+          "-k",
+          "e06",
+          "-q"
+        ],
+        "started_at": "2026-10-29T11:25:25.995231+08:00",
+        "ended_at": "2026-10-29T11:25:27.458628+08:00",
+        "seconds": 1.4625230999663472,
+        "exit_code": 0,
+        "log": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-e06-green.log",
+        "pytest_counts": {
+          "failed": 0,
+          "passed": 1,
+          "skipped": 0,
+          "deselected": 5
+        }
+      }
+    }
+  ],
+  "final_test_runs": [
+    {
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-temp-final-new-tests-complete",
+        "tests/solar-pv/test_definition_errata.py",
+        "tests/solar-pv/test_definition_versions.py",
+        "-q",
+        "--junitxml=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase3-20261029/d1-final-new-tests-complete-junit.xml"
+      ],
+      "started_at": "2026-10-29T11:35:55.288887+08:00",
+      "ended_at": "2026-10-29T11:36:13.149757+08:00",
+      "seconds": 17.860278300009668,
+      "exit_code": 0,
+      "log": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-final-new-tests-complete.log",
+      "junit_counts": {
+        "tests": 58,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-temp-formula-regression",
+        "tests/solar-pv/test_formula_bindings.py",
+        "tests/solar-pv/test_formula_cli.py",
+        "-q",
+        "--junitxml=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/solar-pv-phase3-20261029/d1-formula-regression-junit.xml"
+      ],
+      "started_at": "2026-10-29T11:33:50.366174+08:00",
+      "ended_at": "2026-10-29T11:35:01.603683+08:00",
+      "seconds": 71.23714690003544,
+      "exit_code": 0,
+      "log": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\d1-formula-regression.log",
+      "junit_counts": {
+        "tests": 377,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    }
+  ],
+  "compiled_sources": [
+    "services/solar-pv-engine/src/wangbin_solar_pv/catalog.py",
+    "services/solar-pv-engine/src/wangbin_solar_pv/formula_bindings.py",
+    "services/solar-pv-engine/src/wangbin_solar_pv/definition_versions.py",
+    "tests/solar-pv/test_definition_errata.py",
+    "tests/solar-pv/test_definition_versions.py"
+  ],
+  "protected_file_count": 40,
+  "protected_matches": [
+    "services/solar-pv-engine/src/wangbin_solar_pv/baseline-lock.json",
+    "docs/solar-pv/00-original-user-baseline.md",
+    "docs/solar-pv/00-baseline-manifest.json",
+    "docs/solar-pv/01-product-requirements.md",
+    "docs/solar-pv/03-input-data-dictionary.md",
+    "docs/solar-pv/03-input-fields.json",
+    "docs/solar-pv/05-formulas.json",
+    "docs/solar-pv/05-formula-extensions.json",
+    "docs/solar-pv/05-field-bindings.json",
+    "docs/solar-pv/06-glossary.json",
+    "docs/solar-pv/06-glossary-extensions.json",
+    "docs/solar-pv/07-category-boundaries.md",
+    "docs/solar-pv/08-baseline-contract.json",
+    "tests/solar-pv/completeness_support.py",
+    "tests/solar-pv/conftest.py",
+    "tests/solar-pv/synthetic_support.py",
+    "tests/solar-pv/test_ai_origin.py",
+    "tests/solar-pv/test_applicability.py",
+    "tests/solar-pv/test_boundaries_and_records.py",
+    "tests/solar-pv/test_catalog_schema.py",
+    "tests/solar-pv/test_categories.py",
+    "tests/solar-pv/test_cli.py",
+    "tests/solar-pv/test_completeness.py",
+    "tests/solar-pv/test_conditions.py",
+    "tests/solar-pv/test_context_reactivation.py",
+    "tests/solar-pv/test_field_contract_coverage.py",
+    "tests/solar-pv/test_formula_bindings.py",
+    "tests/solar-pv/test_formula_cli.py",
+    "tests/solar-pv/test_input_consistency.py",
+    "tests/solar-pv/test_intake.py",
+    "tests/solar-pv/test_intake_boundaries.py",
+    "tests/solar-pv/test_metadata_formats.py",
+    "tests/solar-pv/test_parser_intake.py",
+    "tests/solar-pv/test_parser_precision.py",
+    "tests/solar-pv/test_parser_security.py",
+    "tests/solar-pv/test_parsers.py",
+    "tests/solar-pv/test_provenance_validation.py",
+    "tests/solar-pv/test_quality.py",
+    "tests/solar-pv/test_source_merge.py",
+    "tests/solar-pv/test_units.py"
+  ],
+  "changed_or_created_files": [
+    {
+      "file": "services/solar-pv-engine/src/wangbin_solar_pv/catalog.py",
+      "sha256": "9a2675f00c60631016dd72ea9a9046ab9b31ee1d0cce5ccab60ef59479ba7623"
+    },
+    {
+      "file": "services/solar-pv-engine/src/wangbin_solar_pv/formula_bindings.py",
+      "sha256": "7942a602f14c0952dd7dc700b86bb88664484bc4dd3ce1f299c53bb63a1171d4"
+    },
+    {
+      "file": "services/solar-pv-engine/src/wangbin_solar_pv/definition_versions.py",
+      "sha256": "9d50c04fb815fe1160ff43ec1fb7141492bf0acaa8ae264b0480e47fd68b5b43"
+    },
+    {
+      "file": "services/solar-pv-engine/src/wangbin_solar_pv/definition-errata.json",
+      "sha256": "bee7fc4e737a3f8e40befa272a842ce1ad0454b8437590089e090e32031b15e0"
+    },
+    {
+      "file": "services/solar-pv-engine/src/wangbin_solar_pv/definition-lock.json",
+      "sha256": "728ccb42a5d5f78cc9252f61070dd5eb2c1a426b8e727423d113bb2f79d170b6"
+    },
+    {
+      "file": "tests/solar-pv/test_definition_errata.py",
+      "sha256": "28a192a24ee98046245009f7aa873086a623d2399321ac422d6f25ac6f845f3a"
+    },
+    {
+      "file": "tests/solar-pv/test_definition_versions.py",
+      "sha256": "830acca84e659f459b09a59595c5d0605dca4da34b150b7906f0fd731081218c"
+    }
+  ],
+  "diff_check_exit_code": 0,
+  "parent_action_required": {
+    "file": "services/solar-pv-engine/pyproject.toml",
+    "package_data_missing": [
+      "definition-errata.json",
+      "definition-lock.json"
+    ],
+    "reason": "Outside D1 ownership: add package-data entries then verify built wheel in isolated scratch."
+  },
+  "did_not_stage_commit_upload_or_run_old_product_suite": true
+}

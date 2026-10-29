@@ -1,6 +1,6 @@
 # wangbin 光伏预可研产品：长期冻结需求基线
 
-基线版本 `SOLAR-PV-1.0.0`，冻结日期2026-10-28。**Phase2本地有界输入验收为PHASE2_INPUT_CONTRACT_PASS：3014项新测试通过/0失败/5项环境跳过，旧回归145/0/5；独立审阅P1已修复，提交6c7081ba32959c3b633f452e43a8826740e79158。2026-10-29用户另行启动Phase3，当前仅完成启动审阅/回归，D1—D3关键勘误/方法/大时序演进待批准，状态BLOCKED_PENDING_USER_APPROVAL；尚未实现计算或通过Phase3A。** 光伏数值、四文件、真实项目及平台仍未通过，发布BLOCKED。Phase0提交`f55cba2bc0e40aa009d48e49b9eed8b6e094e19b`、Phase1提交`b475c5e5b3d107625acb8e531a623d142060a194`；研究缺口不因输入层实现而关闭。Phase2验收见`reports/solar-pv/phase2-review-and-acceptance.md`、JUnit及git log，symlink跳过不是PASS。
+基线版本 `SOLAR-PV-1.0.0`，冻结日期2026-10-28。**Phase2历史验收PHASE2_INPUT_CONTRACT_PASS：3014/0/5，旧回归145/0/5，提交6c7081ba32959c3b633f452e43a8826740e79158。D1—D3已批准；Phase3A按用户明确批准的已验证隔离快照本地验收通过：3277 passed/0 failed/6 skipped、旧回归145/0/5、独立审阅5项关闭、wheel源码一致。** 用户确认4个旧文件来自其他任务，允许仅提交光伏并明确排除4处；复核隔离快照288保护文件哈希不变、基线exit0，当前源码无漂移。实时工作区保护失败不改称PASS、不回滚或覆盖其他工作；授权、排除清单与证据见reports/solar-pv/phase3a-isolated-acceptance.json及验收报告。公式数值验收仍0、两个完整合成项目未交付；3B仅只读准备，不提前标记PHASE3_CALCULATION_ENGINE_PASS、四文件、真实项目或平台通过，发布BLOCKED。Phase0提交`f55cba2bc0e40aa009d48e49b9eed8b6e094e19b`、Phase1提交`b475c5e5b3d107625acb8e531a623d142060a194`；symlink跳过不是PASS。
 
 ## 后续会话必须先读
 
@@ -9,7 +9,7 @@
 3. `08-requirement-traceability.csv`、`08-baseline-contract.json`：逐需求与真实状态；`FROZEN`不等于实现PASS。
 4. `11-phased-roadmap.md`及最新 `reports/solar-pv/` 阶段记录，重新运行git status/HEAD与保护校验后才继续。
 
-当前任务为Phase3A—3G，全文/哈希见`16-phase3-user-task.md`与manifest，计划见`17-phase3-implementation-plan.md`，必须先读`18-phase3-preimplementation-review.md`及勘误提案。未经批准不修改关键方法/原冻结定义；本轮不进入Phase4—8。不创建空壳Skill/Expert，不改旧工厂/产品/catalog/许可/历史归档，不上传、不部署、不push。Phase2任务及验收是历史已完成边界，不能把旧文档的“本轮停止Phase2”误作新任务禁止启动Phase3。原总提示词与全部长期目标继续有效，已授权的真实数值测试不可删减。
+当前任务为Phase3A—3G，全文/哈希见`16-phase3-user-task.md`与manifest，计划见`17-phase3-implementation-plan.md`，必须先读`18-phase3-preimplementation-review.md`及勘误提案和`19-phase3-approved-implementation-contract.md`。D1/D2/D3已正式批准，同范围不再重复请示；新的实质性数学/数据/关键架构偏差仍需审批，原冻结文件保留。本轮不进入Phase4—8。不创建空壳Skill/Expert，不改旧工厂/产品/catalog/许可/历史归档，不上传、不部署、不push。Phase2任务及验收是历史已完成边界，不能把旧文档的“本轮停止Phase2”误作新任务禁止启动Phase3。原总提示词与全部长期目标继续有效，已授权的真实数值测试不可删减。
 
 ## 文档导航
 
@@ -35,7 +35,12 @@
 | `13-phase2-implementation-plan.md`、`14-phase2-architecture.md` | Phase2A—2E实施计划、数据/来源/分类/受限解析/多轮事务接口和安全边界 |
 | `15-phase3-input-interface.md` | 已有CLI/JSON/公式查询用法，向Phase3移交输入而非伪计算结果；后续独立门禁和未关闭事项 |
 | `16-phase3-user-task.md`、`17-phase3-implementation-plan.md` | 新Phase3任务原文、归档哈希与3A—3G待实施清单，不是数值通过证据 |
-| `17-phase3-formula-execution-inventory.json`、`18-phase3-preimplementation-review.md`、`18-phase3-errata-proposals.json` | 89条真实启动状态（0实现）、双路审阅/主任务复核、6项未应用勘误、方法配置和32MiB大时序阻断及待批准方案 |
+| `17-phase3-formula-execution-inventory.json`、`18-phase3-preimplementation-review.md`、`18-phase3-errata-proposals.json` | 审批前历史：89条启动状态（0实现）、双路审阅/6项差异与待批准方案；不覆盖此历史记录 |
+| `19-phase3-approved-implementation-contract.md` | D1/D2/D3正式批准边界、有效定义与旧输入兼容、有界时序和计算层接口；不等于数值验收通过 |
+| `20-phase3-calculation-architecture.md` | 已实现的D1/D2/D3、输入/方法/结果身份、显式图及资源预算接口；数学执行和数值验收仍待3B—3G |
+| `21-phase3b-implementation-readiness.md` | 只读准备：27条工程域映射、逐组限幅/既有单位桥与输入前置条件、独立小锚；未开始3B生产变更，数值通过数仍0 |
+| `reports/solar-pv/phase3a-effective-execution-mapping.json`、`phase3a-review-fix-evidence.json` | 当前89条有效定义/域血缘/拟执行模块及契约回归证据；不是公式数值通过或最终3A验收 |
+| `reports/solar-pv/phase3a-review-and-acceptance.md`、`phase3a-state.json`、`phase3a-evidence-manifest.json` | Phase3A最终基础契约验收、精确源码与测试/容量/wheel证据；明确0条数值公式、两项目未完成及发布BLOCKED |
 
 ## 可执行检查
 

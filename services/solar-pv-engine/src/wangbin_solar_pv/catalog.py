@@ -42,12 +42,29 @@ class Catalog:
                 self.formulas[item["formula_id"]] = deepcopy(item)
         self.field_catalog = field_catalog
         self._schema = None
+        # Keep archival records independent of the effective, pinned definition.
+        self.frozen_formulas = deepcopy(self.formulas)
+        self.frozen_bindings = deepcopy(self.bindings)
+        from .definition_versions import DEFINITION_VERSION, load_effective_definitions
+        from .serialization import digest
+        self.formulas, self.bindings, self.definition_manifest = load_effective_definitions(self)
+        self.definition_version = DEFINITION_VERSION
+        self.definition_hash = digest(self.definition_manifest)
+
+    def definition_identity(self) -> dict:
+        """Detached, verified identity for formula queries and execution snapshots."""
+        from .definition_versions import definition_compatibility
+        definition_compatibility(self, self.definition_version, self.definition_hash)
+        return {"definition_version": self.definition_version,
+                "definition_hash": self.definition_hash,
+                "definition_manifest": deepcopy(self.definition_manifest)}
 
     def metadata(self, field_id: str) -> dict:
         if field_id not in self.fields:
             raise ContractError("UNKNOWN_FIELD", field_id)
         record = deepcopy(self.fields[field_id])
         record.update(
+            **self.definition_identity(),
             technical_name=field_id,
             evidence_requirements=deepcopy(self.field_catalog["provenance_record"]),
             validation_status="SCHEMA_SUPPORTED_CALCULATION_NOT_IMPLEMENTED",

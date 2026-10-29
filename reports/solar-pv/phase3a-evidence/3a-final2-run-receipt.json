@@ -1,0 +1,19 @@
+{
+  "source_manifest": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\3a-final2-source-hashes.json",
+  "exit_code": 1,
+  "snapshot_source_changed_by_verification": [],
+  "command": [
+    "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "pytest",
+    "tests/solar-pv",
+    "-q",
+    "--tb=short",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp=C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\3a-final2-pytest",
+    "--junitxml=C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\3a-final2.xml"
+  ],
+  "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase3-20261029\\3a-final2-repo"
+}
