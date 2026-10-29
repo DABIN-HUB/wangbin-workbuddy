@@ -45,6 +45,22 @@ def test_zero_cash_is_preserved_only_when_explicitly_provided():
     assert provided.hash != missing.hash
 
 
+def test_auxiliary_station_power_is_typed_explicit_and_missing_is_blocked():
+    provided = MethodConfig.from_dict(configuration({"energy.auxiliary_kw": Decimal("2.5")}))
+    assert provided.require("energy.auxiliary_kw") == Decimal("2.5")
+    missing = MethodConfig.from_dict(configuration({}))
+    with pytest.raises(ContractError, match="BLOCKED_METHOD_REVIEW"):
+        missing.require("energy.auxiliary_kw")
+    assert provided.hash != missing.hash
+
+
+def test_auxiliary_station_power_rejects_negative_and_float_values():
+    with pytest.raises(ContractError, match="METHOD_CONFIG_SCHEMA"):
+        MethodConfig.from_dict(configuration({"energy.auxiliary_kw": Decimal("-0.1")}))
+    with pytest.raises(ContractError, match="EXACT_JSON_NUMBER_REQUIRED"):
+        MethodConfig.from_dict(configuration({"energy.auxiliary_kw": 2.5}))
+
+
 @pytest.mark.parametrize("mutate", ["synthetic_verified", "synthetic_real", "missing_review", "denied", "wrong_category", "unknown_parameter", "extra_root", "future_version", "private_source_path", "credential_url"])
 def test_source_states_category_and_version_never_bypass_method_authorization(mutate):
     data = configuration({"precision.digits": 80})

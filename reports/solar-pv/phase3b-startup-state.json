@@ -1,0 +1,43 @@
+{
+  "phase": "3B",
+  "status": "IN_PROGRESS_NOT_NUMERICAL_PASS",
+  "started_at": "2026-10-29T07:48:01.465901+00:00",
+  "starting_head": "a84451fa0a09ce65c6e1e8c67c853d65c4e8c1ca",
+  "verified_phase3a_commits": [
+    "258da8b2f4739c0b3ab69b67aebed63b867638a7",
+    "a84451fa0a09ce65c6e1e8c67c853d65c4e8c1ca"
+  ],
+  "scope": "Phase3B only; stop before Phase3C",
+  "user_task_sha256": "8486e9ea3cf96f3710cc296e3248802cd3a2b88346b190707444bba17355cbc0",
+  "protected_count": 288,
+  "authorized_other_task_paths": [
+    {
+      "path": "packages/skills/wangbin-receivable-analyzer/SKILL.md",
+      "git_status": " M",
+      "sha256": "8a5ee4eb54a4f6a08d3ab7cccf792c12d5f01ab3fb4ab0de8dc926149087a945"
+    },
+    {
+      "path": "packages/skills/wangbin-receivable-analyzer/manifest.json",
+      "git_status": " M",
+      "sha256": "0a9459ab33f0f3bbc1c538535b994218e6ad92792901a39c3e4e94eaf777762b"
+    },
+    {
+      "path": "products/catalog.json",
+      "git_status": " M",
+      "sha256": "d74f3fa9f00184ee64f8452862958c3ef11f7848378ed42657e4b5fbc91def27"
+    },
+    {
+      "path": "reports/workbuddy-upload-list.md",
+      "git_status": " M",
+      "sha256": "6d0df16f21a4cf7a3a87eef1b90fb2f7d26fd1457f124066707281f9ff0ec586"
+    }
+  ],
+  "protected_drift": [
+    "packages/skills/wangbin-receivable-analyzer/SKILL.md",
+    "packages/skills/wangbin-receivable-analyzer/manifest.json",
+    "products/catalog.json",
+    "reports/workbuddy-upload-list.md"
+  ],
+  "policy": "No edit/overwrite/removal/staging/commit of these four files; compare bytes before/after every commit; no global-clean claim. Remaining 284 old files must match frozen protection hashes.",
+  "publication": "NO_PUSH_NO_UPLOAD_NO_RELEASE_NO_DEPLOY"
+}

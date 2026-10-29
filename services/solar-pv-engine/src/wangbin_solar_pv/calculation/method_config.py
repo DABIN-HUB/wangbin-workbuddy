@@ -54,6 +54,7 @@ PARAMETERS = {
     "constants.stc_cell_temperature": _spec("number", "degC", "标准测试条件电池温度及其明确来源", "Standard Test Conditions cell temperature", "STC_REFERENCE", minimum=Decimal("-273.15"), maximum=200),
     "energy.method": _choice("阵列面辐照性能比法或分时直交流模型", "Energy yield method selection", "ENERGY_MODEL", ["POA_PR", "INTERVAL_DC_AC"]),
     "energy.pr": _spec("number", "1", "明确边界的性能比情景，不能覆盖逐时模型的已算损失", "Explicit Performance Ratio scenario", "PR_PRE_CURTAILMENT", minimum=0, maximum=Decimal("1.5")),
+    "energy.auxiliary_kw": _spec("number", "kW", "选定期间和计量边界内尚未扣除的显式站用功率情景；缺失不默认为零", "Explicit auxiliary station power not yet deducted within the selected period and boundary; absence is not zero", "AUXILIARY_POWER", minimum=0),
     "energy.pr_includes_initial_degradation": _spec("boolean", None, "上游性能比是否明确包含首年初始衰减", "Initial degradation included in upstream Performance Ratio", "LOSS_ACCOUNTING"),
     "energy.upstream_included_losses": _spec("array", None, "上游结果已包含的损失ID集合；用于拒绝重复扣损", "Loss identifiers already included upstream", "LOSS_ACCOUNTING", maxItems=100, uniqueItems=True, items={"type": "string", "minLength": 1, "maxLength": 120}),
     "energy.resource_repetition": _choice("明确代表年重复情景或逐年资源输入，不伪装真实多年天气", "Resource year repetition method", "RESOURCE_YEAR", ["EXPLICIT_REPRESENTATIVE_SCENARIO", "YEAR_SPECIFIC"]),
