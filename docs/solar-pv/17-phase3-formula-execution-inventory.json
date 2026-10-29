@@ -1,0 +1,2685 @@
+{
+  "scope": "STARTUP_INVENTORY_NOT_IMPLEMENTATION_OR_PASS",
+  "total_formulas": 89,
+  "phase3_applicable": 82,
+  "later_phase8": 7,
+  "implemented_tested": 0,
+  "untested_or_unimplemented": 89,
+  "formulas": [
+    {
+      "formula_id": "F-DC-CAPACITY",
+      "name_zh": "直流装机容量",
+      "frozen_definition_reference": "05-formulas.json#F-DC-CAPACITY",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "equipment.module_count",
+        "equipment.module_power_kwp"
+      ],
+      "output_formula_field_id": "capacity.dc_kwp",
+      "supporting_input_field_ids": [
+        "system.module_count",
+        "system.module_power"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-AC-CAPACITY",
+      "name_zh": "逆变器交流额定容量",
+      "frozen_definition_reference": "05-formulas.json#F-AC-CAPACITY",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "equipment.inverters.rated_ac_kw",
+        "equipment.inverters.ids"
+      ],
+      "output_formula_field_id": "capacity.ac_kw",
+      "supporting_input_field_ids": [
+        "system.inverter_count",
+        "system.inverter_model",
+        "system.inverter_unit_ac"
+      ],
+      "symbol_count": 4,
+      "unbound_index_symbols": [
+        "j"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-DC-AC-RATIO",
+      "name_zh": "直交流容配比",
+      "frozen_definition_reference": "05-formulas.json#F-DC-AC-RATIO",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "capacity.dc_kwp",
+        "capacity.ac_kw"
+      ],
+      "output_formula_field_id": "capacity.dc_ac_ratio",
+      "supporting_input_field_ids": [
+        "system.ac_capacity",
+        "system.dc_capacity"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-POA-IRRADIATION",
+      "name_zh": "阵列面辐照量积分",
+      "frozen_definition_reference": "05-formulas.json#F-POA-IRRADIATION",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "resource.poa_irradiance_kw_m2",
+        "time.interval_hours",
+        "time.resource_intervals"
+      ],
+      "output_formula_field_id": "resource.poa_irradiation_kwh_m2",
+      "supporting_input_field_ids": [
+        "load.series.interval_minutes",
+        "load.series.timestamp",
+        "project.evaluation_years",
+        "resource.timeseries.interval_minutes",
+        "resource.timeseries.poa",
+        "resource.timeseries.timestamp",
+        "schedule.commissioning_date",
+        "site.timezone"
+      ],
+      "symbol_count": 6,
+      "unbound_index_symbols": [
+        "t",
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-FIRST-YEAR-ENERGY",
+      "name_zh": "首年性能比简化发电量",
+      "frozen_definition_reference": "05-formulas.json#F-FIRST-YEAR-ENERGY",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "capacity.dc_kwp",
+        "resource.poa_irradiation_kwh_m2",
+        "constants.stc_irradiance_kw_m2",
+        "energy.pr_assumed"
+      ],
+      "output_formula_field_id": "energy.first_year_ac_kwh",
+      "supporting_input_field_ids": [
+        "resource.model_method",
+        "resource.monthly.poa",
+        "resource.timeseries.poa",
+        "system.dc_capacity",
+        "system.losses"
+      ],
+      "symbol_count": 5,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-LOSS-COMPOSITE",
+      "name_zh": "独立损失复合系数",
+      "frozen_definition_reference": "05-formulas.json#F-LOSS-COMPOSITE",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "losses.independent_rates",
+        "losses.active_ids"
+      ],
+      "output_formula_field_id": "losses.retention_factor",
+      "supporting_input_field_ids": [
+        "system.losses",
+        "system.unavailability"
+      ],
+      "symbol_count": 4,
+      "unbound_index_symbols": [
+        "k"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-DC-TIME-POWER",
+      "name_zh": "时段直流功率近似",
+      "frozen_definition_reference": "05-formulas.json#F-DC-TIME-POWER",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "capacity.dc_kwp",
+        "resource.effective_poa_kw_m2",
+        "constants.stc_irradiance_kw_m2",
+        "equipment.power_temperature_coefficient",
+        "resource.cell_temperature_c",
+        "constants.stc_cell_temperature_c",
+        "losses.dc_retention"
+      ],
+      "output_formula_field_id": "energy.dc_power_kw",
+      "supporting_input_field_ids": [
+        "resource.model_method",
+        "resource.timeseries.ambient_temperature",
+        "resource.timeseries.poa",
+        "resource.timeseries.wind_speed",
+        "system.dc_capacity",
+        "system.losses",
+        "system.module_model",
+        "system.temperature_coefficient",
+        "system.unavailability"
+      ],
+      "symbol_count": 8,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-AC-INVERTER-POWER",
+      "name_zh": "逆变转换与限幅",
+      "frozen_definition_reference": "05-formulas.json#F-AC-INVERTER-POWER",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "capacity.ac_kw",
+        "losses.inverter_efficiency",
+        "energy.dc_power_kw"
+      ],
+      "output_formula_field_id": "energy.inverter_ac_power_kw",
+      "supporting_input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.ac_capacity",
+        "system.capacity_boundary",
+        "system.inverter_efficiency",
+        "system.losses"
+      ],
+      "symbol_count": 4,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-AVAILABLE-ENERGY",
+      "name_zh": "计量点限发前可用电量",
+      "frozen_definition_reference": "05-formulas.json#F-AVAILABLE-ENERGY",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "energy.inverter_ac_power_kw",
+        "losses.ac_retention",
+        "losses.transformer_retention",
+        "losses.export_line_retention",
+        "energy.auxiliary_kw",
+        "time.interval_hours",
+        "losses.availability"
+      ],
+      "output_formula_field_id": "energy.available_kwh",
+      "supporting_input_field_ids": [
+        "load.series.interval_minutes",
+        "load.series.timestamp",
+        "project.evaluation_years",
+        "resource.monthly",
+        "resource.timeseries",
+        "resource.timeseries.interval_minutes",
+        "resource.timeseries.timestamp",
+        "schedule.commissioning_date",
+        "site.timezone",
+        "system.capacity_boundary",
+        "system.losses",
+        "system.topology",
+        "system.unavailability"
+      ],
+      "symbol_count": 8,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-ENERGY-AGGREGATION",
+      "name_zh": "月年度电量汇总",
+      "frozen_definition_reference": "05-formulas.json#F-ENERGY-AGGREGATION",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "energy.boundary_interval_kwh",
+        "energy.boundary_id",
+        "time.aggregation_period",
+        "time.period_interval_ids"
+      ],
+      "output_formula_field_id": "energy.period_totals_kwh",
+      "supporting_input_field_ids": [
+        "grid.metering_boundary",
+        "load.series.interval_minutes",
+        "load.series.timestamp",
+        "project.evaluation_years",
+        "resource.monthly",
+        "resource.timeseries",
+        "resource.timeseries.interval_minutes",
+        "resource.timeseries.timestamp",
+        "schedule.commissioning_date",
+        "site.timezone",
+        "system.capacity_boundary",
+        "system.losses"
+      ],
+      "symbol_count": 6,
+      "unbound_index_symbols": [
+        "t"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-INITIAL-DEGRADATION",
+      "name_zh": "首年初始衰减",
+      "frozen_definition_reference": "05-formulas.json#F-INITIAL-DEGRADATION",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "energy.first_year_pre_initial_kwh",
+        "degradation.initial_fraction"
+      ],
+      "output_formula_field_id": "energy.first_year_ac_kwh",
+      "supporting_input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.capacity_boundary",
+        "system.first_year_degradation",
+        "system.losses"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-ANNUAL-DEGRADATION",
+      "name_zh": "后续恒定衰减",
+      "frozen_definition_reference": "05-formulas.json#F-ANNUAL-DEGRADATION",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "energy.first_year_ac_kwh",
+        "degradation.annual_fraction",
+        "time.operating_year"
+      ],
+      "output_formula_field_id": "energy.annual_kwh",
+      "supporting_input_field_ids": [
+        "load.series.interval_minutes",
+        "load.series.timestamp",
+        "project.evaluation_years",
+        "resource.monthly",
+        "resource.timeseries",
+        "resource.timeseries.interval_minutes",
+        "resource.timeseries.timestamp",
+        "schedule.commissioning_date",
+        "site.timezone",
+        "system.annual_degradation",
+        "system.capacity_boundary",
+        "system.losses"
+      ],
+      "symbol_count": 4,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-PIECEWISE-DEGRADATION",
+      "name_zh": "分段衰减性能系数",
+      "frozen_definition_reference": "05-formulas.json#F-PIECEWISE-DEGRADATION",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "degradation.previous_retention",
+        "degradation.yearly_fraction",
+        "degradation.replacement_uplift"
+      ],
+      "output_formula_field_id": "degradation.annual_retention",
+      "supporting_input_field_ids": [
+        "assets.replacements",
+        "assets.replacements.performance_reset",
+        "system.degradation_segments",
+        "system.degradation_segments.from_year",
+        "system.degradation_segments.rate",
+        "system.degradation_segments.to_year"
+      ],
+      "symbol_count": 4,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-EQUIVALENT-HOURS",
+      "name_zh": "等效利用小时",
+      "frozen_definition_reference": "05-formulas.json#F-EQUIVALENT-HOURS",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "energy.annual_kwh",
+        "energy.reference_capacity_kw"
+      ],
+      "output_formula_field_id": "energy.equivalent_hours",
+      "supporting_input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.ac_capacity",
+        "system.capacity_boundary",
+        "system.dc_capacity",
+        "system.losses"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-CAPACITY-FACTOR",
+      "name_zh": "容量因子",
+      "frozen_definition_reference": "05-formulas.json#F-CAPACITY-FACTOR",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "energy.annual_kwh",
+        "energy.reference_capacity_kw",
+        "time.year_hours"
+      ],
+      "output_formula_field_id": "energy.capacity_factor",
+      "supporting_input_field_ids": [
+        "load.series.interval_minutes",
+        "load.series.timestamp",
+        "project.evaluation_years",
+        "resource.monthly",
+        "resource.timeseries",
+        "resource.timeseries.interval_minutes",
+        "resource.timeseries.timestamp",
+        "schedule.commissioning_date",
+        "site.timezone",
+        "system.ac_capacity",
+        "system.capacity_boundary",
+        "system.dc_capacity",
+        "system.losses"
+      ],
+      "symbol_count": 4,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-PR-OBSERVED",
+      "name_zh": "同边界性能比校核",
+      "frozen_definition_reference": "05-formulas.json#F-PR-OBSERVED",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "energy.annual_kwh",
+        "capacity.dc_kwp",
+        "resource.poa_irradiation_kwh_m2",
+        "constants.stc_irradiance_kw_m2"
+      ],
+      "output_formula_field_id": "energy.pr_observed",
+      "supporting_input_field_ids": [
+        "resource.monthly",
+        "resource.monthly.poa",
+        "resource.timeseries",
+        "resource.timeseries.poa",
+        "system.capacity_boundary",
+        "system.dc_capacity",
+        "system.losses"
+      ],
+      "symbol_count": 5,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-EXPORT-LIMIT-ENERGY",
+      "name_zh": "上网功率限制换算电量",
+      "frozen_definition_reference": "05-formulas.json#F-EXPORT-LIMIT-ENERGY",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "grid.export_limit_kw",
+        "time.interval_hours"
+      ],
+      "output_formula_field_id": "grid.export_limit_kwh",
+      "supporting_input_field_ids": [
+        "grid.export_power_limit",
+        "load.series.interval_minutes",
+        "load.series.timestamp",
+        "project.evaluation_years",
+        "resource.timeseries.interval_minutes",
+        "resource.timeseries.timestamp",
+        "schedule.commissioning_date",
+        "site.timezone"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-SELF-CONSUMPTION",
+      "name_zh": "时段自用电量",
+      "frozen_definition_reference": "05-formulas.json#F-SELF-CONSUMPTION",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "energy.available_kwh",
+        "load.interval_kwh"
+      ],
+      "output_formula_field_id": "consumption.self_kwh",
+      "supporting_input_field_ids": [
+        "load.series.energy",
+        "load.series.interval_minutes",
+        "load.series.power",
+        "load.series.timestamp",
+        "resource.monthly",
+        "resource.timeseries",
+        "system.capacity_boundary",
+        "system.losses"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-EXPORTED-ENERGY",
+      "name_zh": "时段上网电量",
+      "frozen_definition_reference": "05-formulas.json#F-EXPORTED-ENERGY",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "energy.available_kwh",
+        "consumption.self_kwh",
+        "grid.export_limit_kwh"
+      ],
+      "output_formula_field_id": "consumption.export_kwh",
+      "supporting_input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.capacity_boundary",
+        "system.losses"
+      ],
+      "symbol_count": 4,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-CURTAILED-ENERGY",
+      "name_zh": "时段弃光限发电量",
+      "frozen_definition_reference": "05-formulas.json#F-CURTAILED-ENERGY",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "energy.available_kwh",
+        "consumption.self_kwh",
+        "consumption.export_kwh"
+      ],
+      "output_formula_field_id": "consumption.curtailed_kwh",
+      "supporting_input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.capacity_boundary",
+        "system.losses"
+      ],
+      "symbol_count": 4,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-ENERGY-BALANCE",
+      "name_zh": "时段电量平衡残差",
+      "frozen_definition_reference": "05-formulas.json#F-ENERGY-BALANCE",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "energy.available_kwh",
+        "consumption.self_kwh",
+        "consumption.export_kwh",
+        "consumption.curtailed_kwh"
+      ],
+      "output_formula_field_id": "checks.energy_balance_residual",
+      "supporting_input_field_ids": [
+        "resource.monthly",
+        "resource.timeseries",
+        "system.capacity_boundary",
+        "system.losses"
+      ],
+      "symbol_count": 5,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-DELIVERED-ENERGY",
+      "name_zh": "可利用交付电量",
+      "frozen_definition_reference": "05-formulas.json#F-DELIVERED-ENERGY",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "consumption.self_kwh",
+        "consumption.export_kwh",
+        "time.operating_interval_ids"
+      ],
+      "output_formula_field_id": "energy.delivered_annual_kwh",
+      "supporting_input_field_ids": [
+        "load.series.interval_minutes",
+        "load.series.timestamp",
+        "project.evaluation_years",
+        "resource.timeseries.interval_minutes",
+        "resource.timeseries.timestamp",
+        "schedule.commissioning_date",
+        "site.timezone"
+      ],
+      "symbol_count": 6,
+      "unbound_index_symbols": [
+        "t",
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-SELF-CONSUMPTION-RATIO",
+      "name_zh": "发电侧自用率",
+      "frozen_definition_reference": "05-formulas.json#F-SELF-CONSUMPTION-RATIO",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "consumption.self_kwh",
+        "energy.delivered_annual_kwh",
+        "time.operating_interval_ids"
+      ],
+      "output_formula_field_id": "consumption.self_ratio",
+      "supporting_input_field_ids": [
+        "load.series.interval_minutes",
+        "load.series.timestamp",
+        "project.evaluation_years",
+        "resource.monthly",
+        "resource.timeseries",
+        "resource.timeseries.interval_minutes",
+        "resource.timeseries.timestamp",
+        "schedule.commissioning_date",
+        "site.timezone",
+        "system.capacity_boundary",
+        "system.losses"
+      ],
+      "symbol_count": 6,
+      "unbound_index_symbols": [
+        "t",
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-LOAD-COVERAGE-RATIO",
+      "name_zh": "负荷侧自给率",
+      "frozen_definition_reference": "05-formulas.json#F-LOAD-COVERAGE-RATIO",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "consumption.self_kwh",
+        "load.interval_kwh",
+        "time.operating_interval_ids"
+      ],
+      "output_formula_field_id": "consumption.load_coverage_ratio",
+      "supporting_input_field_ids": [
+        "load.series.energy",
+        "load.series.interval_minutes",
+        "load.series.power",
+        "load.series.timestamp",
+        "project.evaluation_years",
+        "resource.timeseries.interval_minutes",
+        "resource.timeseries.timestamp",
+        "schedule.commissioning_date",
+        "site.timezone"
+      ],
+      "symbol_count": 6,
+      "unbound_index_symbols": [
+        "t",
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-ENERGY-REVENUE",
+      "name_zh": "自持项目电量经济收益",
+      "frozen_definition_reference": "05-formulas.json#F-ENERGY-REVENUE",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "consumption.self_kwh",
+        "tariff.avoidable_price",
+        "consumption.export_kwh",
+        "tariff.export_price",
+        "revenue.other_benefit",
+        "time.settlement_interval_ids"
+      ],
+      "output_formula_field_id": "revenue.annual_benefit",
+      "supporting_input_field_ids": [
+        "load.series.interval_minutes",
+        "load.series.timestamp",
+        "project.evaluation_years",
+        "resource.timeseries.interval_minutes",
+        "resource.timeseries.timestamp",
+        "revenue.other_items.amount",
+        "revenue.other_items.exclusive_boundary",
+        "schedule.commissioning_date",
+        "site.timezone",
+        "tariff.market_series.sale_price",
+        "tariff.non_avoidable_charges",
+        "tariff.periods.avoidable_price",
+        "tariff.periods.sale_price"
+      ],
+      "symbol_count": 9,
+      "unbound_index_symbols": [
+        "t",
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-PPA-REVENUE",
+      "name_zh": "第三方购售电合同收入",
+      "frozen_definition_reference": "05-formulas.json#F-PPA-REVENUE",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "consumption.host_delivery_kwh",
+        "tariff.ppa_price",
+        "consumption.export_kwh",
+        "tariff.export_price",
+        "revenue.other_benefit",
+        "time.settlement_interval_ids"
+      ],
+      "output_formula_field_id": "revenue.ppa_benefit",
+      "supporting_input_field_ids": [
+        "load.series",
+        "load.series.interval_minutes",
+        "load.series.timestamp",
+        "project.evaluation_years",
+        "project.ownership_mode",
+        "resource.timeseries.interval_minutes",
+        "resource.timeseries.timestamp",
+        "revenue.other_items.amount",
+        "revenue.other_items.exclusive_boundary",
+        "schedule.commissioning_date",
+        "site.timezone",
+        "tariff.contract_id",
+        "tariff.market_series.sale_price",
+        "tariff.periods.sale_price",
+        "tariff.ppa_price"
+      ],
+      "symbol_count": 9,
+      "unbound_index_symbols": [
+        "t",
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-TAX-EXCLUSIVE-AMOUNT",
+      "name_zh": "含税金额剥离",
+      "frozen_definition_reference": "05-formulas.json#F-TAX-EXCLUSIVE-AMOUNT",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "tax.inclusive_amount",
+        "tax.vat_rate"
+      ],
+      "output_formula_field_id": "tax.exclusive_amount",
+      "supporting_input_field_ids": [
+        "assets.depreciation",
+        "capex.items.vat_rate",
+        "finance.loan_agreement_id",
+        "tariff.periods.vat_rate",
+        "tax.incentive_reference",
+        "tax.regime_reference",
+        "tax.vat_output_rate",
+        "tax.vat_recovery_timing"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-CASH-RECEIPTS",
+      "name_zh": "权责收益到收款口径",
+      "frozen_definition_reference": "05-formulas.json#F-CASH-RECEIPTS",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "revenue.invoiced_gross",
+        "revenue.other_cash",
+        "working_capital.receivables_change",
+        "working_capital.advances_change"
+      ],
+      "output_formula_field_id": "revenue.cash_receipts",
+      "supporting_input_field_ids": [
+        "finance.cashflow_timing",
+        "finance.working_capital",
+        "revenue.other_items",
+        "revenue.other_items.amount",
+        "revenue.other_items.contract_id",
+        "tariff.contract_id",
+        "tariff.periods"
+      ],
+      "symbol_count": 5,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-CAPEX-TOTAL",
+      "name_zh": "分类投资估算总额",
+      "frozen_definition_reference": "05-formulas.json#F-CAPEX-TOTAL",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "capex.items.amount",
+        "capex.item_ids"
+      ],
+      "output_formula_field_id": "capex.total",
+      "supporting_input_field_ids": [
+        "capex.items.amount",
+        "capex.items.row_id"
+      ],
+      "symbol_count": 4,
+      "unbound_index_symbols": [
+        "i"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-UNIT-INVESTMENT",
+      "name_zh": "单位装机投资",
+      "frozen_definition_reference": "05-formulas.json#F-UNIT-INVESTMENT",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "capex.total",
+        "capacity.dc_kwp"
+      ],
+      "output_formula_field_id": "capex.unit_dc",
+      "supporting_input_field_ids": [
+        "capex.includes_construction_interest",
+        "capex.items",
+        "finance.cashflow_timing",
+        "system.dc_capacity"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-ANNUAL-OPEX",
+      "name_zh": "年度现金运营费用计划",
+      "frozen_definition_reference": "05-formulas.json#F-ANNUAL-OPEX",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "opex.items.cash_amount",
+        "opex.item_ids"
+      ],
+      "output_formula_field_id": "opex.cash_annual",
+      "supporting_input_field_ids": [
+        "finance.inflation_rate",
+        "opex.items",
+        "opex.items.row_id"
+      ],
+      "symbol_count": 5,
+      "unbound_index_symbols": [
+        "k",
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-OPEX-ESCALATION",
+      "name_zh": "单项运营费用递增",
+      "frozen_definition_reference": "05-formulas.json#F-OPEX-ESCALATION",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "opex.items.base_amount",
+        "opex.items.escalation_rates",
+        "time.escalation_year"
+      ],
+      "output_formula_field_id": "opex.items.escalated_amount",
+      "supporting_input_field_ids": [
+        "finance.inflation_rate",
+        "load.series.interval_minutes",
+        "load.series.timestamp",
+        "opex.items.base_amount",
+        "opex.items.escalation_rate",
+        "project.evaluation_years",
+        "resource.timeseries.interval_minutes",
+        "resource.timeseries.timestamp",
+        "schedule.commissioning_date",
+        "site.timezone"
+      ],
+      "symbol_count": 6,
+      "unbound_index_symbols": [
+        "k",
+        "a"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-STRAIGHT-LINE-DEPRECIATION",
+      "name_zh": "分类直线折旧",
+      "frozen_definition_reference": "05-formulas.json#F-STRAIGHT-LINE-DEPRECIATION",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "depreciation.asset_basis",
+        "depreciation.asset_residual",
+        "depreciation.asset_life_years"
+      ],
+      "output_formula_field_id": "depreciation.asset_annual",
+      "supporting_input_field_ids": [
+        "assets.depreciation.depreciable_basis",
+        "assets.depreciation.depreciation_years",
+        "assets.depreciation.residual_value"
+      ],
+      "symbol_count": 6,
+      "unbound_index_symbols": [
+        "a",
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-ASSET-BOOK-VALUE",
+      "name_zh": "资产净值滚动",
+      "frozen_definition_reference": "05-formulas.json#F-ASSET-BOOK-VALUE",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "assets.opening_book_value",
+        "assets.capitalized_additions",
+        "depreciation.asset_annual",
+        "assets.disposal_book_value"
+      ],
+      "output_formula_field_id": "assets.closing_book_value",
+      "supporting_input_field_ids": [
+        "assets.depreciation",
+        "assets.replacements",
+        "capex.items",
+        "tax.regime_reference"
+      ],
+      "symbol_count": 7,
+      "unbound_index_symbols": [
+        "a",
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-TAXABLE-INCOME-PROJECT",
+      "name_zh": "项目无杠杆应税利润基数",
+      "frozen_definition_reference": "05-formulas.json#F-TAXABLE-INCOME-PROJECT",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "revenue.taxable_net",
+        "tax.deductible_opex",
+        "depreciation.tax_annual",
+        "tax.other_deductions",
+        "tax.other_adjustments"
+      ],
+      "output_formula_field_id": "tax.project_base_pre_losses",
+      "supporting_input_field_ids": [
+        "assets.depreciation",
+        "finance.loan_agreement_id",
+        "revenue.other_items",
+        "tariff.contract_id",
+        "tariff.periods",
+        "tax.incentive_reference",
+        "tax.regime_reference",
+        "tax.vat_recovery_timing"
+      ],
+      "symbol_count": 6,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-TAXABLE-INCOME-EQUITY",
+      "name_zh": "融资后主体应税利润基数",
+      "frozen_definition_reference": "05-formulas.json#F-TAXABLE-INCOME-EQUITY",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "tax.project_base_pre_losses",
+        "tax.deductible_interest",
+        "tax.deductible_finance_fees"
+      ],
+      "output_formula_field_id": "tax.equity_base_pre_losses",
+      "supporting_input_field_ids": [
+        "assets.depreciation",
+        "finance.loan_agreement_id",
+        "tax.incentive_reference",
+        "tax.regime_reference",
+        "tax.vat_recovery_timing"
+      ],
+      "symbol_count": 4,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-INCOME-TAX-ACCRUAL",
+      "name_zh": "所得税计提与亏损使用",
+      "frozen_definition_reference": "05-formulas.json#F-INCOME-TAX-ACCRUAL",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "tax.income_rate",
+        "tax.selected_base_pre_losses",
+        "tax.losses_used",
+        "finance.tax_basis"
+      ],
+      "output_formula_field_id": "tax.income_charge",
+      "supporting_input_field_ids": [
+        "assets.depreciation",
+        "finance.loan_agreement_id",
+        "project.cashflow_tax_basis",
+        "tax.corporate_income_rate",
+        "tax.incentive_reference",
+        "tax.regime_reference",
+        "tax.vat_recovery_timing"
+      ],
+      "symbol_count": 6,
+      "unbound_index_symbols": [
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-TAX-LOSS-BALANCE",
+      "name_zh": "税务亏损余额校验",
+      "frozen_definition_reference": "05-formulas.json#F-TAX-LOSS-BALANCE",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "tax.losses_opening",
+        "tax.selected_base_pre_losses",
+        "tax.losses_used",
+        "tax.losses_expired",
+        "finance.tax_basis"
+      ],
+      "output_formula_field_id": "tax.losses_closing",
+      "supporting_input_field_ids": [
+        "assets.depreciation",
+        "finance.loan_agreement_id",
+        "project.cashflow_tax_basis",
+        "tax.incentive_reference",
+        "tax.regime_reference",
+        "tax.vat_recovery_timing"
+      ],
+      "symbol_count": 7,
+      "unbound_index_symbols": [
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-TAX-CASH-BRIDGE",
+      "name_zh": "所得税计提到现金桥",
+      "frozen_definition_reference": "05-formulas.json#F-TAX-CASH-BRIDGE",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "tax.income_charge",
+        "tax.income_payable_opening",
+        "tax.income_payable_closing",
+        "tax.income_prepaid_closing",
+        "tax.income_prepaid_opening",
+        "finance.tax_basis"
+      ],
+      "output_formula_field_id": "tax.income_cash_paid",
+      "supporting_input_field_ids": [
+        "assets.depreciation",
+        "finance.loan_agreement_id",
+        "project.cashflow_tax_basis",
+        "tax.incentive_reference",
+        "tax.regime_reference",
+        "tax.vat_recovery_timing"
+      ],
+      "symbol_count": 8,
+      "unbound_index_symbols": [
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-VAT-CREDIT-BALANCE",
+      "name_zh": "增值税留抵平衡",
+      "frozen_definition_reference": "05-formulas.json#F-VAT-CREDIT-BALANCE",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "tax.vat_credit_opening",
+        "tax.vat_input_eligible",
+        "tax.vat_output",
+        "tax.vat_cash_paid",
+        "tax.vat_cash_refund"
+      ],
+      "output_formula_field_id": "tax.vat_credit_closing",
+      "supporting_input_field_ids": [
+        "assets.depreciation",
+        "finance.loan_agreement_id",
+        "tax.incentive_reference",
+        "tax.regime_reference",
+        "tax.vat_recovery_timing"
+      ],
+      "symbol_count": 6,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-OTHER-CASH-TAXES",
+      "name_zh": "其他现金税费合计",
+      "frozen_definition_reference": "05-formulas.json#F-OTHER-CASH-TAXES",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "tax.other_items_cash",
+        "tax.other_item_ids",
+        "finance.tax_basis"
+      ],
+      "output_formula_field_id": "tax.other_cash_total",
+      "supporting_input_field_ids": [
+        "assets.depreciation",
+        "finance.loan_agreement_id",
+        "project.cashflow_tax_basis",
+        "tax.incentive_reference",
+        "tax.regime_reference",
+        "tax.vat_recovery_timing"
+      ],
+      "symbol_count": 6,
+      "unbound_index_symbols": [
+        "k",
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-PROJECT-CASH-FLOW",
+      "name_zh": "项目投资无杠杆净现金流",
+      "frozen_definition_reference": "05-formulas.json#F-PROJECT-CASH-FLOW",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "finance.project_operating_cash_benefit",
+        "opex.cash_annual",
+        "tax.project_cash_total",
+        "capex.unlevered_cash_annual",
+        "working_capital.project_net_change",
+        "finance.project_terminal_cash"
+      ],
+      "output_formula_field_id": "finance.project_cash_flow",
+      "supporting_input_field_ids": [
+        "assets.depreciation",
+        "assets.depreciation.residual_value",
+        "assets.replacements",
+        "assets.replacements.salvage",
+        "capex.includes_construction_interest",
+        "capex.items",
+        "finance.inflation_rate",
+        "finance.loan_agreement_id",
+        "finance.working_capital",
+        "opex.items",
+        "project.ownership_mode",
+        "project.sales_mode",
+        "revenue.other_items",
+        "tariff.periods",
+        "tax.incentive_reference",
+        "tax.regime_reference",
+        "tax.vat_recovery_timing"
+      ],
+      "symbol_count": 7,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-PROJECT-PRETAX-CASH-FLOW",
+      "name_zh": "项目所得税前现金流",
+      "frozen_definition_reference": "05-formulas.json#F-PROJECT-PRETAX-CASH-FLOW",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "finance.project_cash_flow",
+        "tax.project_income_cash_paid"
+      ],
+      "output_formula_field_id": "finance.project_pretax_cash_flow",
+      "supporting_input_field_ids": [
+        "assets.depreciation",
+        "finance.cashflow_timing",
+        "finance.loan_agreement_id",
+        "project.cashflow_tax_basis",
+        "project.evaluation_years",
+        "project.price_basis",
+        "tax.incentive_reference",
+        "tax.regime_reference",
+        "tax.vat_recovery_timing"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-EQUITY-AVAILABLE-CASH-FLOW",
+      "name_zh": "股权可分配增量现金流",
+      "frozen_definition_reference": "05-formulas.json#F-EQUITY-AVAILABLE-CASH-FLOW",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "finance.project_operating_cash_benefit",
+        "opex.cash_annual",
+        "tax.equity_cash_total",
+        "capex.equity_asset_cash_annual",
+        "working_capital.equity_net_change",
+        "finance.equity_terminal_cash",
+        "debt.cash_drawdown",
+        "debt.principal_paid",
+        "debt.interest_paid",
+        "debt.finance_fees_paid"
+      ],
+      "output_formula_field_id": "finance.equity_available_cash_flow",
+      "supporting_input_field_ids": [
+        "assets.depreciation",
+        "assets.depreciation.residual_value",
+        "assets.replacements",
+        "assets.replacements.salvage",
+        "capex.items",
+        "finance.debt_schedule",
+        "finance.debt_schedule.drawdown",
+        "finance.debt_schedule.fees",
+        "finance.debt_schedule.interest",
+        "finance.debt_schedule.principal",
+        "finance.inflation_rate",
+        "finance.loan_agreement_id",
+        "finance.working_capital",
+        "opex.items",
+        "project.ownership_mode",
+        "project.sales_mode",
+        "revenue.other_items",
+        "tariff.periods",
+        "tax.incentive_reference",
+        "tax.regime_reference",
+        "tax.vat_recovery_timing"
+      ],
+      "symbol_count": 11,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-EQUITY-INVESTOR-CASH-FLOW",
+      "name_zh": "股东实际投入分配现金流",
+      "frozen_definition_reference": "05-formulas.json#F-EQUITY-INVESTOR-CASH-FLOW",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "equity.distributions",
+        "equity.exit_receipts",
+        "equity.contributions"
+      ],
+      "output_formula_field_id": "finance.equity_investor_cash_flow",
+      "supporting_input_field_ids": [
+        "finance.debt_ratio",
+        "finance.debt_schedule",
+        "finance.loan_agreement_id",
+        "project.ownership_mode"
+      ],
+      "symbol_count": 4,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-CASH-FUNDING-BALANCE",
+      "name_zh": "融资与现金账户平衡",
+      "frozen_definition_reference": "05-formulas.json#F-CASH-FUNDING-BALANCE",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "checks.cash_opening",
+        "finance.equity_available_cash_flow",
+        "equity.contributions",
+        "equity.distributions"
+      ],
+      "output_formula_field_id": "checks.cash_closing",
+      "supporting_input_field_ids": [
+        "capex.items",
+        "finance.cashflow_timing",
+        "finance.debt_ratio",
+        "finance.debt_schedule",
+        "finance.loan_agreement_id",
+        "finance.working_capital",
+        "project.cashflow_tax_basis",
+        "project.evaluation_years",
+        "project.ownership_mode",
+        "project.price_basis"
+      ],
+      "symbol_count": 5,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-DEBT-BALANCE",
+      "name_zh": "债务本金余额滚动",
+      "frozen_definition_reference": "05-formulas.json#F-DEBT-BALANCE",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "debt.opening_balance",
+        "debt.cash_drawdown",
+        "debt.capitalized_unpaid_interest",
+        "debt.capitalized_unpaid_fees",
+        "debt.principal_paid",
+        "debt.documented_writeoff"
+      ],
+      "output_formula_field_id": "debt.closing_balance",
+      "supporting_input_field_ids": [
+        "finance.cfads_definition",
+        "finance.debt_schedule",
+        "finance.debt_schedule.drawdown",
+        "finance.debt_schedule.principal",
+        "finance.loan_agreement_id"
+      ],
+      "symbol_count": 7,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-DEBT-INTEREST",
+      "name_zh": "债务利息计提",
+      "frozen_definition_reference": "05-formulas.json#F-DEBT-INTEREST",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "debt.interest_principal_base",
+        "debt.annual_interest_rate",
+        "debt.daycount_year_fraction",
+        "debt.interest_subperiod_ids"
+      ],
+      "output_formula_field_id": "debt.interest_accrued",
+      "supporting_input_field_ids": [
+        "finance.cfads_definition",
+        "finance.debt_schedule",
+        "finance.debt_schedule.date",
+        "finance.loan_agreement_id",
+        "finance.loan_rate"
+      ],
+      "symbol_count": 7,
+      "unbound_index_symbols": [
+        "s",
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-INTEREST-BALANCE",
+      "name_zh": "应付利息平衡",
+      "frozen_definition_reference": "05-formulas.json#F-INTEREST-BALANCE",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "debt.interest_payable_opening",
+        "debt.interest_accrued",
+        "debt.interest_paid",
+        "debt.capitalized_unpaid_interest"
+      ],
+      "output_formula_field_id": "debt.interest_payable_closing",
+      "supporting_input_field_ids": [
+        "finance.cfads_definition",
+        "finance.debt_schedule",
+        "finance.debt_schedule.interest",
+        "finance.loan_agreement_id"
+      ],
+      "symbol_count": 5,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-NPV",
+      "name_zh": "同口径净现值",
+      "frozen_definition_reference": "05-formulas.json#F-NPV",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "finance.selected_cash_flow",
+        "finance.selected_discount_rate",
+        "finance.cash_flow_basis",
+        "time.financial_end_year"
+      ],
+      "output_formula_field_id": "finance.npv",
+      "supporting_input_field_ids": [
+        "finance.equity_discount_rate",
+        "finance.project_discount_rate",
+        "project.cashflow_tax_basis",
+        "project.evaluation_years",
+        "project.ownership_mode",
+        "project.price_basis",
+        "schedule.commissioning_date",
+        "schedule.construction_start"
+      ],
+      "symbol_count": 6,
+      "unbound_index_symbols": [
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-DATED-NPV",
+      "name_zh": "非整年时点净现值",
+      "frozen_definition_reference": "05-formulas.json#F-DATED-NPV",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "finance.dated_cash_flows",
+        "finance.selected_discount_rate",
+        "finance.cash_event_year_fraction",
+        "finance.cash_event_ids",
+        "finance.cash_flow_basis"
+      ],
+      "output_formula_field_id": "finance.dated_npv",
+      "supporting_input_field_ids": [
+        "capex.items.payment_date",
+        "finance.cashflow_timing",
+        "finance.debt_schedule.date",
+        "finance.equity_discount_rate",
+        "finance.project_discount_rate",
+        "project.cashflow_tax_basis",
+        "project.evaluation_date",
+        "project.ownership_mode",
+        "project.price_basis",
+        "schedule.construction_start"
+      ],
+      "symbol_count": 7,
+      "unbound_index_symbols": [
+        "k"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-NOMINAL-REAL-RATE",
+      "name_zh": "名义与实际折现率桥",
+      "frozen_definition_reference": "05-formulas.json#F-NOMINAL-REAL-RATE",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "finance.real_discount_rate",
+        "finance.general_inflation"
+      ],
+      "output_formula_field_id": "finance.nominal_discount_rate",
+      "supporting_input_field_ids": [
+        "finance.equity_discount_rate",
+        "finance.inflation_rate",
+        "finance.project_discount_rate",
+        "project.price_basis"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-IRR-PROJECT",
+      "name_zh": "项目投资内部收益率根集",
+      "frozen_definition_reference": "05-formulas.json#F-IRR-PROJECT",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "finance.irr_search_domain",
+        "finance.project_irr_cash_flow",
+        "time.financial_end_year"
+      ],
+      "output_formula_field_id": "finance.project_irr_root_set",
+      "supporting_input_field_ids": [
+        "project.cashflow_tax_basis",
+        "project.evaluation_years",
+        "project.price_basis",
+        "scenarios.options",
+        "schedule.commissioning_date",
+        "schedule.construction_start"
+      ],
+      "symbol_count": 6,
+      "unbound_index_symbols": [
+        "r",
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-IRR-EQUITY",
+      "name_zh": "资本金内部收益率根集",
+      "frozen_definition_reference": "05-formulas.json#F-IRR-EQUITY",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "finance.irr_search_domain",
+        "finance.equity_investor_cash_flow",
+        "time.financial_end_year"
+      ],
+      "output_formula_field_id": "finance.equity_irr_root_set",
+      "supporting_input_field_ids": [
+        "finance.cashflow_timing",
+        "project.cashflow_tax_basis",
+        "project.evaluation_years",
+        "project.price_basis",
+        "scenarios.options",
+        "schedule.commissioning_date",
+        "schedule.construction_start"
+      ],
+      "symbol_count": 6,
+      "unbound_index_symbols": [
+        "r",
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-CUMULATIVE-CASH-FLOW",
+      "name_zh": "静态累计现金流",
+      "frozen_definition_reference": "05-formulas.json#F-CUMULATIVE-CASH-FLOW",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "finance.selected_cash_flow",
+        "time.cumulative_end_year",
+        "finance.cash_flow_basis"
+      ],
+      "output_formula_field_id": "finance.cumulative_cash_flow",
+      "supporting_input_field_ids": [
+        "load.series.interval_minutes",
+        "load.series.timestamp",
+        "project.cashflow_tax_basis",
+        "project.evaluation_years",
+        "project.ownership_mode",
+        "resource.timeseries.interval_minutes",
+        "resource.timeseries.timestamp",
+        "schedule.commissioning_date",
+        "site.timezone"
+      ],
+      "symbol_count": 5,
+      "unbound_index_symbols": [
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-STATIC-PAYBACK",
+      "name_zh": "静态首次回收期",
+      "frozen_definition_reference": "05-formulas.json#F-STATIC-PAYBACK",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "finance.first_recovery_year",
+        "finance.pre_recovery_cumulative_cash",
+        "finance.recovery_year_cash_flow",
+        "finance.cash_flow_basis",
+        "time.financial_end_year"
+      ],
+      "output_formula_field_id": "finance.static_payback_years",
+      "supporting_input_field_ids": [
+        "finance.cashflow_timing",
+        "project.cashflow_tax_basis",
+        "project.evaluation_years",
+        "project.ownership_mode",
+        "project.price_basis",
+        "schedule.commissioning_date",
+        "schedule.construction_start"
+      ],
+      "symbol_count": 6,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-DISCOUNTED-CUMULATIVE-CASH",
+      "name_zh": "动态累计现金流",
+      "frozen_definition_reference": "05-formulas.json#F-DISCOUNTED-CUMULATIVE-CASH",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "finance.selected_cash_flow",
+        "finance.selected_discount_rate",
+        "time.cumulative_end_year",
+        "finance.cash_flow_basis"
+      ],
+      "output_formula_field_id": "finance.discounted_cumulative_cash",
+      "supporting_input_field_ids": [
+        "finance.equity_discount_rate",
+        "finance.project_discount_rate",
+        "load.series.interval_minutes",
+        "load.series.timestamp",
+        "project.cashflow_tax_basis",
+        "project.evaluation_years",
+        "project.ownership_mode",
+        "project.price_basis",
+        "resource.timeseries.interval_minutes",
+        "resource.timeseries.timestamp",
+        "schedule.commissioning_date",
+        "site.timezone"
+      ],
+      "symbol_count": 6,
+      "unbound_index_symbols": [
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-DYNAMIC-PAYBACK",
+      "name_zh": "动态首次回收期",
+      "frozen_definition_reference": "05-formulas.json#F-DYNAMIC-PAYBACK",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "finance.first_discounted_recovery_year",
+        "finance.pre_discounted_recovery_cumulative",
+        "finance.discounted_recovery_year_cash_flow",
+        "finance.selected_discount_rate",
+        "finance.cash_flow_basis",
+        "time.financial_end_year"
+      ],
+      "output_formula_field_id": "finance.dynamic_payback_years",
+      "supporting_input_field_ids": [
+        "finance.cashflow_timing",
+        "finance.equity_discount_rate",
+        "finance.project_discount_rate",
+        "project.cashflow_tax_basis",
+        "project.evaluation_years",
+        "project.ownership_mode",
+        "project.price_basis",
+        "schedule.commissioning_date",
+        "schedule.construction_start"
+      ],
+      "symbol_count": 7,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-LIFECYCLE-COST",
+      "name_zh": "无杠杆生命周期净成本",
+      "frozen_definition_reference": "05-formulas.json#F-LIFECYCLE-COST",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "capex.unlevered_cash_annual",
+        "opex.cash_annual",
+        "lcoe.cost_taxes",
+        "working_capital.project_net_change",
+        "finance.project_terminal_cash",
+        "lcoe.cost_subsidy_offset"
+      ],
+      "output_formula_field_id": "lcoe.project_cost_annual",
+      "supporting_input_field_ids": [
+        "assets.depreciation.residual_value",
+        "assets.replacements",
+        "assets.replacements.salvage",
+        "capex.includes_construction_interest",
+        "capex.items",
+        "finance.inflation_rate",
+        "finance.working_capital",
+        "opex.items",
+        "system.capacity_boundary",
+        "tax.regime_reference"
+      ],
+      "symbol_count": 7,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-LCOE",
+      "name_zh": "平准化度电成本",
+      "frozen_definition_reference": "05-formulas.json#F-LCOE",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "lcoe.project_cost_annual",
+        "energy.delivered_annual_kwh",
+        "lcoe.discount_rate",
+        "time.financial_end_year"
+      ],
+      "output_formula_field_id": "finance.lcoe",
+      "supporting_input_field_ids": [
+        "assets.replacements",
+        "capex.items",
+        "finance.project_discount_rate",
+        "opex.items",
+        "project.evaluation_years",
+        "project.price_basis",
+        "resource.monthly",
+        "resource.timeseries",
+        "schedule.commissioning_date",
+        "schedule.construction_start",
+        "system.capacity_boundary",
+        "system.losses",
+        "tax.regime_reference"
+      ],
+      "symbol_count": 6,
+      "unbound_index_symbols": [
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-CFADS",
+      "name_zh": "可用于偿债的现金流",
+      "frozen_definition_reference": "05-formulas.json#F-CFADS",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "finance.project_operating_cash_benefit",
+        "opex.cash_annual",
+        "tax.equity_cash_total",
+        "debt.cfads_working_capital_change",
+        "debt.cfads_mandatory_capex",
+        "debt.cfads_adjustments"
+      ],
+      "output_formula_field_id": "debt.cfads",
+      "supporting_input_field_ids": [
+        "assets.depreciation",
+        "assets.replacements",
+        "finance.cfads_definition",
+        "finance.inflation_rate",
+        "finance.loan_agreement_id",
+        "finance.working_capital",
+        "opex.items",
+        "project.ownership_mode",
+        "project.sales_mode",
+        "revenue.other_items",
+        "tariff.periods",
+        "tax.incentive_reference",
+        "tax.regime_reference",
+        "tax.vat_recovery_timing"
+      ],
+      "symbol_count": 7,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-DEBT-SERVICE",
+      "name_zh": "应付债务服务",
+      "frozen_definition_reference": "05-formulas.json#F-DEBT-SERVICE",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "debt.principal_due",
+        "debt.interest_due",
+        "debt.service_fees_due"
+      ],
+      "output_formula_field_id": "debt.service_due",
+      "supporting_input_field_ids": [
+        "finance.debt_schedule.fees",
+        "finance.debt_schedule.interest",
+        "finance.debt_schedule.principal"
+      ],
+      "symbol_count": 4,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-DSCR",
+      "name_zh": "偿债备付率",
+      "frozen_definition_reference": "05-formulas.json#F-DSCR",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "debt.cfads",
+        "debt.service_due"
+      ],
+      "output_formula_field_id": "debt.dscr",
+      "supporting_input_field_ids": [
+        "finance.cfads_definition",
+        "finance.debt_schedule",
+        "finance.loan_agreement_id"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-BREAK-EVEN-PRICE",
+      "name_zh": "净现值为零的盈亏平衡电价",
+      "frozen_definition_reference": "05-formulas.json#F-BREAK-EVEN-PRICE",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "sensitivity.price_search_domain",
+        "finance.npv",
+        "sensitivity.price_cash_flow_vector",
+        "finance.selected_discount_rate",
+        "finance.cash_flow_basis"
+      ],
+      "output_formula_field_id": "sensitivity.break_even_price_roots",
+      "supporting_input_field_ids": [
+        "finance.cashflow_timing",
+        "finance.equity_discount_rate",
+        "finance.project_discount_rate",
+        "project.cashflow_tax_basis",
+        "project.evaluation_years",
+        "project.ownership_mode",
+        "project.price_basis",
+        "scenarios.options",
+        "targets.equity_irr",
+        "targets.project_irr"
+      ],
+      "symbol_count": 7,
+      "unbound_index_symbols": [
+        "p"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-SINGLE-FACTOR-SENSITIVITY",
+      "name_zh": "单因素绝对与相对敏感性",
+      "frozen_definition_reference": "05-formulas.json#F-SINGLE-FACTOR-SENSITIVITY",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "sensitivity.metric_definition",
+        "sensitivity.factor_base_value",
+        "sensitivity.factor_delta",
+        "sensitivity.frozen_other_inputs"
+      ],
+      "output_formula_field_id": "sensitivity.metric_absolute_change",
+      "supporting_input_field_ids": [
+        "scenarios.options",
+        "scenarios.options.changed_field_id",
+        "scenarios.options.changed_value_text",
+        "scenarios.options.kind"
+      ],
+      "symbol_count": 5,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-SENSITIVITY-ELASTICITY",
+      "name_zh": "归一化敏感性系数",
+      "frozen_definition_reference": "05-formulas.json#F-SENSITIVITY-ELASTICITY",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "sensitivity.metric_base",
+        "sensitivity.metric_perturbed",
+        "sensitivity.factor_base_value",
+        "sensitivity.factor_perturbed_value"
+      ],
+      "output_formula_field_id": "sensitivity.elasticity",
+      "supporting_input_field_ids": [
+        "scenarios.options",
+        "scenarios.options.changed_field_id",
+        "scenarios.options.changed_value_text",
+        "targets.equity_irr",
+        "targets.project_irr"
+      ],
+      "symbol_count": 5,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-SCENARIO-METRIC",
+      "name_zh": "联合情景全模型重算",
+      "frozen_definition_reference": "05-formulas.json#F-SCENARIO-METRIC",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "model.selected_method_version",
+        "sensitivity.scenario_inputs",
+        "sensitivity.scenario_fixed_inputs",
+        "sensitivity.scenario_id"
+      ],
+      "output_formula_field_id": "sensitivity.scenario_metrics",
+      "supporting_input_field_ids": [
+        "resource.model_method",
+        "scenarios.options",
+        "scenarios.options.scenario_id",
+        "system.losses.method"
+      ],
+      "symbol_count": 5,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-WORST-CASH-YEAR",
+      "name_zh": "最差现金流年份集合",
+      "frozen_definition_reference": "05-formulas.json#F-WORST-CASH-YEAR",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "finance.selected_cash_flow",
+        "risk.cash_year_scope",
+        "finance.cash_flow_basis"
+      ],
+      "output_formula_field_id": "risk.worst_cash_years",
+      "supporting_input_field_ids": [
+        "project.cashflow_tax_basis",
+        "project.evaluation_years",
+        "project.ownership_mode",
+        "risk.items"
+      ],
+      "symbol_count": 5,
+      "unbound_index_symbols": [
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-CAPEX-PAYMENT-BALANCE",
+      "name_zh": "投资估算付款平衡",
+      "frozen_definition_reference": "05-formulas.json#F-CAPEX-PAYMENT-BALANCE",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "capex.scope_cash_payments",
+        "capex.payable_net_closing",
+        "capex.payable_net_opening",
+        "capex.scope_accrued_amount",
+        "capex.scope_year_ids"
+      ],
+      "output_formula_field_id": "checks.capex_payment_residual",
+      "supporting_input_field_ids": [
+        "capex.includes_construction_interest",
+        "capex.items",
+        "finance.cashflow_timing"
+      ],
+      "symbol_count": 7,
+      "unbound_index_symbols": [
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-INVESTMENT-HURDLE-GAP",
+      "name_zh": "投资门槛差距",
+      "frozen_definition_reference": "05-formulas.json#F-INVESTMENT-HURDLE-GAP",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "decision.calculated_metric",
+        "decision.target_metric"
+      ],
+      "output_formula_field_id": "decision.metric_gap",
+      "supporting_input_field_ids": [
+        "targets.budget_ceiling",
+        "targets.equity_irr",
+        "targets.payback_basis",
+        "targets.payback_years",
+        "targets.project_irr"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-CASH-TAX-TOTAL",
+      "name_zh": "同口径现金税费总额",
+      "frozen_definition_reference": "05-formulas.json#F-CASH-TAX-TOTAL",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "tax.income_cash_paid",
+        "tax.other_cash_total",
+        "tax.vat_cash_paid",
+        "tax.vat_cash_refund",
+        "tax.vat_cash_basis_adjustment",
+        "finance.tax_basis"
+      ],
+      "output_formula_field_id": "tax.cash_total_selected",
+      "supporting_input_field_ids": [
+        "assets.depreciation",
+        "finance.loan_agreement_id",
+        "project.cashflow_tax_basis",
+        "tax.incentive_reference",
+        "tax.regime_reference",
+        "tax.vat_recovery_timing"
+      ],
+      "symbol_count": 8,
+      "unbound_index_symbols": [
+        "y"
+      ],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-UNIT-KW-MW",
+      "name_zh": "功率千瓦至兆瓦换算",
+      "frozen_definition_reference": "05-formulas.json#F-UNIT-KW-MW",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "units.power_kw",
+        "constants.kilo_scale"
+      ],
+      "output_formula_field_id": "units.power_mw",
+      "supporting_input_field_ids": [
+        "capex.items",
+        "resource.monthly",
+        "system.ac_capacity",
+        "system.dc_capacity"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-UNIT-KWH-MWH",
+      "name_zh": "电量千瓦时至兆瓦时换算",
+      "frozen_definition_reference": "05-formulas.json#F-UNIT-KWH-MWH",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "units.energy_kwh",
+        "constants.kilo_scale"
+      ],
+      "output_formula_field_id": "units.energy_mwh",
+      "supporting_input_field_ids": [
+        "capex.items",
+        "resource.monthly",
+        "system.ac_capacity",
+        "system.dc_capacity"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-UNIT-IRRADIANCE-W-KW",
+      "name_zh": "辐照度瓦至千瓦换算",
+      "frozen_definition_reference": "05-formulas.json#F-UNIT-IRRADIANCE-W-KW",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "units.irradiance_w_m2",
+        "constants.kilo_scale"
+      ],
+      "output_formula_field_id": "units.irradiance_kw_m2",
+      "supporting_input_field_ids": [
+        "capex.items",
+        "resource.monthly",
+        "system.ac_capacity",
+        "system.dc_capacity"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-UNIT-COST-WP-KWP",
+      "name_zh": "单位投资瓦峰至千瓦峰换算",
+      "frozen_definition_reference": "05-formulas.json#F-UNIT-COST-WP-KWP",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "units.cost_per_wp",
+        "constants.kilo_scale"
+      ],
+      "output_formula_field_id": "units.cost_per_kwp",
+      "supporting_input_field_ids": [
+        "capex.items",
+        "resource.monthly",
+        "system.ac_capacity",
+        "system.dc_capacity"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-UNIT-DC-CAPACITY",
+      "name_zh": "峰值直流装机单位换算",
+      "frozen_definition_reference": "05-formulas.json#F-UNIT-DC-CAPACITY",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "capacity.dc_kwp",
+        "constants.kilo_scale"
+      ],
+      "output_formula_field_id": "units.dc_mwp",
+      "supporting_input_field_ids": [
+        "system.dc_capacity"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-UNIT-AC-CAPACITY",
+      "name_zh": "额定交流容量单位换算",
+      "frozen_definition_reference": "05-formulas.json#F-UNIT-AC-CAPACITY",
+      "declared_stage": null,
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "capacity.ac_kw",
+        "constants.kilo_scale"
+      ],
+      "output_formula_field_id": "units.ac_mw",
+      "supporting_input_field_ids": [
+        "system.ac_capacity"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Inferred from Phase3 task and frozen roadmap; original main formula has no implementation_stage field"
+    },
+    {
+      "formula_id": "F-STORAGE-ENERGY-UPDATE",
+      "name_zh": "储能时段储能更新",
+      "frozen_definition_reference": "05-formula-extensions.json#F-STORAGE-ENERGY-UPDATE",
+      "declared_stage": "Phase 8",
+      "phase3_applicable": false,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "storage.state_energy_begin",
+        "storage.charge_efficiency",
+        "storage.charge_input",
+        "storage.discharge_output",
+        "storage.discharge_efficiency",
+        "storage.self_discharge_energy",
+        "storage.internal_auxiliary_energy"
+      ],
+      "output_formula_field_id": "storage.state_energy_end",
+      "supporting_input_field_ids": [
+        "storage.charge_efficiency",
+        "storage.coupling",
+        "storage.discharge_efficiency",
+        "storage.dispatch.auxiliary_energy",
+        "storage.dispatch.charge_from_grid",
+        "storage.dispatch.charge_from_pv",
+        "storage.dispatch.discharge_to_export",
+        "storage.dispatch.discharge_to_load",
+        "storage.dispatch.stored_energy_begin",
+        "storage.self_discharge_rate"
+      ],
+      "symbol_count": 8,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Explicit implementation_stage in original extension"
+    },
+    {
+      "formula_id": "F-STORAGE-SOC",
+      "name_zh": "储能荷电状态",
+      "frozen_definition_reference": "05-formula-extensions.json#F-STORAGE-SOC",
+      "declared_stage": "Phase 8",
+      "phase3_applicable": false,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "storage.state_energy_begin",
+        "storage.available_capacity"
+      ],
+      "output_formula_field_id": "storage.soc",
+      "supporting_input_field_ids": [
+        "storage.dispatch.stored_energy_begin",
+        "storage.dispatch.usable_capacity"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Explicit implementation_stage in original extension"
+    },
+    {
+      "formula_id": "F-STORAGE-CHARGE-LIMIT",
+      "name_zh": "储能充电能量上限",
+      "frozen_definition_reference": "05-formula-extensions.json#F-STORAGE-CHARGE-LIMIT",
+      "declared_stage": "Phase 8",
+      "phase3_applicable": false,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "storage.charge_power",
+        "time.interval_hours"
+      ],
+      "output_formula_field_id": "storage.charge_energy_limit",
+      "supporting_input_field_ids": [
+        "load.series.interval_minutes",
+        "load.series.timestamp",
+        "project.evaluation_years",
+        "resource.timeseries.interval_minutes",
+        "resource.timeseries.timestamp",
+        "schedule.commissioning_date",
+        "site.timezone",
+        "storage.charge_power"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Explicit implementation_stage in original extension"
+    },
+    {
+      "formula_id": "F-STORAGE-DISCHARGE-LIMIT",
+      "name_zh": "储能放电能量上限",
+      "frozen_definition_reference": "05-formula-extensions.json#F-STORAGE-DISCHARGE-LIMIT",
+      "declared_stage": "Phase 8",
+      "phase3_applicable": false,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "storage.discharge_power",
+        "time.interval_hours"
+      ],
+      "output_formula_field_id": "storage.discharge_energy_limit",
+      "supporting_input_field_ids": [
+        "load.series.interval_minutes",
+        "load.series.timestamp",
+        "project.evaluation_years",
+        "resource.timeseries.interval_minutes",
+        "resource.timeseries.timestamp",
+        "schedule.commissioning_date",
+        "site.timezone",
+        "storage.discharge_power"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Explicit implementation_stage in original extension"
+    },
+    {
+      "formula_id": "F-STORAGE-PV-BALANCE",
+      "name_zh": "光储光伏节点守恒",
+      "frozen_definition_reference": "05-formula-extensions.json#F-STORAGE-PV-BALANCE",
+      "declared_stage": "Phase 8",
+      "phase3_applicable": false,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "energy.available_kwh",
+        "storage.pv_direct_load",
+        "storage.pv_charge",
+        "storage.pv_direct_export",
+        "consumption.curtailed_kwh"
+      ],
+      "output_formula_field_id": "checks.storage_pv_balance",
+      "supporting_input_field_ids": [
+        "grid.export_power_limit",
+        "load.series",
+        "resource.monthly",
+        "resource.timeseries",
+        "storage.dispatch",
+        "storage.dispatch.charge_from_pv",
+        "system.capacity_boundary",
+        "system.losses"
+      ],
+      "symbol_count": 5,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Explicit implementation_stage in original extension"
+    },
+    {
+      "formula_id": "F-STORAGE-LOAD-BALANCE",
+      "name_zh": "光储负荷节点守恒",
+      "frozen_definition_reference": "05-formula-extensions.json#F-STORAGE-LOAD-BALANCE",
+      "declared_stage": "Phase 8",
+      "phase3_applicable": false,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "load.interval_kwh",
+        "storage.pv_direct_load",
+        "storage.battery_to_load",
+        "storage.grid_to_load"
+      ],
+      "output_formula_field_id": "checks.storage_load_balance",
+      "supporting_input_field_ids": [
+        "load.series",
+        "load.series.energy",
+        "load.series.interval_minutes",
+        "load.series.power",
+        "load.series.timestamp",
+        "storage.dispatch",
+        "storage.dispatch.discharge_to_load"
+      ],
+      "symbol_count": 4,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Explicit implementation_stage in original extension"
+    },
+    {
+      "formula_id": "F-STORAGE-CYCLE-COUNT",
+      "name_zh": "等效完整循环计数",
+      "frozen_definition_reference": "05-formula-extensions.json#F-STORAGE-CYCLE-COUNT",
+      "declared_stage": "Phase 8",
+      "phase3_applicable": false,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "storage.internal_discharge_energy",
+        "storage.cycle_reference_capacity"
+      ],
+      "output_formula_field_id": "storage.equivalent_cycles",
+      "supporting_input_field_ids": [
+        "storage.cycle_definition",
+        "storage.discharge_efficiency",
+        "storage.dispatch.discharge_to_export",
+        "storage.dispatch.discharge_to_load",
+        "storage.nominal_energy"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Explicit implementation_stage in original extension"
+    },
+    {
+      "formula_id": "F-USABLE-AREA",
+      "name_zh": "可利用面积核算",
+      "frozen_definition_reference": "05-formula-extensions.json#F-USABLE-AREA",
+      "declared_stage": "Phase 3",
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "site.total_area",
+        "site.exclusion_area"
+      ],
+      "output_formula_field_id": "site.usable_area",
+      "supporting_input_field_ids": [
+        "site.exclusion_area",
+        "site.total_area"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Explicit implementation_stage in original extension"
+    },
+    {
+      "formula_id": "F-AVERAGE-ANNUAL-ENERGY",
+      "name_zh": "评价期年均电量",
+      "frozen_definition_reference": "05-formula-extensions.json#F-AVERAGE-ANNUAL-ENERGY",
+      "declared_stage": "Phase 3",
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "energy.annual_kwh",
+        "time.operating_year_count"
+      ],
+      "output_formula_field_id": "energy.mean_annual_kwh",
+      "supporting_input_field_ids": [
+        "project.evaluation_years",
+        "resource.monthly",
+        "resource.timeseries",
+        "system.capacity_boundary",
+        "system.losses"
+      ],
+      "symbol_count": 4,
+      "unbound_index_symbols": [
+        "y"
+      ],
+      "phase3_scope_basis": "Explicit implementation_stage in original extension"
+    },
+    {
+      "formula_id": "F-EMISSIONS-AVOIDED",
+      "name_zh": "有边界的减排估算",
+      "frozen_definition_reference": "05-formula-extensions.json#F-EMISSIONS-AVOIDED",
+      "declared_stage": "Phase 3",
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "environment.eligible_energy",
+        "environment.grid_emission_factor"
+      ],
+      "output_formula_field_id": "environment.avoided_emissions",
+      "supporting_input_field_ids": [
+        "environment.approval_reference",
+        "environment.factor_period",
+        "environment.grid_emission_factor",
+        "system.capacity_boundary"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Explicit implementation_stage in original extension"
+    },
+    {
+      "formula_id": "F-TRANSFORMER-ACTIVE-LIMIT",
+      "name_zh": "变压器有功容量校核",
+      "frozen_definition_reference": "05-formula-extensions.json#F-TRANSFORMER-ACTIVE-LIMIT",
+      "declared_stage": "Phase 3",
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "grid.transformer_capacity",
+        "grid.power_factor"
+      ],
+      "output_formula_field_id": "grid.transformer_active_limit",
+      "supporting_input_field_ids": [
+        "grid.power_factor",
+        "grid.transformer_capacity"
+      ],
+      "symbol_count": 3,
+      "unbound_index_symbols": [],
+      "phase3_scope_basis": "Explicit implementation_stage in original extension"
+    },
+    {
+      "formula_id": "F-CAPEX-ITEM-AMOUNT",
+      "name_zh": "投资分项金额",
+      "frozen_definition_reference": "05-formula-extensions.json#F-CAPEX-ITEM-AMOUNT",
+      "declared_stage": "Phase 3",
+      "phase3_applicable": true,
+      "product_status": "NOT_IMPLEMENTED",
+      "executor": null,
+      "numerical_test_status": "NOT_TESTED",
+      "evidence": null,
+      "input_formula_field_ids": [
+        "capex.items.quantity",
+        "capex.items.unit_price"
+      ],
+      "output_formula_field_id": "capex.items.amount",
+      "supporting_input_field_ids": [
+        "capex.items.quantity",
+        "capex.items.unit_price"
+      ],
+      "symbol_count": 4,
+      "unbound_index_symbols": [
+        "i"
+      ],
+      "phase3_scope_basis": "Explicit implementation_stage in original extension"
+    }
+  ],
+  "review_status": "BLOCKED_PENDING_APPROVAL_FOR_ERRATA_METHOD_CONFIG_AND_LARGE_SERIES"
+}

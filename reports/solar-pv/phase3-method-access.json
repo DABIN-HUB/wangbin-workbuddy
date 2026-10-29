@@ -1,0 +1,36 @@
+{
+  "scope": "Public method documentation only; no site/tariff data adapter or private upload",
+  "extract_tool_failure": "search-only backend cannot extract; used anonymous urllib HTTPS with 25s timeout, 2MiB response cap, no script execution",
+  "sources": [
+    {
+      "source_id": "P3-METHOD-SANDIA-CELL",
+      "url": "https://pvpmc.sandia.gov/modeling-guide/2-dc-module-iv/cell-temperature/sandia-cell-temperature-model/",
+      "final_url": "https://pvpmc.sandia.gov/modeling-guide/2-dc-module-iv/cell-temperature/sandia-cell-temperature-model/",
+      "http_status": 200,
+      "body_sha256": "8c2d42320db6834ee90d4dedc3254b57c37c3ee297be16b986d29d2a288a8cbc",
+      "license_status": "REQUIRES_REVIEW",
+      "scope": "Public mathematical/method documentation; no site/tariff/API data retrieval",
+      "access_date": "2026-10-29"
+    },
+    {
+      "source_id": "P3-METHOD-SANDIA-MODULE",
+      "url": "https://pvpmc.sandia.gov/modeling-guide/2-dc-module-iv/module-temperature/sandia-module-temperature-model/",
+      "final_url": "https://pvpmc.sandia.gov/modeling-guide/2-dc-module-iv/module-temperature/sandia-module-temperature-model/",
+      "http_status": 200,
+      "body_sha256": "2a25c17269d94697f4e3296a4c1e039e8bbadfdd2b8152c43e948224305e61fa",
+      "license_status": "REQUIRES_REVIEW",
+      "scope": "Public mathematical/method documentation; no site/tariff/API data retrieval",
+      "access_date": "2026-10-29"
+    },
+    {
+      "source_id": "P3-METHOD-ROOT-ISOLATION",
+      "url": "https://docs.sympy.org/latest/guides/solving/find-roots-polynomial.html",
+      "final_url": "https://docs.sympy.org/latest/guides/solving/find-roots-polynomial.html",
+      "http_status": 200,
+      "body_sha256": "2d88c16fa63ee020440369e138d0997a36f3a7064a2205ec542a6db34f9c9c72",
+      "license_status": "REQUIRES_REVIEW",
+      "scope": "Public mathematical/method documentation; no site/tariff/API data retrieval",
+      "access_date": "2026-10-29"
+    }
+  ]
+}

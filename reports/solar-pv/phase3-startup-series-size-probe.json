@@ -1,0 +1,9 @@
+{
+  "scope": "SYNTHETIC_SERIALIZATION_SIZE_ONLY_NOT_A_CALCULATION",
+  "intervals": 8760,
+  "primitive_envelopes_per_row": 4,
+  "array_value_utf8_bytes": 36319951,
+  "default_json_bytes_limit": 33554432,
+  "single_array_already_exceeds_default": true,
+  "note": "Exact sum of canonical per-row JSON bytes including array/comma syntax; excludes root envelope, project, candidate and source-snapshot duplication."
+}

@@ -1,0 +1,11 @@
+{
+  "source_filename": "pasted_content_2026-10-29_01-26-57-280_735729.txt",
+  "source_sha256": "da571fe334c6445ea271a92b12ad18c7aff73f77c5803981d22428cd06d06923",
+  "normalized_sha256": "c1fdd047f8d493678642e1609c5b7da2492dae5ef0e28ac2966cd1f59bdb3349",
+  "normalized_rule": "UTF-8 no BOM; CRLF to LF; no content alteration",
+  "initial_git_head": "6c7081ba32959c3b633f452e43a8826740e79158",
+  "initial_branch": "main",
+  "initial_status": "clean",
+  "scope": "Phase3A-G only; no Phase4-8; no push",
+  "task_archive": "16-phase3-user-task.md"
+}

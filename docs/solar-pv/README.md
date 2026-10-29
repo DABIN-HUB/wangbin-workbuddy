@@ -1,6 +1,6 @@
 # wangbin 光伏预可研产品：长期冻结需求基线
 
-基线版本 `SOLAR-PV-1.0.0`，冻结日期2026-10-28。**2026-10-29 Phase2本地有界输入验收为PHASE2_INPUT_CONTRACT_PASS：3014项新测试通过/0失败/5项环境跳过，旧回归145/0/5；独立审阅P1已修复。光伏计算、四文件、真实项目及平台仍未通过，发布BLOCKED，本轮停止不进入Phase3。** Phase0提交`f55cba2bc0e40aa009d48e49b9eed8b6e094e19b`、Phase1提交`b475c5e5b3d107625acb8e531a623d142060a194`；Phase1研究缺口不因输入层实现而关闭。Phase2各子阶段提交及最终证据以`reports/solar-pv/phase2-review-and-acceptance.md`、实际JUnit和git log为准，5项symlink权限跳过不是PASS，基线检查不等于功能或产品成功。
+基线版本 `SOLAR-PV-1.0.0`，冻结日期2026-10-28。**Phase2本地有界输入验收为PHASE2_INPUT_CONTRACT_PASS：3014项新测试通过/0失败/5项环境跳过，旧回归145/0/5；独立审阅P1已修复，提交6c7081ba32959c3b633f452e43a8826740e79158。2026-10-29用户另行启动Phase3，当前仅完成启动审阅/回归，D1—D3关键勘误/方法/大时序演进待批准，状态BLOCKED_PENDING_USER_APPROVAL；尚未实现计算或通过Phase3A。** 光伏数值、四文件、真实项目及平台仍未通过，发布BLOCKED。Phase0提交`f55cba2bc0e40aa009d48e49b9eed8b6e094e19b`、Phase1提交`b475c5e5b3d107625acb8e531a623d142060a194`；研究缺口不因输入层实现而关闭。Phase2验收见`reports/solar-pv/phase2-review-and-acceptance.md`、JUnit及git log，symlink跳过不是PASS。
 
 ## 后续会话必须先读
 
@@ -9,7 +9,7 @@
 3. `08-requirement-traceability.csv`、`08-baseline-contract.json`：逐需求与真实状态；`FROZEN`不等于实现PASS。
 4. `11-phased-roadmap.md`及最新 `reports/solar-pv/` 阶段记录，重新运行git status/HEAD与保护校验后才继续。
 
-当前任务仅Phase2，到验收后停止，不进入Phase3；不创建空壳Skill/Expert，不改旧工厂/产品/catalog/许可/历史归档，不上传、不部署、不push。用户本轮任务全文及哈希见`13-phase2-user-task.md`/manifest；明确要求真实测试，不得以默认不写测试为由删除已授权测试范围。原总提示词仍是后续不可删减长期基线。
+当前任务为Phase3A—3G，全文/哈希见`16-phase3-user-task.md`与manifest，计划见`17-phase3-implementation-plan.md`，必须先读`18-phase3-preimplementation-review.md`及勘误提案。未经批准不修改关键方法/原冻结定义；本轮不进入Phase4—8。不创建空壳Skill/Expert，不改旧工厂/产品/catalog/许可/历史归档，不上传、不部署、不push。Phase2任务及验收是历史已完成边界，不能把旧文档的“本轮停止Phase2”误作新任务禁止启动Phase3。原总提示词与全部长期目标继续有效，已授权的真实数值测试不可删减。
 
 ## 文档导航
 
@@ -34,6 +34,8 @@
 | `00-source-index.json`、`05-additional-sources.json` | 合并专业、政策、平台与公式帮助来源；来源ID与实际项目输入证据分开 |
 | `13-phase2-implementation-plan.md`、`14-phase2-architecture.md` | Phase2A—2E实施计划、数据/来源/分类/受限解析/多轮事务接口和安全边界 |
 | `15-phase3-input-interface.md` | 已有CLI/JSON/公式查询用法，向Phase3移交输入而非伪计算结果；后续独立门禁和未关闭事项 |
+| `16-phase3-user-task.md`、`17-phase3-implementation-plan.md` | 新Phase3任务原文、归档哈希与3A—3G待实施清单，不是数值通过证据 |
+| `17-phase3-formula-execution-inventory.json`、`18-phase3-preimplementation-review.md`、`18-phase3-errata-proposals.json` | 89条真实启动状态（0实现）、双路审阅/主任务复核、6项未应用勘误、方法配置和32MiB大时序阻断及待批准方案 |
 
 ## 可执行检查
 

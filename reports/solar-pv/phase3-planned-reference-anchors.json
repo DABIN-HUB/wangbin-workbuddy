@@ -1,0 +1,31 @@
+{
+  "scope": "Exact independent arithmetic for proposed test anchors only; no production formula or project calculation executed",
+  "anchors": {
+    "npv_single_year": {
+      "cashflows": [
+        -100,
+        110
+      ],
+      "rate_fraction": "1/10",
+      "exact_npv": "0"
+    },
+    "irr_candidate_10pct": {
+      "cashflows": [
+        -100,
+        230,
+        -132
+      ],
+      "rate_fraction": "1/10",
+      "exact_npv": "0"
+    },
+    "irr_candidate_20pct": {
+      "cashflows": [
+        -100,
+        230,
+        -132
+      ],
+      "rate_fraction": "1/5",
+      "exact_npv": "0"
+    }
+  }
+}

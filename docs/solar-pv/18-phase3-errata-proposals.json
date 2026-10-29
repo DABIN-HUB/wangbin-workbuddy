@@ -1,0 +1,49 @@
+{
+  "status": "PROPOSED_NOT_APPLIED",
+  "source_baseline_head": "6c7081ba32959c3b633f452e43a8826740e79158",
+  "items": [
+    {
+      "id": "E01",
+      "formula_id": "F-USABLE-AREA",
+      "path": "05-formula-extensions.json",
+      "problem": "Output field site.usable_area is marked input in A_use symbol role",
+      "proposed": "role output; preserve formula ID, expression, physical meaning and independent supplied input candidate"
+    },
+    {
+      "id": "E02",
+      "formula_id": "F-CAPEX-ITEM-AMOUNT",
+      "path": "05-formula-extensions.json",
+      "problem": "Output capex.items.amount is marked input in C_i symbol role",
+      "proposed": "role output; preserve quantity-times-unit-price and original quote evidence"
+    },
+    {
+      "id": "E03",
+      "formula_id": "F-NOMINAL-REAL-RATE",
+      "path": "05-formulas.json",
+      "problem": "Root unit/dimensional_check 1/year conflicts with per-year effective dimensionless symbol definitions",
+      "proposed": "dimensionless annual-step ratio metadata; retain period/compounding convention and expression"
+    },
+    {
+      "id": "E04",
+      "formula_id": "F-ENERGY-AGGREGATION",
+      "path": "05-formulas.json",
+      "problem": "b means energy boundary in symbols and primary subscript rule, but appended token describes project/equity tax basis",
+      "proposed": "make b explanation consistently energy boundary, no numeric expression change"
+    },
+    {
+      "id": "E05",
+      "formula_id": "F-BREAK-EVEN-PRICE",
+      "path": "05-formulas.json",
+      "problem": "p is solved price, but appended token describes monthly/annual index",
+      "proposed": "explain p as solved settlement price, preserve search-domain/root-set rules"
+    },
+    {
+      "id": "E06",
+      "formula_field_id": "checks.energy_balance_residual",
+      "path": "05-field-bindings.json",
+      "problem": "Supporting raw inputs are working capital, debt schedule and capex rather than energy dependency lineage",
+      "proposed": "derive supporting raw lineage from approved F-ENERGY-BALANCE dependencies; do not make finance data a prerequisite for energy conservation"
+    }
+  ],
+  "policy": "No frozen file, baseline hash, input contract or calculation method has been changed before user approval; preserve original archive and IDs; sync effective definitions, lock/version/migration and regressions after approval"
+}

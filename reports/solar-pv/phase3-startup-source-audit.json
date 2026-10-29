@@ -1,0 +1,13 @@
+{
+  "protected_count": 288,
+  "protected_changed": [],
+  "initial_tracked_files": 437,
+  "initial_tracked_changed": [
+    "docs/solar-pv/README.md"
+  ],
+  "production_code_and_existing_tests_changed": false,
+  "frozen_input_formula_binding_lock_changed": false,
+  "changed_text_files_scanned": 16,
+  "secret_pattern_findings": [],
+  "scope": "Documentation and actual startup regression/format-size evidence only; not Phase3 engine acceptance"
+}

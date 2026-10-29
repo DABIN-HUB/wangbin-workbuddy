@@ -1,0 +1,42 @@
+{
+  "initial_head": "6c7081ba32959c3b633f452e43a8826740e79158",
+  "initial_branch": "main",
+  "initial_status": "clean",
+  "initial_tracked_files": 437,
+  "additional_dist_files": 72,
+  "protected_files": 288,
+  "changed_protected_files": [],
+  "startup_tests": {
+    "phase2": {
+      "total": 3019,
+      "passed": 3014,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 5
+    },
+    "legacy": {
+      "total": 150,
+      "passed": 145,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 5
+    }
+  },
+  "formula_total": 89,
+  "phase3_applicable": 82,
+  "phase8_deferred": 7,
+  "implemented_tested_formulas": 0,
+  "phase3_calculation_status": "NOT_IMPLEMENTED",
+  "phase3a_status": "BLOCKED_PENDING_USER_APPROVAL",
+  "read_only_audits": "deleg_5047b100 completed; parent verified six concrete metadata contradictions",
+  "decision_dependencies": [
+    "D1_VERSIONED_SIX_ITEM_ERRATA",
+    "D2_TYPED_METHOD_NUMERICAL_STRATEGY_AND_EXPLICIT_ASSUMPTIONS",
+    "D3_BOUNDED_LARGE_SERIES_IO_AND_HASH_EVOLUTION"
+  ],
+  "publication": "BLOCKED",
+  "phase4_started": false,
+  "phase3a_completed": false,
+  "calculation_results_created": false,
+  "core_methods_changed": false
+}
