@@ -1,0 +1,7 @@
+........................................................................ [ 40%]
+........................................................................ [ 81%]
+....................sss.........                                         [100%]
+- generated xml file: C:\Users\wangbin\AppData\Local\hermes\cache\scratch\solar-pv-phase3-20261029\3a-integration-focused2.xml -
+=========================== short test summary info ===========================
+SKIPPED [3] tests\solar-pv\test_cli.py:337: Windows symlink privilege unavailable: 22
+173 passed, 3 skipped in 204.20s (0:03:24)

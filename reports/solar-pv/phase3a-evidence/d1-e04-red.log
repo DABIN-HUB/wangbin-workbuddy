@@ -1,0 +1,16 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+_______ test_e04_aggregation_b_is_energy_boundary_not_tax_equity_basis ________
+
+    def test_e04_aggregation_b_is_energy_boundary_not_tax_equity_basis():
+        cat = Catalog()
+        fid = "F-ENERGY-AGGREGATION"
+        current, frozen = cat.formulas[fid], cat.frozen_formulas[fid]
+        tokens = current["subscript_definition"]["逐个下标词素"]
+>       assert "b=同一物理能量边界" in tokens
+E       AssertionError: assert 'b=同一物理能量边界' in 'b=互斥的项目/股权及税前后完整口径索引；p=月/年汇总期间索引；t=同一时间粒度的时段索引'
+
+tests\solar-pv\test_definition_errata.py:70: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_definition_errata.py::test_e04_aggregation_b_is_energy_boundary_not_tax_equity_basis
+1 failed, 3 deselected in 1.03s

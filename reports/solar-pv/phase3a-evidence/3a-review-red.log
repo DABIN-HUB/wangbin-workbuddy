@@ -1,0 +1,54 @@
+FFFFFFFFFF.                                                              [100%]
+================================== FAILURES ===================================
+_____ test_partial_numeric_result_must_validate_source_and_input_identity _____
+tests\solar-pv\test_calculation_review_regressions.py:33: in test_partial_numeric_result_must_validate_source_and_input_identity
+    with pytest.raises(ContractError, match='RESULT_SOURCE_IDENTITY'):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+___ test_result_rejects_dangling_metric_trace_references[source_ids-value0] ___
+tests\solar-pv\test_calculation_review_regressions.py:42: in test_result_rejects_dangling_metric_trace_references
+    with pytest.raises(ContractError, match='METRIC_.*REFERENCE'):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+__ test_result_rejects_dangling_metric_trace_references[evidence_ids-value1] __
+tests\solar-pv\test_calculation_review_regressions.py:42: in test_result_rejects_dangling_metric_trace_references
+    with pytest.raises(ContractError, match='METRIC_.*REFERENCE'):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+_ test_result_rejects_dangling_metric_trace_references[boundary_id-SYNTHETIC-ABSENT] _
+tests\solar-pv\test_calculation_review_regressions.py:42: in test_result_rejects_dangling_metric_trace_references
+    with pytest.raises(ContractError, match='METRIC_.*REFERENCE'):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+_ test_result_rejects_dangling_metric_trace_references[method_parameter_ids-value3] _
+tests\solar-pv\test_calculation_review_regressions.py:42: in test_result_rejects_dangling_metric_trace_references
+    with pytest.raises(ContractError, match='METRIC_.*REFERENCE'):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+____ test_all_formula_consumers_reject_catalog_definition_drift[inventory] ____
+tests\solar-pv\test_calculation_review_regressions.py:51: in test_all_formula_consumers_reject_catalog_definition_drift
+    with pytest.raises(ContractError, match='DEFINITION_IDENTITY_DRIFT'):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+_______ test_all_formula_consumers_reject_catalog_definition_drift[run] _______
+tests\solar-pv\test_calculation_review_regressions.py:51: in test_all_formula_consumers_reject_catalog_definition_drift
+    with pytest.raises(ContractError, match='DEFINITION_IDENTITY_DRIFT'):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+_____ test_all_formula_consumers_reject_catalog_definition_drift[result] ______
+tests\solar-pv\test_calculation_review_regressions.py:51: in test_all_formula_consumers_reject_catalog_definition_drift
+    with pytest.raises(ContractError, match='DEFINITION_IDENTITY_DRIFT'):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+________ test_new_method_contract_rejects_binary_float_before_hashing _________
+tests\solar-pv\test_calculation_review_regressions.py:62: in test_new_method_contract_rejects_binary_float_before_hashing
+    with pytest.raises(ContractError, match='EXACT_JSON_NUMBER_REQUIRED'):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+________ test_new_result_contract_rejects_binary_float_before_hashing _________
+tests\solar-pv\test_calculation_review_regressions.py:69: in test_new_result_contract_rejects_binary_float_before_hashing
+    with pytest.raises(ContractError, match='EXACT_JSON_NUMBER_REQUIRED'):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_calculation_review_regressions.py::test_partial_numeric_result_must_validate_source_and_input_identity
+FAILED tests/solar-pv/test_calculation_review_regressions.py::test_result_rejects_dangling_metric_trace_references[source_ids-value0]
+FAILED tests/solar-pv/test_calculation_review_regressions.py::test_result_rejects_dangling_metric_trace_references[evidence_ids-value1]
+FAILED tests/solar-pv/test_calculation_review_regressions.py::test_result_rejects_dangling_metric_trace_references[boundary_id-SYNTHETIC-ABSENT]
+FAILED tests/solar-pv/test_calculation_review_regressions.py::test_result_rejects_dangling_metric_trace_references[method_parameter_ids-value3]
+FAILED tests/solar-pv/test_calculation_review_regressions.py::test_all_formula_consumers_reject_catalog_definition_drift[inventory]
+FAILED tests/solar-pv/test_calculation_review_regressions.py::test_all_formula_consumers_reject_catalog_definition_drift[run]
+FAILED tests/solar-pv/test_calculation_review_regressions.py::test_all_formula_consumers_reject_catalog_definition_drift[result]
+FAILED tests/solar-pv/test_calculation_review_regressions.py::test_new_method_contract_rejects_binary_float_before_hashing
+FAILED tests/solar-pv/test_calculation_review_regressions.py::test_new_result_contract_rejects_binary_float_before_hashing
+10 failed, 1 passed in 8.79s

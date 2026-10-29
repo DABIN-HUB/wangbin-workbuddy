@@ -1,0 +1,18 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+______ test_e03_nominal_real_rate_is_dimensionless_annual_step_metadata _______
+
+    def test_e03_nominal_real_rate_is_dimensionless_annual_step_metadata():
+        cat = Catalog()
+        fid = "F-NOMINAL-REAL-RATE"
+        current, frozen = cat.formulas[fid], cat.frozen_formulas[fid]
+>       assert current["unit"] == "1"
+E       AssertionError: assert '1/年' == '1'
+E         
+E         - 1
+E         + 1/年
+
+tests\solar-pv\test_definition_errata.py:55: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_definition_errata.py::test_e03_nominal_real_rate_is_dimensionless_annual_step_metadata
+1 failed, 2 deselected in 1.07s

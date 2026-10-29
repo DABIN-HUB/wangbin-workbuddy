@@ -1,0 +1,24 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+___ test_e06_energy_balance_supporting_raw_lineage_uses_energy_dependencies ___
+
+    def test_e06_energy_balance_supporting_raw_lineage_uses_energy_dependencies():
+        cat = Catalog()
+        key = "checks.energy_balance_residual"
+        expected = _energy_raw_lineage(cat)
+>       assert set(cat.bindings[key]["input_field_ids"]) == expected
+E       AssertionError: assert {'capex.items...king_capital'} == {'grid.export...n_years', ...}
+E         
+E         Extra items in the left set:
+E         'finance.debt_schedule'
+E         'capex.items'
+E         'finance.working_capital'
+E         Extra items in the right set:
+E         'system.losses'...
+E         
+E         ...Full output truncated (30 lines hidden), use '-vv' to show
+
+tests\solar-pv\test_definition_errata.py:114: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_definition_errata.py::test_e06_energy_balance_supporting_raw_lineage_uses_energy_dependencies
+1 failed, 5 deselected in 0.99s

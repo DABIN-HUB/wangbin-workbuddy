@@ -1,0 +1,4 @@
+# Preserve immutable verification originals byte-for-byte, including CRLF
+# and terminal progress output. This directory holds evidence, not source code.
+# Review artifact contents and manifest hashes rather than textual Git diffs.
+* -text -diff

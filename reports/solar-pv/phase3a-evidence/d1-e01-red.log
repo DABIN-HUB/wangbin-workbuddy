@@ -1,0 +1,19 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+_______ test_e01_usable_area_is_output_not_a_required_or_missing_input ________
+
+    def test_e01_usable_area_is_output_not_a_required_or_missing_input():
+        cat = Catalog()
+        fid = "F-USABLE-AREA"
+        formula = cat.formulas[fid]
+        symbol = next(s for s in formula["every_symbol_definition"] if s["symbol"] == "A_use")
+>       assert symbol["role"] == "output"
+E       AssertionError: assert 'input' == 'output'
+E         
+E         - output
+E         + input
+
+tests\solar-pv\test_definition_errata.py:15: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_definition_errata.py::test_e01_usable_area_is_output_not_a_required_or_missing_input
+1 failed in 0.47s

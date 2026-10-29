@@ -1,0 +1,49 @@
+.FFF                                                                     [100%]
+================================== FAILURES ===================================
+____________ test_rehashed_in_memory_catalog_cannot_self_authorize ____________
+
+    def test_rehashed_in_memory_catalog_cannot_self_authorize():
+        catalog = Catalog()
+        catalog.formulas["F-USABLE-AREA"]["text_equation"] = "unauthorized"
+        catalog.definition_manifest["effective_definition_hash"] = digest({"formulas": catalog.formulas, "bindings": catalog.bindings})
+        catalog.definition_hash = digest(catalog.definition_manifest)
+>       with pytest.raises(ContractError, match="DEFINITION_IDENTITY_DRIFT"):
+E       Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+
+tests\solar-pv\test_definition_versions.py:183: Failed
+___________ test_lock_schema_requires_exact_original_baseline_names ___________
+
+    def test_lock_schema_requires_exact_original_baseline_names():
+        value = loads((PACKAGE / "definition-lock.json").read_bytes())
+        sha = value["baseline_hashes"].pop("03-input-fields.json")
+        value["baseline_hashes"]["unapproved-fields.json"] = sha
+>       assert list(StrictValidator(definition_lock_schema()).iter_errors(value))
+E       AssertionError: assert []
+E        +  where [] = list(<generator object create.<locals>.Validator.iter_errors at 0x0000022484FCBC40>)
+E        +    where <generator object create.<locals>.Validator.iter_errors at 0x0000022484FCBC40> = iter_errors({'baseline_hashes': {'00-baseline-manifest.json': '33845de976ec13345320b79ff7045e86a39bf2194a427b5cd28169238d1defec', ...finitions/1.0.1', 'effective_definition_hash': '58cfd167bcee7180e9727495be77768416323f8f82df798b910638a79faac003', ...})
+E        +      where iter_errors = Validator(schema={'additionalProperties': False, 'properties': {'baseline_hashes': {'additionalProperties': {'pattern'...s', 'errata_hash', 'frozen_definition_hash', 'effective_definition_hash', ...], 'type': 'object'}, format_checker=None).iter_errors
+E        +        where Validator(schema={'additionalProperties': False, 'properties': {'baseline_hashes': {'additionalProperties': {'pattern'...s', 'errata_hash', 'frozen_definition_hash', 'effective_definition_hash', ...], 'type': 'object'}, format_checker=None) = StrictValidator({'additionalProperties': False, 'properties': {'baseline_hashes': {'additionalProperties': {'pattern': '^[0-9a-f]{64}$...sion', 'baseline_hashes', 'errata_hash', 'frozen_definition_hash', 'effective_definition_hash', ...], 'type': 'object'})
+E        +          where {'additionalProperties': False, 'properties': {'baseline_hashes': {'additionalProperties': {'pattern': '^[0-9a-f]{64}$...sion', 'baseline_hashes', 'errata_hash', 'frozen_definition_hash', 'effective_definition_hash', ...], 'type': 'object'} = definition_lock_schema()
+
+tests\solar-pv\test_definition_versions.py:191: AssertionError
+______ test_exported_lock_schema_cannot_mutate_private_hash_constraints _______
+
+    def test_exported_lock_schema_cannot_mutate_private_hash_constraints():
+        schema = definition_lock_schema()
+        schema["properties"]["definition_hash"]["pattern"] = ".*"
+        value = loads((PACKAGE / "definition-lock.json").read_bytes())
+        value["definition_hash"] = "NOT-A-SHA256"
+>       assert list(StrictValidator(definition_lock_schema()).iter_errors(value))
+E       AssertionError: assert []
+E        +  where [] = list(<generator object create.<locals>.Validator.iter_errors at 0x0000022484FCBD80>)
+E        +    where <generator object create.<locals>.Validator.iter_errors at 0x0000022484FCBD80> = iter_errors({'baseline_hashes': {'00-baseline-manifest.json': '33845de976ec13345320b79ff7045e86a39bf2194a427b5cd28169238d1defec', ...finitions/1.0.1', 'effective_definition_hash': '58cfd167bcee7180e9727495be77768416323f8f82df798b910638a79faac003', ...})
+E        +      where iter_errors = Validator(schema={'additionalProperties': False, 'properties': {'baseline_hashes': {'additionalProperties': {'pattern'...s', 'errata_hash', 'frozen_definition_hash', 'effective_definition_hash', ...], 'type': 'object'}, format_checker=None).iter_errors
+E        +        where Validator(schema={'additionalProperties': False, 'properties': {'baseline_hashes': {'additionalProperties': {'pattern'...s', 'errata_hash', 'frozen_definition_hash', 'effective_definition_hash', ...], 'type': 'object'}, format_checker=None) = StrictValidator({'additionalProperties': False, 'properties': {'baseline_hashes': {'additionalProperties': {'pattern': '.*', 'type': '...sion', 'baseline_hashes', 'errata_hash', 'frozen_definition_hash', 'effective_definition_hash', ...], 'type': 'object'})
+E        +          where {'additionalProperties': False, 'properties': {'baseline_hashes': {'additionalProperties': {'pattern': '.*', 'type': '...sion', 'baseline_hashes', 'errata_hash', 'frozen_definition_hash', 'effective_definition_hash', ...], 'type': 'object'} = definition_lock_schema()
+
+tests\solar-pv\test_definition_versions.py:199: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_definition_versions.py::test_rehashed_in_memory_catalog_cannot_self_authorize
+FAILED tests/solar-pv/test_definition_versions.py::test_lock_schema_requires_exact_original_baseline_names
+FAILED tests/solar-pv/test_definition_versions.py::test_exported_lock_schema_cannot_mutate_private_hash_constraints
+3 failed, 1 passed, 42 deselected in 1.25s

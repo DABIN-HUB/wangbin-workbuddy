@@ -1,0 +1,14 @@
+...........FF........                                                    [100%]
+================================== FAILURES ===================================
+_______ test_integer_token_negative_zero_is_explicitly_rejected[method] _______
+tests\solar-pv\test_calculation_review_regressions.py:83: in test_integer_token_negative_zero_is_explicitly_rejected
+    with pytest.raises(ContractError, match='NONCANONICAL_NEGATIVE_ZERO'):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+_______ test_integer_token_negative_zero_is_explicitly_rejected[result] _______
+tests\solar-pv\test_calculation_review_regressions.py:88: in test_integer_token_negative_zero_is_explicitly_rejected
+    with pytest.raises(ContractError, match='NONCANONICAL_NEGATIVE_ZERO'):
+E   Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_calculation_review_regressions.py::test_integer_token_negative_zero_is_explicitly_rejected[method]
+FAILED tests/solar-pv/test_calculation_review_regressions.py::test_integer_token_negative_zero_is_explicitly_rejected[result]
+2 failed, 19 passed in 20.42s

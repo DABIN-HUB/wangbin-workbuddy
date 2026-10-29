@@ -1,0 +1,30 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+___________ test_e02_capex_amount_is_output_and_quote_is_preserved ____________
+
+    def test_e02_capex_amount_is_output_and_quote_is_preserved():
+>       cat = Catalog()
+              ^^^^^^^^^
+
+tests\solar-pv\test_definition_errata.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+services\solar-pv-engine\src\wangbin_solar_pv\catalog.py:50: in __init__
+    self.formulas, self.bindings, self.definition_manifest = load_effective_definitions(self)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+catalog = <wangbin_solar_pv.catalog.Catalog object at 0x000002C3E8474320>
+
+    def load_effective_definitions(catalog):
+        """Apply only the reviewed package overlay, never files from baseline_dir."""
+        package = Path(__file__).resolve().parent
+        errata = _read_control(package / "definition-errata.json", definition_errata_schema())
+        lock = _read_control(package / "definition-lock.json", definition_lock_schema())
+        if digest(lock) != TRUSTED_DEFINITION_LOCK_HASH:
+>           raise ContractError("DEFINITION_LOCK_DRIFT")
+E           wangbin_solar_pv.errors.ContractError: DEFINITION_LOCK_DRIFT
+
+services\solar-pv-engine\src\wangbin_solar_pv\definition_versions.py:94: ContractError
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_definition_errata.py::test_e02_capex_amount_is_output_and_quote_is_preserved
+1 failed, 1 deselected in 0.46s

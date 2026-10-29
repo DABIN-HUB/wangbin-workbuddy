@@ -1,0 +1,18 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+___________ test_e02_capex_amount_is_output_and_quote_is_preserved ____________
+
+    def test_e02_capex_amount_is_output_and_quote_is_preserved():
+        cat = Catalog()
+        fid = "F-CAPEX-ITEM-AMOUNT"
+        symbol = next(s for s in cat.formulas[fid]["every_symbol_definition"] if s["symbol"] == "C_i")
+>       assert symbol["role"] == "output"
+E       AssertionError: assert 'input' == 'output'
+E         
+E         - output
+E         + input
+
+tests\solar-pv\test_definition_errata.py:14: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_definition_errata.py::test_e02_capex_amount_is_output_and_quote_is_preserved
+1 failed, 1 deselected in 1.22s

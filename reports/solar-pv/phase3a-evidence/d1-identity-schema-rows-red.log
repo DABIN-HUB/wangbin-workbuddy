@@ -1,0 +1,217 @@
+FFFFFFFF.FF................................                              [100%]
+================================== FAILURES ===================================
+___ test_public_queries_include_full_effective_definition_identity[formula] ___
+
+cat = <wangbin_solar_pv.catalog.Catalog object at 0x0000025FC4DA4350>
+kind = 'formula'
+
+    @pytest.mark.parametrize("kind", ["formula", "field", "metadata"])
+    def test_public_queries_include_full_effective_definition_identity(cat, kind):
+        if kind == "formula":
+            info = FormulaBindings(cat).describe("F-USABLE-AREA")
+        elif kind == "field":
+            info = FormulaBindings(cat).describe_field("checks.energy_balance_residual")
+        else:
+            info = cat.metadata("site.usable_area")
+>       assert info["definition_version"] == cat.definition_version == DEFINITION_VERSION
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'definition_version'
+
+tests\solar-pv\test_definition_versions.py:42: KeyError
+____ test_public_queries_include_full_effective_definition_identity[field] ____
+
+cat = <wangbin_solar_pv.catalog.Catalog object at 0x0000025FC4DA4350>
+kind = 'field'
+
+    @pytest.mark.parametrize("kind", ["formula", "field", "metadata"])
+    def test_public_queries_include_full_effective_definition_identity(cat, kind):
+        if kind == "formula":
+            info = FormulaBindings(cat).describe("F-USABLE-AREA")
+        elif kind == "field":
+            info = FormulaBindings(cat).describe_field("checks.energy_balance_residual")
+        else:
+            info = cat.metadata("site.usable_area")
+>       assert info["definition_version"] == cat.definition_version == DEFINITION_VERSION
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'definition_version'
+
+tests\solar-pv\test_definition_versions.py:42: KeyError
+__ test_public_queries_include_full_effective_definition_identity[metadata] ___
+
+cat = <wangbin_solar_pv.catalog.Catalog object at 0x0000025FC4DA4350>
+kind = 'metadata'
+
+    @pytest.mark.parametrize("kind", ["formula", "field", "metadata"])
+    def test_public_queries_include_full_effective_definition_identity(cat, kind):
+        if kind == "formula":
+            info = FormulaBindings(cat).describe("F-USABLE-AREA")
+        elif kind == "field":
+            info = FormulaBindings(cat).describe_field("checks.energy_balance_residual")
+        else:
+            info = cat.metadata("site.usable_area")
+>       assert info["definition_version"] == cat.definition_version == DEFINITION_VERSION
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'definition_version'
+
+tests\solar-pv\test_definition_versions.py:42: KeyError
+___ test_public_formula_instances_use_actual_row_id_not_scalar_item_boolean ___
+
+cat = <wangbin_solar_pv.catalog.Catalog object at 0x0000025FC4DA4350>
+
+    def test_public_formula_instances_use_actual_row_id_not_scalar_item_boolean(cat):
+        project = ProjectData.new("SYNTHETIC-D1-ROWS", "industrial_rooftop", cat)
+        put_rows(project, cat, "capex.items", [row(cat, "capex.items", "alpha", {"quantity": None, "unit_price": 100}), row(cat, "capex.items", "beta", {"unit_price": 200})])
+        info = FormulaBindings(cat).describe("F-CAPEX-ITEM-AMOUNT", project)
+        quantity = next(s for s in info["symbols"] if s["definition"]["field_id"] == "capex.items.quantity")
+        inputs = next(x for x in quantity["supporting_inputs"] if x["field_id"] == "capex.items.quantity")
+>       assert [x["row_id"] for x in inputs["instances"]] == ["alpha"]
+E       AssertionError: assert [False] == ['alpha']
+E         
+E         At index 0 diff: False != 'alpha'
+E         Use -v to get more diff
+
+tests\solar-pv\test_definition_versions.py:55: AssertionError
+_________________ test_errata_schema_requires_exact_six_items _________________
+
+cat = <wangbin_solar_pv.catalog.Catalog object at 0x0000025FC4DA4350>
+
+    def test_errata_schema_requires_exact_six_items(cat):
+        errata = loads((PACKAGE / "definition-errata.json").read_bytes())
+        shortened = deepcopy(errata)
+        shortened["items"].pop()
+>       assert list(StrictValidator(definition_errata_schema()).iter_errors(shortened))
+E       AssertionError: assert []
+E        +  where [] = list(<generator object create.<locals>.Validator.iter_errors at 0x0000025FC507D080>)
+E        +    where <generator object create.<locals>.Validator.iter_errors at 0x0000025FC507D080> = iter_errors({'approval_reference': '19-phase3-approved-implementation-contract.md#D1', 'definition_version': 'solar-pv-formula-def...d': 'E05', 'reason_zh': 'p为事前允许域内待求的指定结算电价，而非月/年索引；保留全链重算、允许域与全部根集合规则。', 'source_file': '05-formulas.json', ...}], ...})
+E        +      where iter_errors = Validator(schema={'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-ap...ontrac...finition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'}, format_checker=None).iter_errors
+E        +        where Validator(schema={'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-ap...ontrac...finition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'}, format_checker=None) = StrictValidator({'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-approved-implementation-cont...['schema_version', 'definition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'})
+E        +          where {'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-approved-implementation-cont...['schema_version', 'definition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'} = definition_errata_schema()
+
+tests\solar-pv\test_definition_versions.py:64: AssertionError
+_ test_errata_schema_binds_each_approved_item_to_its_metadata_path[wrong-target] _
+
+mutation = 'wrong-target'
+
+    @pytest.mark.parametrize("mutation", ["wrong-target", "wrong-file", "wrong-path", "boolean-path", "wrong-value-type", "duplicate-id"])
+    def test_errata_schema_binds_each_approved_item_to_its_metadata_path(mutation):
+        value = loads((PACKAGE / "definition-errata.json").read_bytes())
+        item = value["items"][0]
+        if mutation == "wrong-target": item["target_id"] = "F-DC-CAPACITY"
+        if mutation == "wrong-file": item["source_file"] = "05-formulas.json"
+        if mutation == "wrong-path": item["changes"][0]["path"] = ["text_equation"]
+        if mutation == "boolean-path": item["changes"][0]["path"][1] = False
+        if mutation == "wrong-value-type": item["changes"][0]["after"] = {"hidden": "business-input"}
+        if mutation == "duplicate-id": value["items"][1]["id"] = "E01"
+>       assert list(StrictValidator(definition_errata_schema()).iter_errors(value))
+E       AssertionError: assert []
+E        +  where [] = list(<generator object create.<locals>.Validator.iter_errors at 0x0000025FC507CF40>)
+E        +    where <generator object create.<locals>.Validator.iter_errors at 0x0000025FC507CF40> = iter_errors({'approval_reference': '19-phase3-approved-implementation-contract.md#D1', 'definition_version': 'solar-pv-formula-def...s取可达原始支持血缘并去重；支持清单不是全部同时必需，也不表示转换、账簿或能量模型已执行。不得以投资/融资信息作为电量守恒前提。', 'source_file': '05-field-bindings.json', ...}], ...})
+E        +      where iter_errors = Validator(schema={'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-ap...ontrac...finition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'}, format_checker=None).iter_errors
+E        +        where Validator(schema={'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-ap...ontrac...finition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'}, format_checker=None) = StrictValidator({'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-approved-implementation-cont...['schema_version', 'definition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'})
+E        +          where {'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-approved-implementation-cont...['schema_version', 'definition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'} = definition_errata_schema()
+
+tests\solar-pv\test_definition_versions.py:77: AssertionError
+_ test_errata_schema_binds_each_approved_item_to_its_metadata_path[wrong-file] _
+
+mutation = 'wrong-file'
+
+    @pytest.mark.parametrize("mutation", ["wrong-target", "wrong-file", "wrong-path", "boolean-path", "wrong-value-type", "duplicate-id"])
+    def test_errata_schema_binds_each_approved_item_to_its_metadata_path(mutation):
+        value = loads((PACKAGE / "definition-errata.json").read_bytes())
+        item = value["items"][0]
+        if mutation == "wrong-target": item["target_id"] = "F-DC-CAPACITY"
+        if mutation == "wrong-file": item["source_file"] = "05-formulas.json"
+        if mutation == "wrong-path": item["changes"][0]["path"] = ["text_equation"]
+        if mutation == "boolean-path": item["changes"][0]["path"][1] = False
+        if mutation == "wrong-value-type": item["changes"][0]["after"] = {"hidden": "business-input"}
+        if mutation == "duplicate-id": value["items"][1]["id"] = "E01"
+>       assert list(StrictValidator(definition_errata_schema()).iter_errors(value))
+E       AssertionError: assert []
+E        +  where [] = list(<generator object create.<locals>.Validator.iter_errors at 0x0000025FC507D300>)
+E        +    where <generator object create.<locals>.Validator.iter_errors at 0x0000025FC507D300> = iter_errors({'approval_reference': '19-phase3-approved-implementation-contract.md#D1', 'definition_version': 'solar-pv-formula-def...s取可达原始支持血缘并去重；支持清单不是全部同时必需，也不表示转换、账簿或能量模型已执行。不得以投资/融资信息作为电量守恒前提。', 'source_file': '05-field-bindings.json', ...}], ...})
+E        +      where iter_errors = Validator(schema={'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-ap...ontrac...finition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'}, format_checker=None).iter_errors
+E        +        where Validator(schema={'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-ap...ontrac...finition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'}, format_checker=None) = StrictValidator({'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-approved-implementation-cont...['schema_version', 'definition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'})
+E        +          where {'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-approved-implementation-cont...['schema_version', 'definition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'} = definition_errata_schema()
+
+tests\solar-pv\test_definition_versions.py:77: AssertionError
+_ test_errata_schema_binds_each_approved_item_to_its_metadata_path[wrong-path] _
+
+mutation = 'wrong-path'
+
+    @pytest.mark.parametrize("mutation", ["wrong-target", "wrong-file", "wrong-path", "boolean-path", "wrong-value-type", "duplicate-id"])
+    def test_errata_schema_binds_each_approved_item_to_its_metadata_path(mutation):
+        value = loads((PACKAGE / "definition-errata.json").read_bytes())
+        item = value["items"][0]
+        if mutation == "wrong-target": item["target_id"] = "F-DC-CAPACITY"
+        if mutation == "wrong-file": item["source_file"] = "05-formulas.json"
+        if mutation == "wrong-path": item["changes"][0]["path"] = ["text_equation"]
+        if mutation == "boolean-path": item["changes"][0]["path"][1] = False
+        if mutation == "wrong-value-type": item["changes"][0]["after"] = {"hidden": "business-input"}
+        if mutation == "duplicate-id": value["items"][1]["id"] = "E01"
+>       assert list(StrictValidator(definition_errata_schema()).iter_errors(value))
+E       AssertionError: assert []
+E        +  where [] = list(<generator object create.<locals>.Validator.iter_errors at 0x0000025FC507D580>)
+E        +    where <generator object create.<locals>.Validator.iter_errors at 0x0000025FC507D580> = iter_errors({'approval_reference': '19-phase3-approved-implementation-contract.md#D1', 'definition_version': 'solar-pv-formula-def...s取可达原始支持血缘并去重；支持清单不是全部同时必需，也不表示转换、账簿或能量模型已执行。不得以投资/融资信息作为电量守恒前提。', 'source_file': '05-field-bindings.json', ...}], ...})
+E        +      where iter_errors = Validator(schema={'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-ap...ontrac...finition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'}, format_checker=None).iter_errors
+E        +        where Validator(schema={'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-ap...ontrac...finition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'}, format_checker=None) = StrictValidator({'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-approved-implementation-cont...['schema_version', 'definition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'})
+E        +          where {'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-approved-implementation-cont...['schema_version', 'definition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'} = definition_errata_schema()
+
+tests\solar-pv\test_definition_versions.py:77: AssertionError
+_ test_errata_schema_binds_each_approved_item_to_its_metadata_path[wrong-value-type] _
+
+mutation = 'wrong-value-type'
+
+    @pytest.mark.parametrize("mutation", ["wrong-target", "wrong-file", "wrong-path", "boolean-path", "wrong-value-type", "duplicate-id"])
+    def test_errata_schema_binds_each_approved_item_to_its_metadata_path(mutation):
+        value = loads((PACKAGE / "definition-errata.json").read_bytes())
+        item = value["items"][0]
+        if mutation == "wrong-target": item["target_id"] = "F-DC-CAPACITY"
+        if mutation == "wrong-file": item["source_file"] = "05-formulas.json"
+        if mutation == "wrong-path": item["changes"][0]["path"] = ["text_equation"]
+        if mutation == "boolean-path": item["changes"][0]["path"][1] = False
+        if mutation == "wrong-value-type": item["changes"][0]["after"] = {"hidden": "business-input"}
+        if mutation == "duplicate-id": value["items"][1]["id"] = "E01"
+>       assert list(StrictValidator(definition_errata_schema()).iter_errors(value))
+E       AssertionError: assert []
+E        +  where [] = list(<generator object create.<locals>.Validator.iter_errors at 0x0000025FC507D800>)
+E        +    where <generator object create.<locals>.Validator.iter_errors at 0x0000025FC507D800> = iter_errors({'approval_reference': '19-phase3-approved-implementation-contract.md#D1', 'definition_version': 'solar-pv-formula-def...s取可达原始支持血缘并去重；支持清单不是全部同时必需，也不表示转换、账簿或能量模型已执行。不得以投资/融资信息作为电量守恒前提。', 'source_file': '05-field-bindings.json', ...}], ...})
+E        +      where iter_errors = Validator(schema={'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-ap...ontrac...finition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'}, format_checker=None).iter_errors
+E        +        where Validator(schema={'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-ap...ontrac...finition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'}, format_checker=None) = StrictValidator({'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-approved-implementation-cont...['schema_version', 'definition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'})
+E        +          where {'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-approved-implementation-cont...['schema_version', 'definition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'} = definition_errata_schema()
+
+tests\solar-pv\test_definition_versions.py:77: AssertionError
+_ test_errata_schema_binds_each_approved_item_to_its_metadata_path[duplicate-id] _
+
+mutation = 'duplicate-id'
+
+    @pytest.mark.parametrize("mutation", ["wrong-target", "wrong-file", "wrong-path", "boolean-path", "wrong-value-type", "duplicate-id"])
+    def test_errata_schema_binds_each_approved_item_to_its_metadata_path(mutation):
+        value = loads((PACKAGE / "definition-errata.json").read_bytes())
+        item = value["items"][0]
+        if mutation == "wrong-target": item["target_id"] = "F-DC-CAPACITY"
+        if mutation == "wrong-file": item["source_file"] = "05-formulas.json"
+        if mutation == "wrong-path": item["changes"][0]["path"] = ["text_equation"]
+        if mutation == "boolean-path": item["changes"][0]["path"][1] = False
+        if mutation == "wrong-value-type": item["changes"][0]["after"] = {"hidden": "business-input"}
+        if mutation == "duplicate-id": value["items"][1]["id"] = "E01"
+>       assert list(StrictValidator(definition_errata_schema()).iter_errors(value))
+E       AssertionError: assert []
+E        +  where [] = list(<generator object create.<locals>.Validator.iter_errors at 0x0000025FC507DA80>)
+E        +    where <generator object create.<locals>.Validator.iter_errors at 0x0000025FC507DA80> = iter_errors({'approval_reference': '19-phase3-approved-implementation-contract.md#D1', 'definition_version': 'solar-pv-formula-def...s取可达原始支持血缘并去重；支持清单不是全部同时必需，也不表示转换、账簿或能量模型已执行。不得以投资/融资信息作为电量守恒前提。', 'source_file': '05-field-bindings.json', ...}], ...})
+E        +      where iter_errors = Validator(schema={'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-ap...ontrac...finition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'}, format_checker=None).iter_errors
+E        +        where Validator(schema={'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-ap...ontrac...finition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'}, format_checker=None) = StrictValidator({'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-approved-implementation-cont...['schema_version', 'definition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'})
+E        +          where {'additionalProperties': False, 'properties': {'approval_reference': {'const': '19-phase3-approved-implementation-cont...['schema_version', 'definition_version', 'frozen_definition_version', 'approval_reference', 'items'], 'type': 'object'} = definition_errata_schema()
+
+tests\solar-pv\test_definition_versions.py:77: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_definition_versions.py::test_public_queries_include_full_effective_definition_identity[formula]
+FAILED tests/solar-pv/test_definition_versions.py::test_public_queries_include_full_effective_definition_identity[field]
+FAILED tests/solar-pv/test_definition_versions.py::test_public_queries_include_full_effective_definition_identity[metadata]
+FAILED tests/solar-pv/test_definition_versions.py::test_public_formula_instances_use_actual_row_id_not_scalar_item_boolean
+FAILED tests/solar-pv/test_definition_versions.py::test_errata_schema_requires_exact_six_items
+FAILED tests/solar-pv/test_definition_versions.py::test_errata_schema_binds_each_approved_item_to_its_metadata_path[wrong-target]
+FAILED tests/solar-pv/test_definition_versions.py::test_errata_schema_binds_each_approved_item_to_its_metadata_path[wrong-file]
+FAILED tests/solar-pv/test_definition_versions.py::test_errata_schema_binds_each_approved_item_to_its_metadata_path[wrong-path]
+FAILED tests/solar-pv/test_definition_versions.py::test_errata_schema_binds_each_approved_item_to_its_metadata_path[wrong-value-type]
+FAILED tests/solar-pv/test_definition_versions.py::test_errata_schema_binds_each_approved_item_to_its_metadata_path[duplicate-id]
+10 failed, 33 passed in 4.35s

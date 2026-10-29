@@ -1,0 +1,16 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+______ test_e05_break_even_p_is_solved_settlement_price_not_period_index ______
+
+    def test_e05_break_even_p_is_solved_settlement_price_not_period_index():
+        cat = Catalog()
+        fid = "F-BREAK-EVEN-PRICE"
+        current, frozen = cat.formulas[fid], cat.frozen_formulas[fid]
+        tokens = current["subscript_definition"]["逐个下标词素"]
+>       assert "p=待求结算电价" in tokens
+E       AssertionError: assert 'p=待求结算电价' in 'star=盈亏平衡根集合标签，相当于上标 *，不是乘方；b=互斥的项目/股权及税前后完整口径索引；p=月/年汇总期间索引'
+
+tests\solar-pv\test_definition_errata.py:83: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_definition_errata.py::test_e05_break_even_p_is_solved_settlement_price_not_period_index
+1 failed, 4 deselected in 1.12s

@@ -1,0 +1,43 @@
+FFF                                                                      [100%]
+================================== FAILURES ===================================
+_____ test_public_query_rejects_unapproved_in_memory_definitions[formula] _____
+
+kind = 'formula'
+
+    @pytest.mark.parametrize("kind", ["formula", "field", "metadata"])
+    def test_public_query_rejects_unapproved_in_memory_definitions(kind):
+        catalog = Catalog()
+        catalog.formulas["F-USABLE-AREA"]["text_equation"] = "unauthorized"
+>       with pytest.raises(ContractError, match="DEFINITION_IDENTITY_DRIFT"):
+E       Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+
+tests\solar-pv\test_definition_versions.py:206: Failed
+______ test_public_query_rejects_unapproved_in_memory_definitions[field] ______
+
+kind = 'field'
+
+    @pytest.mark.parametrize("kind", ["formula", "field", "metadata"])
+    def test_public_query_rejects_unapproved_in_memory_definitions(kind):
+        catalog = Catalog()
+        catalog.formulas["F-USABLE-AREA"]["text_equation"] = "unauthorized"
+>       with pytest.raises(ContractError, match="DEFINITION_IDENTITY_DRIFT"):
+E       Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+
+tests\solar-pv\test_definition_versions.py:206: Failed
+____ test_public_query_rejects_unapproved_in_memory_definitions[metadata] _____
+
+kind = 'metadata'
+
+    @pytest.mark.parametrize("kind", ["formula", "field", "metadata"])
+    def test_public_query_rejects_unapproved_in_memory_definitions(kind):
+        catalog = Catalog()
+        catalog.formulas["F-USABLE-AREA"]["text_equation"] = "unauthorized"
+>       with pytest.raises(ContractError, match="DEFINITION_IDENTITY_DRIFT"):
+E       Failed: DID NOT RAISE <class 'wangbin_solar_pv.errors.ContractError'>
+
+tests\solar-pv\test_definition_versions.py:206: Failed
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_definition_versions.py::test_public_query_rejects_unapproved_in_memory_definitions[formula]
+FAILED tests/solar-pv/test_definition_versions.py::test_public_query_rejects_unapproved_in_memory_definitions[field]
+FAILED tests/solar-pv/test_definition_versions.py::test_public_query_rejects_unapproved_in_memory_definitions[metadata]
+3 failed, 46 deselected in 2.62s
