@@ -1,6 +1,6 @@
 # Phase 2 输入资料架构与接口
 
-> 当前为Phase2开发文档，最终通过/失败以reports/solar-pv/phase2-review-and-acceptance.md及实际JUnit为准。尚未联合验收的模块不能据本说明认定完成。全部长期需求仍以原始总提示词/469字段目录/89公式/需求矩阵为准；不进入Phase3。
+> Phase2本地有界输入验收已完成；结论、环境跳过和未关闭事项以reports/solar-pv/phase2-review-and-acceptance.md及最终JUnit为准，不从本说明推导数值/报告/平台成功。全部长期需求仍以原始总提示词/469字段目录/89公式/需求矩阵为准；本轮不进入Phase3。
 
 ## 1. 单一目录与版本
 
@@ -14,12 +14,14 @@
 - 对象数组value为`[{row_id,fields:{完整field_id:信封}}]`；父容器、row_id原子值和每单元独立证据；field_instance_id在已选输入中唯一。
 - schedule.tasks.predecessor_ids为元素信封列表，每元素value仍是字符串，不给字符串伪加row_id；[]为已确认无前置，null为未知，引用和循环专项校验。
 - `original_value/original_unit`保留原输入，`value/unit`为规范值；normalization保存转换ID、精确标志和显式舍入策略，并回放防止只改标签。金额economic_basis区分币种、价格年、税含和名实口径，单位换算不做汇率/含税/价格基准推断。
-- 五种证据status不变；六类source_kind映射U/D/C，ASSUMPTION表示用户显式接受的情景，不把AI分析当客观值。UNKNOWN=null、缺口留原因；VERIFIED要求来源/位置/复核/授权，绝不因提取或用户陈述自动赋值。
+- 五种证据status不变；六类source_kind映射U/D/C，明确AI辅助解释可用ASSUMPTION+provenance_kind=AI，仅限冻结允许AI的字段且保持ASSUMED，不新增第七来源类别，不冒充用户事实或客观值。UNKNOWN=null、缺口留原因；VERIFIED要求来源/位置/复核/授权，绝不因提取或用户陈述自动赋值。
 - C类必须有formula_id/formula_version/run_id及上游实例；投资金额严格同明细数量/单价链，原报价和计算候选分别保存；本阶段只校验声明血缘，不执行投资/发电/财务公式。
 
 ## 3. 来源与冲突
 
 候选按内容摘要获得稳定candidate_id，selected values与candidates分开；不同数据保留两候选，状态CONFLICT且有效value=null，不能静默平均或覆盖。人工选择需要reviewer和reason，但不自动将被选数据改为VERIFIED。历史记录只保存必要标识/理由，客户原文不进入诊断日志。source_snapshot可包含完整受控项目证据，不可自动写入公共仓库。
+
+站址/分类失效事件保留受影响候选ID，历史原候选不改；注册重放和冲突回选共享激活检查，失效过的VERIFIED只在激活副本降至UNVERIFIED并清除reviewer（含逐原子）。旧history无候选列表时按事件顺序兼容；新站址另行review才形成新核验候选。context_invalidations进入source_snapshot/hash，防止旁支历史未参与依据快照。
 
 所有来源真实性评估基于明确的声明和本地格式/一致性核验，不等于已经向电网/产权机关/数据提供者独立认证。外部API/站址数据适配仍属Phase4，平台和正式文件证据另有门禁。
 
@@ -68,3 +70,7 @@ parse_attachment输出PARSED/PARTIAL/NEEDS_OCR/FAILED/BLOCKED及未经核实的�
 ## 9. Phase 3 移交而非计算结果
 
 IntakeSession.export输出solar-pv-input-export/1.0.0，含完整project、normalized_inputs、逐原子provenance_records、source_snapshot/source_snapshot_id、input_hash、scenario_config与input_maturity。input_hash用sha256/solar-pv-input-v1覆盖规范输入/基线/来源快照/适用性，不依赖导出当时的墙钟。反序列化后可重现；这不是12-canonical-result-contract的计算结果JSON，没有run_id/result_hash或财务指标。calculation_status=NOT_IMPLEMENTED、result_contract_status=NOT_CREATED，不能据此生成四文件正式成果。
+
+## 10. 公式输入查询与类型边界
+
+FormulaBindings.describe/describe_field读取89公式与281域映射，原样保留448次完整符号定义（46次无field_id索引/求根变量不伪造绑定），关联原字段类型/来源/必需条件、真实缺失原子与场景。省略project不判断资料缺失；空父容器不掩盖已存在其他行的缺原子。账簿/输出仍NOT_COMPUTED，输入支持项存在仍不是已完成的聚合/单位变换；未声明的账簿运行时类型明确留Phase3。CLI formula可私有写完整查询，stdout只给摘要，不回显商业原值/实例来源。详见15-phase3-input-interface.md。

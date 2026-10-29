@@ -1,0 +1,11 @@
+...............................s.................s.............s........ [ 48%]
+......................s.........s....................................... [ 96%]
+......                                                                   [100%]
+- generated xml file: C:\Users\wangbin\AppData\Local\hermes\cache\scratch\solar-pv-phase2-20261028\phase2-final-legacy-junit.xml -
+=========================== short test summary info ===========================
+SKIPPED [1] tests\test_inventory_analyzer.py:247: symlinks unavailable
+SKIPPED [1] tests\test_product_factory.py:143: symlinks unavailable
+SKIPPED [1] tests\test_product_factory.py:300: symlinks unavailable
+SKIPPED [1] tests\test_security.py:38: 当前 Windows 环境未允许创建符号链接
+SKIPPED [1] tests\test_tender_analyzer.py:190: symlink creation is unavailable on this Windows runner
+145 passed, 5 skipped in 41.63s

@@ -1,0 +1,6 @@
+{
+  "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe -X pycache_prefix=C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\compile-cache -m compileall -q F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine",
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": ""
+}

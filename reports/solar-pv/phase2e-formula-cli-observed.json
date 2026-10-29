@@ -1,0 +1,20 @@
+{
+  "command": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-venv\\Scripts\\python.exe F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\solar_pv.py --workspace C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\SYNTHETIC-formula-final formula --formula-id F-DC-CAPACITY --output formula.json",
+  "exit_code": 0,
+  "stdout": {
+    "calculation_status": "NOT_IMPLEMENTED",
+    "can_execute_calculation": false,
+    "formula_id": "F-DC-CAPACITY",
+    "input_presence_evaluated": false,
+    "missing_input_field_ids": [],
+    "missing_variable_field_ids": [],
+    "name_zh": "直流装机容量",
+    "uncomputed_formula_field_ids": [
+      "capacity.dc_kwp"
+    ],
+    "unverified_constant_field_ids": []
+  },
+  "output_sha256": "7f923058a144d0ce9669755ca27c9ead50706a79c9405d04dad806105ed8c051",
+  "scope": "FROZEN_INPUT_QUERY_ONLY_NOT_NUMERICAL",
+  "environment": "Removed Hermes kernel PYTHONPATH/PYTHONHOME injection for actual venv subprocess; first inherited-env run failed rpds ABI import before executing query, no artifact created."
+}

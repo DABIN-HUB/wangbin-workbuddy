@@ -43,11 +43,12 @@
         "desert_mining"
       ],
       "title": "仅城市/面积/预算",
-      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "method": "实际执行Phase2输入契约及联合负向验收；保留原expected不变；源代码/覆盖与限制见phase2-review-and-acceptance.md",
       "expected": "只生成L1初筛/缺口；装机投资不强制已知；不能宣布L2决策就绪",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "pytest tests/solar-pv; controlled SYNTHETIC local input boundary",
+      "evidence": "reports/solar-pv/phase2e-full-complete-junit.xml",
+      "execution_scope": "INPUT_CONTRACT_ONLY_NOT_CALCULATION_REPORT_PLATFORM"
     },
     {
       "test_id": "T-MISSING-LOAD",
@@ -85,11 +86,12 @@
         "desert_mining"
       ],
       "title": "无并网意见",
-      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "method": "实际执行Phase2输入契约及联合负向验收；保留原expected不变；源代码/覆盖与限制见phase2-review-and-acceptance.md",
       "expected": "条件情景+PENDING_VERIFICATION，不得声明具备并网资格",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "pytest tests/solar-pv; controlled SYNTHETIC local input boundary",
+      "evidence": "reports/solar-pv/phase2e-full-complete-junit.xml",
+      "execution_scope": "INPUT_CONTRACT_ONLY_NOT_CALCULATION_REPORT_PLATFORM"
     },
     {
       "test_id": "T-MISSING-TARIFF",
@@ -148,11 +150,12 @@
         "desert_mining"
       ],
       "title": "来源冲突",
-      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "method": "实际执行Phase2输入契约及联合负向验收；保留原expected不变；源代码/覆盖与限制见phase2-review-and-acceptance.md",
       "expected": "同field不同来源均保留、CONFLICT、请求核实；不能择优迎合目标",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "pytest tests/solar-pv; controlled SYNTHETIC local input boundary",
+      "evidence": "reports/solar-pv/phase2e-full-complete-junit.xml",
+      "execution_scope": "INPUT_CONTRACT_ONLY_NOT_CALCULATION_REPORT_PLATFORM"
     },
     {
       "test_id": "T-POLICY-EXPIRED",
@@ -211,11 +214,12 @@
         "desert_mining"
       ],
       "title": "零/负面积",
-      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "method": "实际执行Phase2输入契约及联合负向验收；保留原expected不变；源代码/覆盖与限制见phase2-review-and-acceptance.md",
       "expected": "以字段契约拒绝无效建设面积，未知面积与0不能混同",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "pytest tests/solar-pv; controlled SYNTHETIC local input boundary",
+      "evidence": "reports/solar-pv/phase2e-full-complete-junit.xml",
+      "execution_scope": "INPUT_CONTRACT_ONLY_NOT_CALCULATION_REPORT_PLATFORM"
     },
     {
       "test_id": "T-BOUND-PRICE",
@@ -253,11 +257,12 @@
         "desert_mining"
       ],
       "title": "kW/MW/Wh/辐照单位",
-      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "method": "实际执行Phase2输入契约及联合负向验收；保留原expected不变；源代码/覆盖与限制见phase2-review-and-acceptance.md",
       "expected": "显式单位转换，kW≠kWh、W每平方米≠kWh每平方米、MWp≠MWac、元/Wp≠元/kWp",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "pytest tests/solar-pv; controlled SYNTHETIC local input boundary",
+      "evidence": "reports/solar-pv/phase2e-full-complete-junit.xml",
+      "execution_scope": "INPUT_CONTRACT_ONLY_NOT_CALCULATION_REPORT_PLATFORM"
     },
     {
       "test_id": "T-BOUND-TEMP",
@@ -274,11 +279,12 @@
         "desert_mining"
       ],
       "title": "温度单位",
-      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "method": "实际执行Phase2输入契约及联合负向验收；保留原expected不变；源代码/覆盖与限制见phase2-review-and-acceptance.md",
       "expected": "摄氏/开尔文转换与物理范围明示，不能错将温度系数单位混用",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "pytest tests/solar-pv; controlled SYNTHETIC local input boundary",
+      "evidence": "reports/solar-pv/phase2e-full-complete-junit.xml",
+      "execution_scope": "INPUT_CONTRACT_ONLY_NOT_CALCULATION_REPORT_PLATFORM"
     },
     {
       "test_id": "T-BOUND-LEAP",
@@ -512,11 +518,12 @@
         "desert_mining"
       ],
       "title": "未实现分类",
-      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "method": "实际执行Phase2输入契约及联合负向验收；保留原expected不变；源代码/覆盖与限制见phase2-review-and-acceptance.md",
       "expected": "农光/渔光/储能及P2未实现时返回NOT_IMPLEMENTED；不降级套P0并报PASS",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "pytest tests/solar-pv; controlled SYNTHETIC local input boundary",
+      "evidence": "reports/solar-pv/phase2e-full-complete-junit.xml",
+      "execution_scope": "INPUT_CONTRACT_ONLY_NOT_CALCULATION_REPORT_PLATFORM"
     },
     {
       "test_id": "T-FILES-LEGAL",
@@ -890,11 +897,12 @@
         "desert_mining"
       ],
       "title": "日志隐私",
-      "method": "待对应Phase实现独立数值参考/受控负载/真实产物或人工证据执行器，细则见expected及08-acceptance-design.md",
+      "method": "实际执行Phase2输入契约及联合负向验收；保留原expected不变；源代码/覆盖与限制见phase2-review-and-acceptance.md",
       "expected": "原始商业附件不入公开日志/仓库，密钥脱敏，不在错误堆栈泄露正文",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "pytest tests/solar-pv; controlled SYNTHETIC local input boundary",
+      "evidence": "reports/solar-pv/phase2e-full-complete-junit.xml",
+      "execution_scope": "INPUT_CONTRACT_ONLY_NOT_CALCULATION_REPORT_PLATFORM"
     },
     {
       "test_id": "T-SEC-LICENSE",

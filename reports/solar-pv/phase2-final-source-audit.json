@@ -1,0 +1,8 @@
+{
+  "scope": "All solar-pv code/tests/docs/reports text files; pattern scan not full DLP",
+  "scanned_files": 218,
+  "credential_findings": [],
+  "production_manifest_verified": true,
+  "unchanged_product_gates": true,
+  "unchanged_acceptance_expected": true
+}

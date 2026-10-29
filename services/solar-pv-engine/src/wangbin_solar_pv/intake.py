@@ -11,7 +11,7 @@ from .completeness import evaluate_completeness
 from .conditions import known
 from .errors import ContractError
 from .models import ProjectData
-from .provenance import make_record, register_candidate, resolve_conflict, source_snapshot
+from .provenance import make_record, register_candidate, resolve_conflict, source_snapshot, invalidate_context
 from .schemas import validate_shape
 from .serialization import digest
 from .validation import validate_project, iter_records
@@ -100,8 +100,10 @@ class IntakeSession:
         if "status" in update and update["status"]!=expected_status:
             raise ContractError("EXPLICIT_REVIEW_REQUIRED",fid)
         value=deepcopy(update["value"])
-        if field["type"] in {"number","integer"} and value is not None and ("unit" not in update or update["unit"] is None):
+        if field["type"] in {"number","integer"} and field["unit"] is not None and value is not None and ("unit" not in update or update["unit"] is None):
             raise ContractError("UNIT_REQUIRED",fid)
+        if field["unit"] is None and update.get("unit") is not None:
+            raise ContractError("UNIT_MISMATCH",fid)
         if field["type"] not in {"number","integer"} and update.get("unit") not in (None,field["unit"]):
             raise ContractError("UNIT_MISMATCH",fid)
         metadata={key:deepcopy(update[key]) for key in _METADATA if key in update}
@@ -264,17 +266,15 @@ class IntakeSession:
         if not geographic:
             return []
         invalidated=[]
-        for fid,record in draft.values.items():
-            if fid in exclude or not fid.startswith(("resource.","grid.","roof.","load.","tariff.","policy.","site.rights_")):
+        fields=set(draft.values) | {r["field_id"] for r in draft.candidates.values()}
+        for fid in fields:
+            category_specific=set(self.catalog.fields[fid]["pv_types"]) != set(self.catalog.pv_types)
+            if fid in exclude or not (category_specific or fid.startswith(("site.","resource.","grid.","roof.","load.","tariff.","policy."))):
                 continue
-            for atom,_ in iter_records({fid:record},self.catalog):
-                if atom["status"]=="VERIFIED":
-                    atom.update(status="UNVERIFIED",reviewer=None,last_updated=datetime.now(timezone.utc).isoformat(),
-                                confidence_basis=atom["confidence_basis"]+"；站址/分类上下文变更，需重新核验")
             invalidated.append(fid)
         if invalidated:
-            draft.history.append({"event":"context_invalidated","field_ids":invalidated,"reason":"site/category changed; numeric values preserved"})
-        return invalidated
+            invalidate_context(draft,invalidated,reason="site/category changed; numeric values preserved")
+        return sorted(invalidated)
 
     def status(self):
         return self._response()

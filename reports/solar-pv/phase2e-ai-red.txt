@@ -1,0 +1,9 @@
+F.                                                                       [100%]
+================================== FAILURES ===================================
+__ test_ai_allowed_risk_interpretation_has_explicit_origin_and_stays_assumed __
+tests\solar-pv\test_ai_origin.py:11: in test_ai_allowed_risk_interpretation_has_explicit_origin_and_stays_assumed
+    assert not [i for i in validate_record(r,CAT) if i.severity=="ERROR"]
+E   AssertionError: assert not [Issue(code='SOURCE_KIND_MISMATCH', field_id='risk.items.description', message='来源类型与U/D/C/AI不一致', severity='ERROR', instance_id='risk.items.description')]
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_ai_origin.py::test_ai_allowed_risk_interpretation_has_explicit_origin_and_stays_assumed
+1 failed, 1 passed in 0.72s

@@ -68,7 +68,8 @@ def validate_record(record, catalog, *, scalar_item=False):
     kind = record.get("source_kind")
     provenance = record.get("provenance_kind")
     from .provenance import SOURCE_KINDS
-    if kind not in SOURCE_KINDS or provenance != SOURCE_KINDS.get(kind):
+    explicit_ai_assumption = kind == "ASSUMPTION" and provenance == "AI"
+    if kind not in SOURCE_KINDS or (provenance != SOURCE_KINDS.get(kind) and not explicit_ai_assumption):
         issue("SOURCE_KIND_MISMATCH", "来源类型与U/D/C/AI不一致")
     if provenance is not None and provenance not in field["provenance_kinds"]:
         issue("SOURCE_NOT_ALLOWED", "本字段不接受该来源类型")

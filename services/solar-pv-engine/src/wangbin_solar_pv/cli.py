@@ -33,6 +33,10 @@ def _parser():
     export = commands.add_parser("export", help="完整数据仅写入指定私有JSON文件；不覆盖")
     export.add_argument("--state", required=True)
     export.add_argument("--output", required=True)
+    formula = commands.add_parser("formula", help="查询冻结公式定义、变量及输入缺口；不执行计算")
+    formula.add_argument("--formula-id", required=True)
+    formula.add_argument("--state", help="可选私有项目JSON；省略时不评价是否缺数据")
+    formula.add_argument("--output", help="完整定义和实例元数据写私有JSON，不覆盖；stdout只输出摘要")
     for command in ("submit", "revise", "resolve", "review", "remove", "accept"):
         examples = {
             "submit": '{"submission_id":"round1","updates":[{"field_id":"site.total_area","value":1000,"unit":"m2"}]}',
@@ -111,6 +115,17 @@ def main(argv=None):
         args = _parser().parse_args(argv)
         workspace = Workspace(args.workspace)
         catalog = Catalog(args.baseline_dir)
+        if args.command == "formula":
+            from .formula_bindings import FormulaBindings
+            project = IntakeSession.from_dict(workspace.read(args.state)[0], catalog).project if args.state else None
+            query = FormulaBindings(catalog).describe(args.formula_id, project)
+            if args.output:
+                workspace.create(args.output, query)
+            keys = ("formula_id", "name_zh", "input_presence_evaluated", "missing_input_field_ids",
+                    "missing_variable_field_ids", "uncomputed_formula_field_ids", "unverified_constant_field_ids",
+                    "calculation_status", "can_execute_calculation")
+            print(dumps({key: query[key] for key in keys}))
+            return 0
         if args.command == "parse":
             return _parse(args, workspace, catalog)
         if args.command == "new":

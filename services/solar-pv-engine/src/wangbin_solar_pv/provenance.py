@@ -75,6 +75,50 @@ def _incompatible(a, b):
                for key in ("economic_basis", "measurement_period", "effective_from", "effective_to", "geography"))
 
 
+def _demote_verification(record):
+    if record["status"] == "VERIFIED":
+        record.update(status="UNVERIFIED", reviewer=None, last_updated=datetime.now(timezone.utc).isoformat(),
+                      confidence_basis=record["confidence_basis"]+"；站址/分类上下文已失效，必须另行核验")
+    if isinstance(record.get("value"), list):
+        for item in record["value"]:
+            if "fields" in item:
+                for child in item["fields"].values():
+                    _demote_verification(child)
+            else:
+                _demote_verification(item)
+
+
+def invalidate_context(project, field_ids, *, reason):
+    affected = set(field_ids)
+    for fid in affected:
+        active = project.values.get(fid)
+        if active:
+            if not active.get("candidate_ids"):
+                project.candidates.setdefault("candidate-"+digest(active), deepcopy(active))
+            _demote_verification(active)
+    ids = [cid for cid, candidate in project.candidates.items() if candidate["field_id"] in affected]
+    project.history.append({"event":"context_invalidated", "field_ids":sorted(affected), "candidate_ids":ids,
+                            "reason":reason, "at":datetime.now(timezone.utc).isoformat()})
+
+
+def _activation_record(project, field_id, candidate_id, *, fresh=False):
+    choice = deepcopy(project.candidates[candidate_id])
+    first_registration = next((n for n, event in enumerate(project.history)
+                               if event.get("candidate_id") == candidate_id and event.get("field_id") == field_id), None)
+    for n, event in enumerate(project.history):
+        if event.get("event") != "context_invalidated" or field_id not in event.get("field_ids", []):
+            continue
+        if "candidate_ids" in event:
+            stale = candidate_id in event["candidate_ids"]
+        else:
+            # Old Phase2D events had no IDs. Use event order, not user-controlled dates.
+            stale = not fresh and (first_registration is None or first_registration < n)
+        if stale:
+            _demote_verification(choice)
+            break
+    return choice
+
+
 def register_candidate(project, record, catalog, *, replacement_reason=None):
     from .validation import validate_record
     errors = [i for i in validate_record(record, catalog) if i.severity == "ERROR"]
@@ -85,7 +129,9 @@ def register_candidate(project, record, catalog, *, replacement_reason=None):
         raise ContractError("ARRAY_ITEM_REQUIRES_PARENT", fid)
     candidate = deepcopy(record)
     candidate_id = "candidate-" + digest(candidate)
+    fresh = candidate_id not in project.candidates
     project.candidates.setdefault(candidate_id, candidate)
+    candidate = _activation_record(project, fid, candidate_id, fresh=fresh)
     current = project.values.get(fid)
     previous_ids = list(current.get("candidate_ids", [])) if current else []
     if current and not previous_ids:
@@ -115,7 +161,7 @@ def resolve_conflict(project, field_id, candidate_id, *, reviewer, reason):
         raise ContractError("INVALID_CONFLICT_CHOICE", field_id)
     if not reviewer or not reason:
         raise ContractError("CONFLICT_REVIEW_REQUIRED", field_id)
-    choice = deepcopy(project.candidates[candidate_id])
+    choice = _activation_record(project, field_id, candidate_id)
     choice["candidate_ids"] = list(active["candidate_ids"])
     # Choosing a source is not factual verification of that source.
     project.values[field_id] = choice
@@ -128,6 +174,7 @@ def source_snapshot(project, catalog):
     records = [deepcopy(r) for r, _ in iter_records(project.values, catalog)]
     candidates = deepcopy(project.candidates)
     attachments=[deepcopy(event) for event in project.history if event.get("event")=="attachment_registered"]
+    invalidations=[deepcopy(event) for event in project.history if event.get("event")=="context_invalidated"]
     snapshot = {"baseline_version": project.baseline_version, "records": records, "candidates": candidates,"attachments":attachments,
-                "resolutions": deepcopy(project.resolutions)}
+                "resolutions": deepcopy(project.resolutions), "context_invalidations":invalidations}
     return {"source_snapshot_id": "sources-" + digest(snapshot), **snapshot}

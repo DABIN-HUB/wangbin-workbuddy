@@ -1,0 +1,1884 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 19%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 38%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 57%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 76%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 96%]
+FFFFFFFFFFFFFFF                                                          [100%]
+================================== FAILURES ===================================
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-AC-CAPACITY] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-AC-INVERTER-POWER] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-ANNUAL-DEGRADATION] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-ANNUAL-OPEX] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-ASSET-BOOK-VALUE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-AVAILABLE-ENERGY] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-AVERAGE-ANNUAL-ENERGY] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-BREAK-EVEN-PRICE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CAPACITY-FACTOR] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CAPEX-ITEM-AMOUNT] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CAPEX-PAYMENT-BALANCE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CAPEX-TOTAL] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CASH-FUNDING-BALANCE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CASH-RECEIPTS] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CASH-TAX-TOTAL] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+____ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CFADS] ____
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CUMULATIVE-CASH-FLOW] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CURTAILED-ENERGY] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+__ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DATED-NPV] __
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DC-AC-RATIO] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DC-CAPACITY] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DC-TIME-POWER] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DEBT-BALANCE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DEBT-INTEREST] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DEBT-SERVICE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DELIVERED-ENERGY] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DISCOUNTED-CUMULATIVE-CASH] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+____ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DSCR] _____
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DYNAMIC-PAYBACK] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-EMISSIONS-AVOIDED] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-ENERGY-AGGREGATION] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-ENERGY-BALANCE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-ENERGY-REVENUE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-EQUITY-AVAILABLE-CASH-FLOW] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-EQUITY-INVESTOR-CASH-FLOW] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-EQUIVALENT-HOURS] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-EXPORT-LIMIT-ENERGY] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-EXPORTED-ENERGY] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-FIRST-YEAR-ENERGY] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-INCOME-TAX-ACCRUAL] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-INITIAL-DEGRADATION] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-INTEREST-BALANCE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-INVESTMENT-HURDLE-GAP] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-IRR-EQUITY] __
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-IRR-PROJECT] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+____ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-LCOE] _____
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-LIFECYCLE-COST] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-LOAD-COVERAGE-RATIO] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-LOSS-COMPOSITE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-NOMINAL-REAL-RATE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_____ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-NPV] _____
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-OPEX-ESCALATION] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-OTHER-CASH-TAXES] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-PIECEWISE-DEGRADATION] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-POA-IRRADIATION] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-PPA-REVENUE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-PR-OBSERVED] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-PROJECT-CASH-FLOW] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-PROJECT-PRETAX-CASH-FLOW] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-SCENARIO-METRIC] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-SELF-CONSUMPTION] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-SELF-CONSUMPTION-RATIO] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-SENSITIVITY-ELASTICITY] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-SINGLE-FACTOR-SENSITIVITY] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STATIC-PAYBACK] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STORAGE-CHARGE-LIMIT] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STORAGE-CYCLE-COUNT] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STORAGE-DISCHARGE-LIMIT] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STORAGE-ENERGY-UPDATE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STORAGE-LOAD-BALANCE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STORAGE-PV-BALANCE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STORAGE-SOC] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STRAIGHT-LINE-DEPRECIATION] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-TAX-CASH-BRIDGE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-TAX-EXCLUSIVE-AMOUNT] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-TAX-LOSS-BALANCE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-TAXABLE-INCOME-EQUITY] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-TAXABLE-INCOME-PROJECT] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-TRANSFORMER-ACTIVE-LIMIT] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-UNIT-AC-CAPACITY] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-UNIT-COST-WP-KWP] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-UNIT-DC-CAPACITY] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-UNIT-INVESTMENT] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-UNIT-IRRADIANCE-W-KW] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-UNIT-KW-MW] __
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-UNIT-KWH-MWH] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-USABLE-AREA] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-VAT-CREDIT-BALANCE] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-WORST-CASH-YEAR] _
+tests\solar-pv\test_formula_bindings.py:14: in test_all_89_formulas_expose_every_symbol_and_frozen_boundary
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[assets.capitalized_additions] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[assets.closing_book_value] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[assets.disposal_book_value] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[assets.opening_book_value] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capacity.ac_kw] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capacity.dc_ac_ratio] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capacity.dc_kwp] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.equity_asset_cash_annual] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.item_ids] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.items.amount] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.items.quantity] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.items.unit_price] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.payable_net_closing] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.payable_net_opening] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.scope_accrued_amount] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.scope_cash_payments] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.scope_year_ids] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.total] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.unit_dc] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.unlevered_cash_annual] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[checks.capex_payment_residual] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[checks.cash_closing] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[checks.cash_opening] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[checks.energy_balance_residual] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[checks.storage_load_balance] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[checks.storage_pv_balance] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[constants.kilo_scale] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[constants.stc_cell_temperature_c] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[constants.stc_irradiance_kw_m2] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[consumption.curtailed_kwh] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[consumption.export_kwh] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[consumption.host_delivery_kwh] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[consumption.load_coverage_ratio] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[consumption.self_kwh] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[consumption.self_ratio] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.annual_interest_rate] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.capitalized_unpaid_fees] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.capitalized_unpaid_interest] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.cash_drawdown] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.cfads] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.cfads_adjustments] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.cfads_mandatory_capex] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.cfads_working_capital_change] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.closing_balance] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.daycount_year_fraction] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.documented_writeoff] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.dscr] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.finance_fees_paid] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.interest_accrued] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.interest_due] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.interest_paid] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.interest_payable_closing] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.interest_payable_opening] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.interest_principal_base] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.interest_subperiod_ids] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.opening_balance] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.principal_due] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.principal_paid] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.service_due] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.service_fees_due] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[decision.calculated_metric] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[decision.metric_gap] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[decision.target_metric] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[degradation.annual_fraction] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[degradation.annual_retention] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[degradation.initial_fraction] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[degradation.previous_retention] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[degradation.replacement_uplift] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[degradation.yearly_fraction] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[depreciation.asset_annual] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[depreciation.asset_basis] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[depreciation.asset_life_years] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[depreciation.asset_residual] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[depreciation.tax_annual] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.annual_kwh] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.auxiliary_kw] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.available_kwh] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.boundary_id] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.boundary_interval_kwh] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.capacity_factor] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.dc_power_kw] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.delivered_annual_kwh] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.equivalent_hours] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.first_year_ac_kwh] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.first_year_pre_initial_kwh] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.inverter_ac_power_kw] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.mean_annual_kwh] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.period_totals_kwh] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.pr_assumed] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.pr_observed] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.reference_capacity_kw] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[environment.avoided_emissions] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[environment.eligible_energy] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[environment.grid_emission_factor] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[equipment.inverters.ids] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[equipment.inverters.rated_ac_kw] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[equipment.module_count] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[equipment.module_power_kwp] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[equipment.power_temperature_coefficient] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[equity.contributions] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[equity.distributions] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[equity.exit_receipts] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.cash_event_ids] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.cash_event_year_fraction] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.cash_flow_basis] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.cumulative_cash_flow] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.dated_cash_flows] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.dated_npv] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.discounted_cumulative_cash] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.discounted_recovery_year_cash_flow] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.dynamic_payback_years] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.equity_available_cash_flow] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.equity_investor_cash_flow] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.equity_irr_root_set] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.equity_terminal_cash] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.first_discounted_recovery_year] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.first_recovery_year] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.general_inflation] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.irr_search_domain] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.lcoe] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.nominal_discount_rate] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.npv] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.pre_discounted_recovery_cumulative] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.pre_recovery_cumulative_cash] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.project_cash_flow] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.project_irr_cash_flow] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.project_irr_root_set] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.project_operating_cash_benefit] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.project_pretax_cash_flow] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.project_terminal_cash] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.real_discount_rate] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.recovery_year_cash_flow] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.selected_cash_flow] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.selected_discount_rate] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.static_payback_years] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.tax_basis] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[grid.export_limit_kw] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[grid.export_limit_kwh] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[grid.power_factor] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[grid.transformer_active_limit] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[grid.transformer_capacity] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[lcoe.cost_subsidy_offset] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[lcoe.cost_taxes] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[lcoe.discount_rate] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[lcoe.project_cost_annual] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[load.interval_kwh] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.ac_retention] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.active_ids] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.availability] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.dc_retention] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.export_line_retention] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.independent_rates] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.inverter_efficiency] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.retention_factor] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.transformer_retention] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[model.selected_method_version] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[opex.cash_annual] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[opex.item_ids] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[opex.items.base_amount] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[opex.items.cash_amount] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[opex.items.escalated_amount] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[opex.items.escalation_rates] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[resource.cell_temperature_c] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[resource.effective_poa_kw_m2] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[resource.poa_irradiance_kw_m2] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[resource.poa_irradiation_kwh_m2] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[revenue.annual_benefit] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[revenue.cash_receipts] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[revenue.invoiced_gross] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[revenue.other_benefit] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[revenue.other_cash] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[revenue.ppa_benefit] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[revenue.taxable_net] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[risk.cash_year_scope] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[risk.worst_cash_years] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.break_even_price_roots] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.elasticity] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.factor_base_value] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.factor_delta] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.factor_perturbed_value] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.frozen_other_inputs] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.metric_absolute_change] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.metric_base] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.metric_definition] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.metric_perturbed] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.price_cash_flow_vector] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.price_search_domain] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.scenario_fixed_inputs] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.scenario_id] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.scenario_inputs] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.scenario_metrics] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[site.exclusion_area] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[site.total_area] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[site.usable_area] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.available_capacity] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.battery_to_load] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.charge_efficiency] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.charge_energy_limit] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.charge_input] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.charge_power] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.cycle_reference_capacity] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.discharge_efficiency] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.discharge_energy_limit] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.discharge_output] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.discharge_power] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.equivalent_cycles] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.grid_to_load] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.internal_auxiliary_energy] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.internal_discharge_energy] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.pv_charge] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.pv_direct_export] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.pv_direct_load] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.self_discharge_energy] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.soc] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.state_energy_begin] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.state_energy_end] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tariff.avoidable_price] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tariff.export_price] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tariff.ppa_price] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.cash_total_selected] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.deductible_finance_fees] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.deductible_interest] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.deductible_opex] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.equity_base_pre_losses] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.equity_cash_total] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.exclusive_amount] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.inclusive_amount] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.income_cash_paid] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.income_charge] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.income_payable_closing] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.income_payable_opening] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.income_prepaid_closing] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.income_prepaid_opening] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.income_rate] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.losses_closing] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.losses_expired] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.losses_opening] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.losses_used] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.other_adjustments] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.other_cash_total] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.other_deductions] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.other_item_ids] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.other_items_cash] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.project_base_pre_losses] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.project_cash_total] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.project_income_cash_paid] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.selected_base_pre_losses] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.vat_cash_basis_adjustment] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.vat_cash_paid] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.vat_cash_refund] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.vat_credit_closing] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.vat_credit_opening] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.vat_input_eligible] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.vat_output] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.vat_rate] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.aggregation_period] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.cumulative_end_year] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.escalation_year] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.financial_end_year] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.interval_hours] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.operating_interval_ids] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.operating_year] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.operating_year_count] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.period_interval_ids] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.resource_intervals] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.settlement_interval_ids] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.year_hours] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.ac_mw] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.cost_per_kwp] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.cost_per_wp] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.dc_mwp] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.energy_kwh] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.energy_mwh] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.irradiance_kw_m2] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.irradiance_w_m2] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.power_kw] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.power_mw] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[working_capital.advances_change] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[working_capital.equity_net_change] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[working_capital.project_net_change] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_all_281_formula_domain_bindings_have_explicit_state_not_zero[working_capital.receivables_change] _
+tests\solar-pv\test_formula_bindings.py:35: in test_all_281_formula_domain_bindings_have_explicit_state_not_zero
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_missing_variables_identify_exact_catalog_inputs_not_just_generic_failure _
+tests\solar-pv\test_formula_bindings.py:44: in test_missing_variables_identify_exact_catalog_inputs_not_just_generic_failure
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_ test_available_input_does_not_claim_transformation_or_output_has_been_computed _
+tests\solar-pv\test_formula_bindings.py:53: in test_available_input_does_not_claim_transformation_or_output_has_been_computed
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+_______ test_no_debt_is_condition_not_applicable_not_zero_debt_service ________
+tests\solar-pv\test_formula_bindings.py:65: in test_no_debt_is_condition_not_applicable_not_zero_debt_service
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+______ test_each_array_atom_is_checked_not_hidden_by_a_present_container ______
+tests\solar-pv\test_formula_bindings.py:74: in test_each_array_atom_is_checked_not_hidden_by_a_present_container
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+___ test_unverified_constant_temperature_and_unknown_formula_stay_explicit ____
+tests\solar-pv\test_formula_bindings.py:83: in test_unverified_constant_temperature_and_unknown_formula_stay_explicit
+    from wangbin_solar_pv.formula_bindings import FormulaBindings
+E   ModuleNotFoundError: No module named 'wangbin_solar_pv.formula_bindings'
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-AC-CAPACITY]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-AC-INVERTER-POWER]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-ANNUAL-DEGRADATION]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-ANNUAL-OPEX]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-ASSET-BOOK-VALUE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-AVAILABLE-ENERGY]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-AVERAGE-ANNUAL-ENERGY]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-BREAK-EVEN-PRICE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CAPACITY-FACTOR]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CAPEX-ITEM-AMOUNT]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CAPEX-PAYMENT-BALANCE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CAPEX-TOTAL]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CASH-FUNDING-BALANCE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CASH-RECEIPTS]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CASH-TAX-TOTAL]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CFADS]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CUMULATIVE-CASH-FLOW]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-CURTAILED-ENERGY]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DATED-NPV]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DC-AC-RATIO]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DC-CAPACITY]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DC-TIME-POWER]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DEBT-BALANCE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DEBT-INTEREST]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DEBT-SERVICE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DELIVERED-ENERGY]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DISCOUNTED-CUMULATIVE-CASH]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DSCR]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-DYNAMIC-PAYBACK]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-EMISSIONS-AVOIDED]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-ENERGY-AGGREGATION]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-ENERGY-BALANCE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-ENERGY-REVENUE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-EQUITY-AVAILABLE-CASH-FLOW]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-EQUITY-INVESTOR-CASH-FLOW]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-EQUIVALENT-HOURS]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-EXPORT-LIMIT-ENERGY]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-EXPORTED-ENERGY]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-FIRST-YEAR-ENERGY]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-INCOME-TAX-ACCRUAL]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-INITIAL-DEGRADATION]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-INTEREST-BALANCE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-INVESTMENT-HURDLE-GAP]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-IRR-EQUITY]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-IRR-PROJECT]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-LCOE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-LIFECYCLE-COST]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-LOAD-COVERAGE-RATIO]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-LOSS-COMPOSITE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-NOMINAL-REAL-RATE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-NPV]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-OPEX-ESCALATION]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-OTHER-CASH-TAXES]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-PIECEWISE-DEGRADATION]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-POA-IRRADIATION]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-PPA-REVENUE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-PR-OBSERVED]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-PROJECT-CASH-FLOW]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-PROJECT-PRETAX-CASH-FLOW]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-SCENARIO-METRIC]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-SELF-CONSUMPTION]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-SELF-CONSUMPTION-RATIO]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-SENSITIVITY-ELASTICITY]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-SINGLE-FACTOR-SENSITIVITY]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STATIC-PAYBACK]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STORAGE-CHARGE-LIMIT]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STORAGE-CYCLE-COUNT]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STORAGE-DISCHARGE-LIMIT]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STORAGE-ENERGY-UPDATE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STORAGE-LOAD-BALANCE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STORAGE-PV-BALANCE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STORAGE-SOC]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-STRAIGHT-LINE-DEPRECIATION]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-TAX-CASH-BRIDGE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-TAX-EXCLUSIVE-AMOUNT]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-TAX-LOSS-BALANCE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-TAXABLE-INCOME-EQUITY]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-TAXABLE-INCOME-PROJECT]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-TRANSFORMER-ACTIVE-LIMIT]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-UNIT-AC-CAPACITY]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-UNIT-COST-WP-KWP]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-UNIT-DC-CAPACITY]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-UNIT-INVESTMENT]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-UNIT-IRRADIANCE-W-KW]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-UNIT-KW-MW]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-UNIT-KWH-MWH]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-USABLE-AREA]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-VAT-CREDIT-BALANCE]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_89_formulas_expose_every_symbol_and_frozen_boundary[F-WORST-CASH-YEAR]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[assets.capitalized_additions]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[assets.closing_book_value]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[assets.disposal_book_value]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[assets.opening_book_value]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capacity.ac_kw]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capacity.dc_ac_ratio]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capacity.dc_kwp]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.equity_asset_cash_annual]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.item_ids]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.items.amount]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.items.quantity]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.items.unit_price]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.payable_net_closing]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.payable_net_opening]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.scope_accrued_amount]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.scope_cash_payments]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.scope_year_ids]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.total]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.unit_dc]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[capex.unlevered_cash_annual]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[checks.capex_payment_residual]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[checks.cash_closing]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[checks.cash_opening]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[checks.energy_balance_residual]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[checks.storage_load_balance]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[checks.storage_pv_balance]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[constants.kilo_scale]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[constants.stc_cell_temperature_c]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[constants.stc_irradiance_kw_m2]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[consumption.curtailed_kwh]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[consumption.export_kwh]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[consumption.host_delivery_kwh]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[consumption.load_coverage_ratio]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[consumption.self_kwh]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[consumption.self_ratio]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.annual_interest_rate]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.capitalized_unpaid_fees]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.capitalized_unpaid_interest]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.cash_drawdown]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.cfads]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.cfads_adjustments]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.cfads_mandatory_capex]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.cfads_working_capital_change]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.closing_balance]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.daycount_year_fraction]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.documented_writeoff]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.dscr]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.finance_fees_paid]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.interest_accrued]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.interest_due]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.interest_paid]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.interest_payable_closing]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.interest_payable_opening]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.interest_principal_base]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.interest_subperiod_ids]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.opening_balance]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.principal_due]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.principal_paid]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.service_due]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[debt.service_fees_due]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[decision.calculated_metric]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[decision.metric_gap]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[decision.target_metric]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[degradation.annual_fraction]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[degradation.annual_retention]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[degradation.initial_fraction]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[degradation.previous_retention]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[degradation.replacement_uplift]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[degradation.yearly_fraction]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[depreciation.asset_annual]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[depreciation.asset_basis]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[depreciation.asset_life_years]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[depreciation.asset_residual]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[depreciation.tax_annual]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.annual_kwh]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.auxiliary_kw]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.available_kwh]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.boundary_id]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.boundary_interval_kwh]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.capacity_factor]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.dc_power_kw]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.delivered_annual_kwh]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.equivalent_hours]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.first_year_ac_kwh]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.first_year_pre_initial_kwh]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.inverter_ac_power_kw]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.mean_annual_kwh]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.period_totals_kwh]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.pr_assumed]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.pr_observed]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[energy.reference_capacity_kw]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[environment.avoided_emissions]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[environment.eligible_energy]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[environment.grid_emission_factor]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[equipment.inverters.ids]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[equipment.inverters.rated_ac_kw]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[equipment.module_count]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[equipment.module_power_kwp]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[equipment.power_temperature_coefficient]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[equity.contributions]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[equity.distributions]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[equity.exit_receipts]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.cash_event_ids]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.cash_event_year_fraction]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.cash_flow_basis]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.cumulative_cash_flow]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.dated_cash_flows]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.dated_npv]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.discounted_cumulative_cash]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.discounted_recovery_year_cash_flow]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.dynamic_payback_years]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.equity_available_cash_flow]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.equity_investor_cash_flow]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.equity_irr_root_set]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.equity_terminal_cash]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.first_discounted_recovery_year]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.first_recovery_year]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.general_inflation]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.irr_search_domain]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.lcoe]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.nominal_discount_rate]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.npv]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.pre_discounted_recovery_cumulative]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.pre_recovery_cumulative_cash]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.project_cash_flow]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.project_irr_cash_flow]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.project_irr_root_set]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.project_operating_cash_benefit]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.project_pretax_cash_flow]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.project_terminal_cash]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.real_discount_rate]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.recovery_year_cash_flow]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.selected_cash_flow]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.selected_discount_rate]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.static_payback_years]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[finance.tax_basis]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[grid.export_limit_kw]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[grid.export_limit_kwh]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[grid.power_factor]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[grid.transformer_active_limit]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[grid.transformer_capacity]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[lcoe.cost_subsidy_offset]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[lcoe.cost_taxes]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[lcoe.discount_rate]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[lcoe.project_cost_annual]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[load.interval_kwh]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.ac_retention]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.active_ids]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.availability]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.dc_retention]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.export_line_retention]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.independent_rates]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.inverter_efficiency]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.retention_factor]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[losses.transformer_retention]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[model.selected_method_version]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[opex.cash_annual]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[opex.item_ids]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[opex.items.base_amount]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[opex.items.cash_amount]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[opex.items.escalated_amount]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[opex.items.escalation_rates]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[resource.cell_temperature_c]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[resource.effective_poa_kw_m2]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[resource.poa_irradiance_kw_m2]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[resource.poa_irradiation_kwh_m2]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[revenue.annual_benefit]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[revenue.cash_receipts]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[revenue.invoiced_gross]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[revenue.other_benefit]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[revenue.other_cash]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[revenue.ppa_benefit]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[revenue.taxable_net]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[risk.cash_year_scope]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[risk.worst_cash_years]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.break_even_price_roots]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.elasticity]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.factor_base_value]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.factor_delta]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.factor_perturbed_value]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.frozen_other_inputs]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.metric_absolute_change]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.metric_base]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.metric_definition]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.metric_perturbed]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.price_cash_flow_vector]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.price_search_domain]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.scenario_fixed_inputs]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.scenario_id]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.scenario_inputs]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[sensitivity.scenario_metrics]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[site.exclusion_area]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[site.total_area]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[site.usable_area]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.available_capacity]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.battery_to_load]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.charge_efficiency]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.charge_energy_limit]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.charge_input]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.charge_power]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.cycle_reference_capacity]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.discharge_efficiency]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.discharge_energy_limit]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.discharge_output]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.discharge_power]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.equivalent_cycles]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.grid_to_load]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.internal_auxiliary_energy]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.internal_discharge_energy]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.pv_charge]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.pv_direct_export]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.pv_direct_load]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.self_discharge_energy]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.soc]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.state_energy_begin]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[storage.state_energy_end]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tariff.avoidable_price]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tariff.export_price]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tariff.ppa_price]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.cash_total_selected]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.deductible_finance_fees]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.deductible_interest]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.deductible_opex]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.equity_base_pre_losses]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.equity_cash_total]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.exclusive_amount]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.inclusive_amount]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.income_cash_paid]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.income_charge]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.income_payable_closing]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.income_payable_opening]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.income_prepaid_closing]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.income_prepaid_opening]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.income_rate]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.losses_closing]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.losses_expired]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.losses_opening]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.losses_used]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.other_adjustments]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.other_cash_total]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.other_deductions]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.other_item_ids]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.other_items_cash]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.project_base_pre_losses]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.project_cash_total]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.project_income_cash_paid]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.selected_base_pre_losses]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.vat_cash_basis_adjustment]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.vat_cash_paid]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.vat_cash_refund]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.vat_credit_closing]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.vat_credit_opening]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.vat_input_eligible]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.vat_output]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[tax.vat_rate]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.aggregation_period]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.cumulative_end_year]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.escalation_year]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.financial_end_year]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.interval_hours]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.operating_interval_ids]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.operating_year]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.operating_year_count]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.period_interval_ids]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.resource_intervals]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.settlement_interval_ids]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[time.year_hours]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.ac_mw]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.cost_per_kwp]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.cost_per_wp]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.dc_mwp]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.energy_kwh]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.energy_mwh]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.irradiance_kw_m2]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.irradiance_w_m2]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.power_kw]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[units.power_mw]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[working_capital.advances_change]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[working_capital.equity_net_change]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[working_capital.project_net_change]
+FAILED tests/solar-pv/test_formula_bindings.py::test_all_281_formula_domain_bindings_have_explicit_state_not_zero[working_capital.receivables_change]
+FAILED tests/solar-pv/test_formula_bindings.py::test_missing_variables_identify_exact_catalog_inputs_not_just_generic_failure
+FAILED tests/solar-pv/test_formula_bindings.py::test_available_input_does_not_claim_transformation_or_output_has_been_computed
+FAILED tests/solar-pv/test_formula_bindings.py::test_no_debt_is_condition_not_applicable_not_zero_debt_service
+FAILED tests/solar-pv/test_formula_bindings.py::test_each_array_atom_is_checked_not_hidden_by_a_present_container
+FAILED tests/solar-pv/test_formula_bindings.py::test_unverified_constant_temperature_and_unknown_formula_stay_explicit
+375 failed in 3.17s

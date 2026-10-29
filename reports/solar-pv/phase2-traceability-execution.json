@@ -1,0 +1,2386 @@
+{
+  "schema_version": "solar-pv-phase2-execution/1.0.0",
+  "matrix_rows": 1208,
+  "updated_cases": {
+    "T-FIELD-PROJECT-NAME": {
+      "field_id": "project.name",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[project.name]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PROJECT-OWNER": {
+      "field_id": "project.owner",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[project.owner]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PROJECT-INVESTOR": {
+      "field_id": "project.investor",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[project.investor]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PROJECT-DEVELOPER": {
+      "field_id": "project.developer",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[project.developer]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PROJECT-OPERATOR": {
+      "field_id": "project.operator",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[project.operator]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PROJECT-CONTACT_REFERENCE": {
+      "field_id": "project.contact_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[project.contact_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PROJECT-PV_TYPE": {
+      "field_id": "project.pv_type",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[project.pv_type]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PROJECT-OWNERSHIP_MODE": {
+      "field_id": "project.ownership_mode",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[project.ownership_mode]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PROJECT-SALES_MODE": {
+      "field_id": "project.sales_mode",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[project.sales_mode]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PROJECT-HAS_STORAGE": {
+      "field_id": "project.has_storage",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[project.has_storage]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCHEDULE-DEVELOPMENT_START": {
+      "field_id": "schedule.development_start",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[schedule.development_start]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCHEDULE-CONSTRUCTION_START": {
+      "field_id": "schedule.construction_start",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[schedule.construction_start]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCHEDULE-COMMISSIONING_DATE": {
+      "field_id": "schedule.commissioning_date",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[schedule.commissioning_date]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PROJECT-EVALUATION_DATE": {
+      "field_id": "project.evaluation_date",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[project.evaluation_date]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PROJECT-CURRENCY": {
+      "field_id": "project.currency",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[project.currency]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PROJECT-EVALUATION_YEARS": {
+      "field_id": "project.evaluation_years",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[project.evaluation_years]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PROJECT-PRICE_BASIS": {
+      "field_id": "project.price_basis",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[project.price_basis]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PROJECT-CASHFLOW_TAX_BASIS": {
+      "field_id": "project.cashflow_tax_basis",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[project.cashflow_tax_basis]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARGETS-BUDGET_CEILING": {
+      "field_id": "targets.budget_ceiling",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[targets.budget_ceiling]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARGETS-PAYBACK_YEARS": {
+      "field_id": "targets.payback_years",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[targets.payback_years]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARGETS-PROJECT_IRR": {
+      "field_id": "targets.project_irr",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[targets.project_irr]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARGETS-EQUITY_IRR": {
+      "field_id": "targets.equity_irr",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[targets.equity_irr]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-PROJECT_DISCOUNT_RATE": {
+      "field_id": "finance.project_discount_rate",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.project_discount_rate]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-EQUITY_DISCOUNT_RATE": {
+      "field_id": "finance.equity_discount_rate",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.equity_discount_rate]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARGETS-RISK_PREFERENCE": {
+      "field_id": "targets.risk_preference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[targets.risk_preference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARGETS-PAYBACK_BASIS": {
+      "field_id": "targets.payback_basis",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[targets.payback_basis]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-PROVINCE": {
+      "field_id": "site.province",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.province]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-CITY": {
+      "field_id": "site.city",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.city]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-DISTRICT": {
+      "field_id": "site.district",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.district]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-ADDRESS": {
+      "field_id": "site.address",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.address]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-COUNTRY": {
+      "field_id": "site.country",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.country]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-CRS": {
+      "field_id": "site.crs",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.crs]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-TIMEZONE": {
+      "field_id": "site.timezone",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.timezone]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-LATITUDE": {
+      "field_id": "site.latitude",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.latitude]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-LONGITUDE": {
+      "field_id": "site.longitude",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.longitude]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-ELEVATION": {
+      "field_id": "site.elevation",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.elevation]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-BOUNDARY_ATTACHMENT_ID": {
+      "field_id": "site.boundary_attachment_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.boundary_attachment_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-BOUNDARY_VERTICES": {
+      "field_id": "site.boundary_vertices",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.boundary_vertices]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-BOUNDARY_VERTICES-POLYGON_ID": {
+      "field_id": "site.boundary_vertices.polygon_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.boundary_vertices.polygon_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-BOUNDARY_VERTICES-RING_INDEX": {
+      "field_id": "site.boundary_vertices.ring_index",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.boundary_vertices.ring_index]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-BOUNDARY_VERTICES-VERTEX_INDEX": {
+      "field_id": "site.boundary_vertices.vertex_index",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.boundary_vertices.vertex_index]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-BOUNDARY_VERTICES-LATITUDE": {
+      "field_id": "site.boundary_vertices.latitude",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.boundary_vertices.latitude]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-BOUNDARY_VERTICES-LONGITUDE": {
+      "field_id": "site.boundary_vertices.longitude",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.boundary_vertices.longitude]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-BOUNDARY_VERTICES-ROW_ID": {
+      "field_id": "site.boundary_vertices.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.boundary_vertices.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-TOTAL_AREA": {
+      "field_id": "site.total_area",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.total_area]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-USABLE_AREA": {
+      "field_id": "site.usable_area",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.usable_area]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-EXCLUSION_AREA": {
+      "field_id": "site.exclusion_area",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.exclusion_area]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-TERRAIN_SLOPE": {
+      "field_id": "site.terrain_slope",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.terrain_slope]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-SHADING_FRACTION": {
+      "field_id": "site.shading_fraction",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.shading_fraction]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-AREA_BASIS": {
+      "field_id": "site.area_basis",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.area_basis]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-RIGHTS_HOLDER": {
+      "field_id": "site.rights_holder",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.rights_holder]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-RIGHTS_DOCUMENT_ID": {
+      "field_id": "site.rights_document_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.rights_document_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-LAND_CLASSIFICATION": {
+      "field_id": "site.land_classification",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.land_classification]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-LOCAL_RESTRICTIONS": {
+      "field_id": "site.local_restrictions",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.local_restrictions]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-TRANSPORT_ACCESS": {
+      "field_id": "site.transport_access",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.transport_access]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-GEOTECHNICAL_REFERENCE": {
+      "field_id": "site.geotechnical_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.geotechnical_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-FLOOD_REFERENCE": {
+      "field_id": "site.flood_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.flood_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-DISASTER_REFERENCE": {
+      "field_id": "site.disaster_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.disaster_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-ECOLOGY_REFERENCE": {
+      "field_id": "site.ecology_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.ecology_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-RIGHTS_EXPIRY": {
+      "field_id": "site.rights_expiry",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.rights_expiry]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SITE-RIGHTS_STATUS": {
+      "field_id": "site.rights_status",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[site.rights_status]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ROOF-STRUCTURE_TYPE": {
+      "field_id": "roof.structure_type",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[roof.structure_type]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ROOF-MATERIAL": {
+      "field_id": "roof.material",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[roof.material]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ROOF-AGE": {
+      "field_id": "roof.age",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[roof.age]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ROOF-REMAINING_LIFE": {
+      "field_id": "roof.remaining_life",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[roof.remaining_life]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ROOF-ALLOWABLE_ADDITIONAL_LOAD": {
+      "field_id": "roof.allowable_additional_load",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[roof.allowable_additional_load]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ROOF-DESIGN_ADDED_LOAD": {
+      "field_id": "roof.design_added_load",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[roof.design_added_load]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ROOF-SLOPE": {
+      "field_id": "roof.slope",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[roof.slope]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ROOF-AZIMUTH": {
+      "field_id": "roof.azimuth",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[roof.azimuth]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ROOF-STRUCTURE_REPORT_ID": {
+      "field_id": "roof.structure_report_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[roof.structure_report_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ROOF-FIRE_ACCESS_REFERENCE": {
+      "field_id": "roof.fire_access_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[roof.fire_access_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ROOF-WATERPROOF_PLAN": {
+      "field_id": "roof.waterproof_plan",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[roof.waterproof_plan]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-DC_CAPACITY": {
+      "field_id": "system.dc_capacity",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.dc_capacity]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-AC_CAPACITY": {
+      "field_id": "system.ac_capacity",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.ac_capacity]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-DC_AC_RATIO": {
+      "field_id": "system.dc_ac_ratio",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.dc_ac_ratio]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-MODULE_COUNT": {
+      "field_id": "system.module_count",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.module_count]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-MODULE_POWER": {
+      "field_id": "system.module_power",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.module_power]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-MODULE_EFFICIENCY": {
+      "field_id": "system.module_efficiency",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.module_efficiency]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-MODULE_LENGTH": {
+      "field_id": "system.module_length",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.module_length]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-MODULE_WIDTH": {
+      "field_id": "system.module_width",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.module_width]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-MODULE_MASS": {
+      "field_id": "system.module_mass",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.module_mass]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-MODULE_VOC": {
+      "field_id": "system.module_voc",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.module_voc]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-MODULE_VMP": {
+      "field_id": "system.module_vmp",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.module_vmp]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-MODULE_ISC": {
+      "field_id": "system.module_isc",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.module_isc]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-MODULE_IMP": {
+      "field_id": "system.module_imp",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.module_imp]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-TEMPERATURE_COEFFICIENT": {
+      "field_id": "system.temperature_coefficient",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.temperature_coefficient]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-INVERTER_UNIT_AC": {
+      "field_id": "system.inverter_unit_ac",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.inverter_unit_ac]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-INVERTER_COUNT": {
+      "field_id": "system.inverter_count",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.inverter_count]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-INVERTER_EFFICIENCY": {
+      "field_id": "system.inverter_efficiency",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.inverter_efficiency]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-INVERTER_MAX_DC_VOLTAGE": {
+      "field_id": "system.inverter_max_dc_voltage",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.inverter_max_dc_voltage]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-INVERTER_MPPT_MIN": {
+      "field_id": "system.inverter_mppt_min",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.inverter_mppt_min]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-INVERTER_MPPT_MAX": {
+      "field_id": "system.inverter_mppt_max",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.inverter_mppt_max]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-INVERTER_MAX_INPUT_CURRENT": {
+      "field_id": "system.inverter_max_input_current",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.inverter_max_input_current]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-MODULES_PER_STRING": {
+      "field_id": "system.modules_per_string",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.modules_per_string]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-PARALLEL_STRINGS": {
+      "field_id": "system.parallel_strings",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.parallel_strings]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LAYOUT-TILT": {
+      "field_id": "layout.tilt",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[layout.tilt]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LAYOUT-AZIMUTH": {
+      "field_id": "layout.azimuth",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[layout.azimuth]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LAYOUT-ROW_PITCH": {
+      "field_id": "layout.row_pitch",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[layout.row_pitch]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LAYOUT-GROUND_COVERAGE_RATIO": {
+      "field_id": "layout.ground_coverage_ratio",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[layout.ground_coverage_ratio]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LAYOUT-FIRE_SETBACK": {
+      "field_id": "layout.fire_setback",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[layout.fire_setback]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-MODULE_MODEL": {
+      "field_id": "system.module_model",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.module_model]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-INVERTER_MODEL": {
+      "field_id": "system.inverter_model",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.inverter_model]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-MOUNTING_TYPE": {
+      "field_id": "system.mounting_type",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.mounting_type]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-TOPOLOGY": {
+      "field_id": "system.topology",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.topology]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-CAPACITY_BOUNDARY": {
+      "field_id": "system.capacity_boundary",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.capacity_boundary]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LAYOUT-STRING_VALIDATION_REFERENCE": {
+      "field_id": "layout.string_validation_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[layout.string_validation_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-LOSSES": {
+      "field_id": "system.losses",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.losses]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-LOSSES-KIND": {
+      "field_id": "system.losses.kind",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.losses.kind]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-LOSSES-VALUE": {
+      "field_id": "system.losses.value",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.losses.value]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-LOSSES-SEQUENCE": {
+      "field_id": "system.losses.sequence",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.losses.sequence]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-LOSSES-BOUNDARY": {
+      "field_id": "system.losses.boundary",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.losses.boundary]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-LOSSES-INCLUDED_IN_SOURCE": {
+      "field_id": "system.losses.included_in_source",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.losses.included_in_source]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-LOSSES-METHOD": {
+      "field_id": "system.losses.method",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.losses.method]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-LOSSES-PERIOD": {
+      "field_id": "system.losses.period",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.losses.period]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-LOSSES-ROW_ID": {
+      "field_id": "system.losses.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.losses.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-FIRST_YEAR_DEGRADATION": {
+      "field_id": "system.first_year_degradation",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.first_year_degradation]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-ANNUAL_DEGRADATION": {
+      "field_id": "system.annual_degradation",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.annual_degradation]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-UNAVAILABILITY": {
+      "field_id": "system.unavailability",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.unavailability]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-DEGRADATION_SEGMENTS": {
+      "field_id": "system.degradation_segments",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.degradation_segments]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-DEGRADATION_SEGMENTS-FROM_YEAR": {
+      "field_id": "system.degradation_segments.from_year",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.degradation_segments.from_year]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-DEGRADATION_SEGMENTS-TO_YEAR": {
+      "field_id": "system.degradation_segments.to_year",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.degradation_segments.to_year]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-DEGRADATION_SEGMENTS-RATE": {
+      "field_id": "system.degradation_segments.rate",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.degradation_segments.rate]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-DEGRADATION_SEGMENTS-RESET_ON_REPLACEMENT": {
+      "field_id": "system.degradation_segments.reset_on_replacement",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.degradation_segments.reset_on_replacement]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SYSTEM-DEGRADATION_SEGMENTS-ROW_ID": {
+      "field_id": "system.degradation_segments.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[system.degradation_segments.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-DATASET_ID": {
+      "field_id": "resource.dataset_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.dataset_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-VERSION": {
+      "field_id": "resource.version",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.version]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-PROVIDER": {
+      "field_id": "resource.provider",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.provider]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-MODEL_METHOD": {
+      "field_id": "resource.model_method",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.model_method]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-LICENSE_ID": {
+      "field_id": "resource.license_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.license_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-TMY_METHOD": {
+      "field_id": "resource.tmy_method",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.tmy_method]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-SPATIAL_RESOLUTION": {
+      "field_id": "resource.spatial_resolution",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.spatial_resolution]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-TIME_RESOLUTION": {
+      "field_id": "resource.time_resolution",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.time_resolution]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-UNCERTAINTY_BASIS": {
+      "field_id": "resource.uncertainty_basis",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.uncertainty_basis]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-POA_BOUNDARY": {
+      "field_id": "resource.poa_boundary",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.poa_boundary]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-PERIOD_START": {
+      "field_id": "resource.period_start",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.period_start]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-PERIOD_END": {
+      "field_id": "resource.period_end",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.period_end]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-IS_TMY": {
+      "field_id": "resource.is_tmy",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.is_tmy]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-UNCERTAINTY_FRACTION": {
+      "field_id": "resource.uncertainty_fraction",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.uncertainty_fraction]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-MONTHLY": {
+      "field_id": "resource.monthly",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.monthly]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-MONTHLY-MONTH": {
+      "field_id": "resource.monthly.month",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.monthly.month]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-MONTHLY-GHI": {
+      "field_id": "resource.monthly.ghi",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.monthly.ghi]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-MONTHLY-DNI": {
+      "field_id": "resource.monthly.dni",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.monthly.dni]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-MONTHLY-DHI": {
+      "field_id": "resource.monthly.dhi",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.monthly.dhi]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-MONTHLY-POA": {
+      "field_id": "resource.monthly.poa",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.monthly.poa]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-MONTHLY-AMBIENT_TEMPERATURE": {
+      "field_id": "resource.monthly.ambient_temperature",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.monthly.ambient_temperature]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-MONTHLY-WIND_SPEED": {
+      "field_id": "resource.monthly.wind_speed",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.monthly.wind_speed]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-MONTHLY-DAYS": {
+      "field_id": "resource.monthly.days",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.monthly.days]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-MONTHLY-COVERAGE": {
+      "field_id": "resource.monthly.coverage",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.monthly.coverage]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-MONTHLY-ROW_ID": {
+      "field_id": "resource.monthly.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.monthly.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-TIMESERIES": {
+      "field_id": "resource.timeseries",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.timeseries]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-TIMESERIES-TIMESTAMP": {
+      "field_id": "resource.timeseries.timestamp",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.timeseries.timestamp]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-TIMESERIES-INTERVAL_MINUTES": {
+      "field_id": "resource.timeseries.interval_minutes",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.timeseries.interval_minutes]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-TIMESERIES-GHI": {
+      "field_id": "resource.timeseries.ghi",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.timeseries.ghi]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-TIMESERIES-DNI": {
+      "field_id": "resource.timeseries.dni",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.timeseries.dni]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-TIMESERIES-DHI": {
+      "field_id": "resource.timeseries.dhi",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.timeseries.dhi]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-TIMESERIES-POA": {
+      "field_id": "resource.timeseries.poa",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.timeseries.poa]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-TIMESERIES-AMBIENT_TEMPERATURE": {
+      "field_id": "resource.timeseries.ambient_temperature",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.timeseries.ambient_temperature]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-TIMESERIES-WIND_SPEED": {
+      "field_id": "resource.timeseries.wind_speed",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.timeseries.wind_speed]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-TIMESERIES-QUALITY_FLAG": {
+      "field_id": "resource.timeseries.quality_flag",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.timeseries.quality_flag]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-TIMESERIES-ROW_ID": {
+      "field_id": "resource.timeseries.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.timeseries.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-ANNUAL_COMPARISON": {
+      "field_id": "resource.annual_comparison",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.annual_comparison]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-ANNUAL_COMPARISON-YEAR": {
+      "field_id": "resource.annual_comparison.year",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.annual_comparison.year]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-ANNUAL_COMPARISON-POA": {
+      "field_id": "resource.annual_comparison.poa",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.annual_comparison.poa]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-ANNUAL_COMPARISON-COVERAGE": {
+      "field_id": "resource.annual_comparison.coverage",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.annual_comparison.coverage]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-ANNUAL_COMPARISON-DIFFERENCE_FROM_REFERENCE": {
+      "field_id": "resource.annual_comparison.difference_from_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.annual_comparison.difference_from_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESOURCE-ANNUAL_COMPARISON-ROW_ID": {
+      "field_id": "resource.annual_comparison.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[resource.annual_comparison.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-GRID-CONNECTION_POINT": {
+      "field_id": "grid.connection_point",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[grid.connection_point]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-GRID-METERING_BOUNDARY": {
+      "field_id": "grid.metering_boundary",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[grid.metering_boundary]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-GRID-OPINION_ATTACHMENT_ID": {
+      "field_id": "grid.opinion_attachment_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[grid.opinion_attachment_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-GRID-PERMIT_REFERENCE": {
+      "field_id": "grid.permit_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[grid.permit_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-GRID-TRANSACTION_OPINION": {
+      "field_id": "grid.transaction_opinion",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[grid.transaction_opinion]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-GRID-PROTECTION_PLAN": {
+      "field_id": "grid.protection_plan",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[grid.protection_plan]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-GRID-UPGRADE_PLAN": {
+      "field_id": "grid.upgrade_plan",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[grid.upgrade_plan]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-GRID-CURTAILMENT_BASIS": {
+      "field_id": "grid.curtailment_basis",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[grid.curtailment_basis]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-GRID-CONNECTION_VOLTAGE": {
+      "field_id": "grid.connection_voltage",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[grid.connection_voltage]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-GRID-TRANSFORMER_CAPACITY": {
+      "field_id": "grid.transformer_capacity",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[grid.transformer_capacity]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-GRID-AVAILABLE_CAPACITY": {
+      "field_id": "grid.available_capacity",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[grid.available_capacity]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-GRID-LINE_LENGTH": {
+      "field_id": "grid.line_length",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[grid.line_length]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-GRID-EXPORT_POWER_LIMIT": {
+      "field_id": "grid.export_power_limit",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[grid.export_power_limit]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-GRID-POWER_FACTOR": {
+      "field_id": "grid.power_factor",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[grid.power_factor]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-GRID-OPINION_STATUS": {
+      "field_id": "grid.opinion_status",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[grid.opinion_status]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-GRID-OPINION_VALID_UNTIL": {
+      "field_id": "grid.opinion_valid_until",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[grid.opinion_valid_until]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-GRID-CURTAILMENT_ASSUMPTION": {
+      "field_id": "grid.curtailment_assumption",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[grid.curtailment_assumption]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-WORK_SCHEDULE": {
+      "field_id": "load.work_schedule",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.work_schedule]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-METER_ID": {
+      "field_id": "load.meter_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.meter_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-METER_BOUNDARY": {
+      "field_id": "load.meter_boundary",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.meter_boundary]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-QUALITY_BASIS": {
+      "field_id": "load.quality_basis",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.quality_basis]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-PROFILE_ATTACHMENT_ID": {
+      "field_id": "load.profile_attachment_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.profile_attachment_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-TIMEZONE": {
+      "field_id": "load.timezone",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.timezone]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-ANNUAL_ENERGY": {
+      "field_id": "load.annual_energy",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.annual_energy]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-PROPOSED_SELF_USE_RATIO": {
+      "field_id": "load.proposed_self_use_ratio",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.proposed_self_use_ratio]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-MONTHLY_BILLS": {
+      "field_id": "load.monthly_bills",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.monthly_bills]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-MONTHLY_BILLS-PERIOD_START": {
+      "field_id": "load.monthly_bills.period_start",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.monthly_bills.period_start]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-MONTHLY_BILLS-PERIOD_END": {
+      "field_id": "load.monthly_bills.period_end",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.monthly_bills.period_end]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-MONTHLY_BILLS-ENERGY": {
+      "field_id": "load.monthly_bills.energy",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.monthly_bills.energy]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-MONTHLY_BILLS-ENERGY_CHARGE": {
+      "field_id": "load.monthly_bills.energy_charge",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.monthly_bills.energy_charge]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-MONTHLY_BILLS-DEMAND_CHARGE": {
+      "field_id": "load.monthly_bills.demand_charge",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.monthly_bills.demand_charge]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-MONTHLY_BILLS-CAPACITY_CHARGE": {
+      "field_id": "load.monthly_bills.capacity_charge",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.monthly_bills.capacity_charge]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-MONTHLY_BILLS-FIXED_CHARGE": {
+      "field_id": "load.monthly_bills.fixed_charge",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.monthly_bills.fixed_charge]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-MONTHLY_BILLS-OTHER_CHARGE": {
+      "field_id": "load.monthly_bills.other_charge",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.monthly_bills.other_charge]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-MONTHLY_BILLS-TAX_AMOUNT": {
+      "field_id": "load.monthly_bills.tax_amount",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.monthly_bills.tax_amount]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-MONTHLY_BILLS-TOTAL_CHARGE": {
+      "field_id": "load.monthly_bills.total_charge",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.monthly_bills.total_charge]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-MONTHLY_BILLS-ATTACHMENT_ID": {
+      "field_id": "load.monthly_bills.attachment_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.monthly_bills.attachment_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-MONTHLY_BILLS-ROW_ID": {
+      "field_id": "load.monthly_bills.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.monthly_bills.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-SERIES": {
+      "field_id": "load.series",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.series]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-SERIES-TIMESTAMP": {
+      "field_id": "load.series.timestamp",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.series.timestamp]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-SERIES-INTERVAL_MINUTES": {
+      "field_id": "load.series.interval_minutes",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.series.interval_minutes]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-SERIES-ENERGY": {
+      "field_id": "load.series.energy",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.series.energy]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-SERIES-POWER": {
+      "field_id": "load.series.power",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.series.power]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-SERIES-QUALITY_FLAG": {
+      "field_id": "load.series.quality_flag",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.series.quality_flag]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-LOAD-SERIES-ROW_ID": {
+      "field_id": "load.series.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[load.series.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-CONTRACT_ID": {
+      "field_id": "tariff.contract_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.contract_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-SETTLEMENT_MODE": {
+      "field_id": "tariff.settlement_mode",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.settlement_mode]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-MARKET_REGION": {
+      "field_id": "tariff.market_region",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.market_region]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-POLICY_REFERENCE": {
+      "field_id": "tariff.policy_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.policy_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-NEGATIVE_PRICE_RULE": {
+      "field_id": "tariff.negative_price_rule",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.negative_price_rule]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-NON_AVOIDABLE_CHARGES": {
+      "field_id": "tariff.non_avoidable_charges",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.non_avoidable_charges]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-REVENUE_SHARE_BOUNDARY": {
+      "field_id": "tariff.revenue_share_boundary",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.revenue_share_boundary]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-PPA_PRICE": {
+      "field_id": "tariff.ppa_price",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.ppa_price]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-REVENUE_SHARE": {
+      "field_id": "tariff.revenue_share",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.revenue_share]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-TRANSACTION_FEE": {
+      "field_id": "tariff.transaction_fee",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.transaction_fee]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-PERIODS": {
+      "field_id": "tariff.periods",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.periods]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-PERIODS-EFFECTIVE_FROM": {
+      "field_id": "tariff.periods.effective_from",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.periods.effective_from]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-PERIODS-EFFECTIVE_TO": {
+      "field_id": "tariff.periods.effective_to",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.periods.effective_to]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-PERIODS-SEASON": {
+      "field_id": "tariff.periods.season",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.periods.season]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-PERIODS-WEEKDAY_RULE": {
+      "field_id": "tariff.periods.weekday_rule",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.periods.weekday_rule]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-PERIODS-START_TIME": {
+      "field_id": "tariff.periods.start_time",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.periods.start_time]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-PERIODS-END_TIME": {
+      "field_id": "tariff.periods.end_time",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.periods.end_time]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-PERIODS-PERIOD_LABEL": {
+      "field_id": "tariff.periods.period_label",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.periods.period_label]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-PERIODS-AVOIDABLE_PRICE": {
+      "field_id": "tariff.periods.avoidable_price",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.periods.avoidable_price]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-PERIODS-SALE_PRICE": {
+      "field_id": "tariff.periods.sale_price",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.periods.sale_price]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-PERIODS-TAX_INCLUDED": {
+      "field_id": "tariff.periods.tax_included",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.periods.tax_included]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-PERIODS-VAT_RATE": {
+      "field_id": "tariff.periods.vat_rate",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.periods.vat_rate]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-PERIODS-POLICY_ID": {
+      "field_id": "tariff.periods.policy_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.periods.policy_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-PERIODS-ROW_ID": {
+      "field_id": "tariff.periods.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.periods.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-MARKET_SERIES": {
+      "field_id": "tariff.market_series",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.market_series]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-MARKET_SERIES-TIMESTAMP": {
+      "field_id": "tariff.market_series.timestamp",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.market_series.timestamp]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-MARKET_SERIES-INTERVAL_MINUTES": {
+      "field_id": "tariff.market_series.interval_minutes",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.market_series.interval_minutes]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-MARKET_SERIES-SALE_PRICE": {
+      "field_id": "tariff.market_series.sale_price",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.market_series.sale_price]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-MARKET_SERIES-TRANSACTION_FEE": {
+      "field_id": "tariff.market_series.transaction_fee",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.market_series.transaction_fee]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TARIFF-MARKET_SERIES-ROW_ID": {
+      "field_id": "tariff.market_series.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tariff.market_series.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-USER_BUDGET": {
+      "field_id": "capex.user_budget",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.user_budget]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ESTIMATE_BASIS": {
+      "field_id": "capex.estimate_basis",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.estimate_basis]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-CONTINGENCY_RATE": {
+      "field_id": "capex.contingency_rate",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.contingency_rate]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-INCLUDES_STORAGE": {
+      "field_id": "capex.includes_storage",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.includes_storage]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-INCLUDES_LAND": {
+      "field_id": "capex.includes_land",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.includes_land]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-INCLUDES_CONSTRUCTION_INTEREST": {
+      "field_id": "capex.includes_construction_interest",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.includes_construction_interest]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS": {
+      "field_id": "capex.items",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS-CATEGORY": {
+      "field_id": "capex.items.category",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items.category]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS-DESCRIPTION": {
+      "field_id": "capex.items.description",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items.description]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS-QUANTITY": {
+      "field_id": "capex.items.quantity",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items.quantity]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS-QUANTITY_UNIT": {
+      "field_id": "capex.items.quantity_unit",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items.quantity_unit]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS-UNIT_PRICE": {
+      "field_id": "capex.items.unit_price",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items.unit_price]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS-AMOUNT": {
+      "field_id": "capex.items.amount",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items.amount]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS-TAX_INCLUDED": {
+      "field_id": "capex.items.tax_included",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items.tax_included]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS-VAT_RATE": {
+      "field_id": "capex.items.vat_rate",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items.vat_rate]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS-RECOVERABLE_VAT_SHARE": {
+      "field_id": "capex.items.recoverable_vat_share",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items.recoverable_vat_share]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS-QUOTE_DATE": {
+      "field_id": "capex.items.quote_date",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items.quote_date]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS-QUOTE_VALID_UNTIL": {
+      "field_id": "capex.items.quote_valid_until",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items.quote_valid_until]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS-QUOTE_ATTACHMENT_ID": {
+      "field_id": "capex.items.quote_attachment_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items.quote_attachment_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS-PAYMENT_DATE": {
+      "field_id": "capex.items.payment_date",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items.payment_date]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS-CURRENCY": {
+      "field_id": "capex.items.currency",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items.currency]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS-FX_RATE": {
+      "field_id": "capex.items.fx_rate",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items.fx_rate]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS-ASSET_ID": {
+      "field_id": "capex.items.asset_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items.asset_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CAPEX-ITEMS-ROW_ID": {
+      "field_id": "capex.items.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[capex.items.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-OPEX-ITEMS": {
+      "field_id": "opex.items",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[opex.items]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-OPEX-ITEMS-CATEGORY": {
+      "field_id": "opex.items.category",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[opex.items.category]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-OPEX-ITEMS-BASE_AMOUNT": {
+      "field_id": "opex.items.base_amount",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[opex.items.base_amount]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-OPEX-ITEMS-FROM_YEAR": {
+      "field_id": "opex.items.from_year",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[opex.items.from_year]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-OPEX-ITEMS-TO_YEAR": {
+      "field_id": "opex.items.to_year",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[opex.items.to_year]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-OPEX-ITEMS-ESCALATION_RATE": {
+      "field_id": "opex.items.escalation_rate",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[opex.items.escalation_rate]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-OPEX-ITEMS-TAX_INCLUDED": {
+      "field_id": "opex.items.tax_included",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[opex.items.tax_included]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-OPEX-ITEMS-VAT_RATE": {
+      "field_id": "opex.items.vat_rate",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[opex.items.vat_rate]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-OPEX-ITEMS-RECOVERABLE_VAT_SHARE": {
+      "field_id": "opex.items.recoverable_vat_share",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[opex.items.recoverable_vat_share]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-OPEX-ITEMS-CONTRACT_ID": {
+      "field_id": "opex.items.contract_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[opex.items.contract_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-OPEX-ITEMS-ROW_ID": {
+      "field_id": "opex.items.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[opex.items.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-DEPRECIATION": {
+      "field_id": "assets.depreciation",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.depreciation]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-DEPRECIATION-ASSET_ID": {
+      "field_id": "assets.depreciation.asset_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.depreciation.asset_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-DEPRECIATION-ASSET_CLASS": {
+      "field_id": "assets.depreciation.asset_class",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.depreciation.asset_class]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-DEPRECIATION-DEPRECIABLE_BASIS": {
+      "field_id": "assets.depreciation.depreciable_basis",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.depreciation.depreciable_basis]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-DEPRECIATION-DEPRECIATION_YEARS": {
+      "field_id": "assets.depreciation.depreciation_years",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.depreciation.depreciation_years]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-DEPRECIATION-METHOD": {
+      "field_id": "assets.depreciation.method",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.depreciation.method]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-DEPRECIATION-RESIDUAL_VALUE": {
+      "field_id": "assets.depreciation.residual_value",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.depreciation.residual_value]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-DEPRECIATION-IN_SERVICE_DATE": {
+      "field_id": "assets.depreciation.in_service_date",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.depreciation.in_service_date]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-DEPRECIATION-TAX_BASIS_REFERENCE": {
+      "field_id": "assets.depreciation.tax_basis_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.depreciation.tax_basis_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-DEPRECIATION-ROW_ID": {
+      "field_id": "assets.depreciation.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.depreciation.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-REPLACEMENTS": {
+      "field_id": "assets.replacements",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.replacements]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-REPLACEMENTS-ASSET_ID": {
+      "field_id": "assets.replacements.asset_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.replacements.asset_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-REPLACEMENTS-YEAR": {
+      "field_id": "assets.replacements.year",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.replacements.year]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-REPLACEMENTS-COST": {
+      "field_id": "assets.replacements.cost",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.replacements.cost]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-REPLACEMENTS-SALVAGE": {
+      "field_id": "assets.replacements.salvage",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.replacements.salvage]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-REPLACEMENTS-DOWNTIME_DAYS": {
+      "field_id": "assets.replacements.downtime_days",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.replacements.downtime_days]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-REPLACEMENTS-NEW_LIFE": {
+      "field_id": "assets.replacements.new_life",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.replacements.new_life]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-REPLACEMENTS-PERFORMANCE_RESET": {
+      "field_id": "assets.replacements.performance_reset",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.replacements.performance_reset]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ASSETS-REPLACEMENTS-ROW_ID": {
+      "field_id": "assets.replacements.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[assets.replacements.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TAX-CORPORATE_INCOME_RATE": {
+      "field_id": "tax.corporate_income_rate",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tax.corporate_income_rate]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TAX-VAT_OUTPUT_RATE": {
+      "field_id": "tax.vat_output_rate",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tax.vat_output_rate]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TAX-SURCHARGE_RATE": {
+      "field_id": "tax.surcharge_rate",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tax.surcharge_rate]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TAX-LOSS_CARRYFORWARD_YEARS": {
+      "field_id": "tax.loss_carryforward_years",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tax.loss_carryforward_years]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-DEBT_RATIO": {
+      "field_id": "finance.debt_ratio",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.debt_ratio]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-LOAN_RATE": {
+      "field_id": "finance.loan_rate",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.loan_rate]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-LOAN_YEARS": {
+      "field_id": "finance.loan_years",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.loan_years]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-GRACE_YEARS": {
+      "field_id": "finance.grace_years",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.grace_years]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-DEBT_FEE": {
+      "field_id": "finance.debt_fee",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.debt_fee]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-SHAREHOLDER_COST": {
+      "field_id": "finance.shareholder_cost",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.shareholder_cost]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-WORKING_CAPITAL": {
+      "field_id": "finance.working_capital",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.working_capital]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-INFLATION_RATE": {
+      "field_id": "finance.inflation_rate",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.inflation_rate]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TAX-REGIME_REFERENCE": {
+      "field_id": "tax.regime_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tax.regime_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TAX-INCENTIVE_REFERENCE": {
+      "field_id": "tax.incentive_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tax.incentive_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TAX-VAT_RECOVERY_TIMING": {
+      "field_id": "tax.vat_recovery_timing",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tax.vat_recovery_timing]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-TAX-SURCHARGE_BASIS": {
+      "field_id": "tax.surcharge_basis",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[tax.surcharge_basis]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-LOAN_AGREEMENT_ID": {
+      "field_id": "finance.loan_agreement_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.loan_agreement_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-CFADS_DEFINITION": {
+      "field_id": "finance.cfads_definition",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.cfads_definition]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-CASHFLOW_TIMING": {
+      "field_id": "finance.cashflow_timing",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.cashflow_timing]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-REPAYMENT_METHOD": {
+      "field_id": "finance.repayment_method",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.repayment_method]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-DEBT_SCHEDULE": {
+      "field_id": "finance.debt_schedule",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.debt_schedule]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-DEBT_SCHEDULE-DATE": {
+      "field_id": "finance.debt_schedule.date",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.debt_schedule.date]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-DEBT_SCHEDULE-DRAWDOWN": {
+      "field_id": "finance.debt_schedule.drawdown",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.debt_schedule.drawdown]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-DEBT_SCHEDULE-PRINCIPAL": {
+      "field_id": "finance.debt_schedule.principal",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.debt_schedule.principal]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-DEBT_SCHEDULE-INTEREST": {
+      "field_id": "finance.debt_schedule.interest",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.debt_schedule.interest]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-DEBT_SCHEDULE-FEES": {
+      "field_id": "finance.debt_schedule.fees",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.debt_schedule.fees]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-DEBT_SCHEDULE-DSCR_COVENANT": {
+      "field_id": "finance.debt_schedule.dscr_covenant",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.debt_schedule.dscr_covenant]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FINANCE-DEBT_SCHEDULE-ROW_ID": {
+      "field_id": "finance.debt_schedule.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[finance.debt_schedule.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-REVENUE-OTHER_ITEMS": {
+      "field_id": "revenue.other_items",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[revenue.other_items]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-REVENUE-OTHER_ITEMS-KIND": {
+      "field_id": "revenue.other_items.kind",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[revenue.other_items.kind]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-REVENUE-OTHER_ITEMS-YEAR": {
+      "field_id": "revenue.other_items.year",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[revenue.other_items.year]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-REVENUE-OTHER_ITEMS-AMOUNT": {
+      "field_id": "revenue.other_items.amount",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[revenue.other_items.amount]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-REVENUE-OTHER_ITEMS-CONTRACT_ID": {
+      "field_id": "revenue.other_items.contract_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[revenue.other_items.contract_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-REVENUE-OTHER_ITEMS-EXCLUSIVE_BOUNDARY": {
+      "field_id": "revenue.other_items.exclusive_boundary",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[revenue.other_items.exclusive_boundary]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-REVENUE-OTHER_ITEMS-ROW_ID": {
+      "field_id": "revenue.other_items.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[revenue.other_items.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-POLICY-APPLICABILITY": {
+      "field_id": "policy.applicability",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[policy.applicability]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-POLICY-APPLICABILITY-TITLE": {
+      "field_id": "policy.applicability.title",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[policy.applicability.title]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-POLICY-APPLICABILITY-DOCUMENT_NUMBER": {
+      "field_id": "policy.applicability.document_number",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[policy.applicability.document_number]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-POLICY-APPLICABILITY-AUTHORITY": {
+      "field_id": "policy.applicability.authority",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[policy.applicability.authority]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-POLICY-APPLICABILITY-REGION": {
+      "field_id": "policy.applicability.region",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[policy.applicability.region]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-POLICY-APPLICABILITY-ISSUED_DATE": {
+      "field_id": "policy.applicability.issued_date",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[policy.applicability.issued_date]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-POLICY-APPLICABILITY-EFFECTIVE_FROM": {
+      "field_id": "policy.applicability.effective_from",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[policy.applicability.effective_from]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-POLICY-APPLICABILITY-EFFECTIVE_TO": {
+      "field_id": "policy.applicability.effective_to",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[policy.applicability.effective_to]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-POLICY-APPLICABILITY-CLAUSE": {
+      "field_id": "policy.applicability.clause",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[policy.applicability.clause]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-POLICY-APPLICABILITY-SUPERSEDED_BY": {
+      "field_id": "policy.applicability.superseded_by",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[policy.applicability.superseded_by]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-POLICY-APPLICABILITY-APPLICABILITY_STATUS": {
+      "field_id": "policy.applicability.applicability_status",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[policy.applicability.applicability_status]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-POLICY-APPLICABILITY-REVIEWER": {
+      "field_id": "policy.applicability.reviewer",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[policy.applicability.reviewer]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-POLICY-APPLICABILITY-ROW_ID": {
+      "field_id": "policy.applicability.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[policy.applicability.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ATTACHMENTS-REGISTER": {
+      "field_id": "attachments.register",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[attachments.register]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ATTACHMENTS-REGISTER-ATTACHMENT_ID": {
+      "field_id": "attachments.register.attachment_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[attachments.register.attachment_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ATTACHMENTS-REGISTER-KIND": {
+      "field_id": "attachments.register.kind",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[attachments.register.kind]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ATTACHMENTS-REGISTER-LOCAL_REFERENCE": {
+      "field_id": "attachments.register.local_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[attachments.register.local_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ATTACHMENTS-REGISTER-SHA256": {
+      "field_id": "attachments.register.sha256",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[attachments.register.sha256]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ATTACHMENTS-REGISTER-LICENSE_STATUS": {
+      "field_id": "attachments.register.license_status",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[attachments.register.license_status]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ATTACHMENTS-REGISTER-REMOTE_UPLOAD_CONSENT": {
+      "field_id": "attachments.register.remote_upload_consent",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[attachments.register.remote_upload_consent]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ATTACHMENTS-REGISTER-SENSITIVITY": {
+      "field_id": "attachments.register.sensitivity",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[attachments.register.sensitivity]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ATTACHMENTS-REGISTER-RETENTION_UNTIL": {
+      "field_id": "attachments.register.retention_until",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[attachments.register.retention_until]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ATTACHMENTS-REGISTER-DOCUMENT_DATE": {
+      "field_id": "attachments.register.document_date",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[attachments.register.document_date]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ATTACHMENTS-REGISTER-ROW_ID": {
+      "field_id": "attachments.register.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[attachments.register.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RISK-ITEMS": {
+      "field_id": "risk.items",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[risk.items]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RISK-ITEMS-RISK_ID": {
+      "field_id": "risk.items.risk_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[risk.items.risk_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RISK-ITEMS-CATEGORY": {
+      "field_id": "risk.items.category",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[risk.items.category]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RISK-ITEMS-DESCRIPTION": {
+      "field_id": "risk.items.description",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[risk.items.description]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RISK-ITEMS-SEVERITY": {
+      "field_id": "risk.items.severity",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[risk.items.severity]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RISK-ITEMS-EVIDENCE_STATE": {
+      "field_id": "risk.items.evidence_state",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[risk.items.evidence_state]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RISK-ITEMS-OWNER": {
+      "field_id": "risk.items.owner",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[risk.items.owner]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RISK-ITEMS-DEADLINE": {
+      "field_id": "risk.items.deadline",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[risk.items.deadline]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RISK-ITEMS-TRIGGER": {
+      "field_id": "risk.items.trigger",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[risk.items.trigger]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RISK-ITEMS-MITIGATION": {
+      "field_id": "risk.items.mitigation",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[risk.items.mitigation]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RISK-ITEMS-ROW_ID": {
+      "field_id": "risk.items.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[risk.items.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCHEDULE-TASKS": {
+      "field_id": "schedule.tasks",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[schedule.tasks]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCHEDULE-TASKS-TASK_ID": {
+      "field_id": "schedule.tasks.task_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[schedule.tasks.task_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCHEDULE-TASKS-NAME": {
+      "field_id": "schedule.tasks.name",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[schedule.tasks.name]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCHEDULE-TASKS-PREDECESSOR_IDS": {
+      "field_id": "schedule.tasks.predecessor_ids",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[schedule.tasks.predecessor_ids]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCHEDULE-TASKS-START_DATE": {
+      "field_id": "schedule.tasks.start_date",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[schedule.tasks.start_date]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCHEDULE-TASKS-FINISH_DATE": {
+      "field_id": "schedule.tasks.finish_date",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[schedule.tasks.finish_date]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCHEDULE-TASKS-OWNER": {
+      "field_id": "schedule.tasks.owner",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[schedule.tasks.owner]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCHEDULE-TASKS-CRITICAL_PATH": {
+      "field_id": "schedule.tasks.critical_path",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[schedule.tasks.critical_path]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCHEDULE-TASKS-ROW_ID": {
+      "field_id": "schedule.tasks.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[schedule.tasks.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ENVIRONMENT-GRID_EMISSION_FACTOR": {
+      "field_id": "environment.grid_emission_factor",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[environment.grid_emission_factor]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ENVIRONMENT-FACTOR_PERIOD": {
+      "field_id": "environment.factor_period",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[environment.factor_period]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ENVIRONMENT-FIRE_REFERENCE": {
+      "field_id": "environment.fire_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[environment.fire_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-ENVIRONMENT-APPROVAL_REFERENCE": {
+      "field_id": "environment.approval_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[environment.approval_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-AGRI-CROP_SPECIES": {
+      "field_id": "agri.crop_species",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[agri.crop_species]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-AGRI-PRODUCTION_BASELINE": {
+      "field_id": "agri.production_baseline",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[agri.production_baseline]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-AGRI-AGRICULTURAL_COMPLIANCE": {
+      "field_id": "agri.agricultural_compliance",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[agri.agricultural_compliance]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-AGRI-MINIMUM_LIGHT_TRANSMISSION": {
+      "field_id": "agri.minimum_light_transmission",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[agri.minimum_light_transmission]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-AGRI-DESIGN_LIGHT_TRANSMISSION": {
+      "field_id": "agri.design_light_transmission",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[agri.design_light_transmission]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-AGRI-MACHINE_CLEARANCE": {
+      "field_id": "agri.machine_clearance",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[agri.machine_clearance]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-AGRI-MACHINE_ACCESS_WIDTH": {
+      "field_id": "agri.machine_access_width",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[agri.machine_access_width]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-AGRI-YIELD_IMPACT_REFERENCE": {
+      "field_id": "agri.yield_impact_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[agri.yield_impact_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-AGRI-IRRIGATION_PLAN": {
+      "field_id": "agri.irrigation_plan",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[agri.irrigation_plan]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FISHERY-WATER_RIGHTS_REFERENCE": {
+      "field_id": "fishery.water_rights_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[fishery.water_rights_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FISHERY-PRODUCTION_BASELINE": {
+      "field_id": "fishery.production_baseline",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[fishery.production_baseline]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FISHERY-WATER_DEPTH": {
+      "field_id": "fishery.water_depth",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[fishery.water_depth]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FISHERY-WATER_LEVEL_VARIATION": {
+      "field_id": "fishery.water_level_variation",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[fishery.water_level_variation]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FISHERY-CORROSION_CLASS": {
+      "field_id": "fishery.corrosion_class",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[fishery.corrosion_class]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FISHERY-FOUNDATION_METHOD": {
+      "field_id": "fishery.foundation_method",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[fishery.foundation_method]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FISHERY-ACCESS_PLAN": {
+      "field_id": "fishery.access_plan",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[fishery.access_plan]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FISHERY-WATER_QUALITY_REFERENCE": {
+      "field_id": "fishery.water_quality_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[fishery.water_quality_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-FISHERY-PRODUCTION_IMPACT_REFERENCE": {
+      "field_id": "fishery.production_impact_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[fishery.production_impact_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PUBLIC-ASSET_AUTHORIZATION": {
+      "field_id": "public.asset_authorization",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[public.asset_authorization]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PUBLIC-PROCUREMENT_REFERENCE": {
+      "field_id": "public.procurement_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[public.procurement_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PUBLIC-OCCUPANCY_SCHEDULE": {
+      "field_id": "public.occupancy_schedule",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[public.occupancy_schedule]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PUBLIC-FIRE_EVACUATION_REFERENCE": {
+      "field_id": "public.fire_evacuation_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[public.fire_evacuation_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-PUBLIC-BUDGET_APPROVAL": {
+      "field_id": "public.budget_approval",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[public.budget_approval]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESIDENTIAL-PROPERTY_CONSENT": {
+      "field_id": "residential.property_consent",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[residential.property_consent]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESIDENTIAL-CONNECTION_STANDARD": {
+      "field_id": "residential.connection_standard",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[residential.connection_standard]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESIDENTIAL-RETAIL_TARIFF_REFERENCE": {
+      "field_id": "residential.retail_tariff_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[residential.retail_tariff_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESIDENTIAL-HOUSEHOLD_LOAD_REFERENCE": {
+      "field_id": "residential.household_load_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[residential.household_load_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-RESIDENTIAL-CONSUMER_CONTRACT_REFERENCE": {
+      "field_id": "residential.consumer_contract_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[residential.consumer_contract_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CARPORT_BIPV-SUBTYPE": {
+      "field_id": "carport_bipv.subtype",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[carport_bipv.subtype]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CARPORT_BIPV-BUILDING_FUNCTION": {
+      "field_id": "carport_bipv.building_function",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[carport_bipv.building_function]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CARPORT_BIPV-MINIMUM_CLEARANCE": {
+      "field_id": "carport_bipv.minimum_clearance",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[carport_bipv.minimum_clearance]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CARPORT_BIPV-FIRE_RATING_REFERENCE": {
+      "field_id": "carport_bipv.fire_rating_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[carport_bipv.fire_rating_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CARPORT_BIPV-WATERPROOF_REFERENCE": {
+      "field_id": "carport_bipv.waterproof_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[carport_bipv.waterproof_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CARPORT_BIPV-WIND_LOAD_REFERENCE": {
+      "field_id": "carport_bipv.wind_load_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[carport_bipv.wind_load_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CARPORT_BIPV-REPLACED_MATERIAL_COST": {
+      "field_id": "carport_bipv.replaced_material_cost",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[carport_bipv.replaced_material_cost]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CARPORT_BIPV-INCREMENTAL_COST_BOUNDARY": {
+      "field_id": "carport_bipv.incremental_cost_boundary",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[carport_bipv.incremental_cost_boundary]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-CARPORT_BIPV-EV_LOAD_REFERENCE": {
+      "field_id": "carport_bipv.ev_load_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[carport_bipv.ev_load_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-DESERT_MINING-SUBTYPE": {
+      "field_id": "desert_mining.subtype",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[desert_mining.subtype]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-DESERT_MINING-RESTORATION_OBLIGATION": {
+      "field_id": "desert_mining.restoration_obligation",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[desert_mining.restoration_obligation]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-DESERT_MINING-SUBSIDENCE_REFERENCE": {
+      "field_id": "desert_mining.subsidence_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[desert_mining.subsidence_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-DESERT_MINING-SAND_DUST_REFERENCE": {
+      "field_id": "desert_mining.sand_dust_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[desert_mining.sand_dust_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-DESERT_MINING-WATER_SUPPLY": {
+      "field_id": "desert_mining.water_supply",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[desert_mining.water_supply]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-DESERT_MINING-SOIL_REFERENCE": {
+      "field_id": "desert_mining.soil_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[desert_mining.soil_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-DESERT_MINING-TRANSMISSION_REFERENCE": {
+      "field_id": "desert_mining.transmission_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[desert_mining.transmission_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-DESERT_MINING-LAND_REHABILITATION_COST": {
+      "field_id": "desert_mining.land_rehabilitation_cost",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[desert_mining.land_rehabilitation_cost]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-ENERGY_CAPACITY": {
+      "field_id": "storage.energy_capacity",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.energy_capacity]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-NOMINAL_ENERGY": {
+      "field_id": "storage.nominal_energy",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.nominal_energy]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-CHARGE_POWER": {
+      "field_id": "storage.charge_power",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.charge_power]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-DISCHARGE_POWER": {
+      "field_id": "storage.discharge_power",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.discharge_power]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-CHARGE_EFFICIENCY": {
+      "field_id": "storage.charge_efficiency",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.charge_efficiency]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-DISCHARGE_EFFICIENCY": {
+      "field_id": "storage.discharge_efficiency",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.discharge_efficiency]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-SOC_MIN": {
+      "field_id": "storage.soc_min",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.soc_min]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-SOC_MAX": {
+      "field_id": "storage.soc_max",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.soc_max]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-SOC_INITIAL": {
+      "field_id": "storage.soc_initial",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.soc_initial]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-SOC_TERMINAL": {
+      "field_id": "storage.soc_terminal",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.soc_terminal]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-SELF_DISCHARGE_RATE": {
+      "field_id": "storage.self_discharge_rate",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.self_discharge_rate]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-CALENDAR_FADE": {
+      "field_id": "storage.calendar_fade",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.calendar_fade]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-CYCLE_FADE": {
+      "field_id": "storage.cycle_fade",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.cycle_fade]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-CYCLE_LIFE": {
+      "field_id": "storage.cycle_life",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.cycle_life]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-RESERVE_ENERGY": {
+      "field_id": "storage.reserve_energy",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.reserve_energy]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-AUXILIARY_POWER": {
+      "field_id": "storage.auxiliary_power",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.auxiliary_power]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-COUPLING": {
+      "field_id": "storage.coupling",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.coupling]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-DISPATCH_MODE": {
+      "field_id": "storage.dispatch_mode",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.dispatch_mode]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-GRID_CHARGING": {
+      "field_id": "storage.grid_charging",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.grid_charging]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-SIMULTANEOUS_CHARGE_DISCHARGE": {
+      "field_id": "storage.simultaneous_charge_discharge",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.simultaneous_charge_discharge]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-BASE_PV_TYPE": {
+      "field_id": "storage.base_pv_type",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.base_pv_type]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-CONNECTION_BOUNDARY": {
+      "field_id": "storage.connection_boundary",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.connection_boundary]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-DISPATCH_CONTRACT_ID": {
+      "field_id": "storage.dispatch_contract_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.dispatch_contract_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-FIRE_SAFETY_REFERENCE": {
+      "field_id": "storage.fire_safety_reference",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.fire_safety_reference]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-REPLACEMENT_RULE": {
+      "field_id": "storage.replacement_rule",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.replacement_rule]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-CYCLE_DEFINITION": {
+      "field_id": "storage.cycle_definition",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.cycle_definition]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-DISPATCH": {
+      "field_id": "storage.dispatch",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.dispatch]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-DISPATCH-TIMESTAMP": {
+      "field_id": "storage.dispatch.timestamp",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.dispatch.timestamp]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-DISPATCH-INTERVAL_MINUTES": {
+      "field_id": "storage.dispatch.interval_minutes",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.dispatch.interval_minutes]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-DISPATCH-CHARGE_FROM_PV": {
+      "field_id": "storage.dispatch.charge_from_pv",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.dispatch.charge_from_pv]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-DISPATCH-CHARGE_FROM_GRID": {
+      "field_id": "storage.dispatch.charge_from_grid",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.dispatch.charge_from_grid]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-DISPATCH-DISCHARGE_TO_LOAD": {
+      "field_id": "storage.dispatch.discharge_to_load",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.dispatch.discharge_to_load]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-DISPATCH-DISCHARGE_TO_EXPORT": {
+      "field_id": "storage.dispatch.discharge_to_export",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.dispatch.discharge_to_export]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-DISPATCH-STORED_ENERGY_BEGIN": {
+      "field_id": "storage.dispatch.stored_energy_begin",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.dispatch.stored_energy_begin]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-DISPATCH-STORED_ENERGY_END": {
+      "field_id": "storage.dispatch.stored_energy_end",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.dispatch.stored_energy_end]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-DISPATCH-USABLE_CAPACITY": {
+      "field_id": "storage.dispatch.usable_capacity",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.dispatch.usable_capacity]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-DISPATCH-AUXILIARY_ENERGY": {
+      "field_id": "storage.dispatch.auxiliary_energy",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.dispatch.auxiliary_energy]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-STORAGE-DISPATCH-ROW_ID": {
+      "field_id": "storage.dispatch.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[storage.dispatch.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCENARIOS-OPTIONS": {
+      "field_id": "scenarios.options",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[scenarios.options]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCENARIOS-OPTIONS-SCENARIO_ID": {
+      "field_id": "scenarios.options.scenario_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[scenarios.options.scenario_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCENARIOS-OPTIONS-KIND": {
+      "field_id": "scenarios.options.kind",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[scenarios.options.kind]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCENARIOS-OPTIONS-CHANGED_FIELD_ID": {
+      "field_id": "scenarios.options.changed_field_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[scenarios.options.changed_field_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCENARIOS-OPTIONS-CHANGED_VALUE_TEXT": {
+      "field_id": "scenarios.options.changed_value_text",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[scenarios.options.changed_value_text]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCENARIOS-OPTIONS-BASIS": {
+      "field_id": "scenarios.options.basis",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[scenarios.options.basis]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCENARIOS-OPTIONS-SOURCE_SNAPSHOT_ID": {
+      "field_id": "scenarios.options.source_snapshot_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[scenarios.options.source_snapshot_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-FIELD-SCENARIOS-OPTIONS-ROW_ID": {
+      "field_id": "scenarios.options.row_id",
+      "pytest_nodeid": "tests/solar-pv/test_field_contract_coverage.py::test_input_field_contract[scenarios.options.row_id]",
+      "scope": "INPUT_CONTRACT_ONLY"
+    },
+    "T-MISSING-MINIMAL": {
+      "scope": "LOCAL_INPUT_VALIDATION_ONLY",
+      "evidence": "reports/solar-pv/phase2e-full-complete-junit.xml"
+    },
+    "T-MISSING-GRID": {
+      "scope": "LOCAL_INPUT_VALIDATION_ONLY",
+      "evidence": "reports/solar-pv/phase2e-full-complete-junit.xml"
+    },
+    "T-CONFLICT": {
+      "scope": "LOCAL_INPUT_VALIDATION_ONLY",
+      "evidence": "reports/solar-pv/phase2e-full-complete-junit.xml"
+    },
+    "T-BOUND-AREA": {
+      "scope": "LOCAL_INPUT_VALIDATION_ONLY",
+      "evidence": "reports/solar-pv/phase2e-full-complete-junit.xml"
+    },
+    "T-BOUND-UNITS": {
+      "scope": "LOCAL_INPUT_VALIDATION_ONLY",
+      "evidence": "reports/solar-pv/phase2e-full-complete-junit.xml"
+    },
+    "T-BOUND-TEMP": {
+      "scope": "LOCAL_INPUT_VALIDATION_ONLY",
+      "evidence": "reports/solar-pv/phase2e-full-complete-junit.xml"
+    },
+    "T-ISOLATION-UNIMPLEMENTED": {
+      "scope": "LOCAL_INPUT_VALIDATION_ONLY",
+      "evidence": "reports/solar-pv/phase2e-full-complete-junit.xml"
+    },
+    "T-SEC-LOGS": {
+      "scope": "LOCAL_INPUT_VALIDATION_ONLY",
+      "evidence": "reports/solar-pv/phase2e-full-complete-junit.xml"
+    }
+  },
+  "formula_bindings_scope": "89 formula definitions / 281 frozen domain mappings only; numerical/E2E cases remain NOT_IMPLEMENTED",
+  "unchanged_policy": "all other matrix statuses, immutable source IDs/acceptance criteria, 12 locked baseline documents and 6 product gates preserved",
+  "environment_skips": "5 new + 5 legacy symlink privilege skips; no skip is counted as a pass"
+}

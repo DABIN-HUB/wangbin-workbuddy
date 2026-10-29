@@ -1,0 +1,19 @@
+{
+  "protected_files": 288,
+  "changed_protected_files": [],
+  "phase2_initial_tracked_files": 273,
+  "initial_tracked_changed": [
+    "docs/solar-pv/08-acceptance-cases.json",
+    "docs/solar-pv/08-derived-acceptance-cases.json",
+    "docs/solar-pv/08-requirement-traceability.csv",
+    "docs/solar-pv/README.md"
+  ],
+  "unexpected_initial_changes": [],
+  "new_files_scope": [
+    "docs/solar-pv",
+    "reports/solar-pv",
+    "services/solar-pv-engine",
+    "tests/solar-pv"
+  ],
+  "old_code_tests_products_dist_changed": false
+}

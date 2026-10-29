@@ -1,0 +1,27 @@
+FF...................................................................... [ 15%]
+........................................................................ [ 30%]
+........................................................................ [ 45%]
+........................................................................ [ 61%]
+........................................................................ [ 76%]
+........................................................................ [ 91%]
+.......................................                                  [100%]
+================================== FAILURES ===================================
+__________ test_formula_cli_writes_query_and_reports_missing_inputs ___________
+tests\solar-pv\test_formula_cli.py:9: in test_formula_cli_writes_query_and_reports_missing_inputs
+    assert proc.returncode==0,proc.stderr
+E   AssertionError: {"error":{"code":"CLI_ARGUMENT_ERROR","field_id":null}}
+E
+E   assert 2 == 0
+E    +  where 2 = CompletedProcess(args=['C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-v...'--output', 'query.json'], returncode=2, stdout='', stderr='{"error":{"code":"CLI_ARGUMENT_ERROR","field_id":null}}\n').returncode
+______________ test_unknown_formula_is_not_repaired_or_executed _______________
+tests\solar-pv\test_formula_cli.py:17: in test_unknown_formula_is_not_repaired_or_executed
+    assert proc.returncode==2 and json.loads(proc.stderr)["error"]["code"]=="UNKNOWN_FORMULA"
+E   assert (2 == 2 and 'CLI_ARGUMENT_ERROR' == 'UNKNOWN_FORMULA'
+E    +  where 2 = CompletedProcess(args=['C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\solar-pv-phase2-20261028\\verify-v...a-id', ' F-DC-CAPACITY '], returncode=2, stdout='', stderr='{"error":{"code":"CLI_ARGUMENT_ERROR","field_id":null}}\n').returncode
+E
+E     - UNKNOWN_FORMULA
+E     + CLI_ARGUMENT_ERROR)
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_formula_cli.py::test_formula_cli_writes_query_and_reports_missing_inputs
+FAILED tests/solar-pv/test_formula_cli.py::test_unknown_formula_is_not_repaired_or_executed
+2 failed, 469 passed in 2.37s
