@@ -40,6 +40,12 @@ def _parser():
     for name in ("calculation-schema", "method-schema", "calculation-formulas"):
         contract = commands.add_parser(name, help="导出版本化计算契约或真实公式执行库存；不运行项目、不升级门禁")
         contract.add_argument("--output", required=True, help="授权私有JSON输出，不覆盖")
+    energy = commands.add_parser("energy", help="Phase3B离线发电计算；不计算负荷、收入或财务")
+    energy.add_argument("--input", required=True, help="Phase2完整导出JSON")
+    energy.add_argument("--methods", required=True, help="D2方法配置JSON")
+    energy.add_argument("--budget", required=True, help="显式D3预算JSON")
+    energy.add_argument("--bundle", help="已授权私有目录内的D3时序bundle")
+    energy.add_argument("--output", required=True, help="新建的私有结果目录，不覆盖")
     for command in ("submit", "revise", "resolve", "review", "remove", "accept"):
         examples = {
             "submit": '{"submission_id":"round1","updates":[{"field_id":"site.total_area","value":1000,"unit":"m2"}]}',
@@ -118,6 +124,28 @@ def main(argv=None):
         args = _parser().parse_args(argv)
         workspace = Workspace(args.workspace)
         catalog = Catalog(args.baseline_dir)
+        if args.command == "energy":
+            from contextlib import nullcontext
+            from .timeseries_bundle import BundleBudget, read_bundle
+            from .calculation.energy_yield import calculate_rooftop, calculate_ground
+            from .calculation.method_config import MethodConfig
+            exported = workspace.read(args.input)[0]
+            methods = MethodConfig.from_dict(workspace.read(args.methods)[0])
+            budget_data = workspace.read(args.budget)[0]
+            if not isinstance(budget_data, dict):
+                raise ContractError("BUNDLE_BUDGET")
+            budget = BundleBudget(**budget_data)
+            pv_type = exported.get("project", {}).get("pv_type")
+            if pv_type not in {"industrial_rooftop", "utility_scale_ground"}:
+                raise ContractError("ENERGY_CATEGORY_NOT_IMPLEMENTED")
+            calculate = calculate_rooftop if pv_type == "industrial_rooftop" else calculate_ground
+            context = read_bundle(workspace.path(args.bundle, json_only=False), catalog=catalog, budget=budget) if args.bundle else nullcontext(None)
+            with context as bundle:
+                result = calculate(exported, methods, catalog=catalog, budget=budget,
+                                   output_dir=workspace.path(args.output, json_only=False), bundle=bundle)
+            print(dumps({"status": result["status"], "result_hash": result["result_hash"],
+                         "calculation_maturity": result["maturity"]["calculation"], "scope": "PHASE3B_ENERGY_ONLY"}))
+            return 0
         if args.command in {"calculation-schema", "method-schema", "calculation-formulas"}:
             if args.command == "calculation-formulas":
                 from .calculation.execution_registry import execution_inventory

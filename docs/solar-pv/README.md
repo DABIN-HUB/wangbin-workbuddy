@@ -1,6 +1,8 @@
 # wangbin 光伏预可研产品：长期冻结需求基线
 
-基线版本 `SOLAR-PV-1.0.0`，冻结日期2026-10-28。**Phase2历史验收PHASE2_INPUT_CONTRACT_PASS：3014/0/5，旧回归145/0/5，提交6c7081ba32959c3b633f452e43a8826740e79158。D1—D3已批准；Phase3A按用户明确批准的已验证隔离快照本地验收通过：3277 passed/0 failed/6 skipped、旧回归145/0/5、独立审阅5项关闭、wheel源码一致。** 用户确认4个旧文件来自其他任务，允许仅提交光伏并明确排除4处；复核隔离快照288保护文件哈希不变、基线exit0，当前源码无漂移。实时工作区保护失败不改称PASS、不回滚或覆盖其他工作；授权、排除清单与证据见reports/solar-pv/phase3a-isolated-acceptance.json及验收报告。公式数值验收仍0、两个完整合成项目未交付；3B仅只读准备，不提前标记PHASE3_CALCULATION_ENGINE_PASS、四文件、真实项目或平台通过，发布BLOCKED。Phase0提交`f55cba2bc0e40aa009d48e49b9eed8b6e094e19b`、Phase1提交`b475c5e5b3d107625acb8e531a623d142060a194`；symlink跳过不是PASS。
+基线版本 `SOLAR-PV-1.0.0`，冻结日期2026-10-28。**当前Phase3B：PHASE3B_ENERGY_ENGINE_PASS。冻结候选v3全量光伏3506 passed/0 failed/6 skipped，旧产品含Expert145/0/5；27条工程公式独立数值通过，两类1MWp/25年SYNTHETIC能源案例、四种全年时序及跨年时区实跑通过。** 详见reports/solar-pv/phase3b-review-and-acceptance.md、phase3b-final-execution-evidence.json及docs/solar-pv/25-phase3b-runtime-and-phase3c-handoff.md。这不是Phase3整体/财务/四文件/真实项目/WorkBuddy通过；3C未启动，发布BLOCKED，验收后停止。
+
+历史：Phase2 PHASE2_INPUT_CONTRACT_PASS：3014/0/5，旧回归145/0/5，提交6c7081ba32959c3b633f452e43a8826740e79158。D1—D3已批准；Phase3A按用户明确批准的隔离快照验收3277/0/6、旧回归145/0/5、独立审阅5项关闭、wheel源码一致。用户确认4个旧文件来自其他任务，仅提交光伏并排除4处；288保护集合的隔离快照哈希不变、基线exit0。实时工作区恰有这4个用户改动，保护检查exit1不改称全局PASS或clean，不回滚或覆盖；原授权见reports/solar-pv/phase3a-isolated-acceptance.json。本轮四文件原字节hash不变、生产/测试与最终候选无漂移；准确提交SHA在完成消息及持久Git回执给出。Phase0提交`f55cba2bc0e40aa009d48e49b9eed8b6e094e19b`、Phase1提交`b475c5e5b3d107625acb8e531a623d142060a194`；symlink跳过不是PASS。
 
 ## 后续会话必须先读
 
@@ -39,6 +41,8 @@
 | `19-phase3-approved-implementation-contract.md` | D1/D2/D3正式批准边界、有效定义与旧输入兼容、有界时序和计算层接口；不等于数值验收通过 |
 | `20-phase3-calculation-architecture.md` | 已实现的D1/D2/D3、输入/方法/结果身份、显式图及资源预算接口；数学执行和数值验收仍待3B—3G |
 | `21-phase3b-implementation-readiness.md` | 只读准备：27条工程域映射、逐组限幅/既有单位桥与输入前置条件、独立小锚；未开始3B生产变更，数值通过数仍0 |
+| `23-phase3b-implementation-plan.md`、`24-phase3b-remaining-execution.md`、`25-phase3b-runtime-and-phase3c-handoff.md` | Phase3B实施闭环、D2最小接线、真实CLI/API、计量边界与仅接口的3C移交；21号文档保留为历史准备，不覆盖其历史状态 |
+| `reports/solar-pv/phase3b-review-and-acceptance.md`、`phase3b-final-execution-evidence.json`、`phase3b-cases/` | 正式离线能源验收、源hash/全量JUnit/资源实测及两类25年真实合成输出；不是完整项目或发布放行 |
 | `reports/solar-pv/phase3a-effective-execution-mapping.json`、`phase3a-review-fix-evidence.json` | 当前89条有效定义/域血缘/拟执行模块及契约回归证据；不是公式数值通过或最终3A验收 |
 | `reports/solar-pv/phase3a-review-and-acceptance.md`、`phase3a-state.json`、`phase3a-evidence-manifest.json` | Phase3A最终基础契约验收、精确源码与测试/容量/wheel证据；明确0条数值公式、两项目未完成及发布BLOCKED |
 

@@ -15152,9 +15152,9 @@
       "title": "直流装机容量",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "独立人工清单复核；块数整数/负值拒绝、功率单位转换和混合规格聚合用例均 PLANNED。；组件铭牌端，不是逆变器交流输出或并网许可容量。混用组件规格须逐类求和。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-AC-CAPACITY",
@@ -15173,9 +15173,9 @@
       "title": "逆变器交流额定容量",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "逐台求和独立复核，kVA 不经功率因数不得代入；空集合和未知额定值分开处理。；逆变器交流端；变压器 kVA、并网点 kW 和无功约束不能直接等同该值。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-DC-AC-RATIO",
@@ -15194,9 +15194,9 @@
       "title": "直交流容配比",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "分母零拒绝；交换分子分母不等价，结果与铭牌清单交叉核验。；比较额定功率数值，保留 DC/AC 标签；不是实时效率，也不是并网容量比。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-POA-IRRADIATION",
@@ -15215,9 +15215,9 @@
       "title": "阵列面辐照量积分",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "时长完整性、重复时段/时区/闰年、W 与 kW 换算及辐照度与辐照量混用检查。；同一阵列朝向、时间标准、已说明遮挡前后边界；GHI/DNI/DHI 不直接当 POA。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-FIRST-YEAR-ENERGY",
@@ -15236,9 +15236,9 @@
       "title": "首年性能比简化发电量",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "与独立符号推导核对；PR 损失覆盖集合重复校验；与可靠逐时结果同边界交叉比较。；PR 假设法仅用于资料不足的简化估算；明确输出在逆变器端或并网点、限发前或后。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-LOSS-COMPOSITE",
@@ -15257,9 +15257,9 @@
       "title": "独立损失复合系数",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "重叠损失拒绝；逐项相乘不得改为求和；全零/全损失符号边界用例。；仅用于独立、同一基准边界的比例损失；不能替代遮挡、温度、限幅的逐时耦合模型。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-DC-TIME-POWER",
@@ -15278,9 +15278,9 @@
       "title": "时段直流功率近似",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "独立温度修正式参考、零辐照边界、℃/K 差值一致、温度系数百分数输入检查。；用于明确版本的线性温度近似；不是宣称复现 PVWatts 全算法。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-AC-INVERTER-POWER",
@@ -15299,9 +15299,9 @@
       "title": "逆变转换与限幅",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "AC 不超过额定、转换损失非负；先单机限幅后聚合与简单总限幅差异用例。；每台/同质组先转换限幅再相加；不同设备不得只用总容量掩盖单机限幅。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-AVAILABLE-ENERGY",
@@ -15320,9 +15320,9 @@
       "title": "计量点限发前可用电量",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "逐段能量台账对账；PR/系统损失/可利用率重复扣除检查；站用电进口另列，不通过负发电量混入。；逆变器→交流线→变压器→送出线→明确计量点，限发另由消纳平衡扣；屋顶若计量点不同需禁用不适用段。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-ENERGY-AGGREGATION",
@@ -15341,9 +15341,9 @@
       "title": "月年度电量汇总",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "月总之和与同一运营年总量一致，跨年投产/闰年/缺测均列 PLANNED。；不混合限发前/后和 DC/AC 边界；账期与自然年不能静默合并。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-INITIAL-DEGRADATION",
@@ -15362,9 +15362,9 @@
       "title": "首年初始衰减",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "已含初始衰减时拒绝再应用；与损失覆盖台账核对。；只适用于首年初始损失尚未由组件模型/PR/损失表包含的情况。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-ANNUAL-DEGRADATION",
@@ -15383,9 +15383,9 @@
       "title": "后续恒定衰减",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "y=1 复得首年；无衰减、长期单调性；更换后不许无条件沿用旧曲线。；天气、限发、自用、设备状态保持可比时才可整年比例缩放；财务基期不是 y=1。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-PIECEWISE-DEGRADATION",
@@ -15404,9 +15404,9 @@
       "title": "分段衰减性能系数",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "分段时间连接、更换不双计、q_y 与年度容量/停机模型一致性。；只更新性能，不替代年度天气/停机/限发重算；设备增容需修改容量而非伪装修复。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-EQUIVALENT-HOURS",
@@ -15425,9 +15425,9 @@
       "title": "等效利用小时",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "独立 kWh/kW 量纲校验，DC/AC 分母互换应改变结果且标签同步。；必须同时输出 reference_capacity_basis=DC/AC 和计量点，不能跨口径对标。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-CAPACITY-FACTOR",
@@ -15446,9 +15446,9 @@
       "title": "容量因子",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "与等效小时/H_y 一致，闰年和时区时间轴核验。；完整普通年、闰年、首尾不完整运营年分别用实际时段覆盖；不能一律硬编码小时数。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-PR-OBSERVED",
@@ -15467,9 +15467,9 @@
       "title": "同边界性能比校核",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "简式符号回代仅查代数不算独立验证；最终需独立能量参考。；性能比不是逆变器效率；限发/停机含否需标签；不与 PR 假设法形成循环输入。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-EXPORT-LIMIT-ENERGY",
@@ -15488,9 +15488,9 @@
       "title": "上网功率限制换算电量",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "kW 与 kWh 混用拒绝，时长改变时限额按比例变化。；功率限额在区间内有效且恒定/以保守等效值表示；合同直接给电量上限时直接使用不再乘时长。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-SELF-CONSUMPTION",
@@ -16643,9 +16643,9 @@
       "title": "功率千瓦至兆瓦换算",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "逆转换一致性、元/Wp 与元/kWp 的方向校验；本阶段仅文档结构核查，不宣称数值测试。；仅变换单位数值，保留物理维度、DC/AC、峰值和税价标签；kW 与 kWh 不互换。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-UNIT-KWH-MWH",
@@ -16664,9 +16664,9 @@
       "title": "电量千瓦时至兆瓦时换算",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "逆转换一致性、元/Wp 与元/kWp 的方向校验；本阶段仅文档结构核查，不宣称数值测试。；仅变换单位数值，保留物理维度、DC/AC、峰值和税价标签；kW 与 kWh 不互换。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-UNIT-IRRADIANCE-W-KW",
@@ -16685,9 +16685,9 @@
       "title": "辐照度瓦至千瓦换算",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "逆转换一致性、元/Wp 与元/kWp 的方向校验；本阶段仅文档结构核查，不宣称数值测试。；仅变换单位数值，保留物理维度、DC/AC、峰值和税价标签；kW 与 kWh 不互换。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-UNIT-COST-WP-KWP",
@@ -16706,9 +16706,9 @@
       "title": "单位投资瓦峰至千瓦峰换算",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "逆转换一致性、元/Wp 与元/kWp 的方向校验；本阶段仅文档结构核查，不宣称数值测试。；仅变换单位数值，保留物理维度、DC/AC、峰值和税价标签；kW 与 kWh 不互换。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-UNIT-DC-CAPACITY",
@@ -16727,9 +16727,9 @@
       "title": "峰值直流装机单位换算",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "反转换一致；与容配比单位换算不变性联检。；这是单位映射，不是 DC→AC 转换模型；MWp 不能直接替代 MWac。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-UNIT-AC-CAPACITY",
@@ -16748,9 +16748,9 @@
       "title": "额定交流容量单位换算",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "反转换一致；与容配比单位换算不变性联检。；这是单位映射，不是 DC→AC 转换模型；MWp 不能直接替代 MWac。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-STORAGE-ENERGY-UPDATE",
@@ -16847,9 +16847,9 @@
       "title": "可利用面积核算",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "独立推导/参考算法、单位及相应边界/能量或成本守恒；不以相同引擎生成expected。；边界坐标系/投影与面积同一，排除区先做空间并集去重后计算。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-AVERAGE-ANNUAL-ENERGY",
@@ -16868,9 +16868,9 @@
       "title": "评价期年均电量",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "独立推导/参考算法、单位及相应边界/能量或成本守恒；不以相同引擎生成expected。；完整运营年算术均值；含不足年采用时长加权并另注册方法，不以建设年补0混淆。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-EMISSIONS-AVOIDED",
@@ -16889,9 +16889,9 @@
       "title": "有边界的减排估算",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "独立推导/参考算法、单位及相应边界/能量或成本守恒；不以相同引擎生成expected。；仅适用因子匹配时估算，生命周期/运行边际/平均排放因子不可混用；储能网充影响单独。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-TRANSFORMER-ACTIVE-LIMIT",
@@ -16910,9 +16910,9 @@
       "title": "变压器有功容量校核",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "独立推导/参考算法、单位及相应边界/能量或成本守恒；不以相同引擎生成expected。；只是有功换算；可用接入还需负荷占用/电网限制/无功和温升核查，不能因此认定许可。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_engineering_kernels.py",
+      "evidence": "reports/solar-pv/phase3b-formula-numerical-verification.json"
     },
     {
       "test_id": "T-CAPEX-ITEM-AMOUNT",
