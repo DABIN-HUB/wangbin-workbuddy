@@ -1,6 +1,8 @@
 # wangbin 光伏预可研产品：长期冻结需求基线
 
-基线版本 `SOLAR-PV-1.0.0`，冻结日期2026-10-28。**当前Phase3B：PHASE3B_ENERGY_ENGINE_PASS。冻结候选v3全量光伏3506 passed/0 failed/6 skipped，旧产品含Expert145/0/5；27条工程公式独立数值通过，两类1MWp/25年SYNTHETIC能源案例、四种全年时序及跨年时区实跑通过。** 详见reports/solar-pv/phase3b-review-and-acceptance.md、phase3b-final-execution-evidence.json及docs/solar-pv/25-phase3b-runtime-and-phase3c-handoff.md。这不是Phase3整体/财务/四文件/真实项目/WorkBuddy通过；3C未启动，发布BLOCKED，验收后停止。
+基线版本 `SOLAR-PV-1.0.0`，冻结日期2026-10-28。**当前Phase3C：PARTIAL，消纳及售电收益链开发和正式验收中。九条原子公式497项专项及独立数值锚通过，不等于项目链/全量回归或Phase3C放行。** 本轮计划见26-phase3c-execution-plan.md，启动保护及独立公式证据见reports/solar-pv/phase3c-startup-state.json、phase3c-formula-numerical-verification.json；不进入3D，发布BLOCKED。
+
+历史Phase3B保持PHASE3B_ENERGY_ENGINE_PASS：冻结候选v3全量光伏3506 passed/0 failed/6 skipped，旧产品含Expert145/0/5；27条工程公式独立数值通过，两类1MWp/25年SYNTHETIC能源案例、四种全年时序及跨年时区实跑通过。详见reports/solar-pv/phase3b-review-and-acceptance.md、phase3b-final-execution-evidence.json及25-phase3b-runtime-and-phase3c-handoff.md。历史通过数不能充作本轮3C验收；这不是Phase3整体/财务/四文件/真实项目/WorkBuddy通过。
 
 历史：Phase2 PHASE2_INPUT_CONTRACT_PASS：3014/0/5，旧回归145/0/5，提交6c7081ba32959c3b633f452e43a8826740e79158。D1—D3已批准；Phase3A按用户明确批准的隔离快照验收3277/0/6、旧回归145/0/5、独立审阅5项关闭、wheel源码一致。用户确认4个旧文件来自其他任务，仅提交光伏并排除4处；288保护集合的隔离快照哈希不变、基线exit0。实时工作区恰有这4个用户改动，保护检查exit1不改称全局PASS或clean，不回滚或覆盖；原授权见reports/solar-pv/phase3a-isolated-acceptance.json。本轮四文件原字节hash不变、生产/测试与最终候选无漂移；准确提交SHA在完成消息及持久Git回执给出。Phase0提交`f55cba2bc0e40aa009d48e49b9eed8b6e094e19b`、Phase1提交`b475c5e5b3d107625acb8e531a623d142060a194`；symlink跳过不是PASS。
 
