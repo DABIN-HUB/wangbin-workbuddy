@@ -9,7 +9,7 @@ from .catalog import Catalog
 from .errors import ContractError
 from .intake import IntakeSession
 from .local_files import Workspace
-from .serialization import dumps
+from .serialization import dumps, loads
 
 
 class _Parser(argparse.ArgumentParser):
@@ -54,6 +54,11 @@ def _parser():
     consumption.add_argument("--generation-hash", required=True, help="调用方固定的3B结果内容SHA-256，不自动信任另一目录")
     consumption.add_argument("--bundle", help="workspace内D3负荷/市场价时序目录")
     consumption.add_argument("--output", required=True, help="新建私有结果目录，不覆盖")
+    financial = commands.add_parser("financial", help="Phase3D成本、资产、融资、税费及财务基础账簿；不组装Phase3E现金流")
+    financial.add_argument("--input", required=True, help="包含Phase3D冻结财务输入的Phase2完整导出JSON")
+    financial.add_argument("--methods", required=True, help="包含已批准Phase3D账簿参数的D2方法配置JSON")
+    financial.add_argument("--settlement", required=True, help="已验收Phase3C结果目录或result.json")
+    financial.add_argument("--output", required=True, help="新建私有结果目录，不覆盖")
     for command in ("submit", "revise", "resolve", "review", "remove", "accept"):
         examples = {
             "submit": '{"submission_id":"round1","updates":[{"field_id":"site.total_area","value":1000,"unit":"m2"}]}',
@@ -154,6 +159,20 @@ def main(argv=None):
                     output_dir=workspace.path(args.output,json_only=False))
             print(dumps({"status":result["status"],"result_hash":result["result_hash"],
                 "calculation_maturity":result["maturity"]["calculation"],"scope":"PHASE3C_CONSUMPTION_AND_ENERGY_BENEFIT_ONLY"}))
+            return 0
+        if args.command == "financial":
+            from .calculation.financial_ledger import calculate_financial_ledger, write_financial_bundle
+            from .calculation.method_config import MethodConfig
+            from .calculation.result_contract import validate_result
+            exported = workspace.read(args.input)[0]
+            methods = MethodConfig.from_dict(workspace.read(args.methods)[0])
+            settlement_path = workspace.path(args.settlement, json_only=False)
+            if settlement_path.is_dir(): settlement_path = settlement_path / "result.json"
+            settlement = loads(settlement_path.read_bytes())
+            result = calculate_financial_ledger(exported, methods, settlement, catalog=catalog)
+            validate_result(result, catalog)
+            write_financial_bundle(result, workspace.path(args.output, json_only=False))
+            print(dumps({"status":result["status"],"result_hash":result["result_hash"],"calculation_maturity":result["maturity"]["calculation"],"scope":"PHASE3D_FINANCIAL_FOUNDATION_ONLY","phase3e":"NOT_IMPLEMENTED"}))
             return 0
         if args.command == "energy":
             from contextlib import nullcontext

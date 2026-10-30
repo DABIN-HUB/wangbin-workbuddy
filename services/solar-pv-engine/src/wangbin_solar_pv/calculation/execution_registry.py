@@ -12,7 +12,7 @@ from pathlib import Path
 from ..errors import ContractError
 from ..serialization import loads
 
-_KERNEL_MODULES = ("engineering", "consumption", "costs", "financial_metrics", "scenarios")
+_KERNEL_MODULES = ("engineering", "consumption", "costs", "accounting_ledger", "financial_metrics", "scenarios")
 
 
 def _kernels():
@@ -39,6 +39,8 @@ def _planned_module(formula_id):
         return "consumption"
     if formula_id in {"F-SINGLE-FACTOR-SENSITIVITY", "F-SENSITIVITY-ELASTICITY", "F-SCENARIO-METRIC"}:
         return "scenarios"
+    if formula_id in {"F-CASH-RECEIPTS", "F-DEBT-SERVICE", "F-CAPEX-PAYMENT-BALANCE"}:
+        return "accounting_ledger"
     if formula_id.startswith(("F-CAPEX-", "F-TAX", "F-INCOME-", "F-VAT-", "F-OTHER-CASH-TAX", "F-DEBT-BALANCE", "F-DEBT-INTEREST", "F-INTEREST-", "F-ANNUAL-OPEX", "F-OPEX-", "F-STRAIGHT-", "F-ASSET-", "F-UNIT-INVESTMENT", "F-CASH-TAX-")):
         return "costs"
     if formula_id.startswith(("F-IRR-", "F-NPV", "F-DATED-", "F-NOMINAL-", "F-CUMULATIVE-", "F-STATIC-", "F-DISCOUNTED-", "F-DYNAMIC-", "F-LIFECYCLE-", "F-LCOE", "F-CFADS", "F-DEBT-SERVICE", "F-DSCR", "F-BREAK-", "F-WORST-", "F-INVESTMENT-", "F-PROJECT-", "F-EQUITY-", "F-CASH-")):

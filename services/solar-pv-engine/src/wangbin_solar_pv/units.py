@@ -235,6 +235,8 @@ def validate_datetime(value: str, *, timezone_required: bool = True) -> str:
     match = re.fullmatch(_DATETIME_PATTERN, value)
     if match is None:
         raise ContractError("DATETIME_INVALID")
+    if int(value[11:13]) > 23:
+        raise ContractError("DATETIME_INVALID")
     zone = match.group("zone")
     if (timezone_required and zone is None) or zone == "-00:00":
         raise ContractError("DATETIME_INVALID")
