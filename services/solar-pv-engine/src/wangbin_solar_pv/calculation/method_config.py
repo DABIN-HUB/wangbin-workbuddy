@@ -117,7 +117,21 @@ PARAMETERS = {
     "break_even.price_tolerance": _spec("number", "currency/kWh", "盈亏电价根区间宽度容差", "Break even price interval tolerance", "BREAK_EVEN_PRICE", exclusiveMinimum=0),
     "break_even.maximum_iterations": _spec("integer", "iteration", "盈亏平衡逐次全链重算次数上限", "Maximum full-chain break even iterations", "BREAK_EVEN_RESOURCES", minimum=1, maximum=10000),
     "prices.escalation_fraction": _spec("number", "1", "明确合同价格增长情景，不替代一般通胀或真实电价", "Explicit contractual price escalation scenario", "PRICE_YEAR", exclusiveMinimum=-1),
-    "consumption.load_repetition": _choice("负荷逐年给定或明确代表年情景；不声称真实年度自用", "Load year repetition method", "LOAD_YEAR", ["EXPLICIT_REPRESENTATIVE_SCENARIO", "YEAR_SPECIFIC", "NO_LOAD_GROUND"]),
+    "consumption.load_repetition": _choice("负荷逐年给定或明确代表年情景；不声称真实年度自用", "Load year repetition method", "LOAD_YEAR", ["EXPLICIT_REPRESENTATIVE_SCENARIO", "YEAR_SPECIFIC", "NO_LOAD_GROUND", "NO_LOAD_FULL_EXPORT"]),
+    "consumption.commercial_export_limit_kw": _spec("number", "kW", "本阶段商业可接受的外送功率上限；与3B物理交付约束分开，缺失不推定无限或零", "Explicit commercially accepted export power ceiling, separate from upstream physical delivery constraints", "COMMERCIAL_EXPORT", minimum=0),
+    "settlement.price_source": _choice("外售采用有效期价格表或同时间轴市场序列；不混用二者", "Export settlement price source", "PRICE_SOURCE", ["PERIOD_TABLE", "MARKET_SERIES"]),
+    "settlement.revenue_method": _choice("自持避免购电、投资方购电协议固定价/折扣或全额外售；不叠加双方收益", "Owner avoided purchase, investor Power Purchase Agreement fixed or discounted settlement, or export-only revenue", "REVENUE_PERSPECTIVE", ["OWNER_AVOIDED_COST", "PPA_FIXED", "PPA_DISCOUNT", "EXPORT_ONLY"]),
+    "settlement.currency": _spec("string", None, "可相加结算项的共同币种，必须等于项目币种；不隐含汇率换算", "Common additive settlement currency, equal to project currency without implicit foreign exchange", "ECONOMIC_BASIS", pattern="^[A-Z]{3}$"),
+    "settlement.price_year": _spec("integer", "year", "可相加结算项的共同基准价年，须与原金额信封一致", "Common price reference year consistent with original economic evidence", "ECONOMIC_BASIS", minimum=1900, maximum=2200),
+    "settlement.tax_basis": _choice("结算项共同含税或未税口径，混合口径拒绝相加；不是税款计算", "Common tax-inclusive or tax-exclusive settlement basis without calculating tax payments", "ECONOMIC_BASIS", ["inclusive", "exclusive"]),
+    "settlement.price_basis": _choice("结算项共同名义或实际价格口径，不自动作通胀转换", "Common nominal or real settlement prices without implicit inflation conversion", "ECONOMIC_BASIS", ["nominal", "real"]),
+    "settlement.fee_treatment": _choice("交易费单列扣减或已经包含在合同净价中；不重复扣费", "Separate transaction expense or fee already included in quoted net settlement price", "TRANSACTION_EXPENSE", ["SEPARATE_LEDGER", "ALREADY_IN_PRICE"]),
+    "settlement.negative_price_treatment": _choice("有合同和原始负价依据时按带符号单价结算，不擅自增加经济弃光策略", "Settle signed contract prices without inventing economic curtailment dispatch", "NEGATIVE_PRICE", ["SETTLE_SIGNED_CONTRACT_PRICE"]),
+    "settlement.ppa_discount_factor": _spec("number", "1", "有明确合同/情景来源的购电协议结算乘数：同段可避免购电单价乘本系数；不得与固定购电协议价混用", "Source-linked Power Purchase Agreement multiplier on the same-interval avoidable purchase price, exclusive of a fixed quoted agreement price", "PPA_SETTLEMENT", minimum=0, maximum=1),
+    "settlement.other_benefit_months": _spec("array", None, "按原其他收益row_id显式指定记入月份；不把只有年度的金额自动摊到每月", "Explicit month allocation by original other-benefit row identifier, without fabricated uniform monthly spreading", "OTHER_BENEFIT_ALLOCATION", maxItems=1000000, items={
+        "type": "object", "additionalProperties": False, "required": ["row_id", "month"],
+        "properties": {"row_id": {"type": "string", "minLength": 1, "maxLength": 96},
+                       "month": {"type": "integer", "minimum": 1, "maximum": 12}}}),
     "scenarios.relative_shocks": _spec("array", "1", "明确单因素相对扰动幅度，不内置默认正负百分比", "Explicit relative single factor sensitivity shocks", "SCENARIO_CONTROL", minItems=1, maxItems=50, items={"type": "number", "exclusiveMinimum": -1}),
 }
 

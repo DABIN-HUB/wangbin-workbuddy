@@ -46,6 +46,14 @@ def _parser():
     energy.add_argument("--budget", required=True, help="显式D3预算JSON")
     energy.add_argument("--bundle", help="已授权私有目录内的D3时序bundle")
     energy.add_argument("--output", required=True, help="新建的私有结果目录，不覆盖")
+    consumption = commands.add_parser("consumption", help="Phase3C消纳及售电收益；只消费已验证3B输出，不计算财务")
+    consumption.add_argument("--input", required=True, help="Phase2完整结算输入导出JSON")
+    consumption.add_argument("--methods", required=True, help="D2明确方法/假设配置JSON")
+    consumption.add_argument("--budget", required=True, help="显式D3预算JSON")
+    consumption.add_argument("--generation", required=True, help="workspace内已有3B结果目录")
+    consumption.add_argument("--generation-hash", required=True, help="调用方固定的3B结果内容SHA-256，不自动信任另一目录")
+    consumption.add_argument("--bundle", help="workspace内D3负荷/市场价时序目录")
+    consumption.add_argument("--output", required=True, help="新建私有结果目录，不覆盖")
     for command in ("submit", "revise", "resolve", "review", "remove", "accept"):
         examples = {
             "submit": '{"submission_id":"round1","updates":[{"field_id":"site.total_area","value":1000,"unit":"m2"}]}',
@@ -124,6 +132,29 @@ def main(argv=None):
         args = _parser().parse_args(argv)
         workspace = Workspace(args.workspace)
         catalog = Catalog(args.baseline_dir)
+        if args.command == "consumption":
+            from contextlib import nullcontext
+            from .timeseries_bundle import BundleBudget, read_bundle
+            from .calculation.revenue import calculate_rooftop, calculate_ground
+            from .calculation.method_config import MethodConfig
+            exported = workspace.read(args.input)[0]
+            methods = MethodConfig.from_dict(workspace.read(args.methods)[0])
+            budget_data = workspace.read(args.budget)[0]
+            if not isinstance(budget_data, dict):
+                raise ContractError("BUNDLE_BUDGET")
+            budget = BundleBudget(**budget_data)
+            pv_type = exported.get("project", {}).get("pv_type")
+            if pv_type not in {"industrial_rooftop", "utility_scale_ground"}:
+                raise ContractError("CONSUMPTION_CATEGORY_NOT_IMPLEMENTED")
+            calculate = calculate_rooftop if pv_type == "industrial_rooftop" else calculate_ground
+            context = read_bundle(workspace.path(args.bundle,json_only=False),catalog=catalog,budget=budget) if args.bundle else nullcontext(None)
+            with context as bundle:
+                result = calculate(exported,methods,catalog=catalog,budget=budget,bundle=bundle,
+                    generation_dir=workspace.path(args.generation,json_only=False),generation_result_hash=args.generation_hash,
+                    output_dir=workspace.path(args.output,json_only=False))
+            print(dumps({"status":result["status"],"result_hash":result["result_hash"],
+                "calculation_maturity":result["maturity"]["calculation"],"scope":"PHASE3C_CONSUMPTION_AND_ENERGY_BENEFIT_ONLY"}))
+            return 0
         if args.command == "energy":
             from contextlib import nullcontext
             from .timeseries_bundle import BundleBudget, read_bundle

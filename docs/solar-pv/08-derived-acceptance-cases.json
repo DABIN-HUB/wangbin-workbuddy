@@ -15509,9 +15509,9 @@
       "title": "时段自用电量",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "自用不超过发电或负荷；缺负荷返回 UNKNOWN，不以年总量虚构自用率。；非负、同区间 kWh；E_available 是同计量边界限发前电量，L 是同点可抵减负荷；本公式不充分描述含储能/跨区间净计量/不同电表边界。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_consumption_kernels.py",
+      "evidence": "reports/solar-pv/phase3c-formula-numerical-verification.json"
     },
     {
       "test_id": "T-EXPORTED-ENERGY",
@@ -15530,9 +15530,9 @@
       "title": "时段上网电量",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "上网不超过剩余发电和时段限额；屋顶自用模式与全额上网分类隔离。；非负、同区间 kWh；E_available 是同计量边界限发前电量，L 是同点可抵减负荷；本公式不充分描述含储能/跨区间净计量/不同电表边界。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_consumption_kernels.py",
+      "evidence": "reports/solar-pv/phase3c-formula-numerical-verification.json"
     },
     {
       "test_id": "T-CURTAILED-ENERGY",
@@ -15551,9 +15551,9 @@
       "title": "时段弃光限发电量",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "极端零上网/零负荷/足额消纳；非负能量守恒。；非负、同区间 kWh；E_available 是同计量边界限发前电量，L 是同点可抵减负荷；本公式不充分描述含储能/跨区间净计量/不同电表边界。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_consumption_kernels.py",
+      "evidence": "reports/solar-pv/phase3c-formula-numerical-verification.json"
     },
     {
       "test_id": "T-ENERGY-BALANCE",
@@ -15572,9 +15572,9 @@
       "title": "时段电量平衡残差",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "全部分项非负且残差闭合；不能只检查公式字符串。；非负、同区间 kWh；E_available 是同计量边界限发前电量，L 是同点可抵减负荷；本公式不充分描述含储能/跨区间净计量/不同电表边界。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_consumption_kernels.py",
+      "evidence": "reports/solar-pv/phase3c-formula-numerical-verification.json"
     },
     {
       "test_id": "T-DELIVERED-ENERGY",
@@ -15593,9 +15593,9 @@
       "title": "可利用交付电量",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "交付加限发等于可用年度量；与时段汇总独立复核。；用于 LCOE 的可利用边界；剔除弃光，不得用理论直流电量替代。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_consumption_kernels.py",
+      "evidence": "reports/solar-pv/phase3c-formula-numerical-verification.json"
     },
     {
       "test_id": "T-SELF-CONSUMPTION-RATIO",
@@ -15614,9 +15614,9 @@
       "title": "发电侧自用率",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "比率范围、分母零、无负荷 UNKNOWN；与负荷自给率区分。；明确分母为交付电量；另需限发前自用比例时须新 ID，不能混称；不是负荷自给率。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_consumption_kernels.py",
+      "evidence": "reports/solar-pv/phase3c-formula-numerical-verification.json"
     },
     {
       "test_id": "T-LOAD-COVERAGE-RATIO",
@@ -15635,9 +15635,9 @@
       "title": "负荷侧自给率",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "分母与自用率不同的对照、负荷覆盖率不超过一。；同一负荷表边界；不与发电侧自用率混用。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_consumption_kernels.py",
+      "evidence": "reports/solar-pv/phase3c-formula-numerical-verification.json"
     },
     {
       "test_id": "T-ENERGY-REVENUE",
@@ -15656,9 +15656,9 @@
       "title": "自持项目电量经济收益",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "自用与外售逐项复算；不变电价下发电下降不应增加电量收益；合法负电价不得静默归零。；自持自用节省属于项目经济收益但不是另一笔到账销售现金；进现金流时用避免支出法或增量收益法二选一。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_consumption_kernels.py",
+      "evidence": "reports/solar-pv/phase3c-formula-numerical-verification.json"
     },
     {
       "test_id": "T-PPA-REVENUE",
@@ -15677,9 +15677,9 @@
       "title": "第三方购售电合同收入",
       "method": "待对应Phase实现自动数值/结构或有记录人工验收；本记录只是冻结规格",
       "expected": "PPA 与自持方法互斥，投资方/用电方收益不串用，租金不重记。；从投资方视角；不得再加用电方避免购电收益。租金/收益分成/交易费另入相应费用。",
-      "status": "PLANNED",
-      "executor": null,
-      "evidence": null
+      "status": "PASS",
+      "executor": "tests/solar-pv/test_consumption_kernels.py",
+      "evidence": "reports/solar-pv/phase3c-formula-numerical-verification.json"
     },
     {
       "test_id": "T-TAX-EXCLUSIVE-AMOUNT",
