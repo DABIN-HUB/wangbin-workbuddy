@@ -9,7 +9,7 @@
 - 仓库：`F:\ideaWorkSpace\wangbin-workbuddy`
 - 起始 HEAD：`0e52ee7d58b8de84bd165426796adcdb295cc54f`
 - 当前报告生成时 HEAD（提交前）：`0e52ee7d58b8de84bd165426796adcdb295cc54f`
-- 本轮提交：最终验收文件完成后显式暂存并本地提交；不 push。
+- 本轮实现提交 SHA：`3f1484c`（本地提交，不 push）。
 - Phase 3E/3F/3G/Phase 4+：未开始。
 - 四个用户保留文件的既有工作区修改保留；未编辑、未暂存、未恢复、未清理。
 - 机器证据：`reports/solar-pv/phase3d-blocking-evidence.json`。
