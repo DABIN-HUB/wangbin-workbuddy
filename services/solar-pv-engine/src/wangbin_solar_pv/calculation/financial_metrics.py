@@ -117,6 +117,14 @@ def _series(value, field, *, ids=None, signed=True, length=None):
     return result
 
 
+def _aligned_series(values, fields, *, unsigned=()):
+    """Align labeled operands to the first operand's year labels."""
+    labeled = [isinstance(values[field], dict) for field in fields]
+    if any(labeled) and not all(labeled):
+        raise ContractError("INDEXED_VALUES_KEYS", fields[0])
+    ids = tuple(values[fields[0]]) if all(labeled) else None
+    return [_series(values[field], field, ids=ids, signed=field not in unsigned) for field in fields]
+
 def _n(values, field):
     n = integer(values[field], field, minimum=0, maximum=10000)
     return n
@@ -243,8 +251,12 @@ def _price_samples(value, field):
         raise ContractError("PRICE_SAMPLE_COUNT", field)
     pairs = sorted(zip(prices, vectors), key=lambda pair: pair[0])
     result = []
+    labeled = [isinstance(vector, dict) for _, vector in pairs]
+    if any(labeled) and not all(labeled):
+        raise ContractError("INDEXED_VALUES_KEYS", field)
+    ids = tuple(pairs[0][1]) if all(labeled) else None
     for price, vector in pairs:
-        result.append((price, _series(vector, field + ".cash_flows", signed=True)))
+        result.append((price, _series(vector, field + ".cash_flows", ids=ids, signed=True)))
     if len({price for price, _ in result}) != len(result):
         raise ContractError("DUPLICATE_PRICE_SAMPLE", field)
     length = len(result[0][1])
@@ -290,35 +302,28 @@ def _break_even(values, options):
 def _dispatch(formula_id, values, options):
     if formula_id == "F-PROJECT-CASH-FLOW":
         keys = ("finance.project_operating_cash_benefit", "opex.cash_annual", "tax.project_cash_total", "capex.unlevered_cash_annual", "working_capital.project_net_change", "finance.project_terminal_cash")
-        series = [_series(values[key], key) for key in keys]
+        series = _aligned_series(values, keys)
+        if len({len(item) for item in series}) != 1:
+            raise ContractError("PERIOD_VECTOR_LENGTH_MISMATCH", formula_id)
         return [sum(items, _ZERO) for items in zip(series[0], *[[-x for x in item] for item in series[1:5]], series[5])]
     if formula_id == "F-PROJECT-PRETAX-CASH-FLOW":
-        a = _series(values["finance.project_cash_flow"], "finance.project_cash_flow")
-        b = _series(values["tax.project_income_cash_paid"], "tax.project_income_cash_paid")
+        a, b = _aligned_series(values, ("finance.project_cash_flow", "tax.project_income_cash_paid"))
         if len(a) != len(b): raise ContractError("PERIOD_VECTOR_LENGTH_MISMATCH", formula_id)
         return [x + y for x, y in zip(a, b)]
     if formula_id == "F-EQUITY-AVAILABLE-CASH-FLOW":
-        benefit = _series(values["finance.project_operating_cash_benefit"], "finance.project_operating_cash_benefit")
-        subtract = [_series(values[key], key) for key in ("opex.cash_annual", "tax.equity_cash_total", "capex.equity_asset_cash_annual", "working_capital.equity_net_change")]
-        terminal = _series(values["finance.equity_terminal_cash"], "finance.equity_terminal_cash")
-        add = _series(values["debt.cash_drawdown"], "debt.cash_drawdown")
-        principal = _series(values["debt.principal_paid"], "debt.principal_paid")
-        interest = _series(values["debt.interest_paid"], "debt.interest_paid")
-        fees = _series(values["debt.finance_fees_paid"], "debt.finance_fees_paid")
+        keys = ("finance.project_operating_cash_benefit", "opex.cash_annual", "tax.equity_cash_total", "capex.equity_asset_cash_annual", "working_capital.equity_net_change", "finance.equity_terminal_cash", "debt.cash_drawdown", "debt.principal_paid", "debt.interest_paid", "debt.finance_fees_paid")
+        benefit, *parts = _aligned_series(values, keys)
+        subtract = parts[:4]
+        terminal, add, principal, interest, fees = parts[4:]
         all_series = [benefit, terminal, add, *subtract, principal, interest, fees]
         if len({len(x) for x in all_series}) != 1: raise ContractError("PERIOD_VECTOR_LENGTH_MISMATCH", formula_id)
         return [b - sum(x[i] for x in subtract) + terminal[i] + add[i] - principal[i] - interest[i] - fees[i] for i, b in enumerate(benefit)]
     if formula_id == "F-EQUITY-INVESTOR-CASH-FLOW":
-        d = _series(values["equity.distributions"], "equity.distributions")
-        e = _series(values["equity.exit_receipts"], "equity.exit_receipts")
-        c = _series(values["equity.contributions"], "equity.contributions")
+        d, e, c = _aligned_series(values, ("equity.distributions", "equity.exit_receipts", "equity.contributions"))
         if len({len(d), len(e), len(c)}) != 1: raise ContractError("PERIOD_VECTOR_LENGTH_MISMATCH", formula_id)
         return [x + y - z for x, y, z in zip(d, e, c)]
     if formula_id == "F-CASH-FUNDING-BALANCE":
-        opening = _series(values["checks.cash_opening"], "checks.cash_opening", signed=False)
-        available = _series(values["finance.equity_available_cash_flow"], "finance.equity_available_cash_flow")
-        contributions = _series(values["equity.contributions"], "equity.contributions")
-        distributions = _series(values["equity.distributions"], "equity.distributions", signed=False)
+        opening, available, contributions, distributions = _aligned_series(values, ("checks.cash_opening", "finance.equity_available_cash_flow", "equity.contributions", "equity.distributions"), unsigned=("checks.cash_opening", "equity.distributions"))
         if len({len(opening), len(available), len(contributions), len(distributions)}) != 1: raise ContractError("PERIOD_VECTOR_LENGTH_MISMATCH", formula_id)
         closing = []
         balance = None
@@ -332,8 +337,8 @@ def _dispatch(formula_id, values, options):
         return _npv(_series(values["finance.selected_cash_flow"], "finance.selected_cash_flow", length=n + 1), values["finance.selected_discount_rate"])
     if formula_id == "F-DATED-NPV":
         ids = _ids(values["finance.cash_event_ids"], "finance.cash_event_ids")
-        cash = _series(values["finance.dated_cash_flows"], "finance.dated_cash_flows", ids=ids)
-        tau = _series(values["finance.cash_event_year_fraction"], "finance.cash_event_year_fraction", ids=ids, signed=False)
+        cash = _series(values["finance.dated_cash_flows"], "finance.dated_cash_flows", ids=ids, length=len(ids))
+        tau = _series(values["finance.cash_event_year_fraction"], "finance.cash_event_year_fraction", ids=ids, signed=False, length=len(ids))
         rate = _rate(values["finance.selected_discount_rate"], "finance.selected_discount_rate")
         return sum((amount / ((_ONE + rate) ** year_fraction) for amount, year_fraction in zip(cash, tau)), _ZERO)
     if formula_id == "F-NOMINAL-REAL-RATE":
@@ -348,9 +353,10 @@ def _dispatch(formula_id, values, options):
         return result
     if formula_id == "F-STATIC-PAYBACK":
         n = integer(values["finance.first_recovery_year"], "finance.first_recovery_year", minimum=1)
-        _n(values, "time.financial_end_year")
+        horizon = _n(values, "time.financial_end_year")
         prior = number(values["finance.pre_recovery_cumulative_cash"], "finance.pre_recovery_cumulative_cash")
         current = number(values["finance.recovery_year_cash_flow"], "finance.recovery_year_cash_flow")
+        if n > horizon or prior + current < 0: return nonvalue("UNDEFINED", "NOT_RECOVERED_WITHIN_HORIZON")
         if prior >= 0 or current <= 0: return nonvalue("UNDEFINED", "INVALID_RECOVERY_CROSSING")
         return n - 1 + (-prior / current)
     if formula_id == "F-DISCOUNTED-CUMULATIVE-CASH":
@@ -360,29 +366,31 @@ def _dispatch(formula_id, values, options):
         return result
     if formula_id == "F-DYNAMIC-PAYBACK":
         n = integer(values["finance.first_discounted_recovery_year"], "finance.first_discounted_recovery_year", minimum=1)
-        _n(values, "time.financial_end_year")
+        horizon = _n(values, "time.financial_end_year")
         prior = number(values["finance.pre_discounted_recovery_cumulative"], "finance.pre_discounted_recovery_cumulative")
         current = number(values["finance.discounted_recovery_year_cash_flow"], "finance.discounted_recovery_year_cash_flow")
         rate = _rate(values["finance.selected_discount_rate"], "finance.selected_discount_rate")
         if prior >= 0 or current <= 0: return nonvalue("UNDEFINED", "INVALID_RECOVERY_CROSSING")
         discounted = current / ((_ONE + rate) ** n)
+        if n > horizon or prior + discounted < 0: return nonvalue("UNDEFINED", "NOT_RECOVERED_WITHIN_HORIZON")
         if discounted <= 0: return nonvalue("UNDEFINED", "ZERO_DISCOUNTED_RECOVERY_FLOW")
         return n - 1 + (-prior / discounted)
     if formula_id == "F-LIFECYCLE-COST":
-        series = [_series(values[key], key) for key in _REQUIRED[formula_id]]
+        series = _aligned_series(values, _REQUIRED[formula_id])
         if len({len(x) for x in series}) != 1: raise ContractError("PERIOD_VECTOR_LENGTH_MISMATCH", formula_id)
         return [a + b + c + d - e - f for a, b, c, d, e, f in zip(*series)]
     if formula_id == "F-LCOE":
-        n = _n(values, "time.financial_end_year"); costs = _series(values["lcoe.project_cost_annual"], "lcoe.project_cost_annual", length=n + 1); energy = _series(values["energy.delivered_annual_kwh"], "energy.delivered_annual_kwh", signed=False, length=n + 1); rate = values["lcoe.discount_rate"]
+        n = _n(values, "time.financial_end_year"); costs, energy = _aligned_series(values, ("lcoe.project_cost_annual", "energy.delivered_annual_kwh"), unsigned=("energy.delivered_annual_kwh",)); rate = values["lcoe.discount_rate"]
+        if len(costs) != n + 1 or len(energy) != n + 1: raise ContractError("PERIOD_VECTOR_LENGTH_MISMATCH", formula_id)
         numerator = _discounted(costs, rate); denominator = _discounted(energy, rate)
         if denominator == 0: return nonvalue("UNDEFINED", "ZERO_DELIVERY")
         return numerator / denominator
     if formula_id == "F-CFADS":
-        series = [_series(values[key], key) for key in _REQUIRED[formula_id]]
+        series = _aligned_series(values, _REQUIRED[formula_id])
         if len({len(x) for x in series}) != 1: raise ContractError("PERIOD_VECTOR_LENGTH_MISMATCH", formula_id)
         return [a - b - c - d - e + f for a, b, c, d, e, f in zip(*series)]
     if formula_id == "F-DSCR":
-        cfads = _series(values["debt.cfads"], "debt.cfads"); service = _series(values["debt.service_due"], "debt.service_due", signed=False)
+        cfads, service = _aligned_series(values, ("debt.cfads", "debt.service_due"), unsigned=("debt.service_due",))
         if len(cfads) != len(service): raise ContractError("PERIOD_VECTOR_LENGTH_MISMATCH", formula_id)
         if all(item == 0 for item in service): return nonvalue("UNDEFINED", "ZERO_DEBT_SERVICE")
         if any(item == 0 for item in service): return nonvalue("UNDEFINED", "ZERO_DEBT_SERVICE", details={"zero_service_periods": [i for i, item in enumerate(service) if item == 0]})
@@ -392,7 +400,7 @@ def _dispatch(formula_id, values, options):
     if formula_id == "F-WORST-CASH-YEAR":
         scope = _ids(values["risk.cash_year_scope"], "risk.cash_year_scope")
         cash = _series(values["finance.selected_cash_flow"], "finance.selected_cash_flow", ids=scope)
-        minimum = min(cash); return [index for index, value in enumerate(cash) if value == minimum]
+        minimum = min(cash); return [scope[index] for index, value in enumerate(cash) if value == minimum]
     if formula_id == "F-INVESTMENT-HURDLE-GAP":
         return number(values["decision.calculated_metric"], "decision.calculated_metric") - number(values["decision.target_metric"], "decision.target_metric")
     raise ContractError("UNKNOWN_FORMULA", formula_id)

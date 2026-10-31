@@ -20,6 +20,7 @@ _BOUNDARY = "PHASE3E_FINANCIAL_EVALUATION"
 
 
 def _metric(result, catalog, metric_id, formula_id, value, unit, period, *, status="CALCULATED", reason=None, details=None):
+    unit = catalog.formulas[formula_id].get("unit", unit)
     result["results"]["metrics"].append({
         "metric_id": metric_id, "value": value, "unit": unit, "status": status,
         "reason": reason, "boundary_id": _BOUNDARY, "period": period,
@@ -53,22 +54,42 @@ def _record(result, catalog, metric_id, formula_id, values, unit, period, *, opt
 
 def _ledger_vectors(annual):
     rows = annual[1:]
-    benefit = [Decimal(0)] + [row["revenue_cash_receipts"] + row["self_use_avoided_expenditure"] for row in rows]
-    opex = [Decimal(0)] + [row["opex_cash_paid"] for row in rows]
-    project_tax = [Decimal(0)] + [row["cash_tax_total_project"] for row in rows]
-    equity_tax = [Decimal(0)] + [row["cash_tax_total_equity"] for row in rows]
-    capex = [row["capex_cash_paid"] for row in annual]
-    working_capital = [row.get("working_capital_increase", Decimal(0)) - row.get("working_capital_release", Decimal(0)) for row in annual]
-    debt_drawdown = [row.get("debt_drawdown", Decimal(0)) for row in annual]
-    principal = [row.get("principal_paid", Decimal(0)) for row in annual]
-    interest = [row.get("interest_paid", Decimal(0)) for row in annual]
-    fees = [Decimal(0)] * len(annual)
-    debt_service = [row.get("debt_service_due", Decimal(0)) for row in rows]
+    missing = {}
+
+    def required(rows_, key):
+        absent = [row.get("period", str(index)) for index, row in enumerate(rows_) if key not in row]
+        if absent:
+            missing[key] = absent
+            return None
+        return [row[key] for row in rows_]
+
+    receipts = required(rows, "revenue_cash_receipts")
+    avoided = required(rows, "self_use_avoided_expenditure")
+    benefit = None if receipts is None or avoided is None else [Decimal(0)] + [a + b for a, b in zip(receipts, avoided)]
+    opex_rows = required(rows, "opex_cash_paid")
+    opex = None if opex_rows is None else [Decimal(0)] + opex_rows
+    project_tax_rows = required(rows, "cash_tax_total_project")
+    project_tax = None if project_tax_rows is None else [Decimal(0)] + project_tax_rows
+    equity_tax_rows = required(rows, "cash_tax_total_equity")
+    equity_tax = None if equity_tax_rows is None else [Decimal(0)] + equity_tax_rows
+    capex = required(annual, "capex_cash_paid")
+    wc_increase = required(annual, "working_capital_increase")
+    # The Phase 3D construction row records the initial occupation only;
+    # release is a sourced operating-year event in that ledger's contract.
+    operating_release = required(rows, "working_capital_release")
+    wc_release = None if operating_release is None else [Decimal(0)] + operating_release
+    working_capital = None if wc_increase is None or wc_release is None else [a - b for a, b in zip(wc_increase, wc_release)]
+    debt_drawdown = required(annual, "debt_drawdown")
+    principal = required(annual, "principal_paid")
+    interest = required(annual, "interest_paid")
+    fees = required(annual, "finance_fees_paid")
+    debt_service = required(rows, "debt_service_due")
     return {
         "benefit": benefit, "opex": opex, "project_tax": project_tax,
         "equity_tax": equity_tax, "capex": capex, "working_capital": working_capital,
         "debt_drawdown": debt_drawdown, "principal": principal,
         "interest": interest, "fees": fees, "debt_service": debt_service,
+        "missing": missing,
     }
 
 
@@ -113,7 +134,8 @@ def calculate_phase3e(financial_result, methods, catalog):
     # The explicit Phase 3D ledger contains no sourced terminal asset cash
     # realization.  Keep all formulas that depend on it blocked rather than
     # silently treating residual book values as cash.
-    terminal_missing = {"missing_field_ids": ["finance.project_terminal_cash"], "policy": "NO_DEFAULT_ZERO"}
+    project_ledger_fields = {"revenue_cash_receipts", "self_use_avoided_expenditure", "opex_cash_paid", "cash_tax_total_project", "capex_cash_paid", "working_capital_increase", "working_capital_release"}
+    terminal_missing = {"missing_field_ids": ["finance.project_terminal_cash", *sorted(project_ledger_fields & vectors["missing"].keys())], "policy": "NO_DEFAULT_ZERO"}
     project_values = {
         "finance.project_operating_cash_benefit": vectors["benefit"],
         "opex.cash_annual": vectors["opex"],
@@ -128,27 +150,40 @@ def calculate_phase3e(financial_result, methods, catalog):
 
     # A nominal/real bridge is independent of project terminal evidence.
     normalized = result["inputs"].get("normalized", {})
-    if "finance.project_discount_rate" in normalized and "finance.inflation_rate" in normalized:
+    if "finance.real_discount_rate" in normalized and "finance.general_inflation" in normalized:
         _record(result, catalog, "financial.phase3e.nominal_discount_rate", "F-NOMINAL-REAL-RATE", {
-            "finance.real_discount_rate": normalized["finance.project_discount_rate"],
-            "finance.general_inflation": normalized["finance.inflation_rate"],
+            "finance.real_discount_rate": normalized["finance.real_discount_rate"],
+            "finance.general_inflation": normalized["finance.general_inflation"],
         }, "1", "LIFECYCLE")
     else:
-        _record(result, catalog, "financial.phase3e.nominal_discount_rate", "F-NOMINAL-REAL-RATE", {}, "1", "LIFECYCLE", blocked_reason="BLOCKED_MISSING_INPUT", blocked_details={"missing_field_ids": ["finance.project_discount_rate", "finance.inflation_rate"]})
+        _record(result, catalog, "financial.phase3e.nominal_discount_rate", "F-NOMINAL-REAL-RATE", {}, "1", "LIFECYCLE", blocked_reason="BLOCKED_MISSING_INPUT", blocked_details={"missing_field_ids": ["finance.real_discount_rate", "finance.general_inflation"]})
 
-    # CFADS is a declared synthetic method scenario.  Mandatory operating
-    # capex is limited to operating-year payments; construction is outside the
-    # debt-service period.  No debt service is deducted from CFADS itself.
-    cfads_values = {
-        "finance.project_operating_cash_benefit": vectors["benefit"][1:],
-        "opex.cash_annual": vectors["opex"][1:],
-        "tax.equity_cash_total": vectors["equity_tax"][1:],
-        "debt.cfads_working_capital_change": vectors["working_capital"][1:],
-        "debt.cfads_mandatory_capex": vectors["capex"][1:],
-        "debt.cfads_adjustments": [Decimal(0)] * (len(annual) - 1),
-    }
-    cfads = _record(result, catalog, "financial.phase3e.cfads", "F-CFADS", cfads_values, "CNY", "OPERATING_YEARS")
-    if cfads["status"] == "CALCULATED":
+    # A configured CFADS method does not itself source the protocol's cash
+    # adjustments.  Never treat the absent adjustment vector as zero.
+    method_data = methods.to_dict() if hasattr(methods, "to_dict") else methods
+    method_parameters = method_data.get("parameters", {}) if isinstance(method_data, dict) else {}
+    cfads_missing = []
+    definition = normalized.get("finance.cfads_definition")
+    method = method_parameters.get("cfads.method", {}).get("value")
+    if not definition:
+        cfads_missing.append("finance.cfads_definition")
+    if not method or definition != method:
+        cfads_missing.append("cfads.method")
+    adjustments = result.get("evidence", {}).get("financial-ledger", {}).get("cfads_adjustments")
+    if adjustments is None:
+        cfads_missing.append("debt.cfads_adjustments")
+    cfads_vectors = {"finance.project_operating_cash_benefit": vectors["benefit"][1:] if vectors["benefit"] is not None else None,
+                     "opex.cash_annual": vectors["opex"][1:] if vectors["opex"] is not None else None,
+                     "tax.equity_cash_total": vectors["equity_tax"][1:] if vectors["equity_tax"] is not None else None,
+                     "debt.cfads_working_capital_change": vectors["working_capital"][1:] if vectors["working_capital"] is not None else None,
+                     "debt.cfads_mandatory_capex": vectors["capex"][1:] if vectors["capex"] is not None else None,
+                     "debt.cfads_adjustments": adjustments}
+    cfads = _record(result, catalog, "financial.phase3e.cfads", "F-CFADS", cfads_vectors, "CNY", "OPERATING_YEARS",
+                    blocked_reason="BLOCKED_MISSING_INPUT" if cfads_missing else None,
+                    blocked_details={"missing_field_ids": cfads_missing} if cfads_missing else None)
+    if vectors["debt_service"] is not None and any(value == 0 for value in vectors["debt_service"]):
+        _metric(result, catalog, "financial.phase3e.dscr", "F-DSCR", None, "1", "OPERATING_YEARS", status="UNDEFINED", reason="ZERO_DEBT_SERVICE", details={"zero_service_periods": [annual[index + 1]["period"] for index, value in enumerate(vectors["debt_service"]) if value == 0]})
+    elif cfads["status"] == "CALCULATED":
         _record(result, catalog, "financial.phase3e.dscr", "F-DSCR", {"debt.cfads": cfads["value"], "debt.service_due": vectors["debt_service"]}, "1", "OPERATING_YEARS")
     else:
         _record(result, catalog, "financial.phase3e.dscr", "F-DSCR", {}, "1", "OPERATING_YEARS", blocked_reason="BLOCKED_UPSTREAM_CFADS", blocked_details={"upstream_formula_id": "F-CFADS"})

@@ -3,6 +3,7 @@ from decimal import Decimal, localcontext
 
 import pytest
 
+from wangbin_solar_pv.errors import ContractError
 from wangbin_solar_pv.calculation.financial_metrics import FORMULA_IDS, evaluate
 
 D = Decimal
@@ -34,6 +35,25 @@ def test_all_remaining_formula_kernels_have_independent_normal_case():
     for formula_id, values in cases.items():
         result = evaluate(formula_id, values)
         assert result["status"] == "CALCULATED", (formula_id, result)
+
+
+def test_worst_cash_year_preserves_supplied_year_labels():
+    result = evaluate("F-WORST-CASH-YEAR", {
+        "finance.selected_cash_flow": {"construction": D("-100"), "year_1": D("20"), "year_2": D("-100")},
+        "risk.cash_year_scope": ["construction", "year_1", "year_2"],
+        "finance.cash_flow_basis": "PROJECT",
+    })
+    assert result["value"] == ["construction", "year_2"]
+
+
+def test_project_cash_flow_rejects_mismatched_period_vectors():
+    values = {
+        "finance.project_operating_cash_benefit": [D("1"), D("2")], "opex.cash_annual": [D("0")],
+        "tax.project_cash_total": [D("0"), D("0")], "capex.unlevered_cash_annual": [D("0"), D("0")],
+        "working_capital.project_net_change": [D("0"), D("0")], "finance.project_terminal_cash": [D("0"), D("0")],
+    }
+    with pytest.raises(ContractError):
+        evaluate("F-PROJECT-CASH-FLOW", values)
 
 
 def test_project_cash_flow_is_signed_and_does_not_round_early():
@@ -132,3 +152,52 @@ def test_missing_frozen_project_inputs_are_not_converted_to_zero(formula_id):
     assert result["status"] == "BLOCKED_MISSING_INPUT"
     assert result["value"] is None
     assert result["reason"] == "BLOCKED_MISSING_INPUT"
+
+
+def test_dated_npv_does_not_omit_a_cash_event_when_vectors_are_short():
+    values = {
+        "finance.dated_cash_flows": [D("100")],
+        "finance.selected_discount_rate": D("0"),
+        "finance.cash_event_year_fraction": [D("0"), D("1")],
+        "finance.cash_event_ids": ["event_0", "event_1"],
+        "finance.cash_flow_basis": "PROJECT",
+    }
+    with pytest.raises(ContractError):
+        evaluate("F-DATED-NPV", values)
+
+
+@pytest.mark.parametrize("formula_id,year_field,prior_field,cash_field", [
+    ("F-STATIC-PAYBACK", "finance.first_recovery_year", "finance.pre_recovery_cumulative_cash", "finance.recovery_year_cash_flow"),
+    ("F-DYNAMIC-PAYBACK", "finance.first_discounted_recovery_year", "finance.pre_discounted_recovery_cumulative", "finance.discounted_recovery_year_cash_flow"),
+])
+def test_payback_must_recover_within_horizon(formula_id, year_field, prior_field, cash_field):
+    values = {year_field: 3, prior_field: D("-100"), cash_field: D("10"),
+              "finance.cash_flow_basis": "PROJECT", "time.financial_end_year": 2}
+    if formula_id == "F-DYNAMIC-PAYBACK":
+        values["finance.selected_discount_rate"] = D("0")
+    result = evaluate(formula_id, values)
+    assert result["status"] == "UNDEFINED"
+    assert result["reason"] == "NOT_RECOVERED_WITHIN_HORIZON"
+
+
+def test_project_cash_flow_aligns_labeled_years_regardless_of_mapping_order():
+    values = {
+        "finance.project_operating_cash_benefit": {"year_0": D("100"), "year_1": D("200")},
+        "opex.cash_annual": {"year_1": D("10"), "year_0": D("1")},
+        "tax.project_cash_total": {"year_0": D("0"), "year_1": D("0")},
+        "capex.unlevered_cash_annual": {"year_0": D("0"), "year_1": D("0")},
+        "working_capital.project_net_change": {"year_0": D("0"), "year_1": D("0")},
+        "finance.project_terminal_cash": {"year_0": D("0"), "year_1": D("0")},
+    }
+    assert evaluate("F-PROJECT-CASH-FLOW", values)["value"] == [D("99"), D("190")]
+
+
+def test_construction_working_capital_does_not_require_a_release_field():
+    from wangbin_solar_pv.calculation.phase3e import _ledger_vectors
+
+    vectors = _ledger_vectors([
+        {"period": "CONSTRUCTION", "working_capital_increase": D("50")},
+        {"period": "OPERATING_YEAR_1", "working_capital_increase": D("0"), "working_capital_release": D("50")},
+    ])
+    assert vectors["working_capital"] == [D("50"), D("-50")]
+    assert "working_capital_release" not in vectors["missing"]
