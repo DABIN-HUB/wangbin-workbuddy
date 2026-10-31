@@ -1,0 +1,61 @@
+{
+  "scope": "Phase 3E IRR repeated roots and break-even full recomputation only",
+  "starting_head": "2a7ad0adcd8182302ab63b9651385d52dc55eb24",
+  "irr_commit": "49faaac4dddf920fc0be7120fddd3c5f11726d72",
+  "definition_version": "solar-pv-formula-definitions/1.0.1",
+  "definition_hash": "617a2e9d314c095bd2ec893939c930a2323be6fd7805da12bf6d6fdd70274808",
+  "source_sha256": {
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py": "861fd39468ed1676ddfd09456d9466c3ed6c85739e96aa568d5c613a340c3c94",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py": "220c6e187d46cf9f47b4f15bd8dc85b69a6527771634256921a61cde67d9c94b",
+    "tests/solar-pv/test_phase3e_irr_roots.py": "686d9fdfb227b3b142f7b832006fe1f5edb60a919cb4a42f3f870a5dfcea7046"
+  },
+  "irr": {
+    "status": "PASS",
+    "frozen_method": "EXACT_RATIONAL_POLYNOMIAL_ISOLATION",
+    "implementation": "Exact Fraction coefficients of P(x)=sum(CF_y*x^(N-y)), x=1+r>0; polynomial GCD and square-free reduction; Sturm sign-variation count; bounded rational interval isolation and residual verification in the original Decimal NPV equation; no sampling-based uniqueness claim",
+    "complete_if": "Degree at most 100, finite decimal cash flows and valid bounded domain, rational Sturm calculation completes within 10000 interval-isolation steps and 8192 refinements per root, Decimal residual within scaled tolerance; otherwise returns nonconvergent/unexhausted instead of a false unique root",
+    "independent_factor_cases": [
+      {"cash_flows": ["-100", "220", "-121"], "factorization": "-100*(x-1.1)^2", "domain_rates": ["-0.5", "2"], "expected_distinct_roots": ["0.1"], "observed_status": "CALCULATED", "observed_root": "0.10000000000000000000024352197233561134748214271894539706408977508544921875", "observed_npv_residual": "-4.901070331423657722435204839828813734E-42"},
+      {"cash_flows": ["-100", "230", "-132"], "factorization": "-100*(x-1.1)*(x-1.2)", "domain_rates": ["-0.5", "2"], "expected_distinct_roots": ["0.1", "0.2"], "observed_status": "UNDEFINED", "observed_reason": "MULTIPLE_ROOTS", "observed_roots": ["0.10000000000000000000024352197233561134748214271894539706408977508544921875", "0.19999999999999999999979882967502710366947127340608858503401279449462890625"]},
+      {"cash_flows": ["-100", "220", "-121.00000000000000000001"], "domain_rates": ["-0.5", "2"], "expected_distinct_roots": [], "observed_status": "UNDEFINED", "observed_reason": "NO_ROOT"}
+    ],
+    "focused_command": "python -m pytest tests/solar-pv/test_phase3e_irr_roots.py tests/solar-pv/test_phase3e_financial_metrics.py -q --tb=short",
+    "focused_exit_code": 0,
+    "focused_passed": 34,
+    "focused_failed": 0
+  },
+  "break_even": {
+    "status": "BLOCKED_PENDING_APPROVED_PRICE_SELECTOR_AND_COMPLETE_CHAIN_INPUTS",
+    "frozen_formula": "P_star = {p in P : NPV_b(CF_b(p), r_b) = 0}",
+    "frozen_basis": "docs/solar-pv/05-formula-registry.md:3290-3336",
+    "root_cause": "The existing sample-vector kernel interpolates two cash-flow samples instead of invoking the selected tariff through Phase 3C settlement and Phase 3D tax/receipt/cash ledgers. D2 has approved price bounds/method/tolerance/budget but no source-bound selector for a specific price field and tariff row. The two sealed projects have no sourced terminal cash flow for the target NPV; a complete Phase 3C replay also needs its protected generation/bundle evidence.",
+    "demonstrated_legacy_sample": {"prices": ["0", "10"], "one_period_cash_flows": ["-1e-20", "9e-20"], "independent_affine_root": "1", "old_kernel_returned_price": "5", "old_kernel_residual_at_returned_price": "4E-20", "method_reported_by_old_kernel": "PIECEWISE_AFFINE_SAMPLE_INTERPOLATION", "limitation": "This is only a simple mathematical reproduction; it is not an independently re-executed full tax or settlement chain."},
+    "project_formula_status_unchanged": "BLOCKED_MISSING_INPUT",
+    "implementation_attempted": false,
+    "method_schema_changed": false,
+    "approval_required": "A sourced and canonical-hashed selection of exactly which existing settlement price field/row/series changes, and an approved legal way to replay its generation/bundle provenance for a full scenario; do not invent a new D2 parameter, alter frozen schemas, treat a time-of-use multiplier as the same output, or invent terminal cash."
+  },
+  "projects": {
+    "industrial_rooftop": {"periods": 26, "CALCULATED": 0, "UNDEFINED": 1, "BLOCKED_MISSING_INPUT": 20, "same_source_cli_api_hash": "332a952e523758a9806f6ed0bb42bcda197adad2c2561bab68c19d15c7e5bf60", "payment_coverage": "INDETERMINATE"},
+    "utility_scale_ground": {"periods": 26, "CALCULATED": 0, "UNDEFINED": 1, "BLOCKED_MISSING_INPUT": 20, "same_source_cli_api_hash": "a95974ebac355493eba5b5674462ce45ad87dbe7d7de8bad96ff1a451519723d", "payment_coverage": "INDETERMINATE"}
+  },
+  "full_solar": {"status": "PASS", "started_at": "2026-10-31T13:01:06+0800", "ended_at": "2026-10-31T14:32:36+0800", "source_head": "49faaac4dddf920fc0be7120fddd3c5f11726d72", "command": "python -m pytest tests/solar-pv -q --junitxml=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/phase3e-numerical-solar.xml", "collected_unique_ids": 4109, "executed_unique_ids": 4109, "missing_ids": 0, "duplicate_ids": 0, "exit_code": 0, "passed": 4103, "failed": 0, "errors": 0, "skipped_windows_symlink": 6, "junit_xml": "reports/solar-pv/phase3e-numerical-blockers-repair-solar-junit.xml", "test_ids": "reports/solar-pv/phase3e-numerical-blockers-repair-solar-ids.txt"},
+  "workbuddy": {"status": "PASS", "command": "python -m pytest tests --ignore=tests/solar-pv -q --junitxml=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/phase3e-numerical-workbuddy.xml", "collected_unique_ids": 114, "executed_unique_ids": 114, "missing_ids": 0, "duplicate_ids": 0, "exit_code": 0, "passed": 109, "failed": 0, "errors": 0, "skipped_windows_symlink": 5, "junit_xml": "reports/solar-pv/phase3e-numerical-blockers-repair-workbuddy-junit.xml", "test_ids": "reports/solar-pv/phase3e-numerical-blockers-repair-workbuddy-ids.txt"},
+  "artifact_sha256": {
+    "reports/solar-pv/phase3e-numerical-blockers-repair-solar-junit.xml": "6861d16b438985fafa7475d568a37ea3c87508c1a54140e829fcd40fd28566ef",
+    "reports/solar-pv/phase3e-numerical-blockers-repair-solar-ids.txt": "b1302c4c82f3b14e0653c840d38fbdce1c18d5d625913bea2e7e369feae960d9",
+    "reports/solar-pv/phase3e-numerical-blockers-repair-workbuddy-junit.xml": "ce0e29e2ea09eb06352cc45e46669c7363baca9e3833cca7f1f74ca0ca82ab9f",
+    "reports/solar-pv/phase3e-numerical-blockers-repair-workbuddy-ids.txt": "b71969bde057e5d37bd4122a2da3ef1b9681e16468f029efdcb8381bdbfcb449"
+  },
+  "protected_file_sha256_before": {
+    "packages/skills/wangbin-receivable-analyzer/SKILL.md": "8a5ee4eb54a4f6a08d3ab7cccf792c12d5f01ab3fb4ab0de8dc926149087a945",
+    "packages/skills/wangbin-receivable-analyzer/manifest.json": "0a9459ab33f0f3bbc1c538535b994218e6ad92792901a39c3e4e94eaf777762b",
+    "products/catalog.json": "d74f3fa9f00184ee64f8452862958c3ef11f7848378ed42657e4b5fbc91def27",
+    "reports/workbuddy-upload-list.md": "6d0df16f21a4cf7a3a87eef1b90fb2f7d26fd1457f124066707281f9ff0ec586",
+    "reports/validate.json": "42765dae553254369311f3d4e7d2d3ab6f3cf0f8858a1c0e587debfea809d1ba",
+    "reports/validate.md": "2c3f7cd41671f2af1cd9f5688ae4e3779d92390260cdb43299457bcedb2060e3"
+  },
+  "protected_288_baseline": {"matched": 286, "preexisting_differences": ["reports/validate.json", "reports/validate.md"], "missing": 0},
+  "protected_six_after_match_before": true,
+  "final_phase3e": "PARTIAL/BLOCKED"
+}
