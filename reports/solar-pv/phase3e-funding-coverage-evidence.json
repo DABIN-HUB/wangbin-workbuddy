@@ -1,0 +1,3055 @@
+{
+  "schema_version": "phase3e-funding-coverage-audit/1.0.0",
+  "audit_scope": "sealed synthetic annual cash movements; not a bank balance or disbursement-time proof",
+  "git_head": "6823f740b9d34647a13c5cdc874d90a23e0bcd7e",
+  "input_raw_sha256": {
+    "docs/solar-pv/README.md": "95e8f4625bc66d3cde733619ba5d76b8d5cba438257740d4cb7dcd0c9151b853",
+    "docs/solar-pv/17-phase3-implementation-plan.md": "94ec602f8c118905e0bf5fbe97c2e9cf91d3446165debe1f408cbcbe4bac6d08",
+    "docs/solar-pv/18-phase3-preimplementation-review.md": "1f0ceb81dfe925a8501879252b9ebe5a71d35774fc71b390c3338b9464cd2868",
+    "docs/solar-pv/19-phase3-approved-implementation-contract.md": "68f2551dce001360972fe94dd562539e967dc1891ae17bc9fb98898ccc4495b4",
+    "docs/solar-pv/05-formulas.json": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331",
+    "docs/solar-pv/05-field-bindings.json": "4ef6171f063f402963d61edc9647c7565c9ec9338099f62424a77e3507521533",
+    "docs/solar-pv/08-requirement-traceability.csv": "80678b46ed84e1935fbca04fcb10662e01dc8af4c0d1f616743c5855498203b4",
+    "reports/solar-pv/phase3d-review-and-acceptance.md": "0d01fbfd7a50158fca79a70cdb009492653c9fbae8bc6991b17a4379d7d88962",
+    "reports/solar-pv/phase3d-repair-and-acceptance.md": "1a4e892596befef1392eb4723fcda36ddebe66595805c149477db314ed0b6317",
+    "reports/solar-pv/phase3e-review-and-acceptance.md": "43b2c1af1d4a804329449fc38a423c29721782b6877d299ce2bfeac8f886844d",
+    "reports/solar-pv/phase3c-startup-state.json": "26fdade64ab3f1f23a51850afa3ce068f3ebfc026b22f30e3a06e31a76732a4d",
+    "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/input.json": "7b08b2b12e9b8a57b4848a73b9c3b68d8881f9305cd796e773a16b3699ba743f",
+    "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/methods.json": "3b33541d440b847187cc1886e27789a167a91cdab5e410b89aed22e3f303d8f5",
+    "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/result.json": "53d3c0cded618566bbce1d8e51fa4e0be91d84609f7bf907010a93cf3acb182e",
+    "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/result.sha256": "25910b71a3a21b1e77ccd743d992eae727eaf2a42f2c65e61cff903687836918",
+    "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/independent-reference.json": "c8a97d9c36b7783924ff7e72d18ba0bb1792402469958225b5823db1fcbdee94",
+    "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/acceptance.json": "3cec0a01677e33929af25da478aff83211bd91402c17f801a3e67f3a624daf1e",
+    "reports/solar-pv/phase3d-cases/industrial_rooftop/settlement.json": "b1fe5fc07ee5c3e6a99e19bf54132ca1be35ac7e3617c7069769037988690505",
+    "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/input.json": "dce65dc6808321a1267d9deb03737f2eeeddd7ac942cd96f2af5783d879a583f",
+    "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/methods.json": "a3d04cd0f14d7c6678ef739dc494c16357a8e766a792a7d0c5f7d6b85c90c5f8",
+    "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/result.json": "99e7b2ae90a28dc07e6c6effbc9bdca9e0aa1c8226efcd10b357e988b4dfd9bb",
+    "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/result.sha256": "04f0a87bce822538c0ef294b78852fb8ab17dbda1b7bf2b82488f3385bc0b685",
+    "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/independent-reference.json": "ffcc13be888fbb745a1afdbfab28002a08ad9e7d7b374933c9fb1a7f04da060a",
+    "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/acceptance.json": "74d0e4817f179c515c22bdd772c3037900a7fca35d9a0c9e2cab5b1f2dd73009",
+    "reports/solar-pv/phase3d-cases/utility_scale_ground/settlement.json": "e3ab017f0562e1badc59e8ee510cce75764f088364c4ed57881dab20dcbb3c53"
+  },
+  "protected_288": {
+    "count": 288,
+    "baseline_matches": 286,
+    "preexisting_deviations": [
+      "reports/validate.json",
+      "reports/validate.md"
+    ],
+    "missing": []
+  },
+  "six_preserved": {
+    "packages/skills/wangbin-receivable-analyzer/SKILL.md": {
+      "startup_sha256": "8a5ee4eb54a4f6a08d3ab7cccf792c12d5f01ab3fb4ab0de8dc926149087a945",
+      "audit_sha256": "8a5ee4eb54a4f6a08d3ab7cccf792c12d5f01ab3fb4ab0de8dc926149087a945",
+      "unchanged": true
+    },
+    "packages/skills/wangbin-receivable-analyzer/manifest.json": {
+      "startup_sha256": "0a9459ab33f0f3bbc1c538535b994218e6ad92792901a39c3e4e94eaf777762b",
+      "audit_sha256": "0a9459ab33f0f3bbc1c538535b994218e6ad92792901a39c3e4e94eaf777762b",
+      "unchanged": true
+    },
+    "products/catalog.json": {
+      "startup_sha256": "d74f3fa9f00184ee64f8452862958c3ef11f7848378ed42657e4b5fbc91def27",
+      "audit_sha256": "d74f3fa9f00184ee64f8452862958c3ef11f7848378ed42657e4b5fbc91def27",
+      "unchanged": true
+    },
+    "reports/workbuddy-upload-list.md": {
+      "startup_sha256": "6d0df16f21a4cf7a3a87eef1b90fb2f7d26fd1457f124066707281f9ff0ec586",
+      "audit_sha256": "6d0df16f21a4cf7a3a87eef1b90fb2f7d26fd1457f124066707281f9ff0ec586",
+      "unchanged": true
+    },
+    "reports/validate.json": {
+      "startup_sha256": "42765dae553254369311f3d4e7d2d3ab6f3cf0f8858a1c0e587debfea809d1ba",
+      "audit_sha256": "42765dae553254369311f3d4e7d2d3ab6f3cf0f8858a1c0e587debfea809d1ba",
+      "unchanged": true
+    },
+    "reports/validate.md": {
+      "startup_sha256": "2c3f7cd41671f2af1cd9f5688ae4e3779d92390260cdb43299457bcedb2060e3",
+      "audit_sha256": "2c3f7cd41671f2af1cd9f5688ae4e3779d92390260cdb43299457bcedb2060e3",
+      "unchanged": true
+    }
+  },
+  "cases": {
+    "industrial_rooftop": {
+      "data_mode": "SYNTHETIC",
+      "file_raw_sha256": {
+        "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/input.json": "7b08b2b12e9b8a57b4848a73b9c3b68d8881f9305cd796e773a16b3699ba743f",
+        "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/methods.json": "3b33541d440b847187cc1886e27789a167a91cdab5e410b89aed22e3f303d8f5",
+        "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/result.json": "53d3c0cded618566bbce1d8e51fa4e0be91d84609f7bf907010a93cf3acb182e",
+        "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/result.sha256": "25910b71a3a21b1e77ccd743d992eae727eaf2a42f2c65e61cff903687836918",
+        "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/independent-reference.json": "c8a97d9c36b7783924ff7e72d18ba0bb1792402469958225b5823db1fcbdee94",
+        "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/acceptance.json": "3cec0a01677e33929af25da478aff83211bd91402c17f801a3e67f3a624daf1e",
+        "reports/solar-pv/phase3d-cases/industrial_rooftop/settlement.json": "b1fe5fc07ee5c3e6a99e19bf54132ca1be35ac7e3617c7069769037988690505"
+      },
+      "canonical_hashes": {
+        "result": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "upstream_phase3c": "7eee9f80f9633a4e93905f2df7bafa9896658020c67069b5276e16f259534a50",
+        "financial_input": "ea0fb8c22ebfafcedc80897e533e3c8a6a5738efbd27026f574574884e8e8d3f",
+        "original_input": "cb71039535b28cf25d512dd5d3179e02ae32c6e0f20ac22e0b8708ad264f44ed",
+        "method_config": "c1c51510d8678b4a4ce22950af5ec2e16381c98c1789244c9a6092e7ed241153"
+      },
+      "synthetic_method_opening_cash_cny": "0",
+      "opening_cash_status": "ASSUMED",
+      "actual_verified_opening_cash_cny": null,
+      "synthetic_minimum_reserve_cny": "0",
+      "actual_restricted_cash_cny": null,
+      "distribution_fraction_config": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "shareholder_contributions_recorded": false,
+      "shareholder_distributions_recorded": false,
+      "drawdown_basis": "CAPEX_PROPORTIONAL_SCENARIO",
+      "finance_debt_schedule_rows": 0,
+      "source_quality": "SYNTHETIC scenario; no independently verified cash account or actual owner transaction record",
+      "period_count": 26,
+      "periods": [
+        {
+          "period": "CONSTRUCTION",
+          "period_index": 0,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "0",
+          "debt_drawdown_cny": "996000.00",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "1660000",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "0",
+          "single_entity_cash_tax_cny": "0",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0",
+          "working_capital_increase_cny": "50000",
+          "known_inflow_cny": "996000.00",
+          "known_outflow_cny": "1710000",
+          "known_annual_delta_cny": "-714000.00",
+          "known_delta_carried_in_cny": "0",
+          "known_delta_carried_out_cny": "-714000.00",
+          "minimum_unproven_funding_at_period_end_cny": "714000.00",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_1",
+          "period_index": 1,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "350400.0",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "113100.00",
+          "single_entity_cash_tax_cny": "488163.72830188679245283018866",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "49800.0000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "350400.0",
+          "known_outflow_cny": "651063.72830188679245283018866",
+          "known_annual_delta_cny": "-300663.72830188679245283018866",
+          "known_delta_carried_in_cny": "-714000.00",
+          "known_delta_carried_out_cny": "-1014663.72830188679245283018866",
+          "minimum_unproven_funding_at_period_end_cny": "1014663.72830188679245283018866",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1606000.0"
+        },
+        {
+          "period": "OPERATING_YEAR_2",
+          "period_index": 2,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "350400.0",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "116289.0000",
+          "single_entity_cash_tax_cny": "487321.35094339622641509433964",
+          "principal_paid_cny": "83000.00",
+          "interest_paid_cny": "49800.000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "350400.0",
+          "known_outflow_cny": "736410.35094339622641509433964",
+          "known_annual_delta_cny": "-386010.35094339622641509433964",
+          "known_delta_carried_in_cny": "-1014663.72830188679245283018866",
+          "known_delta_carried_out_cny": "-1400674.07924528301886792452830",
+          "minimum_unproven_funding_at_period_end_cny": "1400674.07924528301886792452830",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1606000.0"
+        },
+        {
+          "period": "OPERATING_YEAR_3",
+          "period_index": 3,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "350400.0",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "119569.590000",
+          "single_entity_cash_tax_cny": "487616.78000000000000000000000",
+          "principal_paid_cny": "83000.00",
+          "interest_paid_cny": "45650.00000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "350400.0",
+          "known_outflow_cny": "735836.37000000000000000000000",
+          "known_annual_delta_cny": "-385436.37000000000000000000000",
+          "known_delta_carried_in_cny": "-1400674.07924528301886792452830",
+          "known_delta_carried_out_cny": "-1786110.44924528301886792452830",
+          "minimum_unproven_funding_at_period_end_cny": "1786110.44924528301886792452830",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1606000.0"
+        },
+        {
+          "period": "OPERATING_YEAR_4",
+          "period_index": 4,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "350400.0",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "122944.43610000",
+          "single_entity_cash_tax_cny": "487887.31121886792452830188678",
+          "principal_paid_cny": "83000.00",
+          "interest_paid_cny": "41500.0000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "350400.0",
+          "known_outflow_cny": "735331.74731886792452830188678",
+          "known_annual_delta_cny": "-384931.74731886792452830188678",
+          "known_delta_carried_in_cny": "-1786110.44924528301886792452830",
+          "known_delta_carried_out_cny": "-2171042.19656415094339622641508",
+          "minimum_unproven_funding_at_period_end_cny": "2171042.19656415094339622641508",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1606000.0"
+        },
+        {
+          "period": "OPERATING_YEAR_5",
+          "period_index": 5,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "258948.1076407446674389344364",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "126416.2827510000",
+          "single_entity_cash_tax_cny": "463165.85303660253949384796911",
+          "principal_paid_cny": "83000.00",
+          "interest_paid_cny": "37350.000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "258948.1076407446674389344364",
+          "known_outflow_cny": "709932.13578760253949384796911",
+          "known_annual_delta_cny": "-450984.02814685787205491353271",
+          "known_delta_carried_in_cny": "-2171042.19656415094339622641508",
+          "known_delta_carried_out_cny": "-2622026.22471100881545113994779",
+          "minimum_unproven_funding_at_period_end_cny": "2622026.22471100881545113994779",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1606000.0"
+        },
+        {
+          "period": "OPERATING_YEAR_6",
+          "period_index": 6,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "162626.4008766702006950409928",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "129987.955072890000",
+          "single_entity_cash_tax_cny": "437088.56647668077611050090800",
+          "principal_paid_cny": "83000.00",
+          "interest_paid_cny": "33200.00000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "162626.4008766702006950409928",
+          "known_outflow_cny": "683276.52154957077611050090800",
+          "known_annual_delta_cny": "-520650.12067290057541545991520",
+          "known_delta_carried_in_cny": "-2622026.22471100881545113994779",
+          "known_delta_carried_out_cny": "-3142676.34538390939086659986299",
+          "minimum_unproven_funding_at_period_end_cny": "3142676.34538390939086659986299",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1606000.0"
+        },
+        {
+          "period": "OPERATING_YEAR_7",
+          "period_index": 7,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "75936.86478900318062553689350",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "133662.36124122390000",
+          "single_entity_cash_tax_cny": "413613.72526896136642397911907",
+          "principal_paid_cny": "83000.00",
+          "interest_paid_cny": "29050.0000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "75936.86478900318062553689350",
+          "known_outflow_cny": "659326.08651018526642397911907",
+          "known_annual_delta_cny": "-583389.22172118208579844222557",
+          "known_delta_carried_in_cny": "-3142676.34538390939086659986299",
+          "known_delta_carried_out_cny": "-3726065.56710509147666504208856",
+          "minimum_unproven_funding_at_period_end_cny": "3726065.56710509147666504208856",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1606000.0"
+        },
+        {
+          "period": "OPERATING_YEAR_8",
+          "period_index": 8,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "0.00000000000000000000000",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "137442.4949449307610000",
+          "single_entity_cash_tax_cny": "391709.38311321479616973812206",
+          "principal_paid_cny": "83000.00",
+          "interest_paid_cny": "24900.000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "0.00000000000000000000000",
+          "known_outflow_cny": "637051.87805814555716973812206",
+          "known_annual_delta_cny": "-637051.87805814555716973812206",
+          "known_delta_carried_in_cny": "-3726065.56710509147666504208856",
+          "known_delta_carried_out_cny": "-4363117.44516323703383478021062",
+          "minimum_unproven_funding_at_period_end_cny": "4363117.44516323703383478021062",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1601224.81362731906004016984285182433692596847186688651689643"
+        },
+        {
+          "period": "OPERATING_YEAR_9",
+          "period_index": 9,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "0.00000000000000000000000",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "141331.437917078230710000",
+          "single_entity_cash_tax_cny": "346787.22877674298369729261170",
+          "principal_paid_cny": "83000.00",
+          "interest_paid_cny": "20750.00000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "0.00000000000000000000000",
+          "known_outflow_cny": "591868.66669382121440729261170",
+          "known_annual_delta_cny": "-591868.66669382121440729261170",
+          "known_delta_carried_in_cny": "-4363117.44516323703383478021062",
+          "known_delta_carried_out_cny": "-4954986.11185705824824207282232",
+          "minimum_unproven_funding_at_period_end_cny": "4954986.11185705824824207282232",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1440307.36226458715403615285856664190323337162468019786520495"
+        },
+        {
+          "period": "OPERATING_YEAR_10",
+          "period_index": 10,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "0.00000000000000000000000",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "145332.36254086611544890000",
+          "single_entity_cash_tax_cny": "306341.18301950378137777844494",
+          "principal_paid_cny": "83000.00",
+          "interest_paid_cny": "16600.0000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "0.00000000000000000000000",
+          "known_outflow_cny": "551273.54556036989682667844494",
+          "known_annual_delta_cny": "-551273.54556036989682667844494",
+          "known_delta_carried_in_cny": "-4954986.11185705824824207282232",
+          "known_delta_carried_out_cny": "-5506259.65741742814506875126726",
+          "minimum_unproven_funding_at_period_end_cny": "5506259.65741742814506875126726",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1295481.65603812843863253757270997771291003446221217807868323"
+        },
+        {
+          "period": "OPERATING_YEAR_11",
+          "period_index": 11,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "0.00000000000000000000000",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "149448.5345330931474863190000",
+          "single_entity_cash_tax_cny": "274329.81433550828984090010988",
+          "principal_paid_cny": "83000.00",
+          "interest_paid_cny": "12450.00000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "0.00000000000000000000000",
+          "known_outflow_cny": "519228.34886860143732721910988",
+          "known_annual_delta_cny": "-519228.34886860143732721910988",
+          "known_delta_carried_in_cny": "-5506259.65741742814506875126726",
+          "known_delta_carried_out_cny": "-6025488.00628602958239597037714",
+          "minimum_unproven_funding_at_period_end_cny": "6025488.00628602958239597037714",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1165138.52043431559476928381543897994161903101599096027081732"
+        },
+        {
+          "period": "OPERATING_YEAR_12",
+          "period_index": 12,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "247304.53945571371215209488250",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "190000",
+          "replacement_cash_paid_cny": "190000",
+          "opex_cash_paid_cny": "153683.3157074070114563396100",
+          "single_entity_cash_tax_cny": "460540.54644303818001396049649",
+          "principal_paid_cny": "83000.00",
+          "interest_paid_cny": "8300.000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "247304.53945571371215209488250",
+          "known_outflow_cny": "895523.862150445191470300106490",
+          "known_annual_delta_cny": "-648219.322694731479318205223990",
+          "known_delta_carried_in_cny": "-6025488.00628602958239597037714",
+          "known_delta_carried_out_cny": "-6673707.328980761061714175601130",
+          "minimum_unproven_funding_at_period_end_cny": "6673707.328980761061714175601130",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1606000.0"
+        },
+        {
+          "period": "OPERATING_YEAR_13",
+          "period_index": 13,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "170431.6815564605387194058849",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "158040.1668197167127363694591",
+          "single_entity_cash_tax_cny": "439565.38990498855766833794944",
+          "principal_paid_cny": "83000.00",
+          "interest_paid_cny": "4150.000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "170431.6815564605387194058849",
+          "known_outflow_cny": "684755.556724705270404707408540",
+          "known_annual_delta_cny": "-514323.875168244731685301523640",
+          "known_delta_carried_in_cny": "-6673707.328980761061714175601130",
+          "known_delta_carried_out_cny": "-7188031.204149005793399477124770",
+          "minimum_unproven_funding_at_period_end_cny": "7188031.204149005793399477124770",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1606000.0"
+        },
+        {
+          "period": "OPERATING_YEAR_14",
+          "period_index": 14,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "82961.61740081448484746529645",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "162522.6504982174548735269969",
+          "single_entity_cash_tax_cny": "415664.01009806302666091693243",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "82961.61740081448484746529645",
+          "known_outflow_cny": "578186.660596280481534443929330000",
+          "known_annual_delta_cny": "-495225.043195465996686978632880000",
+          "known_delta_carried_in_cny": "-7188031.204149005793399477124770",
+          "known_delta_carried_out_cny": "-7683256.247344471790086455757650000",
+          "minimum_unproven_funding_at_period_end_cny": "7683256.247344471790086455757650000",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1606000.0"
+        },
+        {
+          "period": "OPERATING_YEAR_15",
+          "period_index": 15,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "4238.559660733036362718766806",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "720000",
+          "replacement_cash_paid_cny": "720000",
+          "opex_cash_paid_cny": "167134.4342605514040899005899",
+          "single_entity_cash_tax_cny": "392752.80830346088011082206753",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.00000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "4238.559660733036362718766806",
+          "known_outflow_cny": "1279887.24256401228420072265743000000",
+          "known_annual_delta_cny": "-1275648.68290327924783800389062400000",
+          "known_delta_carried_in_cny": "-7683256.247344471790086455757650000",
+          "known_delta_carried_out_cny": "-8958904.93024775103792445964827400000",
+          "minimum_unproven_funding_at_period_end_cny": "8958904.93024775103792445964827400000",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1606000.0"
+        },
+        {
+          "period": "OPERATING_YEAR_16",
+          "period_index": 16,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "0.000000000000000000000000",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "171879.2936207031202941687463",
+          "single_entity_cash_tax_cny": "347599.49904388759861044438131",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.0000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "0.000000000000000000000000",
+          "known_outflow_cny": "519478.7926645907189046131276100000000",
+          "known_annual_delta_cny": "-519478.7926645907189046131276100000000",
+          "known_delta_carried_in_cny": "-8958904.93024775103792445964827400000",
+          "known_delta_carried_out_cny": "-9478383.7229123417568290727758840000000",
+          "minimum_unproven_funding_at_period_end_cny": "9478383.7229123417568290727758840000000",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1453347.05930026188749810745653738365517281277695065215396379"
+        },
+        {
+          "period": "OPERATING_YEAR_17",
+          "period_index": 17,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "0.000000000000000000000000",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "176761.1152883060914661963702",
+          "single_entity_cash_tax_cny": "305393.65198449080167732026428",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.000000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "0.000000000000000000000000",
+          "known_outflow_cny": "482154.767272796893143516634480000000000",
+          "known_annual_delta_cny": "-482154.767272796893143516634480000000000",
+          "known_delta_carried_in_cny": "-9478383.7229123417568290727758840000000",
+          "known_delta_carried_out_cny": "-9960538.490185138649972589410364000000000",
+          "minimum_unproven_funding_at_period_end_cny": "9960538.490185138649972589410364000000000",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1307217.38337023569874829671088364528965553149925558693856330"
+        },
+        {
+          "period": "OPERATING_YEAR_18",
+          "period_index": 18,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "0.000000000000000000000000",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "181783.9004631167893246488742",
+          "single_entity_cash_tax_cny": "267242.20020772137626296540810",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.00000000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "0.000000000000000000000000",
+          "known_outflow_cny": "449026.10067083816558761428230000000000000",
+          "known_annual_delta_cny": "-449026.10067083816558761428230000000000000",
+          "known_delta_carried_in_cny": "-9960538.490185138649972589410364000000000",
+          "known_delta_carried_out_cny": "-10409564.59085597681556020369266400000000000",
+          "minimum_unproven_funding_at_period_end_cny": "10409564.59085597681556020369266400000000000",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1175700.67503321212887346703979528076068997834933002824470751"
+        },
+        {
+          "period": "OPERATING_YEAR_19",
+          "period_index": 19,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "0.000000000000000000000000",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "186951.7682274950384211442854",
+          "single_entity_cash_tax_cny": "232734.89256148397462901897718",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.0000000000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "0.000000000000000000000000",
+          "known_outflow_cny": "419686.6607889790130501632625800000000000000",
+          "known_annual_delta_cny": "-419686.6607889790130501632625800000000000000",
+          "known_delta_carried_in_cny": "-10409564.59085597681556020369266400000000000",
+          "known_delta_carried_out_cny": "-10829251.2516449558286103669552440000000000000",
+          "minimum_unproven_funding_at_period_end_cny": "10829251.2516449558286103669552440000000000000",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "1057335.63752989091598612033581575268462098051439702542023573"
+        },
+        {
+          "period": "OPERATING_YEAR_20",
+          "period_index": 20,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "0.000000000000000000000000",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "192268.9590398143298988696779",
+          "single_entity_cash_tax_cny": "201502.36214135514066653674933",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.000000000000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "0.000000000000000000000000",
+          "known_outflow_cny": "393771.321181169470565406427230000000000000000",
+          "known_annual_delta_cny": "-393771.321181169470565406427230000000000000000",
+          "known_delta_carried_in_cny": "-10829251.2516449558286103669552440000000000000",
+          "known_delta_carried_out_cny": "-11223022.572826125299175773382474000000000000000",
+          "minimum_unproven_funding_at_period_end_cny": "11223022.572826125299175773382474000000000000000",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "950807.103776901824387508302234177416158882462957322878214378"
+        },
+        {
+          "period": "OPERATING_YEAR_21",
+          "period_index": 21,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "0.000000000000000000000000",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "197739.8383318130889274286534",
+          "single_entity_cash_tax_cny": "175102.03370941353814218037243",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.00000000000000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "0.000000000000000000000000",
+          "known_outflow_cny": "372841.87204122662706960902583000000000000000000",
+          "known_annual_delta_cny": "-372841.87204122662706960902583000000000000000000",
+          "known_delta_carried_in_cny": "-11223022.572826125299175773382474000000000000000",
+          "known_delta_carried_out_cny": "-11595864.44486735192624538240830400000000000000000",
+          "minimum_unproven_funding_at_period_end_cny": "11595864.44486735192624538240830400000000000000000",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "854931.423399211641948757472010759674542994216661590590390787"
+        },
+        {
+          "period": "OPERATING_YEAR_22",
+          "period_index": 22,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "0.000000000000000000000000",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "203368.9002129878973094762559",
+          "single_entity_cash_tax_cny": "154242.44024788754957613089085",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.0000000000000000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "0.000000000000000000000000",
+          "known_outflow_cny": "357611.3404608754468856071467500000000000000000000",
+          "known_annual_delta_cny": "-357611.3404608754468856071467500000000000000000000",
+          "known_delta_carried_in_cny": "-11595864.44486735192624538240830400000000000000000",
+          "known_delta_carried_out_cny": "-11953475.785328227373130989555054000000000000000000",
+          "minimum_unproven_funding_at_period_end_cny": "11953475.785328227373130989555054000000000000000000",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "768643.311059290477753881724809683707088694794995431531352052"
+        },
+        {
+          "period": "OPERATING_YEAR_23",
+          "period_index": 23,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "0.000000000000000000000000",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "209160.7712852223582572697814",
+          "single_entity_cash_tax_cny": "130967.90773046736991092579960",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.000000000000000000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "0.000000000000000000000000",
+          "known_outflow_cny": "340128.67901568972816819558100000000000000000000000",
+          "known_annual_delta_cny": "-340128.67901568972816819558100000000000000000000000",
+          "known_delta_carried_in_cny": "-11953475.785328227373130989555054000000000000000000",
+          "known_delta_carried_out_cny": "-12293604.464343917101299185136054000000000000000000",
+          "minimum_unproven_funding_at_period_end_cny": "12293604.464343917101299185136054000000000000000000",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "690984.009953361429978493552328715336379825315495888378216519"
+        },
+        {
+          "period": "OPERATING_YEAR_24",
+          "period_index": 24,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "0.000000000000000000000000",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "215120.2145709407495140672973",
+          "single_entity_cash_tax_cny": "109823.57128573442953954373059",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.00000000000000000000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "0.000000000000000000000000",
+          "known_outflow_cny": "324943.78585667517905361102789000000000000000000000",
+          "known_annual_delta_cny": "-324943.78585667517905361102789000000000000000000000",
+          "known_delta_carried_in_cny": "-12293604.464343917101299185136054000000000000000000",
+          "known_delta_carried_out_cny": "-12618548.250200592280352796163944000000000000000000",
+          "minimum_unproven_funding_at_period_end_cny": "12618548.250200592280352796163944000000000000000000",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "621090.638958025286980644197095843802741842783946299540396301"
+        },
+        {
+          "period": "OPERATING_YEAR_25",
+          "period_index": 25,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "0.000000000000000000000000",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "50000",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "221252.1335581739269187503272",
+          "single_entity_cash_tax_cny": "90590.689609602844453792062552",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.0000000000000000000000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "50000.000000000000000000000000",
+          "known_outflow_cny": "311842.82316777677137254238975200000000000000000000",
+          "known_annual_delta_cny": "-261842.82316777677137254238975200000000000000000000",
+          "known_delta_carried_in_cny": "-12618548.250200592280352796163944000000000000000000",
+          "known_delta_carried_out_cny": "-12880391.073368369051725338553696000000000000000000",
+          "minimum_unproven_funding_at_period_end_cny": "12880391.073368369051725338553696000000000000000000",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "558186.605062222758282579777386259422467658505551669586357304"
+        }
+      ],
+      "known_flow_totals_cny": {
+        "customer_receipts": "2404047.771380139820841197153356",
+        "debt_drawdowns": "996000.00",
+        "capex_cash_paid": "2570000",
+        "opex_cash_paid": "4033191.9169855481281333759251",
+        "single_entity_cash_tax": "8307746.927762960744433159781952",
+        "principal_paid": "996000.00",
+        "interest_paid": "373500.00000000000000000000000000000000000000000000",
+        "known_delta_cumulative": "-12880391.073368369051725338553696000000000000000000",
+        "peak_period_end_funding_requirement_excluding_unknown_equity_and_restrictions": "12880391.073368369051725338553696000000000000000000"
+      },
+      "replacement_audits": {
+        "12": {
+          "payment_date": "2037-06-01",
+          "payment_row_id": "replacement-inverter-payment",
+          "capitalized_asset_row_id": "replacement-inverter",
+          "amount_cny": "190000",
+          "annual_known_delta_cny": "-648219.322694731479318205223990",
+          "known_delta_carried_in_cny": "-6025488.00628602958239597037714",
+          "known_delta_carried_out_cny": "-6673707.328980761061714175601130",
+          "opening_available_cash_cny": null,
+          "cash_before_payment_cny": null,
+          "cash_after_payment_cny": null,
+          "payment_time_restricted_cash_cny": null,
+          "verdict": "INDETERMINATE",
+          "missing_evidence": [
+            "verified entity cash at opening and at payment date",
+            "dated customer cash receipts / within-day ordering",
+            "dated opex, tax and debt payments",
+            "shareholder contribution and distribution cash events",
+            "restricted or retained cash at payment date"
+          ]
+        },
+        "15": {
+          "payment_date": "2040-06-01",
+          "payment_row_id": "replacement-modules-payment",
+          "capitalized_asset_row_id": "replacement-modules",
+          "amount_cny": "720000",
+          "annual_known_delta_cny": "-1275648.68290327924783800389062400000",
+          "known_delta_carried_in_cny": "-7683256.247344471790086455757650000",
+          "known_delta_carried_out_cny": "-8958904.93024775103792445964827400000",
+          "opening_available_cash_cny": null,
+          "cash_before_payment_cny": null,
+          "cash_after_payment_cny": null,
+          "payment_time_restricted_cash_cny": null,
+          "verdict": "INDETERMINATE",
+          "missing_evidence": [
+            "verified entity cash at opening and at payment date",
+            "dated customer cash receipts / within-day ordering",
+            "dated opex, tax and debt payments",
+            "shareholder contribution and distribution cash events",
+            "restricted or retained cash at payment date"
+          ]
+        }
+      },
+      "decimal_checks": {
+        "count": 186,
+        "max_absolute_residual_cny": "0.0000000000000000000021",
+        "checks": [
+          {
+            "check": "CONSTRUCTION: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "CONSTRUCTION: sources less uses",
+            "absolute_residual_cny": "0.00"
+          },
+          {
+            "check": "CONSTRUCTION: annual delta roll",
+            "absolute_residual_cny": "0.00"
+          },
+          {
+            "check": "OPERATING_YEAR_1: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_1: receivables",
+            "absolute_residual_cny": "0.0"
+          },
+          {
+            "check": "OPERATING_YEAR_1: debt principal",
+            "absolute_residual_cny": "0.0000"
+          },
+          {
+            "check": "OPERATING_YEAR_1: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_1: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.0"
+          },
+          {
+            "check": "OPERATING_YEAR_1: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_1: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_2: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_2: receivables",
+            "absolute_residual_cny": "0.0"
+          },
+          {
+            "check": "OPERATING_YEAR_2: debt principal",
+            "absolute_residual_cny": "0.000000"
+          },
+          {
+            "check": "OPERATING_YEAR_2: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_2: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.0"
+          },
+          {
+            "check": "OPERATING_YEAR_2: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_2: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_3: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_3: receivables",
+            "absolute_residual_cny": "0.0"
+          },
+          {
+            "check": "OPERATING_YEAR_3: debt principal",
+            "absolute_residual_cny": "0.00000000"
+          },
+          {
+            "check": "OPERATING_YEAR_3: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_3: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.0"
+          },
+          {
+            "check": "OPERATING_YEAR_3: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_3: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_4: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_4: receivables",
+            "absolute_residual_cny": "0.0"
+          },
+          {
+            "check": "OPERATING_YEAR_4: debt principal",
+            "absolute_residual_cny": "0.0000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_4: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_4: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.0"
+          },
+          {
+            "check": "OPERATING_YEAR_4: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_4: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_5: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_5: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_5: debt principal",
+            "absolute_residual_cny": "0.000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_5: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_5: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.0"
+          },
+          {
+            "check": "OPERATING_YEAR_5: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_5: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_6: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_6: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_6: debt principal",
+            "absolute_residual_cny": "0.00000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_6: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_6: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.0"
+          },
+          {
+            "check": "OPERATING_YEAR_6: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_6: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_7: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_7: receivables",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_7: debt principal",
+            "absolute_residual_cny": "0.0000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_7: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_7: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.0"
+          },
+          {
+            "check": "OPERATING_YEAR_7: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_7: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_8: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_8: receivables",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_8: debt principal",
+            "absolute_residual_cny": "0.000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_8: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_8: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_8: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_8: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_9: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_9: receivables",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_9: debt principal",
+            "absolute_residual_cny": "0.00000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_9: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_9: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_9: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_9: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_10: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_10: receivables",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_10: debt principal",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_10: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_10: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_10: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_10: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_11: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_11: receivables",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_11: debt principal",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_11: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_11: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_11: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_11: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_12: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_12: receivables",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_12: debt principal",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_12: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_12: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.0"
+          },
+          {
+            "check": "OPERATING_YEAR_12: sources less uses",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_12: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_13: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_13: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_13: debt principal",
+            "absolute_residual_cny": "0.0000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_13: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_13: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.0"
+          },
+          {
+            "check": "OPERATING_YEAR_13: sources less uses",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_13: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_14: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_14: receivables",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_14: debt principal",
+            "absolute_residual_cny": "0.000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_14: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_14: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.0"
+          },
+          {
+            "check": "OPERATING_YEAR_14: sources less uses",
+            "absolute_residual_cny": "0.000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_14: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_15: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_15: receivables",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_15: debt principal",
+            "absolute_residual_cny": "0.00000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_15: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_15: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.0"
+          },
+          {
+            "check": "OPERATING_YEAR_15: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_15: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_16: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_16: receivables",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_16: debt principal",
+            "absolute_residual_cny": "0.0000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_16: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_16: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_16: sources less uses",
+            "absolute_residual_cny": "0.0000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_16: annual delta roll",
+            "absolute_residual_cny": "0.0000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_17: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_17: receivables",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_17: debt principal",
+            "absolute_residual_cny": "0.000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_17: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_17: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_17: sources less uses",
+            "absolute_residual_cny": "0.000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_17: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_18: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_18: receivables",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_18: debt principal",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_18: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_18: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_18: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_18: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_19: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_19: receivables",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_19: debt principal",
+            "absolute_residual_cny": "0.0000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_19: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_19: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_19: sources less uses",
+            "absolute_residual_cny": "0.0000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_19: annual delta roll",
+            "absolute_residual_cny": "0.0000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_20: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_20: receivables",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_20: debt principal",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_20: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_20: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_20: sources less uses",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_20: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_21: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_21: receivables",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_21: debt principal",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_21: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_21: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_21: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_21: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_22: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_22: receivables",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_22: debt principal",
+            "absolute_residual_cny": "0.0000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_22: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_22: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_22: sources less uses",
+            "absolute_residual_cny": "0.0000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_22: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_23: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_23: receivables",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_23: debt principal",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_23: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_23: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_23: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_23: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_24: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_24: receivables",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_24: debt principal",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_24: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_24: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_24: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_24: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_25: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_25: receivables",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_25: debt principal",
+            "absolute_residual_cny": "0.0000000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_25: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_25: avoided expenditure separate from receipt",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_25: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_25: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "industrial_rooftop: lifecycle capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "industrial_rooftop: lifecycle opex",
+            "absolute_residual_cny": "0.0000000000000000000021"
+          },
+          {
+            "check": "industrial_rooftop: lifecycle tax",
+            "absolute_residual_cny": "0.000000000000000000000952"
+          },
+          {
+            "check": "industrial_rooftop: year12 replacement paid",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "industrial_rooftop: year12 capitalized",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "industrial_rooftop: year15 replacement paid",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "industrial_rooftop: year15 capitalized",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "industrial_rooftop: both replacements deducted once",
+            "absolute_residual_cny": "0"
+          }
+        ]
+      }
+    },
+    "utility_scale_ground": {
+      "data_mode": "SYNTHETIC",
+      "file_raw_sha256": {
+        "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/input.json": "dce65dc6808321a1267d9deb03737f2eeeddd7ac942cd96f2af5783d879a583f",
+        "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/methods.json": "a3d04cd0f14d7c6678ef739dc494c16357a8e766a792a7d0c5f7d6b85c90c5f8",
+        "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/result.json": "99e7b2ae90a28dc07e6c6effbc9bdca9e0aa1c8226efcd10b357e988b4dfd9bb",
+        "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/result.sha256": "04f0a87bce822538c0ef294b78852fb8ab17dbda1b7bf2b82488f3385bc0b685",
+        "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/independent-reference.json": "ffcc13be888fbb745a1afdbfab28002a08ad9e7d7b374933c9fb1a7f04da060a",
+        "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/acceptance.json": "74d0e4817f179c515c22bdd772c3037900a7fca35d9a0c9e2cab5b1f2dd73009",
+        "reports/solar-pv/phase3d-cases/utility_scale_ground/settlement.json": "e3ab017f0562e1badc59e8ee510cce75764f088364c4ed57881dab20dcbb3c53"
+      },
+      "canonical_hashes": {
+        "result": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "upstream_phase3c": "6f070c327912973efd79f5cb50a705d4422990132aa28701b1e6fe2a5e6ae616",
+        "financial_input": "7cf4503a1a0c1b65fbbe8e98dacf3062ea880a55ad20ac90358712de32b02056",
+        "original_input": "fcfffc8d01385e97580faf7778258423ce5481324dfd866bfc5283fb3c5d2843",
+        "method_config": "9429bf5612e1d41e8c1383f38d3601956e93ef16e3ba6e6e8a223afd48fd07dd"
+      },
+      "synthetic_method_opening_cash_cny": "0",
+      "opening_cash_status": "ASSUMED",
+      "actual_verified_opening_cash_cny": null,
+      "synthetic_minimum_reserve_cny": "0",
+      "actual_restricted_cash_cny": null,
+      "distribution_fraction_config": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "shareholder_contributions_recorded": false,
+      "shareholder_distributions_recorded": false,
+      "drawdown_basis": "CAPEX_PROPORTIONAL_SCENARIO",
+      "finance_debt_schedule_rows": 0,
+      "source_quality": "SYNTHETIC scenario; no independently verified cash account or actual owner transaction record",
+      "period_count": 26,
+      "periods": [
+        {
+          "period": "CONSTRUCTION",
+          "period_index": 0,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "0",
+          "debt_drawdown_cny": "1129500.00",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "2510000",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "0",
+          "single_entity_cash_tax_cny": "0",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0",
+          "working_capital_increase_cny": "120000",
+          "known_inflow_cny": "1129500.00",
+          "known_outflow_cny": "2630000",
+          "known_annual_delta_cny": "-1500500.00",
+          "known_delta_carried_in_cny": "0",
+          "known_delta_carried_out_cny": "-1500500.00",
+          "minimum_unproven_funding_at_period_end_cny": "1500500.00",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_1",
+          "period_index": 1,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "784750.00",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "113100.00",
+          "single_entity_cash_tax_cny": "143696.52830188679245283018866",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "56475.0000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "784750.00",
+          "known_outflow_cny": "313271.52830188679245283018866",
+          "known_annual_delta_cny": "471478.47169811320754716981134",
+          "known_delta_carried_in_cny": "-1500500.00",
+          "known_delta_carried_out_cny": "-1029021.52830188679245283018866",
+          "minimum_unproven_funding_at_period_end_cny": "1029021.52830188679245283018866",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_2",
+          "period_index": 2,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "784750.00",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "116289.0000",
+          "single_entity_cash_tax_cny": "142854.15094339622641509433964",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "56475.000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "784750.00",
+          "known_outflow_cny": "315618.15094339622641509433964",
+          "known_annual_delta_cny": "469131.84905660377358490566036",
+          "known_delta_carried_in_cny": "-1029021.52830188679245283018866",
+          "known_delta_carried_out_cny": "-559889.67924528301886792452830",
+          "minimum_unproven_funding_at_period_end_cny": "559889.67924528301886792452830",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_3",
+          "period_index": 3,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "784750.00",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "119569.590000",
+          "single_entity_cash_tax_cny": "141987.58000000000000000000000",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "56475.00000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "784750.00",
+          "known_outflow_cny": "318032.17000000000000000000000",
+          "known_annual_delta_cny": "466717.83000000000000000000000",
+          "known_delta_carried_in_cny": "-559889.67924528301886792452830",
+          "known_delta_carried_out_cny": "-93171.84924528301886792452830",
+          "minimum_unproven_funding_at_period_end_cny": "93171.84924528301886792452830",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_4",
+          "period_index": 4,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "784750.00",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "122944.43610000",
+          "single_entity_cash_tax_cny": "215508.51298078143262648188354",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "56475.0000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "784750.00",
+          "known_outflow_cny": "394927.94908078143262648188354",
+          "known_annual_delta_cny": "389822.05091921856737351811646",
+          "known_delta_carried_in_cny": "-93171.84924528301886792452830",
+          "known_delta_carried_out_cny": "296650.20167393554850559358816",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_5",
+          "period_index": 5,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "784750.00",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "126416.2827510000",
+          "single_entity_cash_tax_cny": "223304.35445572366004341292375",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "56475.000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "784750.00",
+          "known_outflow_cny": "406195.63720672366004341292375",
+          "known_annual_delta_cny": "378554.36279327633995658707625",
+          "known_delta_carried_in_cny": "296650.20167393554850559358816",
+          "known_delta_carried_out_cny": "675204.56446721188846218066441",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_6",
+          "period_index": 6,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "750451.6155962646962450103323",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "129987.955072890000",
+          "single_entity_cash_tax_cny": "209011.35321454820308569916729",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "56475.00000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "750451.6155962646962450103323",
+          "known_outflow_cny": "395474.30828743820308569916729",
+          "known_annual_delta_cny": "354977.30730882649315931116501",
+          "known_delta_carried_in_cny": "675204.56446721188846218066441",
+          "known_delta_carried_out_cny": "1030181.87177603838162149182942",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_7",
+          "period_index": 7,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "675098.8006466382266205092991",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "133662.36124122390000",
+          "single_entity_cash_tax_cny": "178948.27909034776399269111392",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "56475.0000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "675098.8006466382266205092991",
+          "known_outflow_cny": "369085.64033157166399269111392",
+          "known_annual_delta_cny": "306013.16031506656262781818518",
+          "known_delta_carried_in_cny": "1030181.87177603838162149182942",
+          "known_delta_carried_out_cny": "1336195.03209110494424931001460",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_8",
+          "period_index": 8,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "607281.2671919744039584583692",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "137442.4949449307610000",
+          "single_entity_cash_tax_cny": "151739.741461821935469361224394",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "56475.000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "607281.2671919744039584583692",
+          "known_outflow_cny": "345657.236406752696469361224394",
+          "known_annual_delta_cny": "261624.030785221707489097144806",
+          "known_delta_carried_in_cny": "1336195.03209110494424931001460",
+          "known_delta_carried_out_cny": "1597819.062876326651738407159406",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_9",
+          "period_index": 9,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "546245.4870827769635626125323",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "141331.437917078230710000",
+          "single_entity_cash_tax_cny": "127095.906938416765047986965408",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "56475.00000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "546245.4870827769635626125323",
+          "known_outflow_cny": "324902.344855494995757986965408",
+          "known_annual_delta_cny": "221343.142227281967804625566892",
+          "known_delta_carried_in_cny": "1597819.062876326651738407159406",
+          "known_delta_carried_out_cny": "1819162.205103608619543032726298",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_10",
+          "period_index": 10,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "491313.2849844992672063512790",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "145332.36254086611544890000",
+          "single_entity_cash_tax_cny": "104755.797544134418197084094561",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "56475.0000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "491313.2849844992672063512790",
+          "known_outflow_cny": "306563.160085000533645984094561",
+          "known_annual_delta_cny": "184750.124899498733560367184439",
+          "known_delta_carried_in_cny": "1819162.205103608619543032726298",
+          "known_delta_carried_out_cny": "2003912.330003107353103399910737",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_11",
+          "period_index": 11,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "441874.3030960493404857161511",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "149448.5345330931474863190000",
+          "single_entity_cash_tax_cny": "88894.401407697194557102586301",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "56475.00000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "441874.3030960493404857161511",
+          "known_outflow_cny": "294817.935940790342043421586301",
+          "known_annual_delta_cny": "147056.367155258998442294564799",
+          "known_delta_carried_in_cny": "2003912.330003107353103399910737",
+          "known_delta_carried_out_cny": "2150968.697158366351545694475536",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_12",
+          "period_index": 12,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "784750.0000000000000000000000",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "190000",
+          "replacement_cash_paid_cny": "190000",
+          "opex_cash_paid_cny": "153683.3157074070114563396100",
+          "single_entity_cash_tax_cny": "214180.32501687612806685116201",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "56475.00000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "784750.0000000000000000000000",
+          "known_outflow_cny": "614338.64072428313952319077201",
+          "known_annual_delta_cny": "170411.35927571686047680922799",
+          "known_delta_carried_in_cny": "2150968.697158366351545694475536",
+          "known_delta_carried_out_cny": "2321380.056434083212022503703526",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_13",
+          "period_index": 13,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "757236.1699639262600652653096",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "158040.1668197167127363694591",
+          "single_entity_cash_tax_cny": "202236.15186334466411200165685",
+          "principal_paid_cny": "1129500.00",
+          "interest_paid_cny": "56475.00000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "757236.1699639262600652653096",
+          "known_outflow_cny": "1546251.31868306137684837111595",
+          "known_annual_delta_cny": "-789015.14871913511678310580635",
+          "known_delta_carried_in_cny": "2321380.056434083212022503703526",
+          "known_delta_carried_out_cny": "1532364.907714948095239397897176",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_14",
+          "period_index": 14,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "681204.8995775336340587387787",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "162522.6504982174548735269969",
+          "single_entity_cash_tax_cny": "187466.81527723737650158021828",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.0000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "681204.8995775336340587387787",
+          "known_outflow_cny": "349989.4657754548313751072151800",
+          "known_annual_delta_cny": "331215.4338020788026836315635200",
+          "known_delta_carried_in_cny": "1532364.907714948095239397897176",
+          "known_delta_carried_out_cny": "1863580.3415170268979230294606960",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_15",
+          "period_index": 15,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "612776.7562297802706528649008",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "720000",
+          "replacement_cash_paid_cny": "720000",
+          "opex_cash_paid_cny": "167134.4342605514040899005899",
+          "single_entity_cash_tax_cny": "159555.86095957825572805298483",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "612776.7562297802706528649008",
+          "known_outflow_cny": "1046690.295220129659817953574730000",
+          "known_annual_delta_cny": "-433913.538990349389165088673930000",
+          "known_delta_carried_in_cny": "1863580.3415170268979230294606960",
+          "known_delta_carried_out_cny": "1429666.802526677508757940786766000",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_16",
+          "period_index": 16,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "551191.4272168022435875784107",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "171879.2936207031202941687463",
+          "single_entity_cash_tax_cny": "138878.832308423353589198424025",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.00000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "551191.4272168022435875784107",
+          "known_outflow_cny": "310758.12592912647388336717032500000",
+          "known_annual_delta_cny": "240433.30128767576970421124037500000",
+          "known_delta_carried_in_cny": "1429666.802526677508757940786766000",
+          "known_delta_carried_out_cny": "1670100.10381435327846215202714100000",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_17",
+          "period_index": 17,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "495764.6311051220192288205697",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "176761.1152883060914661963702",
+          "single_entity_cash_tax_cny": "116066.581614102257664245039853",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.0000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "495764.6311051220192288205697",
+          "known_outflow_cny": "292827.6969024083491304414100530000000",
+          "known_annual_delta_cny": "202936.9342027136700983791596470000000",
+          "known_delta_carried_in_cny": "1670100.10381435327846215202714100000",
+          "known_delta_carried_out_cny": "1873037.0380170669485605311867880000000",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_18",
+          "period_index": 18,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "445880.5146046098173059385127",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "181783.9004631167893246488742",
+          "single_entity_cash_tax_cny": "95333.754546619754262698882406",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.000000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "445880.5146046098173059385127",
+          "known_outflow_cny": "277117.655009736543587347756606000000000",
+          "known_annual_delta_cny": "168762.859594873273718590756094000000000",
+          "known_delta_carried_in_cny": "1873037.0380170669485605311867880000000",
+          "known_delta_carried_out_cny": "2041799.897611940222279121942882000000000",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_19",
+          "period_index": 19,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "400984.8097541488355753446614",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "186951.7682274950384211442854",
+          "single_entity_cash_tax_cny": "76466.566057209528420060195718",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.00000000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "400984.8097541488355753446614",
+          "known_outflow_cny": "263418.33428470456684120448111800000000000",
+          "known_annual_delta_cny": "137566.47546944426873414018028200000000000",
+          "known_delta_carried_in_cny": "2041799.897611940222279121942882000000000",
+          "known_delta_carried_out_cny": "2179366.37308138449101326212316400000000000",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_20",
+          "period_index": 20,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "360578.6753887339520178101953",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "192268.9590398143298988696779",
+          "single_entity_cash_tax_cny": "59272.438548543329992912700736",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.0000000000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "360578.6753887339520178101953",
+          "known_outflow_cny": "251541.3975883576598917823786360000000000000",
+          "known_annual_delta_cny": "109037.2778003762921260278166640000000000000",
+          "known_delta_carried_in_cny": "2179366.37308138449101326212316400000000000",
+          "known_delta_carried_out_cny": "2288403.6508817607831392899398280000000000000",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_21",
+          "period_index": 21,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "324213.1544598605568160291757",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "197739.8383318130889274286534",
+          "single_entity_cash_tax_cny": "48806.876082526888316474217973",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.000000000000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "324213.1544598605568160291757",
+          "known_outflow_cny": "246546.714414339977243902871373000000000000000",
+          "known_annual_delta_cny": "77666.440045520579572126304327000000000000000",
+          "known_delta_carried_in_cny": "2288403.6508817607831392899398280000000000000",
+          "known_delta_carried_out_cny": "2366070.090927281362711416244155000000000000000",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_22",
+          "period_index": 22,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "291484.1856238745011344262582",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "203368.9002129878973094762559",
+          "single_entity_cash_tax_cny": "39243.551017595284593380396320",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.00000000000000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "291484.1856238745011344262582",
+          "known_outflow_cny": "242612.45123058318190285665222000000000000000000",
+          "known_annual_delta_cny": "48871.73439329131923156960598000000000000000000",
+          "known_delta_carried_in_cny": "2366070.090927281362711416244155000000000000000",
+          "known_delta_carried_out_cny": "2414941.82532057268194298585013500000000000000000",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_23",
+          "period_index": 23,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "262028.1136714870510209836324",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "209160.7712852223582572697814",
+          "single_entity_cash_tax_cny": "26094.5818281000248677438508448",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.0000000000000000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "262028.1136714870510209836324",
+          "known_outflow_cny": "235255.3531133223831250136322448000000000000000000",
+          "known_annual_delta_cny": "26772.7605581646678959700001552000000000000000000",
+          "known_delta_carried_in_cny": "2414941.82532057268194298585013500000000000000000",
+          "known_delta_carried_out_cny": "2441714.5858787373498389558502902000000000000000000",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_24",
+          "period_index": 24,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "235517.6489143383459188852691",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "0",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "215120.2145709407495140672973",
+          "single_entity_cash_tax_cny": "14918.33484094677012069513054",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.000000000000000000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "235517.6489143383459188852691",
+          "known_outflow_cny": "230038.54941188751963476242784000000000000000000000",
+          "known_annual_delta_cny": "5479.09950245082628412284126000000000000000000000",
+          "known_delta_carried_in_cny": "2441714.5858787373498389558502902000000000000000000",
+          "known_delta_carried_out_cny": "2447193.6853811881761230786915502000000000000000000",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        },
+        {
+          "period": "OPERATING_YEAR_25",
+          "period_index": 25,
+          "opening_available_cash_cny": null,
+          "receipt_cash_cny": "211658.2306329045113269967422",
+          "debt_drawdown_cny": "0",
+          "working_capital_release_cny": "120000",
+          "capex_cash_paid_cny": "0",
+          "replacement_cash_paid_cny": "0",
+          "opex_cash_paid_cny": "221252.1335581739269187503272",
+          "single_entity_cash_tax_cny": "11826.35625811491853044655107",
+          "principal_paid_cny": "0",
+          "interest_paid_cny": "0.00000000000000000000000000000000000000000000000",
+          "working_capital_increase_cny": "0",
+          "known_inflow_cny": "331658.2306329045113269967422",
+          "known_outflow_cny": "233078.48981628884544919687827000000000000000000000",
+          "known_annual_delta_cny": "98579.74081661566587779986393000000000000000000000",
+          "known_delta_carried_in_cny": "2447193.6853811881761230786915502000000000000000000",
+          "known_delta_carried_out_cny": "2545773.4261978038420008785554802000000000000000000",
+          "minimum_unproven_funding_at_period_end_cny": "0",
+          "restricted_change_cny": null,
+          "equity_contributions_cny": null,
+          "equity_distributions_cny": null,
+          "closing_available_cash_cny": null,
+          "avoided_expenditure_not_cash_cny": "0"
+        }
+      ],
+      "known_flow_totals_cny": {
+        "customer_receipts": "13851283.9757413248967883403795",
+        "debt_drawdowns": "1129500.00",
+        "capex_cash_paid": "3420000",
+        "opex_cash_paid": "4033191.9169855481281333759251",
+        "single_entity_cash_tax": "3118143.6325579729266540858989198",
+        "principal_paid": "1129500.00",
+        "interest_paid": "734175.00000000000000000000000000000000000000000000",
+        "known_delta_cumulative": "2545773.4261978038420008785554802000000000000000000",
+        "peak_period_end_funding_requirement_excluding_unknown_equity_and_restrictions": "1500500.00"
+      },
+      "replacement_audits": {
+        "12": {
+          "payment_date": "2037-06-01",
+          "payment_row_id": "replacement-inverter-payment",
+          "capitalized_asset_row_id": "replacement-inverter",
+          "amount_cny": "190000",
+          "annual_known_delta_cny": "170411.35927571686047680922799",
+          "known_delta_carried_in_cny": "2150968.697158366351545694475536",
+          "known_delta_carried_out_cny": "2321380.056434083212022503703526",
+          "opening_available_cash_cny": null,
+          "cash_before_payment_cny": null,
+          "cash_after_payment_cny": null,
+          "payment_time_restricted_cash_cny": null,
+          "verdict": "INDETERMINATE",
+          "missing_evidence": [
+            "verified entity cash at opening and at payment date",
+            "dated customer cash receipts / within-day ordering",
+            "dated opex, tax and debt payments",
+            "shareholder contribution and distribution cash events",
+            "restricted or retained cash at payment date"
+          ]
+        },
+        "15": {
+          "payment_date": "2040-06-01",
+          "payment_row_id": "replacement-modules-payment",
+          "capitalized_asset_row_id": "replacement-modules",
+          "amount_cny": "720000",
+          "annual_known_delta_cny": "-433913.538990349389165088673930000",
+          "known_delta_carried_in_cny": "1863580.3415170268979230294606960",
+          "known_delta_carried_out_cny": "1429666.802526677508757940786766000",
+          "opening_available_cash_cny": null,
+          "cash_before_payment_cny": null,
+          "cash_after_payment_cny": null,
+          "payment_time_restricted_cash_cny": null,
+          "verdict": "INDETERMINATE",
+          "missing_evidence": [
+            "verified entity cash at opening and at payment date",
+            "dated customer cash receipts / within-day ordering",
+            "dated opex, tax and debt payments",
+            "shareholder contribution and distribution cash events",
+            "restricted or retained cash at payment date"
+          ]
+        }
+      },
+      "decimal_checks": {
+        "count": 161,
+        "max_absolute_residual_cny": "0.0000000000000000000021",
+        "checks": [
+          {
+            "check": "CONSTRUCTION: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "CONSTRUCTION: sources less uses",
+            "absolute_residual_cny": "0.00"
+          },
+          {
+            "check": "CONSTRUCTION: annual delta roll",
+            "absolute_residual_cny": "0.00"
+          },
+          {
+            "check": "OPERATING_YEAR_1: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_1: receivables",
+            "absolute_residual_cny": "0.00"
+          },
+          {
+            "check": "OPERATING_YEAR_1: debt principal",
+            "absolute_residual_cny": "0.0000"
+          },
+          {
+            "check": "OPERATING_YEAR_1: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_1: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_1: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_2: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_2: receivables",
+            "absolute_residual_cny": "0.00"
+          },
+          {
+            "check": "OPERATING_YEAR_2: debt principal",
+            "absolute_residual_cny": "0.000000"
+          },
+          {
+            "check": "OPERATING_YEAR_2: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_2: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_2: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_3: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_3: receivables",
+            "absolute_residual_cny": "0.00"
+          },
+          {
+            "check": "OPERATING_YEAR_3: debt principal",
+            "absolute_residual_cny": "0.00000000"
+          },
+          {
+            "check": "OPERATING_YEAR_3: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_3: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_3: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_4: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_4: receivables",
+            "absolute_residual_cny": "0.00"
+          },
+          {
+            "check": "OPERATING_YEAR_4: debt principal",
+            "absolute_residual_cny": "0.0000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_4: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_4: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_4: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_5: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_5: receivables",
+            "absolute_residual_cny": "0.00"
+          },
+          {
+            "check": "OPERATING_YEAR_5: debt principal",
+            "absolute_residual_cny": "0.000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_5: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_5: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_5: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_6: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_6: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_6: debt principal",
+            "absolute_residual_cny": "0.00000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_6: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_6: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_6: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_7: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_7: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_7: debt principal",
+            "absolute_residual_cny": "0.0000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_7: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_7: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_7: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_8: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_8: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_8: debt principal",
+            "absolute_residual_cny": "0.000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_8: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_8: sources less uses",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_8: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_9: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_9: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_9: debt principal",
+            "absolute_residual_cny": "0.00000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_9: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_9: sources less uses",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_9: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_10: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_10: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_10: debt principal",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_10: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_10: sources less uses",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_10: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_11: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_11: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_11: debt principal",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_11: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_11: sources less uses",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_11: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_12: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_12: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_12: debt principal",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_12: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_12: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_12: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_13: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_13: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_13: debt principal",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_13: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_13: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_13: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_14: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_14: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_14: debt principal",
+            "absolute_residual_cny": "0.0000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_14: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_14: sources less uses",
+            "absolute_residual_cny": "0.0000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_14: annual delta roll",
+            "absolute_residual_cny": "0.0000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_15: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_15: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_15: debt principal",
+            "absolute_residual_cny": "0.000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_15: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_15: sources less uses",
+            "absolute_residual_cny": "0.000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_15: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_16: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_16: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_16: debt principal",
+            "absolute_residual_cny": "0.00000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_16: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_16: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_16: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_17: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_17: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_17: debt principal",
+            "absolute_residual_cny": "0.0000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_17: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_17: sources less uses",
+            "absolute_residual_cny": "0.0000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_17: annual delta roll",
+            "absolute_residual_cny": "0.0000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_18: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_18: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_18: debt principal",
+            "absolute_residual_cny": "0.000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_18: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_18: sources less uses",
+            "absolute_residual_cny": "0.000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_18: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_19: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_19: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_19: debt principal",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_19: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_19: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_19: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_20: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_20: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_20: debt principal",
+            "absolute_residual_cny": "0.0000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_20: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_20: sources less uses",
+            "absolute_residual_cny": "0.0000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_20: annual delta roll",
+            "absolute_residual_cny": "0.0000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_21: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_21: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_21: debt principal",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_21: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_21: sources less uses",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_21: annual delta roll",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_22: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_22: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_22: debt principal",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_22: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_22: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_22: annual delta roll",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_23: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_23: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_23: debt principal",
+            "absolute_residual_cny": "0.0000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_23: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_23: sources less uses",
+            "absolute_residual_cny": "0.0000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_23: annual delta roll",
+            "absolute_residual_cny": "0.0000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_24: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_24: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_24: debt principal",
+            "absolute_residual_cny": "0.000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_24: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_24: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_24: annual delta roll",
+            "absolute_residual_cny": "0.0000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_25: capex payable",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_25: receivables",
+            "absolute_residual_cny": "0.0000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_25: debt principal",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_25: metric capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "OPERATING_YEAR_25: sources less uses",
+            "absolute_residual_cny": "0.00000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "OPERATING_YEAR_25: annual delta roll",
+            "absolute_residual_cny": "0.0000000000000000000000000000000000000000000"
+          },
+          {
+            "check": "utility_scale_ground: lifecycle capex",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "utility_scale_ground: lifecycle opex",
+            "absolute_residual_cny": "0.0000000000000000000021"
+          },
+          {
+            "check": "utility_scale_ground: lifecycle tax",
+            "absolute_residual_cny": "0.0000000000000000000000802"
+          },
+          {
+            "check": "utility_scale_ground: year12 replacement paid",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "utility_scale_ground: year12 capitalized",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "utility_scale_ground: year15 replacement paid",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "utility_scale_ground: year15 capitalized",
+            "absolute_residual_cny": "0"
+          },
+          {
+            "check": "utility_scale_ground: both replacements deducted once",
+            "absolute_residual_cny": "0"
+          }
+        ]
+      }
+    }
+  }
+}

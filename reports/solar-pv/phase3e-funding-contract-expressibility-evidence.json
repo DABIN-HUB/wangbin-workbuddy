@@ -1,0 +1,174 @@
+{
+  "audit_kind": "PHASE3E_FUNDING_CONTRACT_STATIC_EXPRESSIBILITY_ONLY",
+  "head": "6823f740b9d34647a13c5cdc874d90a23e0bcd7e",
+  "branch": "main",
+  "scope": "NO_FUNDS_RECALCULATION_NO_SCHEMA_OR_CODE_CHANGE",
+  "gate": "BLOCKED",
+  "prior_four_payment_verdicts": "INDETERMINATE_UNCHANGED_NOT_REAUDITED",
+  "versions": {
+    "frozen_baseline": "SOLAR-PV-1.0.0",
+    "input_catalog": "solar-pv-input-catalog/1.0.0",
+    "phase2_export": "solar-pv-input-export/1.0.0",
+    "method": "solar-pv-method-config/1.0.0",
+    "result": "solar-pv-calculation-result/1.0.0",
+    "effective_formula_definitions": "solar-pv-formula-definitions/1.0.1",
+    "effective_formula_definition_hash": "617a2e9d314c095bd2ec893939c930a2323be6fd7805da12bf6d6fdd70274808"
+  },
+  "source_raw_sha256": {
+    "docs/solar-pv/03-input-fields.json": "393140cc57b5934041c3fece2c9c185c03c7876afaa3403ce317d795d6112a1b",
+    "docs/solar-pv/05-formulas.json": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331",
+    "docs/solar-pv/05-field-bindings.json": "4ef6171f063f402963d61edc9647c7565c9ec9338099f62424a77e3507521533",
+    "docs/solar-pv/08-requirement-traceability.csv": "80678b46ed84e1935fbca04fcb10662e01dc8af4c0d1f616743c5855498203b4",
+    "services/solar-pv-engine/schemas/project-input.schema.json": "1de2bf35f96b75ea6ffd510dd07f8ea9f52a0f26616e174280346c5127363e27",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/schema/method-config.schema.json": "f8d8aa861269bc44af0eb302e56457f6d5b7edac9f2b7f5903dc6440df8eae14",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/schema/calculation-result.schema.json": "f9f188a924e1c040697a09d7a97d88800bcee8756a453f7a2efe56ca2fc55fe6",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/input_contract.py": "b5ce5258fd497a794b4fa8d359430dc94f6badd1ceb1f780c709e1c8565ab03c",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/method_config.py": "3beccfc6ab03a9d6c21d020819eb2d30422e83daa4245e7167ab7428e17c6001",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_ledger.py": "41e9d5b85ecb1b730554fcdf20932fc69b2f15fe2a2ddfb46ead20d49088fce6",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/result_contract.py": "0a4cb4a5df645066b9fcbd44799f8934e4545bf3d0199633b1d3357fc65eba0c",
+    "reports/solar-pv/phase3c-startup-state.json": "26fdade64ab3f1f23a51850afa3ce068f3ebfc026b22f30e3a06e31a76732a4d"
+  },
+  "matrix": [
+    {
+      "element": "opening_unrestricted_project_cash",
+      "requirements": ["R-S06-L121"],
+      "formula_ids": ["F-CASH-FUNDING-BALANCE"],
+      "paths": ["methods.parameters.cash.opening_cash", "checks.cash_opening", "project.currency", "project.ownership_mode"],
+      "contract": "PARTIALLY_EXPRESSIBLE",
+      "cases": "ASSUMED_SYNTHETIC_SCALAR_ZERO_NOT_VERIFIED_BANK_BALANCE",
+      "consumer": "METHOD_HASHED_BUT_NOT_CONSUMED_IN_PHASE3D_OR_EXECUTED_PHASE3E",
+      "gap": "NO_LEGAL_ENTITY_ID_ACCOUNT_ID_AS_OF_TIMESTAMP_RESTRICTION_OR_BANK_VERIFICATION_ON_BALANCE"
+    },
+    {
+      "element": "dated_individual_cash_event",
+      "requirements": ["R-S06-L119", "R-S06-L121", "R-S06-L122"],
+      "formula_ids": ["F-DATED-NPV", "F-CASH-RECEIPTS", "F-CAPEX-PAYMENT-BALANCE"],
+      "paths": ["capex.items.row_id", "capex.items.payment_date", "capex.items.amount", "finance.debt_schedule.date", "finance.debt_schedule.drawdown", "finance.cash_event_ids"],
+      "contract": "PARTIALLY_EXPRESSIBLE",
+      "cases": "TWO_CAPEX_DATE_ASSUMPTIONS_PER_CASE_OTHER_CASH_ITEMS_ANNUAL_FORECAST_ONLY",
+      "consumer": "CAPEX_AND_DEBT_DATES_BUCKETED_TO_ANNUAL_IN_PHASE3D_NO_GENERAL_EVENT_LEDGER",
+      "gap": "NO_SHARED_EVENT_ID_ENTITY_ACCOUNT_ACTUAL_VS_PLANNED_SETTLEMENT_TIMESTAMP_STATUS_OR_GENERAL_CASH_EVENT_SOURCE"
+    },
+    {
+      "element": "same_day_cash_order",
+      "requirements": ["R-S06-L121", "R-S06-L122"],
+      "formula_ids": ["F-DATED-NPV", "F-CASH-FUNDING-BALANCE"],
+      "paths": ["capex.items.payment_date", "finance.debt_schedule.date", "methods.parameters.time.cashflow_timing", "site.timezone"],
+      "contract": "NOT_EXPRESSIBLE",
+      "cases": "DATE_ONLY_NO_CASH_EVENT_ORDER",
+      "consumer": "NOT_IMPLEMENTED_AND_NO_PREPAYMENT_BALANCE",
+      "gap": "NO_EVENT_TIMESTAMP_TIE_BREAK_OR_APPROVED_SAME_DAY_ORDER_RULE"
+    },
+    {
+      "element": "shareholder_contribution",
+      "requirements": ["R-S06-L121", "R-S06-L123"],
+      "formula_ids": ["F-EQUITY-INVESTOR-CASH-FLOW", "F-CASH-FUNDING-BALANCE"],
+      "paths": ["equity.contributions", "finance.debt_ratio", "project.ownership_mode"],
+      "contract": "NOT_EXPRESSIBLE",
+      "cases": "NO_ACTUAL_OR_PLANNED_CONTRIBUTION_RECORD",
+      "consumer": "FORMULA_DOMAIN_DECLARED_NO_RAW_OR_METHOD_EVENT_PRODUCER",
+      "gap": "CALCULATION_LEDGER_STATE_IS_NOT_A_VALIDATED_OWNER_PAYMENT_INPUT"
+    },
+    {
+      "element": "shareholder_distribution",
+      "requirements": ["R-S06-L121", "R-S06-L123"],
+      "formula_ids": ["F-EQUITY-INVESTOR-CASH-FLOW", "F-CASH-FUNDING-BALANCE"],
+      "paths": ["methods.parameters.equity.distribution_fractions", "equity.distributions", "methods.parameters.equity.minimum_cash_reserve"],
+      "contract": "PARTIALLY_EXPRESSIBLE",
+      "cases": "FRACTIONS_SYNTHETIC_ONE_PER_OPERATING_PERIOD_NO_PAYMENT_EVENT",
+      "consumer": "METHOD_HASHED_BUT_NOT_CONSUMED_BY_PHASE3D_OR_EXECUTED_PHASE3E",
+      "gap": "NO_ACTUAL_AMOUNT_PAYMENT_DATE_RECIPIENT_ACCOUNT_OR_RETENTION_LEDGER"
+    },
+    {
+      "element": "restricted_funds",
+      "requirements": ["R-S06-L121", "R-S06-L126"],
+      "formula_ids": ["F-CASH-FUNDING-BALANCE", "F-EQUITY-AVAILABLE-CASH-FLOW"],
+      "paths": ["methods.parameters.equity.minimum_cash_reserve", "checks.cash_opening", "working_capital.equity_net_change"],
+      "contract": "PARTIALLY_EXPRESSIBLE",
+      "cases": "MINIMUM_RESERVE_SYNTHETIC_ZERO_NO_RESTRICTION_RECORDS",
+      "consumer": "RESERVE_METHOD_HASHED_BUT_NOT_CONSUMED_BY_PHASE3D",
+      "gap": "RESERVE_POLICY_NOT_ACTUAL_RESTRICTED_CASH_AMOUNT_REASON_EFFECTIVE_RELEASE_TIMES_OR_REPLACEMENT_PERMISSION"
+    },
+    {
+      "element": "cash_fact_identity_and_hash",
+      "requirements": ["R-S06-L121", "R-S06-L122"],
+      "formula_ids": ["F-CASH-FUNDING-BALANCE", "F-DATED-NPV"],
+      "paths": ["input_hash", "source_snapshot_id", "methods.parameters", "result_hash"],
+      "contract": "PARTIALLY_EXPRESSIBLE",
+      "cases": "EXISTING_CAPEX_DATES_AND_METHOD_SCALARS_INCLUDED_MISSING_EVENTS_NOT_HASHED",
+      "consumer": "PHASE2_AND_D2_HASHES_COMPOSED_IN_PHASE3D_RESULT_NO_EVENT_IDENTITIES_TO_BIND",
+      "gap": "HASH_CAN_AUTHENTICATE_EXISTING_PAYLOAD_ONLY_NOT_UNREPRESENTABLE_ENTITY_ACCOUNT_ORDER_RESTRICTIONS"
+    }
+  ],
+  "case_observations": {
+    "industrial_rooftop": {
+      "phase2_input_hash": "cb71039535b28cf25d512dd5d3179e02ae32c6e0f20ac22e0b8708ad264f44ed",
+      "method_config_hash": "c1c51510d8678b4a4ce22950af5ec2e16381c98c1789244c9a6092e7ed241153",
+      "result_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+      "source_snapshot_id": "af6a8819475ed4971e273be68e6d0d39559a3d9c255a305674d4127443cd7fb9",
+      "input_raw_sha256": "7b08b2b12e9b8a57b4848a73b9c3b68d8881f9305cd796e773a16b3699ba743f",
+      "method_raw_sha256": "3b33541d440b847187cc1886e27789a167a91cdab5e410b89aed22e3f303d8f5",
+      "result_raw_sha256": "53d3c0cded618566bbce1d8e51fa4e0be91d84609f7bf907010a93cf3acb182e",
+      "sidecar_matches_result_hash": true,
+      "raw_value_count": 98,
+      "annual_periods": 26,
+      "ownership_mode": "owner_invested_UNVERIFIED_NOT_ENTITY_ID"
+    },
+    "utility_scale_ground": {
+      "phase2_input_hash": "fcfffc8d01385e97580faf7778258423ce5481324dfd866bfc5283fb3c5d2843",
+      "method_config_hash": "9429bf5612e1d41e8c1383f38d3601956e93ef16e3ba6e6e8a223afd48fd07dd",
+      "result_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+      "source_snapshot_id": "c760fe455fb673839f3a004c21d00afb52e71dc6d281f40a57fbd59a074555e8",
+      "input_raw_sha256": "dce65dc6808321a1267d9deb03737f2eeeddd7ac942cd96f2af5783d879a583f",
+      "method_raw_sha256": "a3d04cd0f14d7c6678ef739dc494c16357a8e766a792a7d0c5f7d6b85c90c5f8",
+      "result_raw_sha256": "99e7b2ae90a28dc07e6c6effbc9bdca9e0aa1c8226efcd10b357e988b4dfd9bb",
+      "sidecar_matches_result_hash": true,
+      "raw_value_count": 89,
+      "annual_periods": 26,
+      "ownership_mode": null
+    }
+  },
+  "shared_case_observations": {
+    "opening_cash_cny": "0",
+    "opening_cash_source_kind": "SYNTHETIC",
+    "opening_cash_status": "ASSUMED",
+    "minimum_cash_reserve_cny": "0",
+    "distribution_fractions": "25 operating values of 1; assumption, not payment",
+    "cashflow_timing": "YEAR_END",
+    "capex_replacement_date_fields": ["2037-06-01", "2040-06-01"],
+    "capex_replacement_date_status": "UNVERIFIED",
+    "debt_schedule": "empty array; drawdown basis CAPEX_PROPORTIONAL_SCENARIO",
+    "missing_fact_values": null
+  },
+  "protected_288": {
+    "baseline_file": "reports/solar-pv/phase3c-startup-state.json",
+    "total": 288,
+    "baseline_matches": 286,
+    "preexisting_deviations": {
+      "reports/validate.json": {
+        "baseline_sha256": "e1a5130a2857a27f6f5171563db7fc6e09b38bd3fae7c22a713",
+        "actual_sha256": "42765dae553254369311f3d4e7d2d3ab6f3cf0f8858a1c0e587debfea809d1ba"
+      },
+      "reports/validate.md": {
+        "baseline_sha256": "58cc11feb2ce9fd4fd752444412841290b06d30db5c0fb05ea226b703023",
+        "actual_sha256": "2c3f7cd41671f2af1cd9f5688ae4e3779d92390260cdb43299457bcedb2060e3"
+      }
+    },
+    "new_deviations": 0
+  },
+  "six_existing_worktree_differences": {
+    "packages/skills/wangbin-receivable-analyzer/SKILL.md": {"start_sha256": "8a5ee4eb54a4f6a08d3ab7cccf792c12d5f01ab3fb4ab0de8dc926149087a945", "end_sha256": "8a5ee4eb54a4f6a08d3ab7cccf792c12d5f01ab3fb4ab0de8dc926149087a945"},
+    "packages/skills/wangbin-receivable-analyzer/manifest.json": {"start_sha256": "0a9459ab33f0f3bbc1c538535b994218e6ad92792901a39c3e4e94eaf777762b", "end_sha256": "0a9459ab33f0f3bbc1c538535b994218e6ad92792901a39c3e4e94eaf777762b"},
+    "products/catalog.json": {"start_sha256": "d74f3fa9f00184ee64f8452862958c3ef11f7848378ed42657e4b5fbc91def27", "end_sha256": "d74f3fa9f00184ee64f8452862958c3ef11f7848378ed42657e4b5fbc91def27"},
+    "reports/workbuddy-upload-list.md": {"start_sha256": "6d0df16f21a4cf7a3a87eef1b90fb2f7d26fd1457f124066707281f9ff0ec586", "end_sha256": "6d0df16f21a4cf7a3a87eef1b90fb2f7d26fd1457f124066707281f9ff0ec586"},
+    "reports/validate.json": {"start_sha256": "42765dae553254369311f3d4e7d2d3ab6f3cf0f8858a1c0e587debfea809d1ba", "end_sha256": "42765dae553254369311f3d4e7d2d3ab6f3cf0f8858a1c0e587debfea809d1ba"},
+    "reports/validate.md": {"start_sha256": "2c3f7cd41671f2af1cd9f5688ae4e3779d92390260cdb43299457bcedb2060e3", "end_sha256": "2c3f7cd41671f2af1cd9f5688ae4e3779d92390260cdb43299457bcedb2060e3"}
+  },
+  "end_head": "6823f740b9d34647a13c5cdc874d90a23e0bcd7e",
+  "staging_empty_at_start": true,
+  "staging_empty_at_end": true,
+  "new_protected_differences": 0,
+  "phase3e_calculation_run": false,
+  "full_payment_coverage_recalculated": false,
+  "tests_run": false
+}

@@ -59,6 +59,11 @@ def _parser():
     financial.add_argument("--methods", required=True, help="包含已批准Phase3D账簿参数的D2方法配置JSON")
     financial.add_argument("--settlement", required=True, help="已验收Phase3C结果目录或result.json")
     financial.add_argument("--output", required=True, help="新建私有结果目录，不覆盖")
+    phase3e = commands.add_parser("phase3e", help="Phase3E冻结财务评价；消费Phase3D账簿并按公式逐项输出项目级状态")
+    phase3e.add_argument("--input", required=True, help="包含Phase3D冻结财务输入的Phase2完整导出JSON")
+    phase3e.add_argument("--methods", required=True, help="包含已批准D2方法参数的JSON")
+    phase3e.add_argument("--settlement", required=True, help="已验收Phase3C结果目录或result.json")
+    phase3e.add_argument("--output", required=True, help="新建私有结果目录，不覆盖")
     for command in ("submit", "revise", "resolve", "review", "remove", "accept"):
         examples = {
             "submit": '{"submission_id":"round1","updates":[{"field_id":"site.total_area","value":1000,"unit":"m2"}]}',
@@ -173,6 +178,24 @@ def main(argv=None):
             validate_result(result, catalog)
             write_financial_bundle(result, workspace.path(args.output, json_only=False))
             print(dumps({"status":result["status"],"result_hash":result["result_hash"],"calculation_maturity":result["maturity"]["calculation"],"scope":"PHASE3D_FINANCIAL_FOUNDATION_ONLY","phase3e":"NOT_IMPLEMENTED"}))
+            return 0
+        if args.command == "phase3e":
+            from .calculation.financial_ledger import calculate_financial_ledger
+            from .calculation.phase3e import calculate_phase3e, write_phase3e_bundle
+            from .calculation.method_config import MethodConfig
+            from .calculation.result_contract import validate_result
+            exported = workspace.read(args.input)[0]
+            methods = MethodConfig.from_dict(workspace.read(args.methods)[0])
+            settlement_path = workspace.path(args.settlement, json_only=False)
+            if settlement_path.is_dir(): settlement_path = settlement_path / "result.json"
+            settlement = loads(settlement_path.read_bytes())
+            foundation = calculate_financial_ledger(exported, methods, settlement, catalog=catalog)
+            result = calculate_phase3e(foundation, methods, catalog)
+            validate_result(result, catalog)
+            write_phase3e_bundle(result, workspace.path(args.output, json_only=False))
+            print(dumps({"status": result["status"], "result_hash": result["result_hash"],
+                         "calculation_maturity": result["maturity"]["calculation"],
+                         "scope": "PHASE3E_FROZEN_FINANCIAL_EVALUATION", "instantaneous_payment_coverage": "INDETERMINATE"}))
             return 0
         if args.command == "energy":
             from contextlib import nullcontext

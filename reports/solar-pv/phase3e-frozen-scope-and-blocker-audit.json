@@ -1,0 +1,2986 @@
+{
+  "audit": "PHASE3E_FROZEN_SCOPE_AND_BLOCKER",
+  "audit_mode": "READ_ONLY_SOURCES_AND_TWO_NEW_DELIVERABLES",
+  "git": {
+    "head": "6823f740b9d34647a13c5cdc874d90a23e0bcd7e",
+    "branch": "main",
+    "index_empty_at_start": true
+  },
+  "frozen_baseline": {
+    "identifier": "SOLAR-PV-1.0.0",
+    "original_sha256": "4af609040ca4e800b16d561b86a8a33c54226d175581b54aa00110158c5d09f2",
+    "manifest_source_sha256_matches": true,
+    "catalog_fields": 469,
+    "formula_main": 77,
+    "formula_extension": 12,
+    "bindings": 281,
+    "effective_formula_version": "solar-pv-formula-definitions/1.0.1",
+    "effective_definition_hash": "617a2e9d314c095bd2ec893939c930a2323be6fd7805da12bf6d6fdd70274808"
+  },
+  "source_file_sha256": {
+    "docs/solar-pv/00-original-user-baseline.md": "4af609040ca4e800b16d561b86a8a33c54226d175581b54aa00110158c5d09f2",
+    "docs/solar-pv/00-baseline-manifest.json": "33845de976ec13345320b79ff7045e86a39bf2194a427b5cd28169238d1defec",
+    "docs/solar-pv/README.md": "95e8f4625bc66d3cde733619ba5d76b8d5cba438257740d4cb7dcd0c9151b853",
+    "docs/solar-pv/02-report-outline-18-chapters.md": "b78456f1ac59be371f15076e0a17cdcfa89249d68b584afa57feaf2db8654125",
+    "docs/solar-pv/03-input-data-dictionary.md": "fcc1eac5641f941adbd6fd4fab216050344b2ae4e0590d8e9549682117ab8148",
+    "docs/solar-pv/03-input-fields.json": "393140cc57b5934041c3fece2c9c185c03c7876afaa3403ce317d795d6112a1b",
+    "docs/solar-pv/05-formulas.json": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331",
+    "docs/solar-pv/05-formula-extensions.json": "14bb789c908f4f883910fd517fd2cf55cf0719739f9fdd84e4dc61b111252007",
+    "docs/solar-pv/05-field-bindings.json": "4ef6171f063f402963d61edc9647c7565c9ec9338099f62424a77e3507521533",
+    "docs/solar-pv/07-category-boundaries.md": "ee935418c0a7ef55544f6f97fddf71bcb62f6b906d0c19256b871f8d02b086a8",
+    "docs/solar-pv/08-requirement-traceability.csv": "80678b46ed84e1935fbca04fcb10662e01dc8af4c0d1f616743c5855498203b4",
+    "docs/solar-pv/08-acceptance-design.md": "0c8e0db8619bc1d1b060a277923d261ebe0f01f5fa4e666d764e92b4c568acb3",
+    "docs/solar-pv/10-four-file-acceptance.md": "50ebfe4e942bd1f33ed975b4d10eb67a044ea7cf31de7b8577384139c32a909c",
+    "docs/solar-pv/11-phased-roadmap.md": "2e45d757c5f4fc9fdac5b7ae5a03f5f95fd8c05ae09de8a65b58be062d5bd614",
+    "docs/solar-pv/12-canonical-result-contract.md": "d45a819d8a7903e5c4b3493823219a896747540424280018507471bd0df994db",
+    "docs/solar-pv/16-phase3-user-task.md": "c1fdd047f8d493678642e1609c5b7da2492dae5ef0e28ac2966cd1f59bdb3349",
+    "docs/solar-pv/17-phase3-implementation-plan.md": "94ec602f8c118905e0bf5fbe97c2e9cf91d3446165debe1f408cbcbe4bac6d08",
+    "docs/solar-pv/18-phase3-preimplementation-review.md": "1f0ceb81dfe925a8501879252b9ebe5a71d35774fc71b390c3338b9464cd2868",
+    "docs/solar-pv/19-phase3-approved-implementation-contract.md": "68f2551dce001360972fe94dd562539e967dc1891ae17bc9fb98898ccc4495b4",
+    "reports/solar-pv/phase3d-review-and-acceptance.md": "0d01fbfd7a50158fca79a70cdb009492653c9fbae8bc6991b17a4379d7d88962",
+    "reports/solar-pv/phase3d-repair-and-acceptance.md": "1a4e892596befef1392eb4723fcda36ddebe66595805c149477db314ed0b6317",
+    "reports/solar-pv/phase3e-review-and-acceptance.md": "43b2c1af1d4a804329449fc38a423c29721782b6877d299ce2bfeac8f886844d",
+    "reports/solar-pv/phase3e-funding-coverage-review.md": "af2c785901bf490bfe9de4a82ec65c82376b72a1dbc66bede9dbe8580b3cb5be",
+    "reports/solar-pv/phase3e-funding-coverage-recheck.md": "526c1816f873ce8c55832684bd9aa07ad7d075123e56842dbdb4366e97ce19f3",
+    "reports/solar-pv/phase3e-funding-contract-expressibility-review.md": "247381b643839fcd931024c1ae2e0a91ba58574ed621d6152d0683dd3d0469b3",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/method_config.py": "3beccfc6ab03a9d6c21d020819eb2d30422e83daa4245e7167ab7428e17c6001",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_ledger.py": "41e9d5b85ecb1b730554fcdf20932fc69b2f15fe2a2ddfb46ead20d49088fce6",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/schema/method-config.schema.json": "f8d8aa861269bc44af0eb302e56457f6d5b7edac9f2b7f5903dc6440df8eae14",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/schema/calculation-result.schema.json": "f9f188a924e1c040697a09d7a97d88800bcee8756a453f7a2efe56ca2fc55fe6",
+    "services/solar-pv-engine/schemas/project-input.schema.json": "1de2bf35f96b75ea6ffd510dd07f8ea9f52a0f26616e174280346c5127363e27",
+    "services/solar-pv-engine/src/wangbin_solar_pv/definition_versions.py": "9d50c04fb815fe1160ff43ec1fb7141492bf0acaa8ae264b0480e47fd68b5b43",
+    "services/solar-pv-engine/src/wangbin_solar_pv/definition-lock.json": "728ccb42a5d5f78cc9252f61070dd5eb2c1a426b8e727423d113bb2f79d170b6",
+    "services/solar-pv-engine/src/wangbin_solar_pv/definition-errata.json": "bee7fc4e737a3f8e40befa272a842ce1ad0454b8437590089e090e32031b15e0"
+  },
+  "anchors": [
+    {
+      "path": "docs/solar-pv/00-original-user-baseline.md",
+      "line": 121,
+      "sha256": "4af609040ca4e800b16d561b86a8a33c54226d175581b54aa00110158c5d09f2",
+      "text": "10. 年现金流：给项目投资现金流与股东现金流各自的独立公式和逐项符号（经营现金收入、现金运营费用、实际税金、资本开支、营运资金变化、融资资金流、债务服务、残值），应考虑建设期/运营期、设备更换以及税务现金口径。**项目 IRR 不应混入债务融资现金流，股权 IRR 必须计入融资。**"
+    },
+    {
+      "path": "docs/solar-pv/00-original-user-baseline.md",
+      "line": 122,
+      "sha256": "4af609040ca4e800b16d561b86a8a33c54226d175581b54aa00110158c5d09f2",
+      "text": "11. `NPV=Σ_{y=0}^{N} CF_y/(1+r)^y`；`NPV` 净现值(元)，`CF_y` 年末时点现金流(元)，`r` 与现金流口径一致的折现率，`N` 最后一个评价年，`y=0` 为基期（建设期多时点需要正确建模）。区分名义/实际、税前/税后。"
+    },
+    {
+      "path": "docs/solar-pv/00-original-user-baseline.md",
+      "line": 126,
+      "sha256": "4af609040ca4e800b16d561b86a8a33c54226d175581b54aa00110158c5d09f2",
+      "text": "15. `DSCR_y=CFADS_y/DebtService_y`；`CFADS_y` 可用于偿债的现金流，`DebtService_y` 同期应还本金+利息及按融资协议需要的费用，缺失债务时显示不适用，零分母不可强行给数。"
+    },
+    {
+      "path": "docs/solar-pv/16-phase3-user-task.md",
+      "line": 509,
+      "sha256": "c1fdd047f8d493678642e1609c5b7da2492dae5ef0e28ac2966cd1f59bdb3349",
+      "text": "### 8.2 年度现金流"
+    },
+    {
+      "path": "docs/solar-pv/17-phase3-implementation-plan.md",
+      "line": 89,
+      "sha256": "94ec602f8c118905e0bf5fbe97c2e9cf91d3446165debe1f408cbcbe4bac6d08",
+      "text": "- [ ] 明确建设/投产/运营期、年0与实际现金日期，项目不混债务、权益区分可分配现金和股东投入/分红/退出。"
+    },
+    {
+      "path": "docs/solar-pv/19-phase3-approved-implementation-contract.md",
+      "line": 8,
+      "sha256": "68f2551dce001360972fe94dd562539e967dc1891ae17bc9fb98898ccc4495b4",
+      "text": "- D2：独立版本、严格Schema的方法/显式假设配置，每个参数有类型、单位、来源、状态、版本、分类、边界及中英文解释。纳入计算身份/来源/hash；不把缺值填0、应付当已付，不把SYNTHETIC当真实默认，不创建冲突原始字段。"
+    }
+  ],
+  "formula_count": 21,
+  "formula_matrix": [
+    {
+      "formula_id": "F-PROJECT-CASH-FLOW",
+      "chinese_name": "项目投资无杠杆净现金流",
+      "text_equation": "CF_P,y = B_op,y − O_y − T_P,y − K_P,y − ΔW_P,y + S_P,y",
+      "every_symbol_definition": [
+        {
+          "symbol": "CF_P,y",
+          "definition_zh": "项目投资视角税后无杠杆增量净现金流",
+          "unit": "元",
+          "field_id": "finance.project_cash_flow",
+          "role": "output"
+        },
+        {
+          "symbol": "B_op,y",
+          "definition_zh": "增量经营现金利益：到账经营收入加确认的自用避免支出，不含融资",
+          "unit": "元",
+          "field_id": "finance.project_operating_cash_benefit",
+          "role": "input"
+        },
+        {
+          "symbol": "O_y",
+          "definition_zh": "现金经营支出，不含折旧、已在自用避免支出扣除项和单列税",
+          "unit": "元",
+          "field_id": "opex.cash_annual",
+          "role": "input"
+        },
+        {
+          "symbol": "T_P,y",
+          "definition_zh": "无杠杆现金税负：项目所得税、其他税费和适配税价桥后的增值税净缴退",
+          "unit": "元",
+          "field_id": "tax.project_cash_total",
+          "role": "input"
+        },
+        {
+          "symbol": "K_P,y",
+          "definition_zh": "当年工程资本付款及资本化更新替换，不含融资资金流和资本化借款利息",
+          "unit": "元",
+          "field_id": "capex.unlevered_cash_annual",
+          "role": "input"
+        },
+        {
+          "symbol": "ΔW_P,y",
+          "definition_zh": "经营营运资金净增加，不含已按现金收入/支出桥扣过部分和单列税务资产负债",
+          "unit": "元",
+          "field_id": "working_capital.project_net_change",
+          "role": "input"
+        },
+        {
+          "symbol": "S_P,y",
+          "definition_zh": "期末处置净现金和未在 ΔW 中回收的残余资金，税务影响进 T",
+          "unit": "元",
+          "field_id": "finance.project_terminal_cash",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "P": "无杠杆项目；y 为财务时点索引，0 为基期，含所有建设/运营/退出期；op=经营，Δ=期末减期初，W=营运资金。",
+        "逐个下标词素": "P=项目无杠杆口径；y=财务或运营年度索引，必须按本条时间定义区分；op=运营经营利益"
+      },
+      "set_and_range_definition": [],
+      "calculation_boundary": "建设期、运营期、替换和退出全时点；绝不含贷款提款、本息、融资费或股东出入资。",
+      "assumptions": [
+        "直接现金法时 ΔW 只剩未计入收付桥的营运资金；权责法需完整营运资金调整，二者不能叠用。",
+        "自用节省必须与反事实基线一致，不可把原购电费用和全部节省同时重复扣减/增加。",
+        "税前项目流由税后流加回明确所得税项形成另一字段/ID，不能把所有增值税都混称所得税。"
+      ],
+      "input_field_ids": [
+        "finance.project_operating_cash_benefit",
+        "opex.cash_annual",
+        "tax.project_cash_total",
+        "capex.unlevered_cash_annual",
+        "working_capital.project_net_change",
+        "finance.project_terminal_cash"
+      ],
+      "input_bindings": [
+        {
+          "finance.project_operating_cash_benefit": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.project_operating_cash_benefit",
+          "is_original_469_input": false
+        },
+        {
+          "opex.cash_annual": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "opex.cash_annual",
+          "is_original_469_input": false
+        },
+        {
+          "tax.project_cash_total": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "tax.project_cash_total",
+          "is_original_469_input": false
+        },
+        {
+          "capex.unlevered_cash_annual": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "capex.unlevered_cash_annual",
+          "is_original_469_input": false
+        },
+        {
+          "working_capital.project_net_change": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "working_capital.project_net_change",
+          "is_original_469_input": false
+        },
+        {
+          "finance.project_terminal_cash": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.project_terminal_cash",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "年度经营利益（屋顶自用单列；地面外售）",
+      "phase3d_ledger_requirement": "项目税/建设及更换付现/OPEX/营运资金/处置",
+      "required_methods_or_boundaries": "cash.method、time.cashflow_timing、项目税及残值口径",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "CONDITIONAL_ANNUAL",
+      "without_individual_events_or_instant_funding_proof": "可按期间形成项目情景；期末残值必须区分账面残值与实际处置现金，屋顶自用节省不得冒充银行到账。",
+      "missing_input_consequence": "不因缺付款瞬时资金证明而停止；本行其它冻结条件仍须满足",
+      "requirement_ids": [
+        "R-S06-L121"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 5209,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-PROJECT-PRETAX-CASH-FLOW",
+      "chinese_name": "项目所得税前现金流",
+      "text_equation": "CF_P,pre,y = CF_P,y + T_inc,cash,P,y",
+      "every_symbol_definition": [
+        {
+          "symbol": "CF_P,pre,y",
+          "definition_zh": "仅加回项目所得税的税前无杠杆现金流",
+          "unit": "元",
+          "field_id": "finance.project_pretax_cash_flow",
+          "role": "output"
+        },
+        {
+          "symbol": "CF_P,y",
+          "definition_zh": "所得税后无杠杆项目现金流",
+          "unit": "元",
+          "field_id": "finance.project_cash_flow",
+          "role": "input"
+        },
+        {
+          "symbol": "T_inc,cash,P,y",
+          "definition_zh": "同一项目口径实际/模拟所得税现金缴纳净额",
+          "unit": "元",
+          "field_id": "tax.project_income_cash_paid",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "P": "项目；pre=所得税前；inc,cash=现金所得税；y=财务时点。",
+        "逐个下标词素": "P=项目无杠杆口径；pre=初始衰减前或所得税前，按完整符号区分；y=财务或运营年度索引，必须按本条时间定义区分；inc=所得税而非其他现金税费；cash=实际或预测现金收付而非权责计提"
+      },
+      "set_and_range_definition": [],
+      "calculation_boundary": "所得税前不等于不含增值税/全部免税；保留合法其他现金税费和税价桥。",
+      "assumptions": [
+        "若另需全部税前口径必须新命名，不能替换本式。"
+      ],
+      "input_field_ids": [
+        "finance.project_cash_flow",
+        "tax.project_income_cash_paid"
+      ],
+      "input_bindings": [
+        {
+          "finance.project_cash_flow": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.project_cash_flow",
+          "is_original_469_input": false
+        },
+        {
+          "tax.project_income_cash_paid": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "tax.project_income_cash_paid",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "同上",
+      "phase3d_ledger_requirement": "项目所得税实付与项目税后流",
+      "required_methods_or_boundaries": "项目所得税口径",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "DEPENDENT_PROJECT",
+      "without_individual_events_or_instant_funding_proof": "在正确项目税后流和同口径所得税实付具备后可算。",
+      "missing_input_consequence": "不因缺付款瞬时资金证明而停止；本行其它冻结条件仍须满足",
+      "requirement_ids": [
+        "R-S06-L121"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 5348,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-EQUITY-AVAILABLE-CASH-FLOW",
+      "chinese_name": "股权可分配增量现金流",
+      "text_equation": "CF_E,avail,y = B_op,y − O_y − T_E,y − K_E,y − ΔW_E,y + S_E,y + DD_y − PRN_y − INT_y − FF_y",
+      "every_symbol_definition": [
+        {
+          "symbol": "CF_E,avail,y",
+          "definition_zh": "融资后可供股权的现金余缺，负值表示需股东追加资金",
+          "unit": "元",
+          "field_id": "finance.equity_available_cash_flow",
+          "role": "output"
+        },
+        {
+          "symbol": "B_op,y",
+          "definition_zh": "经营现金利益，不含融资",
+          "unit": "元",
+          "field_id": "finance.project_operating_cash_benefit",
+          "role": "input"
+        },
+        {
+          "symbol": "O_y",
+          "definition_zh": "现金运营支出",
+          "unit": "元",
+          "field_id": "opex.cash_annual",
+          "role": "input"
+        },
+        {
+          "symbol": "T_E,y",
+          "definition_zh": "考虑合法利息税盾的实际主体现金税总额，税价桥口径与项目流一致",
+          "unit": "元",
+          "field_id": "tax.equity_cash_total",
+          "role": "input"
+        },
+        {
+          "symbol": "K_E,y",
+          "definition_zh": "实际资产付款及更换，融资利息和融资费用已单列 INT/FF 因此不在此扣",
+          "unit": "元",
+          "field_id": "capex.equity_asset_cash_annual",
+          "role": "input"
+        },
+        {
+          "symbol": "ΔW_E,y",
+          "definition_zh": "未在其他现金项扣过的经营营运资金和约定受限储备净增",
+          "unit": "元",
+          "field_id": "working_capital.equity_net_change",
+          "role": "input"
+        },
+        {
+          "symbol": "S_E,y",
+          "definition_zh": "处置及未在 ΔW 中回收的终期现金",
+          "unit": "元",
+          "field_id": "finance.equity_terminal_cash",
+          "role": "input"
+        },
+        {
+          "symbol": "DD_y",
+          "definition_zh": "债务现金提款，非资本化利息记账增加",
+          "unit": "元",
+          "field_id": "debt.cash_drawdown",
+          "role": "input"
+        },
+        {
+          "symbol": "PRN_y",
+          "definition_zh": "本期实际付现归还本金",
+          "unit": "元",
+          "field_id": "debt.principal_paid",
+          "role": "input"
+        },
+        {
+          "symbol": "INT_y",
+          "definition_zh": "本期实际付现债务利息，含建设期支付部分",
+          "unit": "元",
+          "field_id": "debt.interest_paid",
+          "role": "input"
+        },
+        {
+          "symbol": "FF_y",
+          "definition_zh": "付现融资费用，未在资产付款/利息中重复计入",
+          "unit": "元",
+          "field_id": "debt.finance_fees_paid",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "E": "股权口径；avail=可分配余缺；DD=提款，PRN=本金，INT=利息，FF=融资费；y=完整财务时点。",
+        "逐个下标词素": "E=股权/融资主体口径，ε_E 则标能量残差；avail=可供股权分配的现金余缺；y=财务或运营年度索引，必须按本条时间定义区分；op=运营经营利益"
+      },
+      "set_and_range_definition": [],
+      "calculation_boundary": "明确包含融资并使用融资后税负；项目流不能原样加融资后忽略利息税盾。",
+      "assumptions": [
+        "资本化但未支付利息只滚入债务余额，不再作为 INT 现金支出；资本化费用同理。",
+        "本条是可供股权现金流，受限分红制度下不一定等于投资者实际收付。"
+      ],
+      "input_field_ids": [
+        "finance.project_operating_cash_benefit",
+        "opex.cash_annual",
+        "tax.equity_cash_total",
+        "capex.equity_asset_cash_annual",
+        "working_capital.equity_net_change",
+        "finance.equity_terminal_cash",
+        "debt.cash_drawdown",
+        "debt.principal_paid",
+        "debt.interest_paid",
+        "debt.finance_fees_paid"
+      ],
+      "input_bindings": [
+        {
+          "finance.project_operating_cash_benefit": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.project_operating_cash_benefit",
+          "is_original_469_input": false
+        },
+        {
+          "opex.cash_annual": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "opex.cash_annual",
+          "is_original_469_input": false
+        },
+        {
+          "tax.equity_cash_total": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "tax.equity_cash_total",
+          "is_original_469_input": false
+        },
+        {
+          "capex.equity_asset_cash_annual": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "capex.equity_asset_cash_annual",
+          "is_original_469_input": false
+        },
+        {
+          "working_capital.equity_net_change": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "working_capital.equity_net_change",
+          "is_original_469_input": false
+        },
+        {
+          "finance.equity_terminal_cash": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.equity_terminal_cash",
+          "is_original_469_input": false
+        },
+        {
+          "debt.cash_drawdown": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "debt.cash_drawdown",
+          "is_original_469_input": false
+        },
+        {
+          "debt.principal_paid": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "debt.principal_paid",
+          "is_original_469_input": false
+        },
+        {
+          "debt.interest_paid": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "debt.interest_paid",
+          "is_original_469_input": false
+        },
+        {
+          "debt.finance_fees_paid": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "debt.finance_fees_paid",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "年度经营利益",
+      "phase3d_ledger_requirement": "融资后税、CAPEX/OPEX、提款及实付本息/费、营运/储备/终期",
+      "required_methods_or_boundaries": "现金桥、储备/分配约束、债务付现",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "CONDITIONAL_ANNUAL",
+      "without_individual_events_or_instant_funding_proof": "合成期间余缺可研究；实体受限储备/终期收益须明确，不能把本项自动视作实际分红。",
+      "missing_input_consequence": "不因缺付款瞬时资金证明而停止；本行其它冻结条件仍须满足",
+      "requirement_ids": [
+        "R-S06-L121"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 5450,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-EQUITY-INVESTOR-CASH-FLOW",
+      "chinese_name": "股东实际投入分配现金流",
+      "text_equation": "CF_E,y = DIV_y + EXIT_y − EQ_y",
+      "every_symbol_definition": [
+        {
+          "symbol": "CF_E,y",
+          "definition_zh": "投资者视角净现金流，用于实际资本金 IRR",
+          "unit": "元",
+          "field_id": "finance.equity_investor_cash_flow",
+          "role": "output"
+        },
+        {
+          "symbol": "DIV_y",
+          "definition_zh": "当期实际或计划可合法支付的股东分配",
+          "unit": "元",
+          "field_id": "equity.distributions",
+          "role": "input"
+        },
+        {
+          "symbol": "EXIT_y",
+          "definition_zh": "未含在分配中的投资者退出或终期清算回款",
+          "unit": "元",
+          "field_id": "equity.exit_receipts",
+          "role": "input"
+        },
+        {
+          "symbol": "EQ_y",
+          "definition_zh": "本期股东实际出资及追加资金",
+          "unit": "元",
+          "field_id": "equity.contributions",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "E": "股东投资者；DIV=分配，EXIT=退出，EQ=实缴出资；y=财务时点。",
+        "逐个下标词素": "E=股权/融资主体口径，ε_E 则标能量残差；y=财务或运营年度索引，必须按本条时间定义区分"
+      },
+      "set_and_range_definition": [],
+      "calculation_boundary": "分红限制、储备账户、资金滞留需反映实际收付；CF_E,avail 只有立即全额弥补/分配且无滞留时才与此相等。",
+      "assumptions": [
+        "初始及追加出资均负流；不得将累计正项目现金流直接当资本金 IRR 输入。"
+      ],
+      "input_field_ids": [
+        "equity.distributions",
+        "equity.exit_receipts",
+        "equity.contributions"
+      ],
+      "input_bindings": [
+        {
+          "equity.distributions": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "equity.distributions",
+          "is_original_469_input": false
+        },
+        {
+          "equity.exit_receipts": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "equity.exit_receipts",
+          "is_original_469_input": false
+        },
+        {
+          "equity.contributions": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "equity.contributions",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "无直接需要；依赖股东现金",
+      "phase3d_ledger_requirement": "3D无实际股东出资、分配、退出逐期账",
+      "required_methods_or_boundaries": "equity.distribution_fractions与minimum_cash_reserve仅为策略",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "BLOCKED_EQUITY_FACTS",
+      "without_individual_events_or_instant_funding_proof": "出资/合法可付分配/退出需有效期间事实；比例为1及0储备不等于已向股东支付。",
+      "missing_input_consequence": "原公式无法产生完整有效数值，必须带原因保留未定",
+      "requirement_ids": [
+        "R-S06-L121"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 5618,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-CASH-FUNDING-BALANCE",
+      "chinese_name": "融资与现金账户平衡",
+      "text_equation": "CLOSE_y = OPEN_y + CF_E,avail,y + EQ_y − DIV_y",
+      "every_symbol_definition": [
+        {
+          "symbol": "CLOSE_y",
+          "definition_zh": "项目主体期末非受限现金余额",
+          "unit": "元",
+          "field_id": "checks.cash_closing",
+          "role": "output"
+        },
+        {
+          "symbol": "OPEN_y",
+          "definition_zh": "项目主体期初非受限现金余额",
+          "unit": "元",
+          "field_id": "checks.cash_opening",
+          "role": "input"
+        },
+        {
+          "symbol": "CF_E,avail,y",
+          "definition_zh": "已计经营、税、资本支出、提款、本息及融资费用的股权可用余缺",
+          "unit": "元",
+          "field_id": "finance.equity_available_cash_flow",
+          "role": "input"
+        },
+        {
+          "symbol": "EQ_y",
+          "definition_zh": "股东实际出资及追加",
+          "unit": "元",
+          "field_id": "equity.contributions",
+          "role": "input"
+        },
+        {
+          "symbol": "DIV_y",
+          "definition_zh": "主体支付的股东分配，终期清算支付也应归入对应账户用途",
+          "unit": "元",
+          "field_id": "equity.distributions",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "y": "所有建设/运营财务时点；OPEN/CLOSE=期初/末现金；E,avail=可供股权余缺。",
+        "逐个下标词素": "y=财务或运营年度索引，必须按本条时间定义区分；E=股权/融资主体口径，ε_E 则标能量残差；avail=可供股权分配的现金余缺"
+      },
+      "set_and_range_definition": [],
+      "calculation_boundary": "本条验证主体现金账户；独立第三方支付的股权转让 EXIT 不经过主体账户；终期资产处置已在 CF_E,avail 中。",
+      "assumptions": [
+        "资金缺口不能用负现金隐藏；需标 ADDITIONAL_EQUITY_REQUIRED 或融资缺口。"
+      ],
+      "input_field_ids": [
+        "checks.cash_opening",
+        "finance.equity_available_cash_flow",
+        "equity.contributions",
+        "equity.distributions"
+      ],
+      "input_bindings": [
+        {
+          "checks.cash_opening": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "checks.cash_opening",
+          "is_original_469_input": false
+        },
+        {
+          "finance.equity_available_cash_flow": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.equity_available_cash_flow",
+          "is_original_469_input": false
+        },
+        {
+          "equity.contributions": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "equity.contributions",
+          "is_original_469_input": false
+        },
+        {
+          "equity.distributions": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "equity.distributions",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "无直接需要；以上融资后可用流",
+      "phase3d_ledger_requirement": "3D无主体非受限期初/末现金滚动、股东实际往来",
+      "required_methods_or_boundaries": "cash.opening_cash、equity.minimum_cash_reserve",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": true,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "BLOCKED_PERIOD_ENTITY_BALANCE",
+      "without_individual_events_or_instant_funding_proof": "合成期初现金0已配置，但不是核验非受限现金；需要期间OPEN、EQ、DIV及非负/缺口状态，不要求付款瞬时银行账户排序。",
+      "missing_input_consequence": "原公式无法产生完整有效数值，必须带原因保留未定",
+      "requirement_ids": [
+        "R-S06-L121"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 5729,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-NPV",
+      "chinese_name": "同口径净现值",
+      "text_equation": "NPV_b = Σ(y=0…N) CF_b,y / (1 + r_b)^y",
+      "every_symbol_definition": [
+        {
+          "symbol": "NPV_b",
+          "definition_zh": "口径 b 的年末现金流净现值",
+          "unit": "元",
+          "field_id": "finance.npv",
+          "role": "output"
+        },
+        {
+          "symbol": "CF_b,y",
+          "definition_zh": "已选项目税前/税后或股东实际现金流，口径不混合",
+          "unit": "元",
+          "field_id": "finance.selected_cash_flow",
+          "role": "input"
+        },
+        {
+          "symbol": "r_b",
+          "definition_zh": "与口径 b 匹配的每年折现率",
+          "unit": "1（每年度有效比例，非连续时间倒数单位）",
+          "field_id": "finance.selected_discount_rate",
+          "role": "input"
+        },
+        {
+          "symbol": "b",
+          "definition_zh": "项目税前、项目税后、股东实际收付中的一个完整口径标签",
+          "unit": "枚举",
+          "field_id": "finance.cash_flow_basis",
+          "role": "input"
+        },
+        {
+          "symbol": "y",
+          "definition_zh": "从基期 0 起的财务年度整数时点",
+          "unit": "1",
+          "field_id": null,
+          "role": "index_or_constant"
+        },
+        {
+          "symbol": "N",
+          "definition_zh": "最后一个财务年度时点，含建设及终期",
+          "unit": "1",
+          "field_id": "time.financial_end_year",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "Σ y=0…N": "有限求和含基期与末期；b=唯一口径；y=0 为评价基准日。",
+        "逐个下标词素": "b=互斥的项目/股权及税前后完整口径索引；y=财务或运营年度索引，必须按本条时间定义区分"
+      },
+      "set_and_range_definition": [
+        {
+          "token": "Σ y=0…N",
+          "definition": "有限求和含基期与末期；b=唯一口径；y=0 为评价基准日。"
+        }
+      ],
+      "calculation_boundary": "同币种、同基准日、同税口径和名义/实际价格；多建设年均保留现金流，不把全部投资挤到首运营年。",
+      "assumptions": [
+        "r_b > −1；年末假定必须声明；项目 r 不直接代股东 r；缺折现率只可报情景。"
+      ],
+      "input_field_ids": [
+        "finance.selected_cash_flow",
+        "finance.selected_discount_rate",
+        "finance.cash_flow_basis",
+        "time.financial_end_year"
+      ],
+      "input_bindings": [
+        {
+          "finance.selected_cash_flow": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.selected_cash_flow",
+          "is_original_469_input": false
+        },
+        {
+          "finance.selected_discount_rate": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.selected_discount_rate",
+          "is_original_469_input": false
+        },
+        {
+          "finance.cash_flow_basis": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.cash_flow_basis",
+          "is_original_469_input": false
+        },
+        {
+          "time.financial_end_year": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "time.financial_end_year",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "依所选项目/权益流",
+      "phase3d_ledger_requirement": "已选完整期间流；权益分支缺股东收付",
+      "required_methods_or_boundaries": "选定折现率及税/价格/年末时点",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "PROJECT_CONDITIONAL_EQUITY_BLOCKED",
+      "without_individual_events_or_instant_funding_proof": "项目年末NPV依项目流可算；实际股东NPV随股东收付受阻。",
+      "missing_input_consequence": "不因缺付款瞬时资金证明而停止；本行其它冻结条件仍须满足",
+      "requirement_ids": [
+        "R-S06-L122"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 6243,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-DATED-NPV",
+      "chinese_name": "非整年时点净现值",
+      "text_equation": "NPV_b = Σ(k∈C) CF_b,k / (1 + r_b)^τ_k",
+      "every_symbol_definition": [
+        {
+          "symbol": "NPV_b",
+          "definition_zh": "按实际支付时点折现的净现值",
+          "unit": "元",
+          "field_id": "finance.dated_npv",
+          "role": "output"
+        },
+        {
+          "symbol": "CF_b,k",
+          "definition_zh": "第 k 个实际现金事件的金额",
+          "unit": "元",
+          "field_id": "finance.dated_cash_flows",
+          "role": "input"
+        },
+        {
+          "symbol": "r_b",
+          "definition_zh": "同口径年化折现率",
+          "unit": "1（每年度有效比例，非连续时间倒数单位）",
+          "field_id": "finance.selected_discount_rate",
+          "role": "input"
+        },
+        {
+          "symbol": "τ_k",
+          "definition_zh": "事件日至基准日的合同年分数，可为非整数",
+          "unit": "年/年",
+          "field_id": "finance.cash_event_year_fraction",
+          "role": "input"
+        },
+        {
+          "symbol": "k",
+          "definition_zh": "现金事件索引",
+          "unit": "1",
+          "field_id": null,
+          "role": "index_or_constant"
+        },
+        {
+          "symbol": "C",
+          "definition_zh": "完整评价现金事件集合，含基期和终期",
+          "unit": "集合",
+          "field_id": "finance.cash_event_ids",
+          "role": "input"
+        },
+        {
+          "symbol": "b",
+          "definition_zh": "唯一现金流口径",
+          "unit": "枚举",
+          "field_id": "finance.cash_flow_basis",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "k∈C": "Σ 遍历所有现金事件，不漏基期；τ_k 为按明确日计数规则计算的无量纲年分数。",
+        "逐个下标词素": "b=互斥的项目/股权及税前后完整口径索引；k=损失/费用类别或现金事件索引，见本条集合"
+      },
+      "set_and_range_definition": [
+        {
+          "token": "k∈C",
+          "definition": "Σ 遍历所有现金事件，不漏基期；τ_k 为按明确日计数规则计算的无量纲年分数。"
+        }
+      ],
+      "calculation_boundary": "建设跨年、分期出资优先采用；日计数采用的年分数规则须写入方法版本，不默认日历除数。",
+      "assumptions": [
+        "τ 的计算基准所有事件一致；r>−1；不能和年末 NPV 无说明比较。"
+      ],
+      "input_field_ids": [
+        "finance.dated_cash_flows",
+        "finance.selected_discount_rate",
+        "finance.cash_event_year_fraction",
+        "finance.cash_event_ids",
+        "finance.cash_flow_basis"
+      ],
+      "input_bindings": [
+        {
+          "finance.dated_cash_flows": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.dated_cash_flows",
+          "is_original_469_input": false
+        },
+        {
+          "finance.selected_discount_rate": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.selected_discount_rate",
+          "is_original_469_input": false
+        },
+        {
+          "finance.cash_event_year_fraction": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.cash_event_year_fraction",
+          "is_original_469_input": false
+        },
+        {
+          "finance.cash_event_ids": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.cash_event_ids",
+          "is_original_469_input": false
+        },
+        {
+          "finance.cash_flow_basis": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.cash_flow_basis",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "依所选现金事件口径",
+      "phase3d_ledger_requirement": "完整带日期的项目/股权现金事件集合未由3D生成",
+      "required_methods_or_boundaries": "time.day_count、共同基准日、选定折现率",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": true,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "BLOCKED_DATED_EVENTS",
+      "without_individual_events_or_instant_funding_proof": "原式按事件k及τk，完整日期事件是真独立必需；没有强制同日银行先后顺序或付款日资金覆盖。",
+      "missing_input_consequence": "原公式无法产生完整有效数值，必须带原因保留未定",
+      "requirement_ids": [
+        "R-S06-L122"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 6375,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-NOMINAL-REAL-RATE",
+      "chinese_name": "名义与实际折现率桥",
+      "effective_unit": "1",
+      "effective_dimensional_check": "输出为无量纲年度有效比例（单位1）；年度步长与复利口径保持不变，1+r_nom=(1+r_real)(1+π)各项均无量纲，不是连续时间1/年；比率以小数存储，百分号仅展示。",
+      "text_equation": "r_nom = (1 + r_real) × (1 + π) − 1",
+      "every_symbol_definition": [
+        {
+          "symbol": "r_nom",
+          "definition_zh": "名义年折现率",
+          "unit": "1（每年度有效比例，非连续时间倒数单位）",
+          "field_id": "finance.nominal_discount_rate",
+          "role": "output"
+        },
+        {
+          "symbol": "r_real",
+          "definition_zh": "不含一般通胀的实际年折现率",
+          "unit": "1（每年度有效比例，非连续时间倒数单位）",
+          "field_id": "finance.real_discount_rate",
+          "role": "input"
+        },
+        {
+          "symbol": "π",
+          "definition_zh": "与币种和评价期对应的一般年通胀率假设",
+          "unit": "1（每年度有效比例，非连续时间倒数单位）",
+          "field_id": "finance.general_inflation",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "nom": "名义；real=实际；π 为同年度步长通胀。",
+        "逐个下标词素": "nom=名义币值/名义折现率；real=实际购买力价格/折现率"
+      },
+      "set_and_range_definition": [],
+      "calculation_boundary": "仅作同一税/风险/币种口径下的通胀转换；不能拿资产特定电价变化替代一般通胀。",
+      "assumptions": [
+        "各率均大于 −1；变动通胀需分期转换；不声称市场真实折现率。"
+      ],
+      "input_field_ids": [
+        "finance.real_discount_rate",
+        "finance.general_inflation"
+      ],
+      "input_bindings": [
+        {
+          "finance.real_discount_rate": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.real_discount_rate",
+          "is_original_469_input": false
+        },
+        {
+          "finance.general_inflation": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.general_inflation",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "无",
+      "phase3d_ledger_requirement": "无；需要一般通胀和实际折现率",
+      "required_methods_or_boundaries": "名义/实际一致的通胀与实率假设",
+      "cash_receipt_period_required": false,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "CONDITIONAL_RATE_CONVERSION",
+      "without_individual_events_or_instant_funding_proof": "两案有名义项目折现与通胀假设，未见独立真实率；不用此桥也能按现有一致名义口径算项目NPV。",
+      "missing_input_consequence": "不因缺付款瞬时资金证明而停止；本行其它冻结条件仍须满足",
+      "requirement_ids": [
+        "R-S06-L122"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 6514,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-IRR-PROJECT",
+      "chinese_name": "项目投资内部收益率根集",
+      "text_equation": "R_P = {r∈D : Σ(y=0…N) CF_P,y/(1+r)^y = 0}",
+      "every_symbol_definition": [
+        {
+          "symbol": "R_P",
+          "definition_zh": "项目投资 IRR 的全部可识别实根集合，不是任意单根百分比",
+          "unit": "集合",
+          "field_id": "finance.project_irr_root_set",
+          "role": "output"
+        },
+        {
+          "symbol": "r",
+          "definition_zh": "待求每年收益率",
+          "unit": "1（每年度有效比例，非连续时间倒数单位）",
+          "field_id": null,
+          "role": "index_or_constant"
+        },
+        {
+          "symbol": "D",
+          "definition_zh": "事前声明的实数搜索域，必须位于 r>−1；域外根不声称不存在",
+          "unit": "集合",
+          "field_id": "finance.irr_search_domain",
+          "role": "input"
+        },
+        {
+          "symbol": "CF_P,y",
+          "definition_zh": "同口径项目投资无杠杆现金流，明确税前或税后，不含融资",
+          "unit": "元",
+          "field_id": "finance.project_irr_cash_flow",
+          "role": "input"
+        },
+        {
+          "symbol": "y",
+          "definition_zh": "财务年度时点",
+          "unit": "1",
+          "field_id": null,
+          "role": "index_or_constant"
+        },
+        {
+          "symbol": "N",
+          "definition_zh": "最后评价时点",
+          "unit": "1",
+          "field_id": "time.financial_end_year",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "Σ y=0…N": "对基期到终期项目流求和；P=无杠杆项目。",
+        "r∈D": "集合构造：所有使 NPV 为零的域内实率；集合可能为空/单根/多根/连续。",
+        "逐个下标词素": "P=项目无杠杆口径；y=财务或运营年度索引，必须按本条时间定义区分"
+      },
+      "set_and_range_definition": [
+        {
+          "token": "Σ y=0…N",
+          "definition": "对基期到终期项目流求和；P=无杠杆项目。"
+        },
+        {
+          "token": "r∈D",
+          "definition": "集合构造：所有使 NPV 为零的域内实率；集合可能为空/单根/多根/连续。"
+        }
+      ],
+      "calculation_boundary": "无债务流；税前与税后分别调用并分别输出，不以同字段覆盖；非整年时点改用同口径 dated-NPV 求根版本。",
+      "assumptions": [
+        "未来算法必须报告域、区间隔离、收敛容差、根数和未穷尽标识；不能只跑一次局部求根。",
+        "无正负符号变化（除全零）报 NO_SIGN_CHANGE；全零报 INDETERMINATE；无根报 NO_ROOT；多根报 MULTIPLE_ROOTS；唯一根才返回数值，且注明域内唯一/是否全域证明。"
+      ],
+      "input_field_ids": [
+        "finance.irr_search_domain",
+        "finance.project_irr_cash_flow",
+        "time.financial_end_year"
+      ],
+      "input_bindings": [
+        {
+          "finance.irr_search_domain": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.irr_search_domain",
+          "is_original_469_input": false
+        },
+        {
+          "finance.project_irr_cash_flow": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.project_irr_cash_flow",
+          "is_original_469_input": false
+        },
+        {
+          "time.financial_end_year": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "time.financial_end_year",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "项目年度经营利益",
+      "phase3d_ledger_requirement": "完整无杠杆项目现金流",
+      "required_methods_or_boundaries": "irr.minimum_rate/maximum_rate/root_tolerance/method/maximum_degree",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "DEPENDENT_PROJECT",
+      "without_individual_events_or_instant_funding_proof": "项目年度向量及搜索域有情景基础；必须处理无根/多根/未穷尽。",
+      "missing_input_consequence": "不因缺付款瞬时资金证明而停止；本行其它冻结条件仍须满足",
+      "requirement_ids": [
+        "R-S06-L123"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 6617,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-IRR-EQUITY",
+      "chinese_name": "资本金内部收益率根集",
+      "text_equation": "R_E = {r∈D : Σ(y=0…N) CF_E,y/(1+r)^y = 0}",
+      "every_symbol_definition": [
+        {
+          "symbol": "R_E",
+          "definition_zh": "投资者资本金 IRR 实根集合",
+          "unit": "集合",
+          "field_id": "finance.equity_irr_root_set",
+          "role": "output"
+        },
+        {
+          "symbol": "r",
+          "definition_zh": "待求年化股权收益率",
+          "unit": "1（每年度有效比例，非连续时间倒数单位）",
+          "field_id": null,
+          "role": "index_or_constant"
+        },
+        {
+          "symbol": "D",
+          "definition_zh": "事前声明并记录的 r>−1 实数搜索域",
+          "unit": "集合",
+          "field_id": "finance.irr_search_domain",
+          "role": "input"
+        },
+        {
+          "symbol": "CF_E,y",
+          "definition_zh": "真实股东出资为负、分配和退出为正的投资者现金流",
+          "unit": "元",
+          "field_id": "finance.equity_investor_cash_flow",
+          "role": "input"
+        },
+        {
+          "symbol": "y",
+          "definition_zh": "财务时点",
+          "unit": "1",
+          "field_id": null,
+          "role": "index_or_constant"
+        },
+        {
+          "symbol": "N",
+          "definition_zh": "终期评价时点",
+          "unit": "1",
+          "field_id": "time.financial_end_year",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "Σ y=0…N": "股东全部真实/计划收付时点；E=股东口径。",
+        "r∈D": "域内全部满足 NPV=0 的实率构成集合。",
+        "逐个下标词素": "E=股权/融资主体口径，ε_E 则标能量残差；y=财务或运营年度索引，必须按本条时间定义区分"
+      },
+      "set_and_range_definition": [
+        {
+          "token": "Σ y=0…N",
+          "definition": "股东全部真实/计划收付时点；E=股东口径。"
+        },
+        {
+          "token": "r∈D",
+          "definition": "域内全部满足 NPV=0 的实率构成集合。"
+        }
+      ],
+      "calculation_boundary": "必须计融资及分红限制，不能用项目现金流或单纯会计利润代替；日期不齐改 dated-NPV。",
+      "assumptions": [
+        "与项目 IRR 使用完全相同的无根/多根/全零/未收敛状态规则；资本金为零不能虚构无限回报。"
+      ],
+      "input_field_ids": [
+        "finance.irr_search_domain",
+        "finance.equity_investor_cash_flow",
+        "time.financial_end_year"
+      ],
+      "input_bindings": [
+        {
+          "finance.irr_search_domain": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.irr_search_domain",
+          "is_original_469_input": false
+        },
+        {
+          "finance.equity_investor_cash_flow": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.equity_investor_cash_flow",
+          "is_original_469_input": false
+        },
+        {
+          "time.financial_end_year": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "time.financial_end_year",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "股东分配/退出无3C源",
+      "phase3d_ledger_requirement": "股东实缴与合法分配/退出缺失",
+      "required_methods_or_boundaries": "同项目IRR有界求根配置",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "BLOCKED_EQUITY_FACTS",
+      "without_individual_events_or_instant_funding_proof": "股东现金流缺失；不能以股权可用流或利润顶替。",
+      "missing_input_consequence": "原公式无法产生完整有效数值，必须带原因保留未定",
+      "requirement_ids": [
+        "R-S06-L123"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 6755,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-CUMULATIVE-CASH-FLOW",
+      "chinese_name": "静态累计现金流",
+      "text_equation": "A_b,n = Σ(y=0…n) CF_b,y",
+      "every_symbol_definition": [
+        {
+          "symbol": "A_b,n",
+          "definition_zh": "截至时点 n 的未折现累计净现金流",
+          "unit": "元",
+          "field_id": "finance.cumulative_cash_flow",
+          "role": "output"
+        },
+        {
+          "symbol": "CF_b,y",
+          "definition_zh": "同一口径各期净现金流",
+          "unit": "元",
+          "field_id": "finance.selected_cash_flow",
+          "role": "input"
+        },
+        {
+          "symbol": "y",
+          "definition_zh": "自基期起财务年度时点",
+          "unit": "1",
+          "field_id": null,
+          "role": "index_or_constant"
+        },
+        {
+          "symbol": "n",
+          "definition_zh": "被评估的累计终点，0…N",
+          "unit": "1",
+          "field_id": "time.cumulative_end_year",
+          "role": "input"
+        },
+        {
+          "symbol": "b",
+          "definition_zh": "项目/股权及税前后唯一口径",
+          "unit": "枚举",
+          "field_id": "finance.cash_flow_basis",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "Σ y=0…n": "含基期至累计终点 n；A 为累计值标签。",
+        "逐个下标词素": "b=互斥的项目/股权及税前后完整口径索引；n=累计终点或首次回收年度索引；y=财务或运营年度索引，必须按本条时间定义区分"
+      },
+      "set_and_range_definition": [
+        {
+          "token": "Σ y=0…n",
+          "definition": "含基期至累计终点 n；A 为累计值标签。"
+        }
+      ],
+      "calculation_boundary": "从首次纳入评价的建设出资基期起算，不从投产时重置亏损；如使用运营回收期必须另标起点。",
+      "assumptions": [
+        "未知现金流不参与确定回收期；基期无负投入需返回 NOT_APPLICABLE 或说明即时回收。"
+      ],
+      "input_field_ids": [
+        "finance.selected_cash_flow",
+        "time.cumulative_end_year",
+        "finance.cash_flow_basis"
+      ],
+      "input_bindings": [
+        {
+          "finance.selected_cash_flow": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.selected_cash_flow",
+          "is_original_469_input": false
+        },
+        {
+          "time.cumulative_end_year": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "time.cumulative_end_year",
+          "is_original_469_input": false
+        },
+        {
+          "finance.cash_flow_basis": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.cash_flow_basis",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "项目已选流",
+      "phase3d_ledger_requirement": "项目/权益同口径年流；权益分支缺失",
+      "required_methods_or_boundaries": "完整评价期及基期",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "PROJECT_CONDITIONAL_EQUITY_BLOCKED",
+      "without_individual_events_or_instant_funding_proof": "项目期内累计可算；权益累计依真实/获批计划收付。",
+      "missing_input_consequence": "不因缺付款瞬时资金证明而停止；本行其它冻结条件仍须满足",
+      "requirement_ids": [
+        "R-S06-L124"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 6892,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-STATIC-PAYBACK",
+      "chinese_name": "静态首次回收期",
+      "text_equation": "PB_static,b = n − 1 + (−A_b,n−1) / CF_b,n",
+      "every_symbol_definition": [
+        {
+          "symbol": "PB_static,b",
+          "definition_zh": "自评价基期起静态首次回收的年数",
+          "unit": "年",
+          "field_id": "finance.static_payback_years",
+          "role": "output"
+        },
+        {
+          "symbol": "n",
+          "definition_zh": "第一个使累计净流由负转非负的年度终点",
+          "unit": "1",
+          "field_id": "finance.first_recovery_year",
+          "role": "input"
+        },
+        {
+          "symbol": "A_b,n−1",
+          "definition_zh": "此前一年末负累计净现金流",
+          "unit": "元",
+          "field_id": "finance.pre_recovery_cumulative_cash",
+          "role": "input"
+        },
+        {
+          "symbol": "CF_b,n",
+          "definition_zh": "首次回收年度的正净现金流",
+          "unit": "元",
+          "field_id": "finance.recovery_year_cash_flow",
+          "role": "input"
+        },
+        {
+          "symbol": "b",
+          "definition_zh": "项目/股权唯一口径",
+          "unit": "枚举",
+          "field_id": "finance.cash_flow_basis",
+          "role": "input"
+        },
+        {
+          "symbol": "N",
+          "definition_zh": "评价期最后一个财务年度时点，限制首次交叉搜索范围",
+          "unit": "1",
+          "field_id": "time.financial_end_year",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "n": "在 {1,…,N} 内满足首次负转非负的最小年度索引；static=未折现。",
+        "范围": "N 是评价末期，查找过程必须涵盖全部现金流，N 见时间字段 time.financial_end_year。",
+        "逐个下标词素": "static=未折现回收期；b=互斥的项目/股权及税前后完整口径索引；n=累计终点或首次回收年度索引；1=首运营年或扰动后情景 1，具体按完整符号区分",
+        "时间偏移": "y−1/n−1 表示该财务年/索引前一年度期末，即本年期初；−1 是索引偏移而非新符号。"
+      },
+      "set_and_range_definition": [
+        {
+          "token": "范围",
+          "definition": "N 是评价末期，查找过程必须涵盖全部现金流，N 见时间字段 time.financial_end_year。"
+        }
+      ],
+      "calculation_boundary": "仅当 n≥1、A_(n−1)<0、A_n≥0、CF_n>0；区间内线性流入是假设而非真实日期。",
+      "assumptions": [
+        "查全部评价期无满足条件则 NOT_RECOVERED_WITHIN_HORIZON，展示期内未回收；分母零不插值。",
+        "非整年现金事件优先日期级回收；回收后再负需风险披露。"
+      ],
+      "input_field_ids": [
+        "finance.first_recovery_year",
+        "finance.pre_recovery_cumulative_cash",
+        "finance.recovery_year_cash_flow",
+        "finance.cash_flow_basis",
+        "time.financial_end_year"
+      ],
+      "input_bindings": [
+        {
+          "finance.first_recovery_year": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.first_recovery_year",
+          "is_original_469_input": false
+        },
+        {
+          "finance.pre_recovery_cumulative_cash": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.pre_recovery_cumulative_cash",
+          "is_original_469_input": false
+        },
+        {
+          "finance.recovery_year_cash_flow": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.recovery_year_cash_flow",
+          "is_original_469_input": false
+        },
+        {
+          "finance.cash_flow_basis": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.cash_flow_basis",
+          "is_original_469_input": false
+        },
+        {
+          "time.financial_end_year": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "time.financial_end_year",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "项目已选流",
+      "phase3d_ledger_requirement": "未折现累计及首次交叉",
+      "required_methods_or_boundaries": "评价基期与区间内线性插值说明",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "PROJECT_CONDITIONAL_EQUITY_BLOCKED",
+      "without_individual_events_or_instant_funding_proof": "无首次交叉应返回期内未回收，非付款日资金证明。",
+      "missing_input_consequence": "不因缺付款瞬时资金证明而停止；本行其它冻结条件仍须满足",
+      "requirement_ids": [
+        "R-S06-L124"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 7015,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-DISCOUNTED-CUMULATIVE-CASH",
+      "chinese_name": "动态累计现金流",
+      "text_equation": "A_disc,b,n = Σ(y=0…n) CF_b,y / (1+r_b)^y",
+      "every_symbol_definition": [
+        {
+          "symbol": "A_disc,b,n",
+          "definition_zh": "截至 n 的折现累计净现金流",
+          "unit": "元",
+          "field_id": "finance.discounted_cumulative_cash",
+          "role": "output"
+        },
+        {
+          "symbol": "CF_b,y",
+          "definition_zh": "同口径财务净现金流",
+          "unit": "元",
+          "field_id": "finance.selected_cash_flow",
+          "role": "input"
+        },
+        {
+          "symbol": "r_b",
+          "definition_zh": "同口径年度折现率",
+          "unit": "1（每年度有效比例，非连续时间倒数单位）",
+          "field_id": "finance.selected_discount_rate",
+          "role": "input"
+        },
+        {
+          "symbol": "y",
+          "definition_zh": "财务年度时点",
+          "unit": "1",
+          "field_id": null,
+          "role": "index_or_constant"
+        },
+        {
+          "symbol": "n",
+          "definition_zh": "累计终点索引",
+          "unit": "1",
+          "field_id": "time.cumulative_end_year",
+          "role": "input"
+        },
+        {
+          "symbol": "b",
+          "definition_zh": "唯一现金流口径",
+          "unit": "枚举",
+          "field_id": "finance.cash_flow_basis",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "Σ y=0…n": "从基期到累计终点全部年度流求和。",
+        "逐个下标词素": "disc=已经折现的累计值；b=互斥的项目/股权及税前后完整口径索引；n=累计终点或首次回收年度索引；y=财务或运营年度索引，必须按本条时间定义区分"
+      },
+      "set_and_range_definition": [
+        {
+          "token": "Σ y=0…n",
+          "definition": "从基期到累计终点全部年度流求和。"
+        }
+      ],
+      "calculation_boundary": "与 NPV 同基准日、同年末假设；不能静态累计配动态年度流。",
+      "assumptions": [
+        "r>−1；日期级模型另用年分数。"
+      ],
+      "input_field_ids": [
+        "finance.selected_cash_flow",
+        "finance.selected_discount_rate",
+        "time.cumulative_end_year",
+        "finance.cash_flow_basis"
+      ],
+      "input_bindings": [
+        {
+          "finance.selected_cash_flow": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.selected_cash_flow",
+          "is_original_469_input": false
+        },
+        {
+          "finance.selected_discount_rate": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.selected_discount_rate",
+          "is_original_469_input": false
+        },
+        {
+          "time.cumulative_end_year": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "time.cumulative_end_year",
+          "is_original_469_input": false
+        },
+        {
+          "finance.cash_flow_basis": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.cash_flow_basis",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "项目已选流",
+      "phase3d_ledger_requirement": "同口径期间现金流",
+      "required_methods_or_boundaries": "匹配折现率、年末时点",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "PROJECT_CONDITIONAL_EQUITY_BLOCKED",
+      "without_individual_events_or_instant_funding_proof": "项目折现累计依流和率；权益依股东流。",
+      "missing_input_consequence": "不因缺付款瞬时资金证明而停止；本行其它冻结条件仍须满足",
+      "requirement_ids": [
+        "R-S06-L124"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 7150,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-DYNAMIC-PAYBACK",
+      "chinese_name": "动态首次回收期",
+      "text_equation": "PB_dynamic,b = n − 1 + (−A_disc,b,n−1)/(CF_b,n/(1+r_b)^n)",
+      "every_symbol_definition": [
+        {
+          "symbol": "PB_dynamic,b",
+          "definition_zh": "自基期起动态首次回收期",
+          "unit": "年",
+          "field_id": "finance.dynamic_payback_years",
+          "role": "output"
+        },
+        {
+          "symbol": "n",
+          "definition_zh": "折现累计首次负转非负的年度终点",
+          "unit": "1",
+          "field_id": "finance.first_discounted_recovery_year",
+          "role": "input"
+        },
+        {
+          "symbol": "A_disc,b,n−1",
+          "definition_zh": "前一年末负折现累计净流",
+          "unit": "元",
+          "field_id": "finance.pre_discounted_recovery_cumulative",
+          "role": "input"
+        },
+        {
+          "symbol": "CF_b,n",
+          "definition_zh": "回收年度未折现净现金流",
+          "unit": "元",
+          "field_id": "finance.discounted_recovery_year_cash_flow",
+          "role": "input"
+        },
+        {
+          "symbol": "r_b",
+          "definition_zh": "同口径年折现率",
+          "unit": "1（每年度有效比例，非连续时间倒数单位）",
+          "field_id": "finance.selected_discount_rate",
+          "role": "input"
+        },
+        {
+          "symbol": "b",
+          "definition_zh": "唯一现金流口径",
+          "unit": "枚举",
+          "field_id": "finance.cash_flow_basis",
+          "role": "input"
+        },
+        {
+          "symbol": "N",
+          "definition_zh": "评价期最后一个财务年度时点，限制首次交叉搜索范围",
+          "unit": "1",
+          "field_id": "time.financial_end_year",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "n": "范围 1…N 中折现累计首次负转非负最小索引；N 为已定义的评价末期。",
+        "逐个下标词素": "dynamic=折现回收期；b=互斥的项目/股权及税前后完整口径索引；disc=已经折现的累计值；n=累计终点或首次回收年度索引；1=首运营年或扰动后情景 1，具体按完整符号区分",
+        "时间偏移": "y−1/n−1 表示该财务年/索引前一年度期末，即本年期初；−1 是索引偏移而非新符号。"
+      },
+      "set_and_range_definition": [],
+      "calculation_boundary": "与静态回收期同起点；线性插值基于年度折现值，只是近似，不代表精确日历回收日。",
+      "assumptions": [
+        "前期累计<0、本年折现净流>0；未交叉返回期内未回收。"
+      ],
+      "input_field_ids": [
+        "finance.first_discounted_recovery_year",
+        "finance.pre_discounted_recovery_cumulative",
+        "finance.discounted_recovery_year_cash_flow",
+        "finance.selected_discount_rate",
+        "finance.cash_flow_basis",
+        "time.financial_end_year"
+      ],
+      "input_bindings": [
+        {
+          "finance.first_discounted_recovery_year": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.first_discounted_recovery_year",
+          "is_original_469_input": false
+        },
+        {
+          "finance.pre_discounted_recovery_cumulative": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.pre_discounted_recovery_cumulative",
+          "is_original_469_input": false
+        },
+        {
+          "finance.discounted_recovery_year_cash_flow": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.discounted_recovery_year_cash_flow",
+          "is_original_469_input": false
+        },
+        {
+          "finance.selected_discount_rate": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.selected_discount_rate",
+          "is_original_469_input": false
+        },
+        {
+          "finance.cash_flow_basis": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.cash_flow_basis",
+          "is_original_469_input": false
+        },
+        {
+          "time.financial_end_year": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "time.financial_end_year",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "项目已选流",
+      "phase3d_ledger_requirement": "折现累计与首次交叉",
+      "required_methods_or_boundaries": "匹配折现率/年内插值",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "PROJECT_CONDITIONAL_EQUITY_BLOCKED",
+      "without_individual_events_or_instant_funding_proof": "未交叉输出未回收，不能当实际到款日。",
+      "missing_input_consequence": "不因缺付款瞬时资金证明而停止；本行其它冻结条件仍须满足",
+      "requirement_ids": [
+        "R-S06-L124"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 7281,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-LIFECYCLE-COST",
+      "chinese_name": "无杠杆生命周期净成本",
+      "text_equation": "Cost_P,y = K_P,y + O_y + T_cost,P,y + ΔW_P,y − S_P,y − SUB_P,y",
+      "every_symbol_definition": [
+        {
+          "symbol": "Cost_P,y",
+          "definition_zh": "选定税费/补贴边界的项目生命周期净成本",
+          "unit": "元",
+          "field_id": "lcoe.project_cost_annual",
+          "role": "output"
+        },
+        {
+          "symbol": "K_P,y",
+          "definition_zh": "无杠杆工程及资本更换现金支出",
+          "unit": "元",
+          "field_id": "capex.unlevered_cash_annual",
+          "role": "input"
+        },
+        {
+          "symbol": "O_y",
+          "definition_zh": "现金运营支出，不含折旧",
+          "unit": "元",
+          "field_id": "opex.cash_annual",
+          "role": "input"
+        },
+        {
+          "symbol": "T_cost,P,y",
+          "definition_zh": "选定成本税费，税前 LCOE 不含所得税；税后模型需独立收入税基",
+          "unit": "元",
+          "field_id": "lcoe.cost_taxes",
+          "role": "input"
+        },
+        {
+          "symbol": "ΔW_P,y",
+          "definition_zh": "未重计的营运资金净增",
+          "unit": "元",
+          "field_id": "working_capital.project_net_change",
+          "role": "input"
+        },
+        {
+          "symbol": "S_P,y",
+          "definition_zh": "净残值回收及未在 ΔW 中回收的营运资金",
+          "unit": "元",
+          "field_id": "finance.project_terminal_cash",
+          "role": "input"
+        },
+        {
+          "symbol": "SUB_P,y",
+          "definition_zh": "明确选择为成本抵减且未计收入的有依据补贴",
+          "unit": "元",
+          "field_id": "lcoe.cost_subsidy_offset",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "P": "无杠杆项目；y=建设至退出时点；cost=成本税费，SUB=补贴抵减。",
+        "逐个下标词素": "P=项目无杠杆口径；y=财务或运营年度索引，必须按本条时间定义区分；cost=LCOE 成本范围"
+      },
+      "set_and_range_definition": [],
+      "calculation_boundary": "默认方法冻结为项目无杠杆税前所得税 LCOE，保留适用其他税；融资本息不混入再用含融资成本折现率双计；补贴抵成本/收益二选一。",
+      "assumptions": [
+        "不扣正常售电收入或自用节省，否则变成净收益指标而非度电成本。",
+        "如需股权/融资后/税后 LCOE 必须另建命名方法，冻结成本范围并处理税基与电价循环，不能直接沿用本字段。"
+      ],
+      "input_field_ids": [
+        "capex.unlevered_cash_annual",
+        "opex.cash_annual",
+        "lcoe.cost_taxes",
+        "working_capital.project_net_change",
+        "finance.project_terminal_cash",
+        "lcoe.cost_subsidy_offset"
+      ],
+      "input_bindings": [
+        {
+          "capex.unlevered_cash_annual": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "capex.unlevered_cash_annual",
+          "is_original_469_input": false
+        },
+        {
+          "opex.cash_annual": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "opex.cash_annual",
+          "is_original_469_input": false
+        },
+        {
+          "lcoe.cost_taxes": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "lcoe.cost_taxes",
+          "is_original_469_input": false
+        },
+        {
+          "working_capital.project_net_change": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "working_capital.project_net_change",
+          "is_original_469_input": false
+        },
+        {
+          "finance.project_terminal_cash": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.project_terminal_cash",
+          "is_original_469_input": false
+        },
+        {
+          "lcoe.cost_subsidy_offset": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "lcoe.cost_subsidy_offset",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "可交付电量另供LCOE",
+      "phase3d_ledger_requirement": "无杠杆CAPEX/更换、OPEX、适用成本税、营运与处置现金",
+      "required_methods_or_boundaries": "冻结无杠杆税前所得税成本/补贴抵减边界",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "CONDITIONAL_ANNUAL",
+      "without_individual_events_or_instant_funding_proof": "须核定残值是否可回收、补贴是否有依据且不双计；可按明确合成期间边界计算。",
+      "missing_input_consequence": "不因缺付款瞬时资金证明而停止；本行其它冻结条件仍须满足",
+      "requirement_ids": [
+        "R-S06-L125"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 7418,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-LCOE",
+      "chinese_name": "平准化度电成本",
+      "text_equation": "LCOE = Σ(y=0…N) Cost_P,y/(1+r_L)^y / Σ(y=0…N) E_delivered,y/(1+r_L)^y",
+      "every_symbol_definition": [
+        {
+          "symbol": "LCOE",
+          "definition_zh": "声明成本与交付边界的平准化度电成本",
+          "unit": "元/kWh",
+          "field_id": "finance.lcoe",
+          "role": "output"
+        },
+        {
+          "symbol": "Cost_P,y",
+          "definition_zh": "本条选定无杠杆税前所得税生命周期净成本",
+          "unit": "元",
+          "field_id": "lcoe.project_cost_annual",
+          "role": "input"
+        },
+        {
+          "symbol": "E_delivered,y",
+          "definition_zh": "同项目计量点可利用交付电量，建设无发电期显式为零",
+          "unit": "kWh",
+          "field_id": "energy.delivered_annual_kwh",
+          "role": "input"
+        },
+        {
+          "symbol": "r_L",
+          "definition_zh": "与成本币种/名义实际口径相容的 LCOE 年折现率",
+          "unit": "1（每年度有效比例，非连续时间倒数单位）",
+          "field_id": "lcoe.discount_rate",
+          "role": "input"
+        },
+        {
+          "symbol": "y",
+          "definition_zh": "建设基期至退出的财务年度时点",
+          "unit": "1",
+          "field_id": null,
+          "role": "index_or_constant"
+        },
+        {
+          "symbol": "N",
+          "definition_zh": "末期评价年度",
+          "unit": "1",
+          "field_id": "time.financial_end_year",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "Σ y=0…N": "分子分母分别对全部财务年求和；L=度电成本折现率标签。",
+        "逐个下标词素": "P=项目无杠杆口径；y=财务或运营年度索引，必须按本条时间定义区分；delivered=同计量点可利用交付量，不含弃光；L=度电成本折现口径"
+      },
+      "set_and_range_definition": [
+        {
+          "token": "Σ y=0…N",
+          "definition": "分子分母分别对全部财务年求和；L=度电成本折现率标签。"
+        }
+      ],
+      "calculation_boundary": "分子/分母同年、同期间、同项目边界；弃光不算交付；按售电量计则成本必须切换为同售电边界。",
+      "assumptions": [
+        "折现交付量>0 否则 ZERO_DELIVERY，不返回零/无穷假数值；成本定义写入方法版本，公开对标需同口径。"
+      ],
+      "input_field_ids": [
+        "lcoe.project_cost_annual",
+        "energy.delivered_annual_kwh",
+        "lcoe.discount_rate",
+        "time.financial_end_year"
+      ],
+      "input_bindings": [
+        {
+          "lcoe.project_cost_annual": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "lcoe.project_cost_annual",
+          "is_original_469_input": false
+        },
+        {
+          "energy.delivered_annual_kwh": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "energy.delivered_annual_kwh",
+          "is_original_469_input": false
+        },
+        {
+          "lcoe.discount_rate": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "lcoe.discount_rate",
+          "is_original_469_input": false
+        },
+        {
+          "time.financial_end_year": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "time.financial_end_year",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "3B/3C同口径逐年交付电量",
+      "phase3d_ledger_requirement": "F-LIFECYCLE-COST年度成本",
+      "required_methods_or_boundaries": "finance.project_discount_rate经绑定选同名义口径r_L",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "DEPENDENT_PROJECT",
+      "without_individual_events_or_instant_funding_proof": "年度成本与交付量、明确折现率具备后可算；不能用理论发电量分母。",
+      "missing_input_consequence": "不因缺付款瞬时资金证明而停止；本行其它冻结条件仍须满足",
+      "requirement_ids": [
+        "R-S06-L125"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 7555,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-CFADS",
+      "chinese_name": "可用于偿债的现金流",
+      "text_equation": "CFADS_y = B_op,y − O_y − T_E,y − ΔW_ds,y − K_mand,y + A_ds,y",
+      "every_symbol_definition": [
+        {
+          "symbol": "CFADS_y",
+          "definition_zh": "按融资协议可用于偿债的当期现金流",
+          "unit": "元",
+          "field_id": "debt.cfads",
+          "role": "output"
+        },
+        {
+          "symbol": "B_op,y",
+          "definition_zh": "经营现金利益，不含融资",
+          "unit": "元",
+          "field_id": "finance.project_operating_cash_benefit",
+          "role": "input"
+        },
+        {
+          "symbol": "O_y",
+          "definition_zh": "协议口径现金运营支出",
+          "unit": "元",
+          "field_id": "opex.cash_annual",
+          "role": "input"
+        },
+        {
+          "symbol": "T_E,y",
+          "definition_zh": "协议口径实际现金税，不重复税价桥",
+          "unit": "元",
+          "field_id": "tax.equity_cash_total",
+          "role": "input"
+        },
+        {
+          "symbol": "ΔW_ds,y",
+          "definition_zh": "协议要求的未重计营运资金或储备净增",
+          "unit": "元",
+          "field_id": "debt.cfads_working_capital_change",
+          "role": "input"
+        },
+        {
+          "symbol": "K_mand,y",
+          "definition_zh": "协议要求在偿债前扣除的维护性资本开支",
+          "unit": "元",
+          "field_id": "debt.cfads_mandatory_capex",
+          "role": "input"
+        },
+        {
+          "symbol": "A_ds,y",
+          "definition_zh": "有合同依据的其他 CFADS 调整，可正可负",
+          "unit": "元",
+          "field_id": "debt.cfads_adjustments",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "y": "与债务应付服务完全同周期；ds=偿债协议调整；mand=强制维护资本支出。",
+        "逐个下标词素": "y=财务或运营年度索引，必须按本条时间定义区分；op=运营经营利益；E=股权/融资主体口径，ε_E 则标能量残差；ds=融资协议偿债现金口径；mand=协议要求优先扣除的维护性资本支出"
+      },
+      "set_and_range_definition": [],
+      "calculation_boundary": "债务服务前现金；不得在分子再扣同笔利息本金，也不把提款、股东出资当经营偿债能力。",
+      "assumptions": [
+        "协议尚缺则只能显式情景；融资后现金税含合法利息税盾，不等于重复扣利息本身。"
+      ],
+      "input_field_ids": [
+        "finance.project_operating_cash_benefit",
+        "opex.cash_annual",
+        "tax.equity_cash_total",
+        "debt.cfads_working_capital_change",
+        "debt.cfads_mandatory_capex",
+        "debt.cfads_adjustments"
+      ],
+      "input_bindings": [
+        {
+          "finance.project_operating_cash_benefit": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.project_operating_cash_benefit",
+          "is_original_469_input": false
+        },
+        {
+          "opex.cash_annual": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "opex.cash_annual",
+          "is_original_469_input": false
+        },
+        {
+          "tax.equity_cash_total": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "tax.equity_cash_total",
+          "is_original_469_input": false
+        },
+        {
+          "debt.cfads_working_capital_change": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "debt.cfads_working_capital_change",
+          "is_original_469_input": false
+        },
+        {
+          "debt.cfads_mandatory_capex": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "debt.cfads_mandatory_capex",
+          "is_original_469_input": false
+        },
+        {
+          "debt.cfads_adjustments": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "debt.cfads_adjustments",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "年度经营利益",
+      "phase3d_ledger_requirement": "融资后现金税、OPEX、协议营运/储备、强制更换、调整",
+      "required_methods_or_boundaries": "cfads.method及协议或显式SYNTHETIC情景",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "CONDITIONAL_PROTOCOL",
+      "without_individual_events_or_instant_funding_proof": "合成方法已配置，可计算标注情景；真实协议CFADS/调整未获验证，不可宣布合同值。",
+      "missing_input_consequence": "不因缺付款瞬时资金证明而停止；本行其它冻结条件仍须满足",
+      "requirement_ids": [
+        "R-S06-L126"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 7686,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-DSCR",
+      "chinese_name": "偿债备付率",
+      "text_equation": "DSCR_y = CFADS_y / DS_y",
+      "every_symbol_definition": [
+        {
+          "symbol": "DSCR_y",
+          "definition_zh": "当期可供偿债现金除以合同债务服务",
+          "unit": "1",
+          "field_id": "debt.dscr",
+          "role": "output"
+        },
+        {
+          "symbol": "CFADS_y",
+          "definition_zh": "同周期协议口径可用于偿债现金",
+          "unit": "元",
+          "field_id": "debt.cfads",
+          "role": "input"
+        },
+        {
+          "symbol": "DS_y",
+          "definition_zh": "同周期合同应付本金、利息及协议费用合计",
+          "unit": "元",
+          "field_id": "debt.service_due",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "y": "与服务完全相同周期；DS=应付债务服务；DSCR=比值。",
+        "逐个下标词素": "y=财务或运营年度索引，必须按本条时间定义区分"
+      },
+      "set_and_range_definition": [],
+      "calculation_boundary": "无融资返回 NOT_APPLICABLE；存在债务但宽限期服务为零返回 ZERO_DEBT_SERVICE 不输出无限或伪造数值。",
+      "assumptions": [
+        "CFADS 可负且应如实反映；最小 DSCR 只对 DS>0 期间求，不用无效期覆盖。"
+      ],
+      "input_field_ids": [
+        "debt.cfads",
+        "debt.service_due"
+      ],
+      "input_bindings": [
+        {
+          "debt.cfads": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "debt.cfads",
+          "is_original_469_input": false
+        },
+        {
+          "debt.service_due": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "debt.service_due",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "无直接需要；来自CFADS",
+      "phase3d_ledger_requirement": "同期合同应还本金/利息/费",
+      "required_methods_or_boundaries": "cfads.method及债务合同服务期",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "CONDITIONAL_PROTOCOL",
+      "without_individual_events_or_instant_funding_proof": "应还DS已在3D，CFADS协议口径未验真；情景可算，合同DSCR未证实，DS=0要状态。",
+      "missing_input_consequence": "不因缺付款瞬时资金证明而停止；本行其它冻结条件仍须满足",
+      "requirement_ids": [
+        "R-S06-L126"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 7930,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-BREAK-EVEN-PRICE",
+      "chinese_name": "净现值为零的盈亏平衡电价",
+      "text_equation": "P_star = {p∈P : NPV_b(CF_b(p), r_b) = 0}",
+      "every_symbol_definition": [
+        {
+          "symbol": "P_star",
+          "definition_zh": "满足 NPV=0 的电价根集合",
+          "unit": "集合",
+          "field_id": "sensitivity.break_even_price_roots",
+          "role": "output"
+        },
+        {
+          "symbol": "p",
+          "definition_zh": "待求结算电价，只调整预先指定的电价项",
+          "unit": "元/kWh",
+          "field_id": null,
+          "role": "index_or_constant"
+        },
+        {
+          "symbol": "P",
+          "definition_zh": "有业务依据且事前声明的允许电价域，可含合法负价",
+          "unit": "集合",
+          "field_id": "sensitivity.price_search_domain",
+          "role": "input"
+        },
+        {
+          "symbol": "NPV_b",
+          "definition_zh": "同一税/融资口径的净现值函数",
+          "unit": "元",
+          "field_id": "finance.npv",
+          "role": "input"
+        },
+        {
+          "symbol": "CF_b(p)",
+          "definition_zh": "固定其他外生输入、电价为 p 时完整重算的现金流向量",
+          "unit": "元/期",
+          "field_id": "sensitivity.price_cash_flow_vector",
+          "role": "input"
+        },
+        {
+          "symbol": "r_b",
+          "definition_zh": "同一口径折现率",
+          "unit": "1（每年度有效比例，非连续时间倒数单位）",
+          "field_id": "finance.selected_discount_rate",
+          "role": "input"
+        },
+        {
+          "symbol": "b",
+          "definition_zh": "项目或股权的唯一口径",
+          "unit": "枚举",
+          "field_id": "finance.cash_flow_basis",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "p∈P": "域内全部使 NPV=0 的电价构成集合。",
+        "逐个下标词素": "star=盈亏平衡根集合标签，相当于上标 *，不是乘方；b=互斥的项目/股权及税前后完整口径索引；p=待求结算电价，只调整事前指定电价项，在允许价格域P内求全部有效根"
+      },
+      "set_and_range_definition": [
+        {
+          "token": "p∈P",
+          "definition": "域内全部使 NPV=0 的电价构成集合。"
+        }
+      ],
+      "calculation_boundary": "冻结“使 NPV=0”的定义，不混称会计利润盈亏平衡；分时电价可对指定倍率求根但需新输出字段。",
+      "assumptions": [
+        "税/消纳/债务约束可能非线性；价格域内无根、多根、未收敛、零交付返回明确原因；不能改现实成本迎合目标。"
+      ],
+      "input_field_ids": [
+        "sensitivity.price_search_domain",
+        "finance.npv",
+        "sensitivity.price_cash_flow_vector",
+        "finance.selected_discount_rate",
+        "finance.cash_flow_basis"
+      ],
+      "input_bindings": [
+        {
+          "sensitivity.price_search_domain": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "sensitivity.price_search_domain",
+          "is_original_469_input": false
+        },
+        {
+          "finance.npv": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.npv",
+          "is_original_469_input": false
+        },
+        {
+          "sensitivity.price_cash_flow_vector": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "sensitivity.price_cash_flow_vector",
+          "is_original_469_input": false
+        },
+        {
+          "finance.selected_discount_rate": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.selected_discount_rate",
+          "is_original_469_input": false
+        },
+        {
+          "finance.cash_flow_basis": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.cash_flow_basis",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "价格变动时3C全部重算",
+      "phase3d_ledger_requirement": "3D税/资本/经营与3E项目/股东全链重算",
+      "required_methods_or_boundaries": "break_even.*域、指定可调整价格项、折现口径",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "DEPENDENT_FULL_CHAIN",
+      "without_individual_events_or_instant_funding_proof": "搜索域有合成配置；必须明确变动的是哪一价格，并逐候选整链重算，非直接变更NPV终值。",
+      "missing_input_consequence": "不因缺付款瞬时资金证明而停止；本行其它冻结条件仍须满足",
+      "requirement_ids": [
+        "R-S06-L127"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 8034,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-WORST-CASH-YEAR",
+      "chinese_name": "最差现金流年份集合",
+      "text_equation": "Y_worst,b = argmin(y∈Y) CF_b,y",
+      "every_symbol_definition": [
+        {
+          "symbol": "Y_worst,b",
+          "definition_zh": "达到最小净现金流的全部年份，允许并列",
+          "unit": "集合",
+          "field_id": "risk.worst_cash_years",
+          "role": "output"
+        },
+        {
+          "symbol": "CF_b,y",
+          "definition_zh": "选定口径当年净现金流",
+          "unit": "元",
+          "field_id": "finance.selected_cash_flow",
+          "role": "input"
+        },
+        {
+          "symbol": "Y",
+          "definition_zh": "被比较的有效年份集合，需明确仅运营期或含建设期",
+          "unit": "集合",
+          "field_id": "risk.cash_year_scope",
+          "role": "input"
+        },
+        {
+          "symbol": "y",
+          "definition_zh": "年份索引",
+          "unit": "1",
+          "field_id": null,
+          "role": "index_or_constant"
+        },
+        {
+          "symbol": "b",
+          "definition_zh": "项目/股权及税前后口径",
+          "unit": "枚举",
+          "field_id": "finance.cash_flow_basis",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "argmin y∈Y": "在声明范围内寻找全部最小值年份；不武断取第一个。",
+        "逐个下标词素": "worst=给定年份集合中最差净现金流的全部位置；b=互斥的项目/股权及税前后完整口径索引；y=财务或运营年度索引，必须按本条时间定义区分"
+      },
+      "set_and_range_definition": [
+        {
+          "token": "argmin y∈Y",
+          "definition": "在声明范围内寻找全部最小值年份；不武断取第一个。"
+        }
+      ],
+      "calculation_boundary": "必须同时列最小现金额和比较范围；含建设期与运营最差年各自输出，不能借大建设负数掩盖运营缺口。",
+      "assumptions": [
+        "空集合或有缺失无法断言完整最差年；最差现金流不是最大会计亏损。"
+      ],
+      "input_field_ids": [
+        "finance.selected_cash_flow",
+        "risk.cash_year_scope",
+        "finance.cash_flow_basis"
+      ],
+      "input_bindings": [
+        {
+          "finance.selected_cash_flow": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.selected_cash_flow",
+          "is_original_469_input": false
+        },
+        {
+          "risk.cash_year_scope": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "risk.cash_year_scope",
+          "is_original_469_input": false
+        },
+        {
+          "finance.cash_flow_basis": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "finance.cash_flow_basis",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "所选项目/股东期间流",
+      "phase3d_ledger_requirement": "完整对应各期现金流",
+      "required_methods_or_boundaries": "风险比较范围必须明确运营或建设",
+      "cash_receipt_period_required": true,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "PROJECT_CONDITIONAL_EQUITY_BLOCKED",
+      "without_individual_events_or_instant_funding_proof": "项目最差年按明确范围可算；股东需真实/获批计划流。",
+      "missing_input_consequence": "不因缺付款瞬时资金证明而停止；本行其它冻结条件仍须满足",
+      "requirement_ids": [
+        "R-S06-L127"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 8530,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    },
+    {
+      "formula_id": "F-INVESTMENT-HURDLE-GAP",
+      "chinese_name": "投资门槛差距",
+      "text_equation": "G_M = M_calc − M_target",
+      "every_symbol_definition": [
+        {
+          "symbol": "G_M",
+          "definition_zh": "测算值减用户门槛的原始差距",
+          "unit": "与 M 同单位",
+          "field_id": "decision.metric_gap",
+          "role": "output"
+        },
+        {
+          "symbol": "M_calc",
+          "definition_zh": "有效的确定性测算指标，不得倒改输入迎合目标",
+          "unit": "原指标单位",
+          "field_id": "decision.calculated_metric",
+          "role": "input"
+        },
+        {
+          "symbol": "M_target",
+          "definition_zh": "用户目标，如 IRR 下限或回收期上限",
+          "unit": "原指标单位",
+          "field_id": "decision.target_metric",
+          "role": "input"
+        }
+      ],
+      "subscript_definition": {
+        "M": "被比较指标；calc=测算，target=用户目标。",
+        "逐个下标词素": "M=所考察财务/技术指标；calc=确定性测算结果；target=用户目标阈值而非实际测算输入"
+      },
+      "set_and_range_definition": [],
+      "calculation_boundary": "IRR 下限差距≥0 倾向满足；回收期上限差距≤0 才满足，方向由指标定义而非本式自动推断。",
+      "assumptions": [
+        "指标必须同税/融资/时点口径；多根 IRR 或期内未回收不能硬转数值比较；合规阻断不被财务达标抵消。"
+      ],
+      "input_field_ids": [
+        "decision.calculated_metric",
+        "decision.target_metric"
+      ],
+      "input_bindings": [
+        {
+          "decision.calculated_metric": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "decision.calculated_metric",
+          "is_original_469_input": false
+        },
+        {
+          "decision.target_metric": "FROZEN_MAPPING_IMPLEMENTATION_NOT_STARTED",
+          "formula_field_id": "decision.target_metric",
+          "is_original_469_input": false
+        }
+      ],
+      "phase3c_requirement": "无直接需要",
+      "phase3d_ledger_requirement": "有效已算指标",
+      "required_methods_or_boundaries": "targets.*有来源门槛且与指标同口径",
+      "cash_receipt_period_required": false,
+      "individual_cash_events_required": false,
+      "period_entity_unrestricted_cash_balance_required": false,
+      "bank_account_level_balance_required": false,
+      "payment_instant_liquidity_verification_required": false,
+      "case_mathematical_availability": "BLOCKED_TARGETS_FOR_CASES",
+      "without_individual_events_or_instant_funding_proof": "两案目标门槛未提供；可不伪造目标并标缺失，不阻断独立项目指标计算。",
+      "missing_input_consequence": "原公式无法产生完整有效数值，必须带原因保留未定",
+      "requirement_ids": [
+        "R-S06-L127"
+      ],
+      "frozen_source": {
+        "path": "docs/solar-pv/05-formulas.json",
+        "line": 8792,
+        "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331"
+      }
+    }
+  ],
+  "phase3d_cases": {
+    "industrial_rooftop": {
+      "synthetic_status": "CALCULATED_SYNTHETIC",
+      "data_mode": "SYNTHETIC",
+      "source_paths": {
+        "input.json": {
+          "path": "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/input.json",
+          "sha256": "7b08b2b12e9b8a57b4848a73b9c3b68d8881f9305cd796e773a16b3699ba743f"
+        },
+        "methods.json": {
+          "path": "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/methods.json",
+          "sha256": "3b33541d440b847187cc1886e27789a167a91cdab5e410b89aed22e3f303d8f5"
+        },
+        "result.json": {
+          "path": "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/result.json",
+          "sha256": "53d3c0cded618566bbce1d8e51fa4e0be91d84609f7bf907010a93cf3acb182e"
+        }
+      },
+      "result_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+      "phase3c_result_hash": "7eee9f80f9633a4e93905f2df7bafa9896658020c67069b5276e16f259534a50",
+      "periods": [
+        "CONSTRUCTION",
+        "OPERATING_YEAR_1",
+        "OPERATING_YEAR_2",
+        "OPERATING_YEAR_3",
+        "OPERATING_YEAR_4",
+        "OPERATING_YEAR_5",
+        "OPERATING_YEAR_6",
+        "OPERATING_YEAR_7",
+        "OPERATING_YEAR_8",
+        "OPERATING_YEAR_9",
+        "OPERATING_YEAR_10",
+        "OPERATING_YEAR_11",
+        "OPERATING_YEAR_12",
+        "OPERATING_YEAR_13",
+        "OPERATING_YEAR_14",
+        "OPERATING_YEAR_15",
+        "OPERATING_YEAR_16",
+        "OPERATING_YEAR_17",
+        "OPERATING_YEAR_18",
+        "OPERATING_YEAR_19",
+        "OPERATING_YEAR_20",
+        "OPERATING_YEAR_21",
+        "OPERATING_YEAR_22",
+        "OPERATING_YEAR_23",
+        "OPERATING_YEAR_24",
+        "OPERATING_YEAR_25"
+      ],
+      "annual_rows": 26,
+      "cashflow_3e_all_none": true,
+      "ledger_keys_first_operating_year": [
+        "accounts_receivable_closing",
+        "asset_book_value_closing",
+        "capex_accrued",
+        "capex_cash_paid",
+        "capex_payable_closing",
+        "capex_payable_opening",
+        "capex_payment_residual",
+        "cash_tax_total",
+        "cash_tax_total_equity",
+        "cash_tax_total_project",
+        "debt_balance_closing",
+        "debt_service_due",
+        "depreciation",
+        "income_tax_accrual",
+        "income_tax_accrual_equity",
+        "income_tax_accrual_project",
+        "income_tax_cash_paid",
+        "income_tax_cash_paid_equity",
+        "income_tax_cash_paid_project",
+        "income_tax_payable_closing",
+        "income_tax_payable_equity_closing",
+        "income_tax_payable_project_closing",
+        "interest_accrued",
+        "interest_capitalized",
+        "interest_paid",
+        "interest_payable_closing",
+        "invoiced_gross",
+        "opex_accrued",
+        "opex_cash_paid",
+        "other_cash_taxes",
+        "other_cash_taxes_project",
+        "period",
+        "phase3e_cashflow",
+        "principal_due",
+        "principal_paid",
+        "receivables_opening",
+        "receivables_terminal_collection",
+        "replacement_capex_accrued",
+        "replacement_cash_paid",
+        "revenue_after_transaction_cost",
+        "revenue_cash_receipts",
+        "self_use_avoided_expenditure",
+        "tax_cash_bridge",
+        "tax_cash_bridge_equity",
+        "tax_cash_bridge_project",
+        "tax_loss_closing",
+        "tax_loss_equity_closing",
+        "tax_loss_project_closing",
+        "taxable_income_equity",
+        "taxable_income_project",
+        "vat_credit_closing",
+        "vat_input_eligible",
+        "vat_output",
+        "working_capital_increase",
+        "working_capital_release"
+      ],
+      "controls": {
+        "cash.opening_cash": {
+          "present": true,
+          "value": 0,
+          "status": "ASSUMED"
+        },
+        "cash.method": {
+          "present": true,
+          "value": "ACCRUAL_WORKING_CAPITAL",
+          "status": "ASSUMED"
+        },
+        "cash.self_use_treatment": {
+          "present": true,
+          "value": "INCREMENTAL_AVOIDED_EXPENDITURE",
+          "status": "ASSUMED"
+        },
+        "equity.distribution_fractions": {
+          "present": true,
+          "value": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "status": "ASSUMED"
+        },
+        "equity.minimum_cash_reserve": {
+          "present": true,
+          "value": 0,
+          "status": "ASSUMED"
+        },
+        "cfads.method": {
+          "present": true,
+          "value": "OPERATING_CASH_AFTER_TAX_MANDATORY_CAPEX",
+          "status": "ASSUMED"
+        },
+        "time.cashflow_timing": {
+          "present": true,
+          "value": "YEAR_END",
+          "status": "ASSUMED"
+        },
+        "time.day_count": {
+          "present": true,
+          "value": "ACT_365F",
+          "status": "ASSUMED"
+        },
+        "irr.minimum_rate": {
+          "present": true,
+          "value": -0.5,
+          "status": "ASSUMED"
+        },
+        "irr.maximum_rate": {
+          "present": true,
+          "value": 1,
+          "status": "ASSUMED"
+        },
+        "break_even.minimum_price": {
+          "present": true,
+          "value": 0,
+          "status": "ASSUMED"
+        },
+        "break_even.maximum_price": {
+          "present": true,
+          "value": 2,
+          "status": "ASSUMED"
+        }
+      },
+      "input_controls": {
+        "project.evaluation_date": "2026-10-29",
+        "project.evaluation_years": 25,
+        "project.price_basis": "nominal",
+        "finance.project_discount_rate": 0.08,
+        "finance.equity_discount_rate": 0.08,
+        "finance.cfads_definition": "OPERATING_CASH_AFTER_TAX_MANDATORY_CAPEX",
+        "finance.loan_agreement_id": "SYNTHETIC-loan-industrial_rooftop",
+        "finance.working_capital": 50000,
+        "targets.project_irr": null,
+        "targets.equity_irr": null,
+        "targets.payback_years": null
+      },
+      "ledger_presence": {
+        "construction_capex_paid": 1660000,
+        "year12_capex_paid": 190000,
+        "year15_capex_paid": 720000,
+        "receivables_accounting": true,
+        "project_and_equity_tax": true,
+        "debt_service_due": true,
+        "cash_funding_period_balances_present": false,
+        "equity_contributions_distributions_present": false
+      }
+    },
+    "utility_scale_ground": {
+      "synthetic_status": "CALCULATED_SYNTHETIC",
+      "data_mode": "SYNTHETIC",
+      "source_paths": {
+        "input.json": {
+          "path": "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/input.json",
+          "sha256": "dce65dc6808321a1267d9deb03737f2eeeddd7ac942cd96f2af5783d879a583f"
+        },
+        "methods.json": {
+          "path": "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/methods.json",
+          "sha256": "a3d04cd0f14d7c6678ef739dc494c16357a8e766a792a7d0c5f7d6b85c90c5f8"
+        },
+        "result.json": {
+          "path": "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/result.json",
+          "sha256": "99e7b2ae90a28dc07e6c6effbc9bdca9e0aa1c8226efcd10b357e988b4dfd9bb"
+        }
+      },
+      "result_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+      "phase3c_result_hash": "6f070c327912973efd79f5cb50a705d4422990132aa28701b1e6fe2a5e6ae616",
+      "periods": [
+        "CONSTRUCTION",
+        "OPERATING_YEAR_1",
+        "OPERATING_YEAR_2",
+        "OPERATING_YEAR_3",
+        "OPERATING_YEAR_4",
+        "OPERATING_YEAR_5",
+        "OPERATING_YEAR_6",
+        "OPERATING_YEAR_7",
+        "OPERATING_YEAR_8",
+        "OPERATING_YEAR_9",
+        "OPERATING_YEAR_10",
+        "OPERATING_YEAR_11",
+        "OPERATING_YEAR_12",
+        "OPERATING_YEAR_13",
+        "OPERATING_YEAR_14",
+        "OPERATING_YEAR_15",
+        "OPERATING_YEAR_16",
+        "OPERATING_YEAR_17",
+        "OPERATING_YEAR_18",
+        "OPERATING_YEAR_19",
+        "OPERATING_YEAR_20",
+        "OPERATING_YEAR_21",
+        "OPERATING_YEAR_22",
+        "OPERATING_YEAR_23",
+        "OPERATING_YEAR_24",
+        "OPERATING_YEAR_25"
+      ],
+      "annual_rows": 26,
+      "cashflow_3e_all_none": true,
+      "ledger_keys_first_operating_year": [
+        "accounts_receivable_closing",
+        "asset_book_value_closing",
+        "capex_accrued",
+        "capex_cash_paid",
+        "capex_payable_closing",
+        "capex_payable_opening",
+        "capex_payment_residual",
+        "cash_tax_total",
+        "cash_tax_total_equity",
+        "cash_tax_total_project",
+        "debt_balance_closing",
+        "debt_service_due",
+        "depreciation",
+        "income_tax_accrual",
+        "income_tax_accrual_equity",
+        "income_tax_accrual_project",
+        "income_tax_cash_paid",
+        "income_tax_cash_paid_equity",
+        "income_tax_cash_paid_project",
+        "income_tax_payable_closing",
+        "income_tax_payable_equity_closing",
+        "income_tax_payable_project_closing",
+        "interest_accrued",
+        "interest_capitalized",
+        "interest_paid",
+        "interest_payable_closing",
+        "invoiced_gross",
+        "opex_accrued",
+        "opex_cash_paid",
+        "other_cash_taxes",
+        "other_cash_taxes_project",
+        "period",
+        "phase3e_cashflow",
+        "principal_due",
+        "principal_paid",
+        "receivables_opening",
+        "receivables_terminal_collection",
+        "replacement_capex_accrued",
+        "replacement_cash_paid",
+        "revenue_after_transaction_cost",
+        "revenue_cash_receipts",
+        "self_use_avoided_expenditure",
+        "tax_cash_bridge",
+        "tax_cash_bridge_equity",
+        "tax_cash_bridge_project",
+        "tax_loss_closing",
+        "tax_loss_equity_closing",
+        "tax_loss_project_closing",
+        "taxable_income_equity",
+        "taxable_income_project",
+        "vat_credit_closing",
+        "vat_input_eligible",
+        "vat_output",
+        "working_capital_increase",
+        "working_capital_release"
+      ],
+      "controls": {
+        "cash.opening_cash": {
+          "present": true,
+          "value": 0,
+          "status": "ASSUMED"
+        },
+        "cash.method": {
+          "present": true,
+          "value": "ACCRUAL_WORKING_CAPITAL",
+          "status": "ASSUMED"
+        },
+        "cash.self_use_treatment": {
+          "present": true,
+          "value": "CONTRACT_PPA",
+          "status": "ASSUMED"
+        },
+        "equity.distribution_fractions": {
+          "present": true,
+          "value": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "status": "ASSUMED"
+        },
+        "equity.minimum_cash_reserve": {
+          "present": true,
+          "value": 0,
+          "status": "ASSUMED"
+        },
+        "cfads.method": {
+          "present": true,
+          "value": "OPERATING_CASH_AFTER_TAX_MANDATORY_CAPEX",
+          "status": "ASSUMED"
+        },
+        "time.cashflow_timing": {
+          "present": true,
+          "value": "YEAR_END",
+          "status": "ASSUMED"
+        },
+        "time.day_count": {
+          "present": true,
+          "value": "ACT_365F",
+          "status": "ASSUMED"
+        },
+        "irr.minimum_rate": {
+          "present": true,
+          "value": -0.5,
+          "status": "ASSUMED"
+        },
+        "irr.maximum_rate": {
+          "present": true,
+          "value": 1,
+          "status": "ASSUMED"
+        },
+        "break_even.minimum_price": {
+          "present": true,
+          "value": 0,
+          "status": "ASSUMED"
+        },
+        "break_even.maximum_price": {
+          "present": true,
+          "value": 2,
+          "status": "ASSUMED"
+        }
+      },
+      "input_controls": {
+        "project.evaluation_date": "2026-10-29",
+        "project.evaluation_years": 25,
+        "project.price_basis": "nominal",
+        "finance.project_discount_rate": 0.08,
+        "finance.equity_discount_rate": 0.08,
+        "finance.cfads_definition": "OPERATING_CASH_AFTER_TAX_MANDATORY_CAPEX",
+        "finance.loan_agreement_id": "SYNTHETIC-loan-utility_scale_ground",
+        "finance.working_capital": 120000,
+        "targets.project_irr": null,
+        "targets.equity_irr": null,
+        "targets.payback_years": null
+      },
+      "ledger_presence": {
+        "construction_capex_paid": 2510000,
+        "year12_capex_paid": 190000,
+        "year15_capex_paid": 720000,
+        "receivables_accounting": true,
+        "project_and_equity_tax": true,
+        "debt_service_due": true,
+        "cash_funding_period_balances_present": false,
+        "equity_contributions_distributions_present": false
+      }
+    }
+  },
+  "case_input_checklist": [
+    {
+      "item": "期间划分",
+      "classification": "已存在且可按冻结口径使用",
+      "evidence": "两案26期，CONSTRUCTION+25运营年"
+    },
+    {
+      "item": "Phase 3C收益",
+      "classification": "已存在但仍需核对计算口径",
+      "evidence": "屋顶避免支出是经济利益、非主体银行收款"
+    },
+    {
+      "item": "CAPEX支付计划",
+      "classification": "已存在且可按冻结口径使用",
+      "evidence": "3D建设与替换付现；合成日期非实际扣款时刻"
+    },
+    {
+      "item": "资产更换支出",
+      "classification": "已存在且可按冻结口径使用",
+      "evidence": "年12/15分别190000/720000，已列3D账"
+    },
+    {
+      "item": "OPEX付现",
+      "classification": "已存在且可按冻结口径使用",
+      "evidence": "3D逐年opex_cash_paid"
+    },
+    {
+      "item": "税费预测实付",
+      "classification": "已存在且可按冻结口径使用",
+      "evidence": "3D独立project/equity税费列；只作SYNTHETIC预测"
+    },
+    {
+      "item": "贷款提款",
+      "classification": "已存在且可按冻结口径使用",
+      "evidence": "3D period债务提款；无证明替换期另行提款"
+    },
+    {
+      "item": "本息支付",
+      "classification": "已存在且可按冻结口径使用",
+      "evidence": "逐期实付与应还分开"
+    },
+    {
+      "item": "营运资金变化",
+      "classification": "已存在但仍需核对计算口径",
+      "evidence": "建设期占用及终期回收须按未重复扣除边界映射"
+    },
+    {
+      "item": "应收应付/账簿余额",
+      "classification": "已存在且可按冻结口径使用",
+      "evidence": "应收/资本应付/所得税/债务本金；非现金存量"
+    },
+    {
+      "item": "期初资本金/股东分配",
+      "classification": "原冻结必需但缺失",
+      "evidence": "有期初现金合成0及比例1/储备0；没有逐期股东出资、可合法支付分配、退出和非受限主体余额"
+    },
+    {
+      "item": "折现率",
+      "classification": "已存在但仍需核对计算口径",
+      "evidence": "两案合成project/equity 0.08；LCOE等需明确名实/税口径"
+    },
+    {
+      "item": "IRR搜索域",
+      "classification": "已存在且可按冻结口径使用",
+      "evidence": "合成界[-0.5,1]及有界求根控制，域外不作不存在证明"
+    },
+    {
+      "item": "盈亏电价搜索域",
+      "classification": "已存在但仍需核对计算口径",
+      "evidence": "合成[0,2]；待指定变动电价项并全链重算"
+    },
+    {
+      "item": "CFADS计算配置",
+      "classification": "已存在但仍需核对计算口径",
+      "evidence": "合成method存在；合同协议边界/调整尚未核实"
+    }
+  ],
+  "blocker_matrix": [
+    {
+      "id": "B-FROZEN-ANNUAL",
+      "classification": "FROZEN_OR_TECHNICAL",
+      "formulas": [
+        "F-PROJECT-CASH-FLOW",
+        "F-LIFECYCLE-COST",
+        "F-LCOE"
+      ],
+      "reason": "项目/经济利益归属、成本税/终期实际回收、避免现金重复；不等于银行付款瞬时证明",
+      "source": [
+        "R-S06-L121",
+        "R-S06-L125"
+      ]
+    },
+    {
+      "id": "B-EQUITY",
+      "classification": "FROZEN_REQUIRED",
+      "formulas": [
+        "F-EQUITY-INVESTOR-CASH-FLOW",
+        "F-CASH-FUNDING-BALANCE",
+        "F-IRR-EQUITY"
+      ],
+      "reason": "股东期间实缴、可合法支付分配及退出、主体期初非受限现金滚动；比例/储备不构成实际现金事件",
+      "source": [
+        "R-S06-L121",
+        "R-S06-L123"
+      ]
+    },
+    {
+      "id": "B-DATED",
+      "classification": "FROZEN_REQUIRED",
+      "formulas": [
+        "F-DATED-NPV"
+      ],
+      "reason": "完整日期现金事件与年分数为原式明示输入；无日内资金可用排序要求",
+      "source": [
+        "R-S06-L122"
+      ]
+    },
+    {
+      "id": "B-CFADS",
+      "classification": "FROZEN_REQUIRED_FOR_CONTRACT_VERDICT",
+      "formulas": [
+        "F-CFADS",
+        "F-DSCR"
+      ],
+      "reason": "已有合成方法可进行情景；协议口径/调整未经合同证实不能给合同结论",
+      "source": [
+        "R-S06-L126",
+        "R-CH16-07"
+      ]
+    },
+    {
+      "id": "B-TARGET",
+      "classification": "CONDITIONAL_INPUT",
+      "formulas": [
+        "F-INVESTMENT-HURDLE-GAP"
+      ],
+      "reason": "两案无用户目标；仅目标差距受阻",
+      "source": [
+        "R-S06-L127"
+      ]
+    },
+    {
+      "id": "B-INSTANT",
+      "classification": "LATER_STRICTER_AUDIT_NOT_FROZEN_GLOBAL_GATE",
+      "formulas": [],
+      "reason": "四笔瞬时覆盖INDETERMINATE不改变；没有找到银行账户流水/同日排序/无证明停整个3E的原始正式条文",
+      "source": [
+        "reports/solar-pv/phase3e-funding-coverage-review.md",
+        "reports/solar-pv/phase3e-funding-coverage-recheck.md"
+      ]
+    }
+  ],
+  "verdict": {
+    "frozen_instant_bank_coverage_required": "NO",
+    "original_period_cash_balance_and_equity_requirements": "YES",
+    "dated_cash_event_calculation_required": "YES_FOR_F_DATED_NPV",
+    "global_gate_scope_drift": "YES_PARTIAL",
+    "current_phase3e_status": "BLOCKED_UNCHANGED_NOT_IMPLEMENTED"
+  },
+  "four_payments_status": "INDETERMINATE_UNCHANGED_NO_RECOMPUTE",
+  "six_preserved": {
+    "start_sha256": {
+      "packages/skills/wangbin-receivable-analyzer/SKILL.md": "8a5ee4eb54a4f6a08d3ab7cccf792c12d5f01ab3fb4ab0de8dc926149087a945",
+      "packages/skills/wangbin-receivable-analyzer/manifest.json": "0a9459ab33f0f3bbc1c538535b994218e6ad92792901a39c3e4e94eaf777762b",
+      "products/catalog.json": "d74f3fa9f00184ee64f8452862958c3ef11f7848378ed42657e4b5fbc91def27",
+      "reports/workbuddy-upload-list.md": "6d0df16f21a4cf7a3a87eef1b90fb2f7d26fd1457f124066707281f9ff0ec586",
+      "reports/validate.json": "42765dae553254369311f3d4e7d2d3ab6f3cf0f8858a1c0e587debfea809d1ba",
+      "reports/validate.md": "2c3f7cd41671f2af1cd9f5688ae4e3779d92390260cdb43299457bcedb2060e3"
+    },
+    "end_sha256": {
+      "packages/skills/wangbin-receivable-analyzer/SKILL.md": "8a5ee4eb54a4f6a08d3ab7cccf792c12d5f01ab3fb4ab0de8dc926149087a945",
+      "packages/skills/wangbin-receivable-analyzer/manifest.json": "0a9459ab33f0f3bbc1c538535b994218e6ad92792901a39c3e4e94eaf777762b",
+      "products/catalog.json": "d74f3fa9f00184ee64f8452862958c3ef11f7848378ed42657e4b5fbc91def27",
+      "reports/workbuddy-upload-list.md": "6d0df16f21a4cf7a3a87eef1b90fb2f7d26fd1457f124066707281f9ff0ec586",
+      "reports/validate.json": "42765dae553254369311f3d4e7d2d3ab6f3cf0f8858a1c0e587debfea809d1ba",
+      "reports/validate.md": "2c3f7cd41671f2af1cd9f5688ae4e3779d92390260cdb43299457bcedb2060e3"
+    },
+    "unchanged": true
+  },
+  "baseline_288": {
+    "manifest": "reports/solar-pv/phase3c-startup-state.json",
+    "manifest_sha256": "26fdade64ab3f1f23a51850afa3ce068f3ebfc026b22f30e3a06e31a76732a4d",
+    "total": 288,
+    "matched": 286,
+    "prior_deviations": [
+      "reports/validate.json",
+      "reports/validate.md"
+    ],
+    "missing": [],
+    "new_deviations": []
+  },
+  "tests_executed_in_this_audit": false,
+  "phase3e_calculations_executed": false,
+  "cash_coverage_recalculated": false
+}

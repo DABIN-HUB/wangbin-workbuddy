@@ -1,0 +1,46 @@
+{
+  "definition_version": "solar-pv-formula-definitions/1.0.1",
+  "definition_hash": "617a2e9d314c095bd2ec893939c930a2323be6fd7805da12bf6d6fdd70274808",
+  "scope": "PHASE3E_INDEPENDENT_DECIMAL_KERNELS",
+  "source_sha256": {
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py": "1bef198e38beb790dfbd060c7aa538dbd1cde0d33df60464aa6bf1063e90b3ae",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py": "8e7897b779c613a5e78b4eaed15ea9dfb93dbbea2feb2d55f983186b6185b5b1",
+    "services/solar-pv-engine/src/wangbin_solar_pv/cli.py": "76d639948b4c5ac4829728c35d0c846745c565c18d162812fe196eaa30b467d9"
+  },
+  "test_command": "python -m pytest tests/solar-pv/test_phase3e_financial_metrics.py -q",
+  "test_result": "10 passed in 0.11s",
+  "formula_status": {
+    "F-PROJECT-CASH-FLOW": "NUMERICAL_VERIFICATION_PASS",
+    "F-PROJECT-PRETAX-CASH-FLOW": "NUMERICAL_VERIFICATION_PASS",
+    "F-EQUITY-AVAILABLE-CASH-FLOW": "NUMERICAL_VERIFICATION_PASS",
+    "F-EQUITY-INVESTOR-CASH-FLOW": "NUMERICAL_VERIFICATION_PASS",
+    "F-CASH-FUNDING-BALANCE": "NUMERICAL_VERIFICATION_PASS",
+    "F-NPV": "NUMERICAL_VERIFICATION_PASS",
+    "F-DATED-NPV": "NUMERICAL_VERIFICATION_PASS",
+    "F-NOMINAL-REAL-RATE": "NUMERICAL_VERIFICATION_PASS",
+    "F-IRR-PROJECT": "NUMERICAL_VERIFICATION_PASS",
+    "F-IRR-EQUITY": "NUMERICAL_VERIFICATION_PASS",
+    "F-CUMULATIVE-CASH-FLOW": "NUMERICAL_VERIFICATION_PASS",
+    "F-STATIC-PAYBACK": "NUMERICAL_VERIFICATION_PASS",
+    "F-DISCOUNTED-CUMULATIVE-CASH": "NUMERICAL_VERIFICATION_PASS",
+    "F-DYNAMIC-PAYBACK": "NUMERICAL_VERIFICATION_PASS",
+    "F-LIFECYCLE-COST": "NUMERICAL_VERIFICATION_PASS",
+    "F-LCOE": "NUMERICAL_VERIFICATION_PASS",
+    "F-CFADS": "NUMERICAL_VERIFICATION_PASS",
+    "F-DSCR": "NUMERICAL_VERIFICATION_PASS",
+    "F-BREAK-EVEN-PRICE": "NUMERICAL_VERIFICATION_PASS",
+    "F-WORST-CASH-YEAR": "NUMERICAL_VERIFICATION_PASS",
+    "F-INVESTMENT-HURDLE-GAP": "NUMERICAL_VERIFICATION_PASS"
+  },
+  "case_status_policy": "ENGINE_STATUS_IS_INDEPENDENT_FROM_PROJECT_INPUT_STATUS",
+  "project_results": {
+    "industrial_rooftop": {"status": "PARTIAL", "period_count": 26, "formula_metric_count": 21, "calculated": 1, "undefined": 1, "blocked_missing_input": 19, "result_hash": "13d96b5b77a57c063b2745407bd39f4fc8f66c10aaafb0ee23b83b4796d8467a"},
+    "utility_scale_ground": {"status": "PARTIAL", "period_count": 26, "formula_metric_count": 21, "calculated": 1, "undefined": 1, "blocked_missing_input": 19, "result_hash": "be22a49f20cbe5c15fabfac748bb926273c6ffd8d04ebfd5b2f9b3bf25cba224"}
+  },
+  "preserved_risks": {
+    "instantaneous_payment_coverage": "INDETERMINATE",
+    "phase3e_gate": "PARTIAL_BLOCKED",
+    "phase3f_started": false,
+    "phase3g_started": false
+  }
+}
