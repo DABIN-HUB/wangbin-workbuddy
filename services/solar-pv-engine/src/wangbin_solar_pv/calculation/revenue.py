@@ -173,6 +173,7 @@ def _calculate(exported, methods, *, generation_dir, generation_result_hash, cat
             monthly = [[_empty_ledger(need_load) for _ in range(12)] for _ in range(generation.years)]
             writer = _EvidenceWriter(target,meter)
             count = calls = 0
+            price_sources = set()
             for row,start,end,hours in generation.rows():
                 count += 1
                 load_row = load.take(start,end) if load else None
@@ -188,6 +189,10 @@ def _calculate(exported, methods, *, generation_dir, generation_result_hash, cat
                             if need_load else Decimal(0))
                     limit = cap*hours
                     exported_energy = _scalar(inputs,"F-EXPORTED-ENERGY",{"energy.available_kwh":available,"consumption.self_kwh":used,"grid.export_limit_kwh":limit})
+                    if exported_energy:
+                        price_sources.update(quote["source"]["source_ids"])
+                    if used and quote["table"] is not None:
+                        price_sources.update(quote["table"]["lineage"]["source_ids"])
                     curtailed = _scalar(inputs,"F-CURTAILED-ENERGY",{"energy.available_kwh":available,"consumption.self_kwh":used,"consumption.export_kwh":exported_energy})
                     balance = _scalar(inputs,"F-ENERGY-BALANCE",{"energy.available_kwh":available,"consumption.self_kwh":used,"consumption.export_kwh":exported_energy,"consumption.curtailed_kwh":curtailed})
                     if not _near(inputs,balance,Decimal(0)) or used > available or (need_load and used > demand) or exported_energy > limit:
@@ -257,7 +262,7 @@ def _calculate(exported, methods, *, generation_dir, generation_result_hash, cat
             result["inputs"].update(identity_payload=payload,method_config_hash=inputs.methods.hash,
                 normalized=inputs.validated.export["normalized_inputs"],
                 used_fields=sorted(inputs.field_ids|set(generation.result["inputs"]["used_fields"])),
-                used_sources=sorted({r["source_id"] for r in inputs.used.values()}|set(generation.result["inputs"]["used_sources"])),
+                used_sources=sorted({r["source_id"] for r in inputs.used.values()}|set(generation.result["inputs"]["used_sources"])|price_sources),
                 generation_result_hash=generation_result_hash)
             trace = writer.finish()
             trace.update(status="CALCULATED",formula_version=catalog.definition_version,formula_ids=list(FORMULA_IDS),
