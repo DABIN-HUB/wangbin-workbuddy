@@ -9,6 +9,8 @@ formula registry and independent Decimal reference checks.
 from __future__ import annotations
 
 from decimal import Decimal
+from fractions import Fraction
+from math import gcd, lcm
 from typing import Iterable
 
 from ..errors import ContractError
@@ -196,42 +198,153 @@ def _bisection(func, left, right, tolerance, maximum=160):
     return (left + right) / 2
 
 
+def _poly_trim(poly):
+    while len(poly) > 1 and poly[-1] == 0:
+        poly.pop()
+    return poly
+
+
+def _poly_primitive(poly):
+    """Scale by a strictly positive rational; Sturm signs stay unchanged."""
+    poly = _poly_trim(poly)
+    denominator = lcm(*(term.denominator for term in poly))
+    integers = [term.numerator * (denominator // term.denominator) for term in poly]
+    divisor = gcd(*integers)
+    return [Fraction(item // divisor) for item in integers] if divisor else [Fraction(0)]
+
+
+def _poly_divmod(dividend, divisor):
+    remainder = dividend[:]
+    quotient = [Fraction(0)] * max(1, len(dividend) - len(divisor) + 1)
+    while len(remainder) >= len(divisor) and any(remainder):
+        offset = len(remainder) - len(divisor)
+        factor = remainder[-1] / divisor[-1]
+        quotient[offset] = factor
+        for index, coefficient in enumerate(divisor):
+            remainder[index + offset] -= factor * coefficient
+        _poly_trim(remainder)
+    return _poly_trim(quotient), remainder
+
+
+def _poly_value(poly, point):
+    result = Fraction(0)
+    for coefficient in reversed(poly):
+        result = result * point + coefficient
+    return result
+
+
 def _irr(cash, domain, options):
-    if not any(cash):
-        return nonvalue("UNDEFINED", "ALL_ZERO_CASH_FLOW", details={"roots": []})
-    if all(item >= 0 for item in cash) or all(item <= 0 for item in cash):
-        return nonvalue("UNDEFINED", "NO_SIGN_CHANGE", details={"roots": []})
     low, high = _domain(domain, "finance.irr_search_domain")
     tolerance = number(options.get("root_tolerance", Decimal("1e-18")), "irr.root_tolerance")
-    if tolerance <= 0:
+    if tolerance <= 0 or tolerance > Decimal("0.001"):
         raise ContractError("IRR_TOLERANCE_DOMAIN")
-    steps = min(8192, max(256, len(cash) * 128))
-    step = (high - low) / steps
+    if not any(cash):
+        return nonvalue("UNDEFINED", "INDETERMINATE", details={"roots": [], "unexhausted": False})
+    if all(item >= 0 for item in cash) or all(item <= 0 for item in cash):
+        return nonvalue("UNDEFINED", "NO_SIGN_CHANGE", details={"roots": [], "unexhausted": False})
+    polynomial = _poly_trim([Fraction(item) for item in reversed(cash)])
+    if len(polynomial) - 1 > 100:
+        return nonvalue("BLOCKED_METHOD_REVIEW", "IRR_DEGREE_BUDGET", details={"roots": [], "unexhausted": True})
+    derivative = [polynomial[i] * i for i in range(1, len(polynomial))]
+    left, right = polynomial, derivative
+    while any(right):
+        _, remainder = _poly_divmod(left, right)
+        left, right = right, remainder
+    gcd_poly = left
+    square_free, remainder = _poly_divmod(polynomial, gcd_poly)
+    if any(remainder):
+        raise ContractError("IRR_POLYNOMIAL_DIVISION")
+    square_free = _poly_primitive(square_free)
+    low_x, high_x = Fraction(low + 1), Fraction(high + 1)
+    exact_roots = []
+    for endpoint in (low_x, high_x):
+        if _poly_value(square_free, endpoint) == 0:
+            exact_roots.append(endpoint)
+            square_free, remainder = _poly_divmod(square_free, [-endpoint, Fraction(1)])
+            if any(remainder):
+                raise ContractError("IRR_POLYNOMIAL_DIVISION")
+            square_free = _poly_primitive(square_free)
+    sturm = [square_free]
+    if len(square_free) > 1:
+        sturm.append(_poly_primitive([square_free[i] * i for i in range(1, len(square_free))]))
+        while len(sturm[-1]) > 1:
+            _, remainder = _poly_divmod(sturm[-2], sturm[-1])
+            if not any(remainder):
+                break
+            sturm.append(_poly_primitive([-term for term in remainder]))
+
+    def variations(point):
+        signs = [1 if value > 0 else -1 for poly in sturm if (value := _poly_value(poly, point)) != 0]
+        return sum(a != b for a, b in zip(signs, signs[1:]))
+
+    def count(left_x, right_x):
+        return variations(left_x) - variations(right_x)
+
+    # All roots, including repeated roots, are represented once in the
+    # square-free polynomial.  Sturm counts prove completeness in this domain.
+    intervals = [(low_x, high_x, count(low_x, high_x))]
+    isolated = []
+    budget = 10000
+    while intervals:
+        left_x, right_x, amount = intervals.pop()
+        if not amount:
+            continue
+        if budget <= 0:
+            return nonvalue("UNDEFINED", "NON_CONVERGENT", details={"roots": [], "unexhausted": True})
+        budget -= 1
+        if amount == 1:
+            isolated.append((left_x, right_x))
+            continue
+        midpoint = (left_x + right_x) / 2
+        while _poly_value(square_free, midpoint) == 0:
+            midpoint = (left_x + midpoint) / 2
+            budget -= 1
+            if budget <= 0:
+                return nonvalue("UNDEFINED", "NON_CONVERGENT", details={"roots": [], "unexhausted": True})
+        left_count = count(left_x, midpoint)
+        intervals.extend(((midpoint, right_x, amount - left_count), (left_x, midpoint, left_count)))
+
     roots = []
-    previous_x = low
-    previous_y = _npv(cash, previous_x)
-    for index in range(1, steps + 1):
-        current_x = high if index == steps else low + step * index
-        current_y = _npv(cash, current_x)
-        if abs(previous_y) <= tolerance:
-            roots.append(previous_x)
-        if previous_y * current_y < 0:
-            root = _bisection(lambda rate: _npv(cash, rate), previous_x, current_x, tolerance)
-            if root is not None:
-                roots.append(root)
-        previous_x, previous_y = current_x, current_y
-    if abs(previous_y) <= tolerance:
-        roots.append(previous_x)
-    unique = []
-    for root in sorted(roots):
-        if not unique or abs(root - unique[-1]) > tolerance * 10:
-            unique.append(root)
-    details = {"roots": unique, "domain": {"minimum": low, "maximum": high}, "root_tolerance": tolerance, "residuals": [_npv(cash, root) for root in unique]}
-    if not unique:
+    isolating_intervals = []
+    residuals = []
+    scale = max(Decimal(1), sum((abs(item) for item in cash), _ZERO))
+    for left_x, right_x in [(root, root) for root in exact_roots] + isolated:
+        if left_x != right_x:
+            for _ in range(8192):
+                midpoint = (left_x + right_x) / 2
+                if _poly_value(square_free, midpoint) == 0:
+                    left_x = right_x = midpoint
+                    break
+                if count(left_x, midpoint):
+                    right_x = midpoint
+                else:
+                    left_x = midpoint
+                if right_x - left_x <= Fraction(tolerance) / 1024:
+                    estimate = (left_x + right_x) / 2
+                    rate = Decimal(estimate.numerator) / Decimal(estimate.denominator) - 1
+                    if abs(_npv(cash, rate)) <= tolerance * scale:
+                        break
+            else:
+                return nonvalue("UNDEFINED", "NON_CONVERGENT", details={"roots": [], "unexhausted": True})
+        root_x = (left_x + right_x) / 2
+        root = Decimal(root_x.numerator) / Decimal(root_x.denominator) - 1
+        residual = _npv(cash, root)
+        if abs(residual) > tolerance * scale:
+            return nonvalue("UNDEFINED", "NON_CONVERGENT", details={"roots": [], "unexhausted": True})
+        roots.append(root)
+        residuals.append(residual)
+        isolating_intervals.append([Decimal(left_x.numerator) / Decimal(left_x.denominator) - 1,
+                                    Decimal(right_x.numerator) / Decimal(right_x.denominator) - 1])
+    ordered = sorted(zip(roots, residuals, isolating_intervals), key=lambda item: item[0])
+    details = {"roots": [item[0] for item in ordered], "domain": {"minimum": low, "maximum": high},
+               "root_tolerance": tolerance, "residuals": [item[1] for item in ordered],
+               "isolating_intervals": [item[2] for item in ordered], "root_count": len(ordered),
+               "unexhausted": False, "method": "EXACT_RATIONAL_POLYNOMIAL_ISOLATION"}
+    if not ordered:
         return nonvalue("UNDEFINED", "NO_ROOT", details=details)
-    if len(unique) != 1:
+    if len(ordered) != 1:
         return nonvalue("UNDEFINED", "MULTIPLE_ROOTS", details=details)
-    return calculated(unique[0], details=details)
+    return calculated(ordered[0][0], details=details)
 
 
 def _interpolate_vector(left, right, fraction):
