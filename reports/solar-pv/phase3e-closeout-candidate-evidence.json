@@ -1,0 +1,945 @@
+{
+  "source_head": "1be9a32a937a2f6ea378842e7ef81221041fa1fb",
+  "definition_version": "solar-pv-formula-definitions/1.0.1",
+  "definition_hash": "617a2e9d314c095bd2ec893939c930a2323be6fd7805da12bf6d6fdd70274808",
+  "formula_ids": [
+    "F-PROJECT-CASH-FLOW",
+    "F-PROJECT-PRETAX-CASH-FLOW",
+    "F-EQUITY-AVAILABLE-CASH-FLOW",
+    "F-EQUITY-INVESTOR-CASH-FLOW",
+    "F-CASH-FUNDING-BALANCE",
+    "F-NPV",
+    "F-DATED-NPV",
+    "F-NOMINAL-REAL-RATE",
+    "F-IRR-PROJECT",
+    "F-IRR-EQUITY",
+    "F-CUMULATIVE-CASH-FLOW",
+    "F-STATIC-PAYBACK",
+    "F-DISCOUNTED-CUMULATIVE-CASH",
+    "F-DYNAMIC-PAYBACK",
+    "F-LIFECYCLE-COST",
+    "F-LCOE",
+    "F-CFADS",
+    "F-DSCR",
+    "F-BREAK-EVEN-PRICE",
+    "F-WORST-CASH-YEAR",
+    "F-INVESTMENT-HURDLE-GAP"
+  ],
+  "formula_kernel_claim": "normal-value Decimal checks exist; the existing suite asserts exact independent numeric values for a subset, status-only for other IDs; NOT a claim of 21 full numerical PASS",
+  "cases": {
+    "industrial_rooftop": {
+      "upstream_phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+      "method_config_hash": "c1c51510d8678b4a4ce22950af5ec2e16381c98c1789244c9a6092e7ed241153",
+      "result_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+      "period_count": 26,
+      "status_counts": {
+        "BLOCKED_MISSING_INPUT": 20,
+        "UNDEFINED": 1
+      },
+      "rows": [
+        {
+          "formula_id": "F-PROJECT-CASH-FLOW",
+          "frozen_equation": "CF_P,y = B_op,y − O_y − T_P,y − K_P,y − ΔW_P,y + S_P,y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "finance.project_operating_cash_benefit",
+            "opex.cash_annual",
+            "tax.project_cash_total",
+            "capex.unlevered_cash_annual",
+            "working_capital.project_net_change",
+            "finance.project_terminal_cash"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_INPUT",
+          "details": {
+            "missing_field_ids": [
+              "finance.project_terminal_cash"
+            ],
+            "policy": "NO_DEFAULT_ZERO"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-PROJECT-PRETAX-CASH-FLOW",
+          "frozen_equation": "CF_P,pre,y = CF_P,y + T_inc,cash,P,y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "finance.project_cash_flow",
+            "tax.project_income_cash_paid"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+          "details": {
+            "upstream_formula_id": "F-PROJECT-CASH-FLOW"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": "F-PROJECT-CASH-FLOW"
+        },
+        {
+          "formula_id": "F-EQUITY-AVAILABLE-CASH-FLOW",
+          "frozen_equation": "CF_E,avail,y = B_op,y − O_y − T_E,y − K_E,y − ΔW_E,y + S_E,y + DD_y − PRN_y − INT_y − FF_y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "finance.project_operating_cash_benefit",
+            "opex.cash_annual",
+            "tax.equity_cash_total",
+            "capex.equity_asset_cash_annual",
+            "working_capital.equity_net_change",
+            "finance.equity_terminal_cash",
+            "debt.cash_drawdown",
+            "debt.principal_paid",
+            "debt.interest_paid",
+            "debt.finance_fees_paid"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_OWNER_TERMINAL_CASH",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-EQUITY-INVESTOR-CASH-FLOW",
+          "frozen_equation": "CF_E,y = DIV_y + EXIT_y − EQ_y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "equity.distributions",
+            "equity.exit_receipts",
+            "equity.contributions"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_OWNER_CASH_EVENTS",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "REVIEW_REQUIRED",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-CASH-FUNDING-BALANCE",
+          "frozen_equation": "CLOSE_y = OPEN_y + CF_E,avail,y + EQ_y − DIV_y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "checks.cash_opening",
+            "finance.equity_available_cash_flow",
+            "equity.contributions",
+            "equity.distributions"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_ENTITY_OPENING_AND_OWNER_EVENTS",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-NPV",
+          "frozen_equation": "NPV_b = Σ(y=0…N) CF_b,y / (1 + r_b)^y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "finance.selected_cash_flow",
+            "finance.selected_discount_rate",
+            "finance.cash_flow_basis",
+            "time.financial_end_year"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+          "details": {
+            "upstream_formula_id": "F-PROJECT-CASH-FLOW"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": "F-PROJECT-CASH-FLOW"
+        },
+        {
+          "formula_id": "F-DATED-NPV",
+          "frozen_equation": "NPV_b = Σ(k∈C) CF_b,k / (1 + r_b)^τ_k",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "finance.dated_cash_flows",
+            "finance.selected_discount_rate",
+            "finance.cash_event_year_fraction",
+            "finance.cash_event_ids",
+            "finance.cash_flow_basis"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_DATED_CASH_EVENTS",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-NOMINAL-REAL-RATE",
+          "frozen_equation": "r_nom = (1 + r_real) × (1 + π) − 1",
+          "frozen_unit": "1",
+          "direct_operands": [
+            "finance.real_discount_rate",
+            "finance.general_inflation"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_INPUT",
+          "details": {
+            "missing_field_ids": [
+              "finance.real_discount_rate",
+              "finance.general_inflation"
+            ]
+          },
+          "actual_unit": "1",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-IRR-PROJECT",
+          "frozen_equation": "R_P = {r∈D : Σ(y=0…N) CF_P,y/(1+r)^y = 0}",
+          "frozen_unit": "集合（元素为每年比例）",
+          "direct_operands": [
+            "finance.irr_search_domain",
+            "finance.project_irr_cash_flow",
+            "time.financial_end_year"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+          "details": {
+            "upstream_formula_id": "F-PROJECT-CASH-FLOW"
+          },
+          "actual_unit": "集合（元素为每年比例）",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": "F-PROJECT-CASH-FLOW"
+        },
+        {
+          "formula_id": "F-IRR-EQUITY",
+          "frozen_equation": "R_E = {r∈D : Σ(y=0…N) CF_E,y/(1+r)^y = 0}",
+          "frozen_unit": "集合（元素为每年比例）",
+          "direct_operands": [
+            "finance.irr_search_domain",
+            "finance.equity_investor_cash_flow",
+            "time.financial_end_year"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_OWNER_CASH_EVENTS",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "集合（元素为每年比例）",
+          "value": null,
+          "case_applicability": "REVIEW_REQUIRED",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-CUMULATIVE-CASH-FLOW",
+          "frozen_equation": "A_b,n = Σ(y=0…n) CF_b,y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "finance.selected_cash_flow",
+            "time.cumulative_end_year",
+            "finance.cash_flow_basis"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+          "details": {
+            "upstream_formula_id": "F-PROJECT-CASH-FLOW"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": "F-PROJECT-CASH-FLOW"
+        },
+        {
+          "formula_id": "F-STATIC-PAYBACK",
+          "frozen_equation": "PB_static,b = n − 1 + (−A_b,n−1) / CF_b,n",
+          "frozen_unit": "年",
+          "direct_operands": [
+            "finance.first_recovery_year",
+            "finance.pre_recovery_cumulative_cash",
+            "finance.recovery_year_cash_flow",
+            "finance.cash_flow_basis",
+            "time.financial_end_year"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+          "details": {
+            "upstream_formula_id": "F-PROJECT-CASH-FLOW"
+          },
+          "actual_unit": "年",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": "F-PROJECT-CASH-FLOW"
+        },
+        {
+          "formula_id": "F-DISCOUNTED-CUMULATIVE-CASH",
+          "frozen_equation": "A_disc,b,n = Σ(y=0…n) CF_b,y / (1+r_b)^y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "finance.selected_cash_flow",
+            "finance.selected_discount_rate",
+            "time.cumulative_end_year",
+            "finance.cash_flow_basis"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+          "details": {
+            "upstream_formula_id": "F-PROJECT-CASH-FLOW"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": "F-PROJECT-CASH-FLOW"
+        },
+        {
+          "formula_id": "F-DYNAMIC-PAYBACK",
+          "frozen_equation": "PB_dynamic,b = n − 1 + (−A_disc,b,n−1)/(CF_b,n/(1+r_b)^n)",
+          "frozen_unit": "年",
+          "direct_operands": [
+            "finance.first_discounted_recovery_year",
+            "finance.pre_discounted_recovery_cumulative",
+            "finance.discounted_recovery_year_cash_flow",
+            "finance.selected_discount_rate",
+            "finance.cash_flow_basis",
+            "time.financial_end_year"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+          "details": {
+            "upstream_formula_id": "F-PROJECT-CASH-FLOW"
+          },
+          "actual_unit": "年",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": "F-PROJECT-CASH-FLOW"
+        },
+        {
+          "formula_id": "F-LIFECYCLE-COST",
+          "frozen_equation": "Cost_P,y = K_P,y + O_y + T_cost,P,y + ΔW_P,y − S_P,y − SUB_P,y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "capex.unlevered_cash_annual",
+            "opex.cash_annual",
+            "lcoe.cost_taxes",
+            "working_capital.project_net_change",
+            "finance.project_terminal_cash",
+            "lcoe.cost_subsidy_offset"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_TERMINAL_CASH",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-LCOE",
+          "frozen_equation": "LCOE = Σ(y=0…N) Cost_P,y/(1+r_L)^y / Σ(y=0…N) E_delivered,y/(1+r_L)^y",
+          "frozen_unit": "元/kWh",
+          "direct_operands": [
+            "lcoe.project_cost_annual",
+            "energy.delivered_annual_kwh",
+            "lcoe.discount_rate",
+            "time.financial_end_year"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_TERMINAL_COST_BOUNDARY",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "元/kWh",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-CFADS",
+          "frozen_equation": "CFADS_y = B_op,y − O_y − T_E,y − ΔW_ds,y − K_mand,y + A_ds,y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "finance.project_operating_cash_benefit",
+            "opex.cash_annual",
+            "tax.equity_cash_total",
+            "debt.cfads_working_capital_change",
+            "debt.cfads_mandatory_capex",
+            "debt.cfads_adjustments"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_INPUT",
+          "details": {
+            "missing_field_ids": [
+              "debt.cfads_adjustments"
+            ]
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-DSCR",
+          "frozen_equation": "DSCR_y = CFADS_y / DS_y",
+          "frozen_unit": "1",
+          "direct_operands": [
+            "debt.cfads",
+            "debt.service_due"
+          ],
+          "project_status": "UNDEFINED",
+          "reason": "ZERO_DEBT_SERVICE",
+          "details": {
+            "zero_service_periods": [
+              "OPERATING_YEAR_14",
+              "OPERATING_YEAR_15",
+              "OPERATING_YEAR_16",
+              "OPERATING_YEAR_17",
+              "OPERATING_YEAR_18",
+              "OPERATING_YEAR_19",
+              "OPERATING_YEAR_20",
+              "OPERATING_YEAR_21",
+              "OPERATING_YEAR_22",
+              "OPERATING_YEAR_23",
+              "OPERATING_YEAR_24",
+              "OPERATING_YEAR_25"
+            ]
+          },
+          "actual_unit": "1",
+          "value": null,
+          "case_applicability": "REVIEW_REQUIRED",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-BREAK-EVEN-PRICE",
+          "frozen_equation": "P_star = {p∈P : NPV_b(CF_b(p), r_b) = 0}",
+          "frozen_unit": "集合（元素元/kWh）",
+          "direct_operands": [
+            "sensitivity.price_search_domain",
+            "finance.npv",
+            "sensitivity.price_cash_flow_vector",
+            "finance.selected_discount_rate",
+            "finance.cash_flow_basis"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_FULL_CHAIN_PRICE_RECALCULATION",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "集合（元素元/kWh）",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-WORST-CASH-YEAR",
+          "frozen_equation": "Y_worst,b = argmin(y∈Y) CF_b,y",
+          "frozen_unit": "集合（年份标签）",
+          "direct_operands": [
+            "finance.selected_cash_flow",
+            "risk.cash_year_scope",
+            "finance.cash_flow_basis"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+          "details": {
+            "upstream_formula_id": "F-PROJECT-CASH-FLOW"
+          },
+          "actual_unit": "集合（年份标签）",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": "F-PROJECT-CASH-FLOW"
+        },
+        {
+          "formula_id": "F-INVESTMENT-HURDLE-GAP",
+          "frozen_equation": "G_M = M_calc − M_target",
+          "frozen_unit": "与 M 同单位",
+          "direct_operands": [
+            "decision.calculated_metric",
+            "decision.target_metric"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_USER_TARGET",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "与 M 同单位",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        }
+      ]
+    },
+    "utility_scale_ground": {
+      "upstream_phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+      "method_config_hash": "9429bf5612e1d41e8c1383f38d3601956e93ef16e3ba6e6e8a223afd48fd07dd",
+      "result_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+      "period_count": 26,
+      "status_counts": {
+        "BLOCKED_MISSING_INPUT": 20,
+        "UNDEFINED": 1
+      },
+      "rows": [
+        {
+          "formula_id": "F-PROJECT-CASH-FLOW",
+          "frozen_equation": "CF_P,y = B_op,y − O_y − T_P,y − K_P,y − ΔW_P,y + S_P,y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "finance.project_operating_cash_benefit",
+            "opex.cash_annual",
+            "tax.project_cash_total",
+            "capex.unlevered_cash_annual",
+            "working_capital.project_net_change",
+            "finance.project_terminal_cash"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_INPUT",
+          "details": {
+            "missing_field_ids": [
+              "finance.project_terminal_cash"
+            ],
+            "policy": "NO_DEFAULT_ZERO"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-PROJECT-PRETAX-CASH-FLOW",
+          "frozen_equation": "CF_P,pre,y = CF_P,y + T_inc,cash,P,y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "finance.project_cash_flow",
+            "tax.project_income_cash_paid"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+          "details": {
+            "upstream_formula_id": "F-PROJECT-CASH-FLOW"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": "F-PROJECT-CASH-FLOW"
+        },
+        {
+          "formula_id": "F-EQUITY-AVAILABLE-CASH-FLOW",
+          "frozen_equation": "CF_E,avail,y = B_op,y − O_y − T_E,y − K_E,y − ΔW_E,y + S_E,y + DD_y − PRN_y − INT_y − FF_y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "finance.project_operating_cash_benefit",
+            "opex.cash_annual",
+            "tax.equity_cash_total",
+            "capex.equity_asset_cash_annual",
+            "working_capital.equity_net_change",
+            "finance.equity_terminal_cash",
+            "debt.cash_drawdown",
+            "debt.principal_paid",
+            "debt.interest_paid",
+            "debt.finance_fees_paid"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_OWNER_TERMINAL_CASH",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-EQUITY-INVESTOR-CASH-FLOW",
+          "frozen_equation": "CF_E,y = DIV_y + EXIT_y − EQ_y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "equity.distributions",
+            "equity.exit_receipts",
+            "equity.contributions"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_OWNER_CASH_EVENTS",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "REVIEW_REQUIRED",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-CASH-FUNDING-BALANCE",
+          "frozen_equation": "CLOSE_y = OPEN_y + CF_E,avail,y + EQ_y − DIV_y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "checks.cash_opening",
+            "finance.equity_available_cash_flow",
+            "equity.contributions",
+            "equity.distributions"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_ENTITY_OPENING_AND_OWNER_EVENTS",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-NPV",
+          "frozen_equation": "NPV_b = Σ(y=0…N) CF_b,y / (1 + r_b)^y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "finance.selected_cash_flow",
+            "finance.selected_discount_rate",
+            "finance.cash_flow_basis",
+            "time.financial_end_year"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+          "details": {
+            "upstream_formula_id": "F-PROJECT-CASH-FLOW"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": "F-PROJECT-CASH-FLOW"
+        },
+        {
+          "formula_id": "F-DATED-NPV",
+          "frozen_equation": "NPV_b = Σ(k∈C) CF_b,k / (1 + r_b)^τ_k",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "finance.dated_cash_flows",
+            "finance.selected_discount_rate",
+            "finance.cash_event_year_fraction",
+            "finance.cash_event_ids",
+            "finance.cash_flow_basis"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_DATED_CASH_EVENTS",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-NOMINAL-REAL-RATE",
+          "frozen_equation": "r_nom = (1 + r_real) × (1 + π) − 1",
+          "frozen_unit": "1",
+          "direct_operands": [
+            "finance.real_discount_rate",
+            "finance.general_inflation"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_INPUT",
+          "details": {
+            "missing_field_ids": [
+              "finance.real_discount_rate",
+              "finance.general_inflation"
+            ]
+          },
+          "actual_unit": "1",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-IRR-PROJECT",
+          "frozen_equation": "R_P = {r∈D : Σ(y=0…N) CF_P,y/(1+r)^y = 0}",
+          "frozen_unit": "集合（元素为每年比例）",
+          "direct_operands": [
+            "finance.irr_search_domain",
+            "finance.project_irr_cash_flow",
+            "time.financial_end_year"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+          "details": {
+            "upstream_formula_id": "F-PROJECT-CASH-FLOW"
+          },
+          "actual_unit": "集合（元素为每年比例）",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": "F-PROJECT-CASH-FLOW"
+        },
+        {
+          "formula_id": "F-IRR-EQUITY",
+          "frozen_equation": "R_E = {r∈D : Σ(y=0…N) CF_E,y/(1+r)^y = 0}",
+          "frozen_unit": "集合（元素为每年比例）",
+          "direct_operands": [
+            "finance.irr_search_domain",
+            "finance.equity_investor_cash_flow",
+            "time.financial_end_year"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_OWNER_CASH_EVENTS",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "集合（元素为每年比例）",
+          "value": null,
+          "case_applicability": "REVIEW_REQUIRED",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-CUMULATIVE-CASH-FLOW",
+          "frozen_equation": "A_b,n = Σ(y=0…n) CF_b,y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "finance.selected_cash_flow",
+            "time.cumulative_end_year",
+            "finance.cash_flow_basis"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+          "details": {
+            "upstream_formula_id": "F-PROJECT-CASH-FLOW"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": "F-PROJECT-CASH-FLOW"
+        },
+        {
+          "formula_id": "F-STATIC-PAYBACK",
+          "frozen_equation": "PB_static,b = n − 1 + (−A_b,n−1) / CF_b,n",
+          "frozen_unit": "年",
+          "direct_operands": [
+            "finance.first_recovery_year",
+            "finance.pre_recovery_cumulative_cash",
+            "finance.recovery_year_cash_flow",
+            "finance.cash_flow_basis",
+            "time.financial_end_year"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+          "details": {
+            "upstream_formula_id": "F-PROJECT-CASH-FLOW"
+          },
+          "actual_unit": "年",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": "F-PROJECT-CASH-FLOW"
+        },
+        {
+          "formula_id": "F-DISCOUNTED-CUMULATIVE-CASH",
+          "frozen_equation": "A_disc,b,n = Σ(y=0…n) CF_b,y / (1+r_b)^y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "finance.selected_cash_flow",
+            "finance.selected_discount_rate",
+            "time.cumulative_end_year",
+            "finance.cash_flow_basis"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+          "details": {
+            "upstream_formula_id": "F-PROJECT-CASH-FLOW"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": "F-PROJECT-CASH-FLOW"
+        },
+        {
+          "formula_id": "F-DYNAMIC-PAYBACK",
+          "frozen_equation": "PB_dynamic,b = n − 1 + (−A_disc,b,n−1)/(CF_b,n/(1+r_b)^n)",
+          "frozen_unit": "年",
+          "direct_operands": [
+            "finance.first_discounted_recovery_year",
+            "finance.pre_discounted_recovery_cumulative",
+            "finance.discounted_recovery_year_cash_flow",
+            "finance.selected_discount_rate",
+            "finance.cash_flow_basis",
+            "time.financial_end_year"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+          "details": {
+            "upstream_formula_id": "F-PROJECT-CASH-FLOW"
+          },
+          "actual_unit": "年",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": "F-PROJECT-CASH-FLOW"
+        },
+        {
+          "formula_id": "F-LIFECYCLE-COST",
+          "frozen_equation": "Cost_P,y = K_P,y + O_y + T_cost,P,y + ΔW_P,y − S_P,y − SUB_P,y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "capex.unlevered_cash_annual",
+            "opex.cash_annual",
+            "lcoe.cost_taxes",
+            "working_capital.project_net_change",
+            "finance.project_terminal_cash",
+            "lcoe.cost_subsidy_offset"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_TERMINAL_CASH",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-LCOE",
+          "frozen_equation": "LCOE = Σ(y=0…N) Cost_P,y/(1+r_L)^y / Σ(y=0…N) E_delivered,y/(1+r_L)^y",
+          "frozen_unit": "元/kWh",
+          "direct_operands": [
+            "lcoe.project_cost_annual",
+            "energy.delivered_annual_kwh",
+            "lcoe.discount_rate",
+            "time.financial_end_year"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_TERMINAL_COST_BOUNDARY",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "元/kWh",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-CFADS",
+          "frozen_equation": "CFADS_y = B_op,y − O_y − T_E,y − ΔW_ds,y − K_mand,y + A_ds,y",
+          "frozen_unit": "元",
+          "direct_operands": [
+            "finance.project_operating_cash_benefit",
+            "opex.cash_annual",
+            "tax.equity_cash_total",
+            "debt.cfads_working_capital_change",
+            "debt.cfads_mandatory_capex",
+            "debt.cfads_adjustments"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_INPUT",
+          "details": {
+            "missing_field_ids": [
+              "debt.cfads_adjustments"
+            ]
+          },
+          "actual_unit": "元",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-DSCR",
+          "frozen_equation": "DSCR_y = CFADS_y / DS_y",
+          "frozen_unit": "1",
+          "direct_operands": [
+            "debt.cfads",
+            "debt.service_due"
+          ],
+          "project_status": "UNDEFINED",
+          "reason": "ZERO_DEBT_SERVICE",
+          "details": {
+            "zero_service_periods": [
+              "OPERATING_YEAR_14",
+              "OPERATING_YEAR_15",
+              "OPERATING_YEAR_16",
+              "OPERATING_YEAR_17",
+              "OPERATING_YEAR_18",
+              "OPERATING_YEAR_19",
+              "OPERATING_YEAR_20",
+              "OPERATING_YEAR_21",
+              "OPERATING_YEAR_22",
+              "OPERATING_YEAR_23",
+              "OPERATING_YEAR_24",
+              "OPERATING_YEAR_25"
+            ]
+          },
+          "actual_unit": "1",
+          "value": null,
+          "case_applicability": "REVIEW_REQUIRED",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-BREAK-EVEN-PRICE",
+          "frozen_equation": "P_star = {p∈P : NPV_b(CF_b(p), r_b) = 0}",
+          "frozen_unit": "集合（元素元/kWh）",
+          "direct_operands": [
+            "sensitivity.price_search_domain",
+            "finance.npv",
+            "sensitivity.price_cash_flow_vector",
+            "finance.selected_discount_rate",
+            "finance.cash_flow_basis"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_FULL_CHAIN_PRICE_RECALCULATION",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "集合（元素元/kWh）",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        },
+        {
+          "formula_id": "F-WORST-CASH-YEAR",
+          "frozen_equation": "Y_worst,b = argmin(y∈Y) CF_b,y",
+          "frozen_unit": "集合（年份标签）",
+          "direct_operands": [
+            "finance.selected_cash_flow",
+            "risk.cash_year_scope",
+            "finance.cash_flow_basis"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+          "details": {
+            "upstream_formula_id": "F-PROJECT-CASH-FLOW"
+          },
+          "actual_unit": "集合（年份标签）",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": "F-PROJECT-CASH-FLOW"
+        },
+        {
+          "formula_id": "F-INVESTMENT-HURDLE-GAP",
+          "frozen_equation": "G_M = M_calc − M_target",
+          "frozen_unit": "与 M 同单位",
+          "direct_operands": [
+            "decision.calculated_metric",
+            "decision.target_metric"
+          ],
+          "project_status": "BLOCKED_MISSING_INPUT",
+          "reason": "BLOCKED_MISSING_USER_TARGET",
+          "details": {
+            "project_result": "BLOCKED_MISSING_INPUT"
+          },
+          "actual_unit": "与 M 同单位",
+          "value": null,
+          "case_applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+          "upstream_missing_propagation": null
+        }
+      ]
+    }
+  }
+}

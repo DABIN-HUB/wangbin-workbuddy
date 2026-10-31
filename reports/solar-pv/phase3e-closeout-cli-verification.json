@@ -1,0 +1,94 @@
+{
+  "source_head": "1be9a32a937a2f6ea378842e7ef81221041fa1fb",
+  "candidate_source_sha256": {
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py": "ab9820b15b0693e88aa7a76861fe00419c96703a820c548d2bb6a9faee7225c6",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py": "220c6e187d46cf9f47b4f15bd8dc85b69a6527771634256921a61cde67d9c94b"
+  },
+  "command": "python services/solar-pv-engine/solar_pv.py --workspace <scratch> phase3e --input <kind>/input.json --methods <kind>/methods.json --settlement <kind>/settlement.json --output <kind>/final-v2",
+  "cases": {
+    "industrial_rooftop": {
+      "cli_exit_code": 0,
+      "upstream_settlement_hash": "7eee9f80f9633a4e93905f2df7bafa9896658020c67069b5276e16f259534a50",
+      "archived_phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+      "recalculated_phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+      "archive_and_recomputed_ledger_annual_equal": true,
+      "api_hash_same_source": "332a952e523758a9806f6ed0bb42bcda197adad2c2561bab68c19d15c7e5bf60",
+      "cli_hash": "332a952e523758a9806f6ed0bb42bcda197adad2c2561bab68c19d15c7e5bf60",
+      "sidecar_hash": "332a952e523758a9806f6ed0bb42bcda197adad2c2561bab68c19d15c7e5bf60",
+      "api_cli_hash_equal": true,
+      "period_count": 26,
+      "status_counts": {
+        "BLOCKED_MISSING_INPUT": 20,
+        "UNDEFINED": 1
+      },
+      "calculated_formula_ids": [],
+      "undefined_formula_ids": [
+        "F-DSCR"
+      ],
+      "blocked_formula_ids": [
+        "F-PROJECT-CASH-FLOW",
+        "F-PROJECT-PRETAX-CASH-FLOW",
+        "F-NPV",
+        "F-IRR-PROJECT",
+        "F-CUMULATIVE-CASH-FLOW",
+        "F-STATIC-PAYBACK",
+        "F-DISCOUNTED-CUMULATIVE-CASH",
+        "F-DYNAMIC-PAYBACK",
+        "F-WORST-CASH-YEAR",
+        "F-NOMINAL-REAL-RATE",
+        "F-CFADS",
+        "F-EQUITY-AVAILABLE-CASH-FLOW",
+        "F-EQUITY-INVESTOR-CASH-FLOW",
+        "F-CASH-FUNDING-BALANCE",
+        "F-DATED-NPV",
+        "F-IRR-EQUITY",
+        "F-LIFECYCLE-COST",
+        "F-LCOE",
+        "F-BREAK-EVEN-PRICE",
+        "F-INVESTMENT-HURDLE-GAP"
+      ]
+    },
+    "utility_scale_ground": {
+      "cli_exit_code": 0,
+      "upstream_settlement_hash": "6f070c327912973efd79f5cb50a705d4422990132aa28701b1e6fe2a5e6ae616",
+      "archived_phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+      "recalculated_phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+      "archive_and_recomputed_ledger_annual_equal": true,
+      "api_hash_same_source": "a95974ebac355493eba5b5674462ce45ad87dbe7d7de8bad96ff1a451519723d",
+      "cli_hash": "a95974ebac355493eba5b5674462ce45ad87dbe7d7de8bad96ff1a451519723d",
+      "sidecar_hash": "a95974ebac355493eba5b5674462ce45ad87dbe7d7de8bad96ff1a451519723d",
+      "api_cli_hash_equal": true,
+      "period_count": 26,
+      "status_counts": {
+        "BLOCKED_MISSING_INPUT": 20,
+        "UNDEFINED": 1
+      },
+      "calculated_formula_ids": [],
+      "undefined_formula_ids": [
+        "F-DSCR"
+      ],
+      "blocked_formula_ids": [
+        "F-PROJECT-CASH-FLOW",
+        "F-PROJECT-PRETAX-CASH-FLOW",
+        "F-NPV",
+        "F-IRR-PROJECT",
+        "F-CUMULATIVE-CASH-FLOW",
+        "F-STATIC-PAYBACK",
+        "F-DISCOUNTED-CUMULATIVE-CASH",
+        "F-DYNAMIC-PAYBACK",
+        "F-WORST-CASH-YEAR",
+        "F-NOMINAL-REAL-RATE",
+        "F-CFADS",
+        "F-EQUITY-AVAILABLE-CASH-FLOW",
+        "F-EQUITY-INVESTOR-CASH-FLOW",
+        "F-CASH-FUNDING-BALANCE",
+        "F-DATED-NPV",
+        "F-IRR-EQUITY",
+        "F-LIFECYCLE-COST",
+        "F-LCOE",
+        "F-BREAK-EVEN-PRICE",
+        "F-INVESTMENT-HURDLE-GAP"
+      ]
+    }
+  }
+}

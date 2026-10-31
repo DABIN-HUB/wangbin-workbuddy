@@ -1,0 +1,99 @@
+{
+  "initial_head": "1be9a32a937a2f6ea378842e7ef81221041fa1fb",
+  "scope": "full final candidate (no split, single pytest process per suite)",
+  "source_sha256": {
+    "financial_metrics.py": "ab9820b15b0693e88aa7a76861fe00419c96703a820c548d2bb6a9faee7225c6",
+    "phase3e.py": "220c6e187d46cf9f47b4f15bd8dc85b69a6527771634256921a61cde67d9c94b",
+    "test_phase3e_financial_metrics.py": "f0e62688bce795f33fce989be1b914f76c97aab104e1ccd5c50954842c95aeb8"
+  },
+  "suites": {
+    "solar": {
+      "command": "python -m pytest tests/solar-pv -q --junitxml=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/phase3e-solar-final.xml",
+      "exit_code": 0,
+      "junit_xml": "reports/solar-pv/phase3e-closeout-solar-junit.xml",
+      "junit_sha256": "dbc23c3df64e81ad9f90e66fbe1df269edfc957f50f1dc0e4ba174037f17484a",
+      "unique_test_ids_file": "reports/solar-pv/phase3e-closeout-solar-test-ids.txt",
+      "unique_test_ids_sha256": "db18faa1df262389a48723d65561cfbf20fe70868ad764b40cdcb827f610cc57",
+      "started_at": "2026-10-31T10:34:37.723518+08:00",
+      "approximate_end_at_from_junit_duration": "2026-10-31T12:05:06.223518+08:00",
+      "duration_seconds": "5428.500",
+      "collected": 4092,
+      "executed": 4092,
+      "passed": 4086,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 6,
+      "duplicate_ids": 0,
+      "missing_ids": [],
+      "unexpected_ids": [],
+      "skipped_tests": [
+        {
+          "test_id": "tests/solar-pv/test_cli.py::test_real_symlinks_are_rejected_in_all_path_positions[file]",
+          "reason": "Windows symlink privilege unavailable: 22"
+        },
+        {
+          "test_id": "tests/solar-pv/test_cli.py::test_real_symlinks_are_rejected_in_all_path_positions[ancestor]",
+          "reason": "Windows symlink privilege unavailable: 22"
+        },
+        {
+          "test_id": "tests/solar-pv/test_cli.py::test_real_symlinks_are_rejected_in_all_path_positions[workspace]",
+          "reason": "Windows symlink privilege unavailable: 22"
+        },
+        {
+          "test_id": "tests/solar-pv/test_parser_security.py::test_symlinks_and_linked_root_are_rejected_or_explicitly_skipped[file]",
+          "reason": "Windows symlink privilege unavailable: OSError"
+        },
+        {
+          "test_id": "tests/solar-pv/test_parser_security.py::test_symlinks_and_linked_root_are_rejected_or_explicitly_skipped[root]",
+          "reason": "Windows symlink privilege unavailable: OSError"
+        },
+        {
+          "test_id": "tests/solar-pv/test_timeseries_bundle_security.py::test_symlink_bundle_rejected_when_privileged",
+          "reason": "Windows symlink privilege unavailable; junction separately exercised"
+        }
+      ]
+    },
+    "workbuddy": {
+      "command": "python -m pytest tests --ignore=tests/solar-pv -q --junitxml=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/phase3e-workbuddy-final.xml",
+      "exit_code": 0,
+      "junit_xml": "reports/solar-pv/phase3e-closeout-workbuddy-junit.xml",
+      "junit_sha256": "fd3350e2fa60ea36dfcd15ad4c63b2a2c99fc718fd8262fd0f1fe9787ec6ffcf",
+      "unique_test_ids_file": "reports/solar-pv/phase3e-closeout-workbuddy-test-ids.txt",
+      "unique_test_ids_sha256": "12999696404b73800f0178206dd657658cda7a9635a56699715e06cdbe7e0ef9",
+      "started_at": "2026-10-31T10:32:17.980515+08:00",
+      "approximate_end_at_from_junit_duration": "2026-10-31T10:33:08.892515+08:00",
+      "duration_seconds": "50.912",
+      "collected": 114,
+      "executed": 114,
+      "passed": 109,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 5,
+      "duplicate_ids": 0,
+      "missing_ids": [],
+      "unexpected_ids": [],
+      "skipped_tests": [
+        {
+          "test_id": "tests/test_inventory_analyzer.py::test_wrong_type_and_symlink_are_rejected",
+          "reason": "symlinks unavailable"
+        },
+        {
+          "test_id": "tests/test_product_factory.py::test_package_rejects_private_and_symlink",
+          "reason": "symlinks unavailable"
+        },
+        {
+          "test_id": "tests/test_product_factory.py::test_rejects_symlink_ancestors_and_traversing_registered_test",
+          "reason": "symlinks unavailable"
+        },
+        {
+          "test_id": "tests/test_security.py::test_symlink_is_rejected_when_supported",
+          "reason": "当前 Windows 环境未允许创建符号链接"
+        },
+        {
+          "test_id": "tests/test_tender_analyzer.py::test_cli_rejects_unsupported_non_regular_and_oversized_inputs_without_leaking_path_or_content",
+          "reason": "symlink creation is unavailable on this Windows runner"
+        }
+      ]
+    }
+  }
+}

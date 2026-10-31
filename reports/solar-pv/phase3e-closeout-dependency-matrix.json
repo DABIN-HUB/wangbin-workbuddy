@@ -1,0 +1,1493 @@
+{
+  "scope": "two SYNTHETIC cases × 21 frozen Phase 3E formulae",
+  "phase": "3E",
+  "provenance": "archived phase 3D result per case; separate CLI/API same-source evidence",
+  "limitations": [
+    "A blocked status does not prove the kernel passes independent numerical validation.",
+    "Nonzero debt-service years have blocked CFADS; whole DSCR vector is UNDEFINED because other periods have a zero denominator.",
+    "F-CFADS contract reserve/mandatory-capex mapping cannot be inferred from project ledger totals.",
+    "No frozen requirements or methods changed to improve status."
+  ],
+  "rows": [
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-PROJECT-CASH-FLOW",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.project_operating_cash_benefit",
+        "opex.cash_annual",
+        "tax.project_cash_total",
+        "capex.unlevered_cash_annual",
+        "working_capital.project_net_change",
+        "finance.project_terminal_cash"
+      ],
+      "missing_inputs_or_upstream": [
+        "finance.project_terminal_cash"
+      ],
+      "reason": "BLOCKED_MISSING_INPUT",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 52,
+        "equation": "CF_P,y = B_op,y − O_y − T_P,y − K_P,y − ΔW_P,y + S_P,y",
+        "test_id": "T-PROJECT-CASH-FLOW",
+        "source_references": [
+          "USER-BASELINE §6 第10组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "YES",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-PROJECT-PRETAX-CASH-FLOW",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.project_cash_flow",
+        "tax.project_income_cash_paid"
+      ],
+      "missing_inputs_or_upstream": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 52,
+        "equation": "CF_P,pre,y = CF_P,y + T_inc,cash,P,y",
+        "test_id": "T-PROJECT-PRETAX-CASH-FLOW",
+        "source_references": [
+          "USER-BASELINE §6 第10组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-EQUITY-AVAILABLE-CASH-FLOW",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.project_operating_cash_benefit",
+        "opex.cash_annual",
+        "tax.equity_cash_total",
+        "capex.equity_asset_cash_annual",
+        "working_capital.equity_net_change",
+        "finance.equity_terminal_cash",
+        "debt.cash_drawdown",
+        "debt.principal_paid",
+        "debt.interest_paid",
+        "debt.finance_fees_paid"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_OWNER_TERMINAL_CASH"
+      ],
+      "reason": "BLOCKED_MISSING_OWNER_TERMINAL_CASH",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 52,
+        "equation": "CF_E,avail,y = B_op,y − O_y − T_E,y − K_E,y − ΔW_E,y + S_E,y + DD_y − PRN_y − INT_y − FF_y",
+        "test_id": "T-EQUITY-AVAILABLE-CASH-FLOW",
+        "source_references": [
+          "USER-BASELINE §6 第10组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-EQUITY-INVESTOR-CASH-FLOW",
+      "applicability": "REVIEW_REQUIRED",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "equity.distributions",
+        "equity.exit_receipts",
+        "equity.contributions"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_OWNER_CASH_EVENTS"
+      ],
+      "reason": "BLOCKED_MISSING_OWNER_CASH_EVENTS",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 52,
+        "equation": "CF_E,y = DIV_y + EXIT_y − EQ_y",
+        "test_id": "T-EQUITY-INVESTOR-CASH-FLOW",
+        "source_references": [
+          "USER-BASELINE §6 第10组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-CASH-FUNDING-BALANCE",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "checks.cash_opening",
+        "finance.equity_available_cash_flow",
+        "equity.contributions",
+        "equity.distributions"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_ENTITY_OPENING_AND_OWNER_EVENTS"
+      ],
+      "reason": "BLOCKED_MISSING_ENTITY_OPENING_AND_OWNER_EVENTS",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 52,
+        "equation": "CLOSE_y = OPEN_y + CF_E,avail,y + EQ_y − DIV_y",
+        "test_id": "T-CASH-FUNDING-BALANCE",
+        "source_references": [
+          "USER-BASELINE §6 第10组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-NPV",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.selected_cash_flow",
+        "finance.selected_discount_rate",
+        "finance.cash_flow_basis",
+        "time.financial_end_year"
+      ],
+      "missing_inputs_or_upstream": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 53,
+        "equation": "NPV_b = Σ(y=0…N) CF_b,y / (1 + r_b)^y",
+        "test_id": "T-NPV",
+        "source_references": [
+          "USER-BASELINE §6 第11组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-DATED-NPV",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.dated_cash_flows",
+        "finance.selected_discount_rate",
+        "finance.cash_event_year_fraction",
+        "finance.cash_event_ids",
+        "finance.cash_flow_basis"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_DATED_CASH_EVENTS"
+      ],
+      "reason": "BLOCKED_MISSING_DATED_CASH_EVENTS",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 53,
+        "equation": "NPV_b = Σ(k∈C) CF_b,k / (1 + r_b)^τ_k",
+        "test_id": "T-DATED-NPV",
+        "source_references": [
+          "USER-BASELINE §6 第11组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "YES",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-NOMINAL-REAL-RATE",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.real_discount_rate",
+        "finance.general_inflation"
+      ],
+      "missing_inputs_or_upstream": [
+        "finance.real_discount_rate",
+        "finance.general_inflation"
+      ],
+      "reason": "BLOCKED_MISSING_INPUT",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 53,
+        "equation": "r_nom = (1 + r_real) × (1 + π) − 1",
+        "test_id": "T-NOMINAL-REAL-RATE",
+        "source_references": [
+          "USER-BASELINE §6 第11组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-IRR-PROJECT",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.irr_search_domain",
+        "finance.project_irr_cash_flow",
+        "time.financial_end_year"
+      ],
+      "missing_inputs_or_upstream": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 54,
+        "equation": "R_P = {r∈D : Σ(y=0…N) CF_P,y/(1+r)^y = 0}",
+        "test_id": "T-IRR-PROJECT",
+        "source_references": [
+          "USER-BASELINE §6 第12组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-IRR-EQUITY",
+      "applicability": "REVIEW_REQUIRED",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.irr_search_domain",
+        "finance.equity_investor_cash_flow",
+        "time.financial_end_year"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_OWNER_CASH_EVENTS"
+      ],
+      "reason": "BLOCKED_MISSING_OWNER_CASH_EVENTS",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 54,
+        "equation": "R_E = {r∈D : Σ(y=0…N) CF_E,y/(1+r)^y = 0}",
+        "test_id": "T-IRR-EQUITY",
+        "source_references": [
+          "USER-BASELINE §6 第12组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-CUMULATIVE-CASH-FLOW",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.selected_cash_flow",
+        "time.cumulative_end_year",
+        "finance.cash_flow_basis"
+      ],
+      "missing_inputs_or_upstream": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 55,
+        "equation": "A_b,n = Σ(y=0…n) CF_b,y",
+        "test_id": "T-CUMULATIVE-CASH-FLOW",
+        "source_references": [
+          "USER-BASELINE §6 第13组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-STATIC-PAYBACK",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.first_recovery_year",
+        "finance.pre_recovery_cumulative_cash",
+        "finance.recovery_year_cash_flow",
+        "finance.cash_flow_basis",
+        "time.financial_end_year"
+      ],
+      "missing_inputs_or_upstream": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 55,
+        "equation": "PB_static,b = n − 1 + (−A_b,n−1) / CF_b,n",
+        "test_id": "T-STATIC-PAYBACK",
+        "source_references": [
+          "USER-BASELINE §6 第13组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "YES",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-DISCOUNTED-CUMULATIVE-CASH",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.selected_cash_flow",
+        "finance.selected_discount_rate",
+        "time.cumulative_end_year",
+        "finance.cash_flow_basis"
+      ],
+      "missing_inputs_or_upstream": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 55,
+        "equation": "A_disc,b,n = Σ(y=0…n) CF_b,y / (1+r_b)^y",
+        "test_id": "T-DISCOUNTED-CUMULATIVE-CASH",
+        "source_references": [
+          "USER-BASELINE §6 第13组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-DYNAMIC-PAYBACK",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.first_discounted_recovery_year",
+        "finance.pre_discounted_recovery_cumulative",
+        "finance.discounted_recovery_year_cash_flow",
+        "finance.selected_discount_rate",
+        "finance.cash_flow_basis",
+        "time.financial_end_year"
+      ],
+      "missing_inputs_or_upstream": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 55,
+        "equation": "PB_dynamic,b = n − 1 + (−A_disc,b,n−1)/(CF_b,n/(1+r_b)^n)",
+        "test_id": "T-DYNAMIC-PAYBACK",
+        "source_references": [
+          "USER-BASELINE §6 第13组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "YES",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-LIFECYCLE-COST",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "capex.unlevered_cash_annual",
+        "opex.cash_annual",
+        "lcoe.cost_taxes",
+        "working_capital.project_net_change",
+        "finance.project_terminal_cash",
+        "lcoe.cost_subsidy_offset"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_TERMINAL_CASH"
+      ],
+      "reason": "BLOCKED_MISSING_TERMINAL_CASH",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 56,
+        "equation": "Cost_P,y = K_P,y + O_y + T_cost,P,y + ΔW_P,y − S_P,y − SUB_P,y",
+        "test_id": "T-LIFECYCLE-COST",
+        "source_references": [
+          "USER-BASELINE §6 第14组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-LCOE",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "lcoe.project_cost_annual",
+        "energy.delivered_annual_kwh",
+        "lcoe.discount_rate",
+        "time.financial_end_year"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_TERMINAL_COST_BOUNDARY"
+      ],
+      "reason": "BLOCKED_MISSING_TERMINAL_COST_BOUNDARY",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 56,
+        "equation": "LCOE = Σ(y=0…N) Cost_P,y/(1+r_L)^y / Σ(y=0…N) E_delivered,y/(1+r_L)^y",
+        "test_id": "T-LCOE",
+        "source_references": [
+          "USER-BASELINE §6 第14组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-CFADS",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.project_operating_cash_benefit",
+        "opex.cash_annual",
+        "tax.equity_cash_total",
+        "debt.cfads_working_capital_change",
+        "debt.cfads_mandatory_capex",
+        "debt.cfads_adjustments"
+      ],
+      "missing_inputs_or_upstream": [
+        "debt.cfads_adjustments"
+      ],
+      "reason": "BLOCKED_MISSING_INPUT",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 57,
+        "equation": "CFADS_y = B_op,y − O_y − T_E,y − ΔW_ds,y − K_mand,y + A_ds,y",
+        "test_id": "T-CFADS",
+        "source_references": [
+          "USER-BASELINE §6 第15组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "YES",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-DSCR",
+      "applicability": "REVIEW_REQUIRED",
+      "current_status": "UNDEFINED",
+      "final_status": "UNDEFINED",
+      "direct_frozen_operands": [
+        "debt.cfads",
+        "debt.service_due"
+      ],
+      "missing_inputs_or_upstream": [
+        "ZERO_DEBT_SERVICE"
+      ],
+      "reason": "ZERO_DEBT_SERVICE",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 57,
+        "equation": "DSCR_y = CFADS_y / DS_y",
+        "test_id": "T-DSCR",
+        "source_references": [
+          "USER-BASELINE §6 第15组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-BREAK-EVEN-PRICE",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "sensitivity.price_search_domain",
+        "finance.npv",
+        "sensitivity.price_cash_flow_vector",
+        "finance.selected_discount_rate",
+        "finance.cash_flow_basis"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_FULL_CHAIN_PRICE_RECALCULATION"
+      ],
+      "reason": "BLOCKED_MISSING_FULL_CHAIN_PRICE_RECALCULATION",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 58,
+        "equation": "P_star = {p∈P : NPV_b(CF_b(p), r_b) = 0}",
+        "test_id": "T-BREAK-EVEN-PRICE",
+        "source_references": [
+          "USER-BASELINE §6 第16组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-WORST-CASH-YEAR",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.selected_cash_flow",
+        "risk.cash_year_scope",
+        "finance.cash_flow_basis"
+      ],
+      "missing_inputs_or_upstream": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 58,
+        "equation": "Y_worst,b = argmin(y∈Y) CF_b,y",
+        "test_id": "T-WORST-CASH-YEAR",
+        "source_references": [
+          "USER-BASELINE §6 第16组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "YES",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "industrial_rooftop",
+      "formula_id": "F-INVESTMENT-HURDLE-GAP",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "decision.calculated_metric",
+        "decision.target_metric"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_USER_TARGET"
+      ],
+      "reason": "BLOCKED_MISSING_USER_TARGET",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 58,
+        "equation": "G_M = M_calc − M_target",
+        "test_id": "T-INVESTMENT-HURDLE-GAP",
+        "source_references": [
+          "USER-BASELINE §6 第16组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+        "phase3e_hash": "5b00f6f1ab1bd7df8fb27ca068d41c80bdac9a1b50668e2b159f12f0a3ef8dbe",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-PROJECT-CASH-FLOW",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.project_operating_cash_benefit",
+        "opex.cash_annual",
+        "tax.project_cash_total",
+        "capex.unlevered_cash_annual",
+        "working_capital.project_net_change",
+        "finance.project_terminal_cash"
+      ],
+      "missing_inputs_or_upstream": [
+        "finance.project_terminal_cash"
+      ],
+      "reason": "BLOCKED_MISSING_INPUT",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 52,
+        "equation": "CF_P,y = B_op,y − O_y − T_P,y − K_P,y − ΔW_P,y + S_P,y",
+        "test_id": "T-PROJECT-CASH-FLOW",
+        "source_references": [
+          "USER-BASELINE §6 第10组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "YES",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-PROJECT-PRETAX-CASH-FLOW",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.project_cash_flow",
+        "tax.project_income_cash_paid"
+      ],
+      "missing_inputs_or_upstream": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 52,
+        "equation": "CF_P,pre,y = CF_P,y + T_inc,cash,P,y",
+        "test_id": "T-PROJECT-PRETAX-CASH-FLOW",
+        "source_references": [
+          "USER-BASELINE §6 第10组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-EQUITY-AVAILABLE-CASH-FLOW",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.project_operating_cash_benefit",
+        "opex.cash_annual",
+        "tax.equity_cash_total",
+        "capex.equity_asset_cash_annual",
+        "working_capital.equity_net_change",
+        "finance.equity_terminal_cash",
+        "debt.cash_drawdown",
+        "debt.principal_paid",
+        "debt.interest_paid",
+        "debt.finance_fees_paid"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_OWNER_TERMINAL_CASH"
+      ],
+      "reason": "BLOCKED_MISSING_OWNER_TERMINAL_CASH",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 52,
+        "equation": "CF_E,avail,y = B_op,y − O_y − T_E,y − K_E,y − ΔW_E,y + S_E,y + DD_y − PRN_y − INT_y − FF_y",
+        "test_id": "T-EQUITY-AVAILABLE-CASH-FLOW",
+        "source_references": [
+          "USER-BASELINE §6 第10组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-EQUITY-INVESTOR-CASH-FLOW",
+      "applicability": "REVIEW_REQUIRED",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "equity.distributions",
+        "equity.exit_receipts",
+        "equity.contributions"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_OWNER_CASH_EVENTS"
+      ],
+      "reason": "BLOCKED_MISSING_OWNER_CASH_EVENTS",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 52,
+        "equation": "CF_E,y = DIV_y + EXIT_y − EQ_y",
+        "test_id": "T-EQUITY-INVESTOR-CASH-FLOW",
+        "source_references": [
+          "USER-BASELINE §6 第10组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-CASH-FUNDING-BALANCE",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "checks.cash_opening",
+        "finance.equity_available_cash_flow",
+        "equity.contributions",
+        "equity.distributions"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_ENTITY_OPENING_AND_OWNER_EVENTS"
+      ],
+      "reason": "BLOCKED_MISSING_ENTITY_OPENING_AND_OWNER_EVENTS",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 52,
+        "equation": "CLOSE_y = OPEN_y + CF_E,avail,y + EQ_y − DIV_y",
+        "test_id": "T-CASH-FUNDING-BALANCE",
+        "source_references": [
+          "USER-BASELINE §6 第10组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-NPV",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.selected_cash_flow",
+        "finance.selected_discount_rate",
+        "finance.cash_flow_basis",
+        "time.financial_end_year"
+      ],
+      "missing_inputs_or_upstream": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 53,
+        "equation": "NPV_b = Σ(y=0…N) CF_b,y / (1 + r_b)^y",
+        "test_id": "T-NPV",
+        "source_references": [
+          "USER-BASELINE §6 第11组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-DATED-NPV",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.dated_cash_flows",
+        "finance.selected_discount_rate",
+        "finance.cash_event_year_fraction",
+        "finance.cash_event_ids",
+        "finance.cash_flow_basis"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_DATED_CASH_EVENTS"
+      ],
+      "reason": "BLOCKED_MISSING_DATED_CASH_EVENTS",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 53,
+        "equation": "NPV_b = Σ(k∈C) CF_b,k / (1 + r_b)^τ_k",
+        "test_id": "T-DATED-NPV",
+        "source_references": [
+          "USER-BASELINE §6 第11组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "YES",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-NOMINAL-REAL-RATE",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.real_discount_rate",
+        "finance.general_inflation"
+      ],
+      "missing_inputs_or_upstream": [
+        "finance.real_discount_rate",
+        "finance.general_inflation"
+      ],
+      "reason": "BLOCKED_MISSING_INPUT",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 53,
+        "equation": "r_nom = (1 + r_real) × (1 + π) − 1",
+        "test_id": "T-NOMINAL-REAL-RATE",
+        "source_references": [
+          "USER-BASELINE §6 第11组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-IRR-PROJECT",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.irr_search_domain",
+        "finance.project_irr_cash_flow",
+        "time.financial_end_year"
+      ],
+      "missing_inputs_or_upstream": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 54,
+        "equation": "R_P = {r∈D : Σ(y=0…N) CF_P,y/(1+r)^y = 0}",
+        "test_id": "T-IRR-PROJECT",
+        "source_references": [
+          "USER-BASELINE §6 第12组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-IRR-EQUITY",
+      "applicability": "REVIEW_REQUIRED",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.irr_search_domain",
+        "finance.equity_investor_cash_flow",
+        "time.financial_end_year"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_OWNER_CASH_EVENTS"
+      ],
+      "reason": "BLOCKED_MISSING_OWNER_CASH_EVENTS",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 54,
+        "equation": "R_E = {r∈D : Σ(y=0…N) CF_E,y/(1+r)^y = 0}",
+        "test_id": "T-IRR-EQUITY",
+        "source_references": [
+          "USER-BASELINE §6 第12组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-CUMULATIVE-CASH-FLOW",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.selected_cash_flow",
+        "time.cumulative_end_year",
+        "finance.cash_flow_basis"
+      ],
+      "missing_inputs_or_upstream": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 55,
+        "equation": "A_b,n = Σ(y=0…n) CF_b,y",
+        "test_id": "T-CUMULATIVE-CASH-FLOW",
+        "source_references": [
+          "USER-BASELINE §6 第13组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-STATIC-PAYBACK",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.first_recovery_year",
+        "finance.pre_recovery_cumulative_cash",
+        "finance.recovery_year_cash_flow",
+        "finance.cash_flow_basis",
+        "time.financial_end_year"
+      ],
+      "missing_inputs_or_upstream": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 55,
+        "equation": "PB_static,b = n − 1 + (−A_b,n−1) / CF_b,n",
+        "test_id": "T-STATIC-PAYBACK",
+        "source_references": [
+          "USER-BASELINE §6 第13组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "YES",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-DISCOUNTED-CUMULATIVE-CASH",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.selected_cash_flow",
+        "finance.selected_discount_rate",
+        "time.cumulative_end_year",
+        "finance.cash_flow_basis"
+      ],
+      "missing_inputs_or_upstream": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 55,
+        "equation": "A_disc,b,n = Σ(y=0…n) CF_b,y / (1+r_b)^y",
+        "test_id": "T-DISCOUNTED-CUMULATIVE-CASH",
+        "source_references": [
+          "USER-BASELINE §6 第13组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-DYNAMIC-PAYBACK",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.first_discounted_recovery_year",
+        "finance.pre_discounted_recovery_cumulative",
+        "finance.discounted_recovery_year_cash_flow",
+        "finance.selected_discount_rate",
+        "finance.cash_flow_basis",
+        "time.financial_end_year"
+      ],
+      "missing_inputs_or_upstream": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 55,
+        "equation": "PB_dynamic,b = n − 1 + (−A_disc,b,n−1)/(CF_b,n/(1+r_b)^n)",
+        "test_id": "T-DYNAMIC-PAYBACK",
+        "source_references": [
+          "USER-BASELINE §6 第13组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "YES",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-LIFECYCLE-COST",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "capex.unlevered_cash_annual",
+        "opex.cash_annual",
+        "lcoe.cost_taxes",
+        "working_capital.project_net_change",
+        "finance.project_terminal_cash",
+        "lcoe.cost_subsidy_offset"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_TERMINAL_CASH"
+      ],
+      "reason": "BLOCKED_MISSING_TERMINAL_CASH",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 56,
+        "equation": "Cost_P,y = K_P,y + O_y + T_cost,P,y + ΔW_P,y − S_P,y − SUB_P,y",
+        "test_id": "T-LIFECYCLE-COST",
+        "source_references": [
+          "USER-BASELINE §6 第14组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-LCOE",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "lcoe.project_cost_annual",
+        "energy.delivered_annual_kwh",
+        "lcoe.discount_rate",
+        "time.financial_end_year"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_TERMINAL_COST_BOUNDARY"
+      ],
+      "reason": "BLOCKED_MISSING_TERMINAL_COST_BOUNDARY",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 56,
+        "equation": "LCOE = Σ(y=0…N) Cost_P,y/(1+r_L)^y / Σ(y=0…N) E_delivered,y/(1+r_L)^y",
+        "test_id": "T-LCOE",
+        "source_references": [
+          "USER-BASELINE §6 第14组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-CFADS",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.project_operating_cash_benefit",
+        "opex.cash_annual",
+        "tax.equity_cash_total",
+        "debt.cfads_working_capital_change",
+        "debt.cfads_mandatory_capex",
+        "debt.cfads_adjustments"
+      ],
+      "missing_inputs_or_upstream": [
+        "debt.cfads_adjustments"
+      ],
+      "reason": "BLOCKED_MISSING_INPUT",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 57,
+        "equation": "CFADS_y = B_op,y − O_y − T_E,y − ΔW_ds,y − K_mand,y + A_ds,y",
+        "test_id": "T-CFADS",
+        "source_references": [
+          "USER-BASELINE §6 第15组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "YES",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-DSCR",
+      "applicability": "REVIEW_REQUIRED",
+      "current_status": "UNDEFINED",
+      "final_status": "UNDEFINED",
+      "direct_frozen_operands": [
+        "debt.cfads",
+        "debt.service_due"
+      ],
+      "missing_inputs_or_upstream": [
+        "ZERO_DEBT_SERVICE"
+      ],
+      "reason": "ZERO_DEBT_SERVICE",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 57,
+        "equation": "DSCR_y = CFADS_y / DS_y",
+        "test_id": "T-DSCR",
+        "source_references": [
+          "USER-BASELINE §6 第15组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-BREAK-EVEN-PRICE",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "sensitivity.price_search_domain",
+        "finance.npv",
+        "sensitivity.price_cash_flow_vector",
+        "finance.selected_discount_rate",
+        "finance.cash_flow_basis"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_FULL_CHAIN_PRICE_RECALCULATION"
+      ],
+      "reason": "BLOCKED_MISSING_FULL_CHAIN_PRICE_RECALCULATION",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 58,
+        "equation": "P_star = {p∈P : NPV_b(CF_b(p), r_b) = 0}",
+        "test_id": "T-BREAK-EVEN-PRICE",
+        "source_references": [
+          "USER-BASELINE §6 第16组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-WORST-CASH-YEAR",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "finance.selected_cash_flow",
+        "risk.cash_year_scope",
+        "finance.cash_flow_basis"
+      ],
+      "missing_inputs_or_upstream": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reason": "BLOCKED_UPSTREAM_PROJECT_CASH_FLOW",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 58,
+        "equation": "Y_worst,b = argmin(y∈Y) CF_b,y",
+        "test_id": "T-WORST-CASH-YEAR",
+        "source_references": [
+          "USER-BASELINE §6 第16组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "YES",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "formula_id": "F-INVESTMENT-HURDLE-GAP",
+      "applicability": "APPLICABLE_IN_FROZEN_BOUNDARY",
+      "current_status": "BLOCKED_MISSING_INPUT",
+      "final_status": "BLOCKED_MISSING_INPUT",
+      "direct_frozen_operands": [
+        "decision.calculated_metric",
+        "decision.target_metric"
+      ],
+      "missing_inputs_or_upstream": [
+        "BLOCKED_MISSING_USER_TARGET"
+      ],
+      "reason": "BLOCKED_MISSING_USER_TARGET",
+      "frozen_basis": {
+        "file": "docs/solar-pv/05-formula-registry.md",
+        "first_formula_id_line": 58,
+        "equation": "G_M = M_calc − M_target",
+        "test_id": "T-INVESTMENT-HURDLE-GAP",
+        "source_references": [
+          "USER-BASELINE §6 第16组（附件 hermes-完整提示词.md）",
+          "项目方法冻结约定 METHOD-CONTRACT-v1"
+        ]
+      },
+      "unrelated_missing_propagation": "NO",
+      "fix_without_frozen_change": "NO_NOT_PROVEN",
+      "evidence": {
+        "phase3d_hash": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+        "phase3e_hash": "ee6f20a1812f6db694762b6eaf3674b7dd6237db67ebe418638982c956695673",
+        "metric_status": "reports/solar-pv/phase3e-closeout-candidate-evidence.json",
+        "api_cli_same_source": "reports/solar-pv/phase3e-closeout-cli-verification.json"
+      }
+    }
+  ]
+}
