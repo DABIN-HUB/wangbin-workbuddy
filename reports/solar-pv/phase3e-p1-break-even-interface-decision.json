@@ -1,0 +1,109 @@
+{
+  "document_type": "PHASE3E_P1_BREAK_EVEN_INTERFACE_DECISION",
+  "decision_status": "DESIGN_ONLY_AWAITING_APPROVAL",
+  "reviewed_branch": "main",
+  "reviewed_head": "29202e91a9b71e99ace0c8b9072617578316d4ce",
+  "phase3e_status": "PARTIAL/BLOCKED",
+  "formula_id": "F-BREAK-EVEN-PRICE",
+  "formula_source": "docs/solar-pv/05-formula-registry.md:3290-3338",
+  "equation": "P_star = {p in P : NPV_b(CF_b(p), r_b) = 0}",
+  "definition_version": "solar-pv-formula-definitions/1.0.1",
+  "definition_hash": "617a2e9d314c095bd2ec893939c930a2323be6fd7805da12bf6d6fdd70274808",
+  "source_seams": {
+    "legacy_interpolation": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:381-412",
+    "project_gate": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:191-203",
+    "method_registry": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/method_config.py:114-118,139-161",
+    "cli": "services/solar-pv-engine/src/wangbin_solar_pv/cli.py:49-66,145-199",
+    "generation_reuse": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/generation_evidence.py:27-53,88-147",
+    "settlement": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/revenue.py:149-266,327-334",
+    "ledger": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_ledger.py:193-267",
+    "phase2_integrity": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/input_contract.py:31-132",
+    "d3_repack": "services/solar-pv-engine/src/wangbin_solar_pv/timeseries_bundle.py:391-463,489-596",
+    "result": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/result_contract.py:18-54,87-149"
+  },
+  "recommended_option": "A_VERSIONED_STRICT_EXTERNAL_EXECUTION_SELECTOR",
+  "d2_schema_change_required": false,
+  "new_technical_contract_approval_required": true,
+  "options": {
+    "A": {"selected": true, "business_fields_added": 0, "d2_schema_change": false, "cli_effect": "new_explicit_break_even_command; preserve old phase3e", "identity": "selector+source+p+derived export and D3 must be in canonical input/result chain", "approval": "new versioned execution-control contract and valid derived scenario provenance"},
+    "B": {"selected": false, "d2_schema_change": true, "compatibility": "requires versioned old-D2 acceptance and source/hash migration; old result hashes remain historical", "approval": "explicit D2 schema/version change"},
+    "C": {"selected": false, "feasible": false, "reason": "existing D2 price bounds/method do not identify a unique target field and row; unchecked side input is prohibited"}
+  },
+  "selector_targets": [
+    {"field_id": "tariff.periods.sale_price", "row_id_required": true, "requires": ["settlement.price_source=PERIOD_TABLE", "one effective tariff row", "actual settlement use"], "modified_price_atoms": 1},
+    {"field_id": "tariff.periods.avoidable_price", "row_id_required": true, "requires": ["settlement.revenue_method in {OWNER_AVOIDED_COST,PPA_DISCOUNT}", "actual self-use"], "modified_price_atoms": 1, "cash_note": "avoided expenditure is not necessarily bank receipts"},
+    {"field_id": "tariff.ppa_price", "row_id_required": false, "row_id_must_be_null": true, "requires": ["settlement.revenue_method=PPA_FIXED", "original sourced PPA quote exists"], "modified_price_atoms": 1},
+    {"field_id": "tariff.market_series.sale_price", "row_id_required": true, "requires": ["settlement.price_source=MARKET_SERIES", "complete validated original D3 rows", "one authenticated time row"], "modified_price_atoms": 1}
+  ],
+  "reject_target_fields": ["tariff.transaction_fee", "tariff.market_series.transaction_fee", "settlement.ppa_discount_factor", "tax.corporate_income_rate", "finance.debt_ratio"],
+  "execution_control_schema_draft": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "solar-pv-break-even-execution/1.0.0-DRAFT-UNAPPROVED",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["schema_version", "project_id", "pv_type", "formula_id", "selector", "basis", "original_input_hash", "original_source_snapshot_id", "original_dataset_content_hash", "generation_result_hash", "method_config_hash", "source"],
+    "properties": {
+      "schema_version": {"const": "solar-pv-break-even-execution/1.0.0"},
+      "project_id": {"type": "string", "minLength": 1},
+      "pv_type": {"enum": ["industrial_rooftop", "utility_scale_ground"]},
+      "formula_id": {"const": "F-BREAK-EVEN-PRICE"},
+      "basis": {"type": "string", "minLength": 1, "description": "Must exactly equal the sourced and verified existing finance.cash_flow_basis value; no invented enum or default"},
+      "selector": {
+        "type": "object", "additionalProperties": false,
+        "required": ["field_id", "row_id", "field_instance_id", "original_atom_hash", "unit", "economic_basis"],
+        "properties": {
+          "field_id": {"enum": ["tariff.periods.sale_price", "tariff.periods.avoidable_price", "tariff.ppa_price", "tariff.market_series.sale_price"]},
+          "row_id": {"type": ["string", "null"], "minLength": 1},
+          "field_instance_id": {"type": "string", "minLength": 1},
+          "original_atom_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "unit": {"const": "currency/kWh"},
+          "economic_basis": {"type": "object", "additionalProperties": false, "required": ["currency", "price_year", "tax_basis", "price_basis"], "properties": {"currency": {"type": "string", "pattern": "^[A-Z]{3}$"}, "price_year": {"type": "integer", "minimum": 1900, "maximum": 2200}, "tax_basis": {"enum": ["inclusive", "exclusive"]}, "price_basis": {"enum": ["nominal", "real"]}}}
+        },
+        "allOf": [
+          {"if": {"properties": {"field_id": {"const": "tariff.ppa_price"}}, "required": ["field_id"]}, "then": {"properties": {"row_id": {"type": "null"}}}, "else": {"properties": {"row_id": {"type": "string"}}}}
+        ]
+      },
+      "original_input_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+      "original_source_snapshot_id": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+      "original_dataset_content_hash": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+      "generation_result_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+      "method_config_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+      "source": {"type": "object", "additionalProperties": false, "required": ["source_id", "source_reference", "source_kind", "status", "license_status"], "properties": {"source_id": {"type": "string", "minLength": 1}, "source_reference": {"type": "string", "minLength": 1}, "source_kind": {"enum": ["USER_PROVIDED", "DOCUMENT_EXTRACTED", "EXTERNAL_SOURCE", "SYNTHETIC"]}, "status": {"enum": ["VERIFIED", "UNVERIFIED", "ASSUMED"]}, "license_status": {"const": "AUTHORIZED"}}}
+    }
+  },
+  "schema_cross_validation_required": [
+    "strict numeric token and no nonfinite floats",
+    "exact project, category, methods and formula definition identity",
+    "exactly one original row_id and atom instance with canonical digest",
+    "tariff mode and time-effective actual usage",
+    "market D3 full read and base_export exact equality",
+    "economic_basis equal to verified D2 and original atom",
+    "negative price requires sourced signed-price contract",
+    "new source must not claim synthetic evidence is verified",
+    "basis must map to a frozen computable cash-flow vector and discount rate; missing cash events block",
+    "no unknown or extra selection keys",
+    "candidate price in D2 bounds and frozen price domain agrees"
+  ],
+  "api_signatures_proposed": [
+    "validate_price_selector(control: dict, original_export: dict, methods: MethodConfig, original_bundle: TimeSeriesBundle | None, catalog: Catalog) -> ValidatedPriceSelector",
+    "make_candidate(original: ValidatedInput, selector: ValidatedPriceSelector, p: Decimal, original_bundle: TimeSeriesBundle | None, *, catalog: Catalog, budget: BundleBudget, private_root: Path) -> CandidateScenario",
+    "calculate_candidate_npv(candidate: CandidateScenario, *, generation_dir: Path, generation_result_hash: str, methods: MethodConfig, catalog: Catalog, budget: BundleBudget, cash_flow_evidence: SourcedCashFlowInputs) -> CandidateEvaluation",
+    "solve_break_even(original_export: dict, methods: MethodConfig, control: dict, *, original_bundle: TimeSeriesBundle | None, generation_dir: Path, generation_result_hash: str, private_root: Path, budget: BundleBudget, cash_flow_evidence: SourcedCashFlowInputs, catalog: Catalog) -> dict"
+  ],
+  "recalculation_chain": ["validate original Phase2 export, D1, D2, D3, 3B identity", "validate one selector", "independently derive one candidate export and bound D3 bundle to it", "call actual Phase3C category-specific revenue calculation", "call calculate_financial_ledger on candidate export and candidate settlement", "assemble sourced complete basis-specific cash flows", "call F-NPV on complete vector with unchanged discount basis", "count evaluation and record hashes and NPV", "choose next candidate only if certified solver precondition holds", "rerun complete chain for each final root and verify independent currency residual"],
+  "identity_relation": "source original immutable Phase2/D2/D3/3B + selector_hash => scenario_hash(p) => derived Phase2 and D3 => 3C hash => 3D hash => 3E NPV hash => canonical F-BREAK-EVEN-PRICE evidence and result hash",
+  "root_methods": {
+    "CERTIFIED_MONOTONE_RECALCULATION": "prove whole closed domain monotonicity including tax/loss/receipt/flat branches; finite samples insufficient; root bracket and end-to-end residual and all-root proof required",
+    "PIECEWISE_AFFINE_ALL_ROOTS": "enumerate and prove complete price breakpoints for tax/VAT/loss/receivables/debt/contract rules; solve each certified segment, rerun full chain for every root; zero-valued interval needs separate approved representation",
+    "budget": "D2 maximum_iterations counts endpoints, branch points, final roots; D3 BundleBudget bounds bytes, rows, disk, memory, time; price_tolerance currency/kWh cannot substitute NPV currency tolerance"
+  },
+  "legacy_safety": "current project path blocks; P2 proposed fail-closed public formula evaluate without validated full-chain capability, internal interpolation diagnostic only; do not change code during P1",
+  "result_contract": "reuse existing solar-pv-calculation-result/1.0.0 and validated canonical digest; multi-root UNDEFINED/MULTIPLE_ROOTS with details.roots versus frozen set-value semantics is an explicit approval question; current phase3e.py:203 hardcodes CNY for this blocked metric while frozen Catalog unit is 集合（元素元/kWh）, approve correction before numeric output",
+  "known_case_limitations": ["original cases have no unique chosen price target", "utility-scale ground D3 manifest lists 8760 rows and 35 blocks but blocks not present in repository case", "original project terminal cash and other actual events missing", "do not mutate sealed case or synthesize real market data"],
+  "approval_requests": ["approve versioned strict external execution control and its canonical hash/source rules", "confirm four field/row selector target types and legitimate original source authorization", "approve derived Phase2 and D3 scenario provenance/retention, no frozen schema change", "approve existing-frozen-field source path for complete project/equity cash events; no default terminal cash", "decide whether current UNDEFINED/MULTIPLE_ROOTS details.roots projection is acceptable frozen root-set output and approve correction of current CNY metric unit to frozen Catalog unit; if result Schema evolution is needed approve it separately", "approve certified monotone/piecewise completeness proof and independent NPV currency residual rule", "approve new CLI command and bounded private candidate retention", "separately authorize Phase3E-P2 before implementation"],
+  "files_created_in_p1": ["reports/solar-pv/phase3e-p1-break-even-interface-design.md", "reports/solar-pv/phase3e-p1-break-even-interface-decision.json"],
+  "production_files_modified": [],
+  "schema_files_modified": [],
+  "tests_created_or_run": false,
+  "git_push_or_deploy": false
+}
