@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "solar-pv-break-even-execution/1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_id", "pv_type", "formula_id", "selector", "basis", "original_input_hash", "original_source_snapshot_id", "original_dataset_content_hash", "generation_result_hash", "method_config_hash", "source"],
+  "properties": {
+    "schema_version": {"const": "solar-pv-break-even-execution/1.0.0"},
+    "project_id": {"type": "string", "minLength": 1, "maxLength": 4000},
+    "pv_type": {"enum": ["industrial_rooftop", "utility_scale_ground"]},
+    "formula_id": {"const": "F-BREAK-EVEN-PRICE"},
+    "basis": {"type": "string", "minLength": 1, "maxLength": 4000},
+    "selector": {
+      "type": "object", "additionalProperties": false,
+      "required": ["field_id", "row_id", "field_instance_id", "original_atom_hash", "unit", "economic_basis"],
+      "properties": {
+        "field_id": {"enum": ["tariff.periods.sale_price", "tariff.periods.avoidable_price", "tariff.ppa_price", "tariff.market_series.sale_price"]},
+        "row_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 96},
+        "field_instance_id": {"type": "string", "minLength": 1, "maxLength": 96},
+        "original_atom_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "unit": {"const": "currency/kWh"},
+        "economic_basis": {
+          "type": "object", "additionalProperties": false,
+          "required": ["currency", "price_year", "tax_basis", "price_basis"],
+          "properties": {
+            "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+            "price_year": {"type": "integer", "minimum": 1900, "maximum": 2200},
+            "tax_basis": {"enum": ["inclusive", "exclusive"]},
+            "price_basis": {"enum": ["nominal", "real"]}
+          }
+        }
+      },
+      "allOf": [{"if": {"properties": {"field_id": {"const": "tariff.ppa_price"}}, "required": ["field_id"]}, "then": {"properties": {"row_id": {"type": "null"}}}, "else": {"properties": {"row_id": {"type": "string"}}}}]
+    },
+    "original_input_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "original_source_snapshot_id": {"type": "string", "pattern": "^sources-[0-9a-f]{64}$"},
+    "original_dataset_content_hash": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "generation_result_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "method_config_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_id", "source_reference", "source_kind", "status", "license_status"],
+      "properties": {
+        "source_id": {"type": "string", "minLength": 1, "maxLength": 4000},
+        "source_reference": {"type": "string", "minLength": 1, "maxLength": 4000},
+        "source_kind": {"enum": ["USER_PROVIDED", "DOCUMENT_EXTRACTED", "EXTERNAL_SOURCE", "SYNTHETIC"]},
+        "status": {"enum": ["VERIFIED", "UNVERIFIED", "ASSUMED"]},
+        "license_status": {"const": "AUTHORIZED"}
+      }
+    }
+  }
+}
