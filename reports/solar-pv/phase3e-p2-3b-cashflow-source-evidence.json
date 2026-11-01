@@ -1,0 +1,144 @@
+{
+  "phase": "Phase 3E-P2-3B",
+  "evidence_kind": "READ_ONLY_CONTRACT_AND_SEALED_CASE_AUDIT",
+  "baseline_branch": "main",
+  "baseline_head": "c257725e38dcb6681b884b441aaf6becfdfabd04",
+  "status": "FULL_PROJECT_NPV_REPLAY_BLOCKED",
+  "status_is_formal_result_enum": false,
+  "actual_phase3e_project_cashflow_run_this_phase": false,
+  "actual_npv_run_this_phase": false,
+  "existing_phase3d_read_only_contract_verification": {
+    "method": "Read-only Python invocation with PYTHONPATH=services/solar-pv-engine/src, Catalog(), serialization.loads(), result_hash(), validate_result(); no output files written",
+    "exit_code": 0,
+    "industrial_rooftop": {"canonical_hash_matches": true, "validated_status": "CALCULATED_SYNTHETIC"},
+    "utility_scale_ground": {"canonical_hash_matches": true, "validated_status": "CALCULATED_SYNTHETIC"},
+    "is_phase3e_recalculation": false
+  },
+  "independent_complete_project_decimal_npv": null,
+  "production_code_changed": false,
+  "test_code_changed": false,
+  "tests_executed_this_phase": [],
+  "full_regression_this_phase": "NOT_RUN_NO_PRODUCTION_CHANGE_AND_UNAPPROVED_TERMINAL_CARRIER_STOP_GATE",
+  "prior_phase_r1_regression_not_reused_as_current": {
+    "solar": {"passed": 4137, "skipped": 7, "exit_code": 0},
+    "legacy": {"passed": 109, "skipped": 5, "exit_code": 0},
+    "focused": {"passed": 17, "skipped": 1, "exit_code": 0},
+    "reference": "reports/solar-pv/phase3e-p2-3a-strict-temp-regression-review.md",
+    "solar_junit_sha256": "438e0f291241e900abb12ee272691fa9b00d7c5b7b3ae9f64fdd3b2964201fde"
+  },
+  "formula_sources": {
+    "docs/solar-pv/03-input-fields.json": "393140cc57b5934041c3fece2c9c185c03c7876afaa3403ce317d795d6112a1b",
+    "docs/solar-pv/05-formulas.json": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331",
+    "docs/solar-pv/05-field-bindings.json": "4ef6171f063f402963d61edc9647c7565c9ec9338099f62424a77e3507521533",
+    "docs/solar-pv/05-formula-registry.md": "b52600de2084450376e36e11968861e972363d4c71f05f7ed0d3b57bccbffd33"
+  },
+  "consumer_sources": {
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py": "220c6e187d46cf9f47b4f15bd8dc85b69a6527771634256921a61cde67d9c94b",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_ledger.py": "41e9d5b85ecb1b730554fcdf20932fc69b2f15fe2a2ddfb46ead20d49088fce6",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py": "861fd39468ed1676ddfd09456d9466c3ed6c85739e96aa568d5c613a340c3c94"
+  },
+  "source_resolution": {
+    "finance.cash_flow_basis": {
+      "status": "NOT_UNIQUELY_SOURCED_FOR_SEALED_CASES",
+      "frozen_binding": "docs/solar-pv/05-field-bindings.json:2347-2377",
+      "original_field_ids": ["project.cashflow_tax_basis", "project.ownership_mode"],
+      "known_tax_value": "both",
+      "discount_rate_source_status": "UNVERIFIED",
+      "existing_selector_scope": "PROJECT_PRETAX_OR_POSTTAX_CONDITIONAL_ONLY",
+      "equity_cash_flow_sourced": false,
+      "rule": "do not select by NPV or substitute project rate for shareholder rate"
+    },
+    "finance.project_terminal_cash": {
+      "status": "NOT_EXPRESSIBLE_AS_COMPLETE_SOURCED_TERMINAL_DISPOSITION_IN_APPROVED_INGRESS",
+      "frozen_binding": "docs/solar-pv/05-field-bindings.json:2938-2960",
+      "raw_fields": ["assets.depreciation.residual_value", "assets.replacements.salvage", "finance.working_capital"],
+      "missing": ["terminal receipt or explicit evidenced no-disposition", "amount", "receipt date", "direct disposal costs", "project tax/VAT paid or verifiable tax bridge and date", "source/status/reviewer", "deduplication identities"],
+      "existing_production_blocker": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:134-149",
+      "no_default_zero": true
+    }
+  },
+  "sealed_cases": {
+    "industrial_rooftop": {
+      "paths": {
+        "input": "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/input.json",
+        "methods": "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/methods.json",
+        "result": "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/result.json"
+      },
+      "file_sha256": {
+        "input": "7b08b2b12e9b8a57b4848a73b9c3b68d8881f9305cd796e773a16b3699ba743f",
+        "methods": "3b33541d440b847187cc1886e27789a167a91cdab5e410b89aed22e3f303d8f5",
+        "result": "53d3c0cded618566bbce1d8e51fa4e0be91d84609f7bf907010a93cf3acb182e"
+      },
+      "canonical_result_hash_from_existing_result": "5e2868121e4c80119a47157348b9afba685a172d4575a9d71c840dbbb68278d7",
+      "phase3d_status": "CALCULATED_SYNTHETIC",
+      "phase3d_period_count": 26,
+      "cashflow_tax_basis": {"value": "both", "status": "UNVERIFIED"},
+      "ownership_mode": {"value": "owner_invested", "status": "UNVERIFIED"},
+      "project_discount_rate": {"value": "0.08", "status": "UNVERIFIED"},
+      "equity_discount_rate": {"value": "0.08", "status": "UNVERIFIED"},
+      "terminal_working_capital_release_already_in_3d_cny": "50000",
+      "construction_capex_cash_paid_cny": "1660000",
+      "terminal_phase3e_cashflow_in_3d": null
+    },
+    "utility_scale_ground": {
+      "paths": {
+        "input": "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/input.json",
+        "methods": "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/methods.json",
+        "result": "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/result.json"
+      },
+      "file_sha256": {
+        "input": "dce65dc6808321a1267d9deb03737f2eeeddd7ac942cd96f2af5783d879a583f",
+        "methods": "a3d04cd0f14d7c6678ef739dc494c16357a8e766a792a7d0c5f7d6b85c90c5f8",
+        "result": "99e7b2ae90a28dc07e6c6effbc9bdca9e0aa1c8226efcd10b357e988b4dfd9bb"
+      },
+      "canonical_result_hash_from_existing_result": "d2a4ded9e50d16ebd1fe858d06c987daa4a230b3560ddca7be9974f8c358c4f7",
+      "phase3d_status": "CALCULATED_SYNTHETIC",
+      "phase3d_period_count": 26,
+      "cashflow_tax_basis": {"value": "both", "status": "UNVERIFIED"},
+      "ownership_mode": null,
+      "project_discount_rate": {"value": "0.08", "status": "UNVERIFIED"},
+      "equity_discount_rate": {"value": "0.08", "status": "UNVERIFIED"},
+      "terminal_working_capital_release_already_in_3d_cny": "120000",
+      "construction_capex_cash_paid_cny": "2510000",
+      "terminal_phase3e_cashflow_in_3d": null
+    }
+  },
+  "proposed_decision_not_implemented": {
+    "recommended": "approve a separate strictly versioned project terminal disposition source carrier bound to validated Phase 2/3D identities; include net asset proceeds, cost/tax cash bridge, receipt date, source/reviewer and per-ledger deduplication",
+    "requires_separate_user_approval": true,
+    "phase2_original_fields_change": false,
+    "frozen_formulas_change": false,
+    "frozen_bindings_business_meaning_change": false,
+    "d2_schema_change": false,
+    "d3_protocol_change": false,
+    "formal_result_schema_change": false,
+    "tax_and_result_identity_compatibility_requires_design_review": true
+  },
+  "protected_files_start_sha256": {
+    "packages/skills/wangbin-receivable-analyzer/SKILL.md": "8a5ee4eb54a4f6a08d3ab7cccf792c12d5f01ab3fb4ab0de8dc926149087a945",
+    "packages/skills/wangbin-receivable-analyzer/manifest.json": "0a9459ab33f0f3bbc1c538535b994218e6ad92792901a39c3e4e94eaf777762b",
+    "products/catalog.json": "d74f3fa9f00184ee64f8452862958c3ef11f7848378ed42657e4b5fbc91def27",
+    "reports/workbuddy-upload-list.md": "6d0df16f21a4cf7a3a87eef1b90fb2f7d26fd1457f124066707281f9ff0ec586",
+    "reports/validate.json": "42765dae553254369311f3d4e7d2d3ab6f3cf0f8858a1c0e587debfea809d1ba",
+    "reports/validate.md": "2c3f7cd41671f2af1cd9f5688ae4e3779d92390260cdb43299457bcedb2060e3"
+  },
+  "protected_files_end_sha256": {
+    "packages/skills/wangbin-receivable-analyzer/SKILL.md": "8a5ee4eb54a4f6a08d3ab7cccf792c12d5f01ab3fb4ab0de8dc926149087a945",
+    "packages/skills/wangbin-receivable-analyzer/manifest.json": "0a9459ab33f0f3bbc1c538535b994218e6ad92792901a39c3e4e94eaf777762b",
+    "products/catalog.json": "d74f3fa9f00184ee64f8452862958c3ef11f7848378ed42657e4b5fbc91def27",
+    "reports/workbuddy-upload-list.md": "6d0df16f21a4cf7a3a87eef1b90fb2f7d26fd1457f124066707281f9ff0ec586",
+    "reports/validate.json": "42765dae553254369311f3d4e7d2d3ab6f3cf0f8858a1c0e587debfea809d1ba",
+    "reports/validate.md": "2c3f7cd41671f2af1cd9f5688ae4e3779d92390260cdb43299457bcedb2060e3"
+  },
+  "protected_baseline": {
+    "manifest": "reports/solar-pv/phase3c-startup-state.json",
+    "total": 288,
+    "matched_at_start": 286,
+    "existing_differences": ["reports/validate.json", "reports/validate.md"],
+    "missing_at_start": 0,
+    "matched_at_end": 286,
+    "missing_at_end": 0
+  },
+  "local_document_commit_sha": null,
+  "local_document_commit_sha_note": "Read back after the single explicit report-only commit; do not place its SHA in its own committed payload."
+}
