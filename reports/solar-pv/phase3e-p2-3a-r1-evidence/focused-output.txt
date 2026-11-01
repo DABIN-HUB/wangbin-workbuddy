@@ -1,0 +1,5 @@
+.....s............                                                       [100%]
+- generated xml file: C:\Users\wangbin\AppData\Local\hermes\cache\scratch\p2-3a-r1-focused.xml -
+=========================== short test summary info ===========================
+SKIPPED [1] tests\solar-pv\test_phase3e_candidate_replay.py:198: Windows symlink privilege unavailable: 22
+17 passed, 1 skipped in 4553.28s (1:15:53)
