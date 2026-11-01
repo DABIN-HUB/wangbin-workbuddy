@@ -21,7 +21,7 @@ from wangbin_solar_pv.calculation.result_contract import seal_result, validate_r
 from wangbin_solar_pv.errors import ContractError
 from wangbin_solar_pv.intake import IntakeSession
 from wangbin_solar_pv.local_files import Workspace
-from wangbin_solar_pv.serialization import digest, dumps
+from wangbin_solar_pv.serialization import digest, dumps, loads
 from wangbin_solar_pv.timeseries_bundle import BundleBudget, read_bundle, write_bundle
 
 
@@ -128,7 +128,9 @@ def financial_case():
                  datasets={"resource.timeseries": {"header": resource_header(catalog), "rows": resource_rows(catalog)}},
                  catalog=catalog, budget=budget)
     with read_bundle(root / "resource", catalog=catalog, budget=budget) as resource:
-        generation = generate(generation_input, methods, catalog=catalog,
+        # Physical generation must retain these assets, but need not claim that
+        # later cash/tax forecasting controls were used by the physical engine.
+        generation = generate(generation_input, settlement_methods, catalog=catalog,
                               output_dir=root / "generation", budget=budget, bundle=resource)
     exported = generation_input
     period = axis()
@@ -192,7 +194,12 @@ def test_b1_cash_invoices_receivables_and_real_receipts(financial_case, replays)
     assert repeated.settlement.candidate_revenue["result_hash"] == first.settlement.candidate_revenue["result_hash"]
     assert repeated.settlement.candidate_bundle_hash == first.settlement.candidate_bundle_hash
     assert digest(exported) == digest(validate_export(exported, catalog).export)
-    assert (root / "financial-first" / "candidate-3d" / "result.json").is_file()
+    for name, expected in (("original-3d", first.original_financial),
+                           ("candidate-3d", first.candidate_financial)):
+        published = loads((root / "financial-first" / name / "result.json").read_bytes())
+        validate_result(published, catalog)
+        assert published["result_hash"] == expected["result_hash"]
+        assert (root / "financial-first" / name / "result.sha256").read_text().strip() == expected["result_hash"]
     assert (root / "original" / "manifest.json").is_file()
 
 
@@ -257,6 +264,12 @@ def test_mismatched_financial_inputs_and_method_hash_rejected(financial_case, re
     with pytest.raises(ContractError, match="BREAK_EVEN_FINANCIAL_IDENTITY_MISMATCH"):
         _check_financial(altered, replays[0].settlement.candidate_revenue["result_hash"],
                          replays[0].settlement.candidate_export, methods, catalog)
+    altered = deepcopy(replays[0].candidate_financial)
+    altered["inputs"]["normalized"]["finance.working_capital"] = D("201")
+    altered = seal_result(altered)
+    with pytest.raises(ContractError, match="BREAK_EVEN_FINANCIAL_IDENTITY_MISMATCH"):
+        _check_financial(altered, replays[0].settlement.candidate_revenue["result_hash"],
+                         replays[0].settlement.candidate_export, methods, catalog)
     assert not (root / "cross-contaminated-3d").exists()
 
 
@@ -268,3 +281,20 @@ def test_missing_financial_input_fails_without_valid_ledger(financial_case, repl
     with pytest.raises(ContractError, match="BLOCKED_MISSING_INPUT"):
         calculate_financial_ledger(missing, methods, replays[0].settlement.candidate_revenue, catalog=catalog)
     assert not (root / "missing-financial-3d").exists()
+
+
+def test_missing_financial_method_cleans_owned_run_after_valid_settlement(financial_case):
+    root, catalog, budget, exported, methods, control, generation_hash = financial_case
+    incomplete = methods.to_dict()
+    incomplete["parameters"].pop("cash.collection_fractions")
+    incomplete = MethodConfig.from_dict(incomplete)
+    incomplete_control = deepcopy(control)
+    incomplete_control["method_config_hash"] = incomplete.hash
+    with read_bundle(root / "original", catalog=catalog, budget=budget) as bundle:
+        with pytest.raises(ContractError, match="BLOCKED_METHOD_REVIEW"):
+            replay_financial_candidate(incomplete_control, exported, incomplete, bundle,
+                                       root / "generation", D("0.7"), catalog=catalog,
+                                       budget=budget, workspace=Workspace(root), run_name="financial-incomplete")
+    assert not (root / "financial-incomplete").exists()
+    assert (root / "generation" / "result.json").is_file()
+    assert (root / "original" / "manifest.json").is_file()

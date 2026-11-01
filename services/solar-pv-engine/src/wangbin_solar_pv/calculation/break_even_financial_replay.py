@@ -46,14 +46,21 @@ def _check_settlement(result, exported, methods, bundle_hash, generation_hash, c
 
 def _check_financial(result, settlement_hash, exported, methods, catalog):
     validate_result(result, catalog)
+    snapshot = result["source_snapshot"]
+    payload = result["inputs"].get("identity_payload", {})
     if (result["project_id"] != exported["project"]["project_id"]
             or result["pv_type"] != exported["project"]["pv_type"]
             or result["inputs"].get("method_config_hash") != methods.hash
+            or result["inputs"].get("normalized") != exported["normalized_inputs"]
             or result["inputs"].get("upstream_settlement_result_hash") != settlement_hash
-            or result["source_snapshot"].get("phase3c_settlement", {}).get("result_hash") != settlement_hash
-            or result["source_snapshot"].get("phase2") != exported["source_snapshot"]
-            or result["source_snapshot_id"] != digest(result["source_snapshot"])
-            or result["input_hash"] != digest(result["inputs"].get("identity_payload", {}))):
+            or snapshot.get("phase3c_settlement") != {
+                "result_hash": settlement_hash, "project_id": exported["project"]["project_id"]}
+            or snapshot.get("phase2") != exported["source_snapshot"]
+            or snapshot.get("methods") != methods.to_dict()
+            or result["source_snapshot_id"] != digest(snapshot)
+            or payload.get("phase2_input_hash") != exported["input_hash"]
+            or payload.get("method_config_hash") != methods.hash
+            or result["input_hash"] != digest(payload)):
         raise ContractError("BREAK_EVEN_FINANCIAL_IDENTITY_MISMATCH")
 
 
