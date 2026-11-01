@@ -1,6 +1,11 @@
 """Independent SYNTHETIC candidate replay; no sealed project is modified."""
 from copy import deepcopy
 from decimal import Decimal
+import hashlib
+import os
+from pathlib import Path
+import subprocess
+from uuid import uuid4
 
 import pytest
 
@@ -22,8 +27,14 @@ def _metric(result, metric_id):
 
 
 @pytest.fixture(scope="module")
-def original(tmp_path_factory):
-    root = tmp_path_factory.mktemp("synthetic-p2-replay")
+def original(request):
+    scratch = Path(os.environ["TMPDIR"])
+    workspace = Workspace(scratch)
+    root = scratch / ("synthetic-p2-replay-" + uuid4().hex)
+    root.mkdir(mode=0o700)
+    identity = root.stat().st_dev, root.stat().st_ino
+    from wangbin_solar_pv.calculation.break_even_replay import _remove_owned
+    request.addfinalizer(lambda: _remove_owned(root, identity, workspace))
     catalog = Catalog()
     budget = BundleBudget(max_seconds=1800)
     session, original_methods = case(catalog, "industrial_rooftop", years=1)
@@ -135,6 +146,95 @@ def test_invalid_source_does_not_publish_candidate(original):
     assert not (root / "bad-source").exists()
 
 
+def test_candidate_workspace_is_private_and_separate_from_pytest(original, request):
+    root = original[0]
+    assert root.parent.resolve() == Path(os.environ["TMPDIR"]).resolve()
+    assert root.parent.resolve() != Path(request.config.option.basetemp).resolve()
+    assert Workspace(root).root == root
+
+
+def test_unapproved_pytest_workspace_and_traversal_are_rejected(original, tmp_path):
+    from wangbin_solar_pv.calculation.break_even_replay import replay_price_candidate
+
+    root, catalog, budget, exported, methods, control, _, _ = original
+    assert tmp_path.resolve().parent != root.parent.resolve()
+    with read_bundle(root / "original", catalog=catalog, budget=budget) as bundle:
+        with pytest.raises(ContractError, match="BREAK_EVEN_SCRATCH_OUTSIDE_WORKSPACE"):
+            replay_price_candidate(control, exported, methods, bundle, root / "generation", Decimal("0.6"),
+                                   catalog=catalog, budget=budget, workspace=Workspace(tmp_path), run_name="unapproved")
+        with pytest.raises(ContractError, match="BREAK_EVEN_RUN_NAME"):
+            replay_price_candidate(control, exported, methods, bundle, root / "generation", Decimal("0.6"),
+                                   catalog=catalog, budget=budget, workspace=Workspace(root), run_name="../outside")
+    with pytest.raises(ContractError, match="PATH_TRAVERSAL"):
+        Workspace(root).path("../outside", json_only=False)
+    assert not (tmp_path / "unapproved").exists()
+    assert not (root.parent / "outside").exists()
+
+
+def test_existing_candidate_directory_is_not_overwritten(original):
+    from wangbin_solar_pv.calculation.break_even_replay import replay_price_candidate
+
+    root, catalog, budget, exported, methods, control, _, _ = original
+    existing = root / "already-present"
+    existing.mkdir()
+    sentinel = existing / "owned-by-other-run.txt"
+    sentinel.write_text("SYNTHETIC other run", encoding="utf-8")
+    with read_bundle(root / "original", catalog=catalog, budget=budget) as bundle:
+        with pytest.raises(ContractError, match="BREAK_EVEN_OUTPUT_EXISTS"):
+            replay_price_candidate(control, exported, methods, bundle, root / "generation", Decimal("0.6"),
+                                   catalog=catalog, budget=budget, workspace=Workspace(root), run_name=existing.name)
+    assert sentinel.read_text(encoding="utf-8") == "SYNTHETIC other run"
+
+
+def test_workspace_rejects_real_symlink(original):
+    root = original[0]
+    target = root / "link-target"
+    target.mkdir()
+    link = root / "linked-directory"
+    try:
+        link.symlink_to(target, target_is_directory=True)
+    except OSError as exc:
+        target.rmdir()
+        pytest.skip(f"Windows symlink privilege unavailable: {exc.errno}")
+    try:
+        with pytest.raises(ContractError, match="UNSAFE_LINK"):
+            Workspace(link)
+    finally:
+        link.unlink()
+        target.rmdir()
+
+
+def test_workspace_rejects_real_hardlink(original):
+    root = original[0]
+    target = root / "hardlink-target.json"
+    linked = root / "linked-file.json"
+    target.write_text("{}", encoding="utf-8")
+    os.link(target, linked)
+    try:
+        with pytest.raises(ContractError, match="HARDLINK_FILE"):
+            Workspace(root).read(linked.name)
+    finally:
+        linked.unlink()
+        target.unlink()
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Windows junction security check")
+def test_workspace_rejects_real_windows_junction(original):
+    root = original[0]
+    target = root / "junction-target"
+    target.mkdir()
+    junction = root / "linked-junction"
+    created = subprocess.run(["cmd.exe", "/d", "/c", "mklink", "/J", str(junction), str(target)],
+                             capture_output=True, timeout=30)
+    assert created.returncode == 0, "SYNTHETIC junction fixture could not be created"
+    try:
+        with pytest.raises(ContractError, match="UNSAFE_LINK"):
+            Workspace(junction)
+    finally:
+        os.rmdir(junction)
+        target.rmdir()
+
+
 def test_derived_export_preserves_an_unselected_price_row_and_original_candidate():
     from test_phase3e_price_selector import _case
     from wangbin_solar_pv.calculation.break_even_execution import validate_price_selector
@@ -174,13 +274,27 @@ def test_wrong_generation_hash_cleans_only_the_owned_unpublished_run(original):
     root, catalog, budget, exported, methods, control, _, _ = original
     bad = deepcopy(control)
     bad["generation_result_hash"] = "0" * 64
-    with read_bundle(root / "original", catalog=catalog, budget=budget) as bundle:
-        with pytest.raises(ContractError):
-            replay_price_candidate(bad, exported, methods, bundle, root / "generation", Decimal("0.6"),
-                                   catalog=catalog, budget=budget, workspace=Workspace(root), run_name="wrong-3b")
+    original_manifest = root / "original" / "manifest.json"
+    generation_result = root / "generation" / "result.json"
+    originals = {path: hashlib.sha256(path.read_bytes()).hexdigest()
+                 for path in (original_manifest, generation_result)}
+    sibling = root.parent / ("synthetic-p2-sibling-" + uuid4().hex)
+    sibling.mkdir(mode=0o700)
+    sentinel = sibling / "keep.txt"
+    sentinel.write_text("SYNTHETIC independent task", encoding="utf-8")
+    try:
+        with read_bundle(root / "original", catalog=catalog, budget=budget) as bundle:
+            with pytest.raises(ContractError):
+                replay_price_candidate(bad, exported, methods, bundle, root / "generation", Decimal("0.6"),
+                                       catalog=catalog, budget=budget, workspace=Workspace(root), run_name="wrong-3b")
+        assert sentinel.read_text(encoding="utf-8") == "SYNTHETIC independent task"
+    finally:
+        sentinel.unlink()
+        sibling.rmdir()
     assert not (root / "wrong-3b").exists()
     assert (root / "generation" / "result.json").is_file()
     assert (root / "original" / "manifest.json").is_file()
+    assert all(hashlib.sha256(path.read_bytes()).hexdigest() == value for path, value in originals.items())
 
 
 def test_future_price_row_with_no_settled_energy_does_not_publish_candidate(original):
