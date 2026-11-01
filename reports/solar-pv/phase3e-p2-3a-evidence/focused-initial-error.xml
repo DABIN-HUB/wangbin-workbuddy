@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="1" time="561.514" timestamp="2026-11-01T07:25:57.315623+08:00" hostname="DESKTOP-IKHU04D"><testcase classname="tests.solar-pv.test_phase3e_financial_candidate_replay" name="test_b1_cash_invoices_receivables_and_real_receipts" time="560.782"><error message="failed on setup with &quot;wangbin_solar_pv.errors.ContractError: GENERATION_PHYSICAL_INPUT_CHANGED: assets.depreciation&quot;">financial_case = (WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3a-workspace/synthetic-p2-3a-finance-45007f017a13...40172c3b27a99ce4', 'method_config_hash': 'a6c607146fb17a7d82b3f6ee80b8a99344e14c89849822187f4796ed19387515', ...}, ...)
+
+    
+    
+&gt;   @pytest.fixture(scope="module")
+                ^^^^^^^^^^^^^^^^^^^^
+
+tests\solar-pv\test_phase3e_financial_candidate_replay.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\solar-pv\test_phase3e_financial_candidate_replay.py:146: in _execute
+    root, catalog, budget, exported, methods, control, _ = info
+services\solar-pv-engine\src\wangbin_solar_pv\calculation\break_even_financial_replay.py:65: in replay_financial_candidate
+    candidate_price, catalog=catalog, budget=budget, workspace=workspace,
+services\solar-pv-engine\src\wangbin_solar_pv\calculation\break_even_replay.py:211: in replay_price_candidate
+    baseline = settle(original_export, method, output_dir=root / "original-3c", bundle=original_bundle, **args)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\calculation\revenue.py:333: in calculate_rooftop
+    return _calculate(exported,methods,generation_dir=generation_dir,generation_result_hash=generation_result_hash,
+services\solar-pv-engine\src\wangbin_solar_pv\calculation\revenue.py:165: in _calculate
+    generation = GenerationEvidence(generation_dir,generation_result_hash,inputs,meter,bundle)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\calculation\generation_evidence.py:81: in __init__
+    self._compatible_inputs(bundle)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;wangbin_solar_pv.calculation.generation_evidence.GenerationEvidence object at 0x0000017EE1951010&gt;
+bundle = &lt;wangbin_solar_pv.timeseries_bundle.TimeSeriesBundle object at 0x0000017EE15BC910&gt;
+
+    def _compatible_inputs(self,bundle):
+        # A settlement input may add/change commercial facts, never silently
+        # substitute physical facts underneath a previously calculated result.
+        ignored = {"project.sales_mode", "project.ownership_mode", "grid.metering_boundary"}
+        prior = self.result["inputs"]["normalized"]
+        records = self.result["source_snapshot"]["phase2"]["records"]
+        old = {r["field_id"]: r for r in records if r["field_id"] in prior}
+        commercial = {"grid.opinion_status","grid.opinion_valid_until","grid.opinion_attachment_id",
+            "grid.transaction_opinion","grid.permit_reference","grid.connection_point"}
+        if self.inputs.pv_type == "industrial_rooftop":
+            commercial.update(("grid.export_power_limit","grid.available_capacity"))
+        for fid in set(self.inputs.values)-set(prior):
+            if fid in ignored|commercial or fid == "resource.timeseries":
+                continue
+            if fid.startswith(("site.","roof.","layout.","system.","resource.","assets.","grid.")):
+&gt;               raise ContractError("GENERATION_PHYSICAL_INPUT_CHANGED",fid)
+E               wangbin_solar_pv.errors.ContractError: GENERATION_PHYSICAL_INPUT_CHANGED: assets.depreciation
+
+services\solar-pv-engine\src\wangbin_solar_pv\calculation\generation_evidence.py:103: ContractError</error></testcase></testsuite></testsuites>

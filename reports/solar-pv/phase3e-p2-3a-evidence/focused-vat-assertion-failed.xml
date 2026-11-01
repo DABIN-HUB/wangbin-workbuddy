@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="2" time="1115.304" timestamp="2026-11-01T07:35:56.004000+08:00" hostname="DESKTOP-IKHU04D"><testcase classname="tests.solar-pv.test_phase3e_financial_candidate_replay" name="test_b1_cash_invoices_receivables_and_real_receipts" time="1114.753" /><testcase classname="tests.solar-pv.test_phase3e_financial_candidate_replay" name="test_b2_independent_vat_loss_income_tax_debt_and_cash" time="0.001"><failure message="KeyError: 'vat_cash_paid'">financial_case = (WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3a-workspace/synthetic-p2-3a-finance-bedbb6a96539...69d5e78b9af8ec6d', 'method_config_hash': 'a6c607146fb17a7d82b3f6ee80b8a99344e14c89849822187f4796ed19387515', ...}, ...)
+replays = (FinancialCandidateReplay(settlement=CandidateReplay(original_input_hash='fe38e97fd522dc9b4dd4334c6230aa13fd8a019d1778...e_snapshot_id': 'eaee70dbe6c710056c0a828ebfe44bb7a72793cd1421966307c9d47095ea69b8', 'status': 'CALCULATED_SYNTHETIC'}))
+
+    def test_b2_independent_vat_loss_income_tax_debt_and_cash(financial_case, replays):
+        for outcome, price in ((replays[0], D("0.6")), (replays[1], D("0.8"))):
+            for result, p in ((outcome.original_financial, D("0.4")), (outcome.candidate_financial, price)):
+                construction, year = result["evidence"]["financial-ledger"]["annual"]
+                sales = D("87600") * p
+                project_base = sales - D("100") - D("1000")
+                equity_base = project_base - D("56.5")
+                expected_project_tax = max(D(0), project_base - D("34000")) * D("0.25")
+                expected_equity_tax = max(D(0), equity_base - D("34000")) * D("0.25")
+                vat_output = sales - sales / D("1.13")
+                vat_paid = vat_output - D("143")
+                assert construction["capex_accrued"] == construction["capex_cash_paid"] == D("1130")
+                assert construction["debt_drawdown"] == D("565")
+                assert construction["working_capital_increase"] == D("200")
+                assert year["taxable_income_project"] == project_base
+                assert year["taxable_income_equity"] == equity_base
+                assert year["tax_loss_project_closing"] == max(D(0), D("34000") - project_base)
+                assert year["tax_loss_equity_closing"] == max(D(0), D("34000") - equity_base)
+                assert year["income_tax_accrual_project"] == expected_project_tax
+                assert year["income_tax_accrual_equity"] == expected_equity_tax
+                assert year["income_tax_accrual"] == expected_equity_tax
+                assert year["income_tax_cash_paid_project"] == expected_project_tax * D("0.5")
+                assert year["income_tax_cash_paid"] == expected_equity_tax * D("0.5")
+                assert year["vat_output"] == vat_output
+                assert year["vat_input_eligible"] == D("143")
+                assert year["vat_credit_closing"] == D(0)
+&gt;               assert year["vat_cash_paid"] == vat_paid
+                       ^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'vat_cash_paid'
+
+tests\solar-pv\test_phase3e_financial_candidate_replay.py:219: KeyError</failure></testcase></testsuite></testsuites>
