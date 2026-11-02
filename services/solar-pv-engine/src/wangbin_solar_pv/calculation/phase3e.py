@@ -352,6 +352,12 @@ def calculate_sourced_project_npv(carrier, source_documents, exported, methods, 
     result["evidence"]["phase3e-financial"]["project_npv"] = npv["value"]
     result["findings"].append({"code": "SOURCED_PROJECT_NPV_SYNTHETIC_ONLY",
                                "status": "PARTIAL", "unimplemented": ["EQUITY_CASH_FLOW", "DATED_NPV", "BREAK_EVEN_ROOT"]})
+    # Source JSON sorts evidence object keys on readback. Phase 3E metric
+    # references are sets in meaning, so canonicalize their order here only;
+    # do not touch sealed 3D metrics or the original no-source execution path.
+    for metric in result["results"]["metrics"]:
+        if metric["boundary_id"] == _BOUNDARY:
+            metric["evidence_ids"] = sorted(metric["evidence_ids"])
     result = seal_result(result)
     validate_result(result, catalog)
     return result

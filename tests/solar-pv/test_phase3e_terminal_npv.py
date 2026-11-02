@@ -9,7 +9,7 @@ from test_phase3e_financial_candidate_replay import _build_financial_case, _exec
 from test_phase3e_terminal_binding import _carrier
 from wangbin_solar_pv.calculation.result_contract import validate_result
 from wangbin_solar_pv.errors import ContractError
-from wangbin_solar_pv.serialization import digest, loads
+from wangbin_solar_pv.serialization import digest, dumps, loads
 from wangbin_solar_pv.timeseries_bundle import read_bundle
 
 NO_DOC = (b"SYNTHETIC asset_id=SYNTHETIC-asset no additional recovery "
@@ -32,7 +32,7 @@ def npv_case():
 
 
 def _calculation(base, replay, replay_name, candidate, *, override=None,
-                 document=NO_DOC, source_document=None):
+                 document=NO_DOC, source_document=None, repeat_after_json=False):
     from wangbin_solar_pv.calculation.phase3e import calculate_sourced_project_npv
     root, catalog, budget, exported, methods, control, _ = base
     export = replay.settlement.candidate_export if candidate else exported
@@ -52,6 +52,15 @@ def _calculation(base, replay, replay_name, candidate, *, override=None,
                 carrier, {"SYNTHETIC-asset-clearance": document if source_document is None else source_document}, export,
                 methods, bundle, generation, settlement, financial, catalog,
                 basis_control=control, original_export=exported, original_bundle=original_bundle)
+            if repeat_after_json:
+                roundtrip = lambda value: loads(dumps(value))
+                replayed = calculate_sourced_project_npv(
+                    roundtrip(carrier), {"SYNTHETIC-asset-clearance": document}, roundtrip(export),
+                    methods, bundle, roundtrip(generation), roundtrip(settlement), roundtrip(financial), catalog,
+                    basis_control=roundtrip(control), original_export=roundtrip(exported),
+                    original_bundle=original_bundle)
+                validate_result(replayed, catalog)
+                assert replayed["result_hash"] == result["result_hash"]
     validate_result(result, catalog)
     return carrier, result, financial
 
@@ -68,7 +77,8 @@ def test_no_disposition_has_independent_decimal_cashflow_and_npv(npv_case):
         (replay, "npv-six", True, D("0.6")),
         (other, "npv-eight", True, D("0.8")),
     ):
-        carrier, result, financial = _calculation(base, result_set, name, candidate)
+        carrier, result, financial = _calculation(base, result_set, name, candidate,
+                                                  repeat_after_json=price == D("0.6"))
         year = financial["evidence"]["financial-ledger"]["annual"][1]
         sale = D("87600") * price
         assert year["invoiced_gross"] == sale
