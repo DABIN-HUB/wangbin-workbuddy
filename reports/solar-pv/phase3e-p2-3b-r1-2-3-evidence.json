@@ -1,0 +1,385 @@
+{
+  "schema": "solar-pv-phase3e-p2-3b-r1-2-3-evidence/1.0.0",
+  "scope": "R1-2A/R1-2B/R1-3A/R1-3B local synthetic-only acceptance",
+  "baseline_head": "2c304d9c564f0542e21f05fee84117a80148797e",
+  "local_commits": {
+    "R1-2A": "1ace1fb76ce9f72c92865393bb3955ec2b93cd92",
+    "R1-2B": "822676d1f92323b23d9448686737dfaf5458526c",
+    "R1-3A": "227a6883043b15d557de57fbf56f50fc844f1067",
+    "R1-3B": "self-reference omitted; read HEAD after documentation commit",
+    "R1-3A-hash-stability-fix": "102cf3cd66ac13c399548308462f43516ce92fab"
+  },
+  "runs": {
+    "binding": {
+      "command": "python -m pytest tests/solar-pv/test_phase3e_terminal_binding.py -q --basetemp=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3b-r1-23-basetemp-binding-reviewed --junitxml=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3b-r1-23-binding-reviewed.xml",
+      "tmpdir": "C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3b-r1-23-workspace",
+      "pytest_basetemp": "C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3b-r1-23-basetemp-binding-reviewed",
+      "tmpdir_basetemp_distinct": true,
+      "exit_code": 0,
+      "junit_file": "reports/solar-pv/phase3e-p2-3b-r1-2-3-evidence/binding.xml",
+      "junit_sha256": "d486baa757b0d5793b8f6ad9fe24fe90eeb464a7f6d72841691e7a0113c49d80",
+      "counts": {
+        "tests": 16,
+        "passed": 16,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "junit_timestamp": "2026-11-02T06:29:06.525637+08:00",
+      "skips": [],
+      "failed_test_ids": []
+    },
+    "npv": {
+      "command": "python -m pytest tests/solar-pv/test_phase3e_terminal_npv.py -q --basetemp=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3b-r1-23-basetemp-npv-final --junitxml=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3b-r1-23-npv-final.xml",
+      "tmpdir": "C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3b-r1-23-final-workspace",
+      "pytest_basetemp": "C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3b-r1-23-basetemp-npv-final",
+      "tmpdir_basetemp_distinct": true,
+      "exit_code": 0,
+      "junit_file": "reports/solar-pv/phase3e-p2-3b-r1-2-3-evidence/npv.xml",
+      "junit_sha256": "7efda816883a18f41732ff720e050fd394d8a0f6e8ddbfa24b685bd5ee20b3e4",
+      "counts": {
+        "tests": 3,
+        "passed": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "junit_timestamp": "2026-11-02T11:55:16.969493+08:00",
+      "skips": [],
+      "failed_test_ids": []
+    },
+    "solar": {
+      "command": "python -m pytest tests/solar-pv -q --basetemp=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3b-r1-23-basetemp-solar-final --junitxml=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3b-r1-23-solar-final.xml",
+      "tmpdir": "C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3b-r1-23-solar-final-workspace",
+      "pytest_basetemp": "C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3b-r1-23-basetemp-solar-final",
+      "tmpdir_basetemp_distinct": true,
+      "exit_code": 0,
+      "junit_file": "reports/solar-pv/phase3e-p2-3b-r1-2-3-evidence/solar.xml",
+      "junit_sha256": "24be2e5fe48136af70ae39b7a5f3fe759dfd2bd444e68f6e89b2902633e03ab3",
+      "counts": {
+        "tests": 4178,
+        "passed": 4171,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 7
+      },
+      "junit_timestamp": "2026-11-02T11:55:17.292217+08:00",
+      "skips": [
+        {
+          "test_id": "tests.solar-pv.test_cli::test_real_symlinks_are_rejected_in_all_path_positions[file]",
+          "reason": "Windows symlink privilege unavailable: 22"
+        },
+        {
+          "test_id": "tests.solar-pv.test_cli::test_real_symlinks_are_rejected_in_all_path_positions[ancestor]",
+          "reason": "Windows symlink privilege unavailable: 22"
+        },
+        {
+          "test_id": "tests.solar-pv.test_cli::test_real_symlinks_are_rejected_in_all_path_positions[workspace]",
+          "reason": "Windows symlink privilege unavailable: 22"
+        },
+        {
+          "test_id": "tests.solar-pv.test_parser_security::test_symlinks_and_linked_root_are_rejected_or_explicitly_skipped[file]",
+          "reason": "Windows symlink privilege unavailable: OSError"
+        },
+        {
+          "test_id": "tests.solar-pv.test_parser_security::test_symlinks_and_linked_root_are_rejected_or_explicitly_skipped[root]",
+          "reason": "Windows symlink privilege unavailable: OSError"
+        },
+        {
+          "test_id": "tests.solar-pv.test_phase3e_candidate_replay::test_workspace_rejects_real_symlink",
+          "reason": "Windows symlink privilege unavailable: 22"
+        },
+        {
+          "test_id": "tests.solar-pv.test_timeseries_bundle_security::test_symlink_bundle_rejected_when_privileged",
+          "reason": "Windows symlink privilege unavailable; junction separately exercised"
+        }
+      ],
+      "failed_test_ids": []
+    },
+    "legacy": {
+      "command": "python -m pytest tests --ignore=tests/solar-pv -q --basetemp=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3b-r1-23-basetemp-legacy-final --junitxml=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3b-r1-23-legacy-final.xml",
+      "tmpdir": "C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3b-r1-23-legacy-final-workspace",
+      "pytest_basetemp": "C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-3b-r1-23-basetemp-legacy-final",
+      "tmpdir_basetemp_distinct": true,
+      "exit_code": 0,
+      "junit_file": "reports/solar-pv/phase3e-p2-3b-r1-2-3-evidence/legacy.xml",
+      "junit_sha256": "f40cc65091d888fc8bc49788fab6439b1b6a4a4d6d0bcf38c74be266d2101aa2",
+      "counts": {
+        "tests": 114,
+        "passed": 109,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 5
+      },
+      "junit_timestamp": "2026-11-02T11:55:48.331295+08:00",
+      "skips": [
+        {
+          "test_id": "tests.test_inventory_analyzer::test_wrong_type_and_symlink_are_rejected",
+          "reason": "symlinks unavailable"
+        },
+        {
+          "test_id": "tests.test_product_factory::test_package_rejects_private_and_symlink",
+          "reason": "symlinks unavailable"
+        },
+        {
+          "test_id": "tests.test_product_factory::test_rejects_symlink_ancestors_and_traversing_registered_test",
+          "reason": "symlinks unavailable"
+        },
+        {
+          "test_id": "tests.test_security::test_symlink_is_rejected_when_supported",
+          "reason": "当前 Windows 环境未允许创建符号链接"
+        },
+        {
+          "test_id": "tests.test_tender_analyzer::test_cli_rejects_unsupported_non_regular_and_oversized_inputs_without_leaking_path_or_content",
+          "reason": "symlink creation is unavailable on this Windows runner"
+        }
+      ],
+      "failed_test_ids": []
+    }
+  },
+  "all_test_ids_file": "reports/solar-pv/phase3e-p2-3b-r1-2-3-evidence/all-test-ids.txt",
+  "all_test_ids_count": 4311,
+  "all_test_ids_sha256": "aea6acfef8ebce8e0aafb83607d2762b4e905534e7b23eee1e16709463b51b05",
+  "independent_synthetic_no_disposition_cases": {
+    "0.4": {
+      "source_content_hash": "87d1697bac73ff171be63d8cb16dc4ac7670b779f38fcbb23b76c470236828e9",
+      "binding_hash": "0ce6ab58cc50f8613d186fd866971866e4b0c50314aac54005f863384b36480a",
+      "phase2_input_hash": "dd8f2c619aafd01b7d9235964a08b5829a8e6ea269e88639df232bbfb334dc16",
+      "d3_content_hash": "0bfed13050b084d2e806a21b29127a050d224efd23d5cef0c3f54056c93e6c07",
+      "phase3b_result_hash": "b805e4223a3f3d96ae40055daccd242ce10ed1fe3fd28a9421ab0ee1d52f27d5",
+      "phase3c_result_hash": "3842e8104a70d3ff620b2201964efa965dffd0ed83dcd883d1ea6097b2d022b1",
+      "phase3d_result_hash": "d2fdb24f1428acb004aed3ee7375ec39fd6d58f1f7165941c5b92253ec70d1bf",
+      "phase3e_result_hash": "b5e057508b656736caafe1138b41623a1fba1e0942435be70293a5ba8ad4e284",
+      "independent_full_run_result_hash": "bf8e3f9a4fb93976560acb320b34012113ce38b8cf64849c2285e52508b47faa",
+      "invoiced_gross": "35040.0",
+      "revenue_cash_receipts": "26280.000",
+      "project_cash_flow": [
+        "-1330",
+        "162638.84955752212389380530973"
+      ],
+      "project_pretax_cash_flow": [
+        "-1330",
+        "162638.84955752212389380530973"
+      ],
+      "project_npv": "146523.49959774738535800482702727272727272727272727272727272727272727272727272727",
+      "independent_reference_npv": "146523.49959774738535800482702727272727272727272727272727272727272727272727272727",
+      "npv_difference": "0E-74",
+      "ledger_project_tax": [
+        "0",
+        "3888.15044247787610619469027"
+      ],
+      "ledger_income_tax": [
+        "0",
+        "0.000"
+      ],
+      "ledger_vat_cash_net_of_refunds": [
+        "0",
+        "3888.15044247787610619469027"
+      ],
+      "additional_terminal_cash": [
+        "0",
+        "0"
+      ],
+      "additional_project_tax": [
+        "0",
+        "0"
+      ],
+      "working_capital_release_already_in_ledger": "200",
+      "periods": [
+        "CONSTRUCTION",
+        "OPERATING_YEAR_1"
+      ],
+      "result_status": "PARTIAL",
+      "maturity": {
+        "calculation": "PARTIAL",
+        "four_files": "NOT_IMPLEMENTED",
+        "platform": "NOT_TESTED",
+        "real_project": "NOT_VERIFIED"
+      }
+    },
+    "0.6": {
+      "source_content_hash": "87d1697bac73ff171be63d8cb16dc4ac7670b779f38fcbb23b76c470236828e9",
+      "binding_hash": "98fa4e4228e3cc30a7d3ddd0645cfbea9d15cdeb87db61e299a4c968695a42bf",
+      "phase2_input_hash": "154ef83f8fa17a61bb89ebfad04e5469caf4a258b6a4552e6f0ff4c31244ccba",
+      "d3_content_hash": "4de2611ad83d81dbcd67bf6c7d72afe01e0208b1b55073b6b38757649b22c109",
+      "phase3b_result_hash": "b805e4223a3f3d96ae40055daccd242ce10ed1fe3fd28a9421ab0ee1d52f27d5",
+      "phase3c_result_hash": "713092d8936f33c3ee2a858edac869d089d4cb5866f42eba893029d53d716df4",
+      "phase3d_result_hash": "b614d3ef83ee7c7cef939e590d77a0f54ba6095f7318d210948851f65db8939a",
+      "phase3e_result_hash": "3bbece0d093a2cc9af664e79a1f86a1a9b145c21b84f88213bcd2c448e98b663",
+      "independent_full_run_result_hash": "d10db3f3c4af075ecbb58d22116c1047b554cb5d5b3ca5596245aff623663115",
+      "invoiced_gross": "52560.0",
+      "revenue_cash_receipts": "39420.000",
+      "project_cash_flow": [
+        "-1330",
+        "171580.77433628318584070796460"
+      ],
+      "project_pretax_cash_flow": [
+        "-1330",
+        "173763.27433628318584070796460"
+      ],
+      "project_npv": "154652.52212389380530973451327272727272727272727272727272727272727272727272727273",
+      "independent_reference_npv": "154652.52212389380530973451327272727272727272727272727272727272727272727272727273",
+      "npv_difference": "0E-74",
+      "ledger_project_tax": [
+        "0",
+        "8086.22566371681415929203540"
+      ],
+      "ledger_income_tax": [
+        "0",
+        "2182.5000"
+      ],
+      "ledger_vat_cash_net_of_refunds": [
+        "0",
+        "5903.72566371681415929203540"
+      ],
+      "additional_terminal_cash": [
+        "0",
+        "0"
+      ],
+      "additional_project_tax": [
+        "0",
+        "0"
+      ],
+      "working_capital_release_already_in_ledger": "200",
+      "periods": [
+        "CONSTRUCTION",
+        "OPERATING_YEAR_1"
+      ],
+      "result_status": "PARTIAL",
+      "maturity": {
+        "calculation": "PARTIAL",
+        "four_files": "NOT_IMPLEMENTED",
+        "platform": "NOT_TESTED",
+        "real_project": "NOT_VERIFIED"
+      }
+    },
+    "0.8": {
+      "source_content_hash": "87d1697bac73ff171be63d8cb16dc4ac7670b779f38fcbb23b76c470236828e9",
+      "binding_hash": "134e3ad51925617db7e9a5d83ad761c388833a30d378ca53d829c16a00b8aa9e",
+      "phase2_input_hash": "b349e0c59112015730e6c2286544b3c11c8460d163a25919c1b9f94d737f8875",
+      "d3_content_hash": "d7bd2969b6c1c7585a4c0a1b584487bcf02c793529816ca61e31eaaf1824af23",
+      "phase3b_result_hash": "b805e4223a3f3d96ae40055daccd242ce10ed1fe3fd28a9421ab0ee1d52f27d5",
+      "phase3c_result_hash": "4ba21d6656a2605b9288b65e6faeae9ee19c4414a3da57a3a0d88527a0efecff",
+      "phase3d_result_hash": "d673fe1bd642bb2d7bfcbbacef350bcf1854d545d5a0cb25295dafa3dfed658a",
+      "phase3e_result_hash": "58c024b699e54a37c8124d78b253733ce5df4072a79f7ee33dc6de01d6c74842",
+      "independent_full_run_result_hash": "16f0edc710a878b851d1808b7b23f089019cfc5ab7a8320b8740a10edbb975cd",
+      "invoiced_gross": "70080.0",
+      "revenue_cash_receipts": "52560.000",
+      "project_cash_flow": [
+        "-1330",
+        "180515.19911504424778761061947"
+      ],
+      "project_pretax_cash_flow": [
+        "-1330",
+        "184887.69911504424778761061947"
+      ],
+      "project_npv": "162774.72646822204344328238133636363636363636363636363636363636363636363636363636",
+      "independent_reference_npv": "162774.72646822204344328238133636363636363636363636363636363636363636363636363636",
+      "npv_difference": "0E-74",
+      "ledger_project_tax": [
+        "0",
+        "12291.80088495575221238938053"
+      ],
+      "ledger_income_tax": [
+        "0",
+        "4372.5000"
+      ],
+      "ledger_vat_cash_net_of_refunds": [
+        "0",
+        "7919.30088495575221238938053"
+      ],
+      "additional_terminal_cash": [
+        "0",
+        "0"
+      ],
+      "additional_project_tax": [
+        "0",
+        "0"
+      ],
+      "working_capital_release_already_in_ledger": "200",
+      "periods": [
+        "CONSTRUCTION",
+        "OPERATING_YEAR_1"
+      ],
+      "result_status": "PARTIAL",
+      "maturity": {
+        "calculation": "PARTIAL",
+        "four_files": "NOT_IMPLEMENTED",
+        "platform": "NOT_TESTED",
+        "real_project": "NOT_VERIFIED"
+      }
+    }
+  },
+  "events_mode": "BLOCKED: TERMINAL_TRANSACTION_LEDGER_PROOF_MISSING; no sourced numeric event NPV",
+  "sealed_cases": {
+    "industrial_rooftop": {
+      "paths": {
+        "input": "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/input.json",
+        "methods": "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/methods.json",
+        "result": "reports/solar-pv/phase3d-repaired-cases/industrial_rooftop/result.json"
+      },
+      "file_sha256": {
+        "input": "7b08b2b12e9b8a57b4848a73b9c3b68d8881f9305cd796e773a16b3699ba743f",
+        "methods": "3b33541d440b847187cc1886e27789a167a91cdab5e410b89aed22e3f303d8f5",
+        "result": "53d3c0cded618566bbce1d8e51fa4e0be91d84609f7bf907010a93cf3acb182e"
+      },
+      "unchanged_from_prior_audit": true,
+      "existing_terminal_working_capital_release_cny": "50000",
+      "project_discount_rate_source_status": "UNVERIFIED"
+    },
+    "utility_scale_ground": {
+      "paths": {
+        "input": "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/input.json",
+        "methods": "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/methods.json",
+        "result": "reports/solar-pv/phase3d-repaired-cases/utility_scale_ground/result.json"
+      },
+      "file_sha256": {
+        "input": "dce65dc6808321a1267d9deb03737f2eeeddd7ac942cd96f2af5783d879a583f",
+        "methods": "a3d04cd0f14d7c6678ef739dc494c16357a8e766a792a7d0c5f7d6b85c90c5f8",
+        "result": "99e7b2ae90a28dc07e6c6effbc9bdca9e0aa1c8226efcd10b357e988b4dfd9bb"
+      },
+      "unchanged_from_prior_audit": true,
+      "existing_terminal_working_capital_release_cny": "120000",
+      "project_discount_rate_source_status": "UNVERIFIED"
+    }
+  },
+  "protected_files_start_sha256": {
+    "packages/skills/wangbin-receivable-analyzer/SKILL.md": "8a5ee4eb54a4f6a08d3ab7cccf792c12d5f01ab3fb4ab0de8dc926149087a945",
+    "packages/skills/wangbin-receivable-analyzer/manifest.json": "0a9459ab33f0f3bbc1c538535b994218e6ad92792901a39c3e4e94eaf777762b",
+    "products/catalog.json": "d74f3fa9f00184ee64f8452862958c3ef11f7848378ed42657e4b5fbc91def27",
+    "reports/workbuddy-upload-list.md": "6d0df16f21a4cf7a3a87eef1b90fb2f7d26fd1457f124066707281f9ff0ec586",
+    "reports/validate.json": "42765dae553254369311f3d4e7d2d3ab6f3cf0f8858a1c0e587debfea809d1ba",
+    "reports/validate.md": "2c3f7cd41671f2af1cd9f5688ae4e3779d92390260cdb43299457bcedb2060e3"
+  },
+  "protected_files_end_sha256": {
+    "packages/skills/wangbin-receivable-analyzer/SKILL.md": "8a5ee4eb54a4f6a08d3ab7cccf792c12d5f01ab3fb4ab0de8dc926149087a945",
+    "packages/skills/wangbin-receivable-analyzer/manifest.json": "0a9459ab33f0f3bbc1c538535b994218e6ad92792901a39c3e4e94eaf777762b",
+    "products/catalog.json": "d74f3fa9f00184ee64f8452862958c3ef11f7848378ed42657e4b5fbc91def27",
+    "reports/workbuddy-upload-list.md": "6d0df16f21a4cf7a3a87eef1b90fb2f7d26fd1457f124066707281f9ff0ec586",
+    "reports/validate.json": "42765dae553254369311f3d4e7d2d3ab6f3cf0f8858a1c0e587debfea809d1ba",
+    "reports/validate.md": "2c3f7cd41671f2af1cd9f5688ae4e3779d92390260cdb43299457bcedb2060e3"
+  },
+  "protected_baseline": {
+    "total": 288,
+    "matching": 286,
+    "preexisting_difference_paths": [
+      "reports/validate.json",
+      "reports/validate.md"
+    ],
+    "missing_paths": []
+  },
+  "frozen_document_sha256": {
+    "docs/solar-pv/03-input-fields.json": "393140cc57b5934041c3fece2c9c185c03c7876afaa3403ce317d795d6112a1b",
+    "docs/solar-pv/05-formulas.json": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331",
+    "docs/solar-pv/05-field-bindings.json": "4ef6171f063f402963d61edc9647c7565c9ec9338099f62424a77e3507521533",
+    "docs/solar-pv/05-formula-registry.md": "b52600de2084450376e36e11968861e972363d4c71f05f7ed0d3b57bccbffd33",
+    "docs/solar-pv/19-phase3-approved-implementation-contract.md": "68f2551dce001360972fe94dd562539e967dc1891ae17bc9fb98898ccc4495b4"
+  },
+  "same_candidate_json_roundtrip": {
+    "price": "0.6",
+    "assertion_test_id": "tests.solar-pv.test_phase3e_terminal_npv::test_no_disposition_has_independent_decimal_cashflow_and_npv",
+    "validated_in": "reports/solar-pv/phase3e-p2-3b-r1-2-3-evidence/npv.xml",
+    "same_result_hash_assertion_passed": true,
+    "result_hash": "3bbece0d093a2cc9af664e79a1f86a1a9b145c21b84f88213bcd2c448e98b663"
+  }
+}
