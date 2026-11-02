@@ -1,5 +1,6 @@
 """R1-2A binds sourced terminal facts to actual candidate 3B→3C→3D results."""
 from copy import deepcopy
+from dataclasses import replace
 from decimal import Decimal as D
 from hashlib import sha256
 
@@ -22,6 +23,10 @@ def test_terminal_binding_gate_exists():
     from wangbin_solar_pv.calculation import terminal_binding
     assert callable(terminal_binding.bind_terminal_candidate)
 
+
+def test_terminal_tax_and_cash_reconciliation_gate_exists():
+    from wangbin_solar_pv.calculation import terminal_binding
+    assert callable(terminal_binding.reconcile_terminal_cash)
 
 
 def _candidate(info, replay, *, candidate):
@@ -136,3 +141,16 @@ def test_resealed_mismatched_upstream_and_incomplete_asset_cover_rejected(bound_
     bad["source_content_hash"] = digest(bad["source"])
     with pytest.raises(ContractError):
         _bind(info, bad)
+
+
+def test_missing_year_end_method_blocks_cash_and_unproven_events_remain_blocked(bound_case):
+    from wangbin_solar_pv.calculation.terminal_binding import reconcile_terminal_cash
+    info, carrier = bound_case
+    bound = _bind(info, carrier)
+    with pytest.raises(ContractError, match="BLOCKED_METHOD_REVIEW: time.cashflow_timing"):
+        reconcile_terminal_cash(bound, info[5], info[0], info[1], {"SYNTHETIC-asset-clearance": DOC})
+    # Rehashing an unsupported event claim cannot supply 3D booking evidence.
+    forged_source = {**bound.source, "mode": "EVENTS"}
+    forged = replace(bound, source=forged_source, source_content_hash=digest(forged_source))
+    with pytest.raises(ContractError, match="TERMINAL_TRANSACTION_LEDGER_PROOF_MISSING"):
+        reconcile_terminal_cash(forged, info[5], info[0], info[1], {"SYNTHETIC-asset-clearance": DOC})

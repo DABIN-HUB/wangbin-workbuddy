@@ -10,6 +10,7 @@ from copy import deepcopy
 from dataclasses import dataclass
 from datetime import date
 from decimal import Decimal
+from hashlib import sha256
 
 from ..errors import ContractError
 from ..serialization import digest, dumps
@@ -123,3 +124,76 @@ def bind_terminal_candidate(carrier, source_documents, exported, methods, bundle
     return BoundTerminalCandidate(checked.source_content_hash, digest(checked.binding),
                                   financial["result_hash"], tuple(sorted(assets)),
                                   checked.source, checked.binding)
+
+
+def reconcile_terminal_cash(bound, financial, exported, methods, source_documents):
+    """Fail closed unless a sourced *absence* covers the actual final assets.
+
+    A self-declared unbooked sale cannot be proved absent from the current 3D
+    aggregate cash/tax ledger: it has no disposal transaction IDs. Until a
+    reviewed transaction-level bridge is available, never add EVENTS to NPV.
+    """
+    if (not isinstance(bound, BoundTerminalCandidate) or
+            bound.binding_hash != digest(bound.binding) or
+            bound.source_content_hash != digest(bound.source) or
+            bound.financial_result_hash != financial.get("result_hash") or
+            bound.binding["phase3d_result_hash"] != financial.get("result_hash")):
+        raise ContractError("TERMINAL_RECONCILIATION_IDENTITY")
+    if bound.source["mode"] != "NO_DISPOSITION":
+        raise ContractError("TERMINAL_TRANSACTION_LEDGER_PROOF_MISSING")
+    method = MethodConfig.from_dict(methods.to_dict() if isinstance(methods, MethodConfig) else methods)
+    if method.require("time.cashflow_timing") != "YEAR_END" or method.require("time.horizon_basis") != "OPERATING_YEARS":
+        raise ContractError("TERMINAL_YEAR_END_METHOD_REQUIRED")
+    normalized = exported["normalized_inputs"]
+    commissioning = date.fromisoformat(normalized["schedule.commissioning_date"])
+    evaluation = date.fromisoformat(normalized["project.evaluation_date"])
+    years = normalized["project.evaluation_years"]
+    if (commissioning != date(commissioning.year, 1, 1) or
+            evaluation != date(commissioning.year - 1, 12, 31) or
+            date.fromisoformat(bound.source["terminal_date"]) != date(commissioning.year + years - 1, 12, 31)):
+        raise ContractError("TERMINAL_PERIOD_END_MISMATCH")
+    provenance = bound.source["no_disposition"]["source"]
+    document = source_documents.get(provenance["source_id"]) if isinstance(source_documents, dict) else None
+    if not isinstance(document, bytes) or sha256(document).hexdigest() != provenance["source_content_sha256"]:
+        raise ContractError("TERMINAL_SOURCE_BYTES_MISMATCH")
+    claims = (f"project_id={bound.source['project_id']}".encode("utf-8"),
+              f"terminal_date={bound.source['terminal_date']}".encode("ascii"))
+    if any(claim not in document for claim in claims):
+        raise ContractError("TERMINAL_SOURCE_SCOPE_UNPROVEN")
+    annual = financial["evidence"]["financial-ledger"]["annual"]
+    periods = ["CONSTRUCTION"] + [f"OPERATING_YEAR_{y}" for y in range(1, years + 1)]
+    if len(annual) != years + 1 or [row.get("period") for row in annual] != periods:
+        raise ContractError("TERMINAL_LEDGER_PERIOD_MISMATCH")
+    ledger_assets = _asset_scope(financial["evidence"]["financial-ledger"], normalized)
+    if ledger_assets != set(bound.asset_ids) or ledger_assets != set(bound.source["covered_asset_ids"]):
+        raise ContractError("TERMINAL_ASSET_SCOPE_MISMATCH")
+    increase = sum((row["working_capital_increase"] for row in annual), Decimal(0))
+    release = sum((row.get("working_capital_release", Decimal(0)) for row in annual), Decimal(0))
+    declared = bound.source["no_disposition"]["working_capital_treatment"]
+    if ((declared == "LEDGER_ALREADY_RECOVERED" and (increase == 0 or release != increase)) or
+            (declared == "NO_WORKING_CAPITAL_DECLARED" and (increase != 0 or release != 0))):
+        raise ContractError("TERMINAL_WORKING_CAPITAL_RECONCILIATION")
+    required = ("cash_tax_total_project", "income_tax_cash_paid_project", "other_cash_taxes_project",
+                "revenue_cash_receipts", "receivables_terminal_collection", "working_capital_release",
+                "tax_cash_bridge_project", "vat_output", "vat_input_eligible")
+    if any(any(key not in row for key in required) for row in annual[1:]):
+        raise ContractError("TERMINAL_LEDGER_TAX_OR_CASH_INCOMPLETE")
+    zero = [Decimal(0) for _ in annual]
+    ledger_tax = [Decimal(0)] + [row["cash_tax_total_project"] for row in annual[1:]]
+    ledger_income = [Decimal(0)] + [row["income_tax_cash_paid_project"] for row in annual[1:]]
+    ledger_other = [Decimal(0)] + [row["other_cash_taxes_project"] for row in annual[1:]]
+    ledger_vat_net = [total - income - other for total, income, other in
+                      zip(ledger_tax, ledger_income, ledger_other)]
+    return {
+        "periods": periods, "terminal_cash": zero, "additional_project_tax": zero[:],
+        "additional_income_tax": zero[:], "ledger_project_tax": ledger_tax,
+        "ledger_income_tax": ledger_income, "total_project_tax": ledger_tax[:],
+        "total_income_tax": ledger_income[:], "excluded_duplicate_tax": zero[:],
+        "ledger_other_tax": ledger_other, "ledger_vat_cash_net_of_refunds": ledger_vat_net,
+        "ledger_tax_evidence_paths": [f"financial-ledger.annual[{i}]" for i in range(len(annual))],
+        "working_capital_release_already_in_ledger": release,
+        "receivables_terminal_collection_already_in_receipts": [
+            Decimal(0)] + [row["receivables_terminal_collection"] for row in annual[1:]],
+        "basis": bound.binding["basis"], "source_content_hash": bound.source_content_hash,
+        "binding_hash": bound.binding_hash,
+    }
