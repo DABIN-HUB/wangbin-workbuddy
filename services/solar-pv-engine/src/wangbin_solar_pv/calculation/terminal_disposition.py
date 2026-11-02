@@ -70,7 +70,11 @@ _SOURCE_FACTS = _object({
 _BINDING = _object({
     "project_id": _ID, "pv_type": _PV_TYPE,
     "evaluation_date": _DATE, "currency": _CURRENCY, "scenario_id": _ID,
-    "phase2_input_hash": _HASH, "phase2_source_snapshot_id": _HASH,
+    # Phase 2 canonical source snapshot IDs are `sources-` + SHA-256; they
+    # are identifiers, not bare digests. Retain bare-hash compatibility for
+    # existing R1-1 carriers while accepting the actual validated Phase 2 ID.
+    "phase2_input_hash": _HASH,
+    "phase2_source_snapshot_id": {"anyOf": [_HASH, {"type": "string", "pattern": "^sources-[0-9a-f]{64}$"}]},
     "method_config_hash": _HASH, "d3_content_hash": {"anyOf": [_HASH, {"type": "null"}]},
     "phase3b_result_hash": _HASH, "phase3c_result_hash": _HASH,
     "phase3d_result_hash": _HASH, "basis": {"enum": ["项目税前", "项目税后"]},
