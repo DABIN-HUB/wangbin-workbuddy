@@ -1,0 +1,124 @@
+{
+  "schema": "solar-pv-phase3e-p2-4-partial-evidence/1.0.0",
+  "verdict": "PARTIAL_P2_4A_ONLY",
+  "baseline_head": "89b69df1b5b67063b85f3294fbce274aa4bddffb",
+  "local_commits": {
+    "P2-4A": "50fb9e71f155c01e972a6980bb6cd67a1d29f528",
+    "P2-4B": null,
+    "P2-4C": null,
+    "P2-4D": null,
+    "partial_evidence_commit": "self-reference omitted; read HEAD after documentation commit"
+  },
+  "root_set": {
+    "formula_id": "F-BREAK-EVEN-PRICE",
+    "formal_unit": "集合（元素元/kWh）",
+    "status": "BLOCKED_MISSING_INPUT",
+    "reason": "BLOCKED_MISSING_FULL_CHAIN_PRICE_RECALCULATION",
+    "root_completeness_certified": false,
+    "actual_root_set": null,
+    "root_bracket_width_yuan_per_kwh": null,
+    "root_npv_residual_yuan": null,
+    "independent_root_reference": null,
+    "no_root_conclusion": false,
+    "method_declaration_is_not_proof": "CERTIFIED_MONOTONE_RECALCULATION is configured but no whole-domain continuity, strict monotonicity, or tax/settlement transition certificate exists. Neither three positive samples nor a hypothetical sign-changing bracket proves the full root set.",
+    "old_sample_interpolation_is_not_used": true
+  },
+  "sample_control": {
+    "price_range_yuan_per_kwh": ["0", "2"],
+    "price_tolerance_yuan_per_kwh": "0.000001",
+    "maximum_iterations": 256,
+    "method": "CERTIFIED_MONOTONE_RECALCULATION",
+    "selector": "tariff.periods.sale_price:flat",
+    "settlement_basis": {"currency": "CNY", "price_year": 2025, "tax_basis": "inclusive", "price_basis": "nominal"},
+    "project_basis": "项目税后",
+    "discount_rate": "0.1",
+    "search_attempted": false,
+    "search_iterations": 0,
+    "monetary_root_residual_tolerance_yuan": null
+  },
+  "synthetic_positive_npv_yuan": {
+    "0.4": "146523.49959774738535800482702727272727272727272727272727272727272727272727272727",
+    "0.6": "154652.52212389380530973451327272727272727272727272727272727272727272727272727273",
+    "0.8": "162774.72646822204344328238133636363636363636363636363636363636363636363636363636"
+  },
+  "candidate_execution": {
+    "receipt": "reports/solar-pv/phase3e-p2-4-break-even-evidence/synthetic-price-0.6-execution.json",
+    "receipt_sha256": "fb025f182abd11824f67ac811343a7d98118a8bdbb98b319a832d8d74a2c4b1f",
+    "scope": "one L3 SYNTHETIC original-price 0.4 and candidate-price 0.6 replay, not a root search",
+    "elapsed_seconds": 647.6643597001676,
+    "candidate_replay_calls": 1,
+    "phase3c_calculations": 2,
+    "phase3d_calculations": 2,
+    "phase3e_calculations": 2,
+    "original_phase2_input_hash": "c9c5161f1e3863b74e781c4a2252ee1ea2bb5eb0e353c801d9c254acd5c9f4cf",
+    "candidate_phase2_input_hash": "a5d406e8451a2d4e2197ce4a8c665411bf043a813d6f727230f2dd299fdb9c1c",
+    "candidate_d3_content_hash": "607ead9351148f2689e846b3cc275bc2cf4b49f328476e538f065c8ffb2d9ae4",
+    "generation_3b_result_hash": "4723c7be3ced2b5c6eeb3c19937ee8bdb7771b12f7e4f7f6dc4f3f0d68b9b144",
+    "candidate_3c_result_hash": "e496ef8f85d6e634279fd26a6ddb043aa22dd74ffc6ce2f9df389e45b9d6add7",
+    "candidate_3d_result_hash": "c535928c378e51ea7fe321041ad95064bce2873c7922dcda899f032f5879c1dd",
+    "original_3e_result_hash": "549cf27a503bd41256be06f9e12cd124cf177e8a701d95007c62a33b10a7d4a3",
+    "candidate_3e_result_hash": "0ef1fdb25e34a9e74ce0b7c6c9b486ee1453dd9ca165e061d00107741be6f5f3",
+    "terminal_source_content_hash": "87d1697bac73ff171be63d8cb16dc4ac7670b779f38fcbb23b76c470236828e9",
+    "independent_decimal_npv_reference_error_bound_yuan": "1e-55",
+    "reference_source": "tests/solar-pv/test_phase3e_break_even_project_npv.py:31-40",
+    "note": "Source-bearing generated SYNTHETIC fixtures have distinct hashes across test invocations; the 0.8 positive sample is independently recalculated in L2/L3 and is not a price-domain certificate."
+  },
+  "verification": {
+    "environment": "TMPDIR=C:/Users/wangbin/AppData/Local/hermes/cache/scratch; pytest --basetemp is a distinct child directory for each run; PYTHONPATH=F:/ideaWorkSpace/wangbin-workbuddy/services/solar-pv-engine/src",
+    "runs": {
+      "l1": {
+        "command": "python -m pytest -q tests/solar-pv/test_phase3e_break_even_project_npv.py --basetemp=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/pytest-p2-4-a-traced --junitxml=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-4-a-traced-junit.xml",
+        "exit_code": 0, "tests": 2, "passed": 2, "skipped": 0, "failures": 0, "errors": 0,
+        "junit": "reports/solar-pv/phase3e-p2-4-break-even-evidence/l1.xml",
+        "sha256": "8b68c5172f6b40e93bf2b1c79fe2e289a4a7e992da27841446e3c1871e9ab875"
+      },
+      "l2": {
+        "command": "python -m pytest -q tests/solar-pv/test_phase3e_price_selector.py tests/solar-pv/test_phase3e_candidate_replay.py tests/solar-pv/test_phase3e_financial_candidate_replay.py tests/solar-pv/test_phase3e_terminal_binding.py tests/solar-pv/test_phase3e_terminal_npv.py --basetemp=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/pytest-p2-4-l2 --junitxml=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-4-l2-junit.xml",
+        "exit_code": 0, "tests": 54, "passed": 53, "skipped": 1, "failures": 0, "errors": 0,
+        "junit": "reports/solar-pv/phase3e-p2-4-break-even-evidence/l2.xml",
+        "sha256": "5a274a256672a5f22cc2154ddaa9c7b0218acf0fe3735cd22b26f126ba537fb1"
+      },
+      "solar_l3": {
+        "command": "python -m pytest tests/solar-pv -q --basetemp=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/pytest-p2-4-solar-l3 --junitxml=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-4-solar-l3-junit.xml",
+        "exit_code": 0, "tests": 4180, "passed": 4173, "skipped": 7, "failures": 0, "errors": 0,
+        "junit": "reports/solar-pv/phase3e-p2-4-break-even-evidence/solar-l3.xml",
+        "sha256": "2769a838d3ac447ef2c364283e79fdd565ea02cb2c871b440151d919876240cf"
+      },
+      "workbuddy_l3": {
+        "command": "python -m pytest tests --ignore=tests/solar-pv -q --basetemp=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/pytest-p2-4-legacy-l3 --junitxml=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-4-legacy-l3-junit.xml",
+        "exit_code": 0, "tests": 114, "passed": 109, "skipped": 5, "failures": 0, "errors": 0,
+        "junit": "reports/solar-pv/phase3e-p2-4-break-even-evidence/workbuddy-l3.xml",
+        "sha256": "ac0b14f87441791d2d03cc130b99701c1d9134f22e1972c9908283f47c553baf"
+      },
+      "superseded_l1_unit_check_failure": {
+        "command": "python -m pytest -q tests/solar-pv/test_phase3e_break_even_project_npv.py --basetemp=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/pytest-p2-4-a-final --junitxml=C:/Users/wangbin/AppData/Local/hermes/cache/scratch/p2-4-a-final-junit.xml",
+        "exit_code": 1, "tests": 2, "passed": 1, "skipped": 0, "failures": 1, "errors": 0,
+        "cause": "Incorrectly compared the frozen F-NPV unit 元 with currency code CNY; corrected before the accepted L1/L2/L3 candidate.",
+        "junit": "reports/solar-pv/phase3e-p2-4-break-even-evidence/l1-superseded-unit-check-failure.xml",
+        "sha256": "dcfd895403b228bd7a56da1f764579dedc5293b93d63106334903504470bf932"
+      }
+    },
+    "full_l3_unique_test_ids": 4294,
+    "full_l3_test_ids_file": "reports/solar-pv/phase3e-p2-4-break-even-evidence/all-test-ids.txt",
+    "full_l3_test_ids_sha256": "959d75c97676fe05252d6ff3b867977579d5d88e35346f36f9e433ab67c1faba"
+  },
+  "source_sha256": {
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/break_even_project_npv.py": "581fd338dfedddffb43226c3d2d90fb0055c1e43d17bbd8353573e7b26378b49",
+    "tests/solar-pv/test_phase3e_break_even_project_npv.py": "ffdb41eafdd17b0465648e6149dc5fc704b91d3a4aade9fc523bffb49131e7ee",
+    "docs/solar-pv/03-input-fields.json": "393140cc57b5934041c3fece2c9c185c03c7876afaa3403ce317d795d6112a1b",
+    "docs/solar-pv/05-formulas.json": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331",
+    "docs/solar-pv/05-field-bindings.json": "4ef6171f063f402963d61edc9647c7565c9ec9338099f62424a77e3507521533",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/method_config.py": "3beccfc6ab03a9d6c21d020819eb2d30422e83daa4245e7167ab7428e17c6001",
+    "services/solar-pv-engine/src/wangbin_solar_pv/calculation/result_contract.py": "0a4cb4a5df645066b9fcbd44799f8934e4545bf3d0199633b1d3357fc65eba0c"
+  },
+  "protected_288": {"match": 286, "preexisting_changes": ["reports/validate.json", "reports/validate.md"], "missing": 0},
+  "user_owned_preexisting_sha256": {
+    "packages/skills/wangbin-receivable-analyzer/SKILL.md": "8a5ee4eb54a4f6a08d3ab7cccf792c12d5f01ab3fb4ab0de8dc926149087a945",
+    "packages/skills/wangbin-receivable-analyzer/manifest.json": "0a9459ab33f0f3bbc1c538535b994218e6ad92792901a39c3e4e94eaf777762b",
+    "products/catalog.json": "d74f3fa9f00184ee64f8452862958c3ef11f7848378ed42657e4b5fbc91def27",
+    "reports/workbuddy-upload-list.md": "6d0df16f21a4cf7a3a87eef1b90fb2f7d26fd1457f124066707281f9ff0ec586",
+    "reports/validate.json": "42765dae553254369311f3d4e7d2d3ab6f3cf0f8858a1c0e587debfea809d1ba",
+    "reports/validate.md": "2c3f7cd41671f2af1cd9f5688ae4e3779d92390260cdb43299457bcedb2060e3"
+  },
+  "not_executed": ["P2-4B root search and complete-root certification", "P2-4C independent real-root and adverse numerical cases", "formal break-even metric promotion", "P2-5", "Phase 3F", "Phase 4", "push", "deployment", "publication"]
+}

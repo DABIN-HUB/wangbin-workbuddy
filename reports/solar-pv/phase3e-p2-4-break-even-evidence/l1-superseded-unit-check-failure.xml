@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="2" time="1850.045" timestamp="2026-11-02T18:59:47.737320+08:00" hostname="DESKTOP-IKHU04D"><testcase classname="tests.solar-pv.test_phase3e_break_even_project_npv" name="test_one_candidate_recalculates_original_and_sourced_project_npv" time="1773.656"><failure message="wangbin_solar_pv.errors.ContractError: BREAK_EVEN_PROJECT_NPV_UNAVAILABLE">npv_case = ((WindowsPath('C:/Users/wangbin/AppData/Local/hermes/cache/scratch/synthetic-p2-3a-finance-53ed416dd7884ae9b8b05e5cd5b...e_snapshot_id': '648d85cb0abbb2c5c980deceebb6ce5cf25107bc583d5368e285bf090dd6d8b7', 'status': 'CALCULATED_SYNTHETIC'}))
+
+    def test_one_candidate_recalculates_original_and_sourced_project_npv(npv_case):
+        base, replay, _ = npv_case
+        root, catalog, budget, exported, methods, control, generation_hash = base
+        generation = loads((root / "generation" / "result.json").read_bytes())
+        with read_bundle(root / "original", catalog=catalog, budget=budget) as original_bundle:
+            carrier = _carrier(
+                exported, methods, original_bundle, generation,
+                replay.settlement.original_revenue, replay.original_financial,
+                terminal_date="2025-12-31", document=NO_DOC)
+&gt;           result = calculate_price_project_npv(
+                control, exported, methods, original_bundle, root / "generation", D("0.6"),
+                carrier, {"SYNTHETIC-asset-clearance": NO_DOC}, catalog=catalog, budget=budget,
+                workspace=Workspace(root), run_name="npv-callback-six")
+
+tests\solar-pv\test_phase3e_break_even_project_npv.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+services\solar-pv-engine\src\wangbin_solar_pv\calculation\break_even_project_npv.py:77: in calculate_price_project_npv
+    original_npv = _npv(original, catalog)
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+result = {'artifact_manifest': [{'directory': 'C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\synthetic-p2-3a-fina... ...}, 'DC_NAMEPLATE': {'unit': 'kWp'}, ...}, 'created_at': '2026-11-02T11:27:29.138096+00:00', 'currency': 'CNY', ...}
+catalog = &lt;wangbin_solar_pv.catalog.Catalog object at 0x0000021735D09550&gt;
+
+    def _npv(result, catalog):
+        validate_result(result, catalog)
+        metrics = [metric for metric in result["results"]["metrics"]
+                   if metric["metric_id"] == "financial.phase3e.project_npv"]
+        if (len(metrics) != 1 or metrics[0]["formula_id"] != "F-NPV"
+                or metrics[0]["status"] != "CALCULATED"
+                or not isinstance(metrics[0]["value"], Decimal)
+                or metrics[0]["unit"] != result["currency"]):
+&gt;           raise ContractError("BREAK_EVEN_PROJECT_NPV_UNAVAILABLE")
+E           wangbin_solar_pv.errors.ContractError: BREAK_EVEN_PROJECT_NPV_UNAVAILABLE
+
+services\solar-pv-engine\src\wangbin_solar_pv\calculation\break_even_project_npv.py:49: ContractError</failure></testcase><testcase classname="tests.solar-pv.test_phase3e_break_even_project_npv" name="test_altered_source_bytes_rejected_before_replay" time="75.798" /></testsuite></testsuites>
