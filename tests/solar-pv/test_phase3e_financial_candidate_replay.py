@@ -21,6 +21,7 @@ from wangbin_solar_pv.calculation.result_contract import seal_result, validate_r
 from wangbin_solar_pv.errors import ContractError
 from wangbin_solar_pv.intake import IntakeSession
 from wangbin_solar_pv.local_files import Workspace
+from wangbin_solar_pv.provenance import make_record
 from wangbin_solar_pv.serialization import digest, dumps, loads
 from wangbin_solar_pv.timeseries_bundle import BundleBudget, read_bundle, write_bundle
 
@@ -93,6 +94,8 @@ def _finance(session, methods):
         "break_even.price_tolerance": D("0.000001"), "break_even.maximum_iterations": 256,
         "break_even.method": "CERTIFIED_MONOTONE_RECALCULATION",
     }.items()})
+    if session.project.values.get("finance.project_discount_rate") is not None:
+        config["parameters"]["time.cashflow_timing"] = parameter("time.cashflow_timing", "YEAR_END")
     return MethodConfig.from_dict(config)
 
 
@@ -113,15 +116,35 @@ def _control(exported, methods, bundle_hash, generation_hash):
                        "license_status": "AUTHORIZED"}}
 
 
-@pytest.fixture(scope="module")
-def financial_case():
+def _build_financial_case(*, evaluation_date=None, project_rate=None):
     root = Path(os.environ["TMPDIR"]) / ("synthetic-p2-3a-finance-" + uuid4().hex)
     root.mkdir(mode=0o700)
     catalog = Catalog()
     budget = BundleBudget(max_seconds=1800)
     session, generation_methods = case(catalog, "industrial_rooftop", years=1)
     session, settlement_methods = extend(session, generation_methods)
+    if evaluation_date is not None:
+        session.project.values["project.evaluation_date"] = atom(catalog, "project.evaluation_date", evaluation_date)
     session.project.values["project.cashflow_tax_basis"] = atom(catalog, "project.cashflow_tax_basis", "post_tax")
+    if project_rate is not None:
+        for fid, value in (
+            ("project.cashflow_tax_basis", "post_tax"),
+            ("project.ownership_mode", "owner_invested"),
+            ("project.price_basis", "nominal"),
+            ("finance.project_discount_rate", project_rate),
+        ):
+            session.project.values[fid] = make_record(
+                catalog, fid, value, source_kind="ASSUMPTION",
+                source_id="SYNTHETIC-project-npv-basis",
+                source_url_or_attachment="SYNTHETIC:project-post-tax-nominal-CNY-year-end",
+                source_section_or_cell="PROJECT_POST_TAX_NOMINAL_CNY_YEAR_END",
+                confidence_basis="SYNTHETIC post-tax nominal CNY project year-end evaluation assumption",
+                license_status="AUTHORIZED",
+                assumption={"reason": "Explicit independent synthetic project NPV scope",
+                            "method": "Scenario assumption, not a verified enterprise discount rate",
+                            "maturity_ceiling": "L1", "noncritical": False,
+                            "decision_invariant": False},
+            )
     methods = _finance(session, settlement_methods)
     generation_input = validate_export(session.export(), catalog).export
     write_bundle(root / "resource", base_export=generation_input,
@@ -142,6 +165,11 @@ def financial_case():
     with read_bundle(root / "original", catalog=catalog, budget=budget) as bundle:
         control = _control(exported, methods, bundle.content_hash, generation["result_hash"])
     return root, catalog, budget, exported, methods, control, generation["result_hash"]
+
+
+@pytest.fixture(scope="module")
+def financial_case():
+    return _build_financial_case()
 
 
 def _execute(info, price, name):

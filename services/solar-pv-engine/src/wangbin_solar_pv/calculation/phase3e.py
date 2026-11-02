@@ -11,10 +11,14 @@ from copy import deepcopy
 from decimal import Decimal
 
 from ..errors import ContractError
-from ..serialization import dumps
+from ..serialization import digest, dumps
 from ..timeseries_private import local_target
+from .break_even_execution import _target, validate_price_selector
+from .break_even_replay import _derive, _verify_bundles
 from .financial_metrics import evaluate
+from .input_contract import validate_export
 from .result_contract import seal_result, validate_result
+from .terminal_binding import bind_terminal_candidate, reconcile_terminal_cash
 
 _BOUNDARY = "PHASE3E_FINANCIAL_EVALUATION"
 
@@ -210,6 +214,147 @@ def calculate_phase3e(financial_result, methods, catalog):
     result["status"] = "PARTIAL"
     result["results"]["domains"]["financial_metrics"] = [m["metric_id"] for m in result["results"]["metrics"] if m["metric_id"].startswith("financial.phase3e.")]
     return seal_result(result)
+
+
+def calculate_sourced_project_npv(carrier, source_documents, exported, methods, bundle,
+                                 generation, settlement, financial, catalog, *, basis_control,
+                                 original_export, original_bundle):
+    """Calculate only sourced, year-end unlevered project metrics; other gates stay blocked."""
+    bound = bind_terminal_candidate(carrier, source_documents, exported, methods, bundle,
+                                    generation, settlement, financial, catalog)
+    bridge = reconcile_terminal_cash(bound, financial, exported, methods, source_documents)
+    values = exported["project"]["values"]
+    chosen = bound.binding["basis"]
+    expected_basis = {"项目税前": "pre_tax", "项目税后": "post_tax"}[chosen]
+    tax_basis = values.get("project.cashflow_tax_basis")
+    ownership = values.get("project.ownership_mode")
+    price_basis = values.get("project.price_basis")
+    rate = values.get("finance.project_discount_rate")
+    if not all(isinstance(record, dict) and record.get("status") in {"ASSUMED", "VERIFIED"}
+               and record.get("license_status") == "AUTHORIZED" and record.get("source_id")
+               for record in (tax_basis, ownership, price_basis, rate)):
+        raise ContractError("PROJECT_NPV_BASIS_OR_RATE_UNVERIFIED")
+    if (tax_basis["value"] not in (expected_basis, "both") or
+            rate["unit"] != "1" or not isinstance(rate["value"], Decimal) or
+            price_basis["value"] not in {"nominal", "real"} or
+            price_basis["value"] != methods.require("settlement.price_basis") or
+            methods.require("settlement.currency") != bound.source["currency"]):
+        raise ContractError("PROJECT_NPV_RATE_BASIS_MISMATCH")
+    mode = methods.data_mode
+    if mode != "SYNTHETIC":
+        raise ContractError("PROJECT_NPV_SYNTHETIC_SCOPE_ONLY")
+    for record in (tax_basis, ownership, price_basis, rate):
+        if record["status"] == "ASSUMED" and (mode != "SYNTHETIC" or record["source_kind"] != "ASSUMPTION" or not record.get("assumption")):
+            raise ContractError("PROJECT_NPV_SYNTHETIC_BASIS_ONLY")
+        if record["status"] == "VERIFIED" and not record.get("reviewer"):
+            raise ContractError("PROJECT_NPV_BASIS_OR_RATE_UNVERIFIED")
+    rate_scope = ("PROJECT_PRE_TAX" if chosen == "项目税前" else "PROJECT_POST_TAX")
+    declared_scope = f"{rate_scope}_{price_basis['value'].upper()}_{bound.source['currency']}_YEAR_END"
+    if rate["source_section_or_cell"] != declared_scope:
+        raise ContractError("PROJECT_NPV_RATE_BASIS_MISMATCH")
+    if not isinstance(basis_control, dict) or basis_control.get("basis") != chosen or basis_control.get("project_id") != bound.source["project_id"] or basis_control.get("pv_type") != bound.source["pv_type"] or basis_control.get("method_config_hash") != bound.binding["method_config_hash"] or basis_control.get("generation_result_hash") != bound.binding["phase3b_result_hash"]:
+        raise ContractError("PROJECT_NPV_EXECUTION_BASIS_MISMATCH")
+    control_source = basis_control.get("source", {})
+    if (control_source.get("status") != "ASSUMED" or control_source.get("source_kind") != "SYNTHETIC"
+            or control_source.get("license_status") != "AUTHORIZED" or not control_source.get("source_id")):
+        raise ContractError("PROJECT_NPV_EXECUTION_BASIS_MISMATCH")
+    selected_control = validate_price_selector(basis_control, original_export, methods, original_bundle, catalog)
+    source_is_original = exported["input_hash"] == basis_control.get("original_input_hash")
+    if source_is_original:
+        if (exported["source_snapshot_id"] != basis_control.get("original_source_snapshot_id") or
+                bundle.content_hash != original_bundle.content_hash or
+                dumps(exported) != dumps(validate_export(original_export, catalog).export)):
+            raise ContractError("PROJECT_NPV_EXECUTION_BASIS_MISMATCH")
+    else:
+        key = basis_control["selector"]
+        actual_atom = _target(validate_export(exported, catalog), bundle, key["field_id"], key["row_id"])
+        derived, expected_atom = _derive(original_export, selected_control, actual_atom["value"], catalog)
+        if dumps(exported) != dumps(derived) or dumps(actual_atom) != dumps(expected_atom):
+            raise ContractError("PROJECT_NPV_EXECUTION_BASIS_MISMATCH")
+        _verify_bundles(original_bundle, bundle, key["field_id"], key["row_id"])
+
+    result = calculate_phase3e(financial, methods, catalog)
+    annual = result["evidence"]["financial-ledger"]["annual"]
+    vectors = result["evidence"]["phase3e-financial"]["vectors"]
+    if any(vectors[name] is None for name in ("benefit", "opex", "project_tax", "capex", "working_capital")):
+        raise ContractError("PROJECT_NPV_LEDGER_INCOMPLETE")
+    result["source_snapshot"]["phase3e_terminal"] = {
+        "source": bound.source, "source_content_hash": bound.source_content_hash,
+        "binding": bound.binding, "binding_hash": bound.binding_hash,
+        "phase3d_result_hash": bound.financial_result_hash,
+        "basis_control_hash": digest(basis_control), "basis_control": basis_control,
+        "rate_source": rate,
+    }
+    snapshot_id = digest(result["source_snapshot"])
+    result["source_snapshot_id"] = snapshot_id
+    payload = result["inputs"]["identity_payload"]
+    payload.update(source_snapshot_id=snapshot_id, upstream_financial_result_hash=bound.financial_result_hash,
+                   terminal_binding_hash=bound.binding_hash, terminal_source_content_hash=bound.source_content_hash,
+                   basis_control_hash=digest(basis_control), selected_project_rate_source_hash=digest(rate))
+    result["input_hash"] = digest(payload)
+    source_ids = {bound.source["no_disposition"]["source"]["source_id"]}
+    result["inputs"]["used_sources"] = sorted(set(result["inputs"].get("used_sources", [])) |
+                                                  source_ids | {rate["source_id"], control_source["source_id"]})
+    result["inputs"]["used_fields"] = sorted(set(result["inputs"].get("used_fields", [])) | {
+        "project.cashflow_tax_basis", "project.ownership_mode", "project.price_basis",
+        "finance.project_discount_rate", "project.evaluation_date", "project.evaluation_years",
+        "schedule.commissioning_date",
+    })
+    result["evidence"]["phase3e-terminal-reconciliation"] = bridge
+    result["evidence"]["phase3e-financial"]["terminal_cash"] = bridge["terminal_cash"]
+    result["evidence"]["phase3e-financial"]["vectors"].update({
+        "project_tax": bridge["total_project_tax"], "terminal_cash": bridge["terminal_cash"],
+        "project_income_tax": bridge["total_income_tax"],
+    })
+    result["boundaries"][_BOUNDARY].update(terminal_cash_policy="SOURCE_AND_LEDGER_RECONCILED",
+                                          project_basis=chosen, price_basis=price_basis["value"],
+                                          upstream_financial_result_hash=bound.financial_result_hash)
+    metric_ids = {"financial.phase3e.project_cash_flow", "financial.phase3e.project_pretax_cash_flow",
+                  "financial.phase3e.project_npv"}
+    result["results"]["metrics"] = [m for m in result["results"]["metrics"] if m["metric_id"] not in metric_ids]
+    span = f"{len(annual)}_PERIODS"
+    post = _record(result, catalog, "financial.phase3e.project_cash_flow", "F-PROJECT-CASH-FLOW", {
+        "finance.project_operating_cash_benefit": vectors["benefit"],
+        "opex.cash_annual": vectors["opex"],
+        "tax.project_cash_total": bridge["total_project_tax"],
+        "capex.unlevered_cash_annual": vectors["capex"],
+        "working_capital.project_net_change": vectors["working_capital"],
+        "finance.project_terminal_cash": bridge["terminal_cash"],
+    }, result["currency"], span)
+    if post["status"] != "CALCULATED":
+        raise ContractError("PROJECT_NPV_CASHFLOW_NOT_CALCULATED")
+    pre = _record(result, catalog, "financial.phase3e.project_pretax_cash_flow", "F-PROJECT-PRETAX-CASH-FLOW", {
+        "finance.project_cash_flow": post["value"],
+        "tax.project_income_cash_paid": bridge["total_income_tax"],
+    }, result["currency"], span)
+    if pre["status"] != "CALCULATED":
+        raise ContractError("PROJECT_NPV_PRETAX_NOT_CALCULATED")
+    selected = pre["value"] if chosen == "项目税前" else post["value"]
+    npv = _record(result, catalog, "financial.phase3e.project_npv", "F-NPV", {
+        "finance.selected_cash_flow": selected, "finance.selected_discount_rate": rate["value"],
+        "finance.cash_flow_basis": chosen, "time.financial_end_year": len(annual) - 1,
+    }, result["currency"], span)
+    if npv["status"] != "CALCULATED":
+        raise ContractError("PROJECT_NPV_NOT_CALCULATED")
+    # The inherited stub's "upstream cash flow missing" reason is no longer
+    # true. Preserve the remaining return metrics as nonnumeric, without
+    # pretending that their separate execution gates were implemented here.
+    for metric in result["results"]["metrics"]:
+        if metric["metric_id"] in {
+            "financial.phase3e.project_irr", "financial.phase3e.cumulative_cash_flow",
+            "financial.phase3e.static_payback", "financial.phase3e.discounted_cumulative_cash",
+            "financial.phase3e.dynamic_payback", "financial.phase3e.worst_cash_year",
+        }:
+            metric.update(status="NOT_IMPLEMENTED", reason="PROJECT_RETURN_INTEGRATION_NOT_IN_R1_3_SCOPE",
+                          details={"upstream_project_cash_flow": "CALCULATED"})
+    result["evidence"]["phase3e-financial"]["selected_basis"] = chosen
+    result["evidence"]["phase3e-financial"]["project_discount_rate"] = rate["value"]
+    result["evidence"]["phase3e-financial"]["project_npv"] = npv["value"]
+    result["findings"].append({"code": "SOURCED_PROJECT_NPV_SYNTHETIC_ONLY",
+                               "status": "PARTIAL", "unimplemented": ["EQUITY_CASH_FLOW", "DATED_NPV", "BREAK_EVEN_ROOT"]})
+    result = seal_result(result)
+    validate_result(result, catalog)
+    return result
 
 
 def write_phase3e_bundle(result, output_dir):
