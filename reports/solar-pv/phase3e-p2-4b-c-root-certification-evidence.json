@@ -1,0 +1,465 @@
+{
+  "schema": "solar-pv-phase3e-p2-4bc-partial-root-certification-evidence/1.0.0",
+  "verdict": "PARTIAL_PERFORMANCE_AND_SYNTHETIC_WITNESS_ONLY_FORMAL_ROOT_BLOCKED",
+  "baseline_head": "f1b4f62e54f7dcd50d20d270069c62376747637c",
+  "local_commits": {
+    "P2-4B": "02887ce",
+    "P2-4C": "d07e487",
+    "evidence": null
+  },
+  "performance": {
+    "input_scope": "same pinned 0.4 original and 0.6 candidate SYNTHETIC project/source, two separately executed 0.6 candidates in one optimized session",
+    "old_single_seconds": 842.339448499959,
+    "old_output_bytes": 151129815,
+    "old_peak_rss_bytes": 105742336,
+    "old_io_delta": {
+      "read_count": 2431,
+      "write_count": 3157,
+      "read_bytes": 1367029207,
+      "write_bytes": 163679959
+    },
+    "old_stages": {
+      "terminal_source_prevalidation": {
+        "seconds": 0.001145099988207221,
+        "calls": 1
+      },
+      "phase2_derivation": {
+        "seconds": 3.715264800004661,
+        "calls": 1
+      },
+      "d3_candidate_construction": {
+        "seconds": 110.15677140001208,
+        "calls": 1
+      },
+      "d3_integrity_comparison": {
+        "seconds": 0.0007708000484853983,
+        "calls": 1
+      },
+      "phase3b_read_only_validation": {
+        "seconds": 1.5275775000918657,
+        "calls": 2
+      },
+      "original_3c": {
+        "seconds": 77.51115510007367,
+        "calls": 1
+      },
+      "candidate_3c": {
+        "seconds": 77.56951449997723,
+        "calls": 1
+      },
+      "phase2_d3_3c_replay": {
+        "seconds": 403.90166109986603,
+        "calls": 1
+      },
+      "original_3d": {
+        "seconds": 3.922038899967447,
+        "calls": 1
+      },
+      "candidate_3d": {
+        "seconds": 4.847275400068611,
+        "calls": 1
+      },
+      "phase2_to_3d_replay": {
+        "seconds": 418.43690480012447,
+        "calls": 1
+      },
+      "terminal_3d_recomputation": {
+        "seconds": 8.535494199721143,
+        "calls": 2
+      },
+      "terminal_binding_and_recomputed_3d": {
+        "seconds": 126.26628079987131,
+        "calls": 2
+      },
+      "original_3e": {
+        "seconds": 114.74221020005643,
+        "calls": 1
+      },
+      "npv_hash_validation": {
+        "seconds": 1.1189125999808311,
+        "calls": 2
+      },
+      "candidate_3e": {
+        "seconds": 128.24190660007298,
+        "calls": 1
+      },
+      "phase3e_publication": {
+        "seconds": 0.22187409992329776,
+        "calls": 2
+      }
+    },
+    "session_open_seconds": 337.0658237999305,
+    "session_first_candidate_seconds": 582.469237399986,
+    "session_second_candidate_seconds": 576.0598172000609,
+    "two_candidates_total_seconds": 1587.2523440998048,
+    "new_output_bytes": 282814625,
+    "new_peak_rss_bytes": 118685696,
+    "new_io_delta": {
+      "read_count": 4906,
+      "write_count": 5543,
+      "read_bytes": 2810268909,
+      "write_bytes": 304777426
+    },
+    "new_stages": {
+      "source_selector_and_3b_identity_seconds": 51.487901699962094,
+      "original_3c_and_3b_read_seconds": 77.68772709998302,
+      "original_3d_seconds": 4.644483200041577,
+      "original_3e_binding_and_publish_seconds": 118.03441670001484,
+      "session_open_seconds": 254.0532702000346,
+      "p2-4bc-after-first_seconds": 584.2260230998509,
+      "p2-4bc-after-second_seconds": 577.703653199831
+    },
+    "new_call_counts": {
+      "original_3c": 1,
+      "original_3d": 1,
+      "original_3e": 1,
+      "candidate_3c": 2,
+      "candidate_3d": 2,
+      "candidate_3e": 2
+    },
+    "two_old_calls_linear_baseline_seconds": 1684.678896999918,
+    "two_run_seconds_saved": 97.42655290011317,
+    "followup_seconds_saved": 266.279631299898,
+    "same_original_npv": true,
+    "same_candidate_npv": true,
+    "same_original_result_hash": true,
+    "same_candidate_result_hash": true,
+    "warning": "two old calls is a linear projection from one measured baseline run, not a second observed old process; output/read/write deltas use that projection"
+  },
+  "synthetic_root_witness": {
+    "project_id": "SYNTHETIC-BC-INDEPENDENT-ROOT",
+    "predeclaration_sha256": "331fff8b0f2945eadfb493db111068fd13899f42294c0624c2f7415729234c66",
+    "scope": "one-year independent fixture, real Phase 2/D3/3B/3C/3D/NO_DISPOSITION/3E/F-NPV; economic real-world viability not asserted",
+    "method": "CERTIFIED_MONOTONE_RECALCULATION is a configured method only, not a certificate",
+    "ideal_exact_arithmetic": {
+      "model": "-1330+(65700*p+140160-180000+200)/1.1",
+      "endpoint_0_npv_yuan": "-411030/11",
+      "endpoint_2_npv_yuan": "902970/11",
+      "reference_root_yuan_per_kwh": "4567/7300",
+      "vat_cash_zero_branch_bound": "2277600/113 < 2354690/113",
+      "income_tax_zero_branch_bound": "1684600/113 < 34000",
+      "actual_decimal_model_whole_domain_certified": false
+    },
+    "original_price_yuan_per_kwh": "0.4",
+    "original_npv_yuan": "-13475.454545454545454545454545454545454545454545454545454545454545454545454545455",
+    "original_result_hash": "a491cf07425d5149853d4e93a023dc4784cc272b517e53a745bf83c95e932c8e",
+    "points": {
+      "root-witness-zero": {
+        "price_yuan_per_kwh": "0",
+        "npv_yuan": "-37366.363636363636363636363636363636363636363636363636363636363636363636363636364",
+        "result_hash": "43b1454a657144f864cdd3874f3cb8555831373179c6cb87c4b1ab867f7eac68",
+        "terminal_source_hash": "1113686f31370e717835cc28c9715c4721dc64634022c66232e6f48f9fcf6f7e",
+        "phase3b_hash": "a5e1607b511b7fbe8f0fc9cbfde31326bf0d4eb09d87eff16f7ac03cc93ad748",
+        "phase3c_hash": "06c0d728a28bc5825151735976a114802f7e54337f85bd343fd1f476e5786643",
+        "phase3d_hash": "c99a8ea4399de238d1aa72e3b0e437dd2b7ea67decd36c134a90c4c0364cfbea",
+        "candidate_input_hash": "42b1e2c3dc7ef7ee2cdfaa1fb28c61803beed24b021778fdeed5d74cb165b6f2",
+        "candidate_bundle_hash": "36aeec40ea1aed37cdefb58716b271e2c6f8150b36444c9bb918df2a6f673106",
+        "producer_counts": {
+          "phase3c_calculations": 1,
+          "phase3d_calculations": 1,
+          "phase3d_binding_recalculations": 1,
+          "phase3e_calculations": 1
+        },
+        "elapsed_seconds": "505.5958958999254"
+      },
+      "root-witness-two": {
+        "price_yuan_per_kwh": "2",
+        "npv_yuan": "82088.181818181818181818181818181818181818181818181818181818181818181818181818182",
+        "result_hash": "da5e4b252ebfd697af5050b098e362ffcad606980c343b1c45aa3509b6da4f0b",
+        "terminal_source_hash": "1113686f31370e717835cc28c9715c4721dc64634022c66232e6f48f9fcf6f7e",
+        "phase3b_hash": "a5e1607b511b7fbe8f0fc9cbfde31326bf0d4eb09d87eff16f7ac03cc93ad748",
+        "phase3c_hash": "af238b04e585ef30e244f1b2ed95c58e72b74ef932b64fb6aa0f2cb9d6f1f7bb",
+        "phase3d_hash": "561410bb6d40b13ff25499ab06b07de9a294f39c800bc4818b9417a6fb6f7af9",
+        "candidate_input_hash": "acdd16c990542a78c96ffc61e1d82555bf759e1baeace7148a67a99a33d765a1",
+        "candidate_bundle_hash": "92b7cc97ae55061e742c6189644a5759b68511237c564f02bc113ab014ee762e",
+        "producer_counts": {
+          "phase3c_calculations": 1,
+          "phase3d_calculations": 1,
+          "phase3d_binding_recalculations": 1,
+          "phase3e_calculations": 1
+        },
+        "elapsed_seconds": "489.6944153001532"
+      },
+      "root-witness-reference": {
+        "price_yuan_per_kwh": "0.6256164383561643835616438356164383561643835616438356164383561643835616438356164383561643835616438356",
+        "npv_yuan": "0E-22",
+        "result_hash": "106d7ad3e51abff840272531ea663cdeb37ea3907f196097acd1fbbc70370bac",
+        "terminal_source_hash": "1113686f31370e717835cc28c9715c4721dc64634022c66232e6f48f9fcf6f7e",
+        "phase3b_hash": "a5e1607b511b7fbe8f0fc9cbfde31326bf0d4eb09d87eff16f7ac03cc93ad748",
+        "phase3c_hash": "0119f8f1d60581c9899fdb5412f44cc9a9ec84f86c4e6bea766b4bc3166a2b40",
+        "phase3d_hash": "d58ee6fbe1148c679e3839c7b66bf8b59d4fa888727b159b8615a274584c1fc2",
+        "candidate_input_hash": "9568043c04e6c1162977648e0c828f315b75ca61f4fa6a481c707d86cc6e7bac",
+        "candidate_bundle_hash": "3978254b130f7680800ad48fc18994da2dac0b22a6589fb4a01171ba3766530f",
+        "producer_counts": {
+          "phase3c_calculations": 1,
+          "phase3d_calculations": 1,
+          "phase3d_binding_recalculations": 1,
+          "phase3e_calculations": 1
+        },
+        "elapsed_seconds": "505.67728310008533"
+      }
+    },
+    "independent_decimal_reference_price_error_bound_yuan_per_kwh": "<1e-100",
+    "candidate_npv_absolute_residual_yuan": "0E-22",
+    "certified_bracket_width_yuan_per_kwh": null,
+    "approved_monetary_root_tolerance_yuan": null,
+    "root_search_iterations": 0,
+    "actual_zero_candidate_is_not_complete_root_set": true,
+    "terminal_source_hash": "1113686f31370e717835cc28c9715c4721dc64634022c66232e6f48f9fcf6f7e"
+  },
+  "formal_root_certification": {
+    "result_hash": "f034be0adcac8b1567c0ddd2629ee74c5ce73a564e896be88e9ac23b6574bf7f",
+    "result_path": "reports/solar-pv/phase3e-p2-4b-c-root-certification-evidence/formal-blocked-result.json",
+    "result_status": "PARTIAL",
+    "metric_status": "BLOCKED_MISSING_INPUT",
+    "metric_reason": "BLOCKED_ROOT_SET_COMPLETENESS_UNPROVEN",
+    "metric_value": null,
+    "root_count_certified": null,
+    "unmet_obligations": [
+      "NO_APPROVED_YUAN_NPV_ROOT_RESIDUAL_TOLERANCE",
+      "FINITE_DECIMAL_REPLAY_NOT_CERTIFIED_CONTINUOUS_AND_STRICTLY_MONOTONE_ON_FULL_DOMAIN",
+      "TAX_VAT_COLLECTION_AND_SETTLEMENT_BRANCHES_NOT_EXHAUSTIVELY_CERTIFIED",
+      "NO_PROOF_ALL_ROOTS_ARE_ENUMERATED"
+    ],
+    "formula_version": "solar-pv-formula-definitions/1.0.1",
+    "definition_hash": "617a2e9d314c095bd2ec893939c930a2323be6fd7805da12bf6d6fdd70274808",
+    "executor_sha256": {
+      "break_even_certification.py": "86b837b5775af5c14b0b436a24c4ebb91dbd4a32f3bc9c1fefbb2389385027f4",
+      "break_even_financial_replay.py": "9119fbd3cced4a5961412257d83db2d9277b91f988d27d16d215c58ac6a689ed",
+      "break_even_project_npv.py": "6c050a2912e403fb844a78bd8a731f626f55d868506fe9b1b2a988fa30d9c140",
+      "break_even_project_session.py": "1b4e1a27b96de385cafd7d945b52d44a4e8c2f96b17e97f123f57e33385f691b",
+      "break_even_replay.py": "e64ccbc843c12c731e2e329a2e5649bc2f4cc62a8871829f93dbe78714afac42",
+      "costs.py": "1df30bbc0903a07c1f9f6599c2f5b45a0033da5bcc51963e80ae041cba4371a3",
+      "financial_ledger.py": "41e9d5b85ecb1b730554fcdf20932fc69b2f15fe2a2ddfb46ead20d49088fce6",
+      "financial_metrics.py": "861fd39468ed1676ddfd09456d9466c3ed6c85739e96aa568d5c613a340c3c94",
+      "generation_evidence.py": "b507c26a5aa980a6fe06193bc5ef876851aa15db224cd23d51211f4b707b2683",
+      "input_contract.py": "b5ce5258fd497a794b4fa8d359430dc94f6badd1ceb1f780c709e1c8565ab03c",
+      "method_config.py": "3beccfc6ab03a9d6c21d020819eb2d30422e83daa4245e7167ab7428e17c6001",
+      "phase3e.py": "829df53d136060ac32f420ad673f29f1bed26fb74db1f4e4ab6f32ccefc2b990",
+      "result_contract.py": "0a4cb4a5df645066b9fcbd44799f8934e4545bf3d0199633b1d3357fc65eba0c",
+      "revenue.py": "4b55bf340385e3573a929225abcf80c93b39b19d8e0cffcc030659ba1811afca",
+      "tariffs.py": "9bbc53ccdee0a789c800197813e5225561a8078c7124dc5d2dc708dbce49dbce",
+      "terminal_binding.py": "8131b0d9face27c578d614af42398f0f66c7cf3239b7922cff861c79867af146",
+      "terminal_disposition.py": "85585fb51ef0c1204c9a414a5d4584b4864b3514383bf5c14396ea87dd446fc0"
+    },
+    "source_hash": "1113686f31370e717835cc28c9715c4721dc64634022c66232e6f48f9fcf6f7e"
+  },
+  "verification": {
+    "root_l1": {
+      "path": "reports/solar-pv/phase3e-p2-4b-c-root-certification-evidence/root-l1.xml",
+      "sha256": "30d4185c29c24547408bc4b558e4d9859719ea5e1bc65c0bf5fba6cb182603b0",
+      "tests": 4,
+      "passed": 4,
+      "skipped": 0,
+      "failures": 0,
+      "errors": 0,
+      "test_ids": [
+        "tests.solar-pv.test_phase3e_break_even_project_session::test_declared_independent_project_has_real_full_chain_root_witness",
+        "tests.solar-pv.test_phase3e_break_even_project_session::test_original_price_is_reused_without_neighboring_fake_price",
+        "tests.solar-pv.test_phase3e_break_even_project_session::test_cannot_certify_unproven_executable_root_or_legacy_interpolation",
+        "tests.solar-pv.test_phase3e_break_even_project_session::test_in_place_source_or_control_changes_invalidate_original_cache"
+      ],
+      "slowest": [
+        {
+          "id": "tests.solar-pv.test_phase3e_break_even_project_session::test_declared_independent_project_has_real_full_chain_root_witness",
+          "seconds": 2315.645
+        },
+        {
+          "id": "tests.solar-pv.test_phase3e_break_even_project_session::test_original_price_is_reused_without_neighboring_fake_price",
+          "seconds": 30.684
+        },
+        {
+          "id": "tests.solar-pv.test_phase3e_break_even_project_session::test_cannot_certify_unproven_executable_root_or_legacy_interpolation",
+          "seconds": 27.808
+        },
+        {
+          "id": "tests.solar-pv.test_phase3e_break_even_project_session::test_in_place_source_or_control_changes_invalidate_original_cache",
+          "seconds": 2.141
+        }
+      ]
+    },
+    "certificate_focus": {
+      "path": "reports/solar-pv/phase3e-p2-4b-c-root-certification-evidence/certificate-focus.xml",
+      "sha256": "51695227293a6394f9090b97e3113e1825f279497c7c184b130caafff550605f",
+      "tests": 1,
+      "passed": 1,
+      "skipped": 0,
+      "failures": 0,
+      "errors": 0,
+      "test_ids": [
+        "tests.solar-pv.test_phase3e_break_even_project_session::test_cannot_certify_unproven_executable_root_or_legacy_interpolation"
+      ],
+      "slowest": [
+        {
+          "id": "tests.solar-pv.test_phase3e_break_even_project_session::test_cannot_certify_unproven_executable_root_or_legacy_interpolation",
+          "seconds": 725.771
+        }
+      ]
+    },
+    "l2": {
+      "path": "reports/solar-pv/phase3e-p2-4b-c-root-certification-evidence/l2.xml",
+      "sha256": "c59fda8e235de0fe85ef98262a35ecc99117d1f0cb30a5294b91cefc5e321838",
+      "tests": 60,
+      "passed": 59,
+      "skipped": 1,
+      "failures": 0,
+      "errors": 0,
+      "skip_reason": "Windows symlink privilege unavailable: 22",
+      "elapsed_seconds": "15332.98"
+    },
+    "solar_l3": {
+      "path": "reports/solar-pv/phase3e-p2-4b-c-root-certification-evidence/solar-l3.xml",
+      "sha256": "ae25b9d218454519031860403259e145066bdfc41632c81da7642efc89d3acd6",
+      "tests": 4184,
+      "passed": 4177,
+      "skipped": 7,
+      "failures": 0,
+      "errors": 0,
+      "elapsed_seconds": "20772.34"
+    },
+    "workbuddy_l3": {
+      "path": "reports/solar-pv/phase3e-p2-4b-c-root-certification-evidence/workbuddy-l3.xml",
+      "sha256": "1b4301adcada588eea7ce33a9511afcf1de8cb4246c1449fdf3c3c27efc696c5",
+      "tests": 114,
+      "passed": 109,
+      "skipped": 5,
+      "failures": 0,
+      "errors": 0,
+      "elapsed_seconds": "56.57"
+    },
+    "test_ids_file": {
+      "path": "reports/solar-pv/phase3e-p2-4b-c-root-certification-evidence/test-ids.json",
+      "sha256": "0130e643f29ca7ca494d6e365d59af278566eb36aa1e2da04f5a4943041e71e4",
+      "scopes_overlap": true
+    }
+  },
+  "artifact_sha256": {
+    "certificate-focus.xml": {
+      "sha256": "51695227293a6394f9090b97e3113e1825f279497c7c184b130caafff550605f",
+      "bytes": 423
+    },
+    "formal-blocked-result.json": {
+      "sha256": "1d7e29e53f755683b8f2bf84f2509362f4329aa21af716730f6f7a74fd5d18a4",
+      "bytes": 1140860
+    },
+    "formal-blocked-result.sha256": {
+      "sha256": "17fce00a49ee50375a4308d7a658b017900170d093c7cc9f916b3c7006d1854d",
+      "bytes": 66
+    },
+    "l2.xml": {
+      "sha256": "c59fda8e235de0fe85ef98262a35ecc99117d1f0cb30a5294b91cefc5e321838",
+      "bytes": 9746
+    },
+    "performance-after.json": {
+      "sha256": "522762fc17e16908bbc4dc2422bb97a8a4b7769fea8d9fca18ac97309096852d",
+      "bytes": 14481
+    },
+    "performance-before.json": {
+      "sha256": "cdb6bb52956329986dd420b01c310645d1c1b51b443d55d16917bb546fa7365a",
+      "bytes": 7139
+    },
+    "root-l1.xml": {
+      "sha256": "30d4185c29c24547408bc4b558e4d9859719ea5e1bc65c0bf5fba6cb182603b0",
+      "bytes": 918
+    },
+    "solar-l3.xml": {
+      "sha256": "ae25b9d218454519031860403259e145066bdfc41632c81da7642efc89d3acd6",
+      "bytes": 683520
+    },
+    "test-ids.json": {
+      "sha256": "0130e643f29ca7ca494d6e365d59af278566eb36aa1e2da04f5a4943041e71e4",
+      "bytes": 567363
+    },
+    "workbuddy-l3.xml": {
+      "sha256": "1b4301adcada588eea7ce33a9511afcf1de8cb4246c1449fdf3c3c27efc696c5",
+      "bytes": 15804
+    },
+    "root-l1/generation/receipt.json": {
+      "sha256": "c013896bca0e1a960104fa269e82d883155039b7206889643ff15a99d4c4ed3a",
+      "bytes": 1069
+    },
+    "root-l1/generation/result.json": {
+      "sha256": "baf9e2f391824e4a869258608118e6978273726caf06e0b06c39be70008a2ded",
+      "bytes": 641427
+    },
+    "root-l1/original/base.json": {
+      "sha256": "eb01792af05a9a9fa2bf79842f03021f9dc511676c94690c61d9c0fe8885e043",
+      "bytes": 1453947
+    },
+    "root-l1/original/manifest.json": {
+      "sha256": "17f56d31cdd5ae95d7111312bd1c0cfc71e2c73824655e73c88bf81af156c1c2",
+      "bytes": 12670
+    },
+    "root-l1/root-witness-session/session.json": {
+      "sha256": "4950e10ee208ace0ef63c0306e41506cb85bdd0b2fc4a736e100efe50942d66e",
+      "bytes": 2716
+    },
+    "root-l1/root-witness-zero/phase3e/execution.json": {
+      "sha256": "4d534d4479b4a55f08e292319d56ebce99c4d8f1c709cedf7a2b77f620955196",
+      "bytes": 1123
+    },
+    "root-l1/root-witness-zero/phase3e/candidate-3e/result.json": {
+      "sha256": "dce710b5e629db2a298bb07e3fb9ca3262e2e92b034c65874313d94fcf59209e",
+      "bytes": 1140278
+    },
+    "root-l1/root-witness-zero/phase3e/candidate-3e/result.sha256": {
+      "sha256": "ad109a470d608f334ed15dae08f62bb36d979b25986a59313fd3c270f17dd385",
+      "bytes": 66
+    },
+    "root-l1/root-witness-two/phase3e/execution.json": {
+      "sha256": "f1268cba27a2179320d2fbf6e40ba8b2a234fffd7442048a8a16ed1b90a7399c",
+      "bytes": 1122
+    },
+    "root-l1/root-witness-two/phase3e/candidate-3e/result.json": {
+      "sha256": "dc9ea79ccfaff28d0090c166be91bfa7f27266fcaefad0177ac141c484fc71b3",
+      "bytes": 1140454
+    },
+    "root-l1/root-witness-two/phase3e/candidate-3e/result.sha256": {
+      "sha256": "17d3d649220f01e1efbd417d9eb680dadc1f16250f11cd15a5c65276a8cee334",
+      "bytes": 66
+    },
+    "root-l1/root-witness-session/original-3e/result.json": {
+      "sha256": "428e5502c1ed6bb842f934d0e623cbbfd87eeb0c2e0076e532f7bd2f51b32b90",
+      "bytes": 1136819
+    },
+    "root-l1/root-witness-reference/phase3e/execution.json": {
+      "sha256": "802e67f88205f97374ce5f7901ee0ff6721546d18e843a3aaf7c555316307ae8",
+      "bytes": 1148
+    },
+    "root-l1/root-witness-reference/phase3e/candidate-3e/result.json": {
+      "sha256": "9b561a7f6fcac7aec3d4c326538528a4b81f6df49e597b5d1f85bf6734a36f45",
+      "bytes": 1146212
+    },
+    "root-l1/root-witness-reference/phase3e/candidate-3e/result.sha256": {
+      "sha256": "b8313262bfff1c895df25536a2704c95e39fc723289c455b1683b7e195fb0e6c",
+      "bytes": 66
+    }
+  },
+  "protected_288": {
+    "match": 286,
+    "preexisting_changes": [
+      "reports/validate.json",
+      "reports/validate.md"
+    ],
+    "missing": 0
+  },
+  "user_owned_preexisting_sha256": {
+    "packages/skills/wangbin-receivable-analyzer/SKILL.md": "8a5ee4eb54a4f6a08d3ab7cccf792c12d5f01ab3fb4ab0de8dc926149087a945",
+    "packages/skills/wangbin-receivable-analyzer/manifest.json": "0a9459ab33f0f3bbc1c538535b994218e6ad92792901a39c3e4e94eaf777762b",
+    "products/catalog.json": "d74f3fa9f00184ee64f8452862958c3ef11f7848378ed42657e4b5fbc91def27",
+    "reports/workbuddy-upload-list.md": "6d0df16f21a4cf7a3a87eef1b90fb2f7d26fd1457f124066707281f9ff0ec586",
+    "reports/validate.json": "42765dae553254369311f3d4e7d2d3ab6f3cf0f8858a1c0e587debfea809d1ba",
+    "reports/validate.md": "2c3f7cd41671f2af1cd9f5688ae4e3779d92390260cdb43299457bcedb2060e3"
+  },
+  "not_executed": [
+    "official root solve",
+    "certified NO_ROOT",
+    "whole-domain finite-decimal continuity/strict monotonicity certificate",
+    "approved currency NPV-root tolerance",
+    "P2-5",
+    "Phase 3F",
+    "push",
+    "deployment",
+    "publication"
+  ]
+}

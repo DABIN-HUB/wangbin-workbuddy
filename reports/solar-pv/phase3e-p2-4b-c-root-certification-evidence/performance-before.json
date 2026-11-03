@@ -1,0 +1,193 @@
+{
+  "status": "PASS",
+  "root": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\cache\\scratch\\synthetic-p2-3a-finance-f2f782728872417b93ceccc7b65d49bc",
+  "run_name": "p2-4bc-before-final",
+  "total_seconds": 842.339448499959,
+  "original_npv": "146523.49959774738535800482702727272727272727272727272727272727272727272727272727",
+  "candidate_npv": "154652.52212389380530973451327272727272727272727272727272727272727272727272727273",
+  "original_result_hash": "549cf27a503bd41256be06f9e12cd124cf177e8a701d95007c62a33b10a7d4a3",
+  "candidate_result_hash": "0ef1fdb25e34a9e74ce0b7c6c9b486ee1453dd9ca165e061d00107741be6f5f3",
+  "measurements": {
+    "terminal_source_prevalidation": {
+      "seconds": 0.001145099988207221,
+      "calls": 1
+    },
+    "phase2_derivation": {
+      "seconds": 3.715264800004661,
+      "calls": 1
+    },
+    "d3_candidate_construction": {
+      "seconds": 110.15677140001208,
+      "calls": 1
+    },
+    "d3_integrity_comparison": {
+      "seconds": 0.0007708000484853983,
+      "calls": 1
+    },
+    "phase3b_read_only_validation": {
+      "seconds": 1.5275775000918657,
+      "calls": 2
+    },
+    "original_3c": {
+      "seconds": 77.51115510007367,
+      "calls": 1
+    },
+    "candidate_3c": {
+      "seconds": 77.56951449997723,
+      "calls": 1
+    },
+    "phase2_d3_3c_replay": {
+      "seconds": 403.90166109986603,
+      "calls": 1
+    },
+    "original_3d": {
+      "seconds": 3.922038899967447,
+      "calls": 1
+    },
+    "candidate_3d": {
+      "seconds": 4.847275400068611,
+      "calls": 1
+    },
+    "phase2_to_3d_replay": {
+      "seconds": 418.43690480012447,
+      "calls": 1
+    },
+    "terminal_3d_recomputation": {
+      "seconds": 8.535494199721143,
+      "calls": 2
+    },
+    "terminal_binding_and_recomputed_3d": {
+      "seconds": 126.26628079987131,
+      "calls": 2
+    },
+    "original_3e": {
+      "seconds": 114.74221020005643,
+      "calls": 1
+    },
+    "npv_hash_validation": {
+      "seconds": 1.1189125999808311,
+      "calls": 2
+    },
+    "candidate_3e": {
+      "seconds": 128.24190660007298,
+      "calls": 1
+    },
+    "phase3e_publication": {
+      "seconds": 0.22187409992329776,
+      "calls": 2
+    }
+  },
+  "output_file_sizes": {
+    "candidate-3c\\interval-00000.jsonl": 4192854,
+    "candidate-3c\\interval-00001.jsonl": 4193112,
+    "candidate-3c\\interval-00002.jsonl": 4193096,
+    "candidate-3c\\interval-00003.jsonl": 3899488,
+    "candidate-3c\\receipt.json": 1141,
+    "candidate-3c\\result.json": 1246198,
+    "candidate-3d\\result.json": 910889,
+    "candidate-3d\\result.sha256": 66,
+    "candidate-d3\\base.json": 1461250,
+    "candidate-d3\\d0-c000000.jsonl": 1885374,
+    "candidate-d3\\d0-c000001.jsonl": 1887208,
+    "candidate-d3\\d0-c000002.jsonl": 1887244,
+    "candidate-d3\\d0-c000003.jsonl": 1887652,
+    "candidate-d3\\d0-c000004.jsonl": 1891560,
+    "candidate-d3\\d0-c000005.jsonl": 1891596,
+    "candidate-d3\\d0-c000006.jsonl": 1891596,
+    "candidate-d3\\d0-c000007.jsonl": 1891560,
+    "candidate-d3\\d0-c000008.jsonl": 1891596,
+    "candidate-d3\\d0-c000009.jsonl": 1891596,
+    "candidate-d3\\d0-c000010.jsonl": 1891560,
+    "candidate-d3\\d0-c000011.jsonl": 1891596,
+    "candidate-d3\\d0-c000012.jsonl": 1891596,
+    "candidate-d3\\d0-c000013.jsonl": 1891560,
+    "candidate-d3\\d0-c000014.jsonl": 1891596,
+    "candidate-d3\\d0-c000015.jsonl": 1891596,
+    "candidate-d3\\d0-c000016.jsonl": 1891560,
+    "candidate-d3\\d0-c000017.jsonl": 1891596,
+    "candidate-d3\\d0-c000018.jsonl": 1891596,
+    "candidate-d3\\d0-c000019.jsonl": 1891560,
+    "candidate-d3\\d0-c000020.jsonl": 1891596,
+    "candidate-d3\\d0-c000021.jsonl": 1891596,
+    "candidate-d3\\d0-c000022.jsonl": 1891560,
+    "candidate-d3\\d0-c000023.jsonl": 1891596,
+    "candidate-d3\\d0-c000024.jsonl": 1891596,
+    "candidate-d3\\d0-c000025.jsonl": 1891560,
+    "candidate-d3\\d0-c000026.jsonl": 1891596,
+    "candidate-d3\\d0-c000027.jsonl": 1891596,
+    "candidate-d3\\d0-c000028.jsonl": 1891560,
+    "candidate-d3\\d0-c000029.jsonl": 1891596,
+    "candidate-d3\\d0-c000030.jsonl": 1891596,
+    "candidate-d3\\d0-c000031.jsonl": 1891560,
+    "candidate-d3\\d0-c000032.jsonl": 1891596,
+    "candidate-d3\\d0-c000033.jsonl": 1891596,
+    "candidate-d3\\d0-c000034.jsonl": 413772,
+    "candidate-d3\\d1-c000000.jsonl": 1331818,
+    "candidate-d3\\d1-c000001.jsonl": 1333248,
+    "candidate-d3\\d1-c000002.jsonl": 1333248,
+    "candidate-d3\\d1-c000003.jsonl": 1333560,
+    "candidate-d3\\d1-c000004.jsonl": 1336576,
+    "candidate-d3\\d1-c000005.jsonl": 1336576,
+    "candidate-d3\\d1-c000006.jsonl": 1336576,
+    "candidate-d3\\d1-c000007.jsonl": 1336576,
+    "candidate-d3\\d1-c000008.jsonl": 1336576,
+    "candidate-d3\\d1-c000009.jsonl": 1336576,
+    "candidate-d3\\d1-c000010.jsonl": 1336576,
+    "candidate-d3\\d1-c000011.jsonl": 1336576,
+    "candidate-d3\\d1-c000012.jsonl": 1336576,
+    "candidate-d3\\d1-c000013.jsonl": 1336576,
+    "candidate-d3\\d1-c000014.jsonl": 1336576,
+    "candidate-d3\\d1-c000015.jsonl": 1336576,
+    "candidate-d3\\d1-c000016.jsonl": 1336576,
+    "candidate-d3\\d1-c000017.jsonl": 1336576,
+    "candidate-d3\\d1-c000018.jsonl": 1336576,
+    "candidate-d3\\d1-c000019.jsonl": 1336576,
+    "candidate-d3\\d1-c000020.jsonl": 1336576,
+    "candidate-d3\\d1-c000021.jsonl": 1336576,
+    "candidate-d3\\d1-c000022.jsonl": 1336576,
+    "candidate-d3\\d1-c000023.jsonl": 1336576,
+    "candidate-d3\\d1-c000024.jsonl": 1336576,
+    "candidate-d3\\d1-c000025.jsonl": 1336576,
+    "candidate-d3\\d1-c000026.jsonl": 1336576,
+    "candidate-d3\\d1-c000027.jsonl": 1336576,
+    "candidate-d3\\d1-c000028.jsonl": 1336576,
+    "candidate-d3\\d1-c000029.jsonl": 1336576,
+    "candidate-d3\\d1-c000030.jsonl": 1336576,
+    "candidate-d3\\d1-c000031.jsonl": 1336576,
+    "candidate-d3\\d1-c000032.jsonl": 1336576,
+    "candidate-d3\\d1-c000033.jsonl": 1336576,
+    "candidate-d3\\d1-c000034.jsonl": 292376,
+    "candidate-d3\\manifest.json": 12670,
+    "original-3c\\interval-00000.jsonl": 4192602,
+    "original-3c\\interval-00001.jsonl": 4192962,
+    "original-3c\\interval-00002.jsonl": 4192962,
+    "original-3c\\interval-00003.jsonl": 3580284,
+    "original-3c\\receipt.json": 1141,
+    "original-3c\\result.json": 1242943,
+    "original-3d\\result.json": 907396,
+    "original-3d\\result.sha256": 66,
+    "phase3e\\execution.json": 1089,
+    "phase3e\\candidate-3e\\result.json": 1140493,
+    "phase3e\\candidate-3e\\result.sha256": 66,
+    "phase3e\\original-3e\\result.json": 1136681,
+    "phase3e\\original-3e\\result.sha256": 66
+  },
+  "output_bytes": 151129815,
+  "io_before": {
+    "read_count": 752,
+    "write_count": 3,
+    "read_bytes": 11735219,
+    "write_bytes": 34297,
+    "other_count": 12040,
+    "other_bytes": 753964
+  },
+  "io_after": {
+    "read_count": 3183,
+    "write_count": 3160,
+    "read_bytes": 1378764426,
+    "write_bytes": 163714256,
+    "other_count": 554411,
+    "other_bytes": 11552618
+  },
+  "peak_rss": 105742336
+}
