@@ -13,9 +13,9 @@ from pathlib import Path
 from time import perf_counter
 
 from ..errors import ContractError
-from ..serialization import dumps, loads
+from ..serialization import digest, dumps, loads
 from ..timeseries_bundle import read_bundle
-from .break_even_financial_replay import replay_financial_candidate
+from .break_even_financial_replay import _replay_financial_candidate
 from .break_even_replay import _remove_owned
 from .phase3e import calculate_sourced_project_npv, write_phase3e_bundle
 from .result_contract import validate_result
@@ -59,21 +59,47 @@ def calculate_price_project_npv(control, original_export, methods, original_bund
     A private exclusive run directory is owned by the caller, and is removed
     on failure. No original input, generation result or source bytes are edited.
     """
+    return _calculate_candidate(control, original_export, methods, original_bundle,
+                                generation_dir, candidate_price, terminal_carrier,
+                                source_documents, catalog=catalog, budget=budget,
+                                workspace=workspace, run_name=run_name, original_cache=None)
+
+
+def _calculate_candidate(control, original_export, methods, original_bundle,
+                         generation_dir, candidate_price, terminal_carrier,
+                         source_documents, *, catalog, budget, workspace, run_name,
+                         original_cache):
+    """Private session seam; only an already authenticated original may be reused."""
     validate_terminal_disposition(terminal_carrier, source_documents)
+    if original_cache is not None:
+        original_revenue, original_financial, original = original_cache
+        validate_result(original_revenue, catalog)
+        validate_result(original_financial, catalog)
+        _npv(original, catalog)
+        snapshot = original["source_snapshot"]["phase3e_terminal"]
+        if (snapshot["binding"] != terminal_carrier["binding"]
+                or snapshot["source_content_hash"] != terminal_carrier["source_content_hash"]
+                or snapshot["basis_control_hash"] != digest(control)
+                or snapshot["phase3d_result_hash"] != original_financial["result_hash"]
+                or terminal_carrier["binding"]["phase3c_result_hash"] != original_revenue["result_hash"]):
+            raise ContractError("BREAK_EVEN_ORIGINAL_CACHE_IDENTITY")
     started = perf_counter()
-    replay = replay_financial_candidate(
+    replay = _replay_financial_candidate(
         control, original_export, methods, original_bundle, generation_dir,
         candidate_price, catalog=catalog, budget=budget, workspace=workspace,
-        run_name=run_name)
+        run_name=run_name,
+        original_revenue=None if original_cache is None else original_revenue,
+        original_financial=None if original_cache is None else original_financial)
     root = workspace.path(run_name, json_only=False)
     identity = root.stat().st_dev, root.stat().st_ino
     try:
         generation = loads((Path(generation_dir) / "result.json").read_bytes())
-        original = calculate_sourced_project_npv(
-            terminal_carrier, source_documents, original_export, methods,
-            original_bundle, generation, replay.settlement.original_revenue,
-            replay.original_financial, catalog, basis_control=control,
-            original_export=original_export, original_bundle=original_bundle)
+        if original_cache is None:
+            original = calculate_sourced_project_npv(
+                terminal_carrier, source_documents, original_export, methods,
+                original_bundle, generation, replay.settlement.original_revenue,
+                replay.original_financial, catalog, basis_control=control,
+                original_export=original_export, original_bundle=original_bundle)
         original_npv = _npv(original, catalog)
         candidate_carrier = deepcopy(terminal_carrier)
         binding = candidate_carrier["binding"]
@@ -98,14 +124,18 @@ def calculate_price_project_npv(control, original_export, methods, original_bund
             raise ContractError("BREAK_EVEN_CANDIDATE_NPV_IDENTITY")
         pending = root / "_pending-3e"
         pending.mkdir()
-        write_phase3e_bundle(original, pending / "original-3e")
+        if original_cache is None:
+            write_phase3e_bundle(original, pending / "original-3e")
         write_phase3e_bundle(candidate, pending / "candidate-3e")
         elapsed = perf_counter() - started
         (pending / "execution.json").write_text(dumps({
             "candidate_price": candidate_price, "original_npv": original_npv,
             "candidate_npv": candidate_npv, "elapsed_seconds": elapsed,
-            "replay_calls": 1, "phase3c_calculations": 2,
-            "phase3d_calculations": 2, "phase3e_calculations": 2,
+            "replay_calls": 1, "original_reused": original_cache is not None,
+            "phase3c_calculations": 2 if original_cache is None else 1,
+            "phase3d_calculations": 2 if original_cache is None else 1,
+            "phase3d_binding_recalculations": 2 if original_cache is None else 1,
+            "phase3e_calculations": 2 if original_cache is None else 1,
             "original_result_hash": original["result_hash"],
             "candidate_result_hash": candidate["result_hash"],
             "terminal_source_hash": candidate_carrier["source_content_hash"],

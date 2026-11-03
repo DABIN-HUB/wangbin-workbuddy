@@ -167,7 +167,15 @@ def _remove_owned(root, identity, workspace):
 
 def replay_price_candidate(control, original_export, methods, original_bundle, generation_dir, candidate_price, *,
                            catalog, budget, workspace, run_name):
-    """Fail closed: return only after two authenticated 3C calculations finish."""
+    """Public replay always computes the original, never accepts a cache."""
+    return _replay_price_candidate(control, original_export, methods, original_bundle,
+                                   generation_dir, candidate_price, catalog=catalog, budget=budget,
+                                   workspace=workspace, run_name=run_name, original_revenue=None)
+
+
+def _replay_price_candidate(control, original_export, methods, original_bundle, generation_dir, candidate_price, *,
+                            catalog, budget, workspace, run_name, original_revenue):
+    """Recheck one candidate's physical trace; reuse only a session-owned original."""
     if type(budget) is not BundleBudget or not isinstance(workspace, Workspace):
         raise ContractError("BREAK_EVEN_EXECUTION_CONTEXT")
     if not isinstance(run_name, str) or re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", run_name) is None:
@@ -208,7 +216,9 @@ def replay_price_candidate(control, original_export, methods, original_bundle, g
             settle = calculate_ground if control["pv_type"] == "utility_scale_ground" else calculate_rooftop
             args = dict(generation_dir=generation_dir, generation_result_hash=control["generation_result_hash"],
                         catalog=catalog, budget=budget)
-            baseline = settle(original_export, method, output_dir=root / "original-3c", bundle=original_bundle, **args)
+            baseline = (settle(original_export, method, output_dir=root / "original-3c",
+                               bundle=original_bundle, **args)
+                        if original_revenue is None else original_revenue)
             scenario = settle(candidate_export, method, output_dir=root / "candidate-3c", bundle=derived, **args)
             ledger_key = "export_sales_revenue" if fid.endswith("sale_price") else "self_value"
             def settled_amount(result):
