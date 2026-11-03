@@ -1,0 +1,269 @@
+{
+  "historical_evidence_sha256": "5680a268c71c40d62b00f0750db550bc1b1f73dea3c9c20d2e826b016aa6f78e",
+  "historical_independent_l2_elapsed_seconds": "15332.98",
+  "l2_ids": 60,
+  "l2_junit": "c59fda8e235de0fe85ef98262a35ecc99117d1f0cb30a5294b91cefc5e321838",
+  "l2_outcomes": {
+    "error": 0,
+    "failure": 0,
+    "passed": 59,
+    "skipped": 1
+  },
+  "l2_skips": {
+    "tests.solar-pv.test_phase3e_candidate_replay::test_workspace_rejects_real_symlink": "Windows symlink privilege unavailable: 22"
+  },
+  "l3_covered_l2": {
+    "tests/solar-pv/test_phase3e_break_even_project_npv.py::test_altered_source_bytes_rejected_before_replay": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_break_even_project_npv.py::test_one_candidate_recalculates_original_and_sourced_project_npv": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_break_even_project_session.py::test_cannot_certify_unproven_executable_root_or_legacy_interpolation": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_break_even_project_session.py::test_declared_independent_project_has_real_full_chain_root_witness": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_break_even_project_session.py::test_in_place_source_or_control_changes_invalidate_original_cache": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_break_even_project_session.py::test_original_price_is_reused_without_neighboring_fake_price": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_candidate_replay.py::test_candidate_workspace_is_private_and_separate_from_pytest": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_candidate_replay.py::test_d3_budget_rejects_full_original_before_any_candidate_directory": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_candidate_replay.py::test_derived_export_preserves_an_unselected_price_row_and_original_candidate": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_candidate_replay.py::test_existing_candidate_directory_is_not_overwritten": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_candidate_replay.py::test_future_price_row_with_no_settled_energy_does_not_publish_candidate": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_candidate_replay.py::test_invalid_source_does_not_publish_candidate": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_candidate_replay.py::test_market_8760_candidate_rebinds_only_selected_row": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_candidate_replay.py::test_real_replay_changes_only_one_atom_and_runs_both_3c_calculations": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_candidate_replay.py::test_unapproved_pytest_workspace_and_traversal_are_rejected": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_candidate_replay.py::test_workspace_rejects_real_hardlink": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_candidate_replay.py::test_workspace_rejects_real_symlink": {
+      "outcome": "skipped",
+      "reason": "Windows symlink privilege unavailable: 22"
+    },
+    "tests/solar-pv/test_phase3e_candidate_replay.py::test_workspace_rejects_real_windows_junction": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_candidate_replay.py::test_wrong_generation_hash_cleans_only_the_owned_unpublished_run": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_financial_candidate_replay.py::test_b1_cash_invoices_receivables_and_real_receipts": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_financial_candidate_replay.py::test_b2_independent_vat_loss_income_tax_debt_and_cash": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_financial_candidate_replay.py::test_mismatched_financial_inputs_and_method_hash_rejected": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_financial_candidate_replay.py::test_missing_financial_input_fails_without_valid_ledger": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_financial_candidate_replay.py::test_missing_financial_method_cleans_owned_run_after_valid_settlement": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_price_selector.py::test_duplicate_row_identity_cannot_be_resolved_by_array_position": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_price_selector.py::test_market_row_requires_full_readable_d3_and_exact_one_row": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_price_selector.py::test_rooftop_self_use_quote_is_selected_without_touching_sale_price[tariff.periods.avoidable_price-None-expected0]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_price_selector.py::test_rooftop_self_use_quote_is_selected_without_touching_sale_price[tariff.ppa_price-PPA_FIXED-expected1]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_price_selector.py::test_selected_price_must_be_used_by_current_settlement_method": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_price_selector.py::test_selector_rejects_unauthorized_or_wrong_identity[<lambda>0]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_price_selector.py::test_selector_rejects_unauthorized_or_wrong_identity[<lambda>10]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_price_selector.py::test_selector_rejects_unauthorized_or_wrong_identity[<lambda>1]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_price_selector.py::test_selector_rejects_unauthorized_or_wrong_identity[<lambda>2]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_price_selector.py::test_selector_rejects_unauthorized_or_wrong_identity[<lambda>3]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_price_selector.py::test_selector_rejects_unauthorized_or_wrong_identity[<lambda>4]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_price_selector.py::test_selector_rejects_unauthorized_or_wrong_identity[<lambda>5]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_price_selector.py::test_selector_rejects_unauthorized_or_wrong_identity[<lambda>6]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_price_selector.py::test_selector_rejects_unauthorized_or_wrong_identity[<lambda>7]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_price_selector.py::test_selector_rejects_unauthorized_or_wrong_identity[<lambda>8]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_price_selector.py::test_selector_rejects_unauthorized_or_wrong_identity[<lambda>9]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_price_selector.py::test_strict_selector_binds_single_sourced_price_and_existing_basis": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_binding.py::test_missing_year_end_method_blocks_cash_and_unproven_events_remain_blocked": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_binding.py::test_mutated_claim_cannot_spoof_current_result[basis]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_binding.py::test_mutated_claim_cannot_spoof_current_result[d3_content_hash]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_binding.py::test_mutated_claim_cannot_spoof_current_result[evaluation_date]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_binding.py::test_mutated_claim_cannot_spoof_current_result[method_config_hash]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_binding.py::test_mutated_claim_cannot_spoof_current_result[phase2_input_hash]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_binding.py::test_mutated_claim_cannot_spoof_current_result[phase2_source_snapshot_id]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_binding.py::test_mutated_claim_cannot_spoof_current_result[phase3b_result_hash]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_binding.py::test_mutated_claim_cannot_spoof_current_result[phase3c_result_hash]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_binding.py::test_mutated_claim_cannot_spoof_current_result[phase3d_result_hash]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_binding.py::test_mutated_claim_cannot_spoof_current_result[project_id]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_binding.py::test_mutated_claim_cannot_spoof_current_result[scenario_id]": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_binding.py::test_real_candidate_identity_and_asset_coverage": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_binding.py::test_resealed_mismatched_upstream_and_incomplete_asset_cover_rejected": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_binding.py::test_terminal_binding_gate_exists": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_binding.py::test_terminal_tax_and_cash_reconciliation_gate_exists": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_npv.py::test_no_disposition_has_independent_decimal_cashflow_and_npv": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_npv.py::test_rebound_old_candidate_and_unknown_terminal_date_never_publish_npv": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "tests/solar-pv/test_phase3e_terminal_npv.py::test_sourced_npv_entry_exists": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  "l3_ids": 4184,
+  "l3_outcomes": {
+    "error": 0,
+    "failure": 0,
+    "passed": 4177,
+    "skipped": 7
+  },
+  "missing_ids": [],
+  "not_a_new_l3_pass_or_current_candidate_coverage": true,
+  "schema": "solar-pv-historical-id-overlap/1",
+  "solar_l3_junit": "ae25b9d218454519031860403259e145066bdfc41632c81da7642efc89d3acd6",
+  "verdict": "HISTORICAL_ID_MATCH_ONLY"
+}
