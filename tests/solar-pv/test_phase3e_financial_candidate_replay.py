@@ -32,7 +32,7 @@ def _row(catalog, family, row_id, values):
         for key, value in values.items()}}
 
 
-def _finance(session, methods):
+def _finance(session, methods, *, opex_amount=D("113")):
     catalog = session.catalog
     scalar = {
         "schedule.commissioning_date": "2025-01-01", "finance.working_capital": D("200"),
@@ -55,7 +55,7 @@ def _finance(session, methods):
     ])
     session.project.values["opex.items"] = atom(catalog, "opex.items", [
         _row(catalog, "opex.items", "SYNTHETIC-opex-1", {
-            "row_id": "SYNTHETIC-opex-1", "category": "operations", "base_amount": D("113"),
+            "row_id": "SYNTHETIC-opex-1", "category": "operations", "base_amount": opex_amount,
             "from_year": 1, "to_year": 1, "escalation_rate": D(0),
             "tax_included": True, "vat_rate": D("0.13"), "recoverable_vat_share": 1,
             "contract_id": "SYNTHETIC-opex-contract",
@@ -116,13 +116,16 @@ def _control(exported, methods, bundle_hash, generation_hash):
                        "license_status": "AUTHORIZED"}}
 
 
-def _build_financial_case(*, evaluation_date=None, project_rate=None):
+def _build_financial_case(*, evaluation_date=None, project_rate=None,
+                          project_id=None, opex_amount=D("113")):
     root = Path(os.environ["TMPDIR"]) / ("synthetic-p2-3a-finance-" + uuid4().hex)
     root.mkdir(mode=0o700)
     catalog = Catalog()
     budget = BundleBudget(max_seconds=1800)
     session, generation_methods = case(catalog, "industrial_rooftop", years=1)
     session, settlement_methods = extend(session, generation_methods)
+    if project_id is not None:
+        session.project.project_id = project_id
     if evaluation_date is not None:
         session.project.values["project.evaluation_date"] = atom(catalog, "project.evaluation_date", evaluation_date)
     session.project.values["project.cashflow_tax_basis"] = atom(catalog, "project.cashflow_tax_basis", "post_tax")
@@ -145,7 +148,7 @@ def _build_financial_case(*, evaluation_date=None, project_rate=None):
                             "maturity_ceiling": "L1", "noncritical": False,
                             "decision_invariant": False},
             )
-    methods = _finance(session, settlement_methods)
+    methods = _finance(session, settlement_methods, opex_amount=opex_amount)
     generation_input = validate_export(session.export(), catalog).export
     write_bundle(root / "resource", base_export=generation_input,
                  datasets={"resource.timeseries": {"header": resource_header(catalog), "rows": resource_rows(catalog)}},
