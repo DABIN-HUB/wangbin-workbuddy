@@ -233,6 +233,14 @@ def _verify(args: argparse.Namespace) -> int:
     collected = _receipt(args.collection)
     solar = _receipt(args.solar)
     workbuddy = _receipt(args.workbuddy)
+    current_identity = _identity()
+    if any(item["identity_before"] != current_identity
+           for item in (collected, solar, workbuddy)):
+        raise GateError("HISTORICAL_ONLY: receipt source/test/config/HEAD differs from current checkout")
+    current_conditions = _conditions()
+    if any(item["conditions"] != current_conditions
+           for item in (collected, solar, workbuddy)):
+        raise GateError("HISTORICAL_ONLY: execution conditions differ from current checkout")
     if (collected["tier"], solar["tier"], workbuddy["tier"]) != (
             "collect-l2", "l3-solar", "l3-workbuddy"):
         raise GateError("incorrect receipt tiers")

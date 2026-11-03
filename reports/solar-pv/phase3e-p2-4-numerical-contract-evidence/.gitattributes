@@ -1,0 +1,4 @@
+# Keep archived execution bytes identical to the hashed evidence on every checkout.
+*.json -text
+*.xml -text
+*.log -text

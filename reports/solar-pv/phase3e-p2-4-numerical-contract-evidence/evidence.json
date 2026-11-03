@@ -1,0 +1,81 @@
+{
+  "schema": "solar-pv-phase3e-p2-4-numerical-acceptance-evidence/draft-0.2",
+  "status": "DIAGNOSTIC_ONLY_NOT_A_FORMAL_ROOT_CERTIFICATE",
+  "contract": "docs/solar-pv/19-phase3e-p2-4-numerical-acceptance-draft.md",
+  "prior_head_during_fast_contract_collection": "d6ad8f5c8b3bd3881cfa90ade864bd6afce3f02a",
+  "source_and_model": {
+    "predeclaration_path": "reports/solar-pv/phase3e-p2-4b-c-synthetic-predeclaration.json",
+    "predeclaration_sha256": "331fff8b0f2945eadfb493db111068fd13899f42294c0624c2f7415729234c66",
+    "historical_evidence_path": "reports/solar-pv/phase3e-p2-4b-c-root-certification-evidence.json",
+    "historical_evidence_sha256": "5680a268c71c40d62b00f0750db550bc1b1f73dea3c9c20d2e826b016aa6f78e",
+    "ideal_expression_yuan": "-1330+(65700*p+140160-180000+200)/(11/10)",
+    "price_domain_yuan_per_kwh": ["0", "2"],
+    "ideal_npv_at_endpoints_yuan": ["-411030/11", "902970/11"],
+    "ideal_slope_yuan_per_yuan_per_kwh": "657000/11",
+    "unique_ideal_root_yuan_per_kwh": "4567/7300",
+    "price_width_tolerance_yuan_per_kwh": "0.000001",
+    "ideal_npv_change_at_full_price_width_yuan": "657/11000",
+    "proposed_synthetic_monetary_residual_yuan": "1",
+    "monetary_residual_approval": "PENDING_USER_NO_DEFAULT_NO_FORMAL_PASS",
+    "real_project_inherits_synthetic_residual": false
+  },
+  "finite_precision_diagnostic": {
+    "archived_witness_path": "reports/solar-pv/phase3e-p2-4b-c-root-certification-evidence/root-l1/root-witness-reference/phase3e/candidate-3e/result.json",
+    "archived_witness_sha256": "9b561a7f6fcac7aec3d4c326538528a4b81f6df49e597b5d1f85bf6734a36f45",
+    "archived_decimal_price_yuan_per_kwh": "0.6256164383561643835616438356164383561643835616438356164383561643835616438356164383561643835616438356",
+    "fractional_price_digits": 100,
+    "absolute_price_delta_from_ideal_root_less_than_yuan_per_kwh": "1e-100",
+    "ideal_npv_absolute_at_archived_price_less_than_yuan": "(657000/11)*1e-100",
+    "recorded_executable_npv_yuan_at_this_one_point": "0E-22",
+    "price_width_or_uniform_model_error_proven": false,
+    "precise_full_executable_root_set_proven": false
+  },
+  "formal_result": {
+    "path": "reports/solar-pv/phase3e-p2-4b-c-root-certification-evidence/formal-blocked-result.json",
+    "file_sha256": "1d7e29e53f755683b8f2bf84f2509362f4329aa21af716730f6f7a74fd5d18a4",
+    "overall_status": "PARTIAL",
+    "break_even_status": "BLOCKED_MISSING_INPUT",
+    "break_even_value": null,
+    "reason": "BLOCKED_ROOT_SET_COMPLETENESS_UNPROVEN"
+  },
+  "orchestration_validation": {
+    "scope": "PRE_COMMIT_CODE_TEST_CONFIG_SNAPSHOT_NOT_NEW_L3",
+    "input_sha256": "90b4b66cb00d497d421d8444ce46cb6845e16e2080419e74983b3be926eb4e12",
+    "fast": {
+      "receipt": "fast/receipt.json",
+      "receipt_sha256": "b54e1d242b576f4c6266c6b1c75aea368141abc9e8e2ef7870d88f8aa8bfbcea",
+      "junit": "fast/junit.xml",
+      "junit_sha256": "304c7b058c6142c32816f86e4da0063746e8e3d1c7841137e0792146a3119fb9",
+      "exit_code": 0,
+      "passed": 64,
+      "skipped": 0,
+      "failed": 0,
+      "error": 0
+    },
+    "contract": {
+      "receipt": "contract/receipt.json",
+      "receipt_sha256": "3f451e37c64c750aad64ea987743c98dfe2ae258e1f3fc15e89d3a2794e87431",
+      "junit": "contract/junit.xml",
+      "junit_sha256": "a3f3e7f7f5d5b64aa62303ed8a317403c87b8beb33d75cbee4036da782a9b8c9",
+      "exit_code": 0,
+      "passed": 35,
+      "skipped": 0,
+      "failed": 0,
+      "error": 0
+    },
+    "collected_l2": {
+      "receipt": "collection/receipt.json",
+      "receipt_sha256": "2309eaf2d8b0418a5be211f21ea766b20ccd0b70e2b1a4703a2112391b594053",
+      "exit_code": 0,
+      "node_ids": 60,
+      "parameterized_node_ids": 24,
+      "ids_present_in_archived_solar_l3": 60,
+      "skipped_in_archived_solar_l3": 1,
+      "archived_overlap_verdict": "HISTORICAL_ID_MATCH_ONLY"
+    },
+    "verify_with_old_receipts_exit_code": 2,
+    "verify_with_old_receipts_reason": "HISTORICAL_ONLY: receipt source/test/config/HEAD differs from current checkout",
+    "new_l3_executed": false,
+    "l2_from_new_l3_certified": false
+  }
+}
