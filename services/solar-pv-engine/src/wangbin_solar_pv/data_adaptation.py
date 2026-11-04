@@ -216,6 +216,21 @@ def approve_candidates(exported, adaptation, catalog, *, raw, descriptor, review
                 or item.get("value") != checked["original_value"]
                 or item.get("unit") != checked["original_unit"]):
             raise ContractError("ADAPTER_CANDIDATE_CHANGED")
+        coverage = source["coverage"]
+        expected_record = make_record(catalog, item["field_id"], item["value"],
+            source_kind=source["source_kind"], original_unit=item["unit"],
+            source_id=source["source_id"], source_url_or_attachment=source["source_reference"],
+            source_section_or_cell=position, retrieved_at=source["acquired_at"],
+            effective_from=coverage["start"], effective_to=coverage["end"],
+            measurement_period={"start": coverage["start"], "end": coverage["end"],
+                                "timezone": coverage["timezone"],
+                                "interval_minutes": coverage["interval_minutes"], "coverage": 1},
+            geography=f"{coverage['lat_min']},{coverage['lon_min']}..{coverage['lat_max']},{coverage['lon_max']}",
+            license_status=source["license_status"], economic_basis=source["economic_basis"],
+            confidence_basis="固定响应未经过人工逐字段核验；仅为待审候选",
+            location_status="EXACT", last_updated=checked["last_updated"])
+        if checked != expected_record:
+            raise ContractError("ADAPTER_CANDIDATE_CHANGED")
         checked.update(status="VERIFIED", reviewer=reviewer, last_updated=reviewed_at,
                        confidence_basis=evidence_note)
         if any(issue.severity == "ERROR" for issue in validate_record(checked, catalog)):

@@ -81,6 +81,19 @@ def test_rejects_false_real_label_for_synthetic_source():
     assert rejected.value.code == "ADAPTER_SYNTHETIC_IDENTITY"
 
 
+def test_tampered_offline_bytes_cannot_pass_review_even_with_rehashed_candidate():
+    catalog, export, descriptor, raw, now = _case()
+    forged = adapt_offline_response(export, descriptor, raw, catalog, as_of=now)
+    forged["status"] = "READY_FOR_REVIEW"
+    forged["mode"] = "REAL"
+    forged["snapshot_hash"] = digest({k: v for k, v in forged.items()
+                                      if k not in {"status", "reason", "snapshot_hash"}})
+    with pytest.raises(ContractError) as rejected:
+        approve_candidates(export, forged, catalog, raw=raw + b" ", descriptor=descriptor,
+                           reviewer="human", reviewed_at=now, evidence_note="test only")
+    assert rejected.value.code == "ADAPTER_RAW_CHANGED"
+
+
 def test_f04_private_draft_has_frozen_sheets_and_canonical_identity(tmp_path):
     catalog, _, _ = _fixture()
     base = Path(__file__).resolve().parents[2] / "reports" / "solar-pv" / "phase3g-synthetic" / "rooftop" / "base"

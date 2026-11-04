@@ -21,7 +21,7 @@
 - 样件：`reports/solar-pv/phase4-synthetic/资料来源与假设清单-DRAFT_PARTIAL.xlsx`，从前阶段 `SYNTHETIC-industrial_rooftop` BASE 的经校验 canonical 和公式映射实际生成。文件 **77,673 字节**、SHA-256 **d2d1fc780c7a209a1b0f31346c5ef49c5d94ca82fb6eb284663b3c166e45e821**；重新解析 ZIP/10 sheet 均成功，未含外部链接或 VBA，未发现公式单元。10 sheet 实际行数依次为 **209/15/10/144/10/10/79/10/567/12**。这是单文件来源草稿，**不是**四文件交付或投资决策依据。
 - 固定离线响应专项：明确 SYNTHETIC 的资源标量候选保持 `UNVERIFIED` 与 `SYNTHETIC_ONLY`，人工批准接口拒绝把它改成 REAL；缺失、重复冲突、过期和 DENIED 许可各自拒绝/阻断。既有 **8760 行** SYNTHETIC D3 原始时序只读核验：`SYNTHETIC_ONLY`，D3 内容哈希相等，行数及每行质量/POA/温度/风守卫通过；这不是 PVGIS/NASA 网络可用性测试。
 - `run_project` 最小负例联调：将不匹配的有效 Phase 2 导出指向另一个有效 D3，实际返回 **`PROJECT_BUNDLE_BASE_MISMATCH`**，无项目目录发布。原 Phase 3G 的合法 SYNTHETIC 项目链有历史实算，但本轮**未**对经人工批准的真实适配来源重新执行项目，正例保持 **NOT_TESTED**。
-- 当前最终代码的编译/导入及直接相关快速测试：`test_phase4_data_adaptation.py + test_phase3g_project_runner.py` **8 passed、0 failed，28.13 秒**。样件 CLI 实际退出 0 并给出 `DRAFT_PARTIAL`，重新打开文件与 SHA-256 均核对。D3 只读资源专项约 **62.53 秒**；不匹配基座的生产入口拒绝约 **50.64 秒**。这些不是 pytest 运行时间，也不是 Phase 3/4 完整计算耗时。
+- 当前最终代码的编译/导入及直接相关快速测试：`test_phase4_data_adaptation.py + test_phase3g_project_runner.py` **9 passed、0 failed，32.51 秒**，含伪造审核状态及篡改原始字节负例。样件 CLI 实际退出 0 并给出 `DRAFT_PARTIAL`，重新打开文件与 SHA-256 均核对。D3 只读资源专项约 **62.53 秒**；不匹配基座的生产入口拒绝约 **50.64 秒**。这些专项的用时不等于 Phase 3/4 完整计算耗时。
 - 暂缓：真实外部接口与许可闭环、资源原生格式解析、真实来源审批正例、完整项目 E2E、19+10 全模型/四文件、Word/PDF、L2/L3、WorkBuddy 安装/上传/审核均 **NOT_TESTED 或 NOT_IMPLEMENTED**；原 Phase 3E/3F/3G 的专业阻断不变。Phase 4 正式入口 Phase 3 PASS、出口真实接口或充分 UNAVAILABLE 证据与 F04 全字段/视觉/安全验收均**未关闭**，不进入 Phase 5。
 
 本轮本地提交 SHA 以 Git 最终读回为准；禁止 push、merge、部署或发布。Phase 7 完成并集中验收前不上传 WorkBuddy；用户确认前不启动 Phase 8A–8G。
