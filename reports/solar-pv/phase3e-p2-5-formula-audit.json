@@ -1,0 +1,607 @@
+{
+  "schema": "solar-pv-phase3e-p2-5-formula-baseline-audit/1",
+  "scope": "FROZEN_21_ARCHIVED_BASELINE_PLUS_CURRENT_SYNTHETIC_E2E_REFERENCE_NOT_SEALED_PROJECT",
+  "frozen_catalog": {
+    "total": 89,
+    "phase3e": 21,
+    "definition_version": "solar-pv-formula-definitions/1.0.1",
+    "definition_hash": "617a2e9d314c095bd2ec893939c930a2323be6fd7805da12bf6d6fdd70274808",
+    "main_sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331",
+    "extensions_sha256": "14bb789c908f4f883910fd517fd2cf55cf0719739f9fdd84e4dc61b111252007"
+  },
+  "archive_sha256": "1d7e29e53f755683b8f2bf84f2509362f4329aa21af716730f6f7a74fd5d18a4",
+  "source_hash_when_audited": "eb59cd690c9614988a941792057aa2407aa55787f37e975738c8c638367bf17e",
+  "current_reconciliation_file_sha256": "db70c6089da2acbd5955272d5038f23871f0209cbfc872254a22a1faff1d73bc",
+  "preflight_junit_sha256": "80e17025b1f4b1e9332a6c35ee7ae1519b307c23c2297b0fbe56d67afdc0c15b",
+  "preflight_fast_passed": 64,
+  "formulas": [
+    {
+      "formula_id": "F-PROJECT-CASH-FLOW",
+      "frozen_equation": "CF_P,y = B_op,y − O_y − T_P,y − K_P,y − ΔW_P,y + S_P,y",
+      "frozen_inputs": [
+        "finance.project_operating_cash_benefit",
+        "opex.cash_annual",
+        "tax.project_cash_total",
+        "capex.unlevered_cash_annual",
+        "working_capital.project_net_change",
+        "finance.project_terminal_cash"
+      ],
+      "frozen_output_field": "finance.project_cash_flow",
+      "unit": "元",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "CALCULATED",
+        "reason": null,
+        "value_is_null": false,
+        "metric_id": "financial.phase3e.project_cash_flow",
+        "details": {
+          "formula_id": "F-PROJECT-CASH-FLOW",
+          "precision_digits": 80
+        }
+      },
+      "scope_decision": "ALREADY_CONNECTED_SYNTHETIC_ONLY",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_project_cash_flow_is_signed_and_does_not_round_early",
+      "atomic_assertion_limit": "atomic values/branch only; not a sourced full-project PASS",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-PROJECT-PRETAX-CASH-FLOW",
+      "frozen_equation": "CF_P,pre,y = CF_P,y + T_inc,cash,P,y",
+      "frozen_inputs": [
+        "finance.project_cash_flow",
+        "tax.project_income_cash_paid"
+      ],
+      "frozen_output_field": "finance.project_pretax_cash_flow",
+      "unit": "元",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "CALCULATED",
+        "reason": null,
+        "value_is_null": false,
+        "metric_id": "financial.phase3e.project_pretax_cash_flow",
+        "details": {
+          "formula_id": "F-PROJECT-PRETAX-CASH-FLOW",
+          "precision_digits": 80
+        }
+      },
+      "scope_decision": "ALREADY_CONNECTED_SYNTHETIC_ONLY",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_all_remaining_formula_kernels_have_independent_normal_case",
+      "atomic_assertion_limit": "current fast test checks normal-case CALCULATED status only; numeric values require separate independent reference",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-EQUITY-AVAILABLE-CASH-FLOW",
+      "frozen_equation": "CF_E,avail,y = B_op,y − O_y − T_E,y − K_E,y − ΔW_E,y + S_E,y + DD_y − PRN_y − INT_y − FF_y",
+      "frozen_inputs": [
+        "finance.project_operating_cash_benefit",
+        "opex.cash_annual",
+        "tax.equity_cash_total",
+        "capex.equity_asset_cash_annual",
+        "working_capital.equity_net_change",
+        "finance.equity_terminal_cash",
+        "debt.cash_drawdown",
+        "debt.principal_paid",
+        "debt.interest_paid",
+        "debt.finance_fees_paid"
+      ],
+      "frozen_output_field": "finance.equity_available_cash_flow",
+      "unit": "元",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "BLOCKED_MISSING_INPUT",
+        "reason": "BLOCKED_MISSING_OWNER_TERMINAL_CASH",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.equity-available-cash-flow",
+        "details": {
+          "project_result": "BLOCKED_MISSING_INPUT"
+        }
+      },
+      "scope_decision": "BLOCKED_OR_NOT_CONNECTED_REQUIRES_SOURCE_OR_CONTRACT",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_all_remaining_formula_kernels_have_independent_normal_case",
+      "atomic_assertion_limit": "current fast test checks normal-case CALCULATED status only; numeric values require separate independent reference",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-EQUITY-INVESTOR-CASH-FLOW",
+      "frozen_equation": "CF_E,y = DIV_y + EXIT_y − EQ_y",
+      "frozen_inputs": [
+        "equity.distributions",
+        "equity.exit_receipts",
+        "equity.contributions"
+      ],
+      "frozen_output_field": "finance.equity_investor_cash_flow",
+      "unit": "元",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "BLOCKED_MISSING_INPUT",
+        "reason": "BLOCKED_MISSING_OWNER_CASH_EVENTS",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.equity-investor-cash-flow",
+        "details": {
+          "project_result": "BLOCKED_MISSING_INPUT"
+        }
+      },
+      "scope_decision": "BLOCKED_OR_NOT_CONNECTED_REQUIRES_SOURCE_OR_CONTRACT",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_all_remaining_formula_kernels_have_independent_normal_case",
+      "atomic_assertion_limit": "current fast test checks normal-case CALCULATED status only; numeric values require separate independent reference",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-CASH-FUNDING-BALANCE",
+      "frozen_equation": "CLOSE_y = OPEN_y + CF_E,avail,y + EQ_y − DIV_y",
+      "frozen_inputs": [
+        "checks.cash_opening",
+        "finance.equity_available_cash_flow",
+        "equity.contributions",
+        "equity.distributions"
+      ],
+      "frozen_output_field": "checks.cash_closing",
+      "unit": "元",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "BLOCKED_MISSING_INPUT",
+        "reason": "BLOCKED_MISSING_ENTITY_OPENING_AND_OWNER_EVENTS",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.cash-funding-balance",
+        "details": {
+          "project_result": "BLOCKED_MISSING_INPUT"
+        }
+      },
+      "scope_decision": "BLOCKED_OR_NOT_CONNECTED_REQUIRES_SOURCE_OR_CONTRACT",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_all_remaining_formula_kernels_have_independent_normal_case",
+      "atomic_assertion_limit": "current fast test checks normal-case CALCULATED status only; numeric values require separate independent reference",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-NPV",
+      "frozen_equation": "NPV_b = Σ(y=0…N) CF_b,y / (1 + r_b)^y",
+      "frozen_inputs": [
+        "finance.selected_cash_flow",
+        "finance.selected_discount_rate",
+        "finance.cash_flow_basis",
+        "time.financial_end_year"
+      ],
+      "frozen_output_field": "finance.npv",
+      "unit": "元",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "CALCULATED",
+        "reason": null,
+        "value_is_null": false,
+        "metric_id": "financial.phase3e.project_npv",
+        "details": {
+          "formula_id": "F-NPV",
+          "precision_digits": 80
+        }
+      },
+      "scope_decision": "ALREADY_CONNECTED_SYNTHETIC_ONLY",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_npv_dated_npv_and_real_nominal_bridge_use_independent_reference_math",
+      "atomic_assertion_limit": "atomic values/branch only; not a sourced full-project PASS",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-DATED-NPV",
+      "frozen_equation": "NPV_b = Σ(k∈C) CF_b,k / (1 + r_b)^τ_k",
+      "frozen_inputs": [
+        "finance.dated_cash_flows",
+        "finance.selected_discount_rate",
+        "finance.cash_event_year_fraction",
+        "finance.cash_event_ids",
+        "finance.cash_flow_basis"
+      ],
+      "frozen_output_field": "finance.dated_npv",
+      "unit": "元",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "BLOCKED_MISSING_INPUT",
+        "reason": "BLOCKED_MISSING_DATED_CASH_EVENTS",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.dated-npv",
+        "details": {
+          "project_result": "BLOCKED_MISSING_INPUT"
+        }
+      },
+      "scope_decision": "BLOCKED_OR_NOT_CONNECTED_REQUIRES_SOURCE_OR_CONTRACT",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_npv_dated_npv_and_real_nominal_bridge_use_independent_reference_math",
+      "atomic_assertion_limit": "atomic values/branch only; not a sourced full-project PASS",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-NOMINAL-REAL-RATE",
+      "frozen_equation": "r_nom = (1 + r_real) × (1 + π) − 1",
+      "frozen_inputs": [
+        "finance.real_discount_rate",
+        "finance.general_inflation"
+      ],
+      "frozen_output_field": "finance.nominal_discount_rate",
+      "unit": "1/年",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "BLOCKED_MISSING_INPUT",
+        "reason": "BLOCKED_MISSING_INPUT",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.nominal_discount_rate",
+        "details": {
+          "missing_field_ids": [
+            "finance.real_discount_rate",
+            "finance.general_inflation"
+          ]
+        }
+      },
+      "scope_decision": "BLOCKED_OR_NOT_CONNECTED_REQUIRES_SOURCE_OR_CONTRACT",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_npv_dated_npv_and_real_nominal_bridge_use_independent_reference_math",
+      "atomic_assertion_limit": "atomic values/branch only; not a sourced full-project PASS",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-IRR-PROJECT",
+      "frozen_equation": "R_P = {r∈D : Σ(y=0…N) CF_P,y/(1+r)^y = 0}",
+      "frozen_inputs": [
+        "finance.irr_search_domain",
+        "finance.project_irr_cash_flow",
+        "time.financial_end_year"
+      ],
+      "frozen_output_field": "finance.project_irr_root_set",
+      "unit": "集合（元素为每年比例）",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "NOT_IMPLEMENTED",
+        "reason": "PROJECT_RETURN_INTEGRATION_NOT_IN_R1_3_SCOPE",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.project_irr",
+        "details": {
+          "upstream_project_cash_flow": "CALCULATED"
+        }
+      },
+      "scope_decision": "BLOCKED_OR_NOT_CONNECTED_REQUIRES_SOURCE_OR_CONTRACT",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_irr_reports_unique_root_and_multiple_or_no_root_states",
+      "atomic_assertion_limit": "atomic values/branch only; not a sourced full-project PASS",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-IRR-EQUITY",
+      "frozen_equation": "R_E = {r∈D : Σ(y=0…N) CF_E,y/(1+r)^y = 0}",
+      "frozen_inputs": [
+        "finance.irr_search_domain",
+        "finance.equity_investor_cash_flow",
+        "time.financial_end_year"
+      ],
+      "frozen_output_field": "finance.equity_irr_root_set",
+      "unit": "集合（元素为每年比例）",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "BLOCKED_MISSING_INPUT",
+        "reason": "BLOCKED_MISSING_OWNER_CASH_EVENTS",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.irr-equity",
+        "details": {
+          "project_result": "BLOCKED_MISSING_INPUT"
+        }
+      },
+      "scope_decision": "BLOCKED_OR_NOT_CONNECTED_REQUIRES_SOURCE_OR_CONTRACT",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_all_remaining_formula_kernels_have_independent_normal_case",
+      "atomic_assertion_limit": "current fast test checks normal-case CALCULATED status only; numeric values require separate independent reference",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-CUMULATIVE-CASH-FLOW",
+      "frozen_equation": "A_b,n = Σ(y=0…n) CF_b,y",
+      "frozen_inputs": [
+        "finance.selected_cash_flow",
+        "time.cumulative_end_year",
+        "finance.cash_flow_basis"
+      ],
+      "frozen_output_field": "finance.cumulative_cash_flow",
+      "unit": "元",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "NOT_IMPLEMENTED",
+        "reason": "PROJECT_RETURN_INTEGRATION_NOT_IN_R1_3_SCOPE",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.cumulative_cash_flow",
+        "details": {
+          "upstream_project_cash_flow": "CALCULATED"
+        }
+      },
+      "scope_decision": "NEWLY_CONNECTED_SYNTHETIC_E2E_DECIMAL_RECONCILED",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_all_remaining_formula_kernels_have_independent_normal_case",
+      "atomic_assertion_limit": "atomic test checks status only; current sourced SYNTHETIC 3E was independently reconciled with Decimal in phase3e-p2-5-decimal-reconciliation.json",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-STATIC-PAYBACK",
+      "frozen_equation": "PB_static,b = n − 1 + (−A_b,n−1) / CF_b,n",
+      "frozen_inputs": [
+        "finance.first_recovery_year",
+        "finance.pre_recovery_cumulative_cash",
+        "finance.recovery_year_cash_flow",
+        "finance.cash_flow_basis",
+        "time.financial_end_year"
+      ],
+      "frozen_output_field": "finance.static_payback_years",
+      "unit": "年",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "NOT_IMPLEMENTED",
+        "reason": "PROJECT_RETURN_INTEGRATION_NOT_IN_R1_3_SCOPE",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.static_payback",
+        "details": {
+          "upstream_project_cash_flow": "CALCULATED"
+        }
+      },
+      "scope_decision": "NEWLY_CONNECTED_SYNTHETIC_E2E_DECIMAL_RECONCILED",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_all_remaining_formula_kernels_have_independent_normal_case",
+      "atomic_assertion_limit": "atomic test checks status only; current sourced SYNTHETIC 3E was independently reconciled with Decimal in phase3e-p2-5-decimal-reconciliation.json",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-DISCOUNTED-CUMULATIVE-CASH",
+      "frozen_equation": "A_disc,b,n = Σ(y=0…n) CF_b,y / (1+r_b)^y",
+      "frozen_inputs": [
+        "finance.selected_cash_flow",
+        "finance.selected_discount_rate",
+        "time.cumulative_end_year",
+        "finance.cash_flow_basis"
+      ],
+      "frozen_output_field": "finance.discounted_cumulative_cash",
+      "unit": "元",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "NOT_IMPLEMENTED",
+        "reason": "PROJECT_RETURN_INTEGRATION_NOT_IN_R1_3_SCOPE",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.discounted_cumulative_cash",
+        "details": {
+          "upstream_project_cash_flow": "CALCULATED"
+        }
+      },
+      "scope_decision": "NEWLY_CONNECTED_SYNTHETIC_E2E_DECIMAL_RECONCILED",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_all_remaining_formula_kernels_have_independent_normal_case",
+      "atomic_assertion_limit": "atomic test checks status only; current sourced SYNTHETIC 3E was independently reconciled with Decimal in phase3e-p2-5-decimal-reconciliation.json",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-DYNAMIC-PAYBACK",
+      "frozen_equation": "PB_dynamic,b = n − 1 + (−A_disc,b,n−1)/(CF_b,n/(1+r_b)^n)",
+      "frozen_inputs": [
+        "finance.first_discounted_recovery_year",
+        "finance.pre_discounted_recovery_cumulative",
+        "finance.discounted_recovery_year_cash_flow",
+        "finance.selected_discount_rate",
+        "finance.cash_flow_basis",
+        "time.financial_end_year"
+      ],
+      "frozen_output_field": "finance.dynamic_payback_years",
+      "unit": "年",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "NOT_IMPLEMENTED",
+        "reason": "PROJECT_RETURN_INTEGRATION_NOT_IN_R1_3_SCOPE",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.dynamic_payback",
+        "details": {
+          "upstream_project_cash_flow": "CALCULATED"
+        }
+      },
+      "scope_decision": "NEWLY_CONNECTED_SYNTHETIC_E2E_DECIMAL_RECONCILED",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_all_remaining_formula_kernels_have_independent_normal_case",
+      "atomic_assertion_limit": "atomic test checks status only; current sourced SYNTHETIC 3E was independently reconciled with Decimal in phase3e-p2-5-decimal-reconciliation.json",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-LIFECYCLE-COST",
+      "frozen_equation": "Cost_P,y = K_P,y + O_y + T_cost,P,y + ΔW_P,y − S_P,y − SUB_P,y",
+      "frozen_inputs": [
+        "capex.unlevered_cash_annual",
+        "opex.cash_annual",
+        "lcoe.cost_taxes",
+        "working_capital.project_net_change",
+        "finance.project_terminal_cash",
+        "lcoe.cost_subsidy_offset"
+      ],
+      "frozen_output_field": "lcoe.project_cost_annual",
+      "unit": "元",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "BLOCKED_MISSING_INPUT",
+        "reason": "BLOCKED_MISSING_TERMINAL_CASH",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.lifecycle-cost",
+        "details": {
+          "project_result": "BLOCKED_MISSING_INPUT"
+        }
+      },
+      "scope_decision": "BLOCKED_OR_NOT_CONNECTED_REQUIRES_SOURCE_OR_CONTRACT",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_all_remaining_formula_kernels_have_independent_normal_case",
+      "atomic_assertion_limit": "current fast test checks normal-case CALCULATED status only; numeric values require separate independent reference",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-LCOE",
+      "frozen_equation": "LCOE = Σ(y=0…N) Cost_P,y/(1+r_L)^y / Σ(y=0…N) E_delivered,y/(1+r_L)^y",
+      "frozen_inputs": [
+        "lcoe.project_cost_annual",
+        "energy.delivered_annual_kwh",
+        "lcoe.discount_rate",
+        "time.financial_end_year"
+      ],
+      "frozen_output_field": "finance.lcoe",
+      "unit": "元/kWh",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "BLOCKED_MISSING_INPUT",
+        "reason": "BLOCKED_MISSING_TERMINAL_COST_BOUNDARY",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.lcoe",
+        "details": {
+          "project_result": "BLOCKED_MISSING_INPUT"
+        }
+      },
+      "scope_decision": "BLOCKED_OR_NOT_CONNECTED_REQUIRES_SOURCE_OR_CONTRACT",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_lcoe_cfads_dscr_and_break_even_are_bounded",
+      "atomic_assertion_limit": "atomic values/branch only; not a sourced full-project PASS",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-CFADS",
+      "frozen_equation": "CFADS_y = B_op,y − O_y − T_E,y − ΔW_ds,y − K_mand,y + A_ds,y",
+      "frozen_inputs": [
+        "finance.project_operating_cash_benefit",
+        "opex.cash_annual",
+        "tax.equity_cash_total",
+        "debt.cfads_working_capital_change",
+        "debt.cfads_mandatory_capex",
+        "debt.cfads_adjustments"
+      ],
+      "frozen_output_field": "debt.cfads",
+      "unit": "元",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "BLOCKED_MISSING_INPUT",
+        "reason": "BLOCKED_MISSING_INPUT",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.cfads",
+        "details": {
+          "missing_field_ids": [
+            "finance.cfads_definition",
+            "cfads.method",
+            "debt.cfads_adjustments"
+          ]
+        }
+      },
+      "scope_decision": "BLOCKED_OR_NOT_CONNECTED_REQUIRES_SOURCE_OR_CONTRACT",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_lcoe_cfads_dscr_and_break_even_are_bounded",
+      "atomic_assertion_limit": "atomic values/branch only; not a sourced full-project PASS",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-DSCR",
+      "frozen_equation": "DSCR_y = CFADS_y / DS_y",
+      "frozen_inputs": [
+        "debt.cfads",
+        "debt.service_due"
+      ],
+      "frozen_output_field": "debt.dscr",
+      "unit": "1",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "BLOCKED_MISSING_INPUT",
+        "reason": "BLOCKED_UPSTREAM_CFADS",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.dscr",
+        "details": {
+          "upstream_formula_id": "F-CFADS"
+        }
+      },
+      "scope_decision": "BLOCKED_OR_NOT_CONNECTED_REQUIRES_SOURCE_OR_CONTRACT",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_lcoe_cfads_dscr_and_break_even_are_bounded",
+      "atomic_assertion_limit": "atomic values/branch only; not a sourced full-project PASS",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-BREAK-EVEN-PRICE",
+      "frozen_equation": "P_star = {p∈P : NPV_b(CF_b(p), r_b) = 0}",
+      "frozen_inputs": [
+        "sensitivity.price_search_domain",
+        "finance.npv",
+        "sensitivity.price_cash_flow_vector",
+        "finance.selected_discount_rate",
+        "finance.cash_flow_basis"
+      ],
+      "frozen_output_field": "sensitivity.break_even_price_roots",
+      "unit": "集合（元素元/kWh）",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "BLOCKED_MISSING_INPUT",
+        "reason": "BLOCKED_ROOT_SET_COMPLETENESS_UNPROVEN",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.break-even-price",
+        "details": {
+          "evidence_id": "phase3e-break-even-root-certification",
+          "root_certification": "NOT_PROVEN",
+          "unmet_obligations": [
+            "NO_APPROVED_YUAN_NPV_ROOT_RESIDUAL_TOLERANCE",
+            "FINITE_DECIMAL_REPLAY_NOT_CERTIFIED_CONTINUOUS_AND_STRICTLY_MONOTONE_ON_FULL_DOMAIN",
+            "TAX_VAT_COLLECTION_AND_SETTLEMENT_BRANCHES_NOT_EXHAUSTIVELY_CERTIFIED",
+            "NO_PROOF_ALL_ROOTS_ARE_ENUMERATED"
+          ]
+        }
+      },
+      "scope_decision": "BLOCKED_OR_NOT_CONNECTED_REQUIRES_SOURCE_OR_CONTRACT",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_lcoe_cfads_dscr_and_break_even_are_bounded",
+      "atomic_assertion_limit": "atomic values/branch only; not a sourced full-project PASS",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-WORST-CASH-YEAR",
+      "frozen_equation": "Y_worst,b = argmin(y∈Y) CF_b,y",
+      "frozen_inputs": [
+        "finance.selected_cash_flow",
+        "risk.cash_year_scope",
+        "finance.cash_flow_basis"
+      ],
+      "frozen_output_field": "risk.worst_cash_years",
+      "unit": "集合（年份标签）",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "NOT_IMPLEMENTED",
+        "reason": "PROJECT_RETURN_INTEGRATION_NOT_IN_R1_3_SCOPE",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.worst_cash_year",
+        "details": {
+          "upstream_project_cash_flow": "CALCULATED"
+        }
+      },
+      "scope_decision": "BLOCKED_OR_NOT_CONNECTED_REQUIRES_SOURCE_OR_CONTRACT",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_worst_cash_year_preserves_supplied_year_labels",
+      "atomic_assertion_limit": "atomic values/branch only; not a sourced full-project PASS",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    },
+    {
+      "formula_id": "F-INVESTMENT-HURDLE-GAP",
+      "frozen_equation": "G_M = M_calc − M_target",
+      "frozen_inputs": [
+        "decision.calculated_metric",
+        "decision.target_metric"
+      ],
+      "frozen_output_field": "decision.metric_gap",
+      "unit": "与 M 同单位",
+      "value_kernel": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py:evaluate",
+      "orchestration": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py:calculate_sourced_project_npv",
+      "archived_sourced_synthetic": {
+        "status": "BLOCKED_MISSING_INPUT",
+        "reason": "BLOCKED_MISSING_USER_TARGET",
+        "value_is_null": true,
+        "metric_id": "financial.phase3e.investment-hurdle-gap",
+        "details": {
+          "project_result": "BLOCKED_MISSING_INPUT"
+        }
+      },
+      "scope_decision": "BLOCKED_OR_NOT_CONNECTED_REQUIRES_SOURCE_OR_CONTRACT",
+      "atomic_verification_test_node": "tests/solar-pv/test_phase3e_financial_metrics.py::test_all_remaining_formula_kernels_have_independent_normal_case",
+      "atomic_assertion_limit": "current fast test checks normal-case CALCULATED status only; numeric values require separate independent reference",
+      "current_project_result": "SEE reports/solar-pv/phase3e-p2-5-decimal-reconciliation.json#cases[*].actual_formula_statuses[formula_id]; SYNTHETIC ONLY"
+    }
+  ]
+}
