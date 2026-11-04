@@ -107,3 +107,7 @@ key_env: HERMES_CUSTOM_172_16_5_65_API_KEY
 | `wb-quality` | `gpt-6-sol` / `custom:codex-bz` / `codex_responses` | `HTTP 401: Invalid API key`，未返回 `QUALITY_READY` | 1 |
 
 复核时 Gateway 仍为 PID 18768，`wb-skill-factory` Board 仍为空且各状态计数为 0，团队工作树无未提交改动。四个模型调用仍未全部通过，后续 SOUL 生效、群聊消息、Dispatcher 领取、T00–T05、QA 返工和 ZIP 打包继续保持 NOT_TESTED；`TEAM_READY=PARTIAL`。
+
+## 2026-11-04 再次请求的模型复测
+
+应用户要求再次分别执行四个当前 Profile 的 `config get model.default`、`config get model.provider` 和低成本 `chat -q '请仅回复：<ROLE>_READY' -Q`。四个当前配置仍是 `gpt-6-sol` / `custom:codex-bz`。`wb-manager`、`wb-analyst`、`wb-developer`、`wb-quality` 均返回 `HTTP 401: Invalid API key`，各自模型请求退出状态均为 1，无任一 `*_READY` 正常回复。未改动配置或凭证。四个模型均未通过，T00–T05、群聊消息、QA 返工及 ZIP 验收继续 NOT_TESTED；`TEAM_READY=PARTIAL`。
