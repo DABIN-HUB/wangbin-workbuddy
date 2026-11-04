@@ -7,10 +7,12 @@ import pytest
 from consumption_case_support import atom, case, extend, parameter
 from wangbin_solar_pv.catalog import Catalog
 from wangbin_solar_pv.calculation.method_config import MethodConfig
-from wangbin_solar_pv.calculation.scenario_runner import prepare_scenario, prepare_scenarios
+from wangbin_solar_pv.calculation.scenario_runner import prepare_scenario, prepare_scenarios, run_scenario
 from wangbin_solar_pv.calculation.sensitivity import scenario_calculation_graph
 from wangbin_solar_pv.errors import ContractError
+from wangbin_solar_pv.local_files import Workspace
 from wangbin_solar_pv.serialization import digest, dumps
+from wangbin_solar_pv.timeseries_bundle import BundleBudget
 
 SOURCE = {"source_id": "SYNTHETIC:scenario-user", "source_reference": "SYNTHETIC:declared-case",
           "source_kind": "SYNTHETIC", "status": "ASSUMED", "license_status": "AUTHORIZED"}
@@ -165,3 +167,31 @@ def test_maintenance_input_and_signed_price_are_explicit_not_metric_scaling():
     assert scenario_calculation_graph(catalog, "utility_scale_ground", methods).affected_by(prepared.changed_field_ids) == ["3D", "3E"]
     signed = _input(export, "SALE_PRICE", "tariff.periods.sale_price", D("-0.1"), "flat")
     assert prepare_scenario(_control(export, methods, changes=[signed]), export, methods, catalog).changed_field_ids == ("tariff.periods.sale_price",)
+
+
+def test_discount_rate_does_not_copy_old_npv_when_terminal_binding_is_unavailable(tmp_path):
+    catalog, export, methods = _fixture()
+    changed = _input(export, "PROJECT_DISCOUNT", "finance.project_discount_rate", D("0.12"))
+    prepared = prepare_scenario(_control(export, methods, changes=[changed]), export, methods, catalog)
+    with pytest.raises(ContractError) as blocked:
+        run_scenario(prepared, export, methods, catalog=catalog,
+                     budget=BundleBudget(max_seconds=30), workspace=Workspace(tmp_path))
+    assert blocked.value.code == "BLOCKED_MISSING_INPUT"
+    assert not (tmp_path / prepared.run_id).exists()
+
+
+def test_poa_pr_does_not_masquerade_as_interval_generation_chain(tmp_path):
+    catalog, export, methods = _fixture()
+    config = methods.to_dict()
+    config["parameters"].update({"energy.method": parameter("energy.method", "POA_PR"),
+                                 "energy.pr": parameter("energy.pr", D("0.7"))})
+    methods = MethodConfig.from_dict(config)
+    change = {"factor": "GENERATION", "target_kind": "METHOD",
+              "selector": {"parameter_id": "energy.pr", "original_parameter_hash": digest(methods.to_dict()["parameters"]["energy.pr"])},
+              "value": D("0.8"), "source": deepcopy(SOURCE)}
+    prepared = prepare_scenario(_control(export, methods, changes=[change]), export, methods, catalog)
+    with pytest.raises(ContractError) as blocked:
+        run_scenario(prepared, export, methods, catalog=catalog,
+                     budget=BundleBudget(max_seconds=30), workspace=Workspace(tmp_path))
+    assert blocked.value.code == "BLOCKED_METHOD_REVIEW"
+    assert not (tmp_path / prepared.run_id).exists()

@@ -146,7 +146,7 @@ def _receipt(target, meter, writer, result, counts, calls):
     (target/"result.pending").rename(target/"result.json")
 
 
-def _calculate(exported, methods, *, generation_dir, generation_result_hash, catalog, output_dir, budget, bundle, category):
+def _calculate(exported, methods, *, generation_dir, generation_result_hash, catalog, output_dir, budget, bundle, category, scenario_id="BASE"):
     if type(budget) is not BundleBudget:
         raise ContractError("BUNDLE_BUDGET")
     budget.__post_init__()
@@ -246,8 +246,12 @@ def _calculate(exported, methods, *, generation_dir, generation_result_hash, cat
                         or not _near(inputs,a["gross_benefit"],a["self_value"]+a["export_sales_revenue"]+a["other_benefit"])
                         or not _near(inputs,a["benefit_after_transaction_cost"],a["gross_benefit"]-a["transaction_cost"])):
                     raise ContractError("CONSUMPTION_ANNUAL_CONSERVATION")
-            identity = calculation_identity(inputs.validated,inputs.methods,catalog,datasets=bundle)
+            identity = calculation_identity(inputs.validated,inputs.methods,catalog,datasets=bundle,
+                                            scenario={"scenario_id": scenario_id})
             result = deepcopy(generation.result)
+            result["scenario_id"] = scenario_id
+            for metric in result["results"]["metrics"]:
+                metric["scenario_id"] = scenario_id
             result["run_id"],result["created_at"] = str(uuid4()),datetime.now(timezone.utc).isoformat()
             snapshot = identity["source_snapshot"]
             snapshot["generation"] = {"result_hash":generation_result_hash,"input_hash":generation.result["input_hash"],
@@ -329,11 +333,11 @@ def _calculate(exported, methods, *, generation_dir, generation_result_hash, cat
         raise
 
 
-def calculate_rooftop(exported,methods,*,generation_dir,generation_result_hash,catalog,output_dir,budget,bundle=None):
+def calculate_rooftop(exported,methods,*,generation_dir,generation_result_hash,catalog,output_dir,budget,bundle=None,scenario_id="BASE"):
     return _calculate(exported,methods,generation_dir=generation_dir,generation_result_hash=generation_result_hash,
-        catalog=catalog,output_dir=output_dir,budget=budget,bundle=bundle,category="industrial_rooftop")
+        catalog=catalog,output_dir=output_dir,budget=budget,bundle=bundle,category="industrial_rooftop",scenario_id=scenario_id)
 
 
-def calculate_ground(exported,methods,*,generation_dir,generation_result_hash,catalog,output_dir,budget,bundle=None):
+def calculate_ground(exported,methods,*,generation_dir,generation_result_hash,catalog,output_dir,budget,bundle=None,scenario_id="BASE"):
     return _calculate(exported,methods,generation_dir=generation_dir,generation_result_hash=generation_result_hash,
-        catalog=catalog,output_dir=output_dir,budget=budget,bundle=bundle,category="utility_scale_ground")
+        catalog=catalog,output_dir=output_dir,budget=budget,bundle=bundle,category="utility_scale_ground",scenario_id=scenario_id)

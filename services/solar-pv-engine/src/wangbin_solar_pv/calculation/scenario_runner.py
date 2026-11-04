@@ -247,6 +247,7 @@ def seal_scenario_run(prepared, results, catalog):
         validate_result(result, catalog)
         if (result["project_id"] != prepared.input_export["project"]["project_id"]
                 or result["pv_type"] != prepared.input_export["project"]["pv_type"]
+                or result["scenario_id"] != prepared.scenario_id
                 or result["inputs"].get("normalized") != prepared.input_export["normalized_inputs"]
                 or result["inputs"].get("method_config_hash") != prepared.methods.hash
                 or result["inputs"].get("identity_payload", {}).get("phase2_input_hash")
@@ -257,10 +258,19 @@ def seal_scenario_run(prepared, results, catalog):
     if ("3D" in results and "3C" in results and
             results["3D"]["inputs"].get("upstream_settlement_result_hash") != results["3C"]["result_hash"]):
         raise ContractError("SCENARIO_UPSTREAM_RESULT_MISMATCH")
-    if ("3E" in results and "3D" in results and
-            results["3E"]["inputs"].get("identity_payload", {}).get("upstream_financial_result_hash")
-                != results["3D"]["result_hash"]):
-        raise ContractError("SCENARIO_UPSTREAM_RESULT_MISMATCH")
+    if "3E" in results and "3D" in results:
+        phase3e, financial = results["3E"], results["3D"]
+        upstream_hash = phase3e["inputs"].get("identity_payload", {}).get("upstream_financial_result_hash")
+        if upstream_hash is None:
+            # The common 3E producer extends a sealed 3D result in place and
+            # retains the same input/source identity and actual annual ledger.
+            if (phase3e["input_hash"] != financial["input_hash"]
+                    or phase3e["source_snapshot"] != financial["source_snapshot"]
+                    or phase3e["evidence"].get("financial-ledger")
+                        != financial["evidence"].get("financial-ledger")):
+                raise ContractError("SCENARIO_UPSTREAM_RESULT_MISMATCH")
+        elif upstream_hash != financial["result_hash"]:
+            raise ContractError("SCENARIO_UPSTREAM_RESULT_MISMATCH")
     receipt = {"scenario_id": prepared.scenario_id, "run_id": prepared.run_id,
                "original_input_hash": prepared.original_input_hash,
                "original_source_snapshot_id": prepared.original_source_snapshot_id,
@@ -270,3 +280,127 @@ def seal_scenario_run(prepared, results, catalog):
                "scenario_hash": prepared.scenario_hash,
                "stage_result_hashes": {stage: result["result_hash"] for stage, result in sorted(results.items())}}
     return {**receipt, "result_hash": digest(receipt)}
+
+
+def _trusted_original_settlement(result, original_export, original_methods, catalog):
+    from .result_contract import validate_result
+    validate_result(result, catalog)
+    if (result["project_id"] != original_export["project"]["project_id"]
+            or result["pv_type"] != original_export["project"]["pv_type"]
+            or result["inputs"].get("normalized") != original_export["normalized_inputs"]
+            or result["inputs"].get("method_config_hash") != original_methods.hash
+            or result["inputs"].get("identity_payload", {}).get("phase2_input_hash")
+                != original_export["input_hash"]
+            or result["source_snapshot"].get("phase2") != original_export["source_snapshot"]
+            or result["source_snapshot"].get("methods") != original_methods.to_dict()
+            or result["results"]["domains"].get("revenue") is None):
+        raise ContractError("SCENARIO_ORIGINAL_SETTLEMENT_IDENTITY")
+    return result
+
+
+def run_scenario(prepared, original_export, original_methods, *, catalog, budget, workspace,
+                 original_bundle=None, generation_dir=None, generation_result_hash=None,
+                 original_settlement=None):
+    """Execute affected 3B→3E producers, reusing only a pinned unaffected 3C.
+
+    The common Phase 3E producer remains partial without terminal cash. A
+    discount-only scenario cannot claim a new NPV using the old 3D result.
+    No calculated metric is scaled or copied into a new result envelope.
+    """
+    from pathlib import Path
+    from time import perf_counter
+
+    from ..local_files import Workspace
+    from ..timeseries_bundle import BundleBudget, TimeSeriesBundle, read_bundle, write_bundle
+    from .break_even_replay import _remove_owned, _verify_bundles
+    from .energy_yield import calculate_ground as generate_ground, calculate_rooftop as generate_rooftop
+    from .financial_ledger import calculate_financial_ledger, write_financial_bundle
+    from .phase3e import calculate_phase3e, write_phase3e_bundle
+    from .revenue import calculate_ground as settle_ground, calculate_rooftop as settle_rooftop
+    from .sensitivity import scenario_calculation_graph
+
+    if not isinstance(prepared, PreparedScenario) or type(budget) is not BundleBudget or not isinstance(workspace, Workspace):
+        raise ContractError("SCENARIO_EXECUTION_CONTEXT")
+    original = validate_export(original_export, catalog).export
+    original_methods = MethodConfig.from_dict(
+        original_methods.to_dict() if isinstance(original_methods, MethodConfig) else original_methods)
+    if (prepared.original_input_hash != original["input_hash"]
+            or prepared.original_source_snapshot_id != original["source_snapshot_id"]
+            or prepared.input_export["project"]["project_id"] != original["project"]["project_id"]
+            or prepared.input_export["project"]["pv_type"] != original["project"]["pv_type"]):
+        raise ContractError("SCENARIO_ORIGINAL_IDENTITY")
+    validate_export(prepared.input_export, catalog)
+    MethodConfig.from_dict(prepared.methods.to_dict())
+    graph = scenario_calculation_graph(catalog, original["project"]["pv_type"], prepared.methods)
+    affected = graph.affected_by(prepared.changed_field_ids,
+                                 method_parameter_ids=prepared.changed_method_ids)
+    # The current 3C trace consumer accepts only INTERVAL_DC_AC; the POA_PR
+    # producer has a distinct boundary. A valid D2 PR alternative alone is
+    # therefore not a runnable 3B→3C→3D sensitivity chain.
+    if "energy.pr" in prepared.changed_method_ids:
+        raise ContractError("BLOCKED_METHOD_REVIEW", "scenario.generation_interval_boundary")
+    # The only sourced terminal/NPV branch currently accepts an exact
+    # single-price derivative. It cannot legitimize a changed project rate.
+    if "finance.project_discount_rate" in prepared.changed_field_ids:
+        raise ContractError("BLOCKED_MISSING_INPUT", "scenario.project_npv_terminal_binding")
+    finance_only = not set(affected).intersection({"3B", "3C"})
+    reused = None
+    if finance_only and original_settlement is not None and prepared.methods.hash == original_methods.hash:
+        reused = _trusted_original_settlement(original_settlement, original, original_methods, catalog)
+    if reused is None and (not isinstance(original_bundle, TimeSeriesBundle)
+                           or generation_dir is None or generation_result_hash is None):
+        raise ContractError("BLOCKED_MISSING_INPUT", "scenario.upstream_generation_and_d3")
+    if original_bundle is not None and original_bundle.base_export != original:
+        raise ContractError("SCENARIO_ORIGINAL_BUNDLE_IDENTITY")
+    root = workspace.path(prepared.run_id, json_only=False)
+    if root.exists():
+        raise ContractError("SCENARIO_OUTPUT_EXISTS")
+    root.mkdir(mode=0o700)
+    identity = root.stat().st_dev, root.stat().st_ino
+    started = perf_counter()
+    try:
+        results = {}
+        if reused is None:
+            datasets = {name: {"header": original_bundle.manifest["datasets"][name]["header"],
+                               "rows": original_bundle.rows(name)}
+                        for name in original_bundle.dataset_ids}
+            write_bundle(root / "scenario-d3", base_export=prepared.input_export,
+                         datasets=datasets, catalog=catalog, budget=budget)
+            with read_bundle(root / "scenario-d3", catalog=catalog, budget=budget) as bundle:
+                _verify_bundles(original_bundle, bundle, "", None)
+                if "3B" in affected or prepared.scenario_id == "BASE" and generation_dir is None:
+                    generate = generate_ground if prepared.input_export["project"]["pv_type"] == "utility_scale_ground" else generate_rooftop
+                    results["3B"] = generate(prepared.input_export, prepared.methods, catalog=catalog,
+                                               output_dir=root / "scenario-3b", budget=budget, bundle=bundle,
+                                               scenario_id=prepared.scenario_id)
+                    generation_dir = root / "scenario-3b"
+                    generation_result_hash = results["3B"]["result_hash"]
+                settle = settle_ground if prepared.input_export["project"]["pv_type"] == "utility_scale_ground" else settle_rooftop
+                results["3C"] = settle(prepared.input_export, prepared.methods,
+                                        generation_dir=Path(generation_dir),
+                                        generation_result_hash=generation_result_hash,
+                                        catalog=catalog, output_dir=root / "scenario-3c", budget=budget,
+                                        bundle=bundle, scenario_id=prepared.scenario_id)
+        settlement = results.get("3C", reused)
+        if settlement is None:
+            raise ContractError("SCENARIO_SETTLEMENT_REQUIRED")
+        results["3D"] = calculate_financial_ledger(prepared.input_export, prepared.methods,
+                                                     settlement, catalog=catalog,
+                                                     scenario_id=prepared.scenario_id)
+        results["3E"] = calculate_phase3e(results["3D"], prepared.methods, catalog)
+        receipt = seal_scenario_run(prepared, results, catalog)
+        receipt["affected_stages"] = affected
+        receipt["reused_settlement_result_hash"] = None if reused is None else reused["result_hash"]
+        receipt["reused_generation_result_hash"] = (
+            generation_result_hash if "3B" not in results and reused is None else None)
+        receipt["result_hash"] = digest({key: value for key, value in receipt.items() if key != "result_hash"})
+        # Elapsed duration is operational evidence, not a scenario calculation
+        # identity. It is deliberately excluded from the reproducible digest.
+        receipt["elapsed_seconds"] = Decimal(str(perf_counter() - started))
+        write_financial_bundle(results["3D"], root / "scenario-3d")
+        write_phase3e_bundle(results["3E"], root / "scenario-3e")
+        Workspace(root).create("receipt.json", receipt)
+        return receipt
+    except BaseException:
+        _remove_owned(root, identity, workspace)
+        raise
