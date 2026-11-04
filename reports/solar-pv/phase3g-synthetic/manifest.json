@@ -1,0 +1,192 @@
+{
+  "members": {
+    "ground/base/canonical.json": {
+      "sha256": "dfb734baedb21da2c71c019b488aa849a814d6fe9f78e413fd83c4be6436e803",
+      "size_bytes": 1111509
+    },
+    "ground/base/formula-execution.json": {
+      "sha256": "e39a5f70098f6abe0057eb49648846aecee514531679ecefc83afd00ff85d6d6",
+      "size_bytes": 29252
+    },
+    "ground/base/receipt.json": {
+      "sha256": "05b5bb73180b1deda144556d437d09276178fe8a5ea1ef37f0dedbe47683cdc9",
+      "size_bytes": 1342
+    },
+    "ground/input-export.json": {
+      "sha256": "f800c7d9e00a10e73f048d95142b9248267d3f994d7a5b20eeecab332c90e46b",
+      "size_bytes": 1395207
+    },
+    "ground/methods.json": {
+      "sha256": "e0907d39f0b43120306a5507f2a6cd904d1e7f60801b4041d0d6f5557d43fcb1",
+      "size_bytes": 36413
+    },
+    "rooftop/base/canonical.json": {
+      "sha256": "b004d67e7e5e92b6bb30d87a89ae2e8038267c5213d656ad0dd89598698766c2",
+      "size_bytes": 1124072
+    },
+    "rooftop/base/formula-execution.json": {
+      "sha256": "0c1764c1911685dcde40d185a57ad48751934afc239d0f998afc5ff1fcb06fec",
+      "size_bytes": 29221
+    },
+    "rooftop/base/receipt.json": {
+      "sha256": "15a572a0e1b5f8908110f0eb3aea9a02d4fb61cd65c378745551dc2d3af51cd2",
+      "size_bytes": 2536
+    },
+    "rooftop/input-export.json": {
+      "sha256": "396402ba9b4b261486a613afcc0820044f22c062e052677d948de4cf3711076a",
+      "size_bytes": 1443109
+    },
+    "rooftop/methods.json": {
+      "sha256": "00979013c0ab8d756d8a1b1505263737e655569dbfaa2f0207d4da11844fb89d",
+      "size_bytes": 36436
+    },
+    "rooftop/optimistic/canonical.json": {
+      "sha256": "08695170ef224a376e854077d80f5b2e17e35a8a4ad536cda30cae0bace782f0",
+      "size_bytes": 1187196
+    },
+    "rooftop/optimistic/formula-execution.json": {
+      "sha256": "90c5873cbe22db143d914020938da0e03b04da3ed45128f2b0212e144830ae20",
+      "size_bytes": 29227
+    },
+    "rooftop/optimistic/receipt.json": {
+      "sha256": "3bc48cb2f7c886c827e9ef3ad967d3604e375498ebf734d6fbae4bc0c86113ff",
+      "size_bytes": 1121
+    },
+    "rooftop/pessimistic/canonical.json": {
+      "sha256": "6cbd6843929dc33b1bef4c3a158c9dd83f13db5f4234afea9f0f035d96f6dd4d",
+      "size_bytes": 1176161
+    },
+    "rooftop/pessimistic/formula-execution.json": {
+      "sha256": "8b6a0f1eaa1a1bd502ed3f8b7b985c4a35a1c08c4c210f663eccf3248851ffbf",
+      "size_bytes": 29228
+    },
+    "rooftop/pessimistic/receipt.json": {
+      "sha256": "7733b5b2100bdc23a7d1a2bb74641b6e7405135d9f48117cd476c1f0c0dc2db7",
+      "size_bytes": 1048
+    },
+    "rooftop/scenarios.json": {
+      "sha256": "8360b831c28d2a654f514aa871d16276ad1d377e495870aa3ff397a8efb536c4",
+      "size_bytes": 2558
+    }
+  },
+  "runs": {
+    "ground": {
+      "canonical_result_hash": "269c29a114a0d85f6914b96d383dab46fd1a0c8620014da6f7d915440ab86488",
+      "definition_hash": "617a2e9d314c095bd2ec893939c930a2323be6fd7805da12bf6d6fdd70274808",
+      "definition_version": "solar-pv-formula-definitions/1.0.1",
+      "elapsed_seconds": "98.47503710002638",
+      "formula_mapping_hash": "6e39c794ec272052483de1023f4a3b283284e59201996c3cb3ecfe49420d4bc7",
+      "method_config_hash": "540b94053ba193e2a0f5b25c3e150b8c8babed4a0950d934232e26dd53637f10",
+      "phase2_input_hash": "5714a03a60db11a3d8b22e091f279e61ec10ec44d1e41e3386ef019960512688",
+      "product_counts": {
+        "IMPLEMENTED_TESTED": 57,
+        "NOT_IMPLEMENTED": 32
+      },
+      "project_counts": {
+        "BLOCKED_MISSING_INPUT": 21,
+        "CALCULATED": 20,
+        "NOT_APPLICABLE": 1,
+        "NOT_IMPLEMENTED": 10,
+        "NOT_TESTED": 37
+      },
+      "project_id": "SYNTHETIC-utility_scale_ground",
+      "pv_type": "utility_scale_ground",
+      "receipt_hash": "3163b97ca7e327ee057bf7168d065901d160dd33367f2d657c07d3a879f3b1b3",
+      "scenarios": [],
+      "source_snapshot_id": "2fd7fd549a7a47b9428811bd54859d4313e1d0a6e5aba8bd0eef86621286c35c",
+      "stage_hashes": {
+        "3B": {
+          "result_hash": "dcb05e61a9d6f671215627431ff408f4fc5269d2e2287331772e61df73cee2d6",
+          "reuse": false
+        },
+        "3C": {
+          "result_hash": "cf877875fc87d4db18bb6d183ccee6dc1ed35198dcb058ad0d93ddaa9c97cd07",
+          "reuse": false
+        },
+        "3D": {
+          "result_hash": "030553aed08fb7964741be1a07c7d8db0fba3d566ac8ef85dddb1374016d4df7",
+          "reuse": false
+        },
+        "3E": {
+          "result_hash": "269c29a114a0d85f6914b96d383dab46fd1a0c8620014da6f7d915440ab86488",
+          "reuse": false
+        }
+      },
+      "status": "PARTIAL"
+    },
+    "rooftop": {
+      "canonical_result_hash": "76ff9ad35e6a08cfad88d8e855a88eb2109c63026e07d225e0a5883eef1842b1",
+      "definition_hash": "617a2e9d314c095bd2ec893939c930a2323be6fd7805da12bf6d6fdd70274808",
+      "definition_version": "solar-pv-formula-definitions/1.0.1",
+      "elapsed_seconds": "378.03780340007506",
+      "formula_mapping_hash": "f652ef9ac859de5399fc1f3e1fdc5036834bb2d33aba73ec9990fb44514bf0b0",
+      "method_config_hash": "a6c607146fb17a7d82b3f6ee80b8a99344e14c89849822187f4796ed19387515",
+      "phase2_input_hash": "95a6e14b7e4603eada3321b1e8282a9ee0cbca056836f9dc4c2fe0be74da90af",
+      "product_counts": {
+        "IMPLEMENTED_TESTED": 57,
+        "NOT_IMPLEMENTED": 32
+      },
+      "project_counts": {
+        "BLOCKED_MISSING_INPUT": 21,
+        "CALCULATED": 21,
+        "NOT_IMPLEMENTED": 10,
+        "NOT_TESTED": 37
+      },
+      "project_id": "SYNTHETIC-industrial_rooftop",
+      "pv_type": "industrial_rooftop",
+      "receipt_hash": "b11690fe37813f7d8efc2efb2dfce6bd1b24801e7b2e0200fc12e6e1607c5b3d",
+      "scenarios": [
+        {
+          "canonical_result_hash": "76ff9ad35e6a08cfad88d8e855a88eb2109c63026e07d225e0a5883eef1842b1",
+          "formula_mapping_hash": "f652ef9ac859de5399fc1f3e1fdc5036834bb2d33aba73ec9990fb44514bf0b0",
+          "input_hash": "3074f404bba5f06af0b88a701ff3f91b9690758cdb86022cfd254646b1c4c6fa",
+          "reuse_project_baseline": true,
+          "run_id": "case-base",
+          "scenario_id": "BASE",
+          "status": "PARTIAL"
+        },
+        {
+          "canonical_result_hash": "4857004f88749d76c1f51fd85ba631f7df2936a4cdd081b0b8f0034a725d7cf8",
+          "formula_mapping_hash": "8595ae2dc40b77edd868ca2301621d2bd6bd70e0112f23106600e551b27350e7",
+          "input_hash": "bc1567a5c73ee8df7a8947020016e521728d83d16be90093c6ee8f71ee1eb8e2",
+          "replay_receipt_hash": "e86a8ae77fc135d0f7bdcae77682716b548637339f6ce005d89a431235a96801",
+          "run_id": "case-opex-loan",
+          "scenario_id": "PESSIMISTIC",
+          "status": "PARTIAL"
+        },
+        {
+          "canonical_result_hash": "d9c15c78ee8381c973e7002031f495128b3c64f7f9ce577d48d0e9a56f9c474e",
+          "formula_mapping_hash": "f9febf7f6f36f36014c5748993376bd3c85f77f59153e4439fb9266e0b6ebf48",
+          "input_hash": "5e7e22906718155bd8b2d1abe8cb21db907ef06f8b06ea314fbb4e3551ba4838",
+          "replay_receipt_hash": "56b3596d88450db3df42e5669847b4870d287cf62faf5433654d928320e8f88e",
+          "run_id": "case-price",
+          "scenario_id": "OPTIMISTIC",
+          "status": "PARTIAL"
+        }
+      ],
+      "source_snapshot_id": "88902c3b845bacc32759a5d4bc61f743e63b3a5c2862233520e3e0475e210f31",
+      "stage_hashes": {
+        "3B": {
+          "result_hash": "e5983c27419144c05435a53ecaa7ec4940ef37468372f4cfe96190ed3a2e91df",
+          "reuse": true
+        },
+        "3C": {
+          "result_hash": "7a7d9deb42de2e8f120195c1030f7f8693fdbc831dce5cd177914a3158711fe9",
+          "reuse": false
+        },
+        "3D": {
+          "result_hash": "ba1afcdec5fd55c7b09d9a8d9f0d5759b20491a85c491549d3966ad3b99fb180",
+          "reuse": false
+        },
+        "3E": {
+          "result_hash": "76ff9ad35e6a08cfad88d8e855a88eb2109c63026e07d225e0a5883eef1842b1",
+          "reuse": false
+        }
+      },
+      "status": "PARTIAL"
+    }
+  },
+  "schema": "phase3g-synthetic-evidence/1.0.0",
+  "scope": "PHASE3G_PARTIAL_ONE_YEAR_SYNTHETIC_ONLY",
+  "source_commit": "c2447c87071e4e177b37ce507b48d1448d5b0d97"
+}
