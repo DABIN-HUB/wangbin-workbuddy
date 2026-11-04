@@ -9,7 +9,10 @@ from ..errors import ContractError
 from .calculation_graph import CalculationGraph, CalculationNode
 
 FACTOR_TARGETS = {
-    "INVESTMENT": {("INPUT", "capex.items.amount"), ("INPUT", "capex.items.unit_price")},
+    # Raw capex amount is reconciled to quantity × unit price, payment dates,
+    # depreciable asset basis and debt drawdown. A single-atom shock would
+    # publish contradictory financial ledgers, so this factor stays blocked.
+    "INVESTMENT": set(),
     "GENERATION": {("METHOD", "energy.pr")},
     "SALE_PRICE": {("INPUT", "tariff.periods.sale_price"),
                    ("INPUT", "tariff.ppa_price")},
@@ -33,7 +36,7 @@ def _row(export, parent, row_id):
     return matches[0]["fields"]
 
 
-def validate_factor(factor, kind, name, row_id, export, methods):
+def validate_factor(factor, kind, name, row_id, value, export, methods):
     if factor not in FACTOR_TARGETS:
         raise ContractError("SCENARIO_UNKNOWN_FACTOR")
     if (kind, name) not in FACTOR_TARGETS[factor]:
@@ -68,9 +71,18 @@ def validate_factor(factor, kind, name, row_id, export, methods):
         if (name == "tariff.periods.sale_price" and methods.require("settlement.price_source") != "PERIOD_TABLE"
                 or name == "tariff.ppa_price" and methods.require("settlement.revenue_method") != "PPA_FIXED"):
             raise ContractError("SCENARIO_FACTOR_NOT_CONSUMED")
+        if isinstance(value, (int, float)) or not hasattr(value, "is_finite"):
+            raise ContractError("SCENARIO_EXACT_PRICE_REQUIRED")
+        if value < 0:
+            methods.require("settlement.negative_price_treatment")
+            rule = values.get("tariff.negative_price_rule")
+            if not isinstance(rule, dict) or rule.get("status") not in {"VERIFIED", "ASSUMED", "UNVERIFIED"} or rule.get("license_status") != "AUTHORIZED":
+                raise ContractError("SCENARIO_NEGATIVE_PRICE_RULE_REQUIRED")
     elif factor == "LOAN_INTEREST":
         if not values.get("finance.debt_ratio") or values["finance.debt_ratio"]["value"] <= 0:
             raise ContractError("BLOCKED_MISSING_INPUT", "finance.debt_ratio")
+        if methods.require("debt.drawdown_basis") == "NO_DEBT_DECLARED":
+            raise ContractError("SCENARIO_FACTOR_NOT_CONSUMED")
     elif factor == "PROJECT_DISCOUNT" and not values.get("finance.project_discount_rate"):
         raise ContractError("BLOCKED_MISSING_INPUT", "finance.project_discount_rate")
 

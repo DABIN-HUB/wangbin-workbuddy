@@ -25,6 +25,16 @@ def _fixture():
     session.project.values["finance.project_discount_rate"] = rate
     session.project.values["finance.loan_rate"] = atom(catalog, "finance.loan_rate", D("0.05"))
     session.project.values["finance.debt_ratio"] = atom(catalog, "finance.debt_ratio", D("0.5"))
+    opex = {"row_id": "maintenance-1", "category": "maintenance", "base_amount": D("100"),
+            "from_year": 1, "to_year": 1, "escalation_rate": D(0), "tax_included": False,
+            "vat_rate": D(0), "recoverable_vat_share": D(0), "contract_id": "SYNTHETIC-contract"}
+    session.project.values["opex.items"] = atom(catalog, "opex.items", [{
+        "row_id": "maintenance-1", "fields": {
+            "opex.items."+name: atom(catalog, "opex.items."+name, value, "maintenance-1-"+name)
+            for name, value in opex.items()}}])
+    method_data = methods.to_dict()
+    method_data["parameters"]["debt.drawdown_basis"] = parameter("debt.drawdown_basis", "CAPEX_PROPORTIONAL_SCENARIO")
+    methods = MethodConfig.from_dict(method_data)
     return catalog, session.export(), methods
 
 
@@ -116,3 +126,42 @@ def test_loan_rate_and_discount_rate_are_bound_to_different_stages():
         prepared = prepare_scenario(_control(export, methods, changes=[_input(export, factor, fid, value)]), export, methods, catalog)
         assert prepared.input_export["project"]["values"][fid]["value"] == value
         assert prepared.input_export["project"]["values"][fid]["source_id"] == SOURCE["source_id"]
+
+
+def test_curtailment_changes_one_physical_row_not_other_losses():
+    catalog, export, methods = _fixture()
+    original = export["project"]["values"]["system.losses"]["value"]
+    curtail = _input(export, "CURTAILMENT", "system.losses.value", D("0.2"), "curtailment")
+    prepared = prepare_scenario(_control(export, methods, changes=[curtail]), export, methods, catalog)
+    rows = prepared.input_export["project"]["values"]["system.losses"]["value"]
+    assert len(rows) == len(original)
+    assert [dumps(r) for r in rows if r["row_id"] != "curtailment"] == [
+        dumps(r) for r in original if r["row_id"] != "curtailment"]
+    assert next(r for r in rows if r["row_id"] == "curtailment")["fields"]["system.losses.value"]["value"] == D("0.2")
+    assert scenario_calculation_graph(catalog, "utility_scale_ground", methods).affected_by(prepared.changed_field_ids) == ["3B", "3C", "3D", "3E"]
+    bad = deepcopy(curtail)
+    bad["selector"]["row_id"] = "shading"
+    with pytest.raises(ContractError):
+        prepare_scenario(_control(export, methods, changes=[bad]), export, methods, catalog)
+
+
+def test_investment_and_unconsumed_self_use_cannot_be_published():
+    catalog, export, methods = _fixture()
+    for factor, fid in (("INVESTMENT", "capex.items.amount"),
+                        ("SELF_USE_RATIO", "load.proposed_self_use_ratio")):
+        with pytest.raises(ContractError):
+            prepare_scenario(_control(export, methods, changes=[{
+                "factor": factor, "target_kind": "INPUT", "selector": {"field_id": fid,
+                    "row_id": "r1", "field_instance_id": fid, "original_atom_hash": "0"*64},
+                "value": D("0.1"), "source": deepcopy(SOURCE)}]), export, methods, catalog)
+
+
+def test_maintenance_input_and_signed_price_are_explicit_not_metric_scaling():
+    catalog, export, methods = _fixture()
+    changed = _input(export, "OPERATING_MAINTENANCE", "opex.items.base_amount", D("150"), "maintenance-1")
+    prepared = prepare_scenario(_control(export, methods, changes=[changed]), export, methods, catalog)
+    assert prepared.changed_field_ids == ("opex.items.base_amount",)
+    assert prepared.input_export["normalized_inputs"]["opex.items"][0]["fields"]["opex.items.base_amount"] == D("150")
+    assert scenario_calculation_graph(catalog, "utility_scale_ground", methods).affected_by(prepared.changed_field_ids) == ["3D", "3E"]
+    signed = _input(export, "SALE_PRICE", "tariff.periods.sale_price", D("-0.1"), "flat")
+    assert prepare_scenario(_control(export, methods, changes=[signed]), export, methods, catalog).changed_field_ids == ("tariff.periods.sale_price",)

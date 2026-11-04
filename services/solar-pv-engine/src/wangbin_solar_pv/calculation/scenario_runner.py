@@ -14,7 +14,7 @@ import re
 from ..errors import ContractError
 from ..intake import IntakeSession
 from ..provenance import make_record
-from ..serialization import digest, dumps
+from ..serialization import digest
 from .common import exact_json_numbers
 from .input_contract import validate_export
 from .method_config import MethodConfig, make_parameter
@@ -204,7 +204,7 @@ def prepare_scenario(control, original_export, methods, catalog):
         seen.add(key)
         # The factor selector is a consumer whitelist, not a free-form input editor.
         from .sensitivity import validate_factor
-        validate_factor(change["factor"], kind, name, selector.get("row_id"), export, methods)
+        validate_factor(change["factor"], kind, name, selector.get("row_id"), change["value"], export, methods)
         if kind == "INPUT":
             _input_change(project, selector, change["value"], source, catalog)
             fields.append(name)
