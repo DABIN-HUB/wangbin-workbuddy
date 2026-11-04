@@ -92,7 +92,7 @@
     {
       "name": "skill.semver",
       "status": "PASS",
-      "message": "version=0.1.3"
+      "message": "version=0.1.4"
     },
     {
       "name": "skill.required_frontmatter",

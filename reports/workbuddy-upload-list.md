@@ -10,7 +10,7 @@
 | Document CLI Connector | Connector | 1.2.0 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-document-cli-1.2.0-connector-candidate.zip | be64b3b619382cbc74686fef6bd64a402f15f380487bde61e41620df66feb0e7 | SECURITY_BLOCKED; release_gate=BLOCKED | license file is absent; no license claim is verified |
 | Software Consultant | Expert | 1.0.0 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-software-consultant-1.0.0-expert-candidate.zip | 577f3089d2f4707178f44ba1e5c395a99853bb9558f3e8c0e752a0e6ba2e30de | SUBMITTED_REVIEW; release_gate=BLOCKED | submission is recorded, but platform approval is not verified |
 | 招标文件分析助手 | Skill | 0.1.0 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-tender-analyzer-0.1.0-skill-candidate.zip | 2e68809033301c97b02ec7c7fd59f7b477fcd2f1f86d515d69b5fc7b20146bc7 | SECURITY_BLOCKED; release_gate=BLOCKED | license file is absent; no license claim is verified |
-| 应收账款逾期分析 | Skill | 0.1.3 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-receivable-analyzer-0.1.3-skill-candidate.zip | d4177a8e5657061fd3630780cee88b07e3524c144e0c3bec8be0dfde2278e171 | SECURITY_BLOCKED; release_gate=BLOCKED | license notice is present; account-effective agreement and distribution terms remain unverified |
+| 应收账款逾期分析 | Skill | 0.1.4 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-receivable-analyzer-0.1.4-skill-candidate.zip | 1bd1be4e0c0345c0ee1f66d2d2f0fbf2b17d05a3c67d547e4cb909f09a2e1a3c | SECURITY_BLOCKED; release_gate=BLOCKED | license notice is present; account-effective agreement and distribution terms remain unverified |
 | 软件需求变更影响分析 | Skill | 0.1.0 | MISSING | UNKNOWN | MISSING; release_gate=BLOCKED | candidate ZIP is not present |
 | 库存呆滞分析 | Skill | 0.1.3 | F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-inventory-analyzer-0.1.3-skill-candidate.zip | b99e839de10e7bd8533b2387a99b38c48cdf9360f14919608b35ae8694be17a0 | SECURITY_BLOCKED; release_gate=BLOCKED | license notice is present; account-effective agreement and distribution terms remain unverified |
 | 垂直行业研究报告 | Skill | 0.1.0 | MISSING | UNKNOWN | MISSING; release_gate=BLOCKED | candidate ZIP is not present |
@@ -30,10 +30,11 @@
 
 ### 应收账款逾期分析（`wangbin-receivable-analyzer`）
 
-- 版本：`0.1.3`
-- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-receivable-analyzer-0.1.3-skill-candidate.zip`
+- 版本：`0.1.4`
+- 市场展示名称：`应收账款逾期分析`（包内 `SKILL.md` 的 `display_name`）
+- ZIP：`F:/ideaWorkSpace/wangbin-workbuddy/dist/wangbin-receivable-analyzer-0.1.4-skill-candidate.zip`
 - 文件存在：`True`；大小：`7777` bytes
-- SHA-256：`d4177a8e5657061fd3630780cee88b07e3524c144e0c3bec8be0dfde2278e171`（登记值匹配：`PASS`）
+- SHA-256：`1bd1be4e0c0345c0ee1f66d2d2f0fbf2b17d05a3c67d547e4cb909f09a2e1a3c`（登记值匹配：`PASS`）
 - ZIP 成员数量：`6`
 - ZIP 完整性：`PASS`
 - 当前发布门禁：`BLOCKED`；上传状态：`SECURITY_BLOCKED`

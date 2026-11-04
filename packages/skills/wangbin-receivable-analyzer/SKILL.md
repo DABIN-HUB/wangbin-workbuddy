@@ -1,6 +1,6 @@
 ---
 name: wangbin-receivable-analyzer
-display_name: wangbin 应收逾期分析
+display_name: 应收账款逾期分析
 display_name_en: wangbin Receivables Analyzer
 description: 本地分析授权的应收账款 CSV，分币种核算逾期与账龄并提示异常。
 description_zh: 仅处理用户明确选择的 UTF-8 CSV 应收明细，按基准日及币种输出金额、账龄、客户排序和核查清单。
@@ -9,14 +9,14 @@ examples_zh:
 - 按明确基准日核对本地应收账款明细中的逾期发票
 examples_en:
 - Analyze the explicitly selected local receivables CSV at a given as-of date
-version: 0.1.3
+version: 0.1.4
 author: wangbin
 license_type: PROPRIETARY
 license_status: REQUIRES_MANUAL_REVIEW
 allowed-tools: Read, Bash
 ---
 
-# wangbin 应收逾期分析
+# 应收账款逾期分析
 
 本 Skill 的 Python 脚本只在已授权的本地执行环境中处理明确提供的 UTF-8 CSV。WorkBuddy 普通 Skill 是否能提供 Python、文件路径或执行权限尚未验证：脚本在仓库中运行不等于平台安装或调用成功。
 

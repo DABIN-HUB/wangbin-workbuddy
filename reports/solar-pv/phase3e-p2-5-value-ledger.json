@@ -1,0 +1,416 @@
+{
+  "schema": "solar-pv-phase3e-p2-5-seven-value-ledger/1",
+  "scope": "3 sourced SYNTHETIC NO_DISPOSITION project-post-tax cases only; 3D raw source SHA recorded but not republished",
+  "precision": "3D upstream tax/VAT 28-digit Decimal; 3E independent arithmetic localcontext 80 digits",
+  "method": "separate arithmetic over 3D annual source rows; read 3E numbers only as observed; assert each of 7 formulas equals independently derived expected",
+  "cases": [
+    {
+      "scenario": "npv-six/original",
+      "project_price_yuan_per_kwh": "0.4",
+      "selected_basis": "项目税后",
+      "3d_result_hash": "a701cbf3590f472bdae6b30c6e73753078cf2a6018c71b7d4e406a302b5639e0",
+      "3e_result_hash": "6914e1cea7c8260ac8ed8496f544fc8bc9aa298585280e10f36dcdd044f8135f",
+      "3d_result_json_sha256": "0f739bbf5a37db80ea4708b1548bad4bca6b9728ee9b8368e4bef7fb969f247e",
+      "3e_result_json_sha256": "291ed63294dd9f808646287b0e6d4a912b0607a92df3ca41a301fd83a0d1a784",
+      "source_3d_annual_fields": {
+        "capex_cash_paid": [
+          "1130",
+          "0"
+        ],
+        "working_capital_increase": [
+          "200",
+          "0"
+        ],
+        "working_capital_release": [
+          null,
+          "200"
+        ],
+        "revenue_cash_receipts": [
+          null,
+          "26280.000"
+        ],
+        "self_use_avoided_expenditure": [
+          null,
+          "140160.0"
+        ],
+        "opex_cash_paid": [
+          null,
+          "113"
+        ],
+        "cash_tax_total_project": [
+          null,
+          "3888.15044247787610619469027"
+        ],
+        "income_tax_cash_paid_project": [
+          null,
+          "0.000"
+        ],
+        "invoiced_gross": [
+          null,
+          "35040.0"
+        ],
+        "terminal_project_cash": [
+          "0",
+          "0"
+        ]
+      },
+      "project_discount_rate": "0.1",
+      "reference_arithmetic": {
+        "year0": "-capex_cash_paid[0] - working_capital_increase[0]",
+        "year1": "revenue_cash_receipts[1] + self_use_avoided_expenditure[1] - opex_cash_paid[1] - cash_tax_total_project[1] - capex_cash_paid[1] - working_capital_increase[1] + working_capital_release[1] + terminal_project_cash[1]",
+        "pretax": "project_post_tax + income_tax_cash_paid_project (only project cash income tax)",
+        "cumulative": "prefix sum from construction year 0",
+        "discounted_cumulative": "prefix sum of year_y_cash/(1+project_discount_rate)^y",
+        "static_payback": "first verified negative-to-nonnegative cumulative year - 1 + (-cumulative_previous)/undiscounted_cash_this_year",
+        "dynamic_payback": "first verified negative-to-nonnegative discounted cumulative year - 1 + (-discounted_cumulative_previous)/(undiscounted_cash_this_year/(1+project_discount_rate)^year)"
+      },
+      "comparisons": [
+        {
+          "formula_id": "F-PROJECT-CASH-FLOW",
+          "actual_from_3e": [
+            "-1330",
+            "162638.84955752212389380530973"
+          ],
+          "independent_decimal_from_3d": [
+            "-1330",
+            "162638.84955752212389380530973"
+          ],
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-PROJECT-PRETAX-CASH-FLOW",
+          "actual_from_3e": [
+            "-1330",
+            "162638.84955752212389380530973"
+          ],
+          "independent_decimal_from_3d": [
+            "-1330",
+            "162638.84955752212389380530973"
+          ],
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-CUMULATIVE-CASH-FLOW",
+          "actual_from_3e": [
+            "-1330",
+            "161308.84955752212389380530973"
+          ],
+          "independent_decimal_from_3d": [
+            "-1330",
+            "161308.84955752212389380530973"
+          ],
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-DISCOUNTED-CUMULATIVE-CASH",
+          "actual_from_3e": [
+            "-1330",
+            "146523.49959774738535800482702727272727272727272727272727272727272727272727272727"
+          ],
+          "independent_decimal_from_3d": [
+            "-1330",
+            "146523.49959774738535800482702727272727272727272727272727272727272727272727272727"
+          ],
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-NPV",
+          "actual_from_3e": "146523.49959774738535800482702727272727272727272727272727272727272727272727272727",
+          "independent_decimal_from_3d": "146523.49959774738535800482702727272727272727272727272727272727272727272727272727",
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-STATIC-PAYBACK",
+          "actual_from_3e": "0.0081776279383334267411535085883958425856164316310794637219487816655864576507180809",
+          "independent_decimal_from_3d": "0.0081776279383334267411535085883958425856164316310794637219487816655864576507180809",
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-DYNAMIC-PAYBACK",
+          "actual_from_3e": "0.0089953907321667694152688594472354268441780747941874100941436598321451034157898891",
+          "independent_decimal_from_3d": "0.0089953907321667694152688594472354268441780747941874100941436598321451034157898891",
+          "exact_equal": true,
+          "status": "CALCULATED"
+        }
+      ]
+    },
+    {
+      "scenario": "npv-six/candidate",
+      "project_price_yuan_per_kwh": "0.6",
+      "selected_basis": "项目税后",
+      "3d_result_hash": "85a59a1604a8ccc5c632a4e371a765486c2950143333e7373bcc456c61ddc8e4",
+      "3e_result_hash": "641c801169f5f8ebb9e7a48511cca85a463d3743ccc150e4ca95485216ac2d25",
+      "3d_result_json_sha256": "101db0a23d48012586d43984fb62557c1a9852ad6135bf58807497d740c85ab7",
+      "3e_result_json_sha256": "9ebb7e8fe37e09413b345660a99125a95a394e421e693fc0891c73f4808221a5",
+      "source_3d_annual_fields": {
+        "capex_cash_paid": [
+          "1130",
+          "0"
+        ],
+        "working_capital_increase": [
+          "200",
+          "0"
+        ],
+        "working_capital_release": [
+          null,
+          "200"
+        ],
+        "revenue_cash_receipts": [
+          null,
+          "39420.000"
+        ],
+        "self_use_avoided_expenditure": [
+          null,
+          "140160.0"
+        ],
+        "opex_cash_paid": [
+          null,
+          "113"
+        ],
+        "cash_tax_total_project": [
+          null,
+          "8086.22566371681415929203540"
+        ],
+        "income_tax_cash_paid_project": [
+          null,
+          "2182.5000"
+        ],
+        "invoiced_gross": [
+          null,
+          "52560.0"
+        ],
+        "terminal_project_cash": [
+          "0",
+          "0"
+        ]
+      },
+      "project_discount_rate": "0.1",
+      "reference_arithmetic": {
+        "year0": "-capex_cash_paid[0] - working_capital_increase[0]",
+        "year1": "revenue_cash_receipts[1] + self_use_avoided_expenditure[1] - opex_cash_paid[1] - cash_tax_total_project[1] - capex_cash_paid[1] - working_capital_increase[1] + working_capital_release[1] + terminal_project_cash[1]",
+        "pretax": "project_post_tax + income_tax_cash_paid_project (only project cash income tax)",
+        "cumulative": "prefix sum from construction year 0",
+        "discounted_cumulative": "prefix sum of year_y_cash/(1+project_discount_rate)^y",
+        "static_payback": "first verified negative-to-nonnegative cumulative year - 1 + (-cumulative_previous)/undiscounted_cash_this_year",
+        "dynamic_payback": "first verified negative-to-nonnegative discounted cumulative year - 1 + (-discounted_cumulative_previous)/(undiscounted_cash_this_year/(1+project_discount_rate)^year)"
+      },
+      "comparisons": [
+        {
+          "formula_id": "F-PROJECT-CASH-FLOW",
+          "actual_from_3e": [
+            "-1330",
+            "171580.77433628318584070796460"
+          ],
+          "independent_decimal_from_3d": [
+            "-1330",
+            "171580.77433628318584070796460"
+          ],
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-PROJECT-PRETAX-CASH-FLOW",
+          "actual_from_3e": [
+            "-1330",
+            "173763.27433628318584070796460"
+          ],
+          "independent_decimal_from_3d": [
+            "-1330",
+            "173763.27433628318584070796460"
+          ],
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-CUMULATIVE-CASH-FLOW",
+          "actual_from_3e": [
+            "-1330",
+            "170250.77433628318584070796460"
+          ],
+          "independent_decimal_from_3d": [
+            "-1330",
+            "170250.77433628318584070796460"
+          ],
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-DISCOUNTED-CUMULATIVE-CASH",
+          "actual_from_3e": [
+            "-1330",
+            "154652.52212389380530973451327272727272727272727272727272727272727272727272727273"
+          ],
+          "independent_decimal_from_3d": [
+            "-1330",
+            "154652.52212389380530973451327272727272727272727272727272727272727272727272727273"
+          ],
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-NPV",
+          "actual_from_3e": "154652.52212389380530973451327272727272727272727272727272727272727272727272727273",
+          "independent_decimal_from_3d": "154652.52212389380530973451327272727272727272727272727272727272727272727272727273",
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-STATIC-PAYBACK",
+          "actual_from_3e": "0.0077514512050943265581846884211659793990584875237629346215575700693518248006339070",
+          "independent_decimal_from_3d": "0.0077514512050943265581846884211659793990584875237629346215575700693518248006339070",
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-DYNAMIC-PAYBACK",
+          "actual_from_3e": "0.0085265963256037592140031572632825773389643362761392280837133270762870072806972976",
+          "independent_decimal_from_3d": "0.0085265963256037592140031572632825773389643362761392280837133270762870072806972976",
+          "exact_equal": true,
+          "status": "CALCULATED"
+        }
+      ]
+    },
+    {
+      "scenario": "npv-eight/candidate",
+      "project_price_yuan_per_kwh": "0.8",
+      "selected_basis": "项目税后",
+      "3d_result_hash": "831dd3b21b9609bd116f3798d837d8563dd70774e52efc32ff86b8a10cf00ac8",
+      "3e_result_hash": "49fd5d710c371d242a35e441a003138ac0179b0b7b8ea7a2814a7973e02ef6c0",
+      "3d_result_json_sha256": "d44a12d88f3d3b42a8d190e00ea8057de502940004c3d1ecadd9a8afe4636b80",
+      "3e_result_json_sha256": "b0c6620c2ff7da6768c20a9aa9a07e967f8d812c1f29001200490004ac3787d8",
+      "source_3d_annual_fields": {
+        "capex_cash_paid": [
+          "1130",
+          "0"
+        ],
+        "working_capital_increase": [
+          "200",
+          "0"
+        ],
+        "working_capital_release": [
+          null,
+          "200"
+        ],
+        "revenue_cash_receipts": [
+          null,
+          "52560.000"
+        ],
+        "self_use_avoided_expenditure": [
+          null,
+          "140160.0"
+        ],
+        "opex_cash_paid": [
+          null,
+          "113"
+        ],
+        "cash_tax_total_project": [
+          null,
+          "12291.80088495575221238938053"
+        ],
+        "income_tax_cash_paid_project": [
+          null,
+          "4372.5000"
+        ],
+        "invoiced_gross": [
+          null,
+          "70080.0"
+        ],
+        "terminal_project_cash": [
+          "0",
+          "0"
+        ]
+      },
+      "project_discount_rate": "0.1",
+      "reference_arithmetic": {
+        "year0": "-capex_cash_paid[0] - working_capital_increase[0]",
+        "year1": "revenue_cash_receipts[1] + self_use_avoided_expenditure[1] - opex_cash_paid[1] - cash_tax_total_project[1] - capex_cash_paid[1] - working_capital_increase[1] + working_capital_release[1] + terminal_project_cash[1]",
+        "pretax": "project_post_tax + income_tax_cash_paid_project (only project cash income tax)",
+        "cumulative": "prefix sum from construction year 0",
+        "discounted_cumulative": "prefix sum of year_y_cash/(1+project_discount_rate)^y",
+        "static_payback": "first verified negative-to-nonnegative cumulative year - 1 + (-cumulative_previous)/undiscounted_cash_this_year",
+        "dynamic_payback": "first verified negative-to-nonnegative discounted cumulative year - 1 + (-discounted_cumulative_previous)/(undiscounted_cash_this_year/(1+project_discount_rate)^year)"
+      },
+      "comparisons": [
+        {
+          "formula_id": "F-PROJECT-CASH-FLOW",
+          "actual_from_3e": [
+            "-1330",
+            "180515.19911504424778761061947"
+          ],
+          "independent_decimal_from_3d": [
+            "-1330",
+            "180515.19911504424778761061947"
+          ],
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-PROJECT-PRETAX-CASH-FLOW",
+          "actual_from_3e": [
+            "-1330",
+            "184887.69911504424778761061947"
+          ],
+          "independent_decimal_from_3d": [
+            "-1330",
+            "184887.69911504424778761061947"
+          ],
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-CUMULATIVE-CASH-FLOW",
+          "actual_from_3e": [
+            "-1330",
+            "179185.19911504424778761061947"
+          ],
+          "independent_decimal_from_3d": [
+            "-1330",
+            "179185.19911504424778761061947"
+          ],
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-DISCOUNTED-CUMULATIVE-CASH",
+          "actual_from_3e": [
+            "-1330",
+            "162774.72646822204344328238133636363636363636363636363636363636363636363636363636"
+          ],
+          "independent_decimal_from_3d": [
+            "-1330",
+            "162774.72646822204344328238133636363636363636363636363636363636363636363636363636"
+          ],
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-NPV",
+          "actual_from_3e": "162774.72646822204344328238133636363636363636363636363636363636363636363636363636",
+          "independent_decimal_from_3d": "162774.72646822204344328238133636363636363636363636363636363636363636363636363636",
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-STATIC-PAYBACK",
+          "actual_from_3e": "0.0073678006423845612980644019507679796986838530502585785147852022968744585728861630",
+          "independent_decimal_from_3d": "0.0073678006423845612980644019507679796986838530502585785147852022968744585728861630",
+          "exact_equal": true,
+          "status": "CALCULATED"
+        },
+        {
+          "formula_id": "F-DYNAMIC-PAYBACK",
+          "actual_from_3e": "0.0081045807066230174278708421458447776685522383552844363662637225265619044301747795",
+          "independent_decimal_from_3d": "0.0081045807066230174278708421458447776685522383552844363662637225265619044301747795",
+          "exact_equal": true,
+          "status": "CALCULATED"
+        }
+      ]
+    }
+  ]
+}

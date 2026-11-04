@@ -1,0 +1,384 @@
+{
+  "schema": "solar-pv-l3-historical-hotspots/1",
+  "baseline_kind": "ARCHIVED_2026-11-02_HISTORICAL_NOT_CURRENT_P2_5_L3",
+  "junit_path": "reports/solar-pv/phase3e-p2-4b-c-root-certification-evidence/solar-l3.xml",
+  "junit_sha256": "ae25b9d218454519031860403259e145066bdfc41632c81da7642efc89d3acd6",
+  "profile_path": "reports/solar-pv/phase3e-p2-4b-c-root-certification-evidence.json",
+  "profile_sha256": "5680a268c71c40d62b00f0750db550bc1b1f73dea3c9c20d2e826b016aa6f78e",
+  "junit": {
+    "cases": 4184,
+    "passed": 4177,
+    "skipped": 7,
+    "failures": 0,
+    "errors": 0,
+    "suite_elapsed_seconds": "20772.211",
+    "sum_testcase_seconds": "20753.169",
+    "receipt_wall_seconds": "20772.34"
+  },
+  "heavy_six": {
+    "modules": [
+      "tests.solar-pv.test_phase3e_terminal_npv",
+      "tests.solar-pv.test_phase3e_candidate_replay",
+      "tests.solar-pv.test_phase3e_terminal_binding",
+      "tests.solar-pv.test_phase3e_break_even_project_session",
+      "tests.solar-pv.test_phase3e_break_even_project_npv",
+      "tests.solar-pv.test_phase3e_financial_candidate_replay"
+    ],
+    "testcase_seconds": "14491.157",
+    "percent_of_junit_wall": "69.762",
+    "percent_of_reported_wall": "69.762",
+    "note": "six named Phase3E E2E modules, not top six modules by time overall; 69.762% computed from archived JUnit differs slightly from user approximate 69.83%"
+  },
+  "module_ranking": [
+    {
+      "module": "tests.solar-pv.test_phase3e_terminal_npv",
+      "seconds": "3077.366",
+      "testcase_count": 3,
+      "percent_of_junit_wall": "14.815"
+    },
+    {
+      "module": "tests.solar-pv.test_energy_generation_capacity",
+      "seconds": "2678.712",
+      "testcase_count": 8,
+      "percent_of_junit_wall": "12.896"
+    },
+    {
+      "module": "tests.solar-pv.test_phase3e_candidate_replay",
+      "seconds": "2655.339",
+      "testcase_count": 13,
+      "percent_of_junit_wall": "12.783"
+    },
+    {
+      "module": "tests.solar-pv.test_phase3e_terminal_binding",
+      "seconds": "2313.102",
+      "testcase_count": 16,
+      "percent_of_junit_wall": "11.136"
+    },
+    {
+      "module": "tests.solar-pv.test_phase3e_break_even_project_session",
+      "seconds": "2235.667",
+      "testcase_count": 4,
+      "percent_of_junit_wall": "10.763"
+    },
+    {
+      "module": "tests.solar-pv.test_phase3e_break_even_project_npv",
+      "seconds": "2107.992",
+      "testcase_count": 2,
+      "percent_of_junit_wall": "10.148"
+    },
+    {
+      "module": "tests.solar-pv.test_phase3e_financial_candidate_replay",
+      "seconds": "2101.691",
+      "testcase_count": 5,
+      "percent_of_junit_wall": "10.118"
+    },
+    {
+      "module": "tests.solar-pv.test_consumption_generation",
+      "seconds": "1976.855",
+      "testcase_count": 20,
+      "percent_of_junit_wall": "9.517"
+    },
+    {
+      "module": "tests.solar-pv.test_timeseries_bundle_capacity",
+      "seconds": "467.182",
+      "testcase_count": 2,
+      "percent_of_junit_wall": "2.249"
+    },
+    {
+      "module": "tests.solar-pv.test_phase3e_price_selector",
+      "seconds": "144.568",
+      "testcase_count": 17,
+      "percent_of_junit_wall": "0.696"
+    },
+    {
+      "module": "tests.solar-pv.test_cli",
+      "seconds": "141.479",
+      "testcase_count": 50,
+      "percent_of_junit_wall": "0.681"
+    },
+    {
+      "module": "tests.solar-pv.test_financial_ledger_remediation",
+      "seconds": "135.357",
+      "testcase_count": 10,
+      "percent_of_junit_wall": "0.652"
+    },
+    {
+      "module": "tests.solar-pv.test_parsers",
+      "seconds": "94.601",
+      "testcase_count": 25,
+      "percent_of_junit_wall": "0.455"
+    },
+    {
+      "module": "tests.solar-pv.test_parser_security",
+      "seconds": "90.641",
+      "testcase_count": 38,
+      "percent_of_junit_wall": "0.436"
+    },
+    {
+      "module": "tests.solar-pv.test_energy_generation",
+      "seconds": "78.565",
+      "testcase_count": 36,
+      "percent_of_junit_wall": "0.378"
+    },
+    {
+      "module": "tests.solar-pv.test_formula_bindings",
+      "seconds": "77.979",
+      "testcase_count": 375,
+      "percent_of_junit_wall": "0.375"
+    },
+    {
+      "module": "tests.solar-pv.test_settlement_adapters",
+      "seconds": "74.839",
+      "testcase_count": 36,
+      "percent_of_junit_wall": "0.360"
+    },
+    {
+      "module": "tests.solar-pv.test_catalog_schema",
+      "seconds": "63.188",
+      "testcase_count": 11,
+      "percent_of_junit_wall": "0.304"
+    },
+    {
+      "module": "tests.solar-pv.test_timeseries_bundle_security",
+      "seconds": "46.698",
+      "testcase_count": 109,
+      "percent_of_junit_wall": "0.225"
+    },
+    {
+      "module": "tests.solar-pv.test_field_contract_coverage",
+      "seconds": "43.860",
+      "testcase_count": 469,
+      "percent_of_junit_wall": "0.211"
+    }
+  ],
+  "testcase_ranking": [
+    {
+      "test_id": "tests.solar-pv.test_phase3e_break_even_project_session::test_declared_independent_project_has_real_full_chain_root_witness",
+      "seconds": "2181.945",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_phase3e_terminal_npv::test_no_disposition_has_independent_decimal_cashflow_and_npv",
+      "seconds": "2047.952",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_phase3e_break_even_project_npv::test_one_candidate_recalculates_original_and_sourced_project_npv",
+      "seconds": "2037.098",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_phase3e_financial_candidate_replay::test_b1_cash_invoices_receivables_and_real_receipts",
+      "seconds": "1614.727",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_phase3e_candidate_replay::test_real_replay_changes_only_one_atom_and_runs_both_3c_calculations",
+      "seconds": "1263.984",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_phase3e_terminal_binding::test_real_candidate_identity_and_asset_coverage",
+      "seconds": "1181.591",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_phase3e_terminal_npv::test_rebound_old_candidate_and_unknown_terminal_date_never_publish_npv",
+      "seconds": "1029.413",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_energy_generation_capacity::test_full_year_actual_generation_against_independent_reference[2024-15-35136-industrial_rooftop]",
+      "seconds": "608.646",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_energy_generation_capacity::test_full_year_actual_generation_against_independent_reference[2025-15-35040-utility_scale_ground]",
+      "seconds": "604.237",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_phase3e_candidate_replay::test_future_price_row_with_no_settled_energy_does_not_publish_candidate",
+      "seconds": "588.048",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_phase3e_financial_candidate_replay::test_missing_financial_method_cleans_owned_run_after_valid_settlement",
+      "seconds": "471.532",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_consumption_generation::test_whole_year_and_lifecycle_match_independent_fraction_reference[industrial_rooftop]",
+      "seconds": "386.367",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_timeseries_bundle_capacity::test_real_whole_table_capacity[35040-quarter-hour]",
+      "seconds": "372.701",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_energy_generation_capacity::test_year_specific_leap_and_dst_resource_mapping[Asia/Almaty-17545-8785]",
+      "seconds": "293.320",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_energy_generation_capacity::test_year_specific_leap_and_dst_resource_mapping[America/New_York-17544-8784]",
+      "seconds": "289.730",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_phase3e_candidate_replay::test_wrong_generation_hash_cleans_only_the_owned_unpublished_run",
+      "seconds": "285.792",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_consumption_generation::test_ppa_project_income_is_not_added_to_host_avoided_purchase[industrial_rooftop]",
+      "seconds": "253.443",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_energy_generation_capacity::test_full_year_actual_generation_against_independent_reference[2025-60-8760-industrial_rooftop]",
+      "seconds": "253.219",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_energy_generation_capacity::test_25_year_1mwp_complete_case_with_explicit_replacement[industrial_rooftop]",
+      "seconds": "240.800",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_consumption_generation::test_actual_cli_json_roundtrip_matches_api_hash_and_rejects_generation_escape[industrial_rooftop]",
+      "seconds": "231.147",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_energy_generation_capacity::test_25_year_1mwp_complete_case_with_explicit_replacement[utility_scale_ground]",
+      "seconds": "228.676",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_phase3e_candidate_replay::test_market_8760_candidate_rebinds_only_selected_row",
+      "seconds": "206.213",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_consumption_generation::test_whole_year_and_lifecycle_match_independent_fraction_reference[utility_scale_ground]",
+      "seconds": "187.064",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_consumption_generation::test_embedded_transaction_fee_is_disclosed_but_not_deducted_twice[industrial_rooftop]",
+      "seconds": "167.219",
+      "outcome": "passed"
+    },
+    {
+      "test_id": "tests.solar-pv.test_consumption_generation::test_source_chunk_corruption_and_row_budget_fail_without_publishing[industrial_rooftop]",
+      "seconds": "166.142",
+      "outcome": "passed"
+    }
+  ],
+  "profiler": {
+    "scope": "same pinned 0.4 original and 0.6 candidate SYNTHETIC project/source, two separately executed 0.6 candidates in one optimized session",
+    "old_one_candidate_seconds": 842.339448499959,
+    "session_open_seconds": 337.0658237999305,
+    "session_first_candidate_seconds": 582.469237399986,
+    "session_second_candidate_seconds": 576.0598172000609,
+    "observed_two_candidates_session_seconds": 1587.2523440998048,
+    "projected_two_old_calls_seconds": 1684.678896999918,
+    "projected_two_calls_difference_seconds": 97.42655290011317,
+    "old_stages": {
+      "terminal_source_prevalidation": {
+        "seconds": 0.001145099988207221,
+        "calls": 1
+      },
+      "phase2_derivation": {
+        "seconds": 3.715264800004661,
+        "calls": 1
+      },
+      "d3_candidate_construction": {
+        "seconds": 110.15677140001208,
+        "calls": 1
+      },
+      "d3_integrity_comparison": {
+        "seconds": 0.0007708000484853983,
+        "calls": 1
+      },
+      "phase3b_read_only_validation": {
+        "seconds": 1.5275775000918657,
+        "calls": 2
+      },
+      "original_3c": {
+        "seconds": 77.51115510007367,
+        "calls": 1
+      },
+      "candidate_3c": {
+        "seconds": 77.56951449997723,
+        "calls": 1
+      },
+      "phase2_d3_3c_replay": {
+        "seconds": 403.90166109986603,
+        "calls": 1
+      },
+      "original_3d": {
+        "seconds": 3.922038899967447,
+        "calls": 1
+      },
+      "candidate_3d": {
+        "seconds": 4.847275400068611,
+        "calls": 1
+      },
+      "phase2_to_3d_replay": {
+        "seconds": 418.43690480012447,
+        "calls": 1
+      },
+      "terminal_3d_recomputation": {
+        "seconds": 8.535494199721143,
+        "calls": 2
+      },
+      "terminal_binding_and_recomputed_3d": {
+        "seconds": 126.26628079987131,
+        "calls": 2
+      },
+      "original_3e": {
+        "seconds": 114.74221020005643,
+        "calls": 1
+      },
+      "npv_hash_validation": {
+        "seconds": 1.1189125999808311,
+        "calls": 2
+      },
+      "candidate_3e": {
+        "seconds": 128.24190660007298,
+        "calls": 1
+      },
+      "phase3e_publication": {
+        "seconds": 0.22187409992329776,
+        "calls": 2
+      }
+    },
+    "new_stages": {
+      "source_selector_and_3b_identity_seconds": 51.487901699962094,
+      "original_3c_and_3b_read_seconds": 77.68772709998302,
+      "original_3d_seconds": 4.644483200041577,
+      "original_3e_binding_and_publish_seconds": 118.03441670001484,
+      "session_open_seconds": 254.0532702000346,
+      "p2-4bc-after-first_seconds": 584.2260230998509,
+      "p2-4bc-after-second_seconds": 577.703653199831
+    },
+    "producer_call_counts": {
+      "original_3c": 1,
+      "original_3d": 1,
+      "original_3e": 1,
+      "candidate_3c": 2,
+      "candidate_3d": 2,
+      "candidate_3e": 2
+    },
+    "source_warning": "two old calls is a linear projection from one measured baseline run, not a second observed old process; output/read/write deltas use that projection"
+  },
+  "limits": [
+    "historical JUnit testcase timing includes fixture setup/call/teardown, not stage attribution",
+    "profiler single 0.4 original/0.6 candidate pair is a different run; its stage time must not be added to this L3 JUnit",
+    "projected two-old-call baseline was not observed as two runs; projected savings is not a verified L3 speedup"
+  ]
+}
