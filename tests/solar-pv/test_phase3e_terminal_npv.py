@@ -107,7 +107,13 @@ def test_no_disposition_has_independent_decimal_cashflow_and_npv(npv_case):
         assert _metric(result, "financial.phase3e.project_pretax_cash_flow")["value"][1] - expected[1] == tax_paid
         assert abs(_metric(result, "financial.phase3e.project_npv")["value"] - expected_npv) < D("1e-55")
         assert "finance.project_discount_rate" in _metric(result, "financial.phase3e.project_npv")["input_field_ids"]
-        assert _metric(result, "financial.phase3e.project_irr")["reason"] == "PROJECT_RETURN_INTEGRATION_NOT_IN_R1_3_SCOPE"
+        irr = _metric(result, "financial.phase3e.project_irr")
+        assert irr["status"] == "BLOCKED_MISSING_INPUT" and irr["value"] is None
+        assert irr["reason"] == "IRR_METHOD_CONTROLS_INCOMPLETE"
+        assert set(irr["details"]["missing_method_parameter_ids"]) == {
+            "irr.method", "irr.minimum_rate", "irr.maximum_rate",
+            "irr.root_tolerance", "irr.maximum_degree",
+        }
         assert _metric(result, "financial.phase3e.dated-npv")["status"] == "BLOCKED_MISSING_INPUT"
         assert result["status"] == "PARTIAL" and result["maturity"]["real_project"] == "NOT_VERIFIED"
         assert result["evidence"]["phase3e-financial"]["terminal_cash"] != "BLOCKED_MISSING_INPUT"
