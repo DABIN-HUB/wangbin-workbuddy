@@ -103,6 +103,8 @@ def adapt_offline_response(exported, descriptor, raw, catalog, *, as_of):
     metadata["raw_sha256"] = sha256(raw).hexdigest()
     if source["license_status"] != "AUTHORIZED":
         return {**metadata, "status": "BLOCKED", "reason": "ADAPTER_LICENSE_NOT_AUTHORIZED"}
+    if moment < _instant(source["acquired_at"]):
+        return {**metadata, "status": "BLOCKED", "reason": "ADAPTER_NOT_YET_ACQUIRED"}
     if moment > _instant(source["valid_until"]):
         return {**metadata, "status": "BLOCKED", "reason": "ADAPTER_EXPIRED"}
     normalized = original["normalized_inputs"]
@@ -114,7 +116,13 @@ def adapt_offline_response(exported, descriptor, raw, catalog, *, as_of):
             or not coverage["lon_min"] <= longitude <= coverage["lon_max"]
             or site_zone != coverage["timezone"]):
         return {**metadata, "status": "BLOCKED", "reason": "ADAPTER_SITE_COVERAGE"}
-    if not coverage["start"] <= normalized.get("project.evaluation_date", "") <= coverage["end"]:
+    resource_only = all(fid.startswith("resource.") for fid in source["required_fields"])
+    if resource_only:
+        period_start, period_end = normalized.get("resource.period_start"), normalized.get("resource.period_end")
+        if ((period_start and period_start[:10] < coverage["start"])
+                or (period_end and period_end[:10] > coverage["end"])):
+            return {**metadata, "status": "BLOCKED", "reason": "ADAPTER_TIME_COVERAGE"}
+    elif not coverage["start"] <= normalized.get("project.evaluation_date", "") <= coverage["end"]:
         return {**metadata, "status": "BLOCKED", "reason": "ADAPTER_TIME_COVERAGE"}
     payload = loads(raw)
     if (not isinstance(payload, dict) or set(payload) != {"schema_version", "observations"}
@@ -160,7 +168,7 @@ def adapt_offline_response(exported, descriptor, raw, catalog, *, as_of):
             "reason": "NOT_APPROVED_FOR_CALCULATION"}
 
 
-def approve_candidates(exported, adaptation, catalog, *, reviewer, reviewed_at, evidence_note):
+def approve_candidates(exported, adaptation, catalog, *, raw, descriptor, reviewer, reviewed_at, evidence_note):
     """Explicit human approval creates new Phase 2 candidates; never auto-picks conflicts."""
     original = validate_export(exported, catalog).export
     if (not isinstance(adaptation, dict) or adaptation.get("status") != "READY_FOR_REVIEW"
@@ -171,17 +179,42 @@ def approve_candidates(exported, adaptation, catalog, *, reviewer, reviewed_at, 
             or not isinstance(adaptation.get("records"), list) or not adaptation["records"]):
         raise ContractError("ADAPTER_APPROVAL_REQUIRED")
     moment = _instant(reviewed_at)
-    if moment > _instant(adaptation["valid_until"]):
+    if moment > _instant(adaptation["valid_until"]) or moment < _instant(adaptation["acquired_at"]):
         raise ContractError("ADAPTER_EXPIRED")
     expected = digest({k: v for k, v in adaptation.items()
                        if k not in {"status", "reason", "snapshot_hash"}})
     if adaptation.get("snapshot_hash") != expected:
         raise ContractError("ADAPTER_SNAPSHOT_CHANGED")
+    if (not isinstance(raw, bytes) or not 0 < len(raw) <= MAX_RESPONSE_BYTES
+            or sha256(raw).hexdigest() != adaptation.get("raw_sha256")):
+        raise ContractError("ADAPTER_RAW_CHANGED")
+    source = _descriptor(descriptor, catalog)
+    if (source["mode"] != "REAL" or source["license_status"] != "AUTHORIZED"
+            or any(source[key] != adaptation[key] for key in (
+                "source_id", "source_kind", "dataset_id", "dataset_version",
+                "license_status", "license_reference", "coverage", "acquired_at", "valid_until"))):
+        raise ContractError("ADAPTER_DESCRIPTOR_CHANGED")
+    payload = loads(raw)
+    if (not isinstance(payload, dict) or payload.get("schema_version") != RESPONSE_VERSION
+            or not isinstance(payload.get("observations"), list)):
+        raise ContractError("ADAPTER_RESPONSE_SHAPE")
+    observed = payload["observations"]
     project = IntakeSession.from_dict(original["project"], catalog).project
     for unreviewed in adaptation["records"]:
         checked = deepcopy(unreviewed)
+        position = checked.get("source_section_or_cell", "")
+        try:
+            index = int(position.split("/")[2])
+            item = observed[index]
+        except (ValueError, IndexError, AttributeError, TypeError) as exc:
+            raise ContractError("ADAPTER_CANDIDATE_CHANGED") from exc
         if (checked["source_id"] != adaptation["source_id"] or checked["status"] != "UNVERIFIED"
-                or checked["license_status"] != "AUTHORIZED"):
+                or checked["license_status"] != "AUTHORIZED"
+                or position != f"/observations/{index}/value"
+                or checked["source_url_or_attachment"] != source["source_reference"]
+                or item.get("field_id") != checked["field_id"]
+                or item.get("value") != checked["original_value"]
+                or item.get("unit") != checked["original_unit"]):
             raise ContractError("ADAPTER_CANDIDATE_CHANGED")
         checked.update(status="VERIFIED", reviewer=reviewer, last_updated=reviewed_at,
                        confidence_basis=evidence_note)
@@ -200,7 +233,8 @@ def inspect_resource_bundle(exported, descriptor, bundle_dir, catalog, budget, *
     """
     original = validate_export(exported, catalog).export
     source = _descriptor(descriptor, catalog)
-    if source["license_status"] != "AUTHORIZED" or _instant(as_of) > _instant(source["valid_until"]):
+    if (source["license_status"] != "AUTHORIZED"
+            or not _instant(source["acquired_at"]) <= _instant(as_of) <= _instant(source["valid_until"])):
         return {"status": "BLOCKED", "reason": "ADAPTER_LICENSE_OR_EXPIRY"}
     location = original["normalized_inputs"]
     coverage = source["coverage"]
@@ -227,6 +261,14 @@ def inspect_resource_bundle(exported, descriptor, bundle_dir, catalog, budget, *
                 or "resource.timeseries.poa" not in meta["units"]
                 or "resource.timeseries.quality_flag" not in meta["units"]):
             return {"status": "BLOCKED", "reason": "ADAPTER_RESOURCE_IDENTITY_OR_COVERAGE"}
+        for row in bundle.rows("resource.timeseries"):
+            fields = row["fields"]
+            quality = fields.get("resource.timeseries.quality_flag", {})
+            required = ("poa", "ambient_temperature", "wind_speed")
+            if (quality.get("value") != "valid"
+                    or any(fields.get("resource.timeseries." + part, {}).get("value") is None
+                           for part in required)):
+                return {"status": "BLOCKED", "reason": "ADAPTER_RESOURCE_QUALITY_OR_MISSING"}
         return {"status": "SYNTHETIC_ONLY" if source["mode"] == "SYNTHETIC" else "READY_FOR_REVIEW",
                 "project_id": original["project"]["project_id"], "input_hash": original["input_hash"],
                 "source_id": source["source_id"], "dataset_id": source["dataset_id"],
