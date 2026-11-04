@@ -94,3 +94,16 @@ key_env: HERMES_CUSTOM_172_16_5_65_API_KEY
 由于四个 Bot 的真实模型调用未全部通过，按任务要求未启动 SOUL 实际生效验证、群聊消息验证、Kanban Worker、T00–T05、虚构 Skill 代码、QA 缺陷返工、ZIP 打包或 SHA-256 验证。原有群聊、Board、团队工作树、联调工作树和 Gateway 均保持不变。
 
 本次状态：`MODEL_CALLS_PASS=FAIL`；`MODEL_AUTH_STATUS=BLOCKED`；`KANBAN_BOARD_PASS=PASS`；`DISPATCHER_PASS=NOT_TESTED`；`TASK_HANDOFF_PASS=NOT_TESTED`；`AUTO_REWORK_PASS=NOT_TESTED`；`PACKAGE_VALIDATION_PASS=NOT_TESTED`；`TEAM_READY=PARTIAL`。
+
+## 2026-11-04 继续恢复尝试
+
+重新读取并实际调用四个现有 Profile，未创建或重建任何对象：
+
+| Profile | 当前路由 | 实际结果 | 退出状态 |
+|---|---|---|---|
+| `wb-manager` | `gpt-6-sol` / `custom:codex-bz` / `codex_responses` | `HTTP 401: Invalid API key`，未返回 `MANAGER_READY` | 1 |
+| `wb-analyst` | `gpt-6-sol` / `custom:codex-bz` / `codex_responses` | `HTTP 401: Invalid API key`，未返回 `ANALYST_READY` | 1 |
+| `wb-developer` | `gpt-6-sol` / `custom:codex-bz` / `codex_responses` | `HTTP 401: Invalid API key`，未返回 `DEVELOPER_READY` | 1 |
+| `wb-quality` | `gpt-6-sol` / `custom:codex-bz` / `codex_responses` | `HTTP 401: Invalid API key`，未返回 `QUALITY_READY` | 1 |
+
+复核时 Gateway 仍为 PID 18768，`wb-skill-factory` Board 仍为空且各状态计数为 0，团队工作树无未提交改动。四个模型调用仍未全部通过，后续 SOUL 生效、群聊消息、Dispatcher 领取、T00–T05、QA 返工和 ZIP 打包继续保持 NOT_TESTED；`TEAM_READY=PARTIAL`。
