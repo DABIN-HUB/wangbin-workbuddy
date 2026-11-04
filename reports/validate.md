@@ -115,6 +115,16 @@
       "message": "version=0.1.0"
     },
     {
+      "name": "skill.required_frontmatter",
+      "status": "PASS",
+      "message": "必填字段完整"
+    },
+    {
+      "name": "skill.semver",
+      "status": "PASS",
+      "message": "version=0.1.0"
+    },
+    {
       "name": "expert.required_fields",
       "status": "PASS",
       "message": "必填字段完整"

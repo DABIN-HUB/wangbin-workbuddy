@@ -427,10 +427,10 @@
       "validation_metrics": "products/metrics.json",
       "versions": [
         {
-          "archive_evidence": "UNKNOWN",
-          "candidate": "UNKNOWN",
+          "archive_evidence": "dist/wangbin-team-smoke-test-0.1.0-skill-candidate.zip",
+          "candidate": "dist/wangbin-team-smoke-test-0.1.0-skill-candidate.zip",
           "date": "UNKNOWN",
-          "sha256": "UNKNOWN",
+          "sha256": "2b8556004e014f912287de84da5430a356feb3074f1f2fca3a8000de5464b72a",
           "source": "packages/skills/wangbin-team-smoke-test",
           "version": "0.1.0"
         }
