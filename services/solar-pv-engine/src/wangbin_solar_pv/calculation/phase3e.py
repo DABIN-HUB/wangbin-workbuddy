@@ -310,7 +310,9 @@ def calculate_sourced_project_npv(carrier, source_documents, exported, methods, 
                                           project_basis=chosen, price_basis=price_basis["value"],
                                           upstream_financial_result_hash=bound.financial_result_hash)
     metric_ids = {"financial.phase3e.project_cash_flow", "financial.phase3e.project_pretax_cash_flow",
-                  "financial.phase3e.project_npv"}
+                  "financial.phase3e.project_npv", "financial.phase3e.cumulative_cash_flow",
+                  "financial.phase3e.discounted_cumulative_cash", "financial.phase3e.static_payback",
+                  "financial.phase3e.dynamic_payback"}
     result["results"]["metrics"] = [m for m in result["results"]["metrics"] if m["metric_id"] not in metric_ids]
     span = f"{len(annual)}_PERIODS"
     post = _record(result, catalog, "financial.phase3e.project_cash_flow", "F-PROJECT-CASH-FLOW", {
@@ -336,15 +338,62 @@ def calculate_sourced_project_npv(carrier, source_documents, exported, methods, 
     }, result["currency"], span)
     if npv["status"] != "CALCULATED":
         raise ContractError("PROJECT_NPV_NOT_CALCULATED")
-    # The inherited stub's "upstream cash flow missing" reason is no longer
-    # true. Preserve the remaining return metrics as nonnumeric, without
-    # pretending that their separate execution gates were implemented here.
+    cumulative = _record(result, catalog, "financial.phase3e.cumulative_cash_flow",
+                         "F-CUMULATIVE-CASH-FLOW", {
+                             "finance.selected_cash_flow": selected,
+                             "time.cumulative_end_year": len(annual) - 1,
+                             "finance.cash_flow_basis": chosen,
+                         }, result["currency"], span)
+    discounted = _record(result, catalog, "financial.phase3e.discounted_cumulative_cash",
+                         "F-DISCOUNTED-CUMULATIVE-CASH", {
+                             "finance.selected_cash_flow": selected,
+                             "finance.selected_discount_rate": rate["value"],
+                             "time.cumulative_end_year": len(annual) - 1,
+                             "finance.cash_flow_basis": chosen,
+                         }, result["currency"], span)
+    if (cumulative["status"] != "CALCULATED" or discounted["status"] != "CALCULATED"
+            or discounted["value"][-1] != npv["value"]):
+        raise ContractError("PROJECT_RETURN_CASHFLOW_RECONCILIATION")
+
+    # Recovery requires the first proven crossing of the complete project
+    # series.  The discounted kernel itself discounts the current year's raw
+    # cash; do not feed it a discounted amount for a second discount.
+    for metric_id, formula_id, totals in (
+            ("financial.phase3e.static_payback", "F-STATIC-PAYBACK", cumulative["value"]),
+            ("financial.phase3e.dynamic_payback", "F-DYNAMIC-PAYBACK", discounted["value"])):
+        year = next((index for index in range(1, len(totals))
+                     if totals[index - 1] < 0 <= totals[index]), None)
+        if year is None:
+            _metric(result, catalog, metric_id, formula_id, None, "year", span,
+                    status="UNDEFINED", reason=("INVALID_RECOVERY_CROSSING" if all(total >= 0 for total in totals)
+                                                else "NOT_RECOVERED_WITHIN_HORIZON"),
+                    details={"cash_flow_basis": chosen, "last_period": len(annual) - 1})
+            continue
+        values = {"finance.cash_flow_basis": chosen,
+                  "time.financial_end_year": len(annual) - 1}
+        if formula_id == "F-STATIC-PAYBACK":
+            values.update({"finance.first_recovery_year": year,
+                           "finance.pre_recovery_cumulative_cash": totals[year - 1],
+                           "finance.recovery_year_cash_flow": selected[year]})
+        else:
+            values.update({"finance.first_discounted_recovery_year": year,
+                           "finance.pre_discounted_recovery_cumulative": totals[year - 1],
+                           "finance.discounted_recovery_year_cash_flow": selected[year],
+                           "finance.selected_discount_rate": rate["value"]})
+        outcome = _record(result, catalog, metric_id, formula_id, values, "year", span)
+        if outcome["status"] != "CALCULATED":
+            raise ContractError("PROJECT_RETURN_RECOVERY_RECONCILIATION")
+        outcome["details"].update({
+            "cash_flow_basis": chosen,
+            "first_recovery_year": year,
+            "later_negative_cumulative_periods": [index for index in range(year + 1, len(totals))
+                                                  if totals[index] < 0],
+        })
+
+    # IRR still lacks a sourced D2 domain here; worst-year requires an
+    # explicitly sourced comparison scope and a result-representation review.
     for metric in result["results"]["metrics"]:
-        if metric["metric_id"] in {
-            "financial.phase3e.project_irr", "financial.phase3e.cumulative_cash_flow",
-            "financial.phase3e.static_payback", "financial.phase3e.discounted_cumulative_cash",
-            "financial.phase3e.dynamic_payback", "financial.phase3e.worst_cash_year",
-        }:
+        if metric["metric_id"] in {"financial.phase3e.project_irr", "financial.phase3e.worst_cash_year"}:
             metric.update(status="NOT_IMPLEMENTED", reason="PROJECT_RETURN_INTEGRATION_NOT_IN_R1_3_SCOPE",
                           details={"upstream_project_cash_flow": "CALCULATED"})
     result["evidence"]["phase3e-financial"]["selected_basis"] = chosen
