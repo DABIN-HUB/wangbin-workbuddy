@@ -73,6 +73,10 @@ def _parser():
     project.add_argument("--generation-hash", help="可选3B唯一结果hash；不能单独传入")
     project.add_argument("--scenarios", help="可选BASE/PESSIMISTIC/OPTIMISTIC三场景显式控制JSON")
     project.add_argument("--output", required=True, help="单层新建私有项目目录，不覆盖")
+    source_xlsx = commands.add_parser("source-xlsx", help="Phase4 F04资料来源与假设清单；只生成DRAFT_PARTIAL私有XLSX")
+    source_xlsx.add_argument("--result", required=True, help="已验证canonical JSON")
+    source_xlsx.add_argument("--mapping", help="可选同一结果的formula-execution JSON")
+    source_xlsx.add_argument("--output", required=True, help="新建XLSX文件，不覆盖")
     for command in ("submit", "revise", "resolve", "review", "remove", "accept"):
         examples = {
             "submit": '{"submission_id":"round1","updates":[{"field_id":"site.total_area","value":1000,"unit":"m2"}]}',
@@ -151,6 +155,12 @@ def main(argv=None):
         args = _parser().parse_args(argv)
         workspace = Workspace(args.workspace)
         catalog = Catalog(args.baseline_dir)
+        if args.command == "source-xlsx":
+            from .source_xlsx import create_source_workbook
+            receipt = create_source_workbook(workspace.read(args.result)[0], catalog, workspace,
+                args.output, formula_map=workspace.read(args.mapping)[0] if args.mapping else None)
+            print(dumps(receipt))
+            return 0
         if args.command == "project":
             from .calculation.project_runner import run_project
             from .timeseries_bundle import BundleBudget
