@@ -49,3 +49,48 @@ Desktop Bots 标签四行均显示 `wb-*`。通过 Desktop New Group Chat 勾选
 2. 用户在 Desktop Edit Profile 设置四个展示标题、核验每个 `Bot Chat` 永久会话与 `ui_meta` 托管；群聊 @wb-manager 发送一次无副作用测试消息，确认仅经理回复。
 3. 在 `wb-skill-factory` 由 wb-manager 一次性创建带依赖的六卡虚构任务链，真实经历 T00→T05、故意缺陷→阻断→修复提交→复验→产品工厂打包/验哈希；检查 Gateway 通知能否主动唤醒经理及任务重新进入界面后的持久化。不通过则保持 PARTIAL。
 4. 如需超越软隔离，另行决定受限执行账号/权限方案；本轮未触碰既有 NTFS ACL。
+
+## 2026-11-04 重新验证追加证据
+
+### 第一阶段：四个 Profile 实际模型调用
+
+未创建、删除或重建任何 Profile、群聊或 Board；未修改全局模型配置，未重新登录，未重启 Gateway。逐个执行了以下真实请求，并检查返回文本与退出状态：
+
+```text
+hermes -p wb-manager config get model
+hermes -p wb-manager chat -q "请仅回复：MANAGER_READY" -Q
+hermes -p wb-analyst config get model
+hermes -p wb-analyst chat -q "请仅回复：ANALYST_READY" -Q
+hermes -p wb-developer config get model
+hermes -p wb-developer chat -q "请仅回复：DEVELOPER_READY" -Q
+hermes -p wb-quality config get model
+hermes -p wb-quality chat -q "请仅回复：QUALITY_READY" -Q
+```
+
+四个 Profile 的实际配置一致：
+
+```text
+active model: gpt-6-sol
+provider: custom:codex-bz
+base_url: http://172.16.5.65/v1
+api_mode: codex_responses
+key_env: HERMES_CUSTOM_172_16_5_65_API_KEY
+```
+
+结果：四次请求均返回 `custom rejected your API key` / `HTTP 401: Invalid API key`，每次命令最终退出状态为 `1`，没有生成对应的 `*_READY` 回复。配置已不再使用旧的活动模型 `gpt-6.1-sol`；Provider 元数据中仍保留 `gpt-6.1-sol` 模型条目，并存在 `default_model: gpt-5.5` 元数据，但当前活动路由明确为 `gpt-6-sol`，因此没有擅自清理这些元数据。
+
+诊断边界：
+
+- 认证失败：PASS（四次一致的 HTTP 401）。
+- 模型不支持：本轮未触发；之前对其他 Codex OAuth 模型的 400 不支持结果仍保留在历史记录中。
+- 网络错误：未发现；对 `http://172.16.5.65/v1` 的无凭证 HEAD 请求返回 HTTP 200，说明端点可达。该请求未发送任何凭证。
+- Profile 配置错误：未发现 YAML/版本错误；`hermes -p wb-manager doctor` 显示配置版本 v51、无弃用键，但命令在 120 秒达到超时，不能把完整 doctor 作为通过证据。
+- 凭证状态：四个 Profile `.env` 仍只有注释，没有明文凭证；进程环境中存在配置引用的变量名，但提供商拒绝其凭证。未输出任何密钥值、Token 或连接凭证。
+
+结论：当前阻断点是 `custom:codex-bz` 的凭证被提供商拒绝，需要用户或凭证所有者提供有效授权/更新凭证后再复验。没有无需外部授权的 Profile 局部修复，因此未修改配置。
+
+### 第二、三阶段门禁
+
+由于四个 Bot 的真实模型调用未全部通过，按任务要求未启动 SOUL 实际生效验证、群聊消息验证、Kanban Worker、T00–T05、虚构 Skill 代码、QA 缺陷返工、ZIP 打包或 SHA-256 验证。原有群聊、Board、团队工作树、联调工作树和 Gateway 均保持不变。
+
+本次状态：`MODEL_CALLS_PASS=FAIL`；`MODEL_AUTH_STATUS=BLOCKED`；`KANBAN_BOARD_PASS=PASS`；`DISPATCHER_PASS=NOT_TESTED`；`TASK_HANDOFF_PASS=NOT_TESTED`；`AUTO_REWORK_PASS=NOT_TESTED`；`PACKAGE_VALIDATION_PASS=NOT_TESTED`；`TEAM_READY=PARTIAL`。
