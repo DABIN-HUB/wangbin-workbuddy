@@ -15,6 +15,7 @@ from ..timeseries_bundle import BundleBudget, read_bundle
 from .break_even_replay import _remove_owned
 from .energy_yield import calculate_ground as generate_ground, calculate_rooftop as generate_rooftop
 from .financial_ledger import calculate_financial_ledger, write_financial_bundle
+from .formula_execution import formula_execution_map
 from .input_contract import validate_export
 from .method_config import MethodConfig
 from .phase3e import calculate_phase3e, write_phase3e_bundle
@@ -83,6 +84,8 @@ def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, ru
             # The report layer consumes this one canonical 3E result, including
             # the upstream metric, source, method and formula snapshots.
             Workspace(root).create("canonical.json", result)
+            mapping = formula_execution_map(result, catalog)
+            Workspace(root).create("formula-execution.json", mapping)
             receipt = {"project_id": result["project_id"], "pv_type": pv_type,
                        "scenario_id": "BASE", "input_hash": result["input_hash"],
                        "phase2_input_hash": original["input_hash"],
@@ -91,6 +94,7 @@ def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, ru
                        "definition_version": catalog.definition_version,
                        "definition_hash": catalog.definition_hash,
                        "canonical_result_hash": result["result_hash"],
+                       "formula_mapping_hash": mapping["mapping_hash"],
                        "status": result["status"], "stages": stages}
             receipt["receipt_hash"] = digest(receipt)
             receipt["elapsed_seconds"] = str(perf_counter() - started)
