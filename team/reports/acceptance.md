@@ -111,3 +111,18 @@ key_env: HERMES_CUSTOM_172_16_5_65_API_KEY
 ## 2026-11-04 再次请求的模型复测
 
 应用户要求再次分别执行四个当前 Profile 的 `config get model.default`、`config get model.provider` 和低成本 `chat -q '请仅回复：<ROLE>_READY' -Q`。四个当前配置仍是 `gpt-6-sol` / `custom:codex-bz`。`wb-manager`、`wb-analyst`、`wb-developer`、`wb-quality` 均返回 `HTTP 401: Invalid API key`，各自模型请求退出状态均为 1，无任一 `*_READY` 正常回复。未改动配置或凭证。四个模型均未通过，T00–T05、群聊消息、QA 返工及 ZIP 验收继续 NOT_TESTED；`TEAM_READY=PARTIAL`。
+
+## 再次请求：三名 Bot 已恢复，分析师仍阻断
+
+分别执行四个 Profile 当前配置读取以及 `hermes -p <profile> chat -q '请只回复 <ROLE>_READY' -Q`，检查模型输出和内层退出状态：
+
+| Profile | 当前配置模型/提供商 | 本次真实输出 | 退出状态 |
+| --- | --- | --- | --- |
+| wb-manager | `gpt-6-sol` / `codex-bz` | `MANAGER_READY` | 0 |
+| wb-analyst | `gpt-6-sol` / `codex-bz` | `HTTP 401: Invalid API key`，无预期回复 | 1 |
+| wb-developer | `gpt-6-sol` / `codex-bz` | `DEVELOPER_READY` | 0 |
+| wb-quality | `gpt-6-sol` / `codex-bz` | `QUALITY_READY` | 0 |
+
+`hermes -p ... config get providers.codex-bz.key_env` 和仅打印 `.env` **键名**的检查显示：经理、开发、质量各自 `.env` 配有 `HERMES_CUSTOM_CODEX_BZ_API_KEY`，配置 `key_env` 同名；分析师 `.env` 没有凭证键，配置仍指向旧的 `HERMES_CUSTOM_172_16_5_65_API_KEY`。分析师 Gateway 错误日志明确记录运行时该变量为空，发送了占位凭证并收到 401。当前工具进程中的环境变量非空，但不能据此推断已运行 Gateway 的进程环境相同。未读取、输出或复制任何凭证值。
+
+受既有“不得擅自复制 API Key”约束，未向分析师复制其他 Bot 凭证，未自行切换模型、重新登录或重启 Gateway。用户需自行在分析师 Profile 配置可用授权，并确认 `key_env` 与所配置凭证一致；随后重试分析师真实对话。四名 Bot 未全部通过之前，群聊定向消息、SOUL 注入、Kanban Dispatcher、T00–T05、独立 QA、自动返工、ZIP 和 SHA-256 仍为 NOT_TESTED。`TEAM_READY=PARTIAL`。
