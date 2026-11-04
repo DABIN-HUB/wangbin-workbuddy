@@ -19,7 +19,7 @@ class _Parser(argparse.ArgumentParser):
 
 
 def _parser():
-    parser = _Parser(description="光伏私有本地资料与计算契约 / local intake and calculation contracts；资料收集阶段不计算、不联网；契约导出不运行项目。",
+    parser = _Parser(description="光伏私有本地资料与计算契约 / local intake and calculation contracts；项目计算须显式方法、数据与来源；不联网。",
                      epilog="KNOWN_LIMIT：不是操作系统沙箱；Windows无openat/强制目录隔离，目录竞态仍有边界。仅供私有本地目录；ACL由用户管理，不得作为公开不可信服务。")
     parser.add_argument("--workspace", required=True, help="已存在的授权私有目录；JSON路径均相对此目录")
     parser.add_argument("--baseline-dir", help="冻结基线目录；源码默认docs/solar-pv，安装后可显式提供")
@@ -64,6 +64,14 @@ def _parser():
     phase3e.add_argument("--methods", required=True, help="包含已批准D2方法参数的JSON")
     phase3e.add_argument("--settlement", required=True, help="已验收Phase3C结果目录或result.json")
     phase3e.add_argument("--output", required=True, help="新建私有结果目录，不覆盖")
+    project = commands.add_parser("project", help="Phase3G统一项目计算；真实复用3B/3C/3D/3E生产者，财务缺口保持阻断")
+    project.add_argument("--input", required=True, help="经验证的Phase2完整导出JSON")
+    project.add_argument("--methods", required=True, help="已批准的D2方法配置JSON")
+    project.add_argument("--bundle", required=True, help="与Phase2导出严格绑定的D3时序目录")
+    project.add_argument("--budget", required=True, help="显式D3预算JSON")
+    project.add_argument("--generation", help="可选同项目只读3B轨迹目录；必须同时固定hash")
+    project.add_argument("--generation-hash", help="可选3B唯一结果hash；不能单独传入")
+    project.add_argument("--output", required=True, help="单层新建私有项目目录，不覆盖")
     for command in ("submit", "revise", "resolve", "review", "remove", "accept"):
         examples = {
             "submit": '{"submission_id":"round1","updates":[{"field_id":"site.total_area","value":1000,"unit":"m2"}]}',
@@ -142,6 +150,23 @@ def main(argv=None):
         args = _parser().parse_args(argv)
         workspace = Workspace(args.workspace)
         catalog = Catalog(args.baseline_dir)
+        if args.command == "project":
+            from .calculation.project_runner import run_project
+            from .timeseries_bundle import BundleBudget
+            budget_data = workspace.read(args.budget)[0]
+            if not isinstance(budget_data, dict):
+                raise ContractError("BUNDLE_BUDGET")
+            receipt = run_project(workspace.read(args.input)[0], workspace.read(args.methods)[0],
+                                  bundle_dir=workspace.path(args.bundle, json_only=False),
+                                  catalog=catalog, budget=BundleBudget(**budget_data),
+                                  workspace=workspace, run_id=args.output,
+                                  generation_dir=workspace.path(args.generation, json_only=False) if args.generation else None,
+                                  generation_result_hash=args.generation_hash)
+            print(dumps({"status": receipt["status"],
+                         "canonical_result_hash": receipt["canonical_result_hash"],
+                         "receipt_hash": receipt["receipt_hash"],
+                         "scope": "PHASE3G_PROJECT_EXECUTION_PARTIAL_NOT_RELEASE_ACCEPTANCE"}))
+            return 0
         if args.command == "consumption":
             from contextlib import nullcontext
             from .timeseries_bundle import BundleBudget, read_bundle
