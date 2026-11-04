@@ -71,6 +71,7 @@ def _parser():
     project.add_argument("--budget", required=True, help="显式D3预算JSON")
     project.add_argument("--generation", help="可选同项目只读3B轨迹目录；必须同时固定hash")
     project.add_argument("--generation-hash", help="可选3B唯一结果hash；不能单独传入")
+    project.add_argument("--scenarios", help="可选BASE/PESSIMISTIC/OPTIMISTIC三场景显式控制JSON")
     project.add_argument("--output", required=True, help="单层新建私有项目目录，不覆盖")
     for command in ("submit", "revise", "resolve", "review", "remove", "accept"):
         examples = {
@@ -161,7 +162,8 @@ def main(argv=None):
                                   catalog=catalog, budget=BundleBudget(**budget_data),
                                   workspace=workspace, run_id=args.output,
                                   generation_dir=workspace.path(args.generation, json_only=False) if args.generation else None,
-                                  generation_result_hash=args.generation_hash)
+                                  generation_result_hash=args.generation_hash,
+                                  scenario_controls=workspace.read(args.scenarios)[0] if args.scenarios else None)
             print(dumps({"status": receipt["status"],
                          "canonical_result_hash": receipt["canonical_result_hash"],
                          "receipt_hash": receipt["receipt_hash"],

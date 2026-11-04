@@ -1,12 +1,13 @@
 """Fast ingress checks for the unified Phase 3G project entry."""
 from copy import deepcopy
+from decimal import Decimal
 
 import pytest
 
-from test_phase3f_scenario_runner import _fixture
+from test_phase3f_scenario_runner import _control, _fixture, _input
 from wangbin_solar_pv.calculation.energy_yield import _metric
 from wangbin_solar_pv.calculation.formula_execution import formula_execution_map
-from wangbin_solar_pv.calculation.project_runner import run_project
+from wangbin_solar_pv.calculation.project_runner import _prepare_cases, run_project
 from wangbin_solar_pv.calculation.result_contract import empty_result, seal_result
 from wangbin_solar_pv.errors import ContractError
 from wangbin_solar_pv.local_files import Workspace
@@ -59,3 +60,25 @@ def test_formula_map_distinguishes_old_placeholder_from_current_blocker():
     assert by_id["F-BREAK-EVEN-PRICE"]["project_status"] != "CALCULATED"
     assert sum(mapping["project_counts"].values()) == len(catalog.formulas)
     assert mapping["mapping_hash"] == digest({k: v for k, v in mapping.items() if k != "mapping_hash"})
+
+
+def test_project_requires_three_distinct_explicit_scenario_controls():
+    catalog, export, methods = _fixture()
+    base = _control(export, methods, sid="BASE", rid="base")
+    loan = _control(export, methods, sid="PESSIMISTIC", rid="loan", changes=[
+        _input(export, "LOAN_INTEREST", "finance.loan_rate", Decimal("0.08"))])
+    rate = _control(export, methods, sid="OPTIMISTIC", rid="rate", changes=[
+        _input(export, "PROJECT_DISCOUNT", "finance.project_discount_rate", Decimal("0.12"))])
+    original_hash = digest(export)
+    prepared, blocked = _prepare_cases([base, loan, rate], export, methods, catalog)
+    assert {item.scenario_id for item in prepared} == {"BASE", "PESSIMISTIC", "OPTIMISTIC"}
+    assert not blocked
+    assert digest(export) == original_hash
+    with pytest.raises(ContractError) as duplicate:
+        _prepare_cases([base, loan, loan], export, methods, catalog)
+    assert duplicate.value.code == "SCENARIO_SET_REQUIRED"
+    invalid = deepcopy(rate)
+    invalid["scenario_id"] = ["OPTIMISTIC"]
+    with pytest.raises(ContractError) as malformed:
+        _prepare_cases([base, loan, invalid], export, methods, catalog)
+    assert malformed.value.code == "SCENARIO_SET_REQUIRED"
