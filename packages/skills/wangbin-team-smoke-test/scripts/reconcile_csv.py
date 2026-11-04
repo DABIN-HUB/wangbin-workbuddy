@@ -39,7 +39,7 @@ def _read(path: Path, side: str) -> dict[str, tuple[Decimal, str, int]]:
         ident, amount = row
         if not ident.strip():
             error("EMPTY_ID", side, row_no, "id is empty")
-        if ident.startswith(FORMULA) or any(ord(c) < 32 for c in ident):
+        if ident.startswith(FORMULA) or any(ord(c) < 32 or 0x7F <= ord(c) <= 0x9F for c in ident):
             error("INVALID_ID", side, row_no, "id starts with a forbidden character")
         if ident in result:
             error("DUPLICATE_ID", side, row_no, "id occurs more than once")

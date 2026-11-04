@@ -78,6 +78,8 @@ def test_a02_a03_and_id_original(tmp_path, left, right, expected):
     (b'id,amount\n"A,1\n', BASE, False, False, "CSV_FORMAT_ERROR", "left", None),
     (BASE, BASE, True, False, "INPUT_PATH_ERROR", None, None),
     (b"id,amount\n=1,2\n", BASE, False, False, "INVALID_ID", "left", 2),
+    (b"id,amount\n\x7fdel,2\n", BASE, False, False, "INVALID_ID", "left", 2),
+    ("id,amount\n\u0085c1,2\n".encode(), BASE, False, False, "INVALID_ID", "left", 2),
     (BASE, BASE, False, True, "OUTPUT_ERROR", None, None),
     (b"id,amount\nA,1\nA,2\n", b"id,amount\nA,NaN\n", False, False, "DUPLICATE_ID", "left", 3),
 ])
