@@ -1,0 +1,79 @@
+{
+  "data_scope": "SYNTHETIC_ONE_YEAR_ONLY",
+  "independent_decimal_oracle": {
+    "base_opex_net": "100",
+    "base_sale_price": "0.4",
+    "baseline_3c_result_sha256": "7ca09fd80f5fd883f24c04b41d70082153102d582d3e9be86cc8f4b9d6171131",
+    "baseline_export_kwh": "87600.00",
+    "baseline_export_sales_revenue": "35040.0",
+    "baseline_loan_rate": "0.1",
+    "candidate_loan_rate": "0.2",
+    "candidate_opex_net": "200",
+    "candidate_sale_price": "0.6",
+    "expected_candidate_interest": "113.0",
+    "expected_candidate_opex_accrued": "226.00",
+    "expected_delta": "17520.000",
+    "loan_principal": "565",
+    "observed_delta": "17520.0",
+    "scenario_export_sales_revenue": "52560.0"
+  },
+  "junit": {
+    "errors": 0,
+    "failures": 0,
+    "seconds": "815.521",
+    "sha256": "02d6628491fcd5c336bf881f07aab5487f35c539e79bb34303d7c225a8f1dc7e",
+    "skipped": 0,
+    "tests": 1
+  },
+  "runs": {
+    "scenario-loan": {
+      "elapsed_seconds": "6.618886400014162",
+      "input_hash": "6897af8b4b54d85722fc1fc61415dfa89ee04399ab05f767e3ce518cf0d78701",
+      "interest_accrued": "113.00",
+      "opex_accrued": "113",
+      "opex_net": "100",
+      "project_npv_status": "BLOCKED_MISSING_INPUT",
+      "project_npv_value": null,
+      "receipt_digest_verified": true,
+      "result_file_sha256": {
+        "3D": "400fff5c01b47b4ba91181cfd6e5758028bd2aca24505edbbb9c39e5dbbe094f",
+        "3E": "d8c09647d43d9e517b03fe0e7902f92a3cb1f1244195072b3c1132d7e7b6950f"
+      },
+      "result_hash": "324a70576a58986f1df4e1255eb3b6fb38a8c3085e206fe963449be39d81e31b",
+      "scenario_id": "PESSIMISTIC"
+    },
+    "scenario-opex": {
+      "elapsed_seconds": "7.937142499955371",
+      "input_hash": "cc087770564e9e6e81449b1e375682f7a491abf4ed210f97c0e54449fe744264",
+      "interest_accrued": "56.50",
+      "opex_accrued": "226",
+      "opex_net": "200",
+      "project_npv_status": "BLOCKED_MISSING_INPUT",
+      "project_npv_value": null,
+      "receipt_digest_verified": true,
+      "result_file_sha256": {
+        "3D": "49009b339078a3de43e561464c8e4e807ff20c225c012ea46464967e25cec99c",
+        "3E": "755e00ba3fc82c131e732d436cb84b978fe051e333949af2e58c03c80d8d1118"
+      },
+      "result_hash": "49785a418d7c1bca0c4c614e7b9225a833b851b8d02dd3e9ae57e598e8ec6d6f",
+      "scenario_id": "PESSIMISTIC"
+    },
+    "scenario-price": {
+      "elapsed_seconds": "290.48437439999543",
+      "input_hash": "86fdc2c902c5890eca1582440a3189601cb2befaf6849fe5def741d0137a5c5a",
+      "interest_accrued": "56.50",
+      "opex_accrued": "113",
+      "opex_net": "100",
+      "project_npv_status": "BLOCKED_MISSING_INPUT",
+      "project_npv_value": null,
+      "receipt_digest_verified": true,
+      "result_file_sha256": {
+        "3C": "1dec3dcb26eb642ccdcd045fb08edd7fd90f344dd0c88b8d6e1e141d86d48a55",
+        "3D": "ba62868d67b6f8419fba32db6ee752debdfd8333333d77585a2c0a6972087ef8",
+        "3E": "091123ca00c06dcbf97bdd63272a29af8603b187812cc16a91a9df88c57c99c1"
+      },
+      "result_hash": "21a7115e7933c6f6e43b2dd42ecdaf7532f7ce246b8d420d9cf8e2b50b43822e",
+      "scenario_id": "PESSIMISTIC"
+    }
+  }
+}
