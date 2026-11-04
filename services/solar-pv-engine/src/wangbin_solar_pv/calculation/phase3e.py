@@ -390,10 +390,47 @@ def calculate_sourced_project_npv(carrier, source_documents, exported, methods, 
                                                   if totals[index] < 0],
         })
 
-    # IRR still lacks a sourced D2 domain here; worst-year requires an
-    # explicitly sourced comparison scope and a result-representation review.
+    # The sourced D2 controls are optional: never select a root domain or
+    # precision on behalf of a project, and never run beyond its declared
+    # polynomial degree budget.  The unconfigured existing scenario remains
+    # unchanged; partial/unreviewed controls are an explicit blocked result.
+    irr_ids = ("irr.method", "irr.minimum_rate", "irr.maximum_rate",
+               "irr.root_tolerance", "irr.maximum_degree")
+    irr_parameters = methods.to_dict()["parameters"]
+    irr_metric = next(metric for metric in result["results"]["metrics"]
+                      if metric["metric_id"] == "financial.phase3e.project_irr")
+    if any(parameter_id in irr_parameters for parameter_id in irr_ids):
+        missing_ids = [parameter_id for parameter_id in irr_ids if parameter_id not in irr_parameters]
+        unreviewed_ids = [parameter_id for parameter_id in irr_ids
+                          if parameter_id in irr_parameters and
+                          (irr_parameters[parameter_id]["status"] not in {"ASSUMED", "VERIFIED"} or
+                           irr_parameters[parameter_id]["license_status"] != "AUTHORIZED")]
+        if missing_ids or unreviewed_ids:
+            irr_metric.update(status="BLOCKED_MISSING_INPUT" if missing_ids else "BLOCKED_METHOD_REVIEW",
+                              reason="IRR_METHOD_CONTROLS_INCOMPLETE" if missing_ids else "IRR_METHOD_SOURCE_UNVERIFIED",
+                              details={"missing_method_parameter_ids": missing_ids,
+                                       "unreviewed_method_parameter_ids": unreviewed_ids})
+        elif methods.require("irr.maximum_degree") < len(selected) - 1:
+            irr_metric.update(status="BLOCKED_METHOD_REVIEW", reason="IRR_DEGREE_BUDGET",
+                              details={"financial_end_year": len(selected) - 1,
+                                       "maximum_degree": methods.require("irr.maximum_degree")})
+        else:
+            result["results"]["metrics"].remove(irr_metric)
+            _record(result, catalog, "financial.phase3e.project_irr", "F-IRR-PROJECT", {
+                "finance.irr_search_domain": {
+                    "minimum": methods.require("irr.minimum_rate"),
+                    "maximum": methods.require("irr.maximum_rate"),
+                },
+                "finance.project_irr_cash_flow": selected,
+                "time.financial_end_year": len(selected) - 1,
+            }, "1", span, options={"root_tolerance": methods.require("irr.root_tolerance")})
+    else:
+        irr_metric.update(status="NOT_IMPLEMENTED", reason="PROJECT_RETURN_INTEGRATION_NOT_IN_R1_3_SCOPE",
+                          details={"upstream_project_cash_flow": "CALCULATED"})
+    # The worst-year formula still needs an approved year scope and numeric
+    # result representation; its existing blocked integration is unchanged.
     for metric in result["results"]["metrics"]:
-        if metric["metric_id"] in {"financial.phase3e.project_irr", "financial.phase3e.worst_cash_year"}:
+        if metric["metric_id"] == "financial.phase3e.worst_cash_year":
             metric.update(status="NOT_IMPLEMENTED", reason="PROJECT_RETURN_INTEGRATION_NOT_IN_R1_3_SCOPE",
                           details={"upstream_project_cash_flow": "CALCULATED"})
     result["evidence"]["phase3e-financial"]["selected_basis"] = chosen
