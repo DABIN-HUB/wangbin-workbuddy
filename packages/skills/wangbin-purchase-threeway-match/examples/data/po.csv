@@ -1,0 +1,2 @@
+po_number,po_line_id,item_code,ordered_quantity,po_unit_price,po_amount,currency,uom
+PO-100,1,ITEM-A,10,5.00,50.00,USD,EA

@@ -1,0 +1,3 @@
+po_number,po_line_id,item_code,invoice_number,invoice_line_id,invoiced_quantity,invoice_unit_price,invoice_amount,currency,uom
+PO-100,1,ITEM-A,I-1,1,3,5.00,15.00,USD,EA
+PO-100,1,ITEM-A,I-2,1,7,5.00,35.00,USD,EA

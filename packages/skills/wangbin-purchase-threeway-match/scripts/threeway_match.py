@@ -1,0 +1,186 @@
+"""Deterministic local PO/receipt/invoice three-way matcher.
+
+Usage: python threeway_match.py --manifest manifest.json --output output
+"""
+from __future__ import annotations
+import argparse, csv, hashlib, json, os, sys
+from collections import Counter, defaultdict
+from decimal import Decimal, InvalidOperation
+from pathlib import Path
+from typing import Any
+
+try:
+    from openpyxl import load_workbook, Workbook
+except ImportError:  # pragma: no cover
+    load_workbook = Workbook = None
+
+SHEETS = ["Match Summary", "Line Results", "Exceptions", "Unmatched Receipts", "Unmatched Invoices", "Source Trace", "Run Manifest"]
+DEFAULT_LIMITS = {"max_file_bytes": 50*1024*1024, "max_files": 50, "max_batch_bytes": 200*1024*1024}
+KEY_FIELDS = ["po_number", "po_line_id", "item_code"]
+REQ = {
+ "po": KEY_FIELDS + ["ordered_quantity", "po_unit_price", "currency", "uom"],
+ "receipt": KEY_FIELDS + ["receipt_number", "receipt_line_id", "received_quantity", "uom"],
+ "invoice": KEY_FIELDS + ["invoice_number", "invoice_line_id", "invoiced_quantity", "invoice_unit_price", "invoice_amount", "currency", "uom"],
+}
+
+class MatchError(Exception):
+    def __init__(self, code: str, message: str): self.code, self.message = code, message
+
+def dec(value: Any) -> Decimal | None:
+    if value is None or str(value).strip() in {"", "NA", "-"}: return None
+    try:
+        result = Decimal(str(value).strip())
+        if not result.is_finite(): return None
+        return result
+    except (InvalidOperation, ValueError): return None
+
+def text(value: Any) -> str:
+    return "" if value is None else str(value).strip()
+
+def safe_cell(value: Any) -> Any:
+    if isinstance(value, (dict, list, tuple)): value = json.dumps(value, ensure_ascii=False, sort_keys=True)
+    s = text(value)
+    if s.startswith(("=", "+", "-", "@")): return "'" + s
+    return value
+
+def hash_row(row: dict[str, Any]) -> str:
+    raw = json.dumps({k: text(row.get(k)) for k in sorted(row)}, ensure_ascii=False, separators=(",", ":"))
+    return hashlib.sha256(raw.encode()).hexdigest()
+
+def key_of(row: dict[str, Any], case_insensitive=False) -> tuple[str, ...] | None:
+    vals = tuple(text(row.get(k)) for k in KEY_FIELDS)
+    if any(not x for x in vals): return None
+    return tuple(x.casefold() for x in vals) if case_insensitive else vals
+
+def read_file(path: Path, sheet: str | None, kind: str, root: Path) -> list[dict[str, Any]]:
+    if path.suffix.lower() == ".csv":
+        with path.open("r", encoding="utf-8-sig", newline="") as f:
+            rows = list(csv.DictReader(f))
+        actual_sheet = ""
+    elif path.suffix.lower() == ".xlsx":
+        if load_workbook is None: raise MatchError("INVALID_INPUT", "openpyxl is required for XLSX")
+        wb = load_workbook(path, read_only=True, data_only=False, keep_links=False)
+        names = [sheet] if sheet else ([wb.sheetnames[0]] if len(wb.sheetnames) == 1 else [])
+        if not names or names[0] not in wb.sheetnames: raise MatchError("INVALID_INPUT", "XLSX worksheet must be explicitly named when ambiguous")
+        ws = wb[names[0]]; values = list(ws.values)
+        if not values: rows = []
+        else:
+            headers = [text(v) for v in values[0]]
+            rows = [dict(zip(headers, r)) for r in values[1:]]
+        actual_sheet = names[0]
+    else: raise MatchError("INVALID_INPUT", "unsupported extension")
+    out=[]
+    for i, row in enumerate(rows, 2):
+        row = {str(k): v for k,v in row.items() if k is not None}
+        row["source_file"] = path.name; row["source_sheet"] = actual_sheet; row["source_row_number"] = i
+        row["original_key_values"] = json.dumps([row.get(k) for k in KEY_FIELDS], ensure_ascii=False, separators=(",", ":"))
+        row["source_row_hash"] = hash_row(row)
+        row["_kind"] = kind; row["_path"] = str(path)
+        out.append(row)
+    return out
+
+def tol(config: dict, name: str, variance: Decimal, expected: Decimal | None) -> bool:
+    obj=config.get(name, {"mode":"absolute", "value":"0"}); value=dec(obj.get("value", "0")) or Decimal(0)
+    allowed=value if obj.get("mode", "absolute")=="absolute" else max(Decimal(0), (abs(expected or Decimal(0))*value))
+    return abs(variance) <= allowed
+
+def main_match(manifest: dict[str, Any], output: Path) -> dict[str, Any]:
+    root=Path(manifest.get("input_root", "")).resolve()
+    if not root.is_dir() or root.is_symlink(): raise MatchError("INVALID_INPUT", "input_root must be a directory")
+    out=output.resolve();
+    if out == root or root in out.parents: raise MatchError("INVALID_INPUT", "output root must be distinct")
+    cfg=manifest.get("config", {}); key_ci=bool(cfg.get("case_insensitive", False)); limits={**DEFAULT_LIMITS, **cfg.get("limits", {})}
+    files=[]; source=[]
+    for kind in ("po", "receipt", "invoice"):
+        for item in manifest.get(f"{kind}_files", []):
+            rel=item.get("path") if isinstance(item, dict) else item; sheet=item.get("sheet") if isinstance(item, dict) else None
+            if not isinstance(rel, str) or not rel.strip(): raise MatchError("INVALID_INPUT", "input path is required")
+            p=Path(rel)
+            if p.is_absolute() or ".." in p.parts: raise MatchError("INVALID_INPUT", "path outside input_root")
+            full=(root/p).resolve()
+            if not full.is_file() or full.is_symlink() or root not in full.parents: raise MatchError("INVALID_INPUT", "invalid input path")
+            if full.suffix.lower() not in {".csv", ".xlsx"}: raise MatchError("INVALID_INPUT", "unsupported extension")
+            if full.stat().st_size > limits["max_file_bytes"]: raise MatchError("LIMIT_EXCEEDED", "file limit exceeded")
+            files.append(full); source.extend(read_file(full, sheet, kind, root))
+    if len(files)>limits["max_files"] or sum(p.stat().st_size for p in files)>limits["max_batch_bytes"]: raise MatchError("LIMIT_EXCEEDED", "batch limit exceeded")
+    groups={k: [r for r in source if r["_kind"]==k] for k in ("po","receipt","invoice")}
+    trace=[]; invalid=[]
+    for kind, rows in groups.items():
+        for r in rows:
+            missing=[f for f in REQ[kind] if text(r.get(f))==""]
+            r["_key"]=key_of(r,key_ci)
+            if missing: r["_reason"]="MISSING_REQUIRED_FIELD"; invalid.append(r)
+            elif r["_key"] is None: r["_reason"]="AMBIGUOUS_KEY"; invalid.append(r)
+            else: r["_reason"]="INCLUDED"
+            trace.append(r)
+    pos=defaultdict(list); receipts=defaultdict(list); invoices=defaultdict(list)
+    for r in groups["po"]:
+        if r.get("_key") is not None and r.get("_reason")=="INCLUDED": pos[r["_key"]].append(r)
+    for r in groups["receipt"]:
+        if r.get("_key") is not None and r.get("_reason")=="INCLUDED": receipts[r["_key"]].append(r)
+    for r in groups["invoice"]:
+        if r.get("_key") is not None and r.get("_reason")=="INCLUDED": invoices[r["_key"]].append(r)
+    duplicate_sources=set()
+    for kind, rows, ids in (("receipt",groups["receipt"],("receipt_number","receipt_line_id")),("invoice",groups["invoice"],("invoice_number","invoice_line_id"))):
+        seen=Counter(tuple(text(r.get(x)) for x in ids) for r in rows)
+        duplicate_sources |= {k for k,v in seen.items() if k and v>1}
+    results=[]; exceptions=[]; unmatched_r=[]; unmatched_i=[]
+    keys=sorted(set(pos)|set(receipts)|set(invoices))
+    precedence={"INVALID_INPUT":0,"AMBIGUOUS_KEY":1,"DUPLICATE_PO_KEY":1,"DUPLICATE_SOURCE_ROW":1,"MISSING_REQUIRED_FIELD":2,"CURRENCY_MISMATCH":3,"UOM_MISMATCH":3,"QTY_OVER":4,"QTY_UNDER":4,"PRICE_MISMATCH":5,"AMOUNT_MISMATCH":6}
+    for key in keys:
+        ps=pos.get(key,[]); rs=receipts.get(key,[]); ins=invoices.get(key,[]); codes=[]
+        if len(ps)>1 and not cfg.get("allow_repeated_po_lines",False): codes.append("DUPLICATE_PO_KEY")
+        if not ps:
+            for r in rs: unmatched_r.append({**r,"reason":"ORPHAN_RECEIPT"}); exceptions.append({"comparison_key":json.dumps(key),"exception_code":"ORPHAN_RECEIPT","source_row_reference":r["source_file"]+":"+str(r["source_row_number"])})
+            for r in ins: unmatched_i.append({**r,"reason":"ORPHAN_INVOICE"}); exceptions.append({"comparison_key":json.dumps(key),"exception_code":"ORPHAN_INVOICE","source_row_reference":r["source_file"]+":"+str(r["source_row_number"])})
+            continue
+        po=ps[0]; oq=dec(po.get("ordered_quantity")); price=dec(po.get("po_unit_price")); po_amt=dec(po.get("po_amount")); rq=sum((dec(r.get("received_quantity")) or 0 for r in rs),Decimal(0)); iq=sum((dec(r.get("invoiced_quantity")) or 0 for r in ins),Decimal(0)); ia=sum((dec(r.get("invoice_amount")) or 0 for r in ins),Decimal(0))
+        if oq is None or price is None: codes.append("NOT_COMPARABLE")
+        rv=(rq-oq) if oq is not None else None; iv=(iq-oq) if oq is not None else None
+        if rv is not None and not tol(cfg,"quantity_tolerance",rv,oq): codes.append("QTY_OVER" if rv>0 else "QTY_UNDER")
+        if iv is not None and not tol(cfg,"quantity_tolerance",iv,oq): codes.append("QTY_OVER" if iv>0 else "QTY_UNDER")
+        currencies={text(x.get("currency")) for x in [po,*ins] if text(x.get("currency"))}; uoms={text(x.get("uom")) for x in [po,*rs,*ins] if text(x.get("uom"))}
+        if len(currencies)>1: codes += ["CURRENCY_MISMATCH","NOT_COMPARABLE"]
+        if len(uoms)>1: codes += ["UOM_MISMATCH","NOT_COMPARABLE"]
+        weighted=(sum((dec(x.get("invoiced_quantity")) or 0)*(dec(x.get("invoice_unit_price")) or 0) for x in ins)/iq) if iq else None
+        if weighted is not None and price is not None and not tol(cfg,"unit_price_tolerance",weighted-price,price): codes.append("PRICE_MISMATCH")
+        expected=po_amt if po_amt is not None else ((oq*price) if oq is not None and price is not None else None)
+        av=(ia-expected) if expected is not None else None
+        if av is None: codes.append("NOT_COMPARABLE")
+        elif not tol(cfg,"amount_tolerance",av,expected): codes.append("AMOUNT_MISMATCH")
+        for r in rs+ins:
+            ident=tuple(text(r.get(x)) for x in (("receipt_number","receipt_line_id") if r["_kind"]=="receipt" else ("invoice_number","invoice_line_id")))
+            if ident in duplicate_sources: codes.append("DUPLICATE_SOURCE_ROW")
+        codes=list(dict.fromkeys(codes)); status="MATCHED" if not codes else min(codes,key=lambda x:precedence.get(x,99))
+        result={"comparison_key":json.dumps(key,ensure_ascii=False),"status":status,"ordered_quantity":str(oq) if oq is not None else "NOT_AVAILABLE","received_quantity":str(rq),"invoiced_quantity":str(iq),"receipt_variance":str(rv) if rv is not None else "NOT_AVAILABLE","invoice_variance":str(iv) if iv is not None else "NOT_AVAILABLE","expected_amount":str(expected) if expected is not None else "NOT_AVAILABLE","invoiced_amount":str(ia),"amount_variance":str(av) if av is not None else "NOT_AVAILABLE","weighted_invoice_unit_price":str(weighted) if weighted is not None else "NOT_AVAILABLE","currency":text(po.get("currency")),"uom":text(po.get("uom")),"exception_codes":";".join(codes),"source_file":po["source_file"],"source_sheet":po["source_sheet"],"source_row_number":po["source_row_number"]}
+        results.append(result)
+        for c in codes: exceptions.append({"comparison_key":result["comparison_key"],"exception_code":c,"source_row_reference":po["source_file"]+":"+str(po["source_row_number"])})
+    for r in groups["receipt"]:
+        if r.get("_key") not in pos or r.get("_reason")!="INCLUDED": unmatched_r.append({**r,"reason":r.get("_reason","ORPHAN_RECEIPT")})
+    for r in groups["invoice"]:
+        if r.get("_key") not in pos or r.get("_reason")!="INCLUDED": unmatched_i.append({**r,"reason":r.get("_reason","ORPHAN_INVOICE")})
+    out.mkdir(parents=True,exist_ok=False)
+    summary={"schema_version":"1.0","run_status":"SUCCEEDED_WITH_EXCEPTIONS" if exceptions or invalid else "SUCCEEDED","totals":{"po_keys":len(results),"matched":sum(x["status"]=="MATCHED" for x in results),"exceptions":len(exceptions)},"exception_code_counts":dict(sorted(Counter(x["exception_code"] for x in exceptions).items())),"output_file_references":{"workbook":"threeway_match.xlsx","report":"report.md"}}
+    manifest_out={"product_id":"wangbin-purchase-threeway-match","version":"0.1.0","input_files":[{"name":p.name,"sha256":hashlib.sha256(p.read_bytes()).hexdigest()} for p in files],"row_counts":{k:len(v) for k,v in groups.items()},"limits":limits,"completion_status":summary["run_status"]}
+    (out/"summary.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+    (out/"report.md").write_text("# 采购三单匹配 / Purchase three-way match\n\n本地确定性结果；例外需人工复核，不代表批准或付款。\n\nStatus: "+summary["run_status"]+"\n",encoding="utf-8")
+    if Workbook is not None:
+        wb=Workbook(); wb.remove(wb.active)
+        line_rows=results
+        exception_rows=[{"comparison_key":x["comparison_key"],"exception_code":x["exception_code"],"source_row_reference":x["source_row_reference"]} for x in exceptions]
+        trace_rows=[{k:v for k,v in r.items() if not k.startswith("_")} for r in trace]
+        sheet_rows=[results,line_rows,exception_rows,unmatched_r,unmatched_i,trace_rows,[manifest_out]]
+        headers=[list(x[0].keys()) if x else ["empty"] for x in sheet_rows]
+        headers[0]=list(results[0].keys()) if results else ["comparison_key","status"]
+        headers[1]=headers[0]
+        for name, rows, hs in zip(SHEETS,sheet_rows,headers):
+            ws=wb.create_sheet(name); ws.append([safe_cell(x) for x in hs])
+            for row in rows: ws.append([safe_cell(row.get(x)) for x in hs])
+        wb.save(out/"threeway_match.xlsx")
+    return summary
+
+def cli() -> int:
+    ap=argparse.ArgumentParser(); ap.add_argument("--manifest",required=True); ap.add_argument("--output",required=True); args=ap.parse_args()
+    try: print(json.dumps(main_match(json.loads(Path(args.manifest).read_text(encoding="utf-8")),Path(args.output)),ensure_ascii=False,indent=2)); return 0
+    except MatchError as e: print(json.dumps({"run_status":"FAILED_INPUT" if e.code=="INVALID_INPUT" else "FAILED_LIMIT","error_code":e.code,"message":e.message}),file=sys.stderr); return 2
+if __name__=="__main__": raise SystemExit(cli())

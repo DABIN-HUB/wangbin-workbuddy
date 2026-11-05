@@ -286,6 +286,31 @@
       ]
     },
     {
+      "active_version": "0.1.0",
+      "development": "MVP candidate; local focused matching run verified",
+      "id": "wangbin-purchase-threeway-match",
+      "maintenance": "UNKNOWN",
+      "name": "采购三单匹配",
+      "published_at": "UNKNOWN",
+      "review_evidence": "Local focused test only; platform not tested",
+      "review_status": "NOT_TESTED",
+      "scenario": "Deterministic PO receipt invoice matching",
+      "status": "TESTED",
+      "target_users": "采购、财务与仓库人员",
+      "test_path": "tests/test_purchase_threeway_match.py",
+      "type": "Skill",
+      "validation_metrics": "products/metrics.json",
+      "versions": [{
+        "archive_evidence": "UNKNOWN",
+        "candidate": "UNKNOWN",
+        "date": "UNKNOWN",
+        "published_at": "UNKNOWN",
+        "sha256": "UNKNOWN",
+        "source": "packages/skills/wangbin-purchase-threeway-match",
+        "version": "0.1.0"
+      }]
+    },
+    {
       "active_version": "0.1.3",
       "development": "Local CSV matrix: 10 passed; WorkBuddy runtime unverified",
       "id": "wangbin-purchase-analyzer",

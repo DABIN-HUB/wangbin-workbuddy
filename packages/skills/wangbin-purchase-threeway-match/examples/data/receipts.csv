@@ -1,0 +1,3 @@
+po_number,po_line_id,item_code,receipt_number,receipt_line_id,received_quantity,uom
+PO-100,1,ITEM-A,R-1,1,4,EA
+PO-100,1,ITEM-A,R-2,1,6,EA

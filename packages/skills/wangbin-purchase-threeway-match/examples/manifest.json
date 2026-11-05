@@ -1,0 +1,12 @@
+{
+  "input_root": "data",
+  "po_files": ["po.csv"],
+  "receipt_files": ["receipts.csv"],
+  "invoice_files": ["invoices.csv"],
+  "config": {
+    "key_fields": ["po_number", "po_line_id", "item_code"],
+    "quantity_tolerance": {"mode": "absolute", "value": "0.00", "unit": "base_uom"},
+    "unit_price_tolerance": {"mode": "absolute", "value": "0.00", "unit": "currency/unit"},
+    "amount_tolerance": {"mode": "absolute", "value": "0.00", "unit": "currency"}
+  }
+}
