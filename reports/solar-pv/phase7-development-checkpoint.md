@@ -327,4 +327,5 @@ Connector `cli.json` 和 Skill manifest 现在显式固定：Python `>=3.12,<3.1
 - `soffice`、`libreoffice`、`pandoc`、`wkhtmltopdf`、`docx2pdf`/`comtypes` 仍不可用；两个审阅包都不含假 PDF，manifest 保持 `PDF_RENDERER_UNAVAILABLE` / `BLOCKED`。
 - WorkBuddy 私有安装、Connector `init`、可信 wheel 索引、平台 Python runtime、Skill 对话调用、平台输出权限、平台 PDF/字体和许可证仍为 `NOT_TESTED`/`UNKNOWN`/`REQUIRES_MANUAL_REVIEW`。
 - 新候选归档：Skill `dist/wangbin-solar-pv-prestudy-0.1.2-skill-candidate.zip`，221,231 bytes，SHA-256 `42e66522bb923dd9cdf18180ff38dfca69b24a9ae09e49c6efe5ed935293fca7`；Connector `dist/wangbin-solar-pv-cli-0.1.1-connector-candidate.zip`，3,212 bytes，SHA-256 `766a3e7b24527373d46b56aa56bf33de8e7890f788358d7ef39c24e1b9b76d31`。两个 ZIP 的 `unzip -t` 通过。
+- 快速契约检查：`pytest -q tests/solar-pv/test_calculation_contract_cli.py`，3 passed，9.83 s；未运行完整 L2/L3。
 - 本轮未上传 WorkBuddy、未 push、未提交审核、未发布、未启动 Phase 8A–8G。用户确认报告内容、计算结果、Word 页面视觉和平台试运行前，不进入上传阶段。
