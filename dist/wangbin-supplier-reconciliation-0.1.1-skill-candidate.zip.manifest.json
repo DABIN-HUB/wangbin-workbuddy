@@ -1,0 +1,54 @@
+{
+  "package": "wangbin-supplier-reconciliation",
+  "version": "0.1.1",
+  "zip": "F:\\ideaWorkSpace\\wangbin-workbuddy-supplier-reconciliation\\dist\\wangbin-supplier-reconciliation-0.1.1-skill-candidate.zip",
+  "zip_sha256": "4cb4afc9e7717f1d443b02c0b0e26c48ace5e43b52ca4f0cb2c9caf427a3453c",
+  "zip_size_bytes": 11009,
+  "members": [
+    {
+      "path": "wangbin-supplier-reconciliation/SKILL.md",
+      "size": 3407,
+      "sha256": "0d3384668a031d483986fe8f1cd7ebc413f142553b9fb6aa44cc360d873075d7"
+    },
+    {
+      "path": "wangbin-supplier-reconciliation/examples/fictional-config.json",
+      "size": 353,
+      "sha256": "529c1e2e0992999f8428a3f9d33b6d7379628ff5fd7b0579314de1606c9fc91c"
+    },
+    {
+      "path": "wangbin-supplier-reconciliation/examples/fictional-internal.csv",
+      "size": 132,
+      "sha256": "9ee8c792c051cd679fd54591d1ed2399fc313c5153cd9d71e576ce7a73b8a3a3"
+    },
+    {
+      "path": "wangbin-supplier-reconciliation/examples/fictional-supplier.csv",
+      "size": 132,
+      "sha256": "cbb68365ce673f36722f5c783dbc51558e469e1585ed124bee76dd6a11dc5403"
+    },
+    {
+      "path": "wangbin-supplier-reconciliation/examples/minimal-config.json",
+      "size": 175,
+      "sha256": "815a1a759b991f0e74cebcb8bfc0b027ec9e955893f9c585a69a06680f216201"
+    },
+    {
+      "path": "wangbin-supplier-reconciliation/examples/minimal-internal.csv",
+      "size": 48,
+      "sha256": "b9718508d27dbc4c62d85e82a08c9490ed985b18a357a2e2f5e695f951d17b1c"
+    },
+    {
+      "path": "wangbin-supplier-reconciliation/examples/minimal-supplier.csv",
+      "size": 48,
+      "sha256": "874ccd0472dd768fa82edd8c49717553cce6789c9e761313b6f0fae76df464b4"
+    },
+    {
+      "path": "wangbin-supplier-reconciliation/manifest.json",
+      "size": 193,
+      "sha256": "7c78eea44b893a87d4104085887a0a65ce1a17e7f6f23581f54c44256e615ff3"
+    },
+    {
+      "path": "wangbin-supplier-reconciliation/scripts/reconcile.py",
+      "size": 21667,
+      "sha256": "abeb9a995fee5cf11ff33fc58fa519cb542f4a4716d7b4a53639165aefdd47d3"
+    }
+  ]
+}

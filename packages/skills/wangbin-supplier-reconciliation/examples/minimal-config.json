@@ -1,0 +1,1 @@
+{"supplier_input":{"path":"examples/minimal-supplier.csv","format":"csv"},"internal_input":{"path":"examples/minimal-internal.csv","format":"csv"},"output_dir":"minimal-out"}

@@ -5,6 +5,15 @@
 - **来源/约定**: 用户冻结目标与任务验收条件、T00 `t_d1a01c5a` 交接；输入输出详见同目录 `requirements.md` 与 `input-output-contract.md`。
 - **执行前置**: 每例使用临时普通文件和显式输出目录；不得联网。除特别说明，金额阈值为 `0.01`、键为 `reconciliation_id,document_id,line_id,item_code,currency`，行号从表头后第一行计 2。
 
+## 0.1.1 校准验收（以下原 A01–A18 为显式高级/历史配置回归）
+
+- 两侧仅 `document_no,amount` 的 CSV 与 XLSX（后者显式选择 sheet）均能退出 0、生成三种输出；默认 basic 的 key_fields 为 `[document_no]`。
+- `20.00` 对 `20.01` 默认 `AMOUNT_DIFFERENCE`（差额 `-0.01`）；显式容差 `"0.01"` 后唯一键可 `MATCHED`。
+- 同侧重复单据 `AMBIGUOUS`，不得首条优先；多供应商可靠 ID 使用 `[supplier_id,document_no]`，缺 ID 且多供应商或显式 supplier 模式进入 Manual Review；不能从完全缺 ID 的数据推断多供应商。
+- 显式旧复合键仍可运行，而两列基本输入不被该高级路径阻断。
+- XLSX 六表 `Summary,Matched,Amount Differences,Supplier Only,Internal Only,Manual Review` 存在（包括空类别）；各类别明细与汇总计数一致，AMBIGUOUS/INVALID 均在 Manual Review 并保留来源。
+- 将 ZIP 解压到无 Git 根目录的独立目录后，运行 `python scripts/reconcile.py --config examples/minimal-config.json`，核对 openpyxl 依赖及三种输出。
+
 ## 验收矩阵
 
 | ID | 场景与输入 | 预期结果（必须逐项断言） |

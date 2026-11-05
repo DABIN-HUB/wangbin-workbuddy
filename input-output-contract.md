@@ -3,6 +3,12 @@
 - **product_id**: `wangbin-supplier-reconciliation`
 - **task_id**: `t_9d7ec034`
 - **来源/约定**: 用户冻结 MVP、T00 `t_d1a01c5a` 交接；与 `requirements.md` 同版本冻结。
+
+## 0.1.1 默认接口覆盖条款（下文示例为 0.1.0 历史高级配置）
+
+默认配置只要求双方 `path` 和显式 `output_dir`，CSV 文件仅需 `document_no,amount` 两列表头；XLSX 同样两列但输入须提供精确 `sheet`。`document_id` 是 `document_no` 兼容别名（表头/field_mapping/key_fields）。无 `key_fields` 时 `matching_mode=basic`，键 `document_no`；显式 `matching_mode=supplier` 或检测到不同供应商编码时键 `[supplier_id,document_no]`，缺失供应商 ID 的有效行 `AMBIGUOUS`，`error_codes=["SUPPLIER_ID_REQUIRED"]`。多供应商且全部 ID 缺失无法自动发现，需显式 supplier 模式。`key_fields` 自动启用 advanced（也可显式 `matching_mode=advanced`），金额不可入键，所选列两侧表头均必需。默认容差 `"0"`，显式非零才生效；`run` 增加 `matching_mode`、`supplier_id_required` 并记录实际 `key_fields`/`amount_tolerance`。
+
+XLSX 固定顺序为 `Summary`、`Matched`、`Amount Differences`、`Supplier Only`、`Internal Only`、`Manual Review`；Summary 每行 `currency,status,count`；其余五表共用 `status,result_id,key,supplier_amount,internal_amount,difference,absolute_difference,supplier_source,internal_source,sources,error_codes`。`AMBIGUOUS` 和 `INVALID` 一并进入 Manual Review，明细的 `status` 明确区分；空类别仍有表头。JSON 的 `summary.by_status` 是六种状态计数，总数等于五张明细表数据行之和，`summary.by_currency` 中缺币种标记 `UNSPECIFIED`，不做换汇或金额归并。行级错误仍保留在 `errors` 和 Manual Review；不再输出单独 Errors 工作表。
 - **根目录**: `F:/ideaWorkSpace/wangbin-workbuddy-supplier-reconciliation`
 
 ## 1. 调用请求

@@ -21,7 +21,7 @@ def run(tmp_path, supplier="B1,D1,1,M1,100.00,CNY\n", internal="B1,D1,1,M1,100.0
     a.write_text(HEADER + supplier, encoding="utf-8")
     b.write_text(HEADER + internal, encoding="utf-8")
     config = {"supplier_input": {"path": str(a), "format": "csv"}, "internal_input": {"path": str(b), "format": "csv"},
-              "output_dir": str(tmp_path / "out"), **options}
+              "output_dir": str(tmp_path / "out"), "key_fields": ["reconciliation_id", "document_id", "line_id", "item_code", "currency"], **options}
     return execute(tmp_path, config)
 
 
@@ -49,7 +49,7 @@ def test_a01(tmp_path):
     assert status == 0 and len(rows(data)) == 1 and rows(data)[0]["status"] == "MATCHED"
     assert rows(data)[0]["difference"] == "0.00" and rows(data)[0]["sources"][0]["row_number"] == 2
     assert data["schema_version"] == "1.0" and data["product_id"] == mod.PRODUCT and data["task_id"] == mod.TASK
-    assert load_workbook(out / "reconciliation.xlsx").sheetnames == ["Results", "Summary", "Errors"]
+    assert load_workbook(out / "reconciliation.xlsx").sheetnames == ["Summary", "Matched", "Amount Differences", "Supplier Only", "Internal Only", "Manual Review"]
     assert (out / "reconciliation.md").read_text(encoding="utf-8")
 
 
@@ -221,7 +221,7 @@ def test_a17(tmp_path):
     assert {r["status"] for r in rows(data)} == set(mod.STATUSES)
     assert data["summary"]["total_result_rows"] == len(rows(data))
     assert "来源" in (out / "reconciliation.md").read_text(encoding="utf-8")
-    assert load_workbook(out / "reconciliation.xlsx").sheetnames == ["Results", "Summary", "Errors"]
+    assert load_workbook(out / "reconciliation.xlsx").sheetnames == ["Summary", "Matched", "Amount Differences", "Supplier Only", "Internal Only", "Manual Review"]
 
 
 @pytest.mark.parametrize("kind,code", [("directory", "INPUT_NOT_REGULAR_FILE"), ("unknown", "UNSUPPORTED_FORMAT"), ("corrupt", "XLSX_PARSE_ERROR"), ("symlink", "INPUT_NOT_REGULAR_FILE")])

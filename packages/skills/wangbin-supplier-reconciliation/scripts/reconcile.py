@@ -17,10 +17,11 @@ from pathlib import Path
 
 PRODUCT = "wangbin-supplier-reconciliation"
 TASK = "t_9d7ec034"
-REQUIRED = ("reconciliation_id", "document_id", "line_id", "item_code", "amount", "currency")
-DEFAULT_KEY = list(REQUIRED[:4]) + ["currency"]
+REQUIRED = ("document_no", "amount")
+DEFAULT_KEY = ["document_no"]
+KEY_FIELDS = ("document_no", "supplier_id", "reconciliation_id", "line_id", "item_code", "currency")
 ALIASES = {
-    "reconciliation_id": ("对账批次", "批次号"), "document_id": ("单据号", "发票号", "订单号"),
+    "reconciliation_id": ("对账批次", "批次号"), "document_no": ("document_id", "单据号", "发票号", "订单号"),
     "line_id": ("行号", "明细行号"), "item_code": ("物料编码", "商品编码"),
     "amount": ("金额", "含税金额", "总额"), "currency": ("币种", "货币"),
     "supplier_id": ("供应商", "供应商编码"), "document_date": ("单据日期", "日期"),
@@ -130,7 +131,7 @@ def rows_for(path, raw, spec, side, limits):
     return rows
 
 
-def mapping_for(headers, explicit, side):
+def mapping_for(headers, explicit, side, required=REQUIRED):
     headers = [normalized(h) for h in headers]
     if len(headers) != len(set(headers)):
         raise Problem("DUPLICATE_HEADER", side)
@@ -150,7 +151,7 @@ def mapping_for(headers, explicit, side):
             mapping[key] = hits[0]
     if len(set(mapping.values())) != len(mapping):
         raise Problem("FIELD_MAPPING_AMBIGUOUS", side)
-    if any(key not in mapping for key in REQUIRED):
+    if any(key not in mapping for key in required):
         raise Problem("REQUIRED_FIELD_MISSING", side)
     return mapping, {key: headers[pos] for key, pos in mapping.items()}
 
@@ -187,14 +188,20 @@ def reconcile(config):
         if key not in limits or type(val) is not int or val < 1 or val > limits[key]:
             raise Problem("INPUT_TOO_LARGE")
         limits[key] = val
+    mode = config.get("matching_mode", "advanced" if "key_fields" in config else "basic")
+    if mode not in ("basic", "supplier", "advanced") or (mode != "advanced" and "key_fields" in config):
+        raise Problem("INVALID_KEY")
     key_fields = config.get("key_fields", DEFAULT_KEY)
-    if not isinstance(key_fields, list) or not key_fields or len(key_fields) != len(set(key_fields)) or any(f not in REQUIRED or f == "amount" for f in key_fields):
+    key_fields = ["document_no" if f == "document_id" else f for f in key_fields] if isinstance(key_fields, list) else key_fields
+    if not isinstance(key_fields, list) or not key_fields or len(key_fields) != len(set(key_fields)) or any(f not in KEY_FIELDS for f in key_fields):
+        raise Problem("INVALID_KEY")
+    if mode == "advanced" and "key_fields" not in config:
         raise Problem("INVALID_KEY")
     scale = config.get("amount_scale", 2)
     if type(scale) is not int or not 0 <= scale <= 2:
         raise Problem("INVALID_AMOUNT")
     try:
-        tolerance_text = config.get("amount_tolerance", "0.01")
+        tolerance_text = config.get("amount_tolerance", "0")
         if not isinstance(tolerance_text, str):
             raise ValueError()
         tolerance = amount_of(tolerance_text, scale, True)
@@ -205,11 +212,21 @@ def reconcile(config):
     indexed = {"supplier": defaultdict(list), "internal": defaultdict(list)}
     invalid_keys = {"supplier": set(), "internal": set()}
     invalid, errors, inputs = [], [], []
+    pending = {"supplier": [], "internal": []}
+    invalid_fields = {"supplier": [], "internal": []}
     for side in ("supplier", "internal"):
         spec = config.get(side + "_input")
         path, raw = checked_file(spec, side, limits)
         rows = rows_for(path, raw, spec, side, limits)
-        mapping, mapping_names = mapping_for(rows[0], config.get("field_mapping", {}), side)
+        explicit = dict(config.get("field_mapping", {}))
+        if "document_id" in explicit:
+            if "document_no" in explicit:
+                raise Problem("FIELD_MAPPING_AMBIGUOUS", side)
+            explicit["document_no"] = explicit.pop("document_id")
+        required_fields = (*REQUIRED, *key_fields)
+        if mode == "supplier" and "supplier_id" not in required_fields:
+            required_fields = (*required_fields, "supplier_id")
+        mapping, mapping_names = mapping_for(rows[0], explicit, side, required_fields)
         digest = hashlib.sha256(raw).hexdigest()
         inputs.append({"side": side, "file_name": path.name, "sheet": spec.get("sheet"), "sha256": digest, "field_mapping": mapping_names})
         for rownum, row in enumerate(rows[1:], 2):
@@ -222,28 +239,44 @@ def reconcile(config):
                     raise Problem("FORMULA_CELL")
                 if any(fields.get(k, "").startswith(("=", "+", "@")) for k in key_fields):
                     raise Problem("FORMULA_CELL")
-                if any(not fields.get(k) or fields[k].upper() in ("NA", "NULL") for k in REQUIRED if k != "amount"):
+                if any(not fields.get(k) or fields[k].upper() in ("NA", "NULL") for k in set(key_fields) | {"document_no"}):
                     raise Problem("INVALID_KEY")
-                if not CURRENCY.fullmatch(fields["currency"]):
+                if "currency" in mapping and not CURRENCY.fullmatch(fields["currency"]):
                     raise Problem("INVALID_CURRENCY")
                 amount = amount_of(fields["amount"], scale, config.get("allow_negative_amount", True))
-                key = tuple(fields[k] for k in key_fields)
-                indexed[side][key].append({"amount": amount, "source": source, "currency": fields["currency"]})
+                pending[side].append({"fields": fields, "amount": amount, "source": source})
             except Problem as exc:
-                if all(fields.get(k) for k in key_fields):
-                    invalid_keys[side].add(tuple(fields[k] for k in key_fields))
+                invalid_fields[side].append(fields)
                 err = issue(exc.code, side, source, False)
                 errors.append(err)
                 invalid.append({"result_id": stable([side, digest, spec.get("sheet"), rownum, exc.code]), "status": "INVALID", "key": None, "supplier": None, "internal": None, "difference": None, "absolute_difference": None, "error_codes": [exc.code], "sources": [source]})
-    if not any(indexed[s] for s in indexed):
+    if not any(pending[s] for s in pending):
         raise Problem("REQUIRED_FIELD_MISSING")
+    supplier_ids = {r["fields"].get("supplier_id", "") for side in pending for r in pending[side]}
+    multi = mode == "supplier" or (mode == "basic" and (len(supplier_ids - {""}) > 1 or ("" in supplier_ids and len(supplier_ids) > 1)))
+    if multi:
+        key_fields = ["supplier_id", "document_no"]
+    unresolved_documents = {entry["fields"]["document_no"] for side in pending for entry in pending[side]
+                            if multi and not entry["fields"].get("supplier_id")}
+    for side in invalid_fields:
+        for fields in invalid_fields[side]:
+            if all(fields.get(k) for k in key_fields):
+                invalid_keys[side].add(tuple(fields[k] for k in key_fields))
+    for side in pending:
+        for entry in pending[side]:
+            fields = entry["fields"]
+            key = tuple(fields.get(k, "") for k in key_fields)
+            indexed[side][key].append({"amount": entry["amount"], "source": entry["source"], "currency": fields.get("currency", ""),
+                                       "missing_supplier_id": multi and not fields.get("supplier_id")})
     results = []
     for key in sorted(set(indexed["supplier"]) | set(indexed["internal"])):
         left, right = indexed["supplier"][key], indexed["internal"][key]
         if (not left and key in invalid_keys["supplier"]) or (not right and key in invalid_keys["internal"]):
             continue
         currencies = {item["currency"] for item in left + right}
-        if len(left) > 1 or len(right) > 1 or len(currencies) > 1:
+        needs_supplier_id = any(item["missing_supplier_id"] for item in left + right)
+        unresolved_opposite = multi and not (left and right) and key[-1] in unresolved_documents
+        if needs_supplier_id or unresolved_opposite or len(left) > 1 or len(right) > 1 or len(currencies) > 1:
             status = "AMBIGUOUS"
         elif not left:
             status = "ONLY_INTERNAL"
@@ -257,7 +290,7 @@ def reconcile(config):
                "internal": {"amount": f'{right[0]["amount"]:.{scale}f}', "source": right[0]["source"]} if len(right) == 1 else None,
                "difference": f"{diff:.{scale}f}" if diff is not None else None,
                "absolute_difference": f"{abs(diff):.{scale}f}" if diff is not None else None,
-               "error_codes": [], "sources": [r["source"] for r in left + right]}
+               "error_codes": ["SUPPLIER_ID_REQUIRED"] if needs_supplier_id or unresolved_opposite else [], "sources": [r["source"] for r in left + right]}
         results.append(row)
     results += invalid
     results.sort(key=lambda r: (r["status"], json.dumps(r["key"], sort_keys=True, ensure_ascii=False) if r["key"] else "", r["result_id"]))
@@ -266,7 +299,7 @@ def reconcile(config):
         currency = row["key"].get("currency", "UNSPECIFIED") if row["key"] else "UNSPECIFIED"
         by_currency[currency][row["status"]] += 1
     report = {"schema_version": "1.0", "product_id": PRODUCT, "task_id": TASK,
-              "run": {"key_fields": key_fields, "amount_tolerance": f"{tolerance:.{scale}f}", "inputs": inputs},
+              "run": {"matching_mode": mode, "supplier_id_required": multi, "key_fields": key_fields, "amount_tolerance": f"{tolerance:.{scale}f}", "inputs": inputs},
               "summary": {"total_result_rows": len(results), "by_status": {k: sum(r["status"] == k for r in results) for k in STATUSES}, "by_currency": {k: dict(sorted(v.items())) for k, v in sorted(by_currency.items())}},
               "results": results, "errors": errors, "security": {"network": False, "formulas_executed": False, "macros_executed": False}}
     return report
@@ -279,26 +312,25 @@ def write_report(report, output):
         raise Problem("DEPENDENCY_MISSING") from None
     output.mkdir(parents=True, exist_ok=True)
     book = Workbook()
-    table = book.active
-    assert table is not None
-    table.title = "Results"
-    headers = ["status", "result_id", "key", "supplier_amount", "internal_amount", "difference", "absolute_difference", "supplier_source", "internal_source", "sources", "error_codes"]
-    table.append(headers)
-    for r in report.get("results", []):
-        table.append([safe_excel(v) for v in (r["status"], r["result_id"], json.dumps(r["key"], ensure_ascii=False),
-                      r["supplier"]["amount"] if r["supplier"] else None, r["internal"]["amount"] if r["internal"] else None,
-                      r["difference"], r["absolute_difference"], json.dumps(r["supplier"]["source"], ensure_ascii=False) if r["supplier"] else None,
-                      json.dumps(r["internal"]["source"], ensure_ascii=False) if r["internal"] else None,
-                      json.dumps(r["sources"], ensure_ascii=False), ",".join(r["error_codes"]))])
-    summary = book.create_sheet("Summary")
+    summary = book.active
+    assert summary is not None
+    summary.title = "Summary"
     summary.append(["currency", "status", "count"])
     for currency, statuses in report.get("summary", {}).get("by_currency", {}).items():
         for status, count in statuses.items():
             summary.append([safe_excel(currency), status, count])
-    errors = book.create_sheet("Errors")
-    errors.append(["code", "side", "source", "message"])
-    for err in report["errors"]:
-        errors.append([safe_excel(err["code"]), safe_excel(err["side"]), safe_excel(json.dumps(err["source"], ensure_ascii=False)), safe_excel(err["message"])])
+    headers = ["status", "result_id", "key", "supplier_amount", "internal_amount", "difference", "absolute_difference", "supplier_source", "internal_source", "sources", "error_codes"]
+    sheets = {name: book.create_sheet(name) for name in ("Matched", "Amount Differences", "Supplier Only", "Internal Only", "Manual Review")}
+    for sheet in sheets.values():
+        sheet.append(headers)
+    destinations = {"MATCHED": "Matched", "AMOUNT_DIFFERENCE": "Amount Differences", "ONLY_SUPPLIER": "Supplier Only", "ONLY_INTERNAL": "Internal Only", "AMBIGUOUS": "Manual Review", "INVALID": "Manual Review"}
+    for r in report.get("results", []):
+        sheets[destinations[r["status"]]].append([safe_excel(v) for v in (r["status"], r["result_id"], json.dumps(r["key"], ensure_ascii=False),
+                      r["supplier"]["amount"] if r["supplier"] else None, r["internal"]["amount"] if r["internal"] else None,
+                      r["difference"], r["absolute_difference"], json.dumps(r["supplier"]["source"], ensure_ascii=False) if r["supplier"] else None,
+                      json.dumps(r["internal"]["source"], ensure_ascii=False) if r["internal"] else None,
+                      json.dumps(r["sources"], ensure_ascii=False), ",".join(r["error_codes"]))])
+
     book.save(output / "reconciliation.xlsx")
     lines = ["# 供应商双边对账", "", "规则：确定性键、金额 Decimal；不换汇；不执行公式。", f"阈值: {report.get('run', {}).get('amount_tolerance', 'N/A')}",
              "限制：单文件 10 MiB、数据行 100000、列 200；平台未验证。", "", "## 输入与来源"]

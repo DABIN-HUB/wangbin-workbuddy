@@ -2,7 +2,16 @@
 
 - **product_id**: `wangbin-supplier-reconciliation`
 - **task_id**: `t_9d7ec034`
-- **状态**: 冻结的需求基线（后续实现须以三份合同文档为准）
+- **状态**: 0.1.0 历史需求基线；以 0.1.1 校准条款为当前默认合同。
+- **来源/约定**: 用户冻结目标与本任务验收条件；T00 `t_d1a01c5a` 交接（worktree、基线及工厂边界）；现有产品文档仅用于差异分析。T00 未报告安全冲突，因此不绕过任何依赖。
+- **产品根目录**: `F:/ideaWorkSpace/wangbin-workbuddy-supplier-reconciliation`
+- **基线 commit**: `da8520f2a16a02f2fac6006717252d870fdef39b`
+
+## 0.1.1 最小输入及规则
+
+默认 basic 两侧仅需 `document_no,amount`；旧 `document_id` 为字段及映射别名。单供应商以 NFC/去首尾空白后的 `document_no` 唯一核对；同侧重复进入 `AMBIGUOUS`，不得择一。检测到不同 `supplier_id` 或显式 `matching_mode: "supplier"` 时启用 `[supplier_id,document_no]`，缺失 ID 的有效行进入 `AMBIGUOUS`/`SUPPLIER_ID_REQUIRED`、Excel Manual Review。若多供应商数据完全不提供 ID，程序无法可靠推断，调用方必须显式选择 supplier 模式；缺 ID 不猜测供应商。高级复合键仅通过 `matching_mode: "advanced"` 搭配 `key_fields` 或单独显式 `key_fields` 启用；两侧必须存在所选列。
+
+默认 `amount_tolerance="0"`，以 Decimal 完全相等；20.00 对 20.01 为 `AMOUNT_DIFFERENCE`。非零容差仅显式传入且写入 `run.amount_tolerance`。不按零填空、不做模糊匹配。Excel 固定六表 `Summary`、`Matched`、`Amount Differences`、`Supplier Only`、`Internal Only`、`Manual Review`；后者同时承载 `AMBIGUOUS` 和带错误码/来源的 `INVALID`，Summary 的分类计数与结果行相同。Python 3.10+，需安装 openpyxl；在独立解压目录进入 Skill 根目录运行 `python scripts/reconcile.py --config examples/minimal-config.json`，相对路径相对运行目录；WorkBuddy 环境尚未验证。
 - **来源/约定**: 用户冻结目标与本任务验收条件；T00 `t_d1a01c5a` 交接（worktree、基线及工厂边界）；现有产品文档仅用于差异分析。T00 未报告安全冲突，因此不绕过任何依赖。
 - **产品根目录**: `F:/ideaWorkSpace/wangbin-workbuddy-supplier-reconciliation`
 - **基线 commit**: `da8520f2a16a02f2fac6006717252d870fdef39b`
