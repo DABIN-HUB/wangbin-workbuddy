@@ -1,9 +1,9 @@
 {
   "runtime": {"type": "python", "version": "3.12"},
   "init": {
-    "darwin": "python -m pip install --no-input --disable-pip-version-check --only-binary=:all: jsonschema==4.26.0 wangbin-document-cli==1.2.0 wangbin-solar-pv-input==0.3.0 openpyxl==3.1.5 python-docx==1.2.0 pdfminer.six==20260107 defusedxml==0.7.1 tzdata==2026.5 \"markitdown[pdf,docx,xlsx,pptx]==0.1.9\"",
-    "linux": "python -m pip install --no-input --disable-pip-version-check --only-binary=:all: jsonschema==4.26.0 wangbin-document-cli==1.2.0 wangbin-solar-pv-input==0.3.0 openpyxl==3.1.5 python-docx==1.2.0 pdfminer.six==20260107 defusedxml==0.7.1 tzdata==2026.5 \"markitdown[pdf,docx,xlsx,pptx]==0.1.9\"",
-    "win32": "python -m pip install --no-input --disable-pip-version-check --only-binary=:all: jsonschema==4.26.0 wangbin-document-cli==1.2.0 wangbin-solar-pv-input==0.3.0 openpyxl==3.1.5 python-docx==1.2.0 pdfminer.six==20260107 defusedxml==0.7.1 tzdata==2026.5 \"markitdown[pdf,docx,xlsx,pptx]==0.1.9\""
+    "darwin": "python -m pip install --no-input --disable-pip-version-check --only-binary=:all: jsonschema==4.26.0 wangbin-document-cli==1.2.0 wangbin-solar-pv-input==0.3.1 openpyxl==3.1.5 python-docx==1.2.0 pdfminer.six==20260107 defusedxml==0.7.1 tzdata==2026.5 \"markitdown[pdf,docx,xlsx,pptx]==0.1.9\"",
+    "linux": "python -m pip install --no-input --disable-pip-version-check --only-binary=:all: jsonschema==4.26.0 wangbin-document-cli==1.2.0 wangbin-solar-pv-input==0.3.1 openpyxl==3.1.5 python-docx==1.2.0 pdfminer.six==20260107 defusedxml==0.7.1 tzdata==2026.5 \"markitdown[pdf,docx,xlsx,pptx]==0.1.9\"",
+    "win32": "python -m pip install --no-input --disable-pip-version-check --only-binary=:all: jsonschema==4.26.0 wangbin-document-cli==1.2.0 wangbin-solar-pv-input==0.3.1 openpyxl==3.1.5 python-docx==1.2.0 pdfminer.six==20260107 defusedxml==0.7.1 tzdata==2026.5 \"markitdown[pdf,docx,xlsx,pptx]==0.1.9\""
   },
   "status": {
     "darwin": "python -c \"import wangbin_solar_pv, wangbin_document_engine; print('LOCAL_READY')\"",

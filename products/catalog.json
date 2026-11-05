@@ -421,8 +421,8 @@
       ]
     },
     {
-      "active_version": "0.1.1",
-      "development": "Phase 7H local candidate; CLI runtime distribution and PDF renderer unverified",
+      "active_version": "0.1.2",
+      "development": "Phase 7I local candidate; synthetic report content/export verified, platform and PDF renderer unverified",
       "id": "wangbin-solar-pv-prestudy",
       "license_policy": {
         "decision": "UNKNOWN",
@@ -452,12 +452,21 @@
           "sha256": "e839aa16eac479d70d518890f948508ffb0bbefdfca08669780a3dfc93960002",
           "source": "packages/skills/wangbin-solar-pv-prestudy",
           "version": "0.1.1"
+        },
+        {
+          "archive_evidence": "dist/wangbin-solar-pv-prestudy-0.1.2-skill-candidate.zip",
+          "candidate": "dist/wangbin-solar-pv-prestudy-0.1.2-skill-candidate.zip",
+          "date": "2026-11-05",
+          "published_at": "UNKNOWN",
+          "sha256": "42e66522bb923dd9cdf18180ff38dfca69b24a9ae09e49c6efe5ed935293fca7",
+          "source": "packages/skills/wangbin-solar-pv-prestudy",
+          "version": "0.1.2"
         }
       ]
     },
     {
-      "active_version": "0.1.0",
-      "development": "Phase 7H CLI + Skill runtime candidate; trusted wheel distribution and platform runtime unverified",
+      "active_version": "0.1.1",
+      "development": "Phase 7I CLI + Skill runtime candidate; trusted wheel distribution and platform runtime unverified",
       "id": "wangbin-solar-pv-cli",
       "license_policy": {
         "decision": "UNKNOWN",
@@ -487,6 +496,15 @@
           "sha256": "023dbcd64b09032d850017a5804090afa1837bb6e448f2e7b8783389eeb94c55",
           "source": "packages/connectors/wangbin-solar-pv-cli",
           "version": "0.1.0"
+        },
+        {
+          "archive_evidence": "dist/wangbin-solar-pv-cli-0.1.1-connector-candidate.zip",
+          "candidate": "dist/wangbin-solar-pv-cli-0.1.1-connector-candidate.zip",
+          "date": "2026-11-05",
+          "published_at": "UNKNOWN",
+          "sha256": "766a3e7b24527373d46b56aa56bf33de8e7890f788358d7ef39c24e1b9b76d31",
+          "source": "packages/connectors/wangbin-solar-pv-cli",
+          "version": "0.1.1"
         }
       ]
     }

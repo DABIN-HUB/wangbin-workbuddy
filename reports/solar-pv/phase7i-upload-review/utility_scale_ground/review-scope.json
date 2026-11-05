@@ -1,0 +1,11 @@
+{
+  "package_status": "ARCHIVED_CANONICAL_EXPORT_ONLY",
+  "calculation_chain_status": "NOT_COMPLETED_IN_THIS_PHASE7I_RUN",
+  "canonical_origin": "reports/solar-pv/phase3g-synthetic/ground/base/canonical.json",
+  "synthetic_only": true,
+  "pdf_status": "PDF_RENDERER_UNAVAILABLE",
+  "visual_layout_status": "NOT_TESTED",
+  "xlsx_recalculation_status": "NOT_TESTED_STATIC_SNAPSHOT",
+  "platform_status": "NOT_TESTED",
+  "review_scope": "The files are generated from the existing identity-verifiable canonical result; this must not be described as a fresh Phase2-to-3G execution."
+}

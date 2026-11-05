@@ -1,0 +1,64 @@
+{
+  "files": [
+    {
+      "name": "canonical.json",
+      "bytes": 1111510,
+      "sha256": "c3b21da26f3c28081303fcb2b5535de3fb1d66452bea53290eda08b7f0f59803"
+    },
+    {
+      "name": "content-checklist.json",
+      "bytes": 194163,
+      "sha256": "cf625a395070f27a41f841a73592fc96e13c0c3b482604f240edfcc4e62b7696"
+    },
+    {
+      "name": "manifest.json",
+      "bytes": 5293,
+      "sha256": "0c19088f520898bf7acbbfbcc6eeebd98fecc5af1374017f00e50e1aecc03f88"
+    },
+    {
+      "name": "SYNTHETIC-utility_scale_ground-光伏预可研报告.docx",
+      "bytes": 65492,
+      "sha256": "6f08a4c8ade64c740139f48d8c9f35021c8ba819111027db41a6777d293d2e1d"
+    },
+    {
+      "name": "SYNTHETIC-utility_scale_ground-测算模型.xlsx",
+      "bytes": 58358,
+      "sha256": "560987a70f2118f6c1920a8de55c7bf32297c9451a8f2782537c1bc5a7812dab"
+    },
+    {
+      "name": "SYNTHETIC-utility_scale_ground-资料来源与假设清单.xlsx",
+      "bytes": 75067,
+      "sha256": "e967d04915ab45e608629b1a8cbf0e577103e95f34a76d9c91ec28617805c8fc"
+    }
+  ],
+  "docx": {
+    "heading_count": 162,
+    "chapter_items": 100,
+    "appendix_items": 26,
+    "editable_text": true,
+    "visual_status": "NOT_TESTED"
+  },
+  "checklist": {
+    "records": 126,
+    "ids_unique": true,
+    "all_summaries_nonempty": true,
+    "wrong_binding_count": 0,
+    "duplicate_template_count": 0
+  },
+  "xlsx": {
+    "model_sheets": 19,
+    "source_sheets": 10,
+    "model_static_snapshot": true
+  },
+  "pdf": {
+    "status": "BLOCKED",
+    "reason": "PDF_RENDERER_UNAVAILABLE"
+  },
+  "identity": {
+    "model_version": "solar-pv-engine/0.3.0",
+    "run_id": "72bd0d6e-e466-46ab-87de-7c3fbc2017a9",
+    "input_hash": "9ddebec31b4d918c8c94b27c3051866a0a2574bb19d88f96cc19d1b3bf2464bf",
+    "source_snapshot_id": "2fd7fd549a7a47b9428811bd54859d4313e1d0a6e5aba8bd0eef86621286c35c",
+    "result_hash": "269c29a114a0d85f6914b96d383dab46fd1a0c8620014da6f7d915440ab86488"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "files": [
+    {
+      "name": "canonical.json",
+      "bytes": 1124073,
+      "sha256": "bceddadf21da4e8cdf3fd69d28974161f164f17a94a6978b5ab6ad1f94e5fec2"
+    },
+    {
+      "name": "content-checklist.json",
+      "bytes": 192300,
+      "sha256": "14a3864feb85e8ec2002751e2dea99b6fd2b04ff369ea8b69effe8e82353464e"
+    },
+    {
+      "name": "manifest.json",
+      "bytes": 5277,
+      "sha256": "089335cb278cbeb4adaccd377cfe5f959b32db5d834b351ff185284a3677c757"
+    },
+    {
+      "name": "SYNTHETIC-industrial_rooftop-光伏预可研报告.docx",
+      "bytes": 65547,
+      "sha256": "91928d6d18468e96d9282461e5c533e35eaf7c4396c9c6604bd43b13cfa1d07a"
+    },
+    {
+      "name": "SYNTHETIC-industrial_rooftop-测算模型.xlsx",
+      "bytes": 58381,
+      "sha256": "cc60be13ffd8c5b37f67eed08ef579b3b3537b86ea2caaf081eb629f582d7019"
+    },
+    {
+      "name": "SYNTHETIC-industrial_rooftop-资料来源与假设清单.xlsx",
+      "bytes": 75653,
+      "sha256": "b6742fd6e653788cba93fb1c5208cf4c9c8c8272d8060b344d49269b6b95d0e6"
+    }
+  ],
+  "docx": {
+    "heading_count": 162,
+    "chapter_items": 100,
+    "appendix_items": 26,
+    "editable_text": true,
+    "visual_status": "NOT_TESTED"
+  },
+  "checklist": {
+    "records": 126,
+    "ids_unique": true,
+    "all_summaries_nonempty": true,
+    "wrong_binding_count": 0,
+    "duplicate_template_count": 0
+  },
+  "xlsx": {
+    "model_sheets": 19,
+    "source_sheets": 10,
+    "model_static_snapshot": true
+  },
+  "pdf": {
+    "status": "BLOCKED",
+    "reason": "PDF_RENDERER_UNAVAILABLE"
+  },
+  "identity": {
+    "model_version": "solar-pv-engine/0.3.0",
+    "run_id": "d86a4e81-e432-4199-b194-bbf93dd15b01",
+    "input_hash": "3074f404bba5f06af0b88a701ff3f91b9690758cdb86022cfd254646b1c4c6fa",
+    "source_snapshot_id": "88902c3b845bacc32759a5d4bc61f743e63b3a5c2862233520e3e0475e210f31",
+    "result_hash": "76ff9ad35e6a08cfad88d8e855a88eb2109c63026e07d225e0a5883eef1842b1"
+  }
+}

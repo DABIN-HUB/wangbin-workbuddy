@@ -32,7 +32,7 @@ WorkBuddy 平台是否能从授权可信索引取得这两个内部 wheel 不是
 配套 Connector 的 `cli.json` 安装命令（仅在用户授权的可信索引已经提供包时可用）固定为：
 
 ```text
-python -m pip install --no-input --disable-pip-version-check --only-binary=:all: jsonschema==4.26.0 wangbin-document-cli==1.2.0 wangbin-solar-pv-input==0.3.0 openpyxl==3.1.5 python-docx==1.2.0 pdfminer.six==20260107 defusedxml==0.7.1 tzdata==2026.5 "markitdown[pdf,docx,xlsx,pptx]==0.1.9"
+python -m pip install --no-input --disable-pip-version-check --only-binary=:all: jsonschema==4.26.0 wangbin-document-cli==1.2.0 wangbin-solar-pv-input==0.3.1 openpyxl==3.1.5 python-docx==1.2.0 pdfminer.six==20260107 defusedxml==0.7.1 tzdata==2026.5 "markitdown[pdf,docx,xlsx,pptx]==0.1.9"
 ```
 
 该命令不能在没有包源的环境中成功；失败必须保留为安装阻断，不改成源码路径或个人绝对路径。

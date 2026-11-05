@@ -1,0 +1,2720 @@
+{
+  "schema_version": "phase7i-content-checklist-v1",
+  "project_id": "SYNTHETIC-industrial_rooftop",
+  "pv_type": "industrial_rooftop",
+  "identity": {
+    "model_version": "solar-pv-engine/0.3.0",
+    "run_id": "d86a4e81-e432-4199-b194-bbf93dd15b01",
+    "input_hash": "3074f404bba5f06af0b88a701ff3f91b9690758cdb86022cfd254646b1c4c6fa",
+    "source_snapshot_id": "88902c3b845bacc32759a5d4bc61f743e63b3a5c2862233520e3e0475e210f31",
+    "result_hash": "76ff9ad35e6a08cfad88d8e855a88eb2109c63026e07d225e0a5883eef1842b1"
+  },
+  "coverage": {
+    "chapters": 18,
+    "chapter_items": 100,
+    "appendices": 13,
+    "appendix_items": 26
+  },
+  "records": [
+    {
+      "id": "CH01.01",
+      "title": "项目识别及方案版本",
+      "content_summary": "本项围绕“项目识别及方案版本”核对项目身份、评价边界、成熟度和可决策条件，项目边界为工商业屋顶（industrial_rooftop）。直接证据：dc_capacity=100.0 kWp（CALCULATED）；ac_capacity=80 kWac（CALCULATED）；dc_ac_ratio=1.25 1（CALCULATED）；equivalent_hours.year.1=3425.598 h（CALCULATED）；project.pv_type=industrial_rooftop 按冻结字段字典（PRESENT）；project.evaluation_date=2026-10-29 按冻结字段字典（PRESENT）。当前判定：UNKNOWN。本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充与“项目识别及方案版本”直接对应的原始字段、来源位置、授权状态、计算结果或专业审查记录。",
+      "input_field_ids": [
+        "project.pv_type",
+        "project.evaluation_date"
+      ],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio",
+        "equivalent_hours.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "UNKNOWN",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充与“项目识别及方案版本”直接对应的原始字段、来源位置、授权状态、计算结果或专业审查记录。",
+      "final_conclusion": "本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充与“项目识别及方案版本”直接对应的原始字段、来源位置、授权状态、计算结果或专业审查记录。"
+    },
+    {
+      "id": "CH01.02",
+      "title": "DC/AC及发电指标",
+      "content_summary": "本项围绕“DC/AC及发电指标”核对项目身份、评价边界、成熟度和可决策条件，项目边界为工商业屋顶（industrial_rooftop）。直接证据：dc_capacity=100.0 kWp（CALCULATED）；ac_capacity=80 kWac（CALCULATED）；energy.year.1=342559.8000 kWh（CALCULATED）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "energy.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充与“DC/AC及发电指标”直接对应的原始字段、来源位置、授权状态、计算结果或专业审查记录。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH01.03",
+      "title": "投资及财务指标",
+      "content_summary": "本项围绕“投资及财务指标”核对项目身份、评价边界、成熟度和可决策条件，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.capex.total=1130 CNY（CALCULATED）；financial.phase3e.project_npv=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 元（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充逐项数量×单价、报价时点、税率/可抵扣边界、运维合同、更换计划和来源授权。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "financial.capex.total",
+        "financial.phase3e.project_npv"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充逐项数量×单价、报价时点、税率/可抵扣边界、运维合同、更换计划和来源授权。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充逐项数量×单价、报价时点、税率/可抵扣边界、运维合同、更换计划和来源授权。"
+    },
+    {
+      "id": "CH01.04",
+      "title": "消纳售电与资料成熟度",
+      "content_summary": "本项围绕“消纳售电与资料成熟度”核对项目身份、评价边界、成熟度和可决策条件，项目边界为工商业屋顶（industrial_rooftop）。直接证据：consumption.year.1=175200.00 kWh（CALCULATED）；revenue.year.1=175200.0 CNY（CALCULATED）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "consumption.year.1",
+        "revenue.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充生效日期、适用节点、税费口径、购售电合同/交易规则及价格来源，不能用展示价格替代合同证据。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH01.05",
+      "title": "阻断风险和四态建议",
+      "content_summary": "本项围绕“阻断风险和四态建议”核对项目身份、评价边界、成熟度和可决策条件，项目边界为工商业屋顶（industrial_rooftop）。直接证据：dc_capacity=100.0 kWp（CALCULATED）；ac_capacity=80 kWac（CALCULATED）；dc_ac_ratio=1.25 1（CALCULATED）；equivalent_hours.year.1=3425.598 h（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。当前为PARTIAL/SYNTHETIC；请按finding和来源缺口关闭后再形成建议。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio",
+        "equivalent_hours.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "当前为PARTIAL/SYNTHETIC；请按finding和来源缺口关闭后再形成建议。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。当前为PARTIAL/SYNTHETIC；请按finding和来源缺口关闭后再形成建议。"
+    },
+    {
+      "id": "CH02.01",
+      "title": "项目背景与目的",
+      "content_summary": "本项围绕“项目背景与目的”核对编制依据、口径版本、评价范围和免责边界，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH02.02",
+      "title": "评价范围与价格现金流口径",
+      "content_summary": "本项围绕“评价范围与价格现金流口径”核对编制依据、口径版本、评价范围和免责边界，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充生效日期、适用节点、税费口径、购售电合同/交易规则及价格来源，不能用展示价格替代合同证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充生效日期、适用节点、税费口径、购售电合同/交易规则及价格来源，不能用展示价格替代合同证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充生效日期、适用节点、税费口径、购售电合同/交易规则及价格来源，不能用展示价格替代合同证据。"
+    },
+    {
+      "id": "CH02.03",
+      "title": "标准与政策适用",
+      "content_summary": "本项围绕“标准与政策适用”核对编制依据、口径版本、评价范围和免责边界，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充适用区域、有效期、原文条款、授权状态和逐条适用性判断。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充适用区域、有效期、原文条款、授权状态和逐条适用性判断。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充适用区域、有效期、原文条款、授权状态和逐条适用性判断。"
+    },
+    {
+      "id": "CH02.04",
+      "title": "资料目录与数据年份",
+      "content_summary": "本项围绕“资料目录与数据年份”核对编制依据、口径版本、评价范围和免责边界，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH02.05",
+      "title": "假设、版本及免责",
+      "content_summary": "本项围绕“假设、版本及免责”核对编制依据、口径版本、评价范围和免责边界，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH03.01",
+      "title": "业主与投资运营主体",
+      "content_summary": "本项围绕“业主与投资运营主体”核对建设必要性、业主/运营模式和项目分类，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充逐项数量×单价、报价时点、税率/可抵扣边界、运维合同、更换计划和来源授权。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充逐项数量×单价、报价时点、税率/可抵扣边界、运维合同、更换计划和来源授权。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充逐项数量×单价、报价时点、税率/可抵扣边界、运维合同、更换计划和来源授权。"
+    },
+    {
+      "id": "CH03.02",
+      "title": "站址及工程分类",
+      "content_summary": "本项围绕“站址及工程分类”核对建设必要性、业主/运营模式和项目分类，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH03.03",
+      "title": "建设及权属模式",
+      "content_summary": "本项围绕“建设及权属模式”核对建设必要性、业主/运营模式和项目分类，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH03.04",
+      "title": "用能及售电模式",
+      "content_summary": "本项围绕“用能及售电模式”核对建设必要性、业主/运营模式和项目分类，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充生效日期、适用节点、税费口径、购售电合同/交易规则及价格来源，不能用展示价格替代合同证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充生效日期、适用节点、税费口径、购售电合同/交易规则及价格来源，不能用展示价格替代合同证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充生效日期、适用节点、税费口径、购售电合同/交易规则及价格来源，不能用展示价格替代合同证据。"
+    },
+    {
+      "id": "CH03.05",
+      "title": "规模目标与建设必要性",
+      "content_summary": "本项围绕“规模目标与建设必要性”核对建设必要性、业主/运营模式和项目分类，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH04.01",
+      "title": "位置坐标与边界",
+      "content_summary": "本项围绕“位置坐标与边界”核对站址或屋顶物理边界、权属、面积及建设约束，项目边界为工商业屋顶（industrial_rooftop）。直接证据：site.total_area=1000 按冻结字段字典（PRESENT）；site.usable_area=900 按冻结字段字典（PRESENT）；site.area_basis=SYNTHETIC non-overlapping exclusion union, module surface GCR 按冻结字段字典（PRESENT）。当前判定：UNKNOWN。本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充与“位置坐标与边界”直接对应的原始字段、来源位置、授权状态、计算结果或专业审查记录。",
+      "input_field_ids": [
+        "site.total_area",
+        "site.usable_area",
+        "site.area_basis"
+      ],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "UNKNOWN",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充与“位置坐标与边界”直接对应的原始字段、来源位置、授权状态、计算结果或专业审查记录。",
+      "final_conclusion": "本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充与“位置坐标与边界”直接对应的原始字段、来源位置、授权状态、计算结果或专业审查记录。"
+    },
+    {
+      "id": "CH04.02",
+      "title": "地形海拔与面积核算",
+      "content_summary": "本项围绕“地形海拔与面积核算”核对站址或屋顶物理边界、权属、面积及建设约束，项目边界为工商业屋顶（industrial_rooftop）。直接证据：site.total_area=1000 按冻结字段字典（PRESENT）；site.usable_area=900 按冻结字段字典（PRESENT）；site.area_basis=SYNTHETIC non-overlapping exclusion union, module surface GCR 按冻结字段字典（PRESENT）。当前判定：UNKNOWN。本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充土地权属/用地性质、测绘、地勘、坡度、道路排水、基础和可建设边界文件。",
+      "input_field_ids": [
+        "site.total_area",
+        "site.usable_area",
+        "site.area_basis"
+      ],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "UNKNOWN",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充土地权属/用地性质、测绘、地勘、坡度、道路排水、基础和可建设边界文件。",
+      "final_conclusion": "本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充土地权属/用地性质、测绘、地勘、坡度、道路排水、基础和可建设边界文件。"
+    },
+    {
+      "id": "CH04.03",
+      "title": "土地屋顶权属与期限",
+      "content_summary": "本项围绕“土地屋顶权属与期限”核对站址或屋顶物理边界、权属、面积及建设约束；屋顶项目不把集中式地面土地/地勘/升压结论当作已取得证据，项目边界为工商业屋顶（industrial_rooftop）。直接证据：roof.remaining_life=100 按冻结字段字典（PRESENT）；roof.structure_report_id=SYNTHETIC-structure 按冻结字段字典（PRESENT）。当前判定：UNKNOWN。本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充土地权属/用地性质、测绘、地勘、坡度、道路排水、基础和可建设边界文件。",
+      "input_field_ids": [
+        "roof.remaining_life",
+        "roof.structure_report_id"
+      ],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "UNKNOWN",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充土地权属/用地性质、测绘、地勘、坡度、道路排水、基础和可建设边界文件。",
+      "final_conclusion": "本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充土地权属/用地性质、测绘、地勘、坡度、道路排水、基础和可建设边界文件。"
+    },
+    {
+      "id": "CH04.04",
+      "title": "遮挡与结构安全",
+      "content_summary": "本项围绕“遮挡与结构安全”核对站址或屋顶物理边界、权属、面积及建设约束，项目边界为工商业屋顶（industrial_rooftop）。直接证据：roof.allowable_additional_load=0.2 按冻结字段字典（PRESENT）；roof.structure_report_id=SYNTHETIC-structure 按冻结字段字典（PRESENT）。当前判定：UNKNOWN。本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充结构鉴定、荷载复核、遮挡测量、防水/消防边界和具名审查意见。",
+      "input_field_ids": [
+        "roof.allowable_additional_load",
+        "roof.structure_report_id"
+      ],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "UNKNOWN",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充结构鉴定、荷载复核、遮挡测量、防水/消防边界和具名审查意见。",
+      "final_conclusion": "本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充结构鉴定、荷载复核、遮挡测量、防水/消防边界和具名审查意见。"
+    },
+    {
+      "id": "CH04.05",
+      "title": "交通生态灾害限制",
+      "content_summary": "本项围绕“交通生态灾害限制”核对站址或屋顶物理边界、权属、面积及建设约束，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH04.06",
+      "title": "专项建设条件与缺口",
+      "content_summary": "本项围绕“专项建设条件与缺口”核对站址或屋顶物理边界、权属、面积及建设约束，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH05.01",
+      "title": "数据集元信息与授权",
+      "content_summary": "本项围绕“数据集元信息与授权”核对资源数据集、气象变量、时间粒度和不确定性，项目边界为工商业屋顶（industrial_rooftop）。直接证据：energy.year.1=342559.8000 kWh（CALCULATED）；energy.monthly.year.1=[29094.1200,26278.5600,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200] kWh（CALCULATED）；energy.annual_array=[342559.8000] kWh（CALCULATED）；energy.lifecycle=342559.8000 kWh（CALCULATED）；resource.poa_boundary=ARRAY_PLANE_INTERVAL_MEAN 按冻结字段字典（PRESENT）。当前判定：UNKNOWN。本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。",
+      "input_field_ids": [
+        "resource.poa_boundary"
+      ],
+      "metric_ids": [
+        "energy.year.1",
+        "energy.monthly.year.1",
+        "energy.annual_array",
+        "energy.lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "UNKNOWN",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。",
+      "final_conclusion": "本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。"
+    },
+    {
+      "id": "CH05.02",
+      "title": "辐照分量与单位",
+      "content_summary": "本项围绕“辐照分量与单位”核对资源数据集、气象变量、时间粒度和不确定性，项目边界为工商业屋顶（industrial_rooftop）。直接证据：energy.year.1=342559.8000 kWh（CALCULATED）；energy.monthly.year.1=[29094.1200,26278.5600,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200] kWh（CALCULATED）；energy.annual_array=[342559.8000] kWh（CALCULATED）；energy.lifecycle=342559.8000 kWh（CALCULATED）；resource.poa_boundary=ARRAY_PLANE_INTERVAL_MEAN 按冻结字段字典（PRESENT）。当前判定：UNKNOWN。本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。",
+      "input_field_ids": [
+        "resource.poa_boundary"
+      ],
+      "metric_ids": [
+        "energy.year.1",
+        "energy.monthly.year.1",
+        "energy.annual_array",
+        "energy.lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "UNKNOWN",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。",
+      "final_conclusion": "本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。"
+    },
+    {
+      "id": "CH05.03",
+      "title": "温度风速与12个月",
+      "content_summary": "本项围绕“温度风速与12个月”核对资源数据集、气象变量、时间粒度和不确定性，项目边界为工商业屋顶（industrial_rooftop）。直接证据：energy.year.1=342559.8000 kWh（CALCULATED）；energy.monthly.year.1=[29094.1200,26278.5600,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200] kWh（CALCULATED）；energy.annual_array=[342559.8000] kWh（CALCULATED）；energy.lifecycle=342559.8000 kWh（CALCULATED）；resource.poa_boundary=ARRAY_PLANE_INTERVAL_MEAN 按冻结字段字典（PRESENT）。当前判定：UNKNOWN。本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。",
+      "input_field_ids": [
+        "resource.poa_boundary"
+      ],
+      "metric_ids": [
+        "energy.year.1",
+        "energy.monthly.year.1",
+        "energy.annual_array",
+        "energy.lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "UNKNOWN",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。",
+      "final_conclusion": "本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。"
+    },
+    {
+      "id": "CH05.04",
+      "title": "逐年差异与典型气象年",
+      "content_summary": "本项围绕“逐年差异与典型气象年”核对资源数据集、气象变量、时间粒度和不确定性，项目边界为工商业屋顶（industrial_rooftop）。直接证据：energy.year.1=342559.8000 kWh（CALCULATED）；energy.monthly.year.1=[29094.1200,26278.5600,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200] kWh（CALCULATED）；energy.annual_array=[342559.8000] kWh（CALCULATED）；energy.lifecycle=342559.8000 kWh（CALCULATED）；resource.poa_boundary=ARRAY_PLANE_INTERVAL_MEAN 按冻结字段字典（PRESENT）。当前判定：UNKNOWN。本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。",
+      "input_field_ids": [
+        "resource.poa_boundary"
+      ],
+      "metric_ids": [
+        "energy.year.1",
+        "energy.monthly.year.1",
+        "energy.annual_array",
+        "energy.lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "UNKNOWN",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。",
+      "final_conclusion": "本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。"
+    },
+    {
+      "id": "CH05.05",
+      "title": "平面转置与气象适配",
+      "content_summary": "本项围绕“平面转置与气象适配”核对资源数据集、气象变量、时间粒度和不确定性，项目边界为工商业屋顶（industrial_rooftop）。直接证据：energy.year.1=342559.8000 kWh（CALCULATED）；energy.monthly.year.1=[29094.1200,26278.5600,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200] kWh（CALCULATED）；energy.annual_array=[342559.8000] kWh（CALCULATED）；energy.lifecycle=342559.8000 kWh（CALCULATED）；resource.poa_boundary=ARRAY_PLANE_INTERVAL_MEAN 按冻结字段字典（PRESENT）。当前判定：UNKNOWN。本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。",
+      "input_field_ids": [
+        "resource.poa_boundary"
+      ],
+      "metric_ids": [
+        "energy.year.1",
+        "energy.monthly.year.1",
+        "energy.annual_array",
+        "energy.lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "UNKNOWN",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。",
+      "final_conclusion": "本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。"
+    },
+    {
+      "id": "CH05.06",
+      "title": "误差与交叉验证降级",
+      "content_summary": "本项围绕“误差与交叉验证降级”核对资源数据集、气象变量、时间粒度和不确定性，项目边界为工商业屋顶（industrial_rooftop）。直接证据：energy.year.1=342559.8000 kWh（CALCULATED）；energy.monthly.year.1=[29094.1200,26278.5600,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200] kWh（CALCULATED）；energy.annual_array=[342559.8000] kWh（CALCULATED）；energy.lifecycle=342559.8000 kWh（CALCULATED）；resource.poa_boundary=ARRAY_PLANE_INTERVAL_MEAN 按冻结字段字典（PRESENT）。当前判定：UNKNOWN。本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。",
+      "input_field_ids": [
+        "resource.poa_boundary"
+      ],
+      "metric_ids": [
+        "energy.year.1",
+        "energy.monthly.year.1",
+        "energy.annual_array",
+        "energy.lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "UNKNOWN",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。",
+      "final_conclusion": "本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充带授权和覆盖期的GHI/DNI/DHI、温度、风速、单位、时区、质量标记及交叉验证记录。"
+    },
+    {
+      "id": "CH06.01",
+      "title": "任务与可利用面积",
+      "content_summary": "本项围绕“任务与可利用面积”核对任务规模、容量配置、方案比选和分类适用性，项目边界为工商业屋顶（industrial_rooftop）。直接证据：dc_capacity=100.0 kWp（CALCULATED）；ac_capacity=80 kWac（CALCULATED）；dc_ac_ratio=1.25 1（CALCULATED）；financial.ledger.CONSTRUCTION=1130 CNY（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio",
+        "financial.ledger.CONSTRUCTION"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH06.02",
+      "title": "组件排列与数量",
+      "content_summary": "本项围绕“组件排列与数量”核对任务规模、容量配置、方案比选和分类适用性，项目边界为工商业屋顶（industrial_rooftop）。直接证据：dc_capacity=100.0 kWp（CALCULATED）；ac_capacity=80 kWac（CALCULATED）；dc_ac_ratio=1.25 1（CALCULATED）；financial.ledger.CONSTRUCTION=1130 CNY（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充设备型号、数据表、适用环境、串并联校核、保护整定和供应商来源。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio",
+        "financial.ledger.CONSTRUCTION"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充设备型号、数据表、适用环境、串并联校核、保护整定和供应商来源。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充设备型号、数据表、适用环境、串并联校核、保护整定和供应商来源。"
+    },
+    {
+      "id": "CH06.03",
+      "title": "DC/AC规模与比例",
+      "content_summary": "本项围绕“DC/AC规模与比例”核对任务规模、容量配置、方案比选和分类适用性，项目边界为工商业屋顶（industrial_rooftop）。直接证据：dc_capacity=100.0 kWp（CALCULATED）；ac_capacity=80 kWac（CALCULATED）；dc_ac_ratio=1.25 1（CALCULATED）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充与“DC/AC规模与比例”直接对应的原始字段、来源位置、授权状态、计算结果或专业审查记录。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH06.04",
+      "title": "基准与可行替代方案",
+      "content_summary": "本项围绕“基准与可行替代方案”核对任务规模、容量配置、方案比选和分类适用性，项目边界为工商业屋顶（industrial_rooftop）。直接证据：dc_capacity=100.0 kWp（CALCULATED）；ac_capacity=80 kWac（CALCULATED）；dc_ac_ratio=1.25 1（CALCULATED）；financial.ledger.CONSTRUCTION=1130 CNY（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio",
+        "financial.ledger.CONSTRUCTION"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH06.05",
+      "title": "比选口径与选择理由",
+      "content_summary": "本项围绕“比选口径与选择理由”核对任务规模、容量配置、方案比选和分类适用性，项目边界为工商业屋顶（industrial_rooftop）。直接证据：dc_capacity=100.0 kWp（CALCULATED）；ac_capacity=80 kWac（CALCULATED）；dc_ac_ratio=1.25 1（CALCULATED）；financial.ledger.CONSTRUCTION=1130 CNY（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio",
+        "financial.ledger.CONSTRUCTION"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH06.06",
+      "title": "分类专项方案",
+      "content_summary": "本项围绕“分类专项方案”核对任务规模、容量配置、方案比选和分类适用性，项目边界为工商业屋顶（industrial_rooftop）。直接证据：dc_capacity=100.0 kWp（CALCULATED）；ac_capacity=80 kWac（CALCULATED）；dc_ac_ratio=1.25 1（CALCULATED）；financial.ledger.CONSTRUCTION=1130 CNY（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio",
+        "financial.ledger.CONSTRUCTION"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH07.01",
+      "title": "组件与逆变器选择",
+      "content_summary": "本项围绕“组件与逆变器选择”核对组件、逆变器、支架、电气参数和损失链，项目边界为工商业屋顶（industrial_rooftop）。直接证据：dc_capacity=100.0 kWp（CALCULATED）；ac_capacity=80 kWac（CALCULATED）；dc_ac_ratio=1.25 1（CALCULATED）；inverter_kwh.year.1=350400.00000000000000000 kWh（CALCULATED）；system.module_power=500 按冻结字段字典（PRESENT）；system.inverter_count=2 按冻结字段字典（PRESENT）。当前判定：UNKNOWN。本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充设备型号、数据表、适用环境、串并联校核、保护整定和供应商来源。",
+      "input_field_ids": [
+        "system.module_power",
+        "system.inverter_count",
+        "system.inverter_unit_ac"
+      ],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio",
+        "inverter_kwh.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "UNKNOWN",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充设备型号、数据表、适用环境、串并联校核、保护整定和供应商来源。",
+      "final_conclusion": "本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充设备型号、数据表、适用环境、串并联校核、保护整定和供应商来源。"
+    },
+    {
+      "id": "CH07.02",
+      "title": "支架及几何参数",
+      "content_summary": "本项围绕“支架及几何参数”核对组件、逆变器、支架、电气参数和损失链，项目边界为工商业屋顶（industrial_rooftop）。直接证据：dc_capacity=100.0 kWp（CALCULATED）；ac_capacity=80 kWac（CALCULATED）；dc_ac_ratio=1.25 1（CALCULATED）；inverter_kwh.year.1=350400.00000000000000000 kWh（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充设备型号、数据表、适用环境、串并联校核、保护整定和供应商来源。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio",
+        "inverter_kwh.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充设备型号、数据表、适用环境、串并联校核、保护整定和供应商来源。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充设备型号、数据表、适用环境、串并联校核、保护整定和供应商来源。"
+    },
+    {
+      "id": "CH07.03",
+      "title": "串并联与电压电流校核",
+      "content_summary": "本项围绕“串并联与电压电流校核”核对组件、逆变器、支架、电气参数和损失链，项目边界为工商业屋顶（industrial_rooftop）。直接证据：dc_capacity=100.0 kWp（CALCULATED）；ac_capacity=80 kWac（CALCULATED）；dc_ac_ratio=1.25 1（CALCULATED）；inverter_kwh.year.1=350400.00000000000000000 kWh（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充设备型号、数据表、适用环境、串并联校核、保护整定和供应商来源。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio",
+        "inverter_kwh.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充设备型号、数据表、适用环境、串并联校核、保护整定和供应商来源。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充设备型号、数据表、适用环境、串并联校核、保护整定和供应商来源。"
+    },
+    {
+      "id": "CH07.04",
+      "title": "损失分项与物理顺序",
+      "content_summary": "本项围绕“损失分项与物理顺序”核对组件、逆变器、支架、电气参数和损失链，项目边界为工商业屋顶（industrial_rooftop）。直接证据：dc_capacity=100.0 kWp（CALCULATED）；ac_capacity=80 kWac（CALCULATED）；dc_ac_ratio=1.25 1（CALCULATED）；inverter_kwh.year.1=350400.00000000000000000 kWh（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio",
+        "inverter_kwh.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH07.05",
+      "title": "系统结构及接口",
+      "content_summary": "本项围绕“系统结构及接口”核对组件、逆变器、支架、电气参数和损失链，项目边界为工商业屋顶（industrial_rooftop）。直接证据：dc_capacity=100.0 kWp（CALCULATED）；ac_capacity=80 kWac（CALCULATED）；dc_ac_ratio=1.25 1（CALCULATED）；inverter_kwh.year.1=350400.00000000000000000 kWh（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充结构鉴定、荷载复核、遮挡测量、防水/消防边界和具名审查意见。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio",
+        "inverter_kwh.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充结构鉴定、荷载复核、遮挡测量、防水/消防边界和具名审查意见。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充结构鉴定、荷载复核、遮挡测量、防水/消防边界和具名审查意见。"
+    },
+    {
+      "id": "CH07.06",
+      "title": "储能或分类专项设计",
+      "content_summary": "本项围绕“储能或分类专项设计”核对组件、逆变器、支架、电气参数和损失链，项目边界为工商业屋顶（industrial_rooftop）。直接证据：dc_capacity=100.0 kWp（CALCULATED）；ac_capacity=80 kWac（CALCULATED）；dc_ac_ratio=1.25 1（CALCULATED）；inverter_kwh.year.1=350400.00000000000000000 kWh（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio",
+        "inverter_kwh.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH08.01",
+      "title": "预测方法及能量边界",
+      "content_summary": "本项围绕“预测方法及能量边界”核对月度/年度发电、衰减、效率、限发和预测边界，项目边界为工商业屋顶（industrial_rooftop）。直接证据：energy.year.1=342559.8000 kWh（CALCULATED）；energy.monthly.year.1=[29094.1200,26278.5600,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200] kWh（CALCULATED）；equivalent_hours.year.1=3425.598 h（CALCULATED）；capacity_factor.year.1=0.39105 1（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "energy.year.1",
+        "energy.monthly.year.1",
+        "equivalent_hours.year.1",
+        "capacity_factor.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH08.02",
+      "title": "月度与首年电量",
+      "content_summary": "本项围绕“月度与首年电量”核对月度/年度发电、衰减、效率、限发和预测边界，项目边界为工商业屋顶（industrial_rooftop）。直接证据：energy.monthly.year.1=[29094.1200,26278.5600,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200] kWh（CALCULATED）；energy.year.1=342559.8000 kWh（CALCULATED）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "energy.monthly.year.1",
+        "energy.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充与“月度与首年电量”直接对应的原始字段、来源位置、授权状态、计算结果或专业审查记录。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH08.03",
+      "title": "逐年衰减和更换",
+      "content_summary": "本项围绕“逐年衰减和更换”核对月度/年度发电、衰减、效率、限发和预测边界，项目边界为工商业屋顶（industrial_rooftop）。直接证据：energy.year.1=342559.8000 kWh（CALCULATED）；energy.monthly.year.1=[29094.1200,26278.5600,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200] kWh（CALCULATED）；equivalent_hours.year.1=3425.598 h（CALCULATED）；capacity_factor.year.1=0.39105 1（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "energy.year.1",
+        "energy.monthly.year.1",
+        "equivalent_hours.year.1",
+        "capacity_factor.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH08.04",
+      "title": "PR、等效小时和容量因子",
+      "content_summary": "本项围绕“PR、等效小时和容量因子”核对月度/年度发电、衰减、效率、限发和预测边界，项目边界为工商业屋顶（industrial_rooftop）。直接证据：energy.year.1=342559.8000 kWh（CALCULATED）；energy.monthly.year.1=[29094.1200,26278.5600,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200] kWh（CALCULATED）；equivalent_hours.year.1=3425.598 h（CALCULATED）；capacity_factor.year.1=0.39105 1（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "energy.year.1",
+        "energy.monthly.year.1",
+        "equivalent_hours.year.1",
+        "capacity_factor.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH08.05",
+      "title": "不可利用与限发校核",
+      "content_summary": "本项围绕“不可利用与限发校核”核对月度/年度发电、衰减、效率、限发和预测边界，项目边界为工商业屋顶（industrial_rooftop）。直接证据：energy.year.1=342559.8000 kWh（CALCULATED）；energy.monthly.year.1=[29094.1200,26278.5600,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200] kWh（CALCULATED）；equivalent_hours.year.1=3425.598 h（CALCULATED）；capacity_factor.year.1=0.39105 1（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充同一计量边界和时区下的逐时或15分钟负荷、计量质量、结算规则及限发记录。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "energy.year.1",
+        "energy.monthly.year.1",
+        "equivalent_hours.year.1",
+        "capacity_factor.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充同一计量边界和时区下的逐时或15分钟负荷、计量质量、结算规则及限发记录。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充同一计量边界和时区下的逐时或15分钟负荷、计量质量、结算规则及限发记录。"
+    },
+    {
+      "id": "CH08.06",
+      "title": "不确定性与结果限制",
+      "content_summary": "本项围绕“不确定性与结果限制”核对月度/年度发电、衰减、效率、限发和预测边界，项目边界为工商业屋顶（industrial_rooftop）。直接证据：energy.year.1=342559.8000 kWh（CALCULATED）；energy.monthly.year.1=[29094.1200,26278.5600,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200] kWh（CALCULATED）；equivalent_hours.year.1=3425.598 h（CALCULATED）；capacity_factor.year.1=0.39105 1（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "energy.year.1",
+        "energy.monthly.year.1",
+        "equivalent_hours.year.1",
+        "capacity_factor.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH09.01",
+      "title": "接入点与电压",
+      "content_summary": "本项围绕“接入点与电压”核对接入点、变压器/线路、升压送出和电网确认，项目边界为工商业屋顶（industrial_rooftop）。直接证据：ac_capacity=80 kWac（CALCULATED）；available_kwh.year.1=342559.8000 kWh（CALCULATED）；grid.metering_boundary=AVAILABLE_PRE_CONSUMPTION 按冻结字段字典（PRESENT）；grid.transformer_capacity=100 按冻结字段字典（PRESENT）；grid.available_capacity=70 按冻结字段字典（PRESENT）；grid.export_power_limit=60 按冻结字段字典（PRESENT）。当前判定：UNKNOWN。本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充接入系统意见、容量批复和保护/电压边界。",
+      "input_field_ids": [
+        "grid.metering_boundary",
+        "grid.transformer_capacity",
+        "grid.available_capacity",
+        "grid.export_power_limit"
+      ],
+      "metric_ids": [
+        "ac_capacity",
+        "available_kwh.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "UNKNOWN",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充接入系统意见、容量批复和保护/电压边界。",
+      "final_conclusion": "本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充接入系统意见、容量批复和保护/电压边界。"
+    },
+    {
+      "id": "CH09.02",
+      "title": "变压器线路与容量约束",
+      "content_summary": "本项围绕“变压器线路与容量约束”核对接入点、变压器/线路、升压送出和电网确认，项目边界为工商业屋顶（industrial_rooftop）。直接证据：ac_capacity=80 kWac（CALCULATED）；available_kwh.year.1=342559.8000 kWh（CALCULATED）；grid.metering_boundary=AVAILABLE_PRE_CONSUMPTION 按冻结字段字典（PRESENT）；grid.transformer_capacity=100 按冻结字段字典（PRESENT）；grid.available_capacity=70 按冻结字段字典（PRESENT）；grid.export_power_limit=60 按冻结字段字典（PRESENT）。当前判定：UNKNOWN。本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充接入系统意见、容量批复和保护/电压边界。",
+      "input_field_ids": [
+        "grid.metering_boundary",
+        "grid.transformer_capacity",
+        "grid.available_capacity",
+        "grid.export_power_limit"
+      ],
+      "metric_ids": [
+        "ac_capacity",
+        "available_kwh.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "UNKNOWN",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充接入系统意见、容量批复和保护/电压边界。",
+      "final_conclusion": "本项保持 UNKNOWN，未关闭前不得形成确定性专业结论。需补充接入系统意见、容量批复和保护/电压边界。"
+    },
+    {
+      "id": "CH09.03",
+      "title": "升压保护及送出工程",
+      "content_summary": "本项围绕“升压保护及送出工程”核对接入点、变压器/线路、升压送出和电网确认，项目边界为工商业屋顶（industrial_rooftop）。直接证据：ac_capacity=80 kWac（CALCULATED）；available_kwh.year.1=342559.8000 kWh（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充电网企业接入系统意见、升压站/集电线路方案和调度约束；当前结果不构成并网结论。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "ac_capacity",
+        "available_kwh.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充电网企业接入系统意见、升压站/集电线路方案和调度约束；当前结果不构成并网结论。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充电网企业接入系统意见、升压站/集电线路方案和调度约束；当前结果不构成并网结论。"
+    },
+    {
+      "id": "CH09.04",
+      "title": "并网与交易核验",
+      "content_summary": "本项围绕“并网与交易核验”核对接入点、变压器/线路、升压送出和电网确认，项目边界为工商业屋顶（industrial_rooftop）。直接证据：ac_capacity=80 kWac（CALCULATED）；available_kwh.year.1=342559.8000 kWh（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充生效日期、适用节点、税费口径、购售电合同/交易规则及价格来源，不能用展示价格替代合同证据。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "ac_capacity",
+        "available_kwh.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充生效日期、适用节点、税费口径、购售电合同/交易规则及价格来源，不能用展示价格替代合同证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充生效日期、适用节点、税费口径、购售电合同/交易规则及价格来源，不能用展示价格替代合同证据。"
+    },
+    {
+      "id": "CH09.05",
+      "title": "限发与尚待电网确认",
+      "content_summary": "本项围绕“限发与尚待电网确认”核对接入点、变压器/线路、升压送出和电网确认，项目边界为工商业屋顶（industrial_rooftop）。直接证据：ac_capacity=80 kWac（CALCULATED）；available_kwh.year.1=342559.8000 kWh（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充同一计量边界和时区下的逐时或15分钟负荷、计量质量、结算规则及限发记录。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "ac_capacity",
+        "available_kwh.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充同一计量边界和时区下的逐时或15分钟负荷、计量质量、结算规则及限发记录。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充同一计量边界和时区下的逐时或15分钟负荷、计量质量、结算规则及限发记录。"
+    },
+    {
+      "id": "CH10.01",
+      "title": "负荷资料与同粒度匹配",
+      "content_summary": "本项围绕“负荷资料与同粒度匹配”核对负荷消纳、上网结算、价格合同和市场边界，项目边界为工商业屋顶（industrial_rooftop）。直接证据：consumption.year.1=175200.00 kWh（CALCULATED）；consumption.self_ratio.year.1=0.666666666666666666666666666666666666666666666666666666666667 1（CALCULATED）；revenue.year.1=175200.0 CNY（CALCULATED）；load.meter_id=SYNTHETIC-SAME-NODE 按冻结字段字典（PRESENT）；load.timezone=Asia/Shanghai 按冻结字段字典（PRESENT）；load.quality_basis=SYNTHETIC complete controlled scenario 按冻结字段字典（PRESENT）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [
+        "load.meter_id",
+        "load.timezone",
+        "load.quality_basis"
+      ],
+      "metric_ids": [
+        "consumption.year.1",
+        "consumption.self_ratio.year.1",
+        "revenue.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充同一计量边界和时区下的逐时或15分钟负荷、计量质量、结算规则及限发记录。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH10.02",
+      "title": "自用、上网与限发平衡",
+      "content_summary": "本项围绕“自用、上网与限发平衡”核对负荷消纳、上网结算、价格合同和市场边界，项目边界为工商业屋顶（industrial_rooftop）。直接证据：consumption.year.1=175200.00 kWh（CALCULATED）；consumption.self_ratio.year.1=0.666666666666666666666666666666666666666666666666666666666667 1（CALCULATED）；revenue.year.1=175200.0 CNY（CALCULATED）；load.meter_id=SYNTHETIC-SAME-NODE 按冻结字段字典（PRESENT）；load.timezone=Asia/Shanghai 按冻结字段字典（PRESENT）；load.quality_basis=SYNTHETIC complete controlled scenario 按冻结字段字典（PRESENT）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [
+        "load.meter_id",
+        "load.timezone",
+        "load.quality_basis"
+      ],
+      "metric_ids": [
+        "consumption.year.1",
+        "consumption.self_ratio.year.1",
+        "revenue.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充同一计量边界和时区下的逐时或15分钟负荷、计量质量、结算规则及限发记录。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH10.03",
+      "title": "分时电价与可避免费用",
+      "content_summary": "本项围绕“分时电价与可避免费用”核对负荷消纳、上网结算、价格合同和市场边界，项目边界为工商业屋顶（industrial_rooftop）。直接证据：consumption.year.1=175200.00 kWh（CALCULATED）；consumption.self_ratio.year.1=0.666666666666666666666666666666666666666666666666666666666667 1（CALCULATED）；revenue.year.1=175200.0 CNY（CALCULATED）；load.meter_id=SYNTHETIC-SAME-NODE 按冻结字段字典（PRESENT）；load.timezone=Asia/Shanghai 按冻结字段字典（PRESENT）；load.quality_basis=SYNTHETIC complete controlled scenario 按冻结字段字典（PRESENT）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [
+        "load.meter_id",
+        "load.timezone",
+        "load.quality_basis"
+      ],
+      "metric_ids": [
+        "consumption.year.1",
+        "consumption.self_ratio.year.1",
+        "revenue.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充生效日期、适用节点、税费口径、购售电合同/交易规则及价格来源，不能用展示价格替代合同证据。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH10.04",
+      "title": "合同与交易结算模式",
+      "content_summary": "本项围绕“合同与交易结算模式”核对负荷消纳、上网结算、价格合同和市场边界，项目边界为工商业屋顶（industrial_rooftop）。直接证据：energy.year.1=342559.8000 kWh（CALCULATED）；energy.monthly.year.1=[29094.1200,26278.5600,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200] kWh（CALCULATED）；available_kwh.year.1=342559.8000 kWh（CALCULATED）；energy.annual_array=[342559.8000] kWh（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充生效日期、适用节点、税费口径、购售电合同/交易规则及价格来源，不能用展示价格替代合同证据。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "energy.year.1",
+        "energy.monthly.year.1",
+        "available_kwh.year.1",
+        "energy.annual_array"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充生效日期、适用节点、税费口径、购售电合同/交易规则及价格来源，不能用展示价格替代合同证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充生效日期、适用节点、税费口径、购售电合同/交易规则及价格来源，不能用展示价格替代合同证据。"
+    },
+    {
+      "id": "CH10.05",
+      "title": "逐时市场价与其他收益",
+      "content_summary": "本项围绕“逐时市场价与其他收益”核对负荷消纳、上网结算、价格合同和市场边界，项目边界为工商业屋顶（industrial_rooftop）。直接证据：energy.year.1=342559.8000 kWh（CALCULATED）；energy.monthly.year.1=[29094.1200,26278.5600,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200] kWh（CALCULATED）；available_kwh.year.1=342559.8000 kWh（CALCULATED）；energy.annual_array=[342559.8000] kWh（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "energy.year.1",
+        "energy.monthly.year.1",
+        "available_kwh.year.1",
+        "energy.annual_array"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH10.06",
+      "title": "储能调度独立边界",
+      "content_summary": "本项围绕“储能调度独立边界”核对负荷消纳、上网结算、价格合同和市场边界，项目边界为工商业屋顶（industrial_rooftop）。直接证据：energy.year.1=342559.8000 kWh（CALCULATED）；energy.monthly.year.1=[29094.1200,26278.5600,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200,29094.1200,28155.6000,29094.1200,28155.6000,29094.1200] kWh（CALCULATED）；available_kwh.year.1=342559.8000 kWh（CALCULATED）；energy.annual_array=[342559.8000] kWh（CALCULATED）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "energy.year.1",
+        "energy.monthly.year.1",
+        "available_kwh.year.1",
+        "energy.annual_array"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH11.01",
+      "title": "总平面与功能分区",
+      "content_summary": "本项围绕“总平面与功能分区”核对总平面、基础、道路排水、结构/施工条件，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH11.02",
+      "title": "地基与支架基础",
+      "content_summary": "本项围绕“地基与支架基础”核对总平面、基础、道路排水、结构/施工条件，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充土地权属/用地性质、测绘、地勘、坡度、道路排水、基础和可建设边界文件。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充土地权属/用地性质、测绘、地勘、坡度、道路排水、基础和可建设边界文件。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充土地权属/用地性质、测绘、地勘、坡度、道路排水、基础和可建设边界文件。"
+    },
+    {
+      "id": "CH11.03",
+      "title": "结构承载与安全疏散",
+      "content_summary": "本项围绕“结构承载与安全疏散”核对总平面、基础、道路排水、结构/施工条件，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充结构鉴定、荷载复核、遮挡测量、防水/消防边界和具名审查意见。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充结构鉴定、荷载复核、遮挡测量、防水/消防边界和具名审查意见。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充结构鉴定、荷载复核、遮挡测量、防水/消防边界和具名审查意见。"
+    },
+    {
+      "id": "CH11.04",
+      "title": "施工物流道路与排水",
+      "content_summary": "本项围绕“施工物流道路与排水”核对总平面、基础、道路排水、结构/施工条件；屋顶项目不把集中式地面土地/地勘/升压结论当作已取得证据，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充土地权属/用地性质、测绘、地勘、坡度、道路排水、基础和可建设边界文件。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充土地权属/用地性质、测绘、地勘、坡度、道路排水、基础和可建设边界文件。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充土地权属/用地性质、测绘、地勘、坡度、道路排水、基础和可建设边界文件。"
+    },
+    {
+      "id": "CH11.05",
+      "title": "专项勘察及工程量缺口",
+      "content_summary": "本项围绕“专项勘察及工程量缺口”核对总平面、基础、道路排水、结构/施工条件，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH12.01",
+      "title": "节能减排与因子",
+      "content_summary": "本项围绕“节能减排与因子”核对生态、消防、施工运行安全和社会影响，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH12.02",
+      "title": "环境生态与水土保持",
+      "content_summary": "本项围绕“环境生态与水土保持”核对生态、消防、施工运行安全和社会影响，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH12.03",
+      "title": "消防与施工运行安全",
+      "content_summary": "本项围绕“消防与施工运行安全”核对生态、消防、施工运行安全和社会影响，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充结构鉴定、荷载复核、遮挡测量、防水/消防边界和具名审查意见。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充结构鉴定、荷载复核、遮挡测量、防水/消防边界和具名审查意见。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充结构鉴定、荷载复核、遮挡测量、防水/消防边界和具名审查意见。"
+    },
+    {
+      "id": "CH12.04",
+      "title": "社会影响与利益主体",
+      "content_summary": "本项围绕“社会影响与利益主体”核对生态、消防、施工运行安全和社会影响，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH12.05",
+      "title": "专项评估与合规阻断",
+      "content_summary": "本项围绕“专项评估与合规阻断”核对生态、消防、施工运行安全和社会影响，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充适用区域、有效期、原文条款、授权状态和逐条适用性判断。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充适用区域、有效期、原文条款、授权状态和逐条适用性判断。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充适用区域、有效期、原文条款、授权状态和逐条适用性判断。"
+    },
+    {
+      "id": "CH13.01",
+      "title": "开发前提与组织分工",
+      "content_summary": "本项围绕“开发前提与组织分工”核对采购施工调试、责任分工、里程碑和进入条件，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH13.02",
+      "title": "初设采购施工调试验收",
+      "content_summary": "本项围绕“初设采购施工调试验收”核对采购施工调试、责任分工、里程碑和进入条件，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH13.03",
+      "title": "依赖关系与关键路径",
+      "content_summary": "本项围绕“依赖关系与关键路径”核对采购施工调试、责任分工、里程碑和进入条件，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH13.04",
+      "title": "建设风险与缓释",
+      "content_summary": "本项围绕“建设风险与缓释”核对采购施工调试、责任分工、里程碑和进入条件，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH13.05",
+      "title": "里程碑与进入下一阶段条件",
+      "content_summary": "本项围绕“里程碑与进入下一阶段条件”核对采购施工调试、责任分工、里程碑和进入条件，项目边界为工商业屋顶（industrial_rooftop）。直接证据：NO_DIRECT_EVIDENCE=UNKNOWN UNKNOWN（PENDING_VERIFICATION）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充本子项对应的原始资料、授权、计算结果或专业审查证据。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充本子项对应的原始资料、授权、计算结果或专业审查证据。"
+    },
+    {
+      "id": "CH14.01",
+      "title": "估算依据与边界",
+      "content_summary": "本项围绕“估算依据与边界”核对CAPEX边界、数量单价、税口径和专项工程，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.capex.total=1130 CNY（CALCULATED）；financial.unit_investment=11.3 CNY（CALCULATED）；capex.items=[{\"fields\":{\"capex.items.amount\":1130,\"capex.items.asset_id\":\"SYNTHETIC-asset\",\"capex.items.category\":\"modules\",\"capex.items.currency\":\"CNY\",\"capex.items.description\":\"SYNTHETIC financed construction\",\"capex.items.fx_rate\":1,\"capex.items.payment_date\":\"2024-12-01\",\"capex.items.quantity\":1,\"capex.items.quantity_unit\":\"set\",\"capex.items.quote_attachment_id\":\"SYNTHETIC-capex-quote\",\"capex.items.quote_date\":\"2024-10-01\",\"capex.items.quote_valid_until\":\"2025-10-01\",\"capex.items.recoverable_vat_share\":1,\"capex.items.row_id\":\"SYNTHETIC-capex-1\",\"capex.items.tax_included\":true,\"capex.items.unit_price\":1130,\"capex.items.vat_rate\":0.13},\"row_id\":\"SYNTHETIC-capex-1\"}] 按冻结字段字典（PRESENT）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [
+        "capex.items"
+      ],
+      "metric_ids": [
+        "financial.capex.total",
+        "financial.unit_investment"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "CAPEX总额不能代替数量×单价、报价时点、税口径及地面/屋顶专项工程明细。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH14.02",
+      "title": "设备材料投资",
+      "content_summary": "本项围绕“设备材料投资”核对CAPEX边界、数量单价、税口径和专项工程，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.capex.total=1130 CNY（CALCULATED）；financial.unit_investment=11.3 CNY（CALCULATED）；capex.items=[{\"fields\":{\"capex.items.amount\":1130,\"capex.items.asset_id\":\"SYNTHETIC-asset\",\"capex.items.category\":\"modules\",\"capex.items.currency\":\"CNY\",\"capex.items.description\":\"SYNTHETIC financed construction\",\"capex.items.fx_rate\":1,\"capex.items.payment_date\":\"2024-12-01\",\"capex.items.quantity\":1,\"capex.items.quantity_unit\":\"set\",\"capex.items.quote_attachment_id\":\"SYNTHETIC-capex-quote\",\"capex.items.quote_date\":\"2024-10-01\",\"capex.items.quote_valid_until\":\"2025-10-01\",\"capex.items.recoverable_vat_share\":1,\"capex.items.row_id\":\"SYNTHETIC-capex-1\",\"capex.items.tax_included\":true,\"capex.items.unit_price\":1130,\"capex.items.vat_rate\":0.13},\"row_id\":\"SYNTHETIC-capex-1\"}] 按冻结字段字典（PRESENT）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [
+        "capex.items"
+      ],
+      "metric_ids": [
+        "financial.capex.total",
+        "financial.unit_investment"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充逐项数量×单价、报价时点、税率/可抵扣边界、运维合同、更换计划和来源授权。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH14.03",
+      "title": "工程建设与场址专项",
+      "content_summary": "本项围绕“工程建设与场址专项”核对CAPEX边界、数量单价、税口径和专项工程，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.capex.total=1130 CNY（CALCULATED）；financial.unit_investment=11.3 CNY（CALCULATED）；capex.items=[{\"fields\":{\"capex.items.amount\":1130,\"capex.items.asset_id\":\"SYNTHETIC-asset\",\"capex.items.category\":\"modules\",\"capex.items.currency\":\"CNY\",\"capex.items.description\":\"SYNTHETIC financed construction\",\"capex.items.fx_rate\":1,\"capex.items.payment_date\":\"2024-12-01\",\"capex.items.quantity\":1,\"capex.items.quantity_unit\":\"set\",\"capex.items.quote_attachment_id\":\"SYNTHETIC-capex-quote\",\"capex.items.quote_date\":\"2024-10-01\",\"capex.items.quote_valid_until\":\"2025-10-01\",\"capex.items.recoverable_vat_share\":1,\"capex.items.row_id\":\"SYNTHETIC-capex-1\",\"capex.items.tax_included\":true,\"capex.items.unit_price\":1130,\"capex.items.vat_rate\":0.13},\"row_id\":\"SYNTHETIC-capex-1\"}] 按冻结字段字典（PRESENT）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [
+        "capex.items"
+      ],
+      "metric_ids": [
+        "financial.capex.total",
+        "financial.unit_investment"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "CAPEX总额不能代替数量×单价、报价时点、税口径及地面/屋顶专项工程明细。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH14.04",
+      "title": "前期与管理及预备费",
+      "content_summary": "本项围绕“前期与管理及预备费”核对CAPEX边界、数量单价、税口径和专项工程，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.capex.total=1130 CNY（CALCULATED）；financial.unit_investment=11.3 CNY（CALCULATED）；capex.items=[{\"fields\":{\"capex.items.amount\":1130,\"capex.items.asset_id\":\"SYNTHETIC-asset\",\"capex.items.category\":\"modules\",\"capex.items.currency\":\"CNY\",\"capex.items.description\":\"SYNTHETIC financed construction\",\"capex.items.fx_rate\":1,\"capex.items.payment_date\":\"2024-12-01\",\"capex.items.quantity\":1,\"capex.items.quantity_unit\":\"set\",\"capex.items.quote_attachment_id\":\"SYNTHETIC-capex-quote\",\"capex.items.quote_date\":\"2024-10-01\",\"capex.items.quote_valid_until\":\"2025-10-01\",\"capex.items.recoverable_vat_share\":1,\"capex.items.row_id\":\"SYNTHETIC-capex-1\",\"capex.items.tax_included\":true,\"capex.items.unit_price\":1130,\"capex.items.vat_rate\":0.13},\"row_id\":\"SYNTHETIC-capex-1\"}] 按冻结字段字典（PRESENT）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [
+        "capex.items"
+      ],
+      "metric_ids": [
+        "financial.capex.total",
+        "financial.unit_investment"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "CAPEX总额不能代替数量×单价、报价时点、税口径及地面/屋顶专项工程明细。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH14.05",
+      "title": "建设期利息与资金进度",
+      "content_summary": "本项围绕“建设期利息与资金进度”核对CAPEX边界、数量单价、税口径和专项工程，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.capex.total=1130 CNY（CALCULATED）；financial.unit_investment=11.3 CNY（CALCULATED）；capex.items=[{\"fields\":{\"capex.items.amount\":1130,\"capex.items.asset_id\":\"SYNTHETIC-asset\",\"capex.items.category\":\"modules\",\"capex.items.currency\":\"CNY\",\"capex.items.description\":\"SYNTHETIC financed construction\",\"capex.items.fx_rate\":1,\"capex.items.payment_date\":\"2024-12-01\",\"capex.items.quantity\":1,\"capex.items.quantity_unit\":\"set\",\"capex.items.quote_attachment_id\":\"SYNTHETIC-capex-quote\",\"capex.items.quote_date\":\"2024-10-01\",\"capex.items.quote_valid_until\":\"2025-10-01\",\"capex.items.recoverable_vat_share\":1,\"capex.items.row_id\":\"SYNTHETIC-capex-1\",\"capex.items.tax_included\":true,\"capex.items.unit_price\":1130,\"capex.items.vat_rate\":0.13},\"row_id\":\"SYNTHETIC-capex-1\"}] 按冻结字段字典（PRESENT）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [
+        "capex.items"
+      ],
+      "metric_ids": [
+        "financial.capex.total",
+        "financial.unit_investment"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "CAPEX总额不能代替数量×单价、报价时点、税口径及地面/屋顶专项工程明细。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH14.06",
+      "title": "税口径与单位投资校核",
+      "content_summary": "本项围绕“税口径与单位投资校核”核对CAPEX边界、数量单价、税口径和专项工程，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.capex.total=1130 CNY（CALCULATED）；financial.unit_investment=11.3 CNY（CALCULATED）；capex.items=[{\"fields\":{\"capex.items.amount\":1130,\"capex.items.asset_id\":\"SYNTHETIC-asset\",\"capex.items.category\":\"modules\",\"capex.items.currency\":\"CNY\",\"capex.items.description\":\"SYNTHETIC financed construction\",\"capex.items.fx_rate\":1,\"capex.items.payment_date\":\"2024-12-01\",\"capex.items.quantity\":1,\"capex.items.quantity_unit\":\"set\",\"capex.items.quote_attachment_id\":\"SYNTHETIC-capex-quote\",\"capex.items.quote_date\":\"2024-10-01\",\"capex.items.quote_valid_until\":\"2025-10-01\",\"capex.items.recoverable_vat_share\":1,\"capex.items.row_id\":\"SYNTHETIC-capex-1\",\"capex.items.tax_included\":true,\"capex.items.unit_price\":1130,\"capex.items.vat_rate\":0.13},\"row_id\":\"SYNTHETIC-capex-1\"}] 按冻结字段字典（PRESENT）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [
+        "capex.items"
+      ],
+      "metric_ids": [
+        "financial.capex.total",
+        "financial.unit_investment"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充逐项数量×单价、报价时点、税率/可抵扣边界、运维合同、更换计划和来源授权。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH15.01",
+      "title": "年度运营费",
+      "content_summary": "本项围绕“年度运营费”核对OPEX、折旧、更换、税费和年度现金影响，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.opex.cash_lifecycle=113 CNY（CALCULATED）；opex.items=[{\"fields\":{\"opex.items.base_amount\":113,\"opex.items.category\":\"operations\",\"opex.items.contract_id\":\"SYNTHETIC-opex-contract\",\"opex.items.escalation_rate\":0,\"opex.items.from_year\":1,\"opex.items.recoverable_vat_share\":1,\"opex.items.row_id\":\"SYNTHETIC-opex-1\",\"opex.items.tax_included\":true,\"opex.items.to_year\":1,\"opex.items.vat_rate\":0.13},\"row_id\":\"SYNTHETIC-opex-1\"}] 按冻结字段字典（PRESENT）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [
+        "opex.items"
+      ],
+      "metric_ids": [
+        "financial.opex.cash_lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充运维、保险、租地/屋面、通胀和更换计划的合法依据。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH15.02",
+      "title": "资产分类折旧与残值",
+      "content_summary": "本项围绕“资产分类折旧与残值”核对OPEX、折旧、更换、税费和年度现金影响，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.opex.cash_lifecycle=113 CNY（CALCULATED）；opex.items=[{\"fields\":{\"opex.items.base_amount\":113,\"opex.items.category\":\"operations\",\"opex.items.contract_id\":\"SYNTHETIC-opex-contract\",\"opex.items.escalation_rate\":0,\"opex.items.from_year\":1,\"opex.items.recoverable_vat_share\":1,\"opex.items.row_id\":\"SYNTHETIC-opex-1\",\"opex.items.tax_included\":true,\"opex.items.to_year\":1,\"opex.items.vat_rate\":0.13},\"row_id\":\"SYNTHETIC-opex-1\"}] 按冻结字段字典（PRESENT）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [
+        "opex.items"
+      ],
+      "metric_ids": [
+        "financial.opex.cash_lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充逐项数量×单价、报价时点、税率/可抵扣边界、运维合同、更换计划和来源授权。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH15.03",
+      "title": "更换与寿命计划",
+      "content_summary": "本项围绕“更换与寿命计划”核对OPEX、折旧、更换、税费和年度现金影响，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.opex.cash_lifecycle=113 CNY（CALCULATED）；opex.items=[{\"fields\":{\"opex.items.base_amount\":113,\"opex.items.category\":\"operations\",\"opex.items.contract_id\":\"SYNTHETIC-opex-contract\",\"opex.items.escalation_rate\":0,\"opex.items.from_year\":1,\"opex.items.recoverable_vat_share\":1,\"opex.items.row_id\":\"SYNTHETIC-opex-1\",\"opex.items.tax_included\":true,\"opex.items.to_year\":1,\"opex.items.vat_rate\":0.13},\"row_id\":\"SYNTHETIC-opex-1\"}] 按冻结字段字典（PRESENT）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [
+        "opex.items"
+      ],
+      "metric_ids": [
+        "financial.opex.cash_lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充运维、保险、租地/屋面、通胀和更换计划的合法依据。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH15.04",
+      "title": "税制与实际现金税金",
+      "content_summary": "本项围绕“税制与实际现金税金”核对OPEX、折旧、更换、税费和年度现金影响，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.opex.cash_lifecycle=113 CNY（CALCULATED）；opex.items=[{\"fields\":{\"opex.items.base_amount\":113,\"opex.items.category\":\"operations\",\"opex.items.contract_id\":\"SYNTHETIC-opex-contract\",\"opex.items.escalation_rate\":0,\"opex.items.from_year\":1,\"opex.items.recoverable_vat_share\":1,\"opex.items.row_id\":\"SYNTHETIC-opex-1\",\"opex.items.tax_included\":true,\"opex.items.to_year\":1,\"opex.items.vat_rate\":0.13},\"row_id\":\"SYNTHETIC-opex-1\"}] 按冻结字段字典（PRESENT）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [
+        "opex.items"
+      ],
+      "metric_ids": [
+        "financial.opex.cash_lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充逐项数量×单价、报价时点、税率/可抵扣边界、运维合同、更换计划和来源授权。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH15.05",
+      "title": "非现金与年度汇总校核",
+      "content_summary": "本项围绕“非现金与年度汇总校核”核对OPEX、折旧、更换、税费和年度现金影响，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.opex.cash_lifecycle=113 CNY（CALCULATED）；opex.items=[{\"fields\":{\"opex.items.base_amount\":113,\"opex.items.category\":\"operations\",\"opex.items.contract_id\":\"SYNTHETIC-opex-contract\",\"opex.items.escalation_rate\":0,\"opex.items.from_year\":1,\"opex.items.recoverable_vat_share\":1,\"opex.items.row_id\":\"SYNTHETIC-opex-1\",\"opex.items.tax_included\":true,\"opex.items.to_year\":1,\"opex.items.vat_rate\":0.13},\"row_id\":\"SYNTHETIC-opex-1\"}] 按冻结字段字典（PRESENT）。当前判定：EVIDENCED。本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。",
+      "input_field_ids": [
+        "opex.items"
+      ],
+      "metric_ids": [
+        "financial.opex.cash_lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充运维、保险、租地/屋面、通胀和更换计划的合法依据。",
+      "final_conclusion": "本项可以引用当前运行的直接结果，但结论范围仅限于 工商业屋顶（industrial_rooftop） 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
+    },
+    {
+      "id": "CH16.01",
+      "title": "收入与残值",
+      "content_summary": "本项围绕“收入与残值”核对项目/资本金现金流、回报指标、偿债和阈值，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.phase3e.project_npv=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 元（BLOCKED_MISSING_INPUT）；financial.phase3e.project_irr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（元素为每年比例）（BLOCKED_MISSING_INPUT）；financial.phase3e.static_payback=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 年（BLOCKED_MISSING_INPUT）；financial.phase3e.lcoe=BLOCKED_MISSING_INPUT：BLOCKED_MISSING_TERMINAL_COST_BOUNDARY 元/kWh（BLOCKED_MISSING_INPUT）；financial.phase3e.dscr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_CFADS 1（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。财务现金流、折现率、税费/融资和收益边界未闭合；阻断指标不得写成有效数值。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr",
+        "financial.phase3e.static_payback",
+        "financial.phase3e.lcoe",
+        "financial.phase3e.dscr"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "财务现金流、折现率、税费/融资和收益边界未闭合；阻断指标不得写成有效数值。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。财务现金流、折现率、税费/融资和收益边界未闭合；阻断指标不得写成有效数值。"
+    },
+    {
+      "id": "CH16.02",
+      "title": "项目投资现金流",
+      "content_summary": "本项围绕“项目投资现金流”核对项目/资本金现金流、回报指标、偿债和阈值，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.phase3e.project_npv=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 元（BLOCKED_MISSING_INPUT）；financial.phase3e.project_irr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（元素为每年比例）（BLOCKED_MISSING_INPUT）；financial.phase3e.static_payback=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 年（BLOCKED_MISSING_INPUT）；financial.phase3e.lcoe=BLOCKED_MISSING_INPUT：BLOCKED_MISSING_TERMINAL_COST_BOUNDARY 元/kWh（BLOCKED_MISSING_INPUT）；financial.phase3e.dscr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_CFADS 1（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充逐项数量×单价、报价时点、税率/可抵扣边界、运维合同、更换计划和来源授权。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr",
+        "financial.phase3e.static_payback",
+        "financial.phase3e.lcoe",
+        "financial.phase3e.dscr"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充逐项数量×单价、报价时点、税率/可抵扣边界、运维合同、更换计划和来源授权。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充逐项数量×单价、报价时点、税率/可抵扣边界、运维合同、更换计划和来源授权。"
+    },
+    {
+      "id": "CH16.03",
+      "title": "股东现金流与融资偿债",
+      "content_summary": "本项围绕“股东现金流与融资偿债”核对项目/资本金现金流、回报指标、偿债和阈值，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.phase3e.project_npv=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 元（BLOCKED_MISSING_INPUT）；financial.phase3e.project_irr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（元素为每年比例）（BLOCKED_MISSING_INPUT）；financial.phase3e.static_payback=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 年（BLOCKED_MISSING_INPUT）；financial.phase3e.lcoe=BLOCKED_MISSING_INPUT：BLOCKED_MISSING_TERMINAL_COST_BOUNDARY 元/kWh（BLOCKED_MISSING_INPUT）；financial.phase3e.dscr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_CFADS 1（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充融资协议、提款/还本付息、折现率、税费、现金流时点和适用指标的可追溯输入。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr",
+        "financial.phase3e.static_payback",
+        "financial.phase3e.lcoe",
+        "financial.phase3e.dscr"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充融资协议、提款/还本付息、折现率、税费、现金流时点和适用指标的可追溯输入。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充融资协议、提款/还本付息、折现率、税费、现金流时点和适用指标的可追溯输入。"
+    },
+    {
+      "id": "CH16.04",
+      "title": "NPV与IRR",
+      "content_summary": "本项围绕“NPV与IRR”核对项目/资本金现金流、回报指标、偿债和阈值，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.phase3e.project_npv=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 元（BLOCKED_MISSING_INPUT）；financial.phase3e.project_irr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（元素为每年比例）（BLOCKED_MISSING_INPUT）；financial.phase3e.static_payback=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 年（BLOCKED_MISSING_INPUT）；financial.phase3e.lcoe=BLOCKED_MISSING_INPUT：BLOCKED_MISSING_TERMINAL_COST_BOUNDARY 元/kWh（BLOCKED_MISSING_INPUT）；financial.phase3e.dscr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_CFADS 1（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充融资协议、提款/还本付息、折现率、税费、现金流时点和适用指标的可追溯输入。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr",
+        "financial.phase3e.static_payback",
+        "financial.phase3e.lcoe",
+        "financial.phase3e.dscr"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充融资协议、提款/还本付息、折现率、税费、现金流时点和适用指标的可追溯输入。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充融资协议、提款/还本付息、折现率、税费、现金流时点和适用指标的可追溯输入。"
+    },
+    {
+      "id": "CH16.05",
+      "title": "静态动态回收期",
+      "content_summary": "本项围绕“静态动态回收期”核对项目/资本金现金流、回报指标、偿债和阈值，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.phase3e.project_npv=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 元（BLOCKED_MISSING_INPUT）；financial.phase3e.project_irr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（元素为每年比例）（BLOCKED_MISSING_INPUT）；financial.phase3e.static_payback=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 年（BLOCKED_MISSING_INPUT）；financial.phase3e.lcoe=BLOCKED_MISSING_INPUT：BLOCKED_MISSING_TERMINAL_COST_BOUNDARY 元/kWh（BLOCKED_MISSING_INPUT）；financial.phase3e.dscr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_CFADS 1（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充融资协议、提款/还本付息、折现率、税费、现金流时点和适用指标的可追溯输入。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr",
+        "financial.phase3e.static_payback",
+        "financial.phase3e.lcoe",
+        "financial.phase3e.dscr"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充融资协议、提款/还本付息、折现率、税费、现金流时点和适用指标的可追溯输入。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充融资协议、提款/还本付息、折现率、税费、现金流时点和适用指标的可追溯输入。"
+    },
+    {
+      "id": "CH16.06",
+      "title": "LCOE与可交付电量",
+      "content_summary": "本项围绕“LCOE与可交付电量”核对项目/资本金现金流、回报指标、偿债和阈值，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.phase3e.project_npv=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 元（BLOCKED_MISSING_INPUT）；financial.phase3e.project_irr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（元素为每年比例）（BLOCKED_MISSING_INPUT）；financial.phase3e.static_payback=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 年（BLOCKED_MISSING_INPUT）；financial.phase3e.lcoe=BLOCKED_MISSING_INPUT：BLOCKED_MISSING_TERMINAL_COST_BOUNDARY 元/kWh（BLOCKED_MISSING_INPUT）；financial.phase3e.dscr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_CFADS 1（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充融资协议、提款/还本付息、折现率、税费、现金流时点和适用指标的可追溯输入。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr",
+        "financial.phase3e.static_payback",
+        "financial.phase3e.lcoe",
+        "financial.phase3e.dscr"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充融资协议、提款/还本付息、折现率、税费、现金流时点和适用指标的可追溯输入。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充融资协议、提款/还本付息、折现率、税费、现金流时点和适用指标的可追溯输入。"
+    },
+    {
+      "id": "CH16.07",
+      "title": "DSCR与债务条件",
+      "content_summary": "本项围绕“DSCR与债务条件”核对项目/资本金现金流、回报指标、偿债和阈值，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.phase3e.project_npv=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 元（BLOCKED_MISSING_INPUT）；financial.phase3e.project_irr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（元素为每年比例）（BLOCKED_MISSING_INPUT）；financial.phase3e.static_payback=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 年（BLOCKED_MISSING_INPUT）；financial.phase3e.lcoe=BLOCKED_MISSING_INPUT：BLOCKED_MISSING_TERMINAL_COST_BOUNDARY 元/kWh（BLOCKED_MISSING_INPUT）；financial.phase3e.dscr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_CFADS 1（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充融资协议、提款/还本付息、折现率、税费、现金流时点和适用指标的可追溯输入。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr",
+        "financial.phase3e.static_payback",
+        "financial.phase3e.lcoe",
+        "financial.phase3e.dscr"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充融资协议、提款/还本付息、折现率、税费、现金流时点和适用指标的可追溯输入。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充融资协议、提款/还本付息、折现率、税费、现金流时点和适用指标的可追溯输入。"
+    },
+    {
+      "id": "CH16.08",
+      "title": "盈亏平衡与目标差距",
+      "content_summary": "本项围绕“盈亏平衡与目标差距”核对项目/资本金现金流、回报指标、偿债和阈值，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.phase3e.project_npv=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 元（BLOCKED_MISSING_INPUT）；financial.phase3e.project_irr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（元素为每年比例）（BLOCKED_MISSING_INPUT）；financial.phase3e.static_payback=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 年（BLOCKED_MISSING_INPUT）；financial.phase3e.lcoe=BLOCKED_MISSING_INPUT：BLOCKED_MISSING_TERMINAL_COST_BOUNDARY 元/kWh（BLOCKED_MISSING_INPUT）；financial.phase3e.dscr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_CFADS 1（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。财务现金流、折现率、税费/融资和收益边界未闭合；阻断指标不得写成有效数值。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr",
+        "financial.phase3e.static_payback",
+        "financial.phase3e.lcoe",
+        "financial.phase3e.dscr"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "财务现金流、折现率、税费/融资和收益边界未闭合；阻断指标不得写成有效数值。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。财务现金流、折现率、税费/融资和收益边界未闭合；阻断指标不得写成有效数值。"
+    },
+    {
+      "id": "CH17.01",
+      "title": "单因素敏感性",
+      "content_summary": "本项围绕“单因素敏感性”核对敏感性、情景、风险证据和反向约束，项目边界为工商业屋顶（industrial_rooftop）。直接证据：npv=NOT_IMPLEMENTED：OUTSIDE_PHASE3B UNKNOWN（NOT_IMPLEMENTED）；financial.phase3e.project_npv=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 元（BLOCKED_MISSING_INPUT）；financial.phase3e.project_irr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（元素为每年比例）（BLOCKED_MISSING_INPUT）；financial.phase3e.worst_cash_year=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（年份标签）（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充独立情景控制、变化因子、边界值、重算运行身份和结果差异；不能由单一基准外推。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "npv",
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr",
+        "financial.phase3e.worst_cash_year"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充独立情景控制、变化因子、边界值、重算运行身份和结果差异；不能由单一基准外推。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充独立情景控制、变化因子、边界值、重算运行身份和结果差异；不能由单一基准外推。"
+    },
+    {
+      "id": "CH17.02",
+      "title": "悲观基准乐观组合",
+      "content_summary": "本项围绕“悲观基准乐观组合”核对敏感性、情景、风险证据和反向约束，项目边界为工商业屋顶（industrial_rooftop）。直接证据：npv=NOT_IMPLEMENTED：OUTSIDE_PHASE3B UNKNOWN（NOT_IMPLEMENTED）；financial.phase3e.project_npv=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 元（BLOCKED_MISSING_INPUT）；financial.phase3e.project_irr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（元素为每年比例）（BLOCKED_MISSING_INPUT）；financial.phase3e.worst_cash_year=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（年份标签）（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。未执行合法独立敏感性/情景重算；不能由基准结果推断阈值或稳健性。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "npv",
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr",
+        "financial.phase3e.worst_cash_year"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "未执行合法独立敏感性/情景重算；不能由基准结果推断阈值或稳健性。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。未执行合法独立敏感性/情景重算；不能由基准结果推断阈值或稳健性。"
+    },
+    {
+      "id": "CH17.03",
+      "title": "阈值与稳健性",
+      "content_summary": "本项围绕“阈值与稳健性”核对敏感性、情景、风险证据和反向约束，项目边界为工商业屋顶（industrial_rooftop）。直接证据：npv=NOT_IMPLEMENTED：OUTSIDE_PHASE3B UNKNOWN（NOT_IMPLEMENTED）；financial.phase3e.project_npv=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 元（BLOCKED_MISSING_INPUT）；financial.phase3e.project_irr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（元素为每年比例）（BLOCKED_MISSING_INPUT）；financial.phase3e.worst_cash_year=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（年份标签）（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充独立情景控制、变化因子、边界值、重算运行身份和结果差异；不能由单一基准外推。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "npv",
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr",
+        "financial.phase3e.worst_cash_year"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充独立情景控制、变化因子、边界值、重算运行身份和结果差异；不能由单一基准外推。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充独立情景控制、变化因子、边界值、重算运行身份和结果差异；不能由单一基准外推。"
+    },
+    {
+      "id": "CH17.04",
+      "title": "风险清单与证据状态",
+      "content_summary": "本项围绕“风险清单与证据状态”核对敏感性、情景、风险证据和反向约束，项目边界为工商业屋顶（industrial_rooftop）。直接证据：npv=NOT_IMPLEMENTED：OUTSIDE_PHASE3B UNKNOWN（NOT_IMPLEMENTED）；financial.phase3e.project_npv=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 元（BLOCKED_MISSING_INPUT）；financial.phase3e.project_irr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（元素为每年比例）（BLOCKED_MISSING_INPUT）；financial.phase3e.worst_cash_year=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（年份标签）（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。未执行合法独立敏感性/情景重算；不能由基准结果推断阈值或稳健性。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "npv",
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr",
+        "financial.phase3e.worst_cash_year"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "未执行合法独立敏感性/情景重算；不能由基准结果推断阈值或稳健性。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。未执行合法独立敏感性/情景重算；不能由基准结果推断阈值或稳健性。"
+    },
+    {
+      "id": "CH17.05",
+      "title": "属性及反向约束校核",
+      "content_summary": "本项围绕“属性及反向约束校核”核对敏感性、情景、风险证据和反向约束，项目边界为工商业屋顶（industrial_rooftop）。直接证据：npv=NOT_IMPLEMENTED：OUTSIDE_PHASE3B UNKNOWN（NOT_IMPLEMENTED）；financial.phase3e.project_npv=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 元（BLOCKED_MISSING_INPUT）；financial.phase3e.project_irr=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（元素为每年比例）（BLOCKED_MISSING_INPUT）；financial.phase3e.worst_cash_year=BLOCKED_MISSING_INPUT：BLOCKED_UPSTREAM_PROJECT_CASH_FLOW 集合（年份标签）（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。未执行合法独立敏感性/情景重算；不能由基准结果推断阈值或稳健性。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "npv",
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr",
+        "financial.phase3e.worst_cash_year"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "未执行合法独立敏感性/情景重算；不能由基准结果推断阈值或稳健性。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。未执行合法独立敏感性/情景重算；不能由基准结果推断阈值或稳健性。"
+    },
+    {
+      "id": "CH18.01",
+      "title": "四态唯一建议",
+      "content_summary": "本项围绕“四态唯一建议”核对证据闭合、否决条件、推进门槛和后续核查，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.phase3e.investment-hurdle-gap=BLOCKED_MISSING_INPUT：BLOCKED_MISSING_USER_TARGET 与 M 同单位（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需基于已关闭的来源、专业审查和上游计算门禁形成结论；本样件不提供投资建议。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "financial.phase3e.investment-hurdle-gap"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需基于已关闭的来源、专业审查和上游计算门禁形成结论；本样件不提供投资建议。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需基于已关闭的来源、专业审查和上游计算门禁形成结论；本样件不提供投资建议。"
+    },
+    {
+      "id": "CH18.02",
+      "title": "结论证据及独立否决",
+      "content_summary": "本项围绕“结论证据及独立否决”核对证据闭合、否决条件、推进门槛和后续核查，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.phase3e.investment-hurdle-gap=BLOCKED_MISSING_INPUT：BLOCKED_MISSING_USER_TARGET 与 M 同单位（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需基于已关闭的来源、专业审查和上游计算门禁形成结论；本样件不提供投资建议。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "financial.phase3e.investment-hurdle-gap"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需基于已关闭的来源、专业审查和上游计算门禁形成结论；本样件不提供投资建议。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需基于已关闭的来源、专业审查和上游计算门禁形成结论；本样件不提供投资建议。"
+    },
+    {
+      "id": "CH18.03",
+      "title": "推进条件与触发阈值",
+      "content_summary": "本项围绕“推进条件与触发阈值”核对证据闭合、否决条件、推进门槛和后续核查，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.phase3e.investment-hurdle-gap=BLOCKED_MISSING_INPUT：BLOCKED_MISSING_USER_TARGET 与 M 同单位（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充独立情景控制、变化因子、边界值、重算运行身份和结果差异；不能由单一基准外推。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "financial.phase3e.investment-hurdle-gap"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需补充独立情景控制、变化因子、边界值、重算运行身份和结果差异；不能由单一基准外推。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需补充独立情景控制、变化因子、边界值、重算运行身份和结果差异；不能由单一基准外推。"
+    },
+    {
+      "id": "CH18.04",
+      "title": "资料缺口与专项核查",
+      "content_summary": "本项围绕“资料缺口与专项核查”核对证据闭合、否决条件、推进门槛和后续核查，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.phase3e.investment-hurdle-gap=BLOCKED_MISSING_INPUT：BLOCKED_MISSING_USER_TARGET 与 M 同单位（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需基于已关闭的来源、专业审查和上游计算门禁形成结论；本样件不提供投资建议。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "financial.phase3e.investment-hurdle-gap"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需基于已关闭的来源、专业审查和上游计算门禁形成结论；本样件不提供投资建议。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需基于已关闭的来源、专业审查和上游计算门禁形成结论；本样件不提供投资建议。"
+    },
+    {
+      "id": "CH18.05",
+      "title": "决策里程碑及免责",
+      "content_summary": "本项围绕“决策里程碑及免责”核对证据闭合、否决条件、推进门槛和后续核查，项目边界为工商业屋顶（industrial_rooftop）。直接证据：financial.phase3e.investment-hurdle-gap=BLOCKED_MISSING_INPUT：BLOCKED_MISSING_USER_TARGET 与 M 同单位（BLOCKED_MISSING_INPUT）。当前判定：PENDING_VERIFICATION。本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需基于已关闭的来源、专业审查和上游计算门禁形成结论；本样件不提供投资建议。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "financial.phase3e.investment-hurdle-gap"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需基于已关闭的来源、专业审查和上游计算门禁形成结论；本样件不提供投资建议。",
+      "final_conclusion": "本项保持 PENDING_VERIFICATION，未关闭前不得形成确定性专业结论。需基于已关闭的来源、专业审查和上游计算门禁形成结论；本样件不提供投资建议。"
+    },
+    {
+      "id": "APP01.01",
+      "title": "资料或结果明细",
+      "content_summary": "逐项列出本次运行使用的输入、方法、bundle、canonical和来源身份。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP01.02",
+      "title": "状态、限制与后续核验",
+      "content_summary": "逐项列出本次运行使用的输入、方法、bundle、canonical和来源身份。 第二项专门记录授权、质量、缺口和复核动作，不把已有数值当作资料闭合。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP02.01",
+      "title": "资料或结果明细",
+      "content_summary": "核对12个月资源与发电结果的时间粒度、单位和来源。 当前状态：EVIDENCED；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [
+        "resource.poa_boundary"
+      ],
+      "metric_ids": [
+        "energy.monthly.year.1",
+        "energy.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP02.02",
+      "title": "状态、限制与后续核验",
+      "content_summary": "核对12个月资源与发电结果的时间粒度、单位和来源。 第二项专门记录授权、质量、缺口和复核动作，不把已有数值当作资料闭合。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [
+        "resource.poa_boundary"
+      ],
+      "metric_ids": [
+        "energy.monthly.year.1",
+        "energy.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP03.01",
+      "title": "资料或结果明细",
+      "content_summary": "核对组件、逆变器、容量比和损失分项的输入与计算绑定。 当前状态：EVIDENCED；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [
+        "system.losses"
+      ],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP03.02",
+      "title": "状态、限制与后续核验",
+      "content_summary": "核对组件、逆变器、容量比和损失分项的输入与计算绑定。 第二项专门记录授权、质量、缺口和复核动作，不把已有数值当作资料闭合。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [
+        "system.losses"
+      ],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP04.01",
+      "title": "资料或结果明细",
+      "content_summary": "核对CAPEX逐项金额、币种、税口径、报价时点和项目类型专项项。 当前状态：EVIDENCED；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [
+        "capex.items"
+      ],
+      "metric_ids": [
+        "financial.capex.total",
+        "financial.unit_investment"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP04.02",
+      "title": "状态、限制与后续核验",
+      "content_summary": "核对CAPEX逐项金额、币种、税口径、报价时点和项目类型专项项。 第二项专门记录授权、质量、缺口和复核动作，不把已有数值当作资料闭合。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [
+        "capex.items"
+      ],
+      "metric_ids": [
+        "financial.capex.total",
+        "financial.unit_investment"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP05.01",
+      "title": "资料或结果明细",
+      "content_summary": "核对运维、折旧、更换和税费年度边界。 当前状态：EVIDENCED；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [
+        "opex.items",
+        "assets.depreciation",
+        "assets.replacements"
+      ],
+      "metric_ids": [
+        "financial.opex.cash_lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP05.02",
+      "title": "状态、限制与后续核验",
+      "content_summary": "核对运维、折旧、更换和税费年度边界。 第二项专门记录授权、质量、缺口和复核动作，不把已有数值当作资料闭合。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [
+        "opex.items",
+        "assets.depreciation",
+        "assets.replacements"
+      ],
+      "metric_ids": [
+        "financial.opex.cash_lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP06.01",
+      "title": "资料或结果明细",
+      "content_summary": "核对项目与资本金现金流、评价期、折现率和未决指标。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP06.02",
+      "title": "状态、限制与后续核验",
+      "content_summary": "核对项目与资本金现金流、评价期、折现率和未决指标。 第二项专门记录授权、质量、缺口和复核动作，不把已有数值当作资料闭合。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [],
+      "metric_ids": [
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP07.01",
+      "title": "资料或结果明细",
+      "content_summary": "核对债务余额、还本付息、CFADS和DSCR适用性。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [
+        "finance.debt_schedule"
+      ],
+      "metric_ids": [
+        "financial.phase3e.dscr"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP07.02",
+      "title": "状态、限制与后续核验",
+      "content_summary": "核对债务余额、还本付息、CFADS和DSCR适用性。 第二项专门记录授权、质量、缺口和复核动作，不把已有数值当作资料闭合。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [
+        "finance.debt_schedule"
+      ],
+      "metric_ids": [
+        "financial.phase3e.dscr"
+      ],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP08.01",
+      "title": "资料或结果明细",
+      "content_summary": "核对敏感性/情景控制、变化因子、运行身份和结果差异。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP08.02",
+      "title": "状态、限制与后续核验",
+      "content_summary": "核对敏感性/情景控制、变化因子、运行身份和结果差异。 第二项专门记录授权、质量、缺口和复核动作，不把已有数值当作资料闭合。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP09.01",
+      "title": "资料或结果明细",
+      "content_summary": "核对政策适用区域、有效期、条款原文和授权状态。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP09.02",
+      "title": "状态、限制与后续核验",
+      "content_summary": "核对政策适用区域、有效期、条款原文和授权状态。 第二项专门记录授权、质量、缺口和复核动作，不把已有数值当作资料闭合。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP10.01",
+      "title": "资料或结果明细",
+      "content_summary": "集中列出当前 findings、阻断码、缺失字段和下一步资料。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP10.02",
+      "title": "状态、限制与后续核验",
+      "content_summary": "集中列出当前 findings、阻断码、缺失字段和下一步资料。 第二项专门记录授权、质量、缺口和复核动作，不把已有数值当作资料闭合。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP11.01",
+      "title": "资料或结果明细",
+      "content_summary": "列出公式文本、变量、单位、边界条件、输入和来源。 当前状态：EVIDENCED；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "EVIDENCED",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP11.02",
+      "title": "状态、限制与后续核验",
+      "content_summary": "列出公式文本、变量、单位、边界条件、输入和来源。 第二项专门记录授权、质量、缺口和复核动作，不把已有数值当作资料闭合。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-generation",
+        "SYNTHETIC-generation-methods",
+        "SYNTHETIC-settlement-methods"
+      ],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP12.01",
+      "title": "资料或结果明细",
+      "content_summary": "列出本报告出现的中文术语、英文全称、缩写和首次释义。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP12.02",
+      "title": "状态、限制与后续核验",
+      "content_summary": "列出本报告出现的中文术语、英文全称、缩写和首次释义。 第二项专门记录授权、质量、缺口和复核动作，不把已有数值当作资料闭合。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP13.01",
+      "title": "资料或结果明细",
+      "content_summary": "记录版本、运行身份、数据质量轴、STATIC_SNAPSHOT和复核状态。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    },
+    {
+      "id": "APP13.02",
+      "title": "状态、限制与后续核验",
+      "content_summary": "记录版本、运行身份、数据质量轴、STATIC_SNAPSHOT和复核状态。 第二项专门记录授权、质量、缺口和复核动作，不把已有数值当作资料闭合。 当前状态：PENDING_VERIFICATION；项目身份为 SYNTHETIC-industrial_rooftop，运行身份为 d86a4e81-e432-4199-b194-bbf93dd15b01。",
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "professional_content_status": "PENDING_VERIFICATION",
+      "structure_status": "GENERATED",
+      "duplicate_template": false,
+      "wrong_evidence_binding": false,
+      "visual_layout_status": "NOT_TESTED",
+      "missing_materials": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。",
+      "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"
+    }
+  ],
+  "quality_axes": {
+    "structure_status": "GENERATED",
+    "substantive_content_status": "RECORDED_PER_ITEM",
+    "legal_evidence_status": "SYNTHETIC_OR_SOURCE_BOUND",
+    "visual_layout_status": "NOT_TESTED"
+  }
+}

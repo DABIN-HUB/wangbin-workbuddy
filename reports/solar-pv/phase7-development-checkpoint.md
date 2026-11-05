@@ -296,3 +296,35 @@ Connector `cli.json` 和 Skill manifest 现在显式固定：Python `>=3.12,<3.1
 - 屋顶/地面真实项目所需土地、地勘、结构、接入、升压站、交易、合同、报价、授权和财务依据仍缺失；不得用模型估算偷写正式结果。
 - 完整真实输入到计算 E2E、完整 L2/L3、Excel 重新计算、PDF 页面/检索/中文视觉复核、WorkBuddy 私有安装/实际调用/权限和平台审核仍为 `NOT_TESTED`。
 - 本阶段没有自动上传、登录、发布或发起审核，不启动 Phase 8A–8G；用户完成 WorkBuddy 私有试运行并确认结果前，不宣布正式发布就绪。
+
+## Phase 7I：上传前完整报告内容验收（2026-11-05）
+
+### 7I.1 产品说明和候选版本
+
+- Skill 已升级为 `0.1.2`，Connector 已升级为 `0.1.1`；旧的 0.1.1/0.1.0 候选保留，未覆盖。
+- 支持范围在 `SKILL.md`、`README.md`、`manifest.json` 和产品目录中明确限定为工商业屋顶（`industrial_rooftop`）和集中式地面（`utility_scale_ground`）。农光互补、渔光互补、光储、户用、车棚/BIPV 等均明确为不支持。
+- 产品说明明确 18 章/100 个章节子项、13 个附录/26 个附录子项和 DOCX/PDF/测算 XLSX/来源 XLSX 目标交付；未取得合法依据的结论保持 `UNKNOWN`/`BLOCKED`。平台安装、平台调用、PDF 和许可证仍未闭合，不能宣称完全可用。
+
+### 7I.2 两类审阅包的真实导出结果
+
+本轮对既有身份可复核的 Phase 3G SYNTHETIC canonical 做了新的导出层验收；这是“canonical → 文件导出”，**不是**新的完整 Phase 2→3G 计算回执。两个独立审阅包位于 `reports/solar-pv/phase7i-upload-review/`，每包包含 DOCX、两个 XLSX、manifest、canonical、公式执行证据、内容清单、质量检查和范围说明。
+
+- 屋顶包：`industrial_rooftop-review-package.zip`，287,034 bytes，SHA-256 `661ad3355a637f65f26e96e62be3c2bc1f24eaa8cda83ee9686e0f12437a521b`。
+- 地面包：`utility_scale_ground-review-package.zip`，285,072 bytes，SHA-256 `73d18d4be264c1949644cf09c75722fd614b0481fde8404bd738f1ee2beb9721`。
+- 两类导出均为 `DRAFT_PARTIAL`；DOCX 生成耗时分别约 3.77 s / 3.60 s，不代表完整 Skill 计算耗时。
+- 两类均真实记录：18/18 章、100/100 章节子项、13/13 附录、26/26 附录子项；DOCX 可编辑文本结构检查通过，但实际页面视觉状态为 `NOT_TESTED`。
+- 两类均生成 126 条机器可读逐项检查记录；检查记录含主题摘要、字段/指标、来源、专业内容状态、重复模板标记、错误绑定标记、排版状态、资料缺口和结论。结构存在与专业内容、合法证据和视觉排版状态分开记录。
+- 两类均生成 19 张测算工作表和 10 张来源/假设工作表；内容检查确认 `STATIC_SNAPSHOT`，未宣称 `VERIFIED_RECALCULABLE`。
+
+### 7I.3 完整输入链路结论
+
+- 本轮实际尝试以独立 SYNTHETIC Bundle 运行项目入口，保留在 scratch 证据中；该尝试未在时限内完成到 canonical，不能用它替代完整链路证据。
+- 运行首先暴露旧 Phase 3D 合成输入中 replacement rows 与单条 illustrative replacement rule 的契约不一致（`ENERGY_REPLACEMENT_RULES`）；在临时独立副本中补齐显式事件绑定后，3B 已生成，但完整 3C→3G 运行仍未在本轮收口，故完整输入到计算链状态保持 `NOT_COMPLETED_IN_THIS_PHASE7I_RUN`。
+- 未修改两个封存的 25 年案例，也未将完整链路阻断改成忽略校验或伪造成功；最终审阅包的 `review-scope.json` 明确其 canonical 导出来源和边界。
+
+### 7I.4 PDF、平台和停止点
+
+- `soffice`、`libreoffice`、`pandoc`、`wkhtmltopdf`、`docx2pdf`/`comtypes` 仍不可用；两个审阅包都不含假 PDF，manifest 保持 `PDF_RENDERER_UNAVAILABLE` / `BLOCKED`。
+- WorkBuddy 私有安装、Connector `init`、可信 wheel 索引、平台 Python runtime、Skill 对话调用、平台输出权限、平台 PDF/字体和许可证仍为 `NOT_TESTED`/`UNKNOWN`/`REQUIRES_MANUAL_REVIEW`。
+- 新候选归档：Skill `dist/wangbin-solar-pv-prestudy-0.1.2-skill-candidate.zip`，221,231 bytes，SHA-256 `42e66522bb923dd9cdf18180ff38dfca69b24a9ae09e49c6efe5ed935293fca7`；Connector `dist/wangbin-solar-pv-cli-0.1.1-connector-candidate.zip`，3,212 bytes，SHA-256 `766a3e7b24527373d46b56aa56bf33de8e7890f788358d7ef39c24e1b9b76d31`。两个 ZIP 的 `unzip -t` 通过。
+- 本轮未上传 WorkBuddy、未 push、未提交审核、未发布、未启动 Phase 8A–8G。用户确认报告内容、计算结果、Word 页面视觉和平台试运行前，不进入上传阶段。

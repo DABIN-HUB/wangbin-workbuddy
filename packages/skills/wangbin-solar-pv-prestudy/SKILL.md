@@ -13,7 +13,7 @@ examples_en:
   - "Generate a preliminary feasibility report for this industrial rooftop PV project"
   - "Generate a preliminary feasibility report for this utility-scale ground PV project"
   - "Check which inputs are missing from this solar PV project package"
-version: 0.1.1
+version: 0.1.2
 author: 星核实验室 StarCore Lab
 allowed-tools: Read, Bash, Write
 license_type: PROPRIETARY
@@ -24,11 +24,22 @@ license_status: REQUIRES_MANUAL_REVIEW
 
 ## 运行方式和依赖边界
 
-本 Skill ZIP 是提示词、契约、冻结定义和路由脚本包，不会自动安装 Python、pip 依赖或光伏计算引擎。推荐在 WorkBuddy 中同时安装配套 CLI Connector `wangbin-solar-pv-cli`；Connector 使用 WorkBuddy 托管的 Python runtime 和隔离虚拟环境安装已审阅的 `wangbin-solar-pv-input==0.3.0` 与 `wangbin-document-cli==1.2.0`。如果 Connector 未安装或状态不是 `LOCAL_READY`，不得声称已完成计算。
+本 Skill ZIP 是提示词、契约、冻结定义和路由脚本包，不会自动安装 Python、pip 依赖或光伏计算引擎。推荐在 WorkBuddy 中同时安装配套 CLI Connector `wangbin-solar-pv-cli`；Connector 使用 WorkBuddy 托管的 Python runtime 和隔离虚拟环境安装已审阅的 `wangbin-solar-pv-input==0.3.1` 与 `wangbin-document-cli==1.2.0`。如果 Connector 未安装或状态不是 `LOCAL_READY`，不得声称已完成计算。
 
 普通 Skill 独立运行只在宿主环境已经提供 `wangbin_solar_pv`、`wangbin_document_engine` 及下述依赖时成立；Skill 不依赖开发者 Git 仓库、IDE 或本地 `PYTHONPATH`。WorkBuddy 平台安装、依赖解析和 Connector 获取来源在本候选中仍为 `NOT_TESTED`。
 
 当用户要求根据项目资料生成工商业屋顶或集中式地面光伏预可研报告时，按本技能执行。此技能只负责路由、资料边界、运行入口和结果交付；**不在大模型提示词中重新实现发电、消纳、收益、财务或敏感性计算**。
+
+## 当前支持范围（0.1.2 平台测试前候选）
+
+本候选只支持以下两类独立报告，项目类型必须在输入中明确并由引擎校验：
+
+1. **工商业屋顶光伏预可研报告（`industrial_rooftop`）**：覆盖屋顶边界和可利用面积、结构/防水与荷载资料、组件及逆变器、逐月发电、负荷消纳、自用/上网/限发、购售电价格、CAPEX/OPEX、税费、融资、现金流、敏感性和资料缺口。输入至少包括项目身份、屋顶与结构证据、负荷计量、合同/电价、并网、设备、成本和来源授权。
+2. **集中式地面光伏预可研报告（`utility_scale_ground`）**：覆盖土地及建设边界、地形坡度和地质、支架基础、道路排水、集电线路、升压站与送出、集中并网与限发、市场化售电、发电预测、CAPEX/OPEX、税费、融资、项目财务、情景和地面项目资料缺口。输入至少包括土地权属/用地性质、测绘地勘、工程边界、接入系统、送出、交易、设备和成本来源授权。
+
+报告固定结构为 **18章、100个章节子项、13个附录、26个附录子项**。目标交付为 DOCX、真实转换得到的 PDF、测算 XLSX 和来源/假设 XLSX；当前另生成 `canonical.json` 与逐项 `content-checklist.json` 供审阅。未取得合法依据的工程、政策、资源、合同或财务结论会保持 `UNKNOWN`/`BLOCKED`，不会由模型补写。
+
+当前明确**不支持**农光互补、渔光互补、光储、户用、车棚/BIPV 或其他未列出的项目类型；不得仅替换标题后套用上述两类模型。0.1.2 仍是平台测试前本地候选：WorkBuddy 私有安装、依赖解析、平台运行、平台文件输出和真实对话调用尚未验证；PDF 转换器缺失时保持 `PDF_RENDERER_UNAVAILABLE`，不得宣称完全可用或上传就绪。
 
 ## 1. 先确认项目类型和授权范围
 
@@ -95,7 +106,8 @@ python scripts/run_solar_pv.py project-report \
 1. 光伏预可研报告 DOCX；
 2. 光伏预可研报告 PDF（仅真实转换成功时）；
 3. 测算模型 XLSX（当前为 `STATIC_SNAPSHOT`，不是已验证可重算模型）；
-4. 资料来源与假设清单 XLSX。
+4. 资料来源与假设清单 XLSX；
+5. `canonical.json` 和 126 条逐项 `content-checklist.json`（审阅追溯材料，不改变四文件门禁）。
 
 资料不足时输出应显著标记“草稿，资料不足，未决策就绪”，状态保持 `DRAFT_PARTIAL`。如果生成三件而 PDF 阻断，整体门禁保持 `BLOCKED`。不要把本地脚本可执行、ZIP 可解析或历史样件通过解释成 WorkBuddy 平台已安装、已调用、已审核或已发布。
 
