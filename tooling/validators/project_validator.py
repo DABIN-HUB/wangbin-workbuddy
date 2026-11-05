@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import re
+import unicodedata
 from pathlib import Path
 from typing import Any
 
@@ -12,6 +13,110 @@ from . import Finding, ValidationReport
 from .secret_scanner import scan_for_secrets
 
 SEMVER = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?$")
+_PLACEHOLDER = re.compile(r"(?i)\b(?:todo|tbd|placeholder|sample|example|待补充|待完善|占位|示例)\b")
+_INTERNAL = re.compile(r"(?i)(?:\b(?:api|json|yaml|yml|cli|sdk|regex|stack trace|traceback|exception|bash|powershell|python|pip|git)\b|http\s*\d{3}|error\s*code|[A-Za-z]:[\\/]|/(?:home|usr|tmp|var)/)")
+_ABSOLUTE_GUARANTEE = re.compile(r"(?i)(?:guarantee|always|never fail|100%|绝对|保证|必然|一定(?:能|会)|完全准确)")
+_PLATFORM_CLAIM = re.compile(r"(?i)(?:适用于所有|支持所有|all platforms|any platform|guaranteed? on)")
+_END_PUNCT = "。.!！?？;；:："
+CANONICAL_SECTIONS = (("Preparation", "准备"), ("Usage", "使用"), ("Processing", "处理"),
+                      ("Outputs", "输出"), ("Limits", "边界"))
+
+
+def _normalized_user_text(value: str) -> str:
+    value = unicodedata.normalize("NFC", value).strip()
+    value = re.sub(r"\s+", " ", value).casefold()
+    return value.rstrip(_END_PUNCT).strip()
+
+
+def _user_text_error(value: str, *, language: str) -> str | None:
+    if not isinstance(value, str) or not value.strip():
+        return "must be a non-empty string"
+    text = value.strip()
+    length = len(text)
+    if language == "zh" and not 8 <= length <= 120:
+        return "Chinese user goal length must be 8-120 characters"
+    if language == "en" and not 12 <= length <= 180:
+        return "English user goal length must be 12-180 characters"
+    if _PLACEHOLDER.search(text):
+        return "placeholder text is not allowed"
+    if _INTERNAL.search(text):
+        return "internal technical terms, commands, paths or error codes are not allowed"
+    if _ABSOLUTE_GUARANTEE.search(text) or _PLATFORM_CLAIM.search(text):
+        return "unverified platform or absolute capability claim is not allowed"
+    return None
+
+
+def validate_user_facing_standard(front: dict[str, Any], skill_path: Path,
+                                  checks: list[dict[str, Any]], findings: list[Finding], *,
+                                  enforce: bool = False) -> None:
+    """Validate Skill-only user copy; legacy packages opt in via the migration marker."""
+    enabled = enforce or not isinstance(front, dict) or front.get("user_facing_standard") == "v1"
+    if not enabled:
+        return
+    if not isinstance(front, dict):
+        findings.append(Finding("USER_DESCRIPTION_PASS", str(skill_path), "frontmatter must be a YAML mapping"))
+        _check(checks, "skill.USER_DESCRIPTION_PASS", False, "frontmatter must be a YAML mapping")
+        _check(checks, "skill.USER_EXAMPLES_PASS", False, "frontmatter must be a YAML mapping")
+        _check(checks, "skill.USER_SECTIONS_PASS", False, "frontmatter must be a YAML mapping")
+        return
+    name_ok = all(isinstance(front.get(k), str) and front[k].strip()
+                  for k in ("display_name", "display_name_en"))
+    description_zh = front.get("description_zh", front.get("description"))
+    desc_ok = (isinstance(description_zh, str) and bool(description_zh.strip()) and
+               isinstance(front.get("description_en"), str) and bool(front["description_en"].strip()))
+    desc_errors = []
+    for value, lang in ((description_zh, "zh"), (front.get("description_en"), "en")):
+        if isinstance(value, str):
+            error = _user_text_error(value, language=lang)
+            if error and "length" not in error:
+                desc_errors.append(error)
+    desc_ok = desc_ok and not desc_errors
+    _check(checks, "skill.USER_DESCRIPTION_PASS", name_ok and desc_ok,
+           "双语名称与描述完整" if name_ok and desc_ok else "双语名称或描述缺失")
+    if not name_ok or not desc_ok:
+        findings.append(Finding("USER_DESCRIPTION_PASS", str(skill_path), "双语名称与描述必须非空"))
+    examples_ok = True
+    normalized: set[str] = set()
+    for key, lang in (("examples_zh", "zh"), ("examples_en", "en")):
+        values = front.get(key)
+        if not isinstance(values, list) or len(values) != 3:
+            findings.append(Finding("USER_EXAMPLES_PASS", str(skill_path), f"{key} 必须恰好包含 3 条"))
+            examples_ok = False
+            continue
+        for value in values:
+            error = _user_text_error(value, language=lang)
+            normalized_value = _normalized_user_text(value) if isinstance(value, str) else ""
+            if error or normalized_value in normalized:
+                findings.append(Finding("USER_EXAMPLES_PASS", str(skill_path),
+                                        f"{key}: {error or 'normalized duplicate'}"))
+                examples_ok = False
+            normalized.add(normalized_value)
+    _check(checks, "skill.USER_EXAMPLES_PASS", examples_ok,
+           "双语用户目标通过" if examples_ok else "双语用户目标不符合门禁")
+    body = skill_path.read_text(encoding="utf-8")
+    headings = []
+    for english, chinese in CANONICAL_SECTIONS:
+        match = re.search(rf"(?m)^##\s+{re.escape(english)}\s*(?:/|｜|\|)\s*{re.escape(chinese)}\s*$", body)
+        if not match:
+            match = re.search(rf"(?m)^##\s+{re.escape(chinese)}\s*(?:/|｜|\|)\s*{re.escape(english)}\s*$", body)
+        headings.append(match)
+    sections_ok = all(headings)
+    if sections_ok:
+        positions = [m.start() for m in headings]
+        sections_ok = positions == sorted(positions)
+        for index, match in enumerate(headings):
+            end = headings[index + 1].start() if index + 1 < len(headings) else len(body)
+            if not body[match.end():end].strip():
+                sections_ok = False
+        limits = headings[-1]
+        if limits and not re.search(r"(?i)(?:不能|不支持|限制|仅限|无法|does not|not support|limit|cannot)", body[limits.end():]):
+            sections_ok = False
+    _check(checks, "skill.USER_SECTIONS_PASS", sections_ok,
+           "五段双语说明按序且非空" if sections_ok else "五段双语说明缺失、空段、乱序或缺少边界")
+    if not sections_ok:
+        findings.append(Finding("USER_SECTIONS_PASS", str(skill_path), "五段 Preparation/Usage/Processing/Outputs/Limits 门禁失败"))
+    checks.append({"name": "skill.capability_boundary_review", "status": "NOT_TESTED",
+                   "message": "静态检查不能证明全部能力；需人工核对 capability boundary 证据"})
 
 
 def _read_frontmatter(path: Path) -> dict[str, Any]:
@@ -41,7 +146,10 @@ def validate_skill(skill_dir: Path, checks: list[dict[str, Any]], findings: list
     except (OSError, ValueError, yaml.YAMLError) as exc:
         findings.append(Finding("SKILL_FRONTMATTER", str(skill), f"无法读取 frontmatter: {exc}"))
         return
-    required = ["name", "display_name", "display_name_en", "description", "description_zh", "description_en", "version", "author"]
+    # description is retained as a compatibility alias for description_zh.
+    if not front.get("description_zh") and front.get("description"):
+        front["description_zh"] = front["description"]
+    required = ["name", "display_name", "display_name_en", "description_zh", "description_en", "version", "author"]
     missing = [key for key in required if not front.get(key)]
     _check(checks, "skill.required_frontmatter", not missing, "必填字段完整" if not missing else f"缺少字段: {', '.join(missing)}")
     if missing:
@@ -52,6 +160,7 @@ def validate_skill(skill_dir: Path, checks: list[dict[str, Any]], findings: list
         findings.append(Finding("SKILL_VERSION", str(skill), "version 不是语义化版本"))
     if not re.match(r"^[a-z0-9][a-z0-9-]*$", str(front.get("name", ""))):
         findings.append(Finding("SKILL_NAME", str(skill), "name 必须是小写字母、数字和连字符"))
+    validate_user_facing_standard(front, skill, checks, findings)
     for referenced in re.findall(r"@((?:references|scripts|templates)/[A-Za-z0-9_./-]+)", skill.read_text(encoding="utf-8")):
         if not (skill_dir / referenced).is_file():
             findings.append(Finding("RESOURCE_MISSING", str(skill_dir / referenced), "SKILL.md 引用的资源不存在"))

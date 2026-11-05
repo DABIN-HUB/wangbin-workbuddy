@@ -19,8 +19,10 @@ def generate_skill(target: Path, *, skill_id: str, display_name: str, display_na
         "description": description_zh,
         "description_zh": description_zh,
         "description_en": description_en,
-        "examples_zh": ["请处理这个文档"],
-        "examples_en": ["Process this document"],
+        # New candidates explicitly opt into the user-facing migration gate.
+        "user_facing_standard": "v1",
+        "examples_zh": ["请先完善第一个用户目标", "请先完善第二个用户目标", "请先完善第三个用户目标"],
+        "examples_en": ["Add the first verified user goal here", "Add the second verified user goal here", "Add the third verified user goal here"],
         "version": version,
         "author": author,
     }
