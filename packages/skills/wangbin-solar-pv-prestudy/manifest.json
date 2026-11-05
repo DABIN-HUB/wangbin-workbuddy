@@ -1,0 +1,14 @@
+{
+  "id": "wangbin-solar-pv-prestudy",
+  "version": "0.1.0",
+  "author": "星核实验室 StarCore Lab",
+  "kind": "workbuddy-skill-candidate",
+  "license_type": "PROPRIETARY",
+  "license_status": "REQUIRES_MANUAL_REVIEW",
+  "runtime": {
+    "python": ">=3.12,<3.15",
+    "engine": "wangbin-solar-pv-input==0.3.0",
+    "pdf": "optional-soffice-or-libreoffice"
+  },
+  "platform_upload_status": "LOCAL_CANDIDATE_ONLY"
+}

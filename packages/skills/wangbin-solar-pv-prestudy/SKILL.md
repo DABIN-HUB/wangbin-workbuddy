@@ -1,0 +1,104 @@
+---
+name: wangbin-solar-pv-prestudy
+display_name: 光伏预可研报告
+display_name_en: Solar PV Preliminary Feasibility Report
+description: 根据用户授权的项目资料生成有来源边界的工商业屋顶或集中式地面光伏预可研报告。
+description_zh: 复用既有光伏输入契约、计算引擎和报告导出器，生成可追溯的开发样件或报告文件。
+description_en: Reuses the approved solar-PV contracts, calculation engine, and exporters to produce traceable draft or report files.
+examples_zh:
+  - "根据这些资料生成一份工商业屋顶光伏预可研报告"
+  - "为这个集中式地面光伏项目生成预可研报告"
+  - "检查这份光伏项目资料缺少哪些报告输入"
+examples_en:
+  - "Generate a preliminary feasibility report for this industrial rooftop PV project"
+  - "Generate a preliminary feasibility report for this utility-scale ground PV project"
+  - "Check which inputs are missing from this solar PV project package"
+version: 0.1.0
+author: 星核实验室 StarCore Lab
+allowed-tools: Read, Bash, Write
+license_type: PROPRIETARY
+license_status: REQUIRES_MANUAL_REVIEW
+---
+
+# 光伏预可研报告
+
+当用户要求根据项目资料生成工商业屋顶或集中式地面光伏预可研报告时，按本技能执行。此技能只负责路由、资料边界、运行入口和结果交付；**不在大模型提示词中重新实现发电、消纳、收益、财务或敏感性计算**。
+
+## 1. 先确认项目类型和授权范围
+
+- 识别 `industrial_rooftop`（工商业屋顶）或 `utility_scale_ground`（集中式地面）。项目类型不明确时先询问，不根据标题猜测。
+- 只读取用户明确选择或授权的输入目录；不扫描无关目录，不向第三方自动发送附件。
+- 先列出资料状态：已提供、缺失、冲突、待授权、待专业复核。
+- 真实项目资料不足时保留 `UNKNOWN`、`BLOCKED`、`NOT_IMPLEMENTED`、`NOT_TESTED`；不得用默认零值、经验数或模型臆测补齐。
+- `SYNTHETIC` 仅可用于开发验证，不能描述成实测、真实项目、正式准入或投资决策依据。
+
+## 2. 输入资料门槛
+
+### 工商业屋顶
+
+至少需要明确项目身份、屋顶边界/面积、结构或承载资料、负荷曲线及计量边界、合同/电价口径、并网资料、设备和成本依据、评价情景及来源授权。缺少负荷或合同依据时，不得伪造自用率或可避免购电费用。
+
+### 集中式地面
+
+至少需要明确项目身份、土地权属/用地性质/期限、面积和可建设边界、地形地质、基础和支架、道路排水运输、集电线路、升压站/送出、接入系统意见、限发/调度约束、市场化交易和成本依据。不得把屋顶结构、业主负荷或自用节省模型替换标题后用于地面项目。
+
+详细输入和状态说明见 `@references/input-contract.md`。
+
+## 3. 稳定执行链
+
+1. 将用户资料交给既有 Phase 2 解析、归一化、来源和授权校验；不开发第二套解析或计算逻辑。
+2. 使用既有 `project` 入口运行统一项目计算。计算失败、超时或资料阻断时，返回真实错误和待补资料，不生成看似完整的结果。
+3. 使用同一份已验证 canonical result 调用 `report`（屋顶）或 `ground-report`（地面）。四个输出必须共享 `model_version`、`run_id`、`input_hash`、`source_snapshot_id` 和 `result_hash`。
+4. 检查输出文件和 manifest；明确每个文件是 `GENERATED`、`BLOCKED` 还是 `NOT_TESTED`。
+5. 只交付实际存在且重新读取验证过的文件。PDF 缺失时不得把 DOCX 改后缀或声明四文件完成。
+
+稳定包装脚本为 `@scripts/run_solar_pv.py`。脚本只使用 Python 标准库；它调用已安装的 `wangbin_solar_pv` 引擎，不复制算法。
+
+### 已有 canonical 的导出调用
+
+```bash
+python scripts/run_solar_pv.py report \
+  --project-type industrial_rooftop \
+  --workspace "<授权私有工作区>" \
+  --result "<workspace 内 canonical.json>" \
+  --output "<新的输出目录>" \
+  --engine-root "<solar-pv-engine 或仓库根目录>"
+```
+
+地面项目仅将 `--project-type` 改为 `utility_scale_ground`；脚本会调用 `ground-report`。
+
+### 从项目输入运行计算再导出
+
+```bash
+python scripts/run_solar_pv.py project-report \
+  --project-type industrial_rooftop \
+  --workspace "<授权私有工作区>" \
+  --input "<Phase 2 input.json>" \
+  --methods "<methods.json>" \
+  --bundle "<D3 bundle 目录>" \
+  --budget "<bundle budget.json>" \
+  --project-output "<新的计算目录>" \
+  --report-output "<新的报告目录>" \
+  --engine-root "<solar-pv-engine 或仓库根目录>"
+```
+
+完整参数和运行前提见 `@references/runtime.md`。如果运行环境找不到引擎、Python 依赖或合法 PDF 转换器，脚本必须返回稳定阻断状态，不能假装成功。
+
+## 4. 报告交付规则
+
+标准输出集为：
+
+1. 光伏预可研报告 DOCX；
+2. 光伏预可研报告 PDF（仅真实转换成功时）；
+3. 测算模型 XLSX（当前为 `STATIC_SNAPSHOT`，不是已验证可重算模型）；
+4. 资料来源与假设清单 XLSX。
+
+资料不足时输出应显著标记“草稿，资料不足，未决策就绪”，状态保持 `DRAFT_PARTIAL`。如果生成三件而 PDF 阻断，整体门禁保持 `BLOCKED`。不要把本地脚本可执行、ZIP 可解析或历史样件通过解释成 WorkBuddy 平台已安装、已调用、已审核或已发布。
+
+## 5. 安全和隐私
+
+- 所有输入路径必须位于用户授权的工作区；拒绝绝对路径混入相对参数、`..` 路径穿越、输出覆盖和符号链接边界。
+- 日志只输出稳定错误码、状态和必要的脱敏路径；不打印原始账单、负荷、合同、报价、令牌或完整附件内容。
+- 每次运行使用新的计算/报告目录；不要覆盖旧 run。
+- 不自动联网取数、不自动上传资料、不自动提交 WorkBuddy 审核或发布。
+- 许可证、平台协议、真实数据来源和专业审查状态未闭合时，保持 `REQUIRES_MANUAL_REVIEW` 或 `BLOCKED`。
