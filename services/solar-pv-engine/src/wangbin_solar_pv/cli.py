@@ -77,6 +77,10 @@ def _parser():
     source_xlsx.add_argument("--result", required=True, help="已验证canonical JSON")
     source_xlsx.add_argument("--mapping", help="可选同一结果的formula-execution JSON")
     source_xlsx.add_argument("--output", required=True, help="新建XLSX文件，不覆盖")
+    report = commands.add_parser("report", help="Phase5工商业屋顶四文件开发样件；同一canonical结果，状态DRAFT_PARTIAL")
+    report.add_argument("--result", required=True, help="已验证canonical JSON")
+    report.add_argument("--mapping", help="可选同一结果的formula-execution JSON")
+    report.add_argument("--output", required=True, help="工作区内新建的独立输出目录")
     for command in ("submit", "revise", "resolve", "review", "remove", "accept"):
         examples = {
             "submit": '{"submission_id":"round1","updates":[{"field_id":"site.total_area","value":1000,"unit":"m2"}]}',
@@ -159,6 +163,12 @@ def main(argv=None):
             from .source_xlsx import create_source_workbook
             receipt = create_source_workbook(workspace.read(args.result)[0], catalog, workspace,
                 args.output, formula_map=workspace.read(args.mapping)[0] if args.mapping else None)
+            print(dumps(receipt))
+            return 0
+        if args.command == "report":
+            from .report_export import export_rooftop_report
+            receipt = export_rooftop_report(workspace.read(args.result)[0], catalog, workspace, args.output,
+                formula_map=workspace.read(args.mapping)[0] if args.mapping else None)
             print(dumps(receipt))
             return 0
         if args.command == "project":
