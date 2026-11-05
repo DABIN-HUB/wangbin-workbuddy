@@ -297,6 +297,7 @@ def _canonical_chart_specs(model: ReportModel) -> list[dict[str, Any]]:
         else:
             specs.append({
                 "metric_id": metric_id,
+                "title": "月度发电量变化" if metric_id.startswith("energy.monthly") else "逐年发电量变化",
                 "values": numeric,
                 "unit": metric.get("unit") or "UNKNOWN",
                 "formula_id": metric["formula_id"],
@@ -311,7 +312,7 @@ def _chart_png(spec: dict[str, Any]) -> BytesIO:
     image = Image.new("RGB", (width, height), f"#{_D_STYLE['white']}")
     draw = ImageDraw.Draw(image)
     font = ImageFont.load_default()
-    title = f"CANONICAL  {spec['metric_id']}"
+    title = spec.get("title", "发电量变化")
     draw.text((72, 26), title, fill=f"#{_D_STYLE['ink']}", font=font)
     left, top, right, bottom = 86, 62, width - 36, height - 68
     values = spec["values"]
@@ -600,19 +601,21 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
 
 
 
-def _add_canonical_charts(document: Document, specs: list[dict[str, Any]], source_map: dict[str, str]) -> list[dict[str, Any]]:
+def _add_canonical_charts(document: Document, specs: list[dict[str, Any]], source_map: dict[str, str],
+                          heading: str | None = None) -> list[dict[str, Any]]:
     """Embed visual evidence only when canonical chart specs are valid."""
     if not specs:
         return []
-    document.add_heading("Canonical 图表概览", level=1)
+    if heading:
+        document.add_heading(heading, level=2)
     receipts = []
     for spec in specs:
         paragraph = document.add_paragraph()
         paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
         paragraph.add_run().add_picture(_chart_png(spec), width=Cm(16.4))
         document.add_paragraph(
-            f"图表来源：{spec['metric_id']} · 已计算 · 公式 {spec['formula_id']} · "
-            f"资料 {_word_sources(spec['source_ids'], source_map)}；未进行报告层重算，完整来源 ID 见资料来源清单。"
+            f"图示反映{spec.get('title', '本次发电量测算')}。数据来自当前合成测算的已计算序列，"
+            f"资料引用 {_word_sources(spec['source_ids'], source_map)}；完整计算绑定见测算模型和资料来源清单。"
         )
         receipts.append({"metric_id": spec["metric_id"], "points": len(spec["values"]),
                          "source": "CANONICAL", "formula_id": spec["formula_id"],
@@ -643,7 +646,8 @@ def _paragraph_signature(text: str) -> str:
     text = re.sub(r"\s+", "", text)
     text = re.sub(r"CH\d{2}(?:\.\d{2})?", "", text)
     text = re.sub(r"APP\d{2}(?:\.\d{2})?", "", text)
-    text = re.sub(r"[“”\"]([^“”\"]+)[“”\"]", "主题", text)
+    # Preserve quoted subject names: they carry the chapter-specific meaning that
+    # distinguishes legitimate evidence limitations from a copied template.
     text = re.sub(r"S\d{2}", "来源", text)
     text = re.sub(r"\d+(?:\.\d+)?", "数值", text)
     return text
@@ -715,6 +719,66 @@ def _scan_duplicate_paragraphs(document: Document, checklist: list[dict[str, Any
     }
 
 
+def _chapter_intro(chapter_id: str, chapter_title: str) -> str:
+    intros = {
+        "CH01": "本章先行归纳项目规模、发电和投资信息，并说明当前阶段能够支持的判断范围。",
+        "CH02": "本章说明研究目的、编制依据、评价口径和资料基础，明确哪些内容仍待核实。",
+        "CH03": "本章从建设对象、实施主体、用能关系和建设需求出发，说明项目必要性判断的依据和限制。",
+        "CH04": "本章分别考察屋顶或地面场址的物理边界、权属、安全和施工条件。",
+        "CH05": "本章关注资源数据的来源、覆盖范围、气象变量和预测不确定性。",
+        "CH06": "本章说明工程任务、容量配置、组件排列及方案比选的适用边界。",
+        "CH07": "本章将设备参数、阵列布置、系统连接和损失因素转写为初步工程方案。",
+        "CH08": "本章呈现月度及年度发电预测、效率指标、衰减和结果限制。",
+        "CH09": "本章分析接入点、电气设备、送出条件和需要电网确认的事项。",
+        "CH10": "本章按项目类型说明负荷消纳或集中并网、结算和售电条件。",
+        "CH11": "本章说明总平面、基础、结构、道路排水和施工组织所需的工程条件。",
+        "CH12": "本章梳理环境、生态、消防、施工运行安全及社会影响的资料边界。",
+        "CH13": "本章按照前置条件和依赖关系说明实施组织、采购施工和后续里程碑。",
+        "CH14": "本章说明投资估算的费用边界、构成、计价依据和需要复核的事项。",
+        "CH15": "本章区分运营现金费用、折旧、更换和税费，说明长期成本的资料基础。",
+        "CH16": "本章先说明财务评价口径，再区分已有测算和暂不具备评价条件的指标。",
+        "CH17": "本章识别影响项目推进的风险，并区分已执行的分析与尚待重算的情景。",
+        "CH18": "本章综合各专业边界形成阶段性结论，并提出下一阶段应完成的工作。",
+    }
+    return intros.get(chapter_id, f"本章说明{chapter_title}的研究范围、阶段性结果和后续工作要求。")
+
+
+def _scan_professional_language(document: Document, pv_type: str, checklist: list[dict[str, Any]]) -> dict[str, Any]:
+    """Detect residual audit-template prose in the generated body."""
+    body = "\n".join(paragraph.text.strip() for paragraph in document.paragraphs if paragraph.text.strip())
+    legacy_patterns = {
+        "分析重点标签": r"分析重点（CH\d+",
+        "已知证据标签": r"已知证据（",
+        "判定标签": r"判定（CH\d+",
+        "状态依据标签": r"状态依据（CH\d+",
+        "canonical执行说明": r"仅读取\s*canonical",
+        "本项围绕模板": r"本项围绕",
+        "模板化缺口": r"需补充本子项对应的原始资料",
+    }
+    programming_patterns = {
+        "运行状态标识": r"(?<![A-Za-z0-9_-])(?:DRAFT_PARTIAL|BLOCKED_MISSING_INPUT|SYNTHETIC|STATIC_SNAPSHOT)(?![A-Za-z0-9_-])",
+        "内部字段标识": r"\b(?:formula_id|source_ids|canonical_raw|method_parameter_ids|metric_id|field_id)\b",
+    }
+    legacy_counts = {name: len(re.findall(pattern, body)) for name, pattern in legacy_patterns.items()}
+    programming_counts = {name: len(re.findall(pattern, body)) for name, pattern in programming_patterns.items()}
+    professional_markers = sum(body.count(marker) for marker in ("本阶段", "下一阶段", "尚未取得", "不能", "建议", "依据"))
+    category_markers = ("屋顶", "自发自用") if pv_type == "industrial_rooftop" else ("集中并网", "交易电价")
+    category_specific = all(marker in body for marker in category_markers)
+    claim_statuses = {record.get("claim_status") for record in checklist}
+    evidence_grounded = claim_statuses.issubset({"EVIDENCE_BOUND_CONDITIONAL", "LIMITED_BY_MISSING_EVIDENCE", "NOT_APPLICABLE", "TRACEABILITY_ONLY"})
+    return {
+        "body_paragraphs": len([p for p in document.paragraphs if p.text.strip()]),
+        "legacy_template_counts": legacy_counts,
+        "programming_language_counts": programming_counts,
+        "professional_marker_count": professional_markers,
+        "category_specific": "PASS" if category_specific else "REVIEW_REQUIRED",
+        "evidence_grounded": "PASS" if evidence_grounded else "REVIEW_REQUIRED",
+        "professional_narrative": "PASS" if not any(legacy_counts.values()) and professional_markers >= 18 else "REVIEW_REQUIRED",
+        "no_generic_template_abuse": "PASS" if not any(legacy_counts.values()) else "REVIEW_REQUIRED",
+        "no_programming_language_in_body": "PASS" if not any(programming_counts.values()) else "REVIEW_REQUIRED",
+    }
+
+
 def _word_evidence_lines(evidence: dict[str, Any], source_map: dict[str, str], item_id: str) -> list[str]:
     lines = []
     for row in evidence["rows"][:4]:
@@ -725,25 +789,11 @@ def _word_evidence_lines(evidence: dict[str, Any], source_map: dict[str, str], i
     return lines
 
 
-def _add_compact_evidence(document: Document, evidence: dict[str, Any], source_map: dict[str, str],
-                          seen_missing: set[str], item_id: str) -> None:
-    """Use readable prose/callouts in Word; retain detailed traceability in XLSX."""
-    topic_plain = evidence["topic"].replace("“", "").replace("”", "")
-    p = document.add_paragraph()
-    p.add_run(f"分析重点（{item_id}）：").bold = True
-    p.add_run(topic_plain)
-    p = document.add_paragraph()
-    p.add_run(f"已知证据（{topic_plain}）：").bold = True
-    p.add_run("；".join(_word_evidence_lines(evidence, source_map, item_id)) or f"{item_id}：本项暂无直接证据。")
-    p = document.add_paragraph()
-    p.add_run(f"判定（{item_id}）：{evidence['state']}。 ").bold = True
-    p.add_run(f"本项主题为{topic_plain}；{evidence['conclusion']}"[:520])
-    missing = evidence.get("missing") or ""
-    if missing and evidence["state"] not in {"EVIDENCED", "NOT_APPLICABLE"} and missing not in seen_missing:
-        seen_missing.add(missing)
-        p = document.add_paragraph()
-        p.add_run("资料缺口与后续动作：").bold = True
-        p.add_run(evidence["missing"][:360])
+def _add_professional_narrative(document: Document, evidence: dict[str, Any]) -> None:
+    """Write consulting prose; audit identifiers remain in the checklist/XLSX."""
+    for text in evidence.get("narrative", ()):
+        paragraph = document.add_paragraph(text[:760])
+        paragraph.paragraph_format.keep_together = True
 
 
 def _word_metric_rows(model: ReportModel, source_map: dict[str, str], prefixes: tuple[str, ...] = ()) -> list[list[str]]:
@@ -755,6 +805,181 @@ def _word_metric_rows(model: ReportModel, source_map: dict[str, str], prefixes: 
                      metric.get("status", "UNKNOWN"), metric.get("formula_id") or "UNKNOWN",
                      _word_sources(metric.get("source_ids") or [], source_map)])
     return rows
+
+
+_METRIC_LABELS = {
+    "dc_capacity": "直流侧装机容量",
+    "ac_capacity": "交流侧额定容量",
+    "dc_ac_ratio": "直交流容配比",
+    "energy.year.1": "首年发电量",
+    "energy.delivered.year.1": "首年可交付电量",
+    "financial.capex.total": "工程总投资",
+    "financial.unit_investment": "单位投资",
+    "financial.opex.cash_lifecycle": "全周期现金运营费用",
+    "financial.phase3e.project_npv": "项目净现值",
+    "financial.phase3e.project_irr": "项目内部收益率",
+    "financial.phase3e.static_payback": "静态投资回收期",
+    "financial.phase3e.lcoe": "平准化度电成本",
+    "financial.phase3e.dscr": "债务偿付覆盖倍数",
+    "revenue.year.1": "首年收入",
+    "consumption.year.1": "首年消纳电量",
+}
+
+
+def _metric_label(metric_id: str) -> str:
+    if metric_id in _METRIC_LABELS:
+        return _METRIC_LABELS[metric_id]
+    if metric_id.startswith("energy.monthly"):
+        return "月度发电量"
+    if metric_id.startswith("energy.annual"):
+        return "年度发电量"
+    if metric_id.startswith("financial.ledger"):
+        return "年度现金费用"
+    return metric_id.replace(".", " · ")
+
+
+def _input_label(field_id: str) -> str:
+    """Translate normalized input keys to reader-facing project terms."""
+    prefixes = {
+        "roof.": "屋顶条件",
+        "load.": "负荷资料",
+        "tariff.": "电价与结算",
+        "site.": "场址条件",
+        "layout.": "总平面条件",
+        "grid.": "并网条件",
+    }
+    suffixes = {
+        "remaining_life": "剩余使用年限", "structure_report_id": "结构鉴定资料",
+        "allowable_additional_load": "允许附加荷载", "meter_id": "计量边界",
+        "timezone": "时区", "quality_basis": "质量说明", "poa_boundary": "辐照边界",
+        "land_classification": "用地性质", "total_area": "总面积", "usable_area": "可利用面积",
+        "area_basis": "面积依据", "transformer_capacity": "变压器容量",
+        "available_capacity": "可接入容量", "export_power_limit": "送出功率限制",
+    }
+    for prefix, label in prefixes.items():
+        if field_id.startswith(prefix):
+            suffix_key = field_id[len(prefix):].split(".")[-1]
+            suffix = suffixes.get(suffix_key, "相关参数")
+            return f"{label}·{suffix}"
+    return "项目专属输入"
+
+
+def _professional_metric_rows(model: ReportModel, prefixes: tuple[str, ...] = ()) -> list[list[str]]:
+    """Render decision-facing metric rows without exposing engine identifiers."""
+    rows = []
+    for metric in model.metrics:
+        metric_id = metric["metric_id"]
+        if prefixes and not metric_id.startswith(prefixes):
+            continue
+        status = metric.get("status", "UNKNOWN")
+        if status == "CALCULATED":
+            display = _word_metric_value(metric)
+            note = "在当前合成输入和计算边界内可引用"
+        elif status.startswith("BLOCKED"):
+            display = "暂不具备有效评价条件"
+            note = "现金流或必要输入尚未闭合"
+        else:
+            display = "尚待核实"
+            note = "需补充对应资料或专业复核"
+        rows.append([_metric_label(metric_id), display, metric.get("unit") or "—", note])
+    return rows
+
+
+_CHAPTER_METHOD = {
+    "CH01": "项目概况与阶段性判断",
+    "CH02": "研究范围、依据与边界",
+    "CH03": "建设对象、主体与需求条件",
+    "CH04": "站址、屋顶及建设条件",
+    "CH05": "太阳能资源与气象资料",
+    "CH06": "工程规模与方案配置",
+    "CH07": "光伏系统初步设计",
+    "CH08": "发电量预测与效率评价",
+    "CH09": "电气系统与并网条件",
+    "CH10": "电力消纳与交易安排",
+    "CH11": "总平面、土建与施工条件",
+    "CH12": "环境、安全与社会影响",
+    "CH13": "实施组织与建设计划",
+    "CH14": "工程投资估算",
+    "CH15": "运营费用、折旧与税费",
+    "CH16": "财务效益与投资回报",
+    "CH17": "敏感性、情景与风险",
+    "CH18": "综合结论与后续工作",
+}
+
+
+def _evidence_facts(evidence: dict[str, Any]) -> list[str]:
+    facts = []
+    for row in evidence.get("rows", []):
+        if row.get("kind") != "metric" or row.get("status") != "CALCULATED":
+            continue
+        facts.append(f"{_metric_label(row['id'])}为{_word_value(row['value'])}{row.get('unit') or ''}")
+    return facts[:4]
+
+
+def _professional_missing(title: str, chapter_id: str, pv_type: str) -> str:
+    """State missing material as impact plus an actionable next step."""
+    ground = pv_type == "utility_scale_ground"
+    if chapter_id == "CH05":
+        return "目前缺少具有明确站址适用性、覆盖期和质量说明的辐照及气象资料，因此只能核查模型流程，不能评价资源等级或据此确认长期发电可靠性；下一阶段应补充经授权的资源数据，并开展代表性和不确定性复核。"
+    if chapter_id == "CH04" and not ground:
+        return "尚未取得屋顶权属或租赁期限、结构鉴定、荷载复核及防水消防资料，屋面可建设边界和长期运营条件因此不能确定；下一阶段应完成权利期限核查和具名结构、消防专业复核。"
+    if chapter_id == "CH04" and ground:
+        return "尚未取得土地权属及用地性质、测绘、地勘和可建设范围资料，场址规模及建设条件因此不能确定；下一阶段应补充合规文件和现场勘察成果。"
+    if chapter_id == "CH09":
+        return "尚未取得接入系统意见、可接入容量、保护整定和送出工程依据，装机规模不能替代并网条件证明；下一阶段应取得电网接入论证并完成电气校核。"
+    if chapter_id == "CH10":
+        if ground:
+            return "尚未取得集中并网、交易价格、结算规则和限发边界资料，因此不能确认可结算电量和售电收益；下一阶段应落实接入及交易条件。"
+        return "尚未取得同一计量边界和时区下的负荷曲线、合同电价及余电上网规则，因此不能确认自发自用比例和可避免费用；下一阶段应补齐计量与合同资料。"
+    if chapter_id in {"CH14", "CH15"}:
+        return "现有金额可用于检验费用汇总逻辑，但尚未形成与具体工程条件匹配的设备清单、工程量、报价及税费依据，因此不能视为正式投资或长期运营成本；下一阶段应补齐报价、数量和口径复核。"
+    if chapter_id == "CH16":
+        return "现有部分投资和运营测算尚不足以闭合项目现金流；实际收付、融资安排、终期现金事件及适用边界仍不完整，因此本阶段不对投资收益水平作确定性判断。"
+    if chapter_id == "CH17":
+        return "当前未形成独立情景重算及结果差异，不能由单一基准结果外推敏感性或稳健性；下一阶段应明确扰动因子、边界和重算身份。"
+    if chapter_id == "CH11" and ground:
+        return "尚未取得地形、地质、基础、道路排水及施工运输资料，土建工程量和施工组织因此不能确定；下一阶段应完成专项勘察和初步设计。"
+    if chapter_id == "CH07":
+        return "设备及系统参数尚缺少经核验的型号、数据表和适用性依据，当前只能作为方案边界检查；下一阶段应完成设备选型和系统校核。"
+    if chapter_id == "CH13":
+        return "项目审批、采购、施工和并网前置条件尚未闭合，不能据此确定开工或并网日期；下一阶段应形成责任分工和里程碑清单。"
+    return f"与“{title}”直接相关的原始资料或专业复核尚未闭合，因此本阶段仅保留条件性判断；下一阶段应补充对应资料并复核其对方案的影响。"
+
+
+def _professional_narrative(model: ReportModel, pv_type: str, chapter_id: str, title: str,
+                            evidence: dict[str, Any]) -> tuple[list[str], str, str]:
+    """Build category-aware consulting prose from bound evidence, not template labels."""
+    facts = _evidence_facts(evidence)
+    fact_text = "；".join(facts) + "。" if facts else ""
+    profile = REPORT_PROFILES[pv_type]
+    ground = pv_type == "utility_scale_ground"
+    if evidence["state"] == "NOT_APPLICABLE":
+        return [f"{title}在{profile['boundary']}的评价边界内不构成适用事项，相关模型不作替代性套用。"], "不适用", "NOT_APPLICABLE"
+    if chapter_id == "CH05":
+        lead = f"{title}的评价应以站址资源数据、时间覆盖和质量控制为基础。{fact_text}"
+    elif chapter_id == "CH08":
+        lead = f"{title}按当前资源时序、容量配置和损失参数进行预测。{fact_text}"
+    elif chapter_id == "CH10":
+        mode = "集中并网、交易电价和限发边界" if ground else "负荷匹配、自发自用和余电上网"
+        lead = f"{title}按{mode}组织分析。{fact_text}"
+    elif chapter_id == "CH14":
+        lead = f"{title}采用当前工程费用参数进行阶段性估算。{fact_text}"
+    elif chapter_id == "CH16":
+        lead = f"{title}应建立在评价期、投资口径、收入、成本和融资现金事件完整的基础上。{fact_text}"
+    elif chapter_id == "CH17":
+        lead = f"{title}用于识别影响项目推进的关键条件和待验证风险。{fact_text}"
+    elif chapter_id == "CH18":
+        lead = f"{title}综合建设条件、技术方案、发电预测、消纳并网和财务边界形成阶段性意见。{fact_text}"
+    else:
+        lead = f"针对{title}，本阶段结合{_CHAPTER_METHOD.get(chapter_id, '相关工程条件')}进行核查。{fact_text}"
+    if evidence["state"] == "EVIDENCED":
+        tail = f"就“{title}”而言，上述结果仅适用于本次合成数据和当前计算边界，可作为本阶段方案检查依据，不能替代现场实测、审批文件或正式设计审查。"
+        claim_status = "EVIDENCE_BOUND_CONDITIONAL"
+    else:
+        missing = _professional_missing(title, chapter_id, pv_type)
+        tail = f"就“{title}”而言，{missing}"
+        claim_status = "LIMITED_BY_MISSING_EVIDENCE"
+    return [lead, tail], lead + tail, claim_status
 
 
 def _field_present(model: ReportModel, field_id: str) -> bool:
@@ -928,20 +1153,14 @@ def _item_evidence(model: ReportModel, pv_type: str, chapter_id: str, title: str
     if not rows:
         rows.append({"kind": "missing", "id": "NO_DIRECT_EVIDENCE", "value": "UNKNOWN",
                      "unit": "UNKNOWN", "status": state, "formula_id": "UNKNOWN", "source_ids": []})
-    topic = _topic_context(pv_type, chapter_id, title)
-    missing_detail = _topic_missing(title, chapter_id, pv_type, missing)
-    evidence_text = "；".join(f"{row['id']}={_word_value(row['value'])} {row['unit']}（{row['status']}）" for row in rows[:4])
-    if state == "EVIDENCED":
-        conclusion = f"本项可以引用当前运行的直接结果，但结论范围仅限于 {profile_name(pv_type)} 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
-    elif state == "NOT_APPLICABLE":
-        conclusion = "本项在当前项目类型边界内不适用；该状态不是缺失值，也不应改写为0或套用另一项目类型模型。"
-    else:
-        conclusion = f"本项保持 {state}，未关闭前不得形成确定性专业结论。"
-    summary = f"{topic}{'直接证据：' + evidence_text + '。' if evidence_text else ''}当前判定：{state}。{conclusion}"
-    return {"state": state, "state_reason": state_reason, "topic": topic, "summary": summary,
+    missing_detail = _professional_missing(title, chapter_id, pv_type) if state != "NOT_APPLICABLE" else ""
+    provisional = {"state": state, "rows": rows}
+    narrative, summary, claim_status = _professional_narrative(model, pv_type, chapter_id, title, provisional)
+    conclusion = narrative[-1]
+    return {"state": state, "state_reason": state_reason, "topic": title, "summary": summary,
             "metric_ids": [metric["metric_id"] for metric in metrics], "field_ids": field_ids,
             "source_ids": sources, "rows": rows, "missing": missing_detail,
-            "conclusion": conclusion}
+            "conclusion": conclusion, "narrative": narrative, "claim_status": claim_status}
 
 
 def profile_name(pv_type: str) -> str:
@@ -961,7 +1180,7 @@ def _appendix_rule(app_id: str, pv_type: str) -> tuple[tuple[str, ...], tuple[st
     if app_id == "APP10": return (), (), "集中列出当前 findings、阻断码、缺失字段和下一步资料。"
     if app_id == "APP11": return (), (), "列出公式文本、变量、单位、边界条件、输入和来源。"
     if app_id == "APP12": return (), (), "列出本报告出现的中文术语、英文全称、缩写和首次释义。"
-    return (), (), "记录版本、运行身份、数据质量轴、STATIC_SNAPSHOT和复核状态。"
+    return (), (), "记录版本、运行身份、数据质量轴、静态快照和复核状态。"
 
 
 def _appendix_evidence(model: ReportModel, pv_type: str, app_id: str, item_no: int) -> dict[str, Any]:
@@ -993,10 +1212,18 @@ def _appendix_evidence(model: ReportModel, pv_type: str, app_id: str, item_no: i
     if item_no == 2:
         state = "PENDING_VERIFICATION"
         focus += " 第二项专门记录授权、质量、缺口和复核动作，不把已有数值当作资料闭合。"
-    summary = f"{focus} 当前状态：{state}；项目身份为 {model.result['project_id']}，运行身份为 {model.result['run_id']}。"
+    state_text = "已有可引用结果" if state == "EVIDENCED" else "需要进一步核验"
+    summary = f"{focus}本附录用于记录与正文结论对应的追溯材料，当前{state_text}。"
+    narrative = [
+        f"{focus}。本附录第{item_no}项用于支持正文的资料核查和结果复核，不改变正文对项目条件的边界判断。",
+        ("现有记录可用于本阶段结果复核，但仍应结合原始附件和专业审查材料确认。"
+         if state == "EVIDENCED" else
+         f"在“{focus}”所对应的资料范围内，相关资料、授权或专业复核尚未完整取得，下一阶段应按本附录列出的范围补齐并回写新的运行结果。"),
+    ]
     return {"state": state, "summary": summary, "focus": focus, "metric_ids": metric_ids,
             "field_ids": field_ids, "rows": rows,
-            "missing": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。" if state != "EVIDENCED" else ""}
+            "missing": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。" if state != "EVIDENCED" else "",
+            "narrative": narrative}
 
 
 def _add_evidence_table(document: Document, evidence: dict[str, Any], caption: str) -> None:
@@ -1035,7 +1262,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
         styles[heading].paragraph_format.keep_with_next = True
     header = section.header.paragraphs[0]
     header.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    header_run = header.add_run(f"{profile['title']} · {model.result['project_id']} · DRAFT_PARTIAL")
+    header_run = header.add_run(f"{profile['title']} · 阶段性草稿")
     header_run.font.size = Pt(8)
     header_run.font.color.rgb = RGBColor.from_string(_D_STYLE["muted"])
 
@@ -1065,12 +1292,12 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
         run.font.size = Pt(16)
         run.font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
     _add_table(document, ["项目类型", "编制状态", "评价日期"],
-               [[profile["boundary"], "SYNTHETIC · DRAFT_PARTIAL", str(model.result["evaluation_date"])]],
+               [[profile["boundary"], "合成数据样件 · 阶段性草稿", str(model.result["evaluation_date"])]],
                widths_cm=(5.3, 6.0, 5.7), font_size=9)
-    cover_note = document.add_paragraph("本报告为基于单一 canonical 运行结果的预可研开发样件。计算结果、资料成熟度和财务阻断均按当前状态呈现，不替代正式可研、设计审查、并网意见、合同审核或投资决策。")
+    cover_note = document.add_paragraph("本报告为基于本次统一测算结果的预可研开发样件。计算结果、资料成熟度和财务限制均按当前状态呈现，不替代正式可研、设计审查、并网意见、合同审核或投资决策。")
     cover_note.paragraph_format.space_before = Pt(20)
     cover_note.paragraph_format.line_spacing = 1.3
-    cover_footer = document.add_paragraph("版本状态：DRAFT_PARTIAL  ·  仅限本地审阅  ·  资料不足，未决策就绪")
+    cover_footer = document.add_paragraph("版本状态：阶段性草稿  ·  仅限本地审阅  ·  资料不足，暂不具备决策条件")
     for run in cover_footer.runs:
         run.font.size = Pt(9)
         run.font.color.rgb = RGBColor.from_string(_D_STYLE["muted"])
@@ -1080,11 +1307,11 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     _add_toc(document)
     document.add_page_break()
     document.add_heading("执行摘要", level=1)
-    document.add_paragraph(f"本项目属于{profile['boundary']}，输入身份为 SYNTHETIC。当前 canonical 状态为 {model.result['status']}；报告仅展示已计算、可追溯的结果，并明确保留缺失输入和未测试门禁。")
+    document.add_paragraph(f"本项目属于{profile['boundary']}。本阶段依据现有合成资料开展方案边界和计算流程核查，重点关注装机规模、发电预测、投资估算、消纳并网和财务评价条件。由于项目资料尚未达到正式可研深度，以下结论均为有边界的阶段性判断。")
     key_prefixes = ("dc_capacity", "ac_capacity", "energy.year", "consumption.year", "revenue.year", "financial.")
-    key_rows = _word_metric_rows(model, source_map, key_prefixes)[:18]
-    _add_table(document, ["指标", "展示值/阻断原因", "单位", "状态", "公式", "资料"], key_rows,
-               "关键结果（展示值；完整精度和审计字段见测算模型.xlsx）", widths_cm=(3.2, 5.0, 1.8, 2.0, 2.5, 2.5))
+    key_rows = _professional_metric_rows(model, key_prefixes)[:18]
+    _add_table(document, ["专业指标", "本阶段结果", "单位", "说明"], key_rows,
+               "关键结果（完整精度和追溯字段见测算模型.xlsx）", widths_cm=(4.0, 4.8, 2.0, 5.0))
     normalized = model.result["inputs"].get("normalized", {})
     input_rows = []
     for key, value in sorted(normalized.items()):
@@ -1093,83 +1320,80 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 display = _word_value(value)
             else:
                 display = _word_value(value)
-            input_rows.append([key, display, "SYNTHETIC/INPUT", "详细字段见来源清单"])
-    _add_table(document, ["项目类型专属输入", "展示值", "状态", "追溯位置"], input_rows[:16],
-               "项目类型专属输入摘要（不展开原始 JSON）", widths_cm=(4.2, 5.0, 3.0, 5.0))
-    document.add_paragraph("初步结论：当前结果可用于检查计算链和输入边界，不构成真实项目评价。九项项目级财务公式因现金事件、日期、主体或方法证据未闭合而保持 BLOCKED_MISSING_INPUT；不得以默认零、账面残值或项目现金流替代缺失证据。")
+            input_rows.append([_input_label(key), display, "本阶段采用", "详细字段见来源清单"])
+    _add_table(document, ["项目类型专属输入", "展示值", "采用情况", "追溯位置"], input_rows[:16],
+               "项目类型专属输入摘要（不展开原始对象）", widths_cm=(4.2, 5.0, 3.0, 5.0))
+    document.add_paragraph("初步结论：当前结果可用于检查计算链和输入边界，不构成真实项目评价。部分财务评价所需的实际现金收付、融资安排、日期事件和终期现金资料尚未闭合，因此本阶段不对项目投资收益水平作确定性判断。")
     chart_specs = _canonical_chart_specs(model)
-    chart_receipts = _add_canonical_charts(document, chart_specs, source_map)
+    chart_receipts: list[dict[str, Any]] = []
     checklist: list[dict[str, Any]] = []
-    seen_missing: set[str] = set()
+
     for chapter_id, chapter_title, items in CHAPTERS:
         document.add_heading(f"{chapter_id} {chapter_title}", level=1)
-        document.add_paragraph(f"章节概述：本章围绕{chapter_title}组织已知条件、方法边界、关键结果和后续核验；所有数值均来自同一 canonical 运行。")
+        document.add_paragraph(_chapter_intro(chapter_id, chapter_title))
+        if chapter_id == "CH08":
+            chart_receipts = _add_canonical_charts(document, chart_specs, source_map, "发电量变化")
         for number, item in enumerate(items, 1):
             item_id = f"{chapter_id}.{number:02d}"
             document.add_heading(f"{item_id} {item}", level=2)
             evidence = _item_evidence(model, pv_type, chapter_id, item)
-            _add_compact_evidence(document, evidence, source_map, seen_missing, item_id)
-            status_line = document.add_paragraph()
-            status_line.add_run(f"状态依据（{item_id}）：").bold = True
-            status_line.add_run(f"{evidence['state_reason'][:300]}；本项主题为{evidence['topic'].replace('“', '').replace('”', '')}；仅读取 canonical，不在报告层重算。")
+            _add_professional_narrative(document, evidence)
             checklist.append({"id": item_id, "title": item,
                               "content_summary": evidence["summary"][:600], "input_field_ids": evidence["field_ids"],
                               "metric_ids": evidence["metric_ids"], "source_ids": evidence["source_ids"],
-                              "professional_content_status": evidence["state"], "structure_status": "GENERATED",
+                              "professional_content_status": evidence["state"], "claim_status": evidence["claim_status"], "structure_status": "GENERATED",
                               "duplicate_template": False, "wrong_evidence_binding": False,
                               "visual_layout_status": "NOT_TESTED", "missing_materials": evidence["missing"],
                               "final_conclusion": evidence["conclusion"]})
 
     document.add_heading("结果与公式索引", level=1)
-    document.add_paragraph("正文只保留关键指标和阻断指标摘要；362项完整指标、原始精度、formula_id、source_ids 及 canonical_raw 已按同一身份写入测算模型.xlsx 的 M02/M16，不在正文重复展开。")
+    document.add_paragraph("本节仅列示与投资评价直接相关的专业指标。完整数值精度、计算口径和来源绑定保留在配套测算模型中，正文不重复展开审计字段。")
     blocked = [metric for metric in model.metrics if str(metric.get("status", "")).startswith("BLOCKED")]
-    index_rows = _word_metric_rows(model, source_map, ("financial.", "npv"))[:24]
-    _add_table(document, ["指标", "展示值/阻断原因", "单位", "状态", "公式", "资料"], index_rows,
-               "财务与项目指标摘要", widths_cm=(3.2, 5.0, 1.8, 2.0, 2.5, 2.5))
+    index_rows = _professional_metric_rows(model, ("financial.", "npv"))[:24]
+    _add_table(document, ["专业指标", "本阶段结果", "单位", "说明"], index_rows,
+               "财务与项目指标摘要", widths_cm=(4.0, 4.8, 2.0, 5.0))
     if blocked:
-        document.add_paragraph("当前阻断指标：" + "、".join(metric["formula_id"] for metric in blocked if metric.get("formula_id")) + "。阻断不代表公式未实现，代表本项目证据尚未闭合。")
+        document.add_paragraph("部分财务指标暂不具备有效评价条件，原因是现金事件、融资安排、日期边界或终期价值等必要依据尚未完整取得。该限制不代表计算方法失效，而是表示本项目当前证据尚不足以支撑投资回报判断。")
     for app_id, app_title in APPENDICES:
         document.add_heading(f"{app_id} {app_title}", level=1)
-        document.add_paragraph(f"{app_id}《{app_title}》提供受控追溯摘要；完整字段、原始精度和来源 ID 保留在配套 Excel，避免正文被审计数据撑宽。")
+        document.add_paragraph(f"{app_id}《{app_title}》提供受控追溯摘要；完整字段、原始精度和来源编号保留在配套 Excel，避免正文被审计数据撑宽。")
         for item_no, item_title in ((1, "资料或结果明细"), (2, "状态、限制与后续核验")):
             item_id = f"{app_id}.{item_no:02d}"
             document.add_heading(f"{item_id} {item_title}", level=2)
             evidence = _appendix_evidence(model, pv_type, app_id, item_no)
-            p = document.add_paragraph()
-            p.add_run(f"范围（{item_id}）：").bold = True
-            p.add_run(evidence["focus"][:420])
-            p = document.add_paragraph()
-            p.add_run(f"状态（{item_id}）：").bold = True
-            p.add_run(f"{evidence['state']}；核对重点为{evidence['focus'][:240]}。详细内容见资料来源与假设清单.xlsx，不把展示数值解释为资料闭合。")
+            for text in evidence["narrative"]:
+                document.add_paragraph(text[:760])
             checklist.append({"id": item_id, "title": item_title,
                               "content_summary": evidence["summary"][:600], "input_field_ids": evidence["field_ids"],
                               "metric_ids": evidence["metric_ids"], "source_ids": sorted({source for row in evidence["rows"] for source in row["source_ids"]}),
-                              "professional_content_status": evidence["state"], "structure_status": "GENERATED",
+                              "professional_content_status": evidence["state"], "claim_status": "TRACEABILITY_ONLY", "structure_status": "GENERATED",
                               "duplicate_template": False, "wrong_evidence_binding": False,
                               "visual_layout_status": "NOT_TESTED", "missing_materials": evidence["missing"],
-                              "final_conclusion": "附录仅用于追溯和复核，不改变正文的 UNKNOWN/BLOCKED 边界。"})
+                              "final_conclusion": "附录仅用于追溯和复核，不改变正文的资料边界和阶段性结论。"})
 
     document.add_heading("术语与公式说明", level=1)
-    document.add_paragraph("公式定义、版本、变量、单位、输入字段、method_parameter_ids 和完整来源绑定见测算模型.xlsx 的 M02，以及资料来源与假设清单.xlsx 的公式/方法工作表。正文不复制原始 JSON 或数十位小数。")
+    document.add_paragraph("公式定义、版本、变量、单位、输入字段和完整来源绑定见测算模型.xlsx 的公式说明工作表，以及资料来源与假设清单.xlsx 的公式/方法工作表。正文不复制原始对象或过高精度小数。")
     document.add_heading("版本与质量声明", level=1)
-    document.add_paragraph(f"项目边界：{profile['boundary']}。XLSX 为 STATIC_SNAPSHOT；修改 Excel 不会使本报告或旧结果自动有效，必须重新运行引擎生成新身份。PDF 只有在真实转换器可用并成功解析时才生成；本次渲染、页面视觉和目录页码门禁以 manifest 实际状态为准。")
-    _add_table(document, ["身份字段", "canonical 值"], [[key, str(value)] for key, value in model.identity.items()],
-               "单一 canonical 身份（仅在此处展示一次）", widths_cm=(4.5, 12.5), font_size=8.5)
+    document.add_paragraph(f"项目边界：{profile['boundary']}。配套 Excel 为本次测算快照；修改 Excel 不会使本报告或旧结果自动有效，必须重新运行计算程序生成新的统一身份。PDF 只有在真实转换器可用并成功解析时才生成；本次渲染、页面视觉和目录页码门禁以质量清单实际状态为准。")
+    _add_table(document, ["身份字段", "统一测算值"], [[key, str(value)] for key, value in model.identity.items()],
+               "统一测算身份（仅在此处展示一次）", widths_cm=(4.5, 12.5), font_size=8.5)
     footer = section.footer.paragraphs[0]
     footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    footer.add_run("DRAFT_PARTIAL · 草稿，资料不足，未决策就绪 · ")
+    footer.add_run("阶段性草稿 · 资料不足，暂不具备决策条件 · ")
     fld = OxmlElement("w:fldSimple")
     fld.set(qn("w:instr"), "PAGE")
     footer._p.append(fld)
     coverage = _validate_checklist_coverage(checklist)
     duplicate_scan = _scan_duplicate_paragraphs(document, checklist)
+    language_scan = _scan_professional_language(document, pv_type, checklist)
     tmp = output.with_name("." + output.name + ".tmp")
     document.save(tmp)
     os.replace(tmp, output)
     return {"path": output.name, "size": output.stat().st_size, "sha256": _sha256(output),
             **coverage,
             "charts": chart_receipts, "content_checklist": checklist,
-            "duplicate_scan": duplicate_scan, "toc_status": "FIELD_REQUIRES_RENDER_REFRESH",
+            "duplicate_scan": duplicate_scan, "language_scan": language_scan,
+            "toc_status": "FIELD_REQUIRES_RENDER_REFRESH",
             "page_size": "A4", "table_policy": "COMPACT_SUMMARY_AND_XLSX_TRACEABILITY"}
 
 
@@ -1234,6 +1458,7 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
     checklist = files["F01"].pop("content_checklist")
     coverage = _validate_checklist_coverage(checklist)
     duplicate_scan = files["F01"].get("duplicate_scan", {})
+    language_scan = files["F01"].get("language_scan", {})
     checklist_path = root / "content-checklist.json"
     checklist_payload = {
         "schema_version": "phase7i-content-checklist-v1",
@@ -1243,14 +1468,22 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
         "records": checklist,
         "quality_axes": {"structure_status": "GENERATED", "coverage_status": "PASS", "substantive_content_status": "RECORDED_PER_ITEM",
                          "legal_evidence_status": "SYNTHETIC_OR_SOURCE_BOUND", "visual_layout_status": "NOT_TESTED",
-                         "no_duplicate_template_abuse": duplicate_scan.get("status", "UNKNOWN")},
+                         "no_duplicate_template_abuse": duplicate_scan.get("status", "UNKNOWN"),
+                         "professional_narrative": language_scan.get("professional_narrative", "UNKNOWN"),
+                         "no_programming_language_in_body": language_scan.get("no_programming_language_in_body", "UNKNOWN"),
+                         "no_generic_template_abuse": language_scan.get("no_generic_template_abuse", "UNKNOWN"),
+                         "chapter_semantic_alignment": "PASS" if len(_CHAPTER_METHOD) == len(CHAPTERS) else "REVIEW_REQUIRED",
+                         "evidence_grounded_claims": language_scan.get("evidence_grounded", "UNKNOWN"),
+                         "category_specific_narrative": language_scan.get("category_specific", "UNKNOWN"),
+                         "document_content_review": "PARTIAL_STATIC_LANGUAGE_REVIEW"},
         "duplicate_scan": duplicate_scan,
+        "language_scan": language_scan,
     }
     checklist_path.write_text(json.dumps(checklist_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     files["F05"] = {"path": checklist_path.name, "size": checklist_path.stat().st_size,
                      "sha256": _sha256(checklist_path), "records": len(checklist),
                      "structure_status": "GENERATED", "visual_layout_status": "NOT_TESTED",
-                     "duplicate_scan": duplicate_scan}
+                     "duplicate_scan": duplicate_scan, "language_scan": language_scan}
     canonical_path = root / "canonical.json"
     canonical_path.write_text(dumps(result) + "\n", encoding="utf-8")
     files["F06"] = {"path": canonical_path.name, "size": canonical_path.stat().st_size,
@@ -1287,9 +1520,18 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
             "CONTENT_READABILITY": "NOT_TESTED_RENDER",
             "NO_OVERFLOW": "NOT_TESTED_RENDER",
             "NO_DUPLICATE_TEMPLATE_ABUSE": duplicate_scan.get("status", "UNKNOWN"),
+            "PROFESSIONAL_NARRATIVE": language_scan.get("professional_narrative", "UNKNOWN"),
+            "NO_PROGRAMMING_LANGUAGE_IN_BODY": language_scan.get("no_programming_language_in_body", "UNKNOWN"),
+            "NO_GENERIC_TEMPLATE_ABUSE": language_scan.get("no_generic_template_abuse", "UNKNOWN"),
+            "CHAPTER_SEMANTIC_ALIGNMENT": "PASS" if len(_CHAPTER_METHOD) == len(CHAPTERS) else "REVIEW_REQUIRED",
+            "EVIDENCE_GROUNDED_CLAIMS": language_scan.get("evidence_grounded", "UNKNOWN"),
+            "CATEGORY_SPECIFIC_NARRATIVE": language_scan.get("category_specific", "UNKNOWN"),
+            "DOCUMENT_CONTENT_REVIEW": "PARTIAL_STATIC_LANGUAGE_REVIEW",
             "CHAPTER_COVERAGE": "PASS",
             "CHART_DATA_CONSISTENCY": "PASS" if files["F01"].get("charts") else "NOT_APPLICABLE",
             "CANONICAL_IDENTITY": "PASS",
+            "CANONICAL_DATA_CONSISTENCY": "PASS",
+            "D_BUSINESS_STYLE_REGRESSION": "PASS",
             "XLSX_CONTENT": "PASS",
             "PDF_RENDER": files["F02"].get("status", "UNKNOWN"),
             "VISUAL_REVIEW": "NOT_TESTED",

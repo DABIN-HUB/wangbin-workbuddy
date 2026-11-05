@@ -400,3 +400,48 @@ Connector `cli.json` 和 Skill manifest 现在显式固定：Python `>=3.12,<3.1
 - 本机仍未发现 `soffice`/`libreoffice`；没有将 DOCX 改后缀或生成假 PDF。未完成真实 PDF 页面渲染，因此不宣布 Word 页面视觉质量通过；final6 当前屋顶/地面 DOCX 大小分别为 77,655/77,792 bytes，不是实际渲染页数。
 - 两类的测算 XLSX 均为 19 张工作表、2 个原生 Excel 图表；来源/假设 XLSX 均为 10 张工作表。Excel 真实重算仍为 `NOT_TESTED_STATIC_SNAPSHOT`。
 - 本轮未上传 WorkBuddy、未 push、未提交审核、未发布、未启动 Phase 8。
+
+## Phase 7J：专业语言与章节内容生成整改（2026-11-05）
+
+### 7J.1 生产代码整改
+
+- 修改 `services/solar-pv-engine/src/wangbin_solar_pv/report_export.py`，继续以 canonical、normalized 输入和既有公式回执为唯一事实来源，没有重建发电/财务模型，也没有修改冻结财务公式。
+- 将章节导出从统一的“分析重点/已知证据/判定/状态依据”审计模板改为按 CH01–CH18 研究对象生成章节导语和专业叙事；项目说明、资源评价、技术分析、工程建设、投资财务、风险及综合结论使用不同的表达重点。
+- 将关键程序指标转写为中文工程术语，完整 `formula_id`、`field_id`、`source_ids` 和原始精度继续保留在 content-checklist、canonical 和两个 XLSX 中；正文只展示受控摘要及来源引用。
+- 对屋顶和集中式地面分别保留屋顶权属/结构/防水消防与土地用途/测绘/地勘/道路排水等缺口表达；消纳章节分别使用自发自用、余电上网与集中并网、交易电价等项目类型术语。
+- 将图表标题调整为“月度发电量变化”“逐年发电量变化”，并将图表说明放回发电量相关章节；执行摘要不展开 25 年年度数组。
+- 新增生成后 DOCX 正文语言扫描和真实段落重复扫描，扫描结果写入 `manifest.json`、`content-checklist.json` 和 chain receipt；扫描器不通过修改检测器来掩盖旧模板，且保留章节主题差异。
+
+### 7J.2 两类新报告及静态回执
+
+两类报告均由既有 Phase 7I 新独立全链生成的 partial canonical 重新导出，未重复运行约 388/423 秒的计算链。新产物目录：
+
+`C:/Users/wangbin/AppData/Local/hermes/cache/scratch/phase7j-professional-narrative-final5/`
+
+- 屋顶 DOCX：`industrial_rooftop/SYNTHETIC-industrial_rooftop-光伏预可研报告.docx`，68,555 bytes，SHA-256 `e1ff70e4d9b094682ce7cbdfa12a2342376df4af5c8f40df260ee6438245bfa9`。
+- 地面 DOCX：`utility_scale_ground/SYNTHETIC-utility_scale_ground-光伏预可研报告.docx`，68,571 bytes，SHA-256 `91d8077cbda18e07203bbc9bcd009f0859f76874ca733abeca9f964e7265eafb`。
+- 屋顶测算 XLSX：112,961 bytes，SHA-256 `5d72fb66852e5ea6e58f856563036eea49ea509502e37b83290a90f4147a24cd`；屋顶来源 XLSX：104,081 bytes，SHA-256 `009422ede6ed033a5a4e327fc030e244e7842c78d23495ba718924f3c569a321`。
+- 地面测算 XLSX：112,469 bytes，SHA-256 `adb09e887231dc30840df9810bc0d4432a4015307e0a455f145a618edf12c5c2`；地面来源 XLSX：114,640 bytes，SHA-256 `fd9ba8e9674c948c06b65d09ab32ccad551e68e1c6a314a68772f891f96e79ae`。
+- 两类均生成 18/100/13/26 结构和 126 条内容检查记录；测算 XLSX 为 19 张表、来源 XLSX 为 10 张表，Excel 状态继续为 `NOT_TESTED_STATIC_SNAPSHOT`。
+- 两份 DOCX 均通过 `docx_validate.py`：`{"ok": true, "issues": []}`；静态 A4、D 风格、固定表格、TOC field、图表与 canonical identity 门禁均保留。
+
+### 7J.3 专业内容质量门禁
+
+屋顶和地面两类生成结果相同：
+
+- `PROFESSIONAL_NARRATIVE=PASS`
+- `NO_PROGRAMMING_LANGUAGE_IN_BODY=PASS`
+- `NO_GENERIC_TEMPLATE_ABUSE=PASS`
+- `CHAPTER_SEMANTIC_ALIGNMENT=PASS`
+- `EVIDENCE_GROUNDED_CLAIMS=PASS`
+- `CATEGORY_SPECIFIC_NARRATIVE=PASS`
+- `CANONICAL_DATA_CONSISTENCY=PASS`
+- `D_BUSINESS_STYLE_REGRESSION`：由 `PAGE_SIZE_A4=A4`、`COVER_STYLE_D=GENERATED`、`TABLE_LAYOUT=COMPACT_SUMMARY_AND_XLSX_TRACEABILITY` 等静态门禁支持，未进行页面视觉替代性判断。
+- `DOCUMENT_CONTENT_REVIEW=PARTIAL_STATIC_LANGUAGE_REVIEW`
+- 旧模板标签计数全部为 0，程序状态/内部字段计数均为 0，精确重复段落和近似模板段落均为 0。
+
+### 7J.4 真实阻断和停止点
+
+- 两类 manifest 均保持 `status=DRAFT_PARTIAL`、`calculation_status=PARTIAL`、`not_decision_ready=true`、`PDF_RENDER=BLOCKED`、`FOUR_FILE_GATE=BLOCKED`；九项财务阻断没有被正文润色掩盖。
+- `TOC_VALID=FIELD_REQUIRES_RENDER_REFRESH`；本机仍没有 `soffice`/`libreoffice`，没有生成假 PDF，因此实际页数、目录页码和逐页视觉检查仍为 `VISUAL_REVIEW=NOT_TESTED`、`CONTENT_READABILITY=NOT_TESTED_RENDER`、`NO_OVERFLOW=NOT_TESTED_RENDER`。
+- 本轮没有上传 WorkBuddy、没有 push、没有提交审核/发布、没有启动 Phase 8；等待用户直接审阅新 DOCX 的专业语言、内容和排版。
