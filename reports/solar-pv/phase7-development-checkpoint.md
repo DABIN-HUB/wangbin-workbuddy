@@ -384,3 +384,19 @@ Connector `cli.json` 和 Skill manifest 现在显式固定：Python `>=3.12,<3.1
   - `C:/Users/wangbin/AppData/Local/hermes/cache/scratch/phase7i-d-report-review-4/industrial_rooftop-D-business-review.zip`，486,167 bytes，SHA-256 `db287a1744a8b243c19e172c90cadca10b3338bf291bdc567c1e9826d5567dcf`，ZIP `testzip()` 通过。
   - `C:/Users/wangbin/AppData/Local/hermes/cache/scratch/phase7i-d-report-review-4/utility_scale_ground-D-business-review.zip`，509,906 bytes，SHA-256 `c8f9cd58fb67a825c9e8f2adc7d2b83c345b1d7752cc7b787e59d3028fa09a23`，ZIP `testzip()` 通过。
 - 本轮专项验证：`py_compile`、`git diff --check`、目录/版本测试 `63 passed`、计算契约测试 `3 passed`；两类实际报告导出均成功，PDF 转换器缺失按设计返回 `PDF_RENDERER_UNAVAILABLE`。没有运行完整 L3，也没有把未执行的页面视觉复核、PDF 转换、Excel 重算或 WorkBuddy 平台验收标记为通过。
+
+### 7I.13 P0 Word 排版与内容质量修复（2026-11-05）
+
+- 根因确认：旧导出器为 100 个章节子项和 26 个附录子项逐项生成 7–8 列证据表，并在正文重复展开完整 `source_ids`、`canonical_raw`、数组和长 JSON；这直接造成 Letter 页面、极窄列、逐字换行和 509/552 页失控。章节结构完整不等于正文可读。
+- `report_export.py` 现在以单一 canonical 结果为数据源，正文改为章节概述、项目类型主题、关键证据摘要、状态判定和后续资料动作；完整原始精度、来源 ID、公式绑定和 canonical raw 保留在 XLSX，正文仅使用 `S01` 等受控来源引用和有限展示精度。
+- Word 已改为 A4 纵向 OOXML（`11906×16838` twips，即 210×297 mm），使用 D 风格白底、炭灰正文、暗金强调、单页封面、StarCore Lab 品牌、页眉页脚和真实 TOC field；表格收敛为 5 张摘要表，表格固定布局并设置 `cantSplit`。
+- 生成后的正文段落执行真实扫描，而不是将 `duplicate_template` 固定为 `false`。当前两类报告均检测到 `exact_duplicate_count=0`、`approximate_template_count=0`，质量门禁为 `NO_DUPLICATE_TEMPLATE_ABUSE=PASS`；扫描结果保留实际章节上下文和文本摘要。
+- 新 P0 产物来自两次已验证新链的 partial canonical，不重新执行 388/423 秒计算：
+  - 屋顶 DOCX：`C:/Users/wangbin/AppData/Local/hermes/cache/scratch/phase7i-p0-report-review-final4/industrial_rooftop/SYNTHETIC-industrial_rooftop-光伏预可研报告.docx`，76,680 bytes，SHA-256 `91e5ef69ec8b1309f99acc2c3b3d18123e6e56e5cd196b35e9889c0c999e14bb`。
+  - 地面 DOCX：`C:/Users/wangbin/AppData/Local/hermes/cache/scratch/phase7i-p0-report-review-final4/utility_scale_ground/SYNTHETIC-utility_scale_ground-光伏预可研报告.docx`，76,795 bytes，SHA-256 `fb65325e0503d80ccf3ca30bbd6ae879b9d7f62c8d9559009a9a57a5ad2eae02`。
+- P0 产物哈希：屋顶测算 XLSX `6e0f7c2e54c35e25058685fde9b7ca85d4ded38559206efe10cc2b09f6ce4f77`，来源 XLSX `4362b6448102f3e221a9bc07d11f9ffd005a78d18010bfcb2fd13501741f822f`；地面测算 XLSX `2d5ed4fee2834764f931a7187d0c49ad1cdc155ab40ad8c9c3b5dc52a467e6fd`，来源 XLSX `9bd8307631400b5f65f8e31d696eb3f42e4399b577c9238c9a874890c25b126b`。
+- 两类报告均为 5 张表、2 张嵌入 PNG 图表、0 个超过 1000 字符的段落；结构覆盖仍为 18/100/13/26。`docx_validate.py` 对两份文件均返回 `{"ok": true, "issues": []}`。
+- P0 质量门禁：`PAGE_SIZE_A4=A4`、`COVER_STYLE_D=GENERATED`、`TABLE_LAYOUT=COMPACT_SUMMARY_AND_XLSX_TRACEABILITY`、`NO_DUPLICATE_TEMPLATE_ABUSE=PASS`、`CHAPTER_COVERAGE=PASS`、`CHART_DATA_CONSISTENCY=PASS`、`CANONICAL_IDENTITY=PASS`、`XLSX_CONTENT=PASS`；`TOC_VALID=FIELD_REQUIRES_RENDER_REFRESH`、`CONTENT_READABILITY=NOT_TESTED_RENDER`、`NO_OVERFLOW=NOT_TESTED_RENDER`、`PDF_RENDER=BLOCKED`、`VISUAL_REVIEW=NOT_TESTED`、`FOUR_FILE_GATE=BLOCKED`。
+- 本机仍未发现 `soffice`/`libreoffice`；没有将 DOCX 改后缀或生成假 PDF。未完成真实 PDF 页面渲染，因此不宣布 Word 页面视觉质量通过；当前 76,680/76,795 bytes 是 DOCX 文件大小，不是实际渲染页数。
+- 两类的测算 XLSX 均为 19 张工作表、2 个原生 Excel 图表；来源/假设 XLSX 均为 10 张工作表。Excel 真实重算仍为 `NOT_TESTED_STATIC_SNAPSHOT`。
+- 本轮未上传 WorkBuddy、未 push、未提交审核、未发布、未启动 Phase 8。

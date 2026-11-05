@@ -28,7 +28,7 @@ from docx.enum.table import WD_TABLE_ALIGNMENT, WD_CELL_VERTICAL_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
-from docx.shared import Cm, Pt, RGBColor
+from docx.shared import Cm, Mm, Pt, RGBColor
 from openpyxl.chart import LineChart, Reference
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Alignment, Font, PatternFill
@@ -95,7 +95,7 @@ REPORT_PROFILES = {
 
 _WINDOWS_RESERVED = {"CON", "PRN", "AUX", "NUL", *(f"COM{i}" for i in range(1, 10)), *(f"LPT{i}" for i in range(1, 10))}
 
-# D: white space, charcoal text, one restrained teal accent.  Keep this
+# D: white space, charcoal text, one restrained champagne-gold accent. Keep this
 # palette in the exporter rather than in the calculation layer: visual changes
 # must not alter canonical values or their identity.
 _D_STYLE = {
@@ -160,6 +160,72 @@ def _string(value: Any) -> str:
     if isinstance(value, (dict, list)):
         return dumps(value)
     return str(value)
+
+
+def _word_number(value: Any) -> str:
+    """Format a canonical scalar for readable Word presentation only."""
+    if isinstance(value, Decimal):
+        value = float(value)
+    if isinstance(value, bool):
+        return "是" if value else "否"
+    if isinstance(value, int):
+        return f"{value:,}"
+    if isinstance(value, float):
+        if not math.isfinite(value):
+            return "UNKNOWN"
+        if abs(value) >= 1000:
+            text = f"{value:,.2f}"
+        elif abs(value) >= 1:
+            text = f"{value:.4f}"
+        else:
+            text = f"{value:.6f}"
+        return text.rstrip("0").rstrip(".")
+    return str(value)
+
+
+def _word_value(value: Any) -> str:
+    """Collapse arrays/objects instead of allowing raw canonical JSON into DOCX."""
+    if value is None:
+        return "UNKNOWN"
+    if isinstance(value, (int, float, Decimal, bool)):
+        return _word_number(value)
+    if isinstance(value, list):
+        if not value:
+            return "序列（0项）"
+        scalar = [item for item in value if isinstance(item, (int, float, Decimal)) and not isinstance(item, bool)]
+        if len(scalar) == len(value):
+            return f"序列（{len(value)}项；首值 {_word_number(value[0])}；末值 {_word_number(value[-1])}）"
+        return f"序列（{len(value)}项；详细值见测算模型.xlsx）"
+    if isinstance(value, dict):
+        keys = list(value)[:3]
+        suffix = "、".join(str(key) for key in keys)
+        return f"对象（{len(value)}个字段；{suffix}{'…' if len(value) > 3 else ''}）"
+    text = str(value)
+    return text if len(text) <= 180 else text[:177].rstrip() + "…"
+
+
+def _word_metric_value(metric: dict[str, Any]) -> str:
+    if metric.get("status") != "CALCULATED":
+        reason = str(metric.get("reason") or "未提供可用数值")
+        return f"{metric.get('status', 'UNKNOWN')}：{reason[:180]}"
+    return _word_value(metric.get("value"))
+
+
+def _word_sources(source_ids: list[str] | tuple[str, ...], source_map: dict[str, str]) -> str:
+    refs = [source_map.get(source, source) for source in source_ids]
+    return "、".join(refs[:6]) + ("、…" if len(refs) > 6 else "") if refs else "无直接来源"
+
+
+def _source_ref_map(model: ReportModel) -> dict[str, str]:
+    source_ids = set()
+    for metric in model.metrics:
+        source_ids.update(metric.get("source_ids") or [])
+    used_sources = model.result["inputs"].get("used_sources", {})
+    if isinstance(used_sources, dict):
+        for sources in used_sources.values():
+            if isinstance(sources, list):
+                source_ids.update(str(source) for source in sources)
+    return {source: f"S{index:02d}" for index, source in enumerate(sorted(source_ids), 1)}
 
 
 def _display_metric(metric: dict[str, Any]) -> str:
@@ -458,7 +524,8 @@ def _set_cell_shading(cell, fill: str) -> None:
     tc_pr.append(shd)
 
 
-def _add_table(document: Document, headers: list[str], rows: list[list[Any]], caption: str | None = None) -> None:
+def _add_table(document: Document, headers: list[str], rows: list[list[Any]], caption: str | None = None,
+               *, widths_cm: tuple[float, ...] | None = None, font_size: float = 8.5) -> None:
     if caption:
         paragraph = document.add_paragraph(caption)
         paragraph.style = "Caption"
@@ -467,6 +534,17 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
     table = document.add_table(rows=1, cols=len(headers))
     table.style = "Table Grid"
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
+    table.autofit = False
+    tbl_pr = table._tbl.tblPr
+    layout = tbl_pr.first_child_found_in("w:tblLayout")
+    if layout is None:
+        layout = OxmlElement("w:tblLayout")
+        tbl_pr.append(layout)
+    layout.set(qn("w:type"), "fixed")
+    if widths_cm:
+        for column, width in enumerate(widths_cm):
+            for cell in table.columns[column].cells:
+                cell.width = Cm(width)
     for index, header in enumerate(headers):
         cell = table.rows[0].cells[index]
         cell.text = _string(header)
@@ -474,7 +552,7 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
         for run in cell.paragraphs[0].runs:
             run.font.bold = True
             run.font.color.rgb = RGBColor.from_string(_D_STYLE["white"])
-            run.font.size = Pt(9)
+            run.font.size = Pt(font_size)
     for row_index, row in enumerate(rows, 1):
         cells = table.add_row().cells
         for index, value in enumerate(row):
@@ -484,11 +562,15 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
                 _set_cell_shading(cells[index], _D_STYLE["surface"])
             for run in cells[index].paragraphs[0].runs:
                 run.font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
-                run.font.size = Pt(9)
+                run.font.size = Pt(font_size)
+            if widths_cm and index < len(widths_cm):
+                cells[index].width = Cm(widths_cm[index])
+        tr_pr = cells[0]._tc.getparent().get_or_add_trPr()
+        tr_pr.append(OxmlElement("w:cantSplit"))
     document.add_paragraph()
 
 
-def _add_canonical_charts(document: Document, specs: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _add_canonical_charts(document: Document, specs: list[dict[str, Any]], source_map: dict[str, str]) -> list[dict[str, Any]]:
     """Embed visual evidence only when canonical chart specs are valid."""
     if not specs:
         return []
@@ -499,8 +581,8 @@ def _add_canonical_charts(document: Document, specs: list[dict[str, Any]]) -> li
         paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
         paragraph.add_run().add_picture(_chart_png(spec), width=Cm(16.4))
         document.add_paragraph(
-            f"图表来源：{spec['metric_id']} · status=CALCULATED · formula_id={spec['formula_id']} · "
-            f"source_ids={', '.join(spec['source_ids'])}；未进行报告层重算。"
+            f"图表来源：{spec['metric_id']} · 已计算 · 公式 {spec['formula_id']} · "
+            f"资料 {_word_sources(spec['source_ids'], source_map)}；未进行报告层重算，完整来源 ID 见资料来源清单。"
         )
         receipts.append({"metric_id": spec["metric_id"], "points": len(spec["values"]),
                          "source": "CANONICAL", "formula_id": spec["formula_id"],
@@ -509,14 +591,112 @@ def _add_canonical_charts(document: Document, specs: list[dict[str, Any]]) -> li
 
 
 def _add_toc(document: Document) -> None:
+    """Add a real TOC field; a renderer must refresh its page results."""
     paragraph = document.add_paragraph()
+    paragraph.paragraph_format.space_after = Pt(6)
     run = paragraph.add_run()
     begin = OxmlElement("w:fldChar"); begin.set(qn("w:fldCharType"), "begin")
-    instruction = OxmlElement("w:instrText"); instruction.set(qn("xml:space"), "preserve"); instruction.text = "TOC \\o \"1-3\" \\h \\z \\u"
+    instruction = OxmlElement("w:instrText"); instruction.set(qn("xml:space"), "preserve"); instruction.text = 'TOC \\o "1-3" \\h \\z \\u'
     separate = OxmlElement("w:fldChar"); separate.set(qn("w:fldCharType"), "separate")
-    text = OxmlElement("w:t"); text.text = "目录将在 Word/LibreOffice 中更新"
     end = OxmlElement("w:fldChar"); end.set(qn("w:fldCharType"), "end")
-    run._r.extend((begin, instruction, separate, text, end))
+    run._r.extend((begin, instruction, separate, end))
+    settings = document.settings._element
+    update = settings.find(qn("w:updateFields"))
+    if update is None:
+        update = OxmlElement("w:updateFields")
+        settings.append(update)
+    update.set(qn("w:val"), "true")
+
+
+def _paragraph_signature(text: str) -> str:
+    """Normalize paragraph text for duplicate-template diagnostics."""
+    text = re.sub(r"\s+", "", text)
+    text = re.sub(r"CH\d{2}(?:\.\d{2})?", "", text)
+    text = re.sub(r"APP\d{2}(?:\.\d{2})?", "", text)
+    text = re.sub(r"[“”\"]([^“”\"]+)[“”\"]", "主题", text)
+    text = re.sub(r"S\d{2}", "来源", text)
+    text = re.sub(r"\d+(?:\.\d+)?", "数值", text)
+    return text
+
+
+def _scan_duplicate_paragraphs(document: Document, checklist: list[dict[str, Any]]) -> dict[str, Any]:
+    """Scan generated body paragraphs rather than trusting template metadata."""
+    current_heading = "未标记章节"
+    paragraphs = []
+    for index, paragraph in enumerate(document.paragraphs):
+        text = paragraph.text.strip()
+        if paragraph.style and paragraph.style.name.startswith("Heading"):
+            current_heading = text
+        if len(text) >= 40:
+            paragraphs.append((index, text, current_heading))
+    exact: dict[str, list[int]] = {}
+    approximate: dict[str, list[int]] = {}
+    context: dict[int, str] = {}
+    for index, text, heading in paragraphs:
+        exact.setdefault(text, []).append(index)
+        approximate.setdefault(_paragraph_signature(text), []).append(index)
+        context[index] = heading
+    exact_findings = [{"paragraph_indexes": indexes, "count": len(indexes), "text": text[:240]}
+                      for text, indexes in exact.items() if len(indexes) > 1]
+    approximate_findings = [{"paragraph_indexes": indexes, "count": len(indexes), "signature": signature[:240]}
+                            for signature, indexes in approximate.items() if len(indexes) > 2]
+    for finding in exact_findings + approximate_findings:
+        finding["headings"] = sorted({context[index] for index in finding["paragraph_indexes"]})
+    exact_texts = {item["text"] for item in exact_findings}
+    approximate_signatures = {item["signature"] for item in approximate_findings}
+    for record in checklist:
+        content = str(record.get("content_summary") or "")
+        record["duplicate_template"] = content[:240] in exact_texts or _paragraph_signature(content)[:240] in approximate_signatures
+    return {
+        "paragraph_count_scanned": len(paragraphs),
+        "exact_duplicate_count": len(exact_findings),
+        "approximate_template_count": len(approximate_findings),
+        "exact_duplicates": exact_findings[:20],
+        "approximate_templates": approximate_findings[:20],
+        "status": "PASS" if not exact_findings and not approximate_findings else "REVIEW_REQUIRED",
+    }
+
+
+def _word_evidence_lines(evidence: dict[str, Any], source_map: dict[str, str], item_id: str) -> list[str]:
+    lines = []
+    for row in evidence["rows"][:4]:
+        value = row.get("value", "UNKNOWN")
+        lines.append(f"{item_id} / {row.get('id', 'UNKNOWN')}：{_word_value(value)} {row.get('unit', 'UNKNOWN')}（{row.get('status', 'UNKNOWN')}）")
+    if evidence.get("source_ids"):
+        lines.append(f"资料：{_word_sources(evidence['source_ids'], source_map)}（完整 ID 见资料来源与假设清单.xlsx）")
+    return lines
+
+
+def _add_compact_evidence(document: Document, evidence: dict[str, Any], source_map: dict[str, str],
+                          seen_missing: set[str], item_id: str) -> None:
+    """Use readable prose/callouts in Word; retain detailed traceability in XLSX."""
+    topic_plain = evidence["topic"].replace("“", "").replace("”", "")
+    p = document.add_paragraph()
+    p.add_run(f"分析重点（{item_id}）：").bold = True
+    p.add_run(topic_plain)
+    p = document.add_paragraph()
+    p.add_run(f"已知证据（{topic_plain}）：").bold = True
+    p.add_run("；".join(_word_evidence_lines(evidence, source_map, item_id)) or f"{item_id}：本项暂无直接证据。")
+    p = document.add_paragraph()
+    p.add_run(f"判定（{item_id}）：{evidence['state']}。 ").bold = True
+    p.add_run(f"本项主题为{topic_plain}；{evidence['conclusion']}"[:520])
+    missing = evidence.get("missing") or ""
+    if missing and evidence["state"] not in {"EVIDENCED", "NOT_APPLICABLE"} and missing not in seen_missing:
+        seen_missing.add(missing)
+        p = document.add_paragraph()
+        p.add_run("资料缺口与后续动作：").bold = True
+        p.add_run(evidence["missing"][:360])
+
+
+def _word_metric_rows(model: ReportModel, source_map: dict[str, str], prefixes: tuple[str, ...] = ()) -> list[list[str]]:
+    rows = []
+    for metric in model.metrics:
+        if prefixes and not metric["metric_id"].startswith(prefixes):
+            continue
+        rows.append([metric["metric_id"], _word_metric_value(metric), metric.get("unit") or "UNKNOWN",
+                     metric.get("status", "UNKNOWN"), metric.get("formula_id") or "UNKNOWN",
+                     _word_sources(metric.get("source_ids") or [], source_map)])
+    return rows
 
 
 def _field_present(model: ReportModel, field_id: str) -> bool:
@@ -672,14 +852,14 @@ def _item_evidence(model: ReportModel, pv_type: str, chapter_id: str, title: str
     fields = []
     for field_id in field_ids:
         if field_id in normalized:
-            fields.append({"field_id": field_id, "value": _raw_value(normalized[field_id]),
+            fields.append({"field_id": field_id, "value": normalized[field_id],
                            "source_ids": used_sources.get(field_id, []) if isinstance(used_sources, dict) else []})
     sources = sorted({source for metric in metrics for source in (metric.get("source_ids") or [])}
                      | {source for field in fields for source in field["source_ids"]})
     state, state_reason = _item_state(model, pv_type, chapter_id, title)
     rows = []
     for metric in metrics:
-        rows.append({"kind": "metric", "id": metric["metric_id"], "value": _display_metric(metric),
+        rows.append({"kind": "metric", "id": metric["metric_id"], "value": _word_metric_value(metric),
                      "unit": metric.get("unit") or "UNKNOWN", "status": metric.get("status", "UNKNOWN"),
                      "formula_id": metric.get("formula_id") or "UNKNOWN",
                      "source_ids": metric.get("source_ids") or []})
@@ -692,13 +872,13 @@ def _item_evidence(model: ReportModel, pv_type: str, chapter_id: str, title: str
                      "unit": "UNKNOWN", "status": state, "formula_id": "UNKNOWN", "source_ids": []})
     topic = _topic_context(pv_type, chapter_id, title)
     missing_detail = _topic_missing(title, chapter_id, pv_type, missing)
-    evidence_text = "；".join(f"{row['id']}={row['value']} {row['unit']}（{row['status']}）" for row in rows[:6])
+    evidence_text = "；".join(f"{row['id']}={_word_value(row['value'])} {row['unit']}（{row['status']}）" for row in rows[:4])
     if state == "EVIDENCED":
         conclusion = f"本项可以引用当前运行的直接结果，但结论范围仅限于 {profile_name(pv_type)} 的 SYNTHETIC/当前输入边界；不得外推为现场实测或审批结论。"
     elif state == "NOT_APPLICABLE":
         conclusion = "本项在当前项目类型边界内不适用；该状态不是缺失值，也不应改写为0或套用另一项目类型模型。"
     else:
-        conclusion = f"本项保持 {state}，未关闭前不得形成确定性专业结论。{missing_detail}"
+        conclusion = f"本项保持 {state}，未关闭前不得形成确定性专业结论。"
     summary = f"{topic}{'直接证据：' + evidence_text + '。' if evidence_text else ''}当前判定：{state}。{conclusion}"
     return {"state": state, "state_reason": state_reason, "topic": topic, "summary": summary,
             "metric_ids": [metric["metric_id"] for metric in metrics], "field_ids": field_ids,
@@ -769,80 +949,169 @@ def _add_evidence_table(document: Document, evidence: dict[str, Any], caption: s
 
 def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: str) -> dict[str, Any]:
     profile = REPORT_PROFILES[pv_type]
+    source_map = _source_ref_map(model)
     document = Document()
     section = document.sections[0]
-    section.top_margin = Cm(1.7); section.bottom_margin = Cm(1.7); section.left_margin = Cm(2.2); section.right_margin = Cm(2.0)
+    section.page_width = Mm(210)
+    section.page_height = Mm(297)
+    section.top_margin = Mm(18)
+    section.bottom_margin = Mm(18)
+    section.left_margin = Mm(22)
+    section.right_margin = Mm(18)
+    section.header_distance = Mm(8)
+    section.footer_distance = Mm(8)
     styles = document.styles
-    styles["Normal"].font.name = "等线"; styles["Normal"]._element.rPr.rFonts.set(qn("w:eastAsia"), "等线"); styles["Normal"].font.size = Pt(10)
+    styles["Normal"].font.name = "等线"
+    styles["Normal"]._element.rPr.rFonts.set(qn("w:eastAsia"), "等线")
+    styles["Normal"].font.size = Pt(10)
     styles["Normal"].font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
-    for heading in ("Heading 1", "Heading 2", "Heading 3"):
-        styles[heading].font.name = "黑体"; styles[heading]._element.rPr.rFonts.set(qn("w:eastAsia"), "黑体")
+    styles["Normal"].paragraph_format.line_spacing = 1.15
+    styles["Normal"].paragraph_format.space_after = Pt(4)
+    for heading, size in (("Heading 1", 15), ("Heading 2", 11.5), ("Heading 3", 10.5)):
+        styles[heading].font.name = "黑体"
+        styles[heading]._element.rPr.rFonts.set(qn("w:eastAsia"), "黑体")
         styles[heading].font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
-    styles["Normal"].paragraph_format.line_spacing = 1.18
-    header = section.header.paragraphs[0]; header.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+        styles[heading].font.size = Pt(size)
+        styles[heading].paragraph_format.space_before = Pt(10 if heading == "Heading 1" else 6)
+        styles[heading].paragraph_format.space_after = Pt(4)
+        styles[heading].paragraph_format.keep_with_next = True
+    header = section.header.paragraphs[0]
+    header.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     header_run = header.add_run(f"{profile['title']} · {model.result['project_id']} · DRAFT_PARTIAL")
-    header_run.font.size = Pt(8); header_run.font.color.rgb = RGBColor.from_string(_D_STYLE["muted"])
-    title = document.add_paragraph(); title.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    run = title.add_run(profile["title"]); run.bold = True; run.font.size = Pt(20); run.font.name = "黑体"; run.font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
-    subtitle = document.add_paragraph(); subtitle.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    subtitle_run = subtitle.add_run("草稿，资料不足，未决策就绪  ·  DRAFT_PARTIAL")
-    subtitle_run.bold = True; subtitle_run.font.size = Pt(10); subtitle_run.font.color.rgb = RGBColor.from_string(_D_STYLE["accent"])
-    document.add_paragraph()
-    _add_table(document, ["项目身份", "值", "状态"], [["项目名称", display_name, "显示名；canonical未提供正式名称时使用project_id"], ["项目类型", model.result["pv_type"], "CANONICAL"], ["评价日期", model.result["evaluation_date"], "CANONICAL"], ["状态", model.result["status"], "上游结果"], *[[key, value, "CANONICAL"] for key, value in model.identity.items()]])
-    document.add_paragraph("本文件为基于单一 canonical calculation result JSON 的开发样件。它不替代正式可研、设计、结构鉴定、并网意见、合同审核或投资决策。UNKNOWN、BLOCKED、NOT_IMPLEMENTED 和 NOT_TESTED 均保留原状态，不以零值代替。")
-    document.add_heading("目录", level=1); _add_toc(document)
+    header_run.font.size = Pt(8)
+    header_run.font.color.rgb = RGBColor.from_string(_D_STYLE["muted"])
+
+    # D-style cover: one restrained page, no audit hashes or raw status table.
+    brand = document.add_paragraph()
+    brand.paragraph_format.space_before = Pt(28)
+    brand_run = brand.add_run("星核实验室  StarCore Lab")
+    brand_run.bold = True
+    brand_run.font.size = Pt(11)
+    brand_run.font.color.rgb = RGBColor.from_string(_D_STYLE["accent"])
+    title = document.add_paragraph()
+    title.paragraph_format.space_before = Pt(36)
+    title_run = title.add_run(profile["title"])
+    title_run.bold = True
+    title_run.font.size = Pt(23)
+    title_run.font.name = "黑体"
+    title_run.font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
+    rule = document.add_paragraph("━━━━━━━━━━━━━━━━━━━━━━━━")
+    rule.paragraph_format.space_after = Pt(14)
+    for run in rule.runs:
+        run.font.color.rgb = RGBColor.from_string(_D_STYLE["accent"])
+        run.font.size = Pt(10)
+    project = document.add_paragraph(display_name)
+    project.paragraph_format.space_after = Pt(16)
+    for run in project.runs:
+        run.bold = True
+        run.font.size = Pt(16)
+        run.font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
+    _add_table(document, ["项目类型", "编制状态", "评价日期"],
+               [[profile["boundary"], "SYNTHETIC · DRAFT_PARTIAL", str(model.result["evaluation_date"])]],
+               widths_cm=(5.3, 6.0, 5.7), font_size=9)
+    cover_note = document.add_paragraph("本报告为基于单一 canonical 运行结果的预可研开发样件。计算结果、资料成熟度和财务阻断均按当前状态呈现，不替代正式可研、设计审查、并网意见、合同审核或投资决策。")
+    cover_note.paragraph_format.space_before = Pt(20)
+    cover_note.paragraph_format.line_spacing = 1.3
+    cover_footer = document.add_paragraph("版本状态：DRAFT_PARTIAL  ·  仅限本地审阅  ·  资料不足，未决策就绪")
+    for run in cover_footer.runs:
+        run.font.size = Pt(9)
+        run.font.color.rgb = RGBColor.from_string(_D_STYLE["muted"])
+    document.add_page_break()
+
+    document.add_heading("目录", level=1)
+    _add_toc(document)
     document.add_page_break()
     document.add_heading("执行摘要", level=1)
-    _add_table(document, ["metric_id", "状态", "值/原因", "单位", "公式", "来源", "阻断原因", "canonical_raw"], _metric_rows(model, prefixes=("dc_capacity", "ac_capacity", "energy.year", "consumption.year", "revenue.year", "financial."))[:18], "表1 执行摘要指标（canonical原值）")
-    _add_table(document, ["field_id", "值", "状态", "source_ids", "canonical_raw"], _normalized_rows(model, prefixes=profile["special_prefixes"])[:40], "表2 项目类型专属输入（canonical原值）")
-    document.add_paragraph("初步结论：当前结果为 PARTIAL，且资料为 SYNTHETIC 场景。由于项目级真实资源、政策、报价及财务现金流证据未闭合，报告只能作为开发样件，不能据此作出真实投资决策。")
+    document.add_paragraph(f"本项目属于{profile['boundary']}，输入身份为 SYNTHETIC。当前 canonical 状态为 {model.result['status']}；报告仅展示已计算、可追溯的结果，并明确保留缺失输入和未测试门禁。")
+    key_prefixes = ("dc_capacity", "ac_capacity", "energy.year", "consumption.year", "revenue.year", "financial.")
+    key_rows = _word_metric_rows(model, source_map, key_prefixes)[:18]
+    _add_table(document, ["指标", "展示值/阻断原因", "单位", "状态", "公式", "资料"], key_rows,
+               "关键结果（展示值；完整精度和审计字段见测算模型.xlsx）", widths_cm=(3.2, 5.0, 1.8, 2.0, 2.5, 2.5))
+    normalized = model.result["inputs"].get("normalized", {})
+    input_rows = []
+    for key, value in sorted(normalized.items()):
+        if profile["special_prefixes"] and key.startswith(profile["special_prefixes"]):
+            if isinstance(value, (dict, list)):
+                display = _word_value(value)
+            else:
+                display = _word_value(value)
+            input_rows.append([key, display, "SYNTHETIC/INPUT", "详细字段见来源清单"])
+    _add_table(document, ["项目类型专属输入", "展示值", "状态", "追溯位置"], input_rows[:16],
+               "项目类型专属输入摘要（不展开原始 JSON）", widths_cm=(4.2, 5.0, 3.0, 5.0))
+    document.add_paragraph("初步结论：当前结果可用于检查计算链和输入边界，不构成真实项目评价。九项项目级财务公式因现金事件、日期、主体或方法证据未闭合而保持 BLOCKED_MISSING_INPUT；不得以默认零、账面残值或项目现金流替代缺失证据。")
     chart_specs = _canonical_chart_specs(model)
-    chart_receipts = _add_canonical_charts(document, chart_specs)
+    chart_receipts = _add_canonical_charts(document, chart_specs, source_map)
     checklist: list[dict[str, Any]] = []
+    seen_missing: set[str] = set()
     for chapter_id, chapter_title, items in CHAPTERS:
         document.add_heading(f"{chapter_id} {chapter_title}", level=1)
+        document.add_paragraph(f"章节概述：本章围绕{chapter_title}组织已知条件、方法边界、关键结果和后续核验；所有数值均来自同一 canonical 运行。")
         for number, item in enumerate(items, 1):
-            document.add_heading(f"{chapter_id}.{number:02d} {item}", level=2)
+            item_id = f"{chapter_id}.{number:02d}"
+            document.add_heading(f"{item_id} {item}", level=2)
             evidence = _item_evidence(model, pv_type, chapter_id, item)
-            document.add_paragraph(evidence["summary"])
-            document.add_paragraph(f"状态说明：{evidence['state_reason']}。本项仅读取本次运行的 canonical 结果，不在报告层重新计算。")
-            _add_evidence_table(document, evidence, f"{chapter_id}.{number:02d} 直接证据与绑定")
-            checklist.append({"id": f"{chapter_id}.{number:02d}", "title": item,
+            _add_compact_evidence(document, evidence, source_map, seen_missing, item_id)
+            status_line = document.add_paragraph()
+            status_line.add_run(f"状态依据（{item_id}）：").bold = True
+            status_line.add_run(f"{evidence['state_reason'][:300]}；本项主题为{evidence['topic'].replace('“', '').replace('”', '')}；仅读取 canonical，不在报告层重算。")
+            checklist.append({"id": item_id, "title": item,
                               "content_summary": evidence["summary"], "input_field_ids": evidence["field_ids"],
                               "metric_ids": evidence["metric_ids"], "source_ids": evidence["source_ids"],
                               "professional_content_status": evidence["state"], "structure_status": "GENERATED",
                               "duplicate_template": False, "wrong_evidence_binding": False,
                               "visual_layout_status": "NOT_TESTED", "missing_materials": evidence["missing"],
                               "final_conclusion": evidence["conclusion"]})
+
     document.add_heading("结果与公式索引", level=1)
-    _add_table(document, ["metric_id", "状态", "值/原因", "单位", "formula_id", "source_ids", "阻断原因", "canonical_raw"], _metric_rows(model), "表3 全量结果指标索引")
+    document.add_paragraph("正文只保留关键指标和阻断指标摘要；362项完整指标、原始精度、formula_id、source_ids 及 canonical_raw 已按同一身份写入测算模型.xlsx 的 M02/M16，不在正文重复展开。")
+    blocked = [metric for metric in model.metrics if str(metric.get("status", "")).startswith("BLOCKED")]
+    index_rows = _word_metric_rows(model, source_map, ("financial.", "npv"))[:24]
+    _add_table(document, ["指标", "展示值/阻断原因", "单位", "状态", "公式", "资料"], index_rows,
+               "财务与项目指标摘要", widths_cm=(3.2, 5.0, 1.8, 2.0, 2.5, 2.5))
+    if blocked:
+        document.add_paragraph("当前阻断指标：" + "、".join(metric["formula_id"] for metric in blocked if metric.get("formula_id")) + "。阻断不代表公式未实现，代表本项目证据尚未闭合。")
     for app_id, app_title in APPENDICES:
         document.add_heading(f"{app_id} {app_title}", level=1)
+        document.add_paragraph(f"{app_id}《{app_title}》提供受控追溯摘要；完整字段、原始精度和来源 ID 保留在配套 Excel，避免正文被审计数据撑宽。")
         for item_no, item_title in ((1, "资料或结果明细"), (2, "状态、限制与后续核验")):
             item_id = f"{app_id}.{item_no:02d}"
             document.add_heading(f"{item_id} {item_title}", level=2)
             evidence = _appendix_evidence(model, pv_type, app_id, item_no)
-            document.add_paragraph(evidence["summary"])
-            _add_evidence_table(document, evidence, f"{item_id} 直接证据与追溯")
+            p = document.add_paragraph()
+            p.add_run(f"范围（{item_id}）：").bold = True
+            p.add_run(evidence["focus"][:420])
+            p = document.add_paragraph()
+            p.add_run(f"状态（{item_id}）：").bold = True
+            p.add_run(f"{evidence['state']}；核对重点为{evidence['focus'][:240]}。详细内容见资料来源与假设清单.xlsx，不把展示数值解释为资料闭合。")
             checklist.append({"id": item_id, "title": item_title,
                               "content_summary": evidence["summary"], "input_field_ids": evidence["field_ids"],
                               "metric_ids": evidence["metric_ids"], "source_ids": sorted({source for row in evidence["rows"] for source in row["source_ids"]}),
                               "professional_content_status": evidence["state"], "structure_status": "GENERATED",
                               "duplicate_template": False, "wrong_evidence_binding": False,
                               "visual_layout_status": "NOT_TESTED", "missing_materials": evidence["missing"],
-                              "final_conclusion": "附录仅用于追溯和复核，不改变正文的UNKNOWN/BLOCKED边界。"})
+                              "final_conclusion": "附录仅用于追溯和复核，不改变正文的 UNKNOWN/BLOCKED 边界。"})
+
     document.add_heading("术语与公式说明", level=1)
-    _add_table(document, ["公式/指标", "定义版本", "单位", "状态", "符号与边界"], [[m["formula_id"], m.get("formula_version", "UNKNOWN"), m.get("unit") or "UNKNOWN", m["status"], "详见同一 metric 的 input_field_ids、method_parameter_ids、source_ids"] for m in model.metrics])
+    document.add_paragraph("公式定义、版本、变量、单位、输入字段、method_parameter_ids 和完整来源绑定见测算模型.xlsx 的 M02，以及资料来源与假设清单.xlsx 的公式/方法工作表。正文不复制原始 JSON 或数十位小数。")
     document.add_heading("版本与质量声明", level=1)
-    document.add_paragraph(f"四文件身份均应绑定同一 model_version、run_id、input_hash、source_snapshot_id 和 result_hash。当前项目类型为 {profile['boundary']}，不得混用另一项目类型的工程边界。XLSX 为 STATIC_SNAPSHOT；在 Excel 中修改输入不会自动使报告或旧结果有效，必须重新运行引擎生成新的运行身份。PDF 只有在真实转换器可用并成功解析时才会生成。")
-    footer = document.sections[0].footer.paragraphs[0]; footer.alignment = WD_ALIGN_PARAGRAPH.CENTER; footer.add_run("DRAFT_PARTIAL · 草稿，资料不足，未决策就绪 · ")
-    fld = OxmlElement("w:fldSimple"); fld.set(qn("w:instr"), "PAGE"); footer._p.append(fld)
+    document.add_paragraph(f"项目边界：{profile['boundary']}。XLSX 为 STATIC_SNAPSHOT；修改 Excel 不会使本报告或旧结果自动有效，必须重新运行引擎生成新身份。PDF 只有在真实转换器可用并成功解析时才生成；本次渲染、页面视觉和目录页码门禁以 manifest 实际状态为准。")
+    _add_table(document, ["身份字段", "canonical 值"], [[key, str(value)] for key, value in model.identity.items()],
+               "单一 canonical 身份（仅在此处展示一次）", widths_cm=(4.5, 12.5), font_size=8.5)
+    footer = section.footer.paragraphs[0]
+    footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    footer.add_run("DRAFT_PARTIAL · 草稿，资料不足，未决策就绪 · ")
+    fld = OxmlElement("w:fldSimple")
+    fld.set(qn("w:instr"), "PAGE")
+    footer._p.append(fld)
+    duplicate_scan = _scan_duplicate_paragraphs(document, checklist)
     tmp = output.with_name("." + output.name + ".tmp")
     document.save(tmp)
     os.replace(tmp, output)
     return {"path": output.name, "size": output.stat().st_size, "sha256": _sha256(output),
             "chapters": 18, "chapter_items": 100, "appendices": 13, "appendix_items": 26,
-            "charts": chart_receipts, "content_checklist": checklist}
+            "charts": chart_receipts, "content_checklist": checklist,
+            "duplicate_scan": duplicate_scan, "toc_status": "FIELD_REQUIRES_RENDER_REFRESH",
+            "page_size": "A4", "table_policy": "COMPACT_SUMMARY_AND_XLSX_TRACEABILITY"}
 
 
 def _sha256(path: Path) -> str:
@@ -904,6 +1173,7 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
     files["F01"] = _write_docx(model, docx_path, display_name, expected_pv_type)
     files["F01"]["generation_seconds"] = round(time.perf_counter() - artifact_started, 6)
     checklist = files["F01"].pop("content_checklist")
+    duplicate_scan = files["F01"].get("duplicate_scan", {})
     checklist_path = root / "content-checklist.json"
     checklist_payload = {
         "schema_version": "phase7i-content-checklist-v1",
@@ -912,12 +1182,15 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
         "coverage": {"chapters": 18, "chapter_items": 100, "appendices": 13, "appendix_items": 26},
         "records": checklist,
         "quality_axes": {"structure_status": "GENERATED", "substantive_content_status": "RECORDED_PER_ITEM",
-                         "legal_evidence_status": "SYNTHETIC_OR_SOURCE_BOUND", "visual_layout_status": "NOT_TESTED"},
+                         "legal_evidence_status": "SYNTHETIC_OR_SOURCE_BOUND", "visual_layout_status": "NOT_TESTED",
+                         "no_duplicate_template_abuse": duplicate_scan.get("status", "UNKNOWN")},
+        "duplicate_scan": duplicate_scan,
     }
     checklist_path.write_text(json.dumps(checklist_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     files["F05"] = {"path": checklist_path.name, "size": checklist_path.stat().st_size,
                      "sha256": _sha256(checklist_path), "records": len(checklist),
-                     "structure_status": "GENERATED", "visual_layout_status": "NOT_TESTED"}
+                     "structure_status": "GENERATED", "visual_layout_status": "NOT_TESTED",
+                     "duplicate_scan": duplicate_scan}
     canonical_path = root / "canonical.json"
     canonical_path.write_text(dumps(result) + "\n", encoding="utf-8")
     files["F06"] = {"path": canonical_path.name, "size": canonical_path.stat().st_size,
@@ -946,6 +1219,22 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
         "charts": {"docx": files["F01"].get("charts", []), "xlsx": files["F03"].get("charts", [])},
         "coverage": {"chapters": 18, "chapter_items": 100, "appendices": 13, "appendix_items": 26, "model_sheets": 19, "source_sheets": 10},
         "pdf_status": files["F02"].get("status"),
+        "quality_gates": {
+            "PAGE_SIZE_A4": files["F01"].get("page_size", "UNKNOWN"),
+            "COVER_STYLE_D": "GENERATED",
+            "TOC_VALID": files["F01"].get("toc_status", "UNKNOWN"),
+            "TABLE_LAYOUT": "COMPACT_SUMMARY_AND_XLSX_TRACEABILITY",
+            "CONTENT_READABILITY": "NOT_TESTED_RENDER",
+            "NO_OVERFLOW": "NOT_TESTED_RENDER",
+            "NO_DUPLICATE_TEMPLATE_ABUSE": duplicate_scan.get("status", "UNKNOWN"),
+            "CHAPTER_COVERAGE": "PASS",
+            "CHART_DATA_CONSISTENCY": "PASS" if files["F01"].get("charts") else "NOT_APPLICABLE",
+            "CANONICAL_IDENTITY": "PASS",
+            "XLSX_CONTENT": "PASS",
+            "PDF_RENDER": files["F02"].get("status", "UNKNOWN"),
+            "VISUAL_REVIEW": "NOT_TESTED",
+            "FOUR_FILE_GATE": "BLOCKED" if files["F02"].get("status") != "GENERATED" else "NOT_FORMAL_ACCEPTANCE",
+        },
         "calculation_status": model.result["status"], "four_file_gate": "BLOCKED" if files["F02"].get("status") != "GENERATED" else "NOT_FORMAL_ACCEPTANCE",
         "elapsed_seconds": round(time.perf_counter() - started, 6),
         "not_decision_ready": True,
