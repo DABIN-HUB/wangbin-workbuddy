@@ -79,3 +79,9 @@
 1. 需要合法、可用的 DOCX→PDF 转换环境后，才能继续 F02 真实转换与 PDF 解析/视觉检查。
 2. 需要真实来源、授权和上游阶段关闭后，才能评估正式真实性与四文件门禁。
 3. 本轮停止在 Phase 5 可合法实施的报告生产代码和开发样件；不自动进入 Phase 6，不自动 push、部署、上传或发布。
+
+## 本轮最小修正补充（Phase 5 导出器）
+
+本检查点原有样件和哈希保留为历史回执；本轮针对导出器重新生成的屋顶样件位于 `reports/solar-pv/phase5-synthetic-rooftop-v2/`。修正后的章节状态按子项直接 metric/input field 映射，气象资源、投资现金流、设备、并网、合同/政策和财务阻断状态不再由无关年度发电量或 CAPEX 总额推断。19-sheet 测算工作簿将合法标量写入数值单元格，并以 `canonical_raw` 列保留原始精度/状态文本；地面项目的 M08 则明确为 `NOT_APPLICABLE`，不把屋顶自用模型串入地面项目。
+
+该补充仍是 `DRAFT_PARTIAL` 开发样件记录，不改变本文件所述四文件 `BLOCKED`、真实 PDF 渲染缺失及正式投资决策不可用边界。Phase 6 地面独立开发记录见 `reports/solar-pv/phase6-development-checkpoint.md`。

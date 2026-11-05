@@ -1,0 +1,107 @@
+{
+  "status": "DRAFT_PARTIAL",
+  "phase": "PHASE5_INDUSTRIAL_ROOFTOP_REPORT_EXPORT",
+  "project_id": "SYNTHETIC-industrial_rooftop",
+  "pv_type": "industrial_rooftop",
+  "display_name": "SYNTHETIC-industrial_rooftop",
+  "name_mapping": null,
+  "identity": {
+    "model_version": "solar-pv-engine/0.3.0",
+    "run_id": "d86a4e81-e432-4199-b194-bbf93dd15b01",
+    "input_hash": "3074f404bba5f06af0b88a701ff3f91b9690758cdb86022cfd254646b1c4c6fa",
+    "source_snapshot_id": "88902c3b845bacc32759a5d4bc61f743e63b3a5c2862233520e3e0475e210f31",
+    "result_hash": "76ff9ad35e6a08cfad88d8e855a88eb2109c63026e07d225e0a5883eef1842b1"
+  },
+  "files": {
+    "F01": {
+      "path": "SYNTHETIC-industrial_rooftop-光伏预可研报告.docx",
+      "size": 48644,
+      "sha256": "142c99374a41b25e9612708bf208a628f138429c7faec6d2e15dee4300dbb502",
+      "chapters": 18,
+      "chapter_items": 100,
+      "appendices": 13,
+      "appendix_items": 26,
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "d86a4e81-e432-4199-b194-bbf93dd15b01",
+      "input_hash": "3074f404bba5f06af0b88a701ff3f91b9690758cdb86022cfd254646b1c4c6fa",
+      "source_snapshot_id": "88902c3b845bacc32759a5d4bc61f743e63b3a5c2862233520e3e0475e210f31",
+      "result_hash": "76ff9ad35e6a08cfad88d8e855a88eb2109c63026e07d225e0a5883eef1842b1"
+    },
+    "F03": {
+      "path": "SYNTHETIC-industrial_rooftop-测算模型.xlsx",
+      "size": 58381,
+      "sha256": "8eb5c51f0ca5e40f8cd136ce8d93b1edc3af537da410165dec81f6753b9bd3a5",
+      "sheets": [
+        "项目参数",
+        "术语和公式说明",
+        "数据质量",
+        "资源月度",
+        "系统容量与损耗",
+        "发电预测-月度",
+        "逐年衰减",
+        "负荷与消纳",
+        "电价与收入",
+        "CAPEX",
+        "OPEX",
+        "折旧与税费",
+        "融资与偿债",
+        "项目现金流",
+        "资本金现金流",
+        "财务指标",
+        "敏感性",
+        "方案比较",
+        "一致性校验"
+      ],
+      "mode": "STATIC_SNAPSHOT",
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "d86a4e81-e432-4199-b194-bbf93dd15b01",
+      "input_hash": "3074f404bba5f06af0b88a701ff3f91b9690758cdb86022cfd254646b1c4c6fa",
+      "source_snapshot_id": "88902c3b845bacc32759a5d4bc61f743e63b3a5c2862233520e3e0475e210f31",
+      "result_hash": "76ff9ad35e6a08cfad88d8e855a88eb2109c63026e07d225e0a5883eef1842b1"
+    },
+    "F04": {
+      "status": "DRAFT_PARTIAL",
+      "file": "SYNTHETIC-industrial_rooftop-资料来源与假设清单.xlsx",
+      "project_id": "SYNTHETIC-industrial_rooftop",
+      "scenario_id": "BASE",
+      "input_hash": "3074f404bba5f06af0b88a701ff3f91b9690758cdb86022cfd254646b1c4c6fa",
+      "source_snapshot_id": "88902c3b845bacc32759a5d4bc61f743e63b3a5c2862233520e3e0475e210f31",
+      "result_hash": "76ff9ad35e6a08cfad88d8e855a88eb2109c63026e07d225e0a5883eef1842b1",
+      "sha256": "9a7269b6bdd33a82302ec124254266a07032db84f2a2373ab219401896a9f8ea",
+      "sheets": [
+        "输入台账",
+        "气象与地理来源",
+        "政策适用性",
+        "设备与成本来源",
+        "案例对标",
+        "假设清单",
+        "冲突与缺口",
+        "变更与复核记录",
+        "变量-术语词典",
+        "资料授权说明"
+      ],
+      "generation_seconds": 1.045146,
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "d86a4e81-e432-4199-b194-bbf93dd15b01"
+    },
+    "F02": {
+      "status": "BLOCKED",
+      "reason": "PDF_RENDERER_UNAVAILABLE",
+      "renderer": null
+    }
+  },
+  "coverage": {
+    "chapters": 18,
+    "chapter_items": 100,
+    "appendices": 13,
+    "appendix_items": 26,
+    "model_sheets": 19,
+    "source_sheets": 10
+  },
+  "pdf_status": "BLOCKED",
+  "calculation_status": "PARTIAL",
+  "four_file_gate": "BLOCKED",
+  "elapsed_seconds": 1.962573,
+  "not_decision_ready": true,
+  "sensitive_raw_attachments_included": false
+}
