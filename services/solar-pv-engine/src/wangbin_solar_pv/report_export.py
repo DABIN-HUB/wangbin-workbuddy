@@ -81,13 +81,13 @@ MODEL_SHEETS = (
 REPORT_PROFILES = {
     "industrial_rooftop": {
         "title": "工商业屋顶光伏预可研报告",
-        "boundary": "工商业屋顶（industrial_rooftop）",
+        "boundary": "工商业屋顶项目",
         "missing": "屋顶权属/租赁期限、结构鉴定、负荷曲线、合同电价及并网资料",
         "special_prefixes": ("roof.", "load.", "tariff."),
     },
     "utility_scale_ground": {
         "title": "集中式地面光伏预可研报告",
-        "boundary": "集中式地面电站（utility_scale_ground）",
+        "boundary": "集中式地面电站",
         "missing": "土地合规、地形测量、地质勘察、道路排水、集电线路、升压站、接入系统意见及市场化交易依据",
         "special_prefixes": ("site.", "layout.", "grid.", "tariff."),
     },
@@ -835,6 +835,21 @@ def _metric_label(metric_id: str) -> str:
         return "年度发电量"
     if metric_id.startswith("financial.ledger"):
         return "年度现金费用"
+    generic_labels = {
+        "equivalent_hours": "等效利用小时数",
+        "capacity_factor": "容量因数",
+        "pr_observed": "系统性能比",
+        "consumption.self_ratio": "自用比例",
+        "energy.year": "年度发电量",
+        "energy.monthly": "月度发电量",
+        "revenue.year": "年度收入",
+    }
+    for prefix, label in generic_labels.items():
+        if metric_id.startswith(prefix):
+            suffix = metric_id[len(prefix):].strip(".")
+            if suffix.isdigit():
+                return f"第{suffix}年{label}"
+            return label
     return metric_id.replace(".", " · ")
 
 
