@@ -310,7 +310,10 @@ def write_report(report, output):
     lines.extend(["", "## 结果", "| 状态 | 键 | 供应商金额 | 内部金额 | 差额 | 来源 |", "|---|---|---|---|---|---|"])
     for r in report.get("results", []):
         sources = "; ".join(f"{safe_md(s['file_name'])}:{safe_md(s['sheet'])}:{s['row_number']}" for s in r["sources"])
-        lines.append("| " + " | ".join(safe_md(v) for v in (r["status"], json.dumps(r["key"], ensure_ascii=False), r["supplier"]["amount"] if r["supplier"] else None, r["internal"]["amount"] if r["internal"] else None, r["difference"], sources)) + " |")
+        key_text = "; ".join(f"{k}={safe_md(v)}" for k, v in (r["key"] or {}).items())
+        values = (r["status"], r["supplier"]["amount"] if r["supplier"] else None,
+                  r["internal"]["amount"] if r["internal"] else None, r["difference"])
+        lines.append("| " + " | ".join((safe_md(values[0]), key_text, *(safe_md(v) for v in values[1:]), sources)) + " |")
     lines.extend(["", "## 错误"] + [f"- {e['code']} ({e['side']}; {safe_md(e['source'])})" for e in report["errors"]])
     (output / "reconciliation.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     (output / "reconciliation.json").write_text(json.dumps(report, ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf-8")
