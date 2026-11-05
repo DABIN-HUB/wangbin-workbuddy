@@ -416,12 +416,12 @@ Connector `cli.json` 和 Skill manifest 现在显式固定：Python `>=3.12,<3.1
 
 两类报告均由既有 Phase 7I 新独立全链生成的 partial canonical 重新导出，未重复运行约 388/423 秒的计算链。新产物目录：
 
-`C:/Users/wangbin/AppData/Local/hermes/cache/scratch/phase7j-professional-narrative-final5/`
+`C:/Users/wangbin/AppData/Local/hermes/cache/scratch/phase7j-professional-narrative-final6/`
 
-- 屋顶 DOCX：`industrial_rooftop/SYNTHETIC-industrial_rooftop-光伏预可研报告.docx`，68,555 bytes，SHA-256 `e1ff70e4d9b094682ce7cbdfa12a2342376df4af5c8f40df260ee6438245bfa9`。
-- 地面 DOCX：`utility_scale_ground/SYNTHETIC-utility_scale_ground-光伏预可研报告.docx`，68,571 bytes，SHA-256 `91d8077cbda18e07203bbc9bcd009f0859f76874ca733abeca9f964e7265eafb`。
-- 屋顶测算 XLSX：112,961 bytes，SHA-256 `5d72fb66852e5ea6e58f856563036eea49ea509502e37b83290a90f4147a24cd`；屋顶来源 XLSX：104,081 bytes，SHA-256 `009422ede6ed033a5a4e327fc030e244e7842c78d23495ba718924f3c569a321`。
-- 地面测算 XLSX：112,469 bytes，SHA-256 `adb09e887231dc30840df9810bc0d4432a4015307e0a455f145a618edf12c5c2`；地面来源 XLSX：114,640 bytes，SHA-256 `fd9ba8e9674c948c06b65d09ab32ccad551e68e1c6a314a68772f891f96e79ae`。
+- 屋顶 DOCX：`industrial_rooftop/SYNTHETIC-industrial_rooftop-光伏预可研报告.docx`，68,475 bytes，SHA-256 `3a1d1dcb405cb587b077e81e7927cb2ff354cefdcf0a8dbe870d9a8af45bc6dc`。
+- 地面 DOCX：`utility_scale_ground/SYNTHETIC-utility_scale_ground-光伏预可研报告.docx`，68,467 bytes，SHA-256 `0085cbab98ebd46167f72f30d5433769fc43b1ceba18acb3d60df1409846db36`。
+- 屋顶测算 XLSX：112,960 bytes，SHA-256 `90bcafaa3710b70b21b79043637ad9906e2ca17013171c244b9c44348fd3355a`；屋顶来源 XLSX：104,081 bytes，SHA-256 `d92f9435f685e48bea76503447b95c82a2d9717db22741a8c141ee82d9cb9865`。
+- 地面测算 XLSX：112,473 bytes，SHA-256 `f69848855844007b01e44be4087068a44e17be1f052196d3008a3b0164bcb407`；地面来源 XLSX：114,640 bytes，SHA-256 `9c0e03c73dd84cbdffe0139bb5347dc3cbf114174a31027c63e7fff67088615e`。
 - 两类均生成 18/100/13/26 结构和 126 条内容检查记录；测算 XLSX 为 19 张表、来源 XLSX 为 10 张表，Excel 状态继续为 `NOT_TESTED_STATIC_SNAPSHOT`。
 - 两份 DOCX 均通过 `docx_validate.py`：`{"ok": true, "issues": []}`；静态 A4、D 风格、固定表格、TOC field、图表与 canonical identity 门禁均保留。
 

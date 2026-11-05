@@ -93,6 +93,15 @@ REPORT_PROFILES = {
     },
 }
 
+
+def _cover_project_name(pv_type: str) -> str:
+    """Keep internal run identifiers out of the reader-facing cover."""
+    return {
+        "industrial_rooftop": "工商业屋顶光伏项目（阶段性样件）",
+        "utility_scale_ground": "集中式地面光伏项目（阶段性样件）",
+    }[pv_type]
+
+
 _WINDOWS_RESERVED = {"CON", "PRN", "AUX", "NUL", *(f"COM{i}" for i in range(1, 10)), *(f"LPT{i}" for i in range(1, 10))}
 
 # D: white space, charcoal text, one restrained champagne-gold accent. Keep this
@@ -1468,7 +1477,7 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
     if any(path.exists() for path in (docx_path, xlsx_path, root / source_name)):
         raise ContractError("REPORT_OUTPUT_EXISTS")
     artifact_started = time.perf_counter()
-    files["F01"] = _write_docx(model, docx_path, display_name, expected_pv_type)
+    files["F01"] = _write_docx(model, docx_path, _cover_project_name(expected_pv_type), expected_pv_type)
     files["F01"]["generation_seconds"] = round(time.perf_counter() - artifact_started, 6)
     checklist = files["F01"].pop("content_checklist")
     coverage = _validate_checklist_coverage(checklist)
