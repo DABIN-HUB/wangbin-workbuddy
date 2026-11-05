@@ -44,6 +44,10 @@ python -m tooling release-check
 
 本地通过不等于 WorkBuddy 平台兼容。平台账号认证、ZIP 根层级试传、Skill 运行时、平台安装和实际对话调用在无授权环境下保持 `BLOCKED` 或 `NOT_TESTED`，详见 `docs/workbuddy-platform-spec.md` 和最终验收报告。
 
+## Solar PV 本地候选
+
+`packages/skills/wangbin-solar-pv-prestudy/` 与 `packages/connectors/wangbin-solar-pv-cli/` 是独立的 Phase 7I 本地候选，仅支持工商业屋顶和集中式地面光伏预可研报告。报告结构固定为 18 章/100 个章节子项/13 个附录/26 个附录子项，目标交付为 DOCX、真实 PDF、测算 XLSX 和来源/假设 XLSX；当前平台运行、可信内部 wheel 分发、PDF 转换和正式发布仍未验证。
+
 ## Phase 2 本地 CLI 候选（1.1.0）
 
 Phase 1 的 Skill ZIP 只含适配脚本，不包含引擎，不能直接交给普通用户作为可运行成品。Phase 2 从 `services/document-engine/` 构建真正含引擎与 CLI 的 Python wheel，并生成独立 Skill/CLI Connector 双候选包。Windows Python 3.12 干净 venv 已实际安装 wheel、下载依赖并验证七类文件；不依赖 `WANGBIN_ENGINE_SRC`。

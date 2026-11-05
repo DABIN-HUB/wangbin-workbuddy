@@ -13,7 +13,7 @@ examples_en:
   - "Generate a preliminary feasibility report for this industrial rooftop PV project"
   - "Generate a preliminary feasibility report for this utility-scale ground PV project"
   - "Check which inputs are missing from this solar PV project package"
-version: 0.1.2
+version: 0.1.3
 author: 星核实验室 StarCore Lab
 allowed-tools: Read, Bash, Write
 license_type: PROPRIETARY
@@ -30,7 +30,7 @@ license_status: REQUIRES_MANUAL_REVIEW
 
 当用户要求根据项目资料生成工商业屋顶或集中式地面光伏预可研报告时，按本技能执行。此技能只负责路由、资料边界、运行入口和结果交付；**不在大模型提示词中重新实现发电、消纳、收益、财务或敏感性计算**。
 
-## 当前支持范围（0.1.2 平台测试前候选）
+## 当前支持范围（0.1.3 平台测试前候选）
 
 本候选只支持以下两类独立报告，项目类型必须在输入中明确并由引擎校验：
 
@@ -39,7 +39,7 @@ license_status: REQUIRES_MANUAL_REVIEW
 
 报告固定结构为 **18章、100个章节子项、13个附录、26个附录子项**。目标交付为 DOCX、真实转换得到的 PDF、测算 XLSX 和来源/假设 XLSX；当前另生成 `canonical.json` 与逐项 `content-checklist.json` 供审阅。未取得合法依据的工程、政策、资源、合同或财务结论会保持 `UNKNOWN`/`BLOCKED`，不会由模型补写。
 
-当前明确**不支持**农光互补、渔光互补、光储、户用、车棚/BIPV 或其他未列出的项目类型；不得仅替换标题后套用上述两类模型。0.1.2 仍是平台测试前本地候选：WorkBuddy 私有安装、依赖解析、平台运行、平台文件输出和真实对话调用尚未验证；PDF 转换器缺失时保持 `PDF_RENDERER_UNAVAILABLE`，不得宣称完全可用或上传就绪。
+当前明确**不支持**农光互补、渔光互补、光储、户用、车棚/BIPV 或其他未列出的项目类型；不得仅替换标题后套用上述两类模型。0.1.3 仍是平台测试前本地候选：WorkBuddy 私有安装、依赖解析、平台运行、平台文件输出和真实对话调用尚未验证；PDF 转换器缺失时保持 `PDF_RENDERER_UNAVAILABLE`，不得宣称完全可用或上传就绪。
 
 ## 1. 先确认项目类型和授权范围
 

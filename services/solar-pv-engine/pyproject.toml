@@ -8,7 +8,7 @@ version = "0.3.1"
 description = "Local solar PV input contracts and versioned deterministic calculation layer"
 requires-python = ">=3.12,<3.15"
 authors = [{name = "wangbin"}]
-dependencies = ["jsonschema==4.26.0", "wangbin-document-cli==1.2.0", "openpyxl==3.1.5", "python-docx==1.2.0", "pdfminer.six==20260107", "defusedxml==0.7.1", "tzdata==2026.5; sys_platform == 'win32'"]
+dependencies = ["jsonschema==4.26.0", "wangbin-document-cli==1.2.0", "openpyxl==3.1.5", "python-docx==1.2.0", "Pillow>=10,<13", "pdfminer.six==20260107", "defusedxml==0.7.1", "tzdata==2026.5; sys_platform == 'win32'"]
 
 [project.scripts]
 wangbin-solar-pv-input = "wangbin_solar_pv.cli:main"

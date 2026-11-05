@@ -14,4 +14,4 @@
 
 本仓库不自动发布 wheel，也不写入索引凭据。两个固定版本必须先由权利人发布到 WorkBuddy 托管 Python 可访问的可信索引，或由用户提供经审核的私有索引；否则 `init` 会真实失败，Connector 必须保持未连接。不要把本地源码目录、IDE 路径或个人绝对路径写入 `cli.json`。
 
-请同时安装 `wangbin-solar-pv-prestudy` Skill 0.1.2；本 Connector 仅提供运行时，不替代 Skill 的输入契约和输出安全边界。
+请同时安装 `wangbin-solar-pv-prestudy` Skill 0.1.3；本 Connector 仅提供运行时，不替代 Skill 的输入契约和输出安全边界。

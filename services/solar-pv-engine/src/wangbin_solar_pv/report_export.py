@@ -11,7 +11,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from decimal import Decimal
 from hashlib import sha256
+from io import BytesIO
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -26,10 +28,12 @@ from docx.enum.table import WD_TABLE_ALIGNMENT, WD_CELL_VERTICAL_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
-from docx.shared import Cm, Pt
+from docx.shared import Cm, Pt, RGBColor
+from openpyxl.chart import LineChart, Reference
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import get_column_letter
+from PIL import Image, ImageDraw, ImageFont
 
 from .calculation.result_contract import validate_result
 from .errors import ContractError
@@ -90,6 +94,19 @@ REPORT_PROFILES = {
 }
 
 _WINDOWS_RESERVED = {"CON", "PRN", "AUX", "NUL", *(f"COM{i}" for i in range(1, 10)), *(f"LPT{i}" for i in range(1, 10))}
+
+# D: white space, charcoal text, one restrained teal accent.  Keep this
+# palette in the exporter rather than in the calculation layer: visual changes
+# must not alter canonical values or their identity.
+_D_STYLE = {
+    "ink": "1F2937",
+    "muted": "6B7280",
+    "accent": "9A7B4F",
+    "accent_light": "F4EEE7",
+    "line": "D9E2EC",
+    "surface": "F8FAFC",
+    "white": "FFFFFF",
+}
 
 
 @dataclass(frozen=True)
@@ -185,6 +202,85 @@ def _identity_rows(model: ReportModel) -> list[list[Any]]:
     return [[key, value, "CANONICAL", _raw_value(value)] for key, value in model.identity.items()]
 
 
+def _canonical_chart_specs(model: ReportModel) -> list[dict[str, Any]]:
+    """Return chartable series without deriving or filling any result data.
+
+    A chart is legal only for a calculated canonical metric with a finite
+    numeric array.  Missing, blocked, scalar, malformed, or untraceable
+    metrics deliberately produce no chart instead of a zero-filled visual.
+    """
+    specs: list[dict[str, Any]] = []
+    for metric_id, minimum_points, exact_points in (
+        ("energy.monthly.year.1", 2, 12),
+        ("energy.annual_array", 2, None),
+    ):
+        metric = model.metric(metric_id)
+        values = metric.get("value") if metric and metric.get("status") == "CALCULATED" else None
+        if (not metric or not isinstance(values, list) or len(values) < minimum_points
+                or (exact_points is not None and len(values) != exact_points)
+                or not metric.get("formula_id") or not metric.get("source_ids")):
+            continue
+        numeric: list[float] = []
+        for value in values:
+            if isinstance(value, bool) or not isinstance(value, (int, float, Decimal)):
+                break
+            number = float(value)
+            if not math.isfinite(number):
+                break
+            numeric.append(number)
+        else:
+            specs.append({
+                "metric_id": metric_id,
+                "values": numeric,
+                "unit": metric.get("unit") or "UNKNOWN",
+                "formula_id": metric["formula_id"],
+                "source_ids": tuple(metric["source_ids"]),
+            })
+    return specs
+
+
+def _chart_png(spec: dict[str, Any]) -> BytesIO:
+    """Render one canonical series as a small, dependency-local PNG."""
+    width, height = 1200, 500
+    image = Image.new("RGB", (width, height), f"#{_D_STYLE['white']}")
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.load_default()
+    title = f"CANONICAL  {spec['metric_id']}"
+    draw.text((72, 26), title, fill=f"#{_D_STYLE['ink']}", font=font)
+    left, top, right, bottom = 86, 62, width - 36, height - 68
+    values = spec["values"]
+    low, high = min(values), max(values)
+    if low == high:
+        padding = max(abs(low) * 0.05, 1.0)
+        low, high = low - padding, high + padding
+    else:
+        padding = (high - low) * 0.08
+        low, high = low - padding, high + padding
+    for index in range(5):
+        ratio = index / 4
+        y = int(bottom - ratio * (bottom - top))
+        draw.line((left, y, right, y), fill=f"#{_D_STYLE['line']}", width=1)
+        tick = high - ratio * (high - low)
+        draw.text((8, y - 7), f"{tick:,.0f}", fill=f"#{_D_STYLE['muted']}", font=font)
+    draw.line((left, top, left, bottom), fill=f"#{_D_STYLE['ink']}", width=2)
+    draw.line((left, bottom, right, bottom), fill=f"#{_D_STYLE['ink']}", width=2)
+    step = (right - left) / max(1, len(values) - 1)
+    points = []
+    for index, value in enumerate(values):
+        x = int(left + index * step)
+        y = int(bottom - ((value - low) / (high - low)) * (bottom - top))
+        points.append((x, y))
+        label = str(index + 1).zfill(2)
+        draw.text((x - 5, bottom + 12), label, fill=f"#{_D_STYLE['muted']}", font=font)
+    draw.line(points, fill=f"#{_D_STYLE['accent']}", width=4, joint="curve")
+    for x, y in points:
+        draw.ellipse((x - 5, y - 5, x + 5, y + 5), fill=f"#{_D_STYLE['accent']}")
+    stream = BytesIO()
+    image.save(stream, format="PNG", optimize=True)
+    stream.seek(0)
+    return stream
+
+
 def _header(ws, model: ReportModel, sheet_id: str, title: str) -> None:
     ws.append([sheet_id, title, "STATIC_SNAPSHOT", "草稿，资料不足，未决策就绪"])
     for key, value in model.identity.items():
@@ -197,18 +293,24 @@ def _header(ws, model: ReportModel, sheet_id: str, title: str) -> None:
 def _style_sheet(ws, header_row: int) -> None:
     ws.freeze_panes = f"A{header_row + 1}"
     ws.auto_filter.ref = f"A{header_row}:{get_column_letter(max(1, ws.max_column))}{ws.max_row}"
+    ws.sheet_view.showGridLines = False
+    ws.sheet_properties.tabColor = _D_STYLE["accent"]
     for cell in ws[1]:
-        cell.font = Font(bold=True, color="FFFFFF", size=12)
-        cell.fill = PatternFill("solid", fgColor="16446B")
+        cell.font = Font(bold=True, color=_D_STYLE["white"], size=11)
+        cell.fill = PatternFill("solid", fgColor=_D_STYLE["ink"])
     for cell in ws[header_row]:
-        cell.font = Font(bold=True, color="FFFFFF")
-        cell.fill = PatternFill("solid", fgColor="2B6D9A")
+        cell.font = Font(bold=True, color=_D_STYLE["ink"])
+        cell.fill = PatternFill("solid", fgColor=_D_STYLE["accent_light"])
+    ws.row_dimensions[1].height = 22
+    ws.row_dimensions[header_row].height = 20
     for column in range(1, ws.max_column + 1):
         width = min(55, max(14, max((len(_string(ws.cell(row, column).value)) for row in range(1, min(ws.max_row, 40) + 1)), default=14) + 2))
         ws.column_dimensions[get_column_letter(column)].width = width
-    for row in ws.iter_rows():
+    for row_index, row in enumerate(ws.iter_rows(), 1):
         for cell in row:
             cell.alignment = Alignment(vertical="top", wrap_text=True)
+            if row_index > header_row and row_index % 2 == 0:
+                cell.fill = PatternFill("solid", fgColor=_D_STYLE["surface"])
             if isinstance(cell.value, str):
                 cell.data_type = "s"
                 cell.number_format = "@"
@@ -225,6 +327,29 @@ def _xlsx_cell(value: Any) -> Any:
     if isinstance(value, (dict, list)):
         return dumps(value)
     return value
+
+
+def _embed_xlsx_chart(ws, spec: dict[str, Any], header_row: int, data_start: int, anchor: str) -> dict[str, Any]:
+    """Embed an Excel-native chart over cells already populated from canonical data."""
+    data_end = data_start + len(spec["values"]) - 1
+    chart = LineChart()
+    chart.title = f"Canonical · {spec['metric_id']}"
+    chart.y_axis.title = spec["unit"]
+    chart.x_axis.title = "序号"
+    chart.style = 13
+    chart.height = 7.0
+    chart.width = 15.5
+    chart.legend = None
+    chart.add_data(Reference(ws, min_col=2, min_row=header_row, max_row=data_end), titles_from_data=True)
+    chart.set_categories(Reference(ws, min_col=1, min_row=data_start, max_row=data_end))
+    series = chart.series[0]
+    series.graphicalProperties.line.solidFill = _D_STYLE["accent"]
+    series.graphicalProperties.line.width = 26000
+    series.marker.symbol = "circle"
+    series.marker.size = 5
+    ws.add_chart(chart, anchor)
+    return {"metric_id": spec["metric_id"], "points": len(spec["values"]), "sheet": ws.title,
+            "source": "CANONICAL", "formula_id": spec["formula_id"], "source_ids": list(spec["source_ids"])}
 
 
 def _sheet_data(model: ReportModel, sheet_id: str, title: str, pv_type: str) -> tuple[list[str], list[list[Any]]]:
@@ -292,6 +417,8 @@ def _sheet_data(model: ReportModel, sheet_id: str, title: str, pv_type: str) -> 
 def _write_model_xlsx(model: ReportModel, output: Path, pv_type: str) -> dict[str, Any]:
     book = Workbook()
     book.remove(book.active)
+    specs = {spec["metric_id"]: spec for spec in _canonical_chart_specs(model)}
+    charts: list[dict[str, Any]] = []
     for sheet_id, title in MODEL_SHEETS:
         ws = book.create_sheet(title)
         _header(ws, model, sheet_id, title)
@@ -301,6 +428,10 @@ def _write_model_xlsx(model: ReportModel, output: Path, pv_type: str) -> dict[st
         for row in rows:
             ws.append([_xlsx_cell(value) for value in row])
         _style_sheet(ws, header_row)
+        if sheet_id == "M06" and "energy.monthly.year.1" in specs:
+            charts.append(_embed_xlsx_chart(ws, specs["energy.monthly.year.1"], header_row, header_row + 1, "F2"))
+        elif sheet_id == "M07" and "energy.annual_array" in specs:
+            charts.append(_embed_xlsx_chart(ws, specs["energy.annual_array"], header_row, header_row + 1, "F2"))
     output_tmp = output.with_name("." + output.stem + ".tmp.xlsx")
     book.save(output_tmp)
     if output_tmp.stat().st_size > 32 * 1024 * 1024:
@@ -316,7 +447,8 @@ def _write_model_xlsx(model: ReportModel, output: Path, pv_type: str) -> dict[st
     finally:
         inspected.close()
     os.replace(output_tmp, output)
-    return {"path": output.name, "size": output.stat().st_size, "sha256": _sha256(output), "sheets": [name for _, name in MODEL_SHEETS], "mode": "STATIC_SNAPSHOT"}
+    return {"path": output.name, "size": output.stat().st_size, "sha256": _sha256(output),
+            "sheets": [name for _, name in MODEL_SHEETS], "mode": "STATIC_SNAPSHOT", "charts": charts}
 
 
 def _set_cell_shading(cell, fill: str) -> None:
@@ -330,22 +462,50 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
     if caption:
         paragraph = document.add_paragraph(caption)
         paragraph.style = "Caption"
+        for run in paragraph.runs:
+            run.font.color.rgb = RGBColor.from_string(_D_STYLE["muted"])
     table = document.add_table(rows=1, cols=len(headers))
     table.style = "Table Grid"
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     for index, header in enumerate(headers):
         cell = table.rows[0].cells[index]
         cell.text = _string(header)
-        _set_cell_shading(cell, "16446B")
+        _set_cell_shading(cell, _D_STYLE["ink"])
         for run in cell.paragraphs[0].runs:
             run.font.bold = True
-            run.font.color.rgb = None
-    for row in rows:
+            run.font.color.rgb = RGBColor.from_string(_D_STYLE["white"])
+            run.font.size = Pt(9)
+    for row_index, row in enumerate(rows, 1):
         cells = table.add_row().cells
         for index, value in enumerate(row):
             cells[index].text = _string(value)
             cells[index].vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.TOP
+            if row_index % 2 == 0:
+                _set_cell_shading(cells[index], _D_STYLE["surface"])
+            for run in cells[index].paragraphs[0].runs:
+                run.font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
+                run.font.size = Pt(9)
     document.add_paragraph()
+
+
+def _add_canonical_charts(document: Document, specs: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Embed visual evidence only when canonical chart specs are valid."""
+    if not specs:
+        return []
+    document.add_heading("Canonical 图表概览", level=1)
+    receipts = []
+    for spec in specs:
+        paragraph = document.add_paragraph()
+        paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        paragraph.add_run().add_picture(_chart_png(spec), width=Cm(16.4))
+        document.add_paragraph(
+            f"图表来源：{spec['metric_id']} · status=CALCULATED · formula_id={spec['formula_id']} · "
+            f"source_ids={', '.join(spec['source_ids'])}；未进行报告层重算。"
+        )
+        receipts.append({"metric_id": spec["metric_id"], "points": len(spec["values"]),
+                         "source": "CANONICAL", "formula_id": spec["formula_id"],
+                         "source_ids": list(spec["source_ids"]), "format": "PNG_EMBEDDED"})
+    return receipts
 
 
 def _add_toc(document: Document) -> None:
@@ -611,18 +771,22 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     profile = REPORT_PROFILES[pv_type]
     document = Document()
     section = document.sections[0]
-    section.top_margin = Cm(2.0); section.bottom_margin = Cm(2.0); section.left_margin = Cm(2.4); section.right_margin = Cm(2.0)
+    section.top_margin = Cm(1.7); section.bottom_margin = Cm(1.7); section.left_margin = Cm(2.2); section.right_margin = Cm(2.0)
     styles = document.styles
-    styles["Normal"].font.name = "等线"; styles["Normal"]._element.rPr.rFonts.set(qn("w:eastAsia"), "等线"); styles["Normal"].font.size = Pt(10.5)
+    styles["Normal"].font.name = "等线"; styles["Normal"]._element.rPr.rFonts.set(qn("w:eastAsia"), "等线"); styles["Normal"].font.size = Pt(10)
+    styles["Normal"].font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
     for heading in ("Heading 1", "Heading 2", "Heading 3"):
         styles[heading].font.name = "黑体"; styles[heading]._element.rPr.rFonts.set(qn("w:eastAsia"), "黑体")
-    styles["Normal"].paragraph_format.line_spacing = 1.25
+        styles[heading].font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
+    styles["Normal"].paragraph_format.line_spacing = 1.18
     header = section.header.paragraphs[0]; header.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    header.add_run(f"{profile['title']} · {model.result['project_id']} · DRAFT_PARTIAL").font.size = Pt(8)
-    title = document.add_paragraph(); title.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    run = title.add_run(profile["title"]); run.bold = True; run.font.size = Pt(22); run.font.name = "黑体"
-    subtitle = document.add_paragraph(); subtitle.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    subtitle.add_run("草稿，资料不足，未决策就绪\nDRAFT_PARTIAL").bold = True
+    header_run = header.add_run(f"{profile['title']} · {model.result['project_id']} · DRAFT_PARTIAL")
+    header_run.font.size = Pt(8); header_run.font.color.rgb = RGBColor.from_string(_D_STYLE["muted"])
+    title = document.add_paragraph(); title.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    run = title.add_run(profile["title"]); run.bold = True; run.font.size = Pt(20); run.font.name = "黑体"; run.font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
+    subtitle = document.add_paragraph(); subtitle.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    subtitle_run = subtitle.add_run("草稿，资料不足，未决策就绪  ·  DRAFT_PARTIAL")
+    subtitle_run.bold = True; subtitle_run.font.size = Pt(10); subtitle_run.font.color.rgb = RGBColor.from_string(_D_STYLE["accent"])
     document.add_paragraph()
     _add_table(document, ["项目身份", "值", "状态"], [["项目名称", display_name, "显示名；canonical未提供正式名称时使用project_id"], ["项目类型", model.result["pv_type"], "CANONICAL"], ["评价日期", model.result["evaluation_date"], "CANONICAL"], ["状态", model.result["status"], "上游结果"], *[[key, value, "CANONICAL"] for key, value in model.identity.items()]])
     document.add_paragraph("本文件为基于单一 canonical calculation result JSON 的开发样件。它不替代正式可研、设计、结构鉴定、并网意见、合同审核或投资决策。UNKNOWN、BLOCKED、NOT_IMPLEMENTED 和 NOT_TESTED 均保留原状态，不以零值代替。")
@@ -632,6 +796,8 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     _add_table(document, ["metric_id", "状态", "值/原因", "单位", "公式", "来源", "阻断原因", "canonical_raw"], _metric_rows(model, prefixes=("dc_capacity", "ac_capacity", "energy.year", "consumption.year", "revenue.year", "financial."))[:18], "表1 执行摘要指标（canonical原值）")
     _add_table(document, ["field_id", "值", "状态", "source_ids", "canonical_raw"], _normalized_rows(model, prefixes=profile["special_prefixes"])[:40], "表2 项目类型专属输入（canonical原值）")
     document.add_paragraph("初步结论：当前结果为 PARTIAL，且资料为 SYNTHETIC 场景。由于项目级真实资源、政策、报价及财务现金流证据未闭合，报告只能作为开发样件，不能据此作出真实投资决策。")
+    chart_specs = _canonical_chart_specs(model)
+    chart_receipts = _add_canonical_charts(document, chart_specs)
     checklist: list[dict[str, Any]] = []
     for chapter_id, chapter_title, items in CHAPTERS:
         document.add_heading(f"{chapter_id} {chapter_title}", level=1)
@@ -674,7 +840,9 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     tmp = output.with_name("." + output.name + ".tmp")
     document.save(tmp)
     os.replace(tmp, output)
-    return {"path": output.name, "size": output.stat().st_size, "sha256": _sha256(output), "chapters": 18, "chapter_items": 100, "appendices": 13, "appendix_items": 26, "content_checklist": checklist}
+    return {"path": output.name, "size": output.stat().st_size, "sha256": _sha256(output),
+            "chapters": 18, "chapter_items": 100, "appendices": 13, "appendix_items": 26,
+            "charts": chart_receipts, "content_checklist": checklist}
 
 
 def _sha256(path: Path) -> str:
@@ -732,7 +900,9 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
     source_name = f"{stem}-资料来源与假设清单.xlsx"
     if any(path.exists() for path in (docx_path, xlsx_path, root / source_name)):
         raise ContractError("REPORT_OUTPUT_EXISTS")
+    artifact_started = time.perf_counter()
     files["F01"] = _write_docx(model, docx_path, display_name, expected_pv_type)
+    files["F01"]["generation_seconds"] = round(time.perf_counter() - artifact_started, 6)
     checklist = files["F01"].pop("content_checklist")
     checklist_path = root / "content-checklist.json"
     checklist_payload = {
@@ -752,12 +922,16 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
     canonical_path.write_text(dumps(result) + "\n", encoding="utf-8")
     files["F06"] = {"path": canonical_path.name, "size": canonical_path.stat().st_size,
                      "sha256": _sha256(canonical_path), "status": "GENERATED"}
+    artifact_started = time.perf_counter()
     files["F03"] = _write_model_xlsx(model, xlsx_path, expected_pv_type)
+    files["F03"]["generation_seconds"] = round(time.perf_counter() - artifact_started, 6)
     source_started = time.perf_counter()
     source_receipt = create_source_workbook(model.result, catalog, Workspace(root), source_name, formula_map=formula_map)
     files["F04"] = {**source_receipt, "generation_seconds": round(time.perf_counter() - source_started, 6)}
     pdf_path = root / f"{stem}-光伏预可研报告.pdf"
+    artifact_started = time.perf_counter()
     files["F02"] = _convert_pdf(docx_path, pdf_path)
+    files["F02"]["generation_seconds"] = round(time.perf_counter() - artifact_started, 6)
     identity = model.identity
     for entry in files.values():
         if entry.get("status") != "BLOCKED":
@@ -769,6 +943,7 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
         "project_id": model.result["project_id"], "pv_type": model.result["pv_type"],
         "display_name": display_name, "name_mapping": name_mapping,
         "identity": identity, "files": files,
+        "charts": {"docx": files["F01"].get("charts", []), "xlsx": files["F03"].get("charts", [])},
         "coverage": {"chapters": 18, "chapter_items": 100, "appendices": 13, "appendix_items": 26, "model_sheets": 19, "source_sheets": 10},
         "pdf_status": files["F02"].get("status"),
         "calculation_status": model.result["status"], "four_file_gate": "BLOCKED" if files["F02"].get("status") != "GENERATED" else "NOT_FORMAL_ACCEPTANCE",

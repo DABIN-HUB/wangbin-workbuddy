@@ -3,7 +3,7 @@
 WorkBuddy Skill candidate for evidence-bounded solar PV preliminary feasibility reports.
 
 - Developer: 星核实验室 StarCore Lab
-- Version: 0.1.2
+- Version: 0.1.3
 - Scope: industrial rooftop and utility-scale ground projects only
 - Local status: candidate only; WorkBuddy platform installation and runtime not tested
 - Recommended delivery: pair this Skill with the `wangbin-solar-pv-cli` Python CLI Connector

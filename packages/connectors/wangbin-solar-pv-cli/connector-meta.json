@@ -7,7 +7,7 @@
   "description_en": "Provides isolated local Python calculation and report export for the solar PV pre-study Skill without uploading project files.",
   "source": "wangbin-solar-pv-cli",
   "type": "cli",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "minWorkbuddyVersion": "5.0.0",
   "examples_zh": [
     "检查光伏预可研计算 CLI 是否就绪",
@@ -16,5 +16,12 @@
   "examples_en": [
     "Check whether the solar PV pre-study CLI is ready",
     "Generate a rooftop or utility-scale ground PV pre-study report from authorized files"
-  ]
+  ],
+  "supported_pv_types": ["industrial_rooftop", "utility_scale_ground"],
+  "scope": {"chapters": 18, "chapter_items": 100, "appendices": 13, "appendix_items": 26},
+  "deliverables": {"F01": "DOCX", "F02": "PDF", "F03": "XLSX", "F04": "XLSX"},
+  "platform_status": "LOCAL_CANDIDATE_ONLY",
+  "platform_test_status": "NOT_TESTED",
+  "pdf_status": "BLOCKED_UNLESS_REAL_SOFFICE_OR_LIBREOFFICE",
+  "distribution_status": "REQUIRES_TRUSTED_INTERNAL_WHEEL_INDEX"
 }

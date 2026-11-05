@@ -329,3 +329,58 @@ Connector `cli.json` 和 Skill manifest 现在显式固定：Python `>=3.12,<3.1
 - 新候选归档：Skill `dist/wangbin-solar-pv-prestudy-0.1.2-skill-candidate.zip`，221,231 bytes，SHA-256 `42e66522bb923dd9cdf18180ff38dfca69b24a9ae09e49c6efe5ed935293fca7`；Connector `dist/wangbin-solar-pv-cli-0.1.1-connector-candidate.zip`，3,212 bytes，SHA-256 `766a3e7b24527373d46b56aa56bf33de8e7890f788358d7ef39c24e1b9b76d31`。两个 ZIP 的 `unzip -t` 通过。
 - 快速契约检查：`pytest -q tests/solar-pv/test_calculation_contract_cli.py`，3 passed，9.83 s；未运行完整 L2/L3。
 - 本轮未上传 WorkBuddy、未 push、未提交审核、未发布、未启动 Phase 8A–8G。用户确认报告内容、计算结果、Word 页面视觉和平台试运行前，不进入上传阶段。
+
+### 7I.8 异步内容审阅失败后的元数据收口（2026-11-05）
+
+- 报告内容质量异步审阅任务因上游响应超时失败，未将其当作独立质量通过证据；已有 `content-checklist.json` 仍只表示导出器生成的逐项记录，不替代页面视觉检查或专业人工审阅。
+- 为避免产品目录、Skill manifest 和 Connector 元数据只写运行依赖而遗漏能力边界，新增机器可读的支持类型、明确不支持类型、18/100/13/26 结构范围、F01–F04 交付映射、平台未测试、PDF 转换阻断和分发前置条件。
+- 由此产生新本地候选：Skill `0.1.3`，Connector `0.1.2`；旧的 0.1.2/0.1.1 候选保留。新 ZIP 均通过 `unzip -t`，且不包含 `__pycache__` 或 `.pyc`：
+  - `dist/wangbin-solar-pv-prestudy-0.1.3-skill-candidate.zip`，211,336 bytes，SHA-256 `5ae58f7314b21aadc7c1014135e99e31816ebda60696914de62bd2a9fb19c9c0`。
+  - `dist/wangbin-solar-pv-cli-0.1.2-connector-candidate.zip`，3,484 bytes，SHA-256 `4c289036e7a4ea58c8c8051f7274fc2bdb30eb98d4a6d4b6c536f1434badc4cb`。
+- 以上仍是本地候选；WorkBuddy 安装、依赖解析、Connector init、平台 Skill 调用、PDF、Excel 重算、视觉排版和正式发布继续保持 `NOT_TESTED`/`BLOCKED`，没有自动上传或发布。
+
+### 7I.9 新独立 SYNTHETIC 屋顶全链实跑（2026-11-05）
+
+- 在清理输出目录复用因素后，使用新的独占 scratch 根目录真实调用 `write_bundle()` 和 `run_project()`；本次不修改生产计算算法、不修改封存案例。
+- 屋顶项目实际完成并写出 Phase 3B、3C、3D、3E、`canonical.json`、`formula-execution.json` 和 `receipt.json`。运行耗时 `388.9396240999922` 秒，Bundle 行数为 `resource.timeseries=8760`、`load.series=8760`。
+- 全链结果不是 COMPLETE：3B=`PARTIAL`、3C=`PARTIAL`、3D=`CALCULATED_SYNTHETIC`、3E=`PARTIAL`，最终 canonical/receipt 状态均为 `PARTIAL`；结果哈希为 `11527aaefbb36c38674242029c07014fbbd9629f909f576be1dbe87d07df9ad1`。
+- 真实阻断来自现有引擎冻结边界，而非输出目录错误：3B/3C 保留 `NO_REAL_PROJECT_VERIFICATION`，3B 标记 `NO_PHASE3C_LOAD_OR_REVENUE_CALCULATIONS`，3C/3D 标记财务税费现金流/回报尚未实现；3E 标记 `PHASE3E_PARTIAL_MISSING_FROZEN_INPUTS`，缺少债务提款、利息/本金支付和融资费用等冻结输入，9 个财务公式保持阻断。
+- 该回执证明“新输入 Bundle → 既有 3B–3E 计算链 → partial canonical”真实可运行，但不能证明完整财务结论或正式项目评价已经完成；不得替代先前 `ARCHIVED_CANONICAL_EXPORT_ONLY` 报告包的状态。
+
+### 7I.10 新独立 SYNTHETIC 地面全链实跑（2026-11-05）
+
+- 在补齐冻结契约要求的 `tariff.market_series` 8760 行市场价格序列后，集中式地面项目真实完成 Phase 3B、3C、3D、3E 和 canonical 写出；本次仍未修改生产算法或封存案例。
+- 运行耗时 `423.8618110001553` 秒，Bundle 行数为 `resource.timeseries=8760`、`tariff.market_series=8760`；最终 receipt/canonical 状态为 `PARTIAL`，结果哈希为 `2d9289f3f6082f1cb189b09bbce7fe2f41d1cbb1276081eacd12fd0aa13164e9`。
+- 阶段状态：3B=`PARTIAL`、3C=`PARTIAL`、3D=`CALCULATED_SYNTHETIC`、3E=`PARTIAL`。3E 同样保留 `PHASE3E_PARTIAL_MISSING_FROZEN_INPUTS`，9 个财务公式因债务提款、利息/本金支付和融资费用等输入缺失而阻断。
+- 两类代表性项目现在均有新的独立 Bundle→3B→3C→3D→3E 实跑回执，但均不是 COMPLETE；报告仍不得把 partial canonical、SYNTHETIC 参数或归档导出材料写成真实项目完整财务结论。
+
+### 7I.11 partial canonical 到报告文件的真实导出（2026-11-05）
+
+- 使用上述两次新全链生成的 `canonical.json` 和对应 `formula-execution.json`，再次调用既有 `export_rooftop_report()` / `export_ground_report()`；这不是归档 canonical 导出，且没有改变报告或计算算法。
+- 两类均实际生成 DOCX、测算 XLSX、来源/假设 XLSX、`canonical.json`、`content-checklist.json` 和 manifest；每类均有 126 条逐项记录、19 张测算表和 10 张来源/假设表。
+- 两类 manifest 均如实标记：`status=DRAFT_PARTIAL`、`calculation_status=PARTIAL`、`pdf_status=BLOCKED`、`four_file_gate=BLOCKED`、`not_decision_ready=true`、`visual_layout_status=NOT_TESTED`。
+- 新审阅包已通过 ZIP 完整性检查：
+  - `reports/solar-pv/phase7i-chain-partial-review/industrial_rooftop-chain-partial-review.zip`，450,477 bytes，SHA-256 `7d76a995fd01fabe757a76b4f93bab505a7cadfb66a4c905541750a90813a3f3`。
+  - `reports/solar-pv/phase7i-chain-partial-review/utility_scale_ground-chain-partial-review.zip`，475,380 bytes，SHA-256 `69af7ce2dfd2314b8727fc3eb4cbedfe33ea287534340b03409adcb55956c00e`。
+
+### 7I.12 财务阻断逐公式审阅与 D 极简商务报告改造（2026-11-05）
+
+- 对当前生产编排、财务账簿、公式内核、结果契约和 Phase 3E 证据进行了逐项复核。以下 9 个项目级公式仍合法保持 `BLOCKED_MISSING_INPUT`，没有用默认零、账面残值、年度桶或方法参数伪造现金事件：
+  - `F-EQUITY-AVAILABLE-CASH-FLOW`：缺带主体、时点、来源和支付状态的权益现金瀑布及终期现金。
+  - `F-EQUITY-INVESTOR-CASH-FLOW`：缺股东实际出资、合法分配和退出收款事件。
+  - `F-CASH-FUNDING-BALANCE`：缺主体非受限期初现金和逐期所有者事件，不能把 `opening=0` 当银行事实。
+  - `F-DATED-NPV`：缺唯一事件 ID、日期/同日顺序、基准日和完整 dated cash-event 台账。
+  - `F-IRR-EQUITY`：上游投资者实际现金流未闭合，不能以权益可用现金替代；搜索域和根集证据也必须绑定。
+  - `F-LIFECYCLE-COST`：缺完整无杠杆成本税、终期净现金和补贴抵减边界。
+  - `F-LCOE`：缺已闭合生命周期成本及同期间、同计量边界的可交付电量。
+  - `F-BREAK-EVEN-PRICE`：缺价格域全链重算、全部分支覆盖和根集完整性证明，不能用样本插值。
+  - `F-INVESTMENT-HURDLE-GAP`：缺用户明确提供的同口径目标指标和方向。
+- 财务内核本身已提供相应数值/阻断状态处理；本轮没有把“产品层 `IMPLEMENTED_TESTED`”误写成“项目层已计算”。在取得合法来源、事件台账、口径、哈希和独立数值验证前，上述公式必须继续为 `BLOCKED`。
+- `project_runner.py` 新增了 Bundle 读取、3B、3C、3D、3E、canonical 序列化的分段耗时回执；报告导出器新增 DOCX、PDF、测算 XLSX、来源 XLSX 的生成耗时字段，未改变计算值或身份哈希。
+- `report_export.py` 已按 D 极简商务风格调整为白底、炭灰正文、克制青绿色强调色、留白和交替表格行；仅当 canonical 指标为 `CALCULATED`、为有限数值序列、带 `formula_id` 和 `source_ids` 时才生成图表，不对 `BLOCKED`/`UNKNOWN` 补零或绘制虚假数据。
+- 新导出实际验证：两类 DOCX 各嵌入 2 张 PNG 图表，测算 XLSX 各含 19 张工作表和 2 个 Excel 原生图表；图表分别绑定 `energy.monthly.year.1`（12 点）和 `energy.annual_array`（25 点），来源均为同一新 partial canonical。两类仍为 `DRAFT_PARTIAL`、PDF `BLOCKED`、`four_file_gate=BLOCKED`、`not_decision_ready=true`。
+- 为正式运行时提供图表依赖，`services/solar-pv-engine/pyproject.toml` 增加 `Pillow>=10,<13`；没有自动安装系统级 PDF 转换器。
+- 新 D 风格直接审阅包（来自新链 partial canonical，不是归档 canonical）：
+  - `C:/Users/wangbin/AppData/Local/hermes/cache/scratch/phase7i-d-report-review-4/industrial_rooftop-D-business-review.zip`，486,167 bytes，SHA-256 `db287a1744a8b243c19e172c90cadca10b3338bf291bdc567c1e9826d5567dcf`，ZIP `testzip()` 通过。
+  - `C:/Users/wangbin/AppData/Local/hermes/cache/scratch/phase7i-d-report-review-4/utility_scale_ground-D-business-review.zip`，509,906 bytes，SHA-256 `c8f9cd58fb67a825c9e8f2adc7d2b83c345b1d7752cc7b787e59d3028fa09a23`，ZIP `testzip()` 通过。
+- 本轮专项验证：`py_compile`、`git diff --check`、目录/版本测试 `63 passed`、计算契约测试 `3 passed`；两类实际报告导出均成功，PDF 转换器缺失按设计返回 `PDF_RENDERER_UNAVAILABLE`。没有运行完整 L3，也没有把未执行的页面视觉复核、PDF 转换、Excel 重算或 WorkBuddy 平台验收标记为通过。

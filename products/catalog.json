@@ -421,7 +421,7 @@
       ]
     },
     {
-      "active_version": "0.1.2",
+      "active_version": "0.1.3",
       "development": "Phase 7I local candidate; synthetic report content/export verified, platform and PDF renderer unverified",
       "id": "wangbin-solar-pv-prestudy",
       "license_policy": {
@@ -438,7 +438,7 @@
       "published_at": "UNKNOWN",
       "review_evidence": "No WorkBuddy platform receipt",
       "review_status": "NOT_TESTED",
-      "scenario": "根据授权项目资料生成工商业屋顶或集中式地面光伏预可研报告",
+      "scenario": "根据授权项目资料生成工商业屋顶或集中式地面光伏预可研报告；固定18章/100子项/13附录/26附录子项，交付DOCX、PDF、测算XLSX和来源XLSX",
       "status": "DEVELOPING",
       "target_users": "光伏项目开发与工程咨询人员",
       "type": "Skill",
@@ -461,11 +461,20 @@
           "sha256": "42e66522bb923dd9cdf18180ff38dfca69b24a9ae09e49c6efe5ed935293fca7",
           "source": "packages/skills/wangbin-solar-pv-prestudy",
           "version": "0.1.2"
+        },
+        {
+          "archive_evidence": "dist/wangbin-solar-pv-prestudy-0.1.3-skill-candidate.zip.manifest.json",
+          "candidate": "dist/wangbin-solar-pv-prestudy-0.1.3-skill-candidate.zip",
+          "date": "2026-11-05",
+          "published_at": "UNKNOWN",
+          "sha256": "5ae58f7314b21aadc7c1014135e99e31816ebda60696914de62bd2a9fb19c9c0",
+          "source": "packages/skills/wangbin-solar-pv-prestudy",
+          "version": "0.1.3"
         }
       ]
     },
     {
-      "active_version": "0.1.1",
+      "active_version": "0.1.2",
       "development": "Phase 7I CLI + Skill runtime candidate; trusted wheel distribution and platform runtime unverified",
       "id": "wangbin-solar-pv-cli",
       "license_policy": {
@@ -482,7 +491,7 @@
       "published_at": "UNKNOWN",
       "review_evidence": "No WorkBuddy platform receipt",
       "review_status": "NOT_TESTED",
-      "scenario": "为光伏预可研 Skill 提供隔离 Python 计算与报告导出运行时",
+      "scenario": "为光伏预可研 Skill 提供隔离 Python 计算与报告导出运行时，支持两类项目及18章/100子项/13附录/26附录子项交付",
       "status": "DEVELOPING",
       "target_users": "光伏项目开发与工程咨询人员",
       "type": "Connector",
@@ -505,6 +514,15 @@
           "sha256": "766a3e7b24527373d46b56aa56bf33de8e7890f788358d7ef39c24e1b9b76d31",
           "source": "packages/connectors/wangbin-solar-pv-cli",
           "version": "0.1.1"
+        },
+        {
+          "archive_evidence": "dist/wangbin-solar-pv-cli-0.1.2-connector-candidate.zip.manifest.json",
+          "candidate": "dist/wangbin-solar-pv-cli-0.1.2-connector-candidate.zip",
+          "date": "2026-11-05",
+          "published_at": "UNKNOWN",
+          "sha256": "4c289036e7a4ea58c8c8051f7274fc2bdb30eb98d4a6d4b6c536f1434badc4cb",
+          "source": "packages/connectors/wangbin-solar-pv-cli",
+          "version": "0.1.2"
         }
       ]
     }

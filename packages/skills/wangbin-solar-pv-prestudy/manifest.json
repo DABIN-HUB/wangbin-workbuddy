@@ -1,6 +1,6 @@
 {
   "id": "wangbin-solar-pv-prestudy",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "星核实验室 StarCore Lab",
   "kind": "workbuddy-skill-candidate",
   "license_type": "PROPRIETARY",
@@ -24,5 +24,12 @@
     ],
     "pdf": "optional-soffice-or-libreoffice"
   },
-  "platform_upload_status": "LOCAL_CANDIDATE_ONLY"
+  "platform_upload_status": "LOCAL_CANDIDATE_ONLY",
+  "supported_pv_types": ["industrial_rooftop", "utility_scale_ground"],
+  "unsupported_pv_types": ["agri_pv", "fishery_pv", "pv_storage", "public_rooftop", "residential_pv", "pv_carport_bipv", "desert_mining"],
+  "scope": {"chapters": 18, "chapter_items": 100, "appendices": 13, "appendix_items": 26},
+  "deliverables": {"F01": "DOCX", "F02": "PDF", "F03": "XLSX", "F04": "XLSX"},
+  "platform_test_status": "NOT_TESTED",
+  "pdf_status": "BLOCKED_UNLESS_REAL_SOFFICE_OR_LIBREOFFICE",
+  "blockers": ["trusted_internal_wheel_distribution", "WorkBuddy_platform_install_and_runtime_test", "PDF_renderer_availability"]
 }

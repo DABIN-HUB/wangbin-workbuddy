@@ -75,7 +75,9 @@ def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, ru
     if root.exists():
         raise ContractError("PROJECT_OUTPUT_EXISTS")
     # Validate the complete D3 input before creating any published output.
+    timing = {"bundle_read_seconds": perf_counter()}
     with read_bundle(bundle_dir, catalog=catalog, budget=budget) as bundle:
+        timing["bundle_read_seconds"] = perf_counter() - timing["bundle_read_seconds"]
         if dumps(bundle.base_export) != dumps(original):
             raise ContractError("PROJECT_BUNDLE_BASE_MISMATCH")
         root.mkdir(mode=0o700)
@@ -84,6 +86,7 @@ def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, ru
         try:
             stages = {}
             if generation_dir is None:
+                stage_started = perf_counter()
                 generate = generate_ground if pv_type == "utility_scale_ground" else generate_rooftop
                 generation = generate(original, config, catalog=catalog,
                                       output_dir=root / "3b", budget=budget, bundle=bundle)
@@ -91,29 +94,39 @@ def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, ru
                 generation_dir = root / "3b"
                 generation_result_hash = generation["result_hash"]
                 stages["3B"] = {"result_hash": generation_result_hash, "reuse": False}
+                timing["phase3b_seconds"] = perf_counter() - stage_started
             else:
                 generation_dir = Path(generation_dir)
                 stages["3B"] = {"result_hash": generation_result_hash, "reuse": True}
+                timing["phase3b_seconds"] = 0.0
             settle = settle_ground if pv_type == "utility_scale_ground" else settle_rooftop
+            stage_started = perf_counter()
             settlement = settle(original, config, generation_dir=generation_dir,
                                 generation_result_hash=generation_result_hash,
                                 catalog=catalog, output_dir=root / "3c", budget=budget,
                                 bundle=bundle)
             validate_result(settlement, catalog)
             stages["3C"] = {"result_hash": settlement["result_hash"], "reuse": False}
+            timing["phase3c_seconds"] = perf_counter() - stage_started
+            stage_started = perf_counter()
             financial = calculate_financial_ledger(original, config, settlement, catalog=catalog)
             validate_result(financial, catalog)
             write_financial_bundle(financial, root / "3d")
             stages["3D"] = {"result_hash": financial["result_hash"], "reuse": False}
+            timing["phase3d_seconds"] = perf_counter() - stage_started
+            stage_started = perf_counter()
             result = calculate_phase3e(financial, config, catalog)
             validate_result(result, catalog)
             write_phase3e_bundle(result, root / "3e")
             stages["3E"] = {"result_hash": result["result_hash"], "reuse": False}
+            timing["phase3e_seconds"] = perf_counter() - stage_started
+            stage_started = perf_counter()
             # The report layer consumes this one canonical 3E result, including
             # the upstream metric, source, method and formula snapshots.
             Workspace(root).create("canonical.json", result)
             mapping = formula_execution_map(result, catalog)
             Workspace(root).create("formula-execution.json", mapping)
+            timing["canonical_serialization_seconds"] = perf_counter() - stage_started
             scenarios = []
             if scenario_controls is not None:
                 scenarios.append({"scenario_id": "BASE", "run_id": next(
@@ -166,7 +179,8 @@ def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, ru
                        "canonical_result_hash": result["result_hash"],
                        "formula_mapping_hash": mapping["mapping_hash"],
                        "status": result["status"], "stages": stages,
-                       "scenarios": scenarios}
+                       "scenarios": scenarios,
+                       "timings_seconds": {key: str(value) for key, value in timing.items()}}
             receipt["receipt_hash"] = digest(receipt)
             receipt["elapsed_seconds"] = str(perf_counter() - started)
             Workspace(root).create("receipt.json", receipt)

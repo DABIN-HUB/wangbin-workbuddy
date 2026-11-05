@@ -1,5 +1,7 @@
 # wangbin 光伏预可研产品：长期冻结需求基线
 
+> 说明：本文是历史冻结基线和阶段性设计索引，不是当前平台产品状态。当前 Phase 7I 本地候选为 Skill `0.1.3` 与 CLI Connector `0.1.2`，仅支持工商业屋顶和集中式地面两类项目；平台安装/调用、PDF、真实项目和发布仍未通过。
+
 基线版本 `SOLAR-PV-1.0.0`，冻结日期2026-10-28。**当前Phase3C：PHASE3C_CONSUMPTION_REVENUE_PASS，仅表示本轮离线消纳及售电收益链已完成正式验收；Phase 3整体、真实项目、正式四文件、WorkBuddy平台和发布仍BLOCKED。** 九条原子公式497项专项、完整光伏回归及两类独立业务案例均有持久证据，见reports/solar-pv/phase3c-review-and-acceptance.md、phase3c-final-execution-evidence.json；不进入3D。
 
 历史Phase3B保持PHASE3B_ENERGY_ENGINE_PASS：冻结候选v3全量光伏3506 passed/0 failed/6 skipped，旧产品含Expert145/0/5；27条工程公式独立数值通过，两类1MWp/25年SYNTHETIC能源案例、四种全年时序及跨年时区实跑通过。详见reports/solar-pv/phase3b-review-and-acceptance.md、phase3b-final-execution-evidence.json及25-phase3b-runtime-and-phase3c-handoff.md。历史通过数不能充作本轮3C验收；这不是Phase3整体/财务/四文件/真实项目/WorkBuddy通过。
