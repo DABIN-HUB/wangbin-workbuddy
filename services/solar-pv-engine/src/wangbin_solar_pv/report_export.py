@@ -545,19 +545,49 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
         for column, width in enumerate(widths_cm):
             for cell in table.columns[column].cells:
                 cell.width = Cm(width)
+    tbl_width = sum(widths_cm) if widths_cm else 0
+    if tbl_width:
+        tbl_w = tbl_pr.first_child_found_in("w:tblW")
+        if tbl_w is None:
+            tbl_w = OxmlElement("w:tblW")
+            tbl_pr.insert(0, tbl_w)
+        tbl_w.set(qn("w:w"), str(int(tbl_width * 567)))
+        tbl_w.set(qn("w:type"), "dxa")
     for index, header in enumerate(headers):
         cell = table.rows[0].cells[index]
         cell.text = _string(header)
         _set_cell_shading(cell, _D_STYLE["ink"])
+        cell_pr = cell._tc.get_or_add_tcPr()
+        margins = cell_pr.first_child_found_in("w:tcMar")
+        if margins is None:
+            margins = OxmlElement("w:tcMar")
+            cell_pr.append(margins)
+        for side in ("top", "start", "bottom", "end"):
+            margin = OxmlElement(f"w:{side}")
+            margin.set(qn("w:w"), "72")
+            margin.set(qn("w:type"), "dxa")
+            margins.append(margin)
         for run in cell.paragraphs[0].runs:
             run.font.bold = True
             run.font.color.rgb = RGBColor.from_string(_D_STYLE["white"])
             run.font.size = Pt(font_size)
+    header_pr = table.rows[0]._tr.get_or_add_trPr()
+    header_pr.append(OxmlElement("w:tblHeader"))
     for row_index, row in enumerate(rows, 1):
         cells = table.add_row().cells
         for index, value in enumerate(row):
             cells[index].text = _string(value)
             cells[index].vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.TOP
+            cell_pr = cells[index]._tc.get_or_add_tcPr()
+            margins = cell_pr.first_child_found_in("w:tcMar")
+            if margins is None:
+                margins = OxmlElement("w:tcMar")
+                cell_pr.append(margins)
+            for side in ("top", "start", "bottom", "end"):
+                margin = OxmlElement(f"w:{side}")
+                margin.set(qn("w:w"), "72")
+                margin.set(qn("w:type"), "dxa")
+                margins.append(margin)
             if row_index % 2 == 0:
                 _set_cell_shading(cells[index], _D_STYLE["surface"])
             for run in cells[index].paragraphs[0].runs:
@@ -567,7 +597,7 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
                 cells[index].width = Cm(widths_cm[index])
         tr_pr = cells[0]._tc.getparent().get_or_add_trPr()
         tr_pr.append(OxmlElement("w:cantSplit"))
-    document.add_paragraph()
+
 
 
 def _add_canonical_charts(document: Document, specs: list[dict[str, Any]], source_map: dict[str, str]) -> list[dict[str, Any]]:
@@ -595,7 +625,7 @@ def _add_toc(document: Document) -> None:
     paragraph = document.add_paragraph()
     paragraph.paragraph_format.space_after = Pt(6)
     run = paragraph.add_run()
-    begin = OxmlElement("w:fldChar"); begin.set(qn("w:fldCharType"), "begin")
+    begin = OxmlElement("w:fldChar"); begin.set(qn("w:fldCharType"), "begin"); begin.set(qn("w:dirty"), "true")
     instruction = OxmlElement("w:instrText"); instruction.set(qn("xml:space"), "preserve"); instruction.text = 'TOC \\o "1-3" \\h \\z \\u'
     separate = OxmlElement("w:fldChar"); separate.set(qn("w:fldCharType"), "separate")
     end = OxmlElement("w:fldChar"); end.set(qn("w:fldCharType"), "end")
@@ -617,6 +647,28 @@ def _paragraph_signature(text: str) -> str:
     text = re.sub(r"S\d{2}", "来源", text)
     text = re.sub(r"\d+(?:\.\d+)?", "数值", text)
     return text
+
+
+def _validate_checklist_coverage(checklist: list[dict[str, Any]]) -> dict[str, int]:
+    """Validate the frozen chapter/appendix ID coverage against generated records."""
+    expected = {f"{chapter_id}.{number:02d}"
+                for chapter_id, _title, items in CHAPTERS
+                for number, _item in enumerate(items, 1)}
+    expected.update({f"{app_id}.{number:02d}"
+                     for app_id, _title in APPENDICES
+                     for number in (1, 2)})
+    actual = [str(record.get("id", "")) for record in checklist]
+    actual_set = set(actual)
+    if len(actual) != len(actual_set) or actual_set != expected:
+        missing = sorted(expected - actual_set)
+        unexpected = sorted(actual_set - expected)
+        raise ContractError(f"REPORT_CHECKLIST_COVERAGE:{missing[:5]}:{unexpected[:5]}")
+    return {
+        "chapters": len(CHAPTERS),
+        "chapter_items": sum(len(items) for _chapter_id, _title, items in CHAPTERS),
+        "appendices": len(APPENDICES),
+        "appendix_items": len(APPENDICES) * 2,
+    }
 
 
 def _scan_duplicate_paragraphs(document: Document, checklist: list[dict[str, Any]]) -> dict[str, Any]:
@@ -646,7 +698,13 @@ def _scan_duplicate_paragraphs(document: Document, checklist: list[dict[str, Any
     approximate_signatures = {item["signature"] for item in approximate_findings}
     for record in checklist:
         content = str(record.get("content_summary") or "")
+        record["summary_length"] = len(content)
         record["duplicate_template"] = content[:240] in exact_texts or _paragraph_signature(content)[:240] in approximate_signatures
+        record["duplicate_group"] = None
+        if content[:240] in exact_texts:
+            record["duplicate_group"] = "exact-paragraph"
+        elif _paragraph_signature(content)[:240] in approximate_signatures:
+            record["duplicate_group"] = "approximate-template"
     return {
         "paragraph_count_scanned": len(paragraphs),
         "exact_duplicate_count": len(exact_findings),
@@ -1055,7 +1113,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             status_line.add_run(f"状态依据（{item_id}）：").bold = True
             status_line.add_run(f"{evidence['state_reason'][:300]}；本项主题为{evidence['topic'].replace('“', '').replace('”', '')}；仅读取 canonical，不在报告层重算。")
             checklist.append({"id": item_id, "title": item,
-                              "content_summary": evidence["summary"], "input_field_ids": evidence["field_ids"],
+                              "content_summary": evidence["summary"][:600], "input_field_ids": evidence["field_ids"],
                               "metric_ids": evidence["metric_ids"], "source_ids": evidence["source_ids"],
                               "professional_content_status": evidence["state"], "structure_status": "GENERATED",
                               "duplicate_template": False, "wrong_evidence_binding": False,
@@ -1084,7 +1142,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             p.add_run(f"状态（{item_id}）：").bold = True
             p.add_run(f"{evidence['state']}；核对重点为{evidence['focus'][:240]}。详细内容见资料来源与假设清单.xlsx，不把展示数值解释为资料闭合。")
             checklist.append({"id": item_id, "title": item_title,
-                              "content_summary": evidence["summary"], "input_field_ids": evidence["field_ids"],
+                              "content_summary": evidence["summary"][:600], "input_field_ids": evidence["field_ids"],
                               "metric_ids": evidence["metric_ids"], "source_ids": sorted({source for row in evidence["rows"] for source in row["source_ids"]}),
                               "professional_content_status": evidence["state"], "structure_status": "GENERATED",
                               "duplicate_template": False, "wrong_evidence_binding": False,
@@ -1103,12 +1161,13 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     fld = OxmlElement("w:fldSimple")
     fld.set(qn("w:instr"), "PAGE")
     footer._p.append(fld)
+    coverage = _validate_checklist_coverage(checklist)
     duplicate_scan = _scan_duplicate_paragraphs(document, checklist)
     tmp = output.with_name("." + output.name + ".tmp")
     document.save(tmp)
     os.replace(tmp, output)
     return {"path": output.name, "size": output.stat().st_size, "sha256": _sha256(output),
-            "chapters": 18, "chapter_items": 100, "appendices": 13, "appendix_items": 26,
+            **coverage,
             "charts": chart_receipts, "content_checklist": checklist,
             "duplicate_scan": duplicate_scan, "toc_status": "FIELD_REQUIRES_RENDER_REFRESH",
             "page_size": "A4", "table_policy": "COMPACT_SUMMARY_AND_XLSX_TRACEABILITY"}
@@ -1173,15 +1232,16 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
     files["F01"] = _write_docx(model, docx_path, display_name, expected_pv_type)
     files["F01"]["generation_seconds"] = round(time.perf_counter() - artifact_started, 6)
     checklist = files["F01"].pop("content_checklist")
+    coverage = _validate_checklist_coverage(checklist)
     duplicate_scan = files["F01"].get("duplicate_scan", {})
     checklist_path = root / "content-checklist.json"
     checklist_payload = {
         "schema_version": "phase7i-content-checklist-v1",
         "project_id": model.result["project_id"], "pv_type": model.result["pv_type"],
         "identity": model.identity,
-        "coverage": {"chapters": 18, "chapter_items": 100, "appendices": 13, "appendix_items": 26},
+        "coverage": coverage,
         "records": checklist,
-        "quality_axes": {"structure_status": "GENERATED", "substantive_content_status": "RECORDED_PER_ITEM",
+        "quality_axes": {"structure_status": "GENERATED", "coverage_status": "PASS", "substantive_content_status": "RECORDED_PER_ITEM",
                          "legal_evidence_status": "SYNTHETIC_OR_SOURCE_BOUND", "visual_layout_status": "NOT_TESTED",
                          "no_duplicate_template_abuse": duplicate_scan.get("status", "UNKNOWN")},
         "duplicate_scan": duplicate_scan,
@@ -1217,7 +1277,7 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
         "display_name": display_name, "name_mapping": name_mapping,
         "identity": identity, "files": files,
         "charts": {"docx": files["F01"].get("charts", []), "xlsx": files["F03"].get("charts", [])},
-        "coverage": {"chapters": 18, "chapter_items": 100, "appendices": 13, "appendix_items": 26, "model_sheets": 19, "source_sheets": 10},
+        "coverage": {**coverage, "model_sheets": 19, "source_sheets": 10},
         "pdf_status": files["F02"].get("status"),
         "quality_gates": {
             "PAGE_SIZE_A4": files["F01"].get("page_size", "UNKNOWN"),
