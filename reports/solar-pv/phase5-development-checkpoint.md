@@ -43,7 +43,7 @@
 | `SYNTHETIC-industrial_rooftop-光伏预可研报告.docx` | GENERATED | 46,474 | `1caa2674fdbad4e07f404709c7ea0d2e65f31a218c640c02dda41dd6eadc3dc1` |
 | `SYNTHETIC-industrial_rooftop-光伏预可研报告.pdf` | BLOCKED | — | — |
 | `SYNTHETIC-industrial_rooftop-测算模型.xlsx` | GENERATED, `STATIC_SNAPSHOT` | 56,318 | `824e88cdc0121f498bff3778246f951f30a9184ca23a3dd94887e7aa5b88798c` |
-| `SYNTHETIC-industrial_rooftop-资料来源与假设清单.xlsx` | GENERATED, `DRAFT_PARTIAL` | 77,669 | `93b079a0956c73ca4d593976a954675872b0b5c8b9a8cb00870893e197ead5ae` |
+| `SYNTHETIC-industrial_rooftop-资料来源与假设清单.xlsx` | GENERATED, `DRAFT_PARTIAL` | 77,670 | `93b079a0956c73ca4d593976a954675872b0b5c8b9a8cb00870893e197ead5ae` |
 | `manifest.json` | GENERATED | 4,042 | `7e753e759e7b60103d63b7166133ac3b6e64a6674c3701cca30f93b9aa367f79` |
 
 来源 XLSX 的既有 Phase 4 样件此前为 77,673 字节；Phase 5 复用生成器后重新写入时，身份和输出文件保持同一 canonical 绑定，不能用旧哈希替代当前样件哈希。
