@@ -70,7 +70,7 @@
 ## 实际验证
 
 - `python -m compileall -q services/solar-pv-engine/src/wangbin_solar_pv`：通过。
-- 直接相关快速回归：`tests/solar-pv/test_phase4_data_adaptation.py tests/solar-pv/test_phase3g_project_runner.py`，`9 passed`，约 `33.74s`。
+- 直接相关快速回归：`tests/solar-pv/test_phase4_data_adaptation.py tests/solar-pv/test_phase3g_project_runner.py`，`9 passed`，约 `33.40s`。
 - CLI 单项目导出：成功，报告导出总耗时约 `1.986341s`；其中来源 XLSX 生成约 `1.039194s`。该耗时为本机开发样件实测，不等于完整项目计算耗时或用户 Skill 调用耗时。
 - 完整 L2/L3、长时间财务求根回放、真实数据源访问、PDF 转换、电子表格实际重算、全页视觉复核、WorkBuddy 平台验收：`NOT_TESTED` 或 `BLOCKED`，未以历史结果替代本轮证据。
 
