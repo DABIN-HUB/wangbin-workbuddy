@@ -437,11 +437,11 @@
       "validation_metrics": "products/metrics.json",
       "versions": [
         {
-          "archive_evidence": "UNKNOWN",
-          "candidate": "UNKNOWN",
+          "archive_evidence": "dist/wangbin-supplier-reconciliation-0.1.0-skill-candidate.zip",
+          "candidate": "dist/wangbin-supplier-reconciliation-0.1.0-skill-candidate.zip",
           "date": "UNKNOWN",
           "published_at": "UNKNOWN",
-          "sha256": "UNKNOWN",
+          "sha256": "232be0d241179f18e2190b5622e7482d8522ac55e09ee18fb877c95d69e35412",
           "source": "packages/skills/wangbin-supplier-reconciliation",
           "version": "0.1.0"
         }
