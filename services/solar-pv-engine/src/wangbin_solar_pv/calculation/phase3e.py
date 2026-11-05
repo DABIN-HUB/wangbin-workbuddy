@@ -56,6 +56,39 @@ def _record(result, catalog, metric_id, formula_id, values, unit, period, *, opt
     return outcome
 
 
+def _record_sourced_project_irr(result, catalog, methods, cash, period):
+    """Use only the declared project basis and fully sourced D2 root controls."""
+    ids = ("irr.method", "irr.minimum_rate", "irr.maximum_rate",
+           "irr.root_tolerance", "irr.maximum_degree")
+    parameters = methods.to_dict()["parameters"]
+    metric = next(item for item in result["results"]["metrics"]
+                  if item["metric_id"] == "financial.phase3e.project_irr")
+    missing = [parameter_id for parameter_id in ids if parameter_id not in parameters]
+    unreviewed = [parameter_id for parameter_id in ids if parameter_id in parameters and
+                  (parameters[parameter_id]["status"] not in {"ASSUMED", "VERIFIED"} or
+                   parameters[parameter_id]["license_status"] != "AUTHORIZED")]
+    if missing or unreviewed:
+        metric.update(status="BLOCKED_MISSING_INPUT" if missing else "BLOCKED_METHOD_REVIEW",
+                      reason="IRR_METHOD_CONTROLS_INCOMPLETE" if missing else "IRR_METHOD_SOURCE_UNVERIFIED",
+                      details={"missing_method_parameter_ids": missing,
+                               "unreviewed_method_parameter_ids": unreviewed})
+        return
+    maximum_degree = methods.require("irr.maximum_degree")
+    if maximum_degree < len(cash) - 1:
+        metric.update(status="BLOCKED_METHOD_REVIEW", reason="IRR_DEGREE_BUDGET",
+                      details={"financial_end_year": len(cash) - 1, "maximum_degree": maximum_degree})
+        return
+    result["results"]["metrics"].remove(metric)
+    _record(result, catalog, "financial.phase3e.project_irr", "F-IRR-PROJECT", {
+        "finance.irr_search_domain": {
+            "minimum": methods.require("irr.minimum_rate"),
+            "maximum": methods.require("irr.maximum_rate"),
+        },
+        "finance.project_irr_cash_flow": cash,
+        "time.financial_end_year": len(cash) - 1,
+    }, "1", period, options={"root_tolerance": methods.require("irr.root_tolerance")})
+
+
 def _ledger_vectors(annual):
     rows = annual[1:]
     missing = {}
@@ -390,10 +423,13 @@ def calculate_sourced_project_npv(carrier, source_documents, exported, methods, 
                                                   if totals[index] < 0],
         })
 
-    # IRR still lacks a sourced D2 domain here; worst-year requires an
-    # explicitly sourced comparison scope and a result-representation review.
+    # Unspecified IRR parameters block this project's result, not the existing
+    # kernel's product-level implementation; no default domain is inferred.
+    _record_sourced_project_irr(result, catalog, methods, selected, span)
+    # The worst-year formula still needs an approved year scope and numeric
+    # result representation; its existing blocked integration is unchanged.
     for metric in result["results"]["metrics"]:
-        if metric["metric_id"] in {"financial.phase3e.project_irr", "financial.phase3e.worst_cash_year"}:
+        if metric["metric_id"] == "financial.phase3e.worst_cash_year":
             metric.update(status="NOT_IMPLEMENTED", reason="PROJECT_RETURN_INTEGRATION_NOT_IN_R1_3_SCOPE",
                           details={"upstream_project_cash_flow": "CALCULATED"})
     result["evidence"]["phase3e-financial"]["selected_basis"] = chosen

@@ -1,0 +1,37 @@
+{
+  "checks": {
+    "ground_export_kwh": "87600.0000",
+    "ground_interest_observed": "56.50",
+    "ground_sales_expected": "35040.00000",
+    "ground_sales_observed": "35040.0",
+    "rooftop_base_interest_expected": "56.50",
+    "rooftop_base_interest_observed": "56.50",
+    "rooftop_base_sales_expected": "35040.000",
+    "rooftop_base_sales_observed": "35040.0",
+    "rooftop_export_kwh": "87600.00",
+    "rooftop_opt_sales_expected": "52560.000",
+    "rooftop_opt_sales_observed": "52560.0",
+    "rooftop_pess_interest_expected": "113.00",
+    "rooftop_pess_interest_observed": "113.00",
+    "rooftop_pess_opex_net_expected": "2E+2",
+    "rooftop_pess_opex_net_observed": "200",
+    "rooftop_sales_delta_expected": "17520.000",
+    "rooftop_sales_delta_observed": "17520.0"
+  },
+  "oracle": "Independent Decimal arithmetic over sourced prices, fixed capex/debt inputs and real physical export; no production money kernel used for expected amounts",
+  "scope": "ONE_YEAR_SYNTHETIC_ONLY_NOT_SEALED_PROJECT_ACCEPTANCE",
+  "source_inputs": [
+    "rooftop/input-export.json",
+    "rooftop/scenarios.json",
+    "ground/input-export.json"
+  ],
+  "upstream_result_sha256": {
+    "ground_base_3c": "a46dbba0a013e5ea79ac1139cd9362705c8944e9b6c550e71772d132eba6a92f",
+    "ground_base_3d": "84aad97140ba76b33c4b66f2617fb1d68ba108502761250961af73e7f17b306d",
+    "rooftop_base_3c": "d1d8d058833727defd78c813510e32dd57fe1f2e2ef7e52820962f61ae993a3e",
+    "rooftop_base_3d": "e3ec2e6b35f9e1b0878404c1b70bfe98a054d02c9c9a90b999245e7101109809",
+    "rooftop_opt_3c": "06471fa4b287bb28cc086228eadff48d205b69f5acfc10e5eb6d9abe50f9bf5d",
+    "rooftop_pess_3d": "12d63dbe410feac3e1dfcff9a0792b26f2d1a1fe9a8b372b230519e04428b9af"
+  },
+  "upstream_retention": "Original 3B/3C/3D full row trace is in uniquely named Hermes scratch workspaces, not the tracked evidence bundle. Scratched data may expire; a complete replay/acceptance requires retained D3 blocks and validated 3B receipts."
+}

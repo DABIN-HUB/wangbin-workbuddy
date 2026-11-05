@@ -244,7 +244,7 @@ def _metric(result, catalog, mid, value, unit, formula, boundary, period, *, det
         "upstream_metric_ids": [], "details": details or {}})
 
 
-def _calculate(exported, methods, *, catalog, output_dir, budget, bundle, category):
+def _calculate(exported, methods, *, catalog, output_dir, budget, bundle, category, scenario_id="BASE"):
     if type(budget) is not BundleBudget:
         raise ContractError("BUNDLE_BUDGET")
     budget.__post_init__()
@@ -270,7 +270,7 @@ def _calculate(exported, methods, *, catalog, output_dir, budget, bundle, catego
                 raise ContractError("BLOCKED_METHOD_REVIEW", "time.horizon_basis")
             result = empty_result(project_id=inputs.validated.project.project_id,
                 pv_type=inputs.pv_type, evaluation_date=inputs.evaluation_date.isoformat(),
-                currency=inputs.value("project.currency"), scenario_id="BASE",
+                currency=inputs.value("project.currency"), scenario_id=scenario_id,
                 input_hash="pending", source_snapshot_id="pending",
                 baseline_hashes=catalog.baseline_hashes, definition_version=catalog.definition_version,
                 definition_hash=catalog.definition_hash)
@@ -372,7 +372,8 @@ def _calculate(exported, methods, *, catalog, output_dir, budget, bundle, catego
                     writer.add(m)
             # Revalidation includes ALL datasets, complete canonical hashes and
             # full source snapshots before any complete result can be published.
-            identity = calculation_identity(inputs.validated, inputs.methods, catalog, datasets=bundle)
+            identity = calculation_identity(inputs.validated, inputs.methods, catalog, datasets=bundle,
+                                            scenario={"scenario_id": scenario_id})
             result["input_hash"] = identity["input_hash"]
             result["source_snapshot_id"] = identity["source_snapshot_id"]
             result["source_snapshot"] = identity["source_snapshot"]
@@ -480,11 +481,11 @@ def _calculate(exported, methods, *, catalog, output_dir, budget, bundle, catego
         raise
 
 
-def calculate_rooftop(exported, methods, *, catalog, output_dir, budget, bundle=None):
+def calculate_rooftop(exported, methods, *, catalog, output_dir, budget, bundle=None, scenario_id="BASE"):
     return _calculate(exported, methods, catalog=catalog, output_dir=output_dir,
-                      budget=budget, bundle=bundle, category="industrial_rooftop")
+                      budget=budget, bundle=bundle, category="industrial_rooftop", scenario_id=scenario_id)
 
 
-def calculate_ground(exported, methods, *, catalog, output_dir, budget, bundle=None):
+def calculate_ground(exported, methods, *, catalog, output_dir, budget, bundle=None, scenario_id="BASE"):
     return _calculate(exported, methods, catalog=catalog, output_dir=output_dir,
-                      budget=budget, bundle=bundle, category="utility_scale_ground")
+                      budget=budget, bundle=bundle, category="utility_scale_ground", scenario_id=scenario_id)
