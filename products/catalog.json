@@ -419,6 +419,33 @@
           "version": "0.1.3"
         }
       ]
+    },
+    {
+      "active_version": "0.1.0",
+      "development": "Local supplier reconciliation MVP; independent QA pending",
+      "id": "wangbin-supplier-reconciliation",
+      "maintenance": "UNKNOWN",
+      "name": "供应商双边对账",
+      "published_at": "UNKNOWN",
+      "review_evidence": "No platform evidence",
+      "review_status": "NOT_TESTED",
+      "scenario": "Compare authorized supplier and internal line items by deterministic business key",
+      "status": "DEVELOPING",
+      "target_users": "采购及财务对账人员",
+      "test_path": "tests/test_supplier_reconciliation.py",
+      "type": "Skill",
+      "validation_metrics": "products/metrics.json",
+      "versions": [
+        {
+          "archive_evidence": "UNKNOWN",
+          "candidate": "UNKNOWN",
+          "date": "UNKNOWN",
+          "published_at": "UNKNOWN",
+          "sha256": "UNKNOWN",
+          "source": "packages/skills/wangbin-supplier-reconciliation",
+          "version": "0.1.0"
+        }
+      ]
     }
   ],
   "schema_version": 1

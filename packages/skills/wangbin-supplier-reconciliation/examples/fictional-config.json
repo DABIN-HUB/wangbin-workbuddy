@@ -1,0 +1,1 @@
+{"supplier_input":{"path":"packages/skills/wangbin-supplier-reconciliation/examples/fictional-supplier.csv","format":"csv","sheet":null,"encoding":"utf-8"},"internal_input":{"path":"packages/skills/wangbin-supplier-reconciliation/examples/fictional-internal.csv","format":"csv","sheet":null,"encoding":"utf-8"},"amount_tolerance":"0.01","output_dir":"supplier-reconciliation-out"}
