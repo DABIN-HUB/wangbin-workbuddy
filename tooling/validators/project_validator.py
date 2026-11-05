@@ -13,11 +13,11 @@ from . import Finding, ValidationReport
 from .secret_scanner import scan_for_secrets
 
 SEMVER = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?$")
-_PLACEHOLDER = re.compile(r"(?i)\b(?:todo|tbd|placeholder|sample|example|待补充|待完善|占位|示例)\b")
+_PLACEHOLDER = re.compile(r"(?i)(?:\b(?:todo|tbd|placeholder|sample|example)\b|待补充|待完善|占位|示例)")
 _INTERNAL = re.compile(r"(?i)(?:\b(?:api|json|yaml|yml|cli|sdk|regex|stack trace|traceback|exception|bash|powershell|python|pip|git)\b|http\s*\d{3}|error\s*code|[A-Za-z]:[\\/]|/(?:home|usr|tmp|var)/)")
 _ABSOLUTE_GUARANTEE = re.compile(r"(?i)(?:guarantee|always|never fail|100%|绝对|保证|必然|一定(?:能|会)|完全准确)")
 _PLATFORM_CLAIM = re.compile(r"(?i)(?:适用于所有|支持所有|all platforms|any platform|guaranteed? on)")
-_END_PUNCT = "。.!！?？;；:："
+_END_PUNCT = "。.!！?？;；:：,，、…"
 CANONICAL_SECTIONS = (("Preparation", "准备"), ("Usage", "使用"), ("Processing", "处理"),
                       ("Outputs", "输出"), ("Limits", "边界"))
 
@@ -28,7 +28,7 @@ def _normalized_user_text(value: str) -> str:
     return value.rstrip(_END_PUNCT).strip()
 
 
-def _user_text_error(value: str, *, language: str) -> str | None:
+def _user_text_error(value: Any, *, language: str) -> str | None:
     if not isinstance(value, str) or not value.strip():
         return "must be a non-empty string"
     text = value.strip()
@@ -52,6 +52,13 @@ def validate_user_facing_standard(front: dict[str, Any], skill_path: Path,
     """Validate Skill-only user copy; legacy packages opt in via the migration marker."""
     enabled = enforce or not isinstance(front, dict) or front.get("user_facing_standard") == "v1"
     if not enabled:
+        # Existing assets remain structurally valid during migration, but their
+        # user-facing claims are not silently treated as having passed v1.
+        for name in ("skill.USER_DESCRIPTION_PASS", "skill.USER_EXAMPLES_PASS", "skill.USER_SECTIONS_PASS"):
+            checks.append({"name": name, "status": "NOT_TESTED",
+                           "message": "历史 Skill 未声明 user_facing_standard=v1，需显式迁移后检查"})
+        checks.append({"name": "skill.capability_boundary_review", "status": "NOT_TESTED",
+                       "message": "历史 Skill 的能力边界需要人工复核"})
         return
     if not isinstance(front, dict):
         findings.append(Finding("USER_DESCRIPTION_PASS", str(skill_path), "frontmatter must be a YAML mapping"))
@@ -59,9 +66,18 @@ def validate_user_facing_standard(front: dict[str, Any], skill_path: Path,
         _check(checks, "skill.USER_EXAMPLES_PASS", False, "frontmatter must be a YAML mapping")
         _check(checks, "skill.USER_SECTIONS_PASS", False, "frontmatter must be a YAML mapping")
         return
-    name_ok = all(isinstance(front.get(k), str) and front[k].strip()
-                  for k in ("display_name", "display_name_en"))
+    name_ok = True
+    for key in ("display_name", "display_name_en"):
+        value = front.get(key)
+        error = _user_text_error(value, language="zh" if key == "display_name" else "en")
+        if error and "length" not in error:
+            findings.append(Finding("USER_DESCRIPTION_PASS", str(skill_path), f"{key}: {error}"))
+            name_ok = False
     description_zh = front.get("description_zh", front.get("description"))
+    if (isinstance(front.get("description"), str) and isinstance(front.get("description_zh"), str)
+            and _normalized_user_text(front["description"]) != _normalized_user_text(front["description_zh"])):
+        findings.append(Finding("USER_DESCRIPTION_PASS", str(skill_path), "description and description_zh must agree"))
+        name_ok = False
     desc_ok = (isinstance(description_zh, str) and bool(description_zh.strip()) and
                isinstance(front.get("description_en"), str) and bool(front["description_en"].strip()))
     desc_errors = []
@@ -83,33 +99,34 @@ def validate_user_facing_standard(front: dict[str, Any], skill_path: Path,
             findings.append(Finding("USER_EXAMPLES_PASS", str(skill_path), f"{key} 必须恰好包含 3 条"))
             examples_ok = False
             continue
-        for value in values:
+        for index, value in enumerate(values):
             error = _user_text_error(value, language=lang)
             normalized_value = _normalized_user_text(value) if isinstance(value, str) else ""
             if error or normalized_value in normalized:
                 findings.append(Finding("USER_EXAMPLES_PASS", str(skill_path),
-                                        f"{key}: {error or 'normalized duplicate'}"))
+                                        f"{key}[{index}]: {error or 'normalized duplicate'}"))
                 examples_ok = False
             normalized.add(normalized_value)
     _check(checks, "skill.USER_EXAMPLES_PASS", examples_ok,
            "双语用户目标通过" if examples_ok else "双语用户目标不符合门禁")
     body = skill_path.read_text(encoding="utf-8")
-    headings = []
-    for english, chinese in CANONICAL_SECTIONS:
-        match = re.search(rf"(?m)^##\s+{re.escape(english)}\s*(?:/|｜|\|)\s*{re.escape(chinese)}\s*$", body)
-        if not match:
-            match = re.search(rf"(?m)^##\s+{re.escape(chinese)}\s*(?:/|｜|\|)\s*{re.escape(english)}\s*$", body)
-        headings.append(match)
-    sections_ok = all(headings)
+    heading_pattern = re.compile(r"(?m)^##\s+(.+?)\s*$")
+    headings = list(heading_pattern.finditer(body))
+    expected = {f"{english} / {chinese}" for english, chinese in CANONICAL_SECTIONS}
+    expected |= {f"{chinese} / {english}" for english, chinese in CANONICAL_SECTIONS}
+    # The section sequence is deliberately exact: accepting a later matching
+    # heading would allow duplicate/extra sections to hide a missing section.
+    section_matches = [match for match in headings if match.group(1) in expected]
+    sections_ok = (len(headings) == len(CANONICAL_SECTIONS) and
+                   [match.group(1) for match in headings] ==
+                   [f"{english} / {chinese}" for english, chinese in CANONICAL_SECTIONS])
     if sections_ok:
-        positions = [m.start() for m in headings]
-        sections_ok = positions == sorted(positions)
-        for index, match in enumerate(headings):
-            end = headings[index + 1].start() if index + 1 < len(headings) else len(body)
+        for index, match in enumerate(section_matches):
+            end = section_matches[index + 1].start() if index + 1 < len(section_matches) else len(body)
             if not body[match.end():end].strip():
                 sections_ok = False
-        limits = headings[-1]
-        if limits and not re.search(r"(?i)(?:不能|不支持|限制|仅限|无法|does not|not support|limit|cannot)", body[limits.end():]):
+        limits = section_matches[-1]
+        if not re.search(r"(?i)(?:不能|不支持|限制|仅限|无法|does not|not support|limit|cannot)", body[limits.end():]):
             sections_ok = False
     _check(checks, "skill.USER_SECTIONS_PASS", sections_ok,
            "五段双语说明按序且非空" if sections_ok else "五段双语说明缺失、空段、乱序或缺少边界")

@@ -19,7 +19,7 @@ import yaml
 
 from .expert_rules import validate_prompt_expert
 from .generators import generate_skill
-from .validators.project_validator import SEMVER, validate_connector, validate_skill, validate_user_facing_standard
+from .validators.project_validator import SEMVER, validate_connector, validate_skill
 from .validators.secret_scanner import scan_for_secrets
 
 KINDS = {"Skill": "skills", "Expert": "experts", "Connector": "connectors"}
@@ -312,8 +312,6 @@ def validate_product(root: Path, product_id: str) -> dict:
             if item["type"] == "Skill":
                 validate_skill(source, checks, issues)
                 front = yaml.safe_load((source / "SKILL.md").read_text(encoding="utf-8").split("---", 2)[1])
-                validate_user_facing_standard(front, source / "SKILL.md", checks, issues,
-                                               enforce=isinstance(front, dict) and front.get("user_facing_standard") == "v1")
                 if not isinstance(front, dict) or front.get("name") != product_id or str(front.get("version")) != _version(item):
                     findings.append("Skill identity/version mismatch")
                 if (source / "manifest.json").is_file():
