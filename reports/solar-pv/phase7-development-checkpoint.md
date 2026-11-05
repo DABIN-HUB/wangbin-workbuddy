@@ -227,3 +227,72 @@ wangbin-solar-pv-prestudy/scripts/run_solar_pv.py
 ## Git 与停止点
 
 本轮生产代码、产品注册、Skill 资源、候选包和本检查点完成后停止；不启动 Phase 8。当前应在提交前仅暂存本阶段明确文件，不执行 `git add -A`，并保留既有未跟踪屋顶样件不变。
+
+## Phase 7H 独立运行与交付依赖收口
+
+### 7H.1 交付结论
+
+- 版本从 `0.1.0` 升为 `0.1.1`，因为本轮改变了运行依赖、包内冻结基线和安全边界。
+- 普通 Skill ZIP **不包含** `services/solar-pv-engine` 的实际计算源码，也不自动安装 Python 依赖；它携带 12 份受控冻结基线和标准库 wrapper。
+- 当前最小候选交付为普通 Skill + `wangbin-solar-pv-cli` CLI Connector：Connector 负责隔离 Python runtime 和固定依赖，Skill 负责输入契约、类型路由、输出安全和真实状态保留。
+- Connector 仍需权利人将两个内部 wheel 发布到 WorkBuddy 可访问的可信索引，或由用户提供经审核的私有索引；本轮没有上传 wheel、写入凭据或登录 WorkBuddy。
+- 因此当前结论是 `LOCAL_CANDIDATE_ONLY`，不是平台安装成功或正式发布就绪。
+
+### 7H.2 无原仓库隔离验证
+
+验证目录为 Hermes scratch 下的新解压目录，运行时使用独立 venv；没有把仓库根目录加入 `PYTHONPATH`，也没有通过 `--engine-root` 指向开发仓库。0.1.1 ZIP 解压后可定位包内 baseline；已安装的 wheel 提供 `wangbin_solar_pv` 和 `wangbin_document_engine`。
+
+实际 runtime 结果：
+
+```text
+Python 3.14.7
+No broken requirements found.
+imports=PASS wangbin_solar_pv wangbin_document_engine
+wangbin-solar-pv-input 0.3.0
+wangbin-document-cli 1.2.0
+markitdown 0.1.9
+```
+
+同时确认 ZIP 不含个人绝对路径、`.env`、`__pycache__`、canonical、密码、token 或 secret 成员；Skill 19 个成员、Connector 5 个成员，`unzip -t` 均通过。使用 `project-report` 调用既有 `project` 入口时，屋顶和地面均实际进入引擎并因提供的 `resource-manifest.json` 不是完整 bundle 返回 `BUNDLE_INVALID`，没有创建输出目录；这证明入口和阻断边界可调用，但不冒称缺失专业资源时的完整 `project` 成功。
+
+### 7H.3 两类 SYNTHETIC 实际导出
+
+从最终 0.1.1 ZIP 解压出的 wrapper，在独立 wheel runtime 中对已归档 canonical 真实执行：
+
+| 类型 | 身份 | 状态 | F01/F03/F04 | PDF | 文件证据 |
+|---|---|---|---|---|---|
+| `industrial_rooftop` | `SYNTHETIC-industrial_rooftop` | `DRAFT_PARTIAL` | DOCX/XLSX/XLSX 已生成 | `PDF_RENDERER_UNAVAILABLE` / `BLOCKED` | `reports/solar-pv/phase7h-isolated-rooftop/` |
+| `utility_scale_ground` | `SYNTHETIC-utility_scale_ground` | `DRAFT_PARTIAL` | DOCX/XLSX/XLSX 已生成 | `PDF_RENDERER_UNAVAILABLE` / `BLOCKED` | `reports/solar-pv/phase7h-isolated-ground/` |
+
+两类 manifest 均保留 `four_file_gate=BLOCKED`、`not_decision_ready=true`。导出结构复核为每类 DOCX 404 段落、测算模型 19 sheets、来源台账 10 sheets；这不是 PDF，也不是投资决策结论。最终证据文件的 SHA-256 已写入对应目录文件及本仓库检查记录：
+
+- 屋顶：manifest `184421e1c55d96009c61398f72170d4a86639a17d454cd2a79a121594364cd36`；DOCX `83311843a21b2019614c081c50882d19369131ec38b997628b92a95ea519aaaa`；测算 XLSX `13e58fb297e6cd167a7404b4147f8a763ec30f1a13c79fbf76e68b80cca0246d`；来源 XLSX `2ff1cf1df70d19b22e6487ead1449f5b1453967bb94e2909579b34abc8ff0b8e`。
+- 地面：manifest `4b44b36d0c15059c8172e0309dd575a6391d533ab5814ef5d5e6bf1cab7f93a9`；DOCX `cbd00083e14e91c0f99bcc7b2bdcf8a2162062cce7fa5d660de9d7cbf63ee826`；测算 XLSX `e282eaba6698148b34422cdc8bbbdd498f42c7c913970103f5d68abf95b46fa8`；来源 XLSX `8c402f293db3e7807edfb39b0e4c2a8d3b8787ae125adc83b0a5e153cb8705ca`。
+
+### 7H.4 安全和边界专项
+
+- 屋顶 canonical 请求地面报告：`REPORT_CATEGORY_MISMATCH`。
+- `../canonical.json`：`PATH_BOUNDARY`。
+- 显式不存在引擎：`ENGINE_UNAVAILABLE`。
+- 已有输出目录：`OUTPUT_EXISTS`，不覆盖既有结果。
+- Windows junction / reparse-point workspace：`WORKSPACE_SYMLINK`，不创建输出；wrapper 现在同时拒绝普通 symlink 和 Windows junction。
+- 真实 Windows symlink 创建因当前账号缺少 `SeCreateSymbolicLinkPrivilege` 未执行；junction 复核已实际执行。该平台能力不被误报为已测试。
+
+### 7H.5 PDF 和依赖状态
+
+本机 `soffice`、`libreoffice`、`pandoc`、`wkhtmltopdf` 均未发现；`docx2pdf`/`comtypes` 不可用；Word COM 启动探测超时（exit code 124）。没有可控合法转换器和可复核中文字体/许可证，因此没有生成 PDF，没有改后缀，也没有截图伪造。四文件门禁继续保持 `BLOCKED`。
+
+Connector `cli.json` 和 Skill manifest 现在显式固定：Python `>=3.12,<3.15`、`jsonschema==4.26.0`、`wangbin-document-cli==1.2.0`、`wangbin-solar-pv-input==0.3.0`、`openpyxl==3.1.5`、`python-docx==1.2.0`、`pdfminer.six==20260107`、`defusedxml==0.7.1`、`tzdata==2026.5`、`markitdown[pdf,docx,xlsx,pptx]==0.1.9`。本地 venv `pip check` 通过；WorkBuddy 平台安装、依赖解析、权限和实际对话仍为 `NOT_TESTED`/`UNKNOWN`。
+
+### 7H.6 最终候选归档
+
+- Skill：`dist/wangbin-solar-pv-prestudy-0.1.1-skill-candidate.zip`，203,100 bytes，SHA-256 `e839aa16eac479d70d518890f948508ffb0bbefdfca08669780a3dfc93960002`。
+- Connector：`dist/wangbin-solar-pv-cli-0.1.0-connector-candidate.zip`，3,168 bytes，SHA-256 `023dbcd64b09032d850017a5804090afa1837bb6e448f2e7b8783389eeb94c55`。
+- 两个归档均由独立 scratch source/catalog 重建；`validate`、`verify`、`unzip -t` 通过，独立重建哈希与原归档分别一致。
+- 产品目录已登记上述 Skill 0.1.1 和 Connector 0.1.0 哈希；WorkBuddy 平台证据仍为 `NOT_TESTED`，许可证/权利和可信索引仍需人工审核。
+
+### 7H.7 未关闭事项与停止点
+
+- 屋顶/地面真实项目所需土地、地勘、结构、接入、升压站、交易、合同、报价、授权和财务依据仍缺失；不得用模型估算偷写正式结果。
+- 完整真实输入到计算 E2E、完整 L2/L3、Excel 重新计算、PDF 页面/检索/中文视觉复核、WorkBuddy 私有安装/实际调用/权限和平台审核仍为 `NOT_TESTED`。
+- 本阶段没有自动上传、登录、发布或发起审核，不启动 Phase 8A–8G；用户完成 WorkBuddy 私有试运行并确认结果前，不宣布正式发布就绪。

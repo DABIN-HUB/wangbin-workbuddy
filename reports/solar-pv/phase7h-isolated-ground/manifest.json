@@ -1,0 +1,107 @@
+{
+  "status": "DRAFT_PARTIAL",
+  "phase": "PHASE6_UTILITY_SCALE_GROUND_REPORT_EXPORT",
+  "project_id": "SYNTHETIC-utility_scale_ground",
+  "pv_type": "utility_scale_ground",
+  "display_name": "SYNTHETIC-utility_scale_ground",
+  "name_mapping": null,
+  "identity": {
+    "model_version": "solar-pv-engine/0.3.0",
+    "run_id": "72bd0d6e-e466-46ab-87de-7c3fbc2017a9",
+    "input_hash": "9ddebec31b4d918c8c94b27c3051866a0a2574bb19d88f96cc19d1b3bf2464bf",
+    "source_snapshot_id": "2fd7fd549a7a47b9428811bd54859d4313e1d0a6e5aba8bd0eef86621286c35c",
+    "result_hash": "269c29a114a0d85f6914b96d383dab46fd1a0c8620014da6f7d915440ab86488"
+  },
+  "files": {
+    "F01": {
+      "path": "SYNTHETIC-utility_scale_ground-光伏预可研报告.docx",
+      "size": 49024,
+      "sha256": "cbd00083e14e91c0f99bcc7b2bdcf8a2162062cce7fa5d660de9d7cbf63ee826",
+      "chapters": 18,
+      "chapter_items": 100,
+      "appendices": 13,
+      "appendix_items": 26,
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "72bd0d6e-e466-46ab-87de-7c3fbc2017a9",
+      "input_hash": "9ddebec31b4d918c8c94b27c3051866a0a2574bb19d88f96cc19d1b3bf2464bf",
+      "source_snapshot_id": "2fd7fd549a7a47b9428811bd54859d4313e1d0a6e5aba8bd0eef86621286c35c",
+      "result_hash": "269c29a114a0d85f6914b96d383dab46fd1a0c8620014da6f7d915440ab86488"
+    },
+    "F03": {
+      "path": "SYNTHETIC-utility_scale_ground-测算模型.xlsx",
+      "size": 58355,
+      "sha256": "e282eaba6698148b34422cdc8bbbdd498f42c7c913970103f5d68abf95b46fa8",
+      "sheets": [
+        "项目参数",
+        "术语和公式说明",
+        "数据质量",
+        "资源月度",
+        "系统容量与损耗",
+        "发电预测-月度",
+        "逐年衰减",
+        "负荷与消纳",
+        "电价与收入",
+        "CAPEX",
+        "OPEX",
+        "折旧与税费",
+        "融资与偿债",
+        "项目现金流",
+        "资本金现金流",
+        "财务指标",
+        "敏感性",
+        "方案比较",
+        "一致性校验"
+      ],
+      "mode": "STATIC_SNAPSHOT",
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "72bd0d6e-e466-46ab-87de-7c3fbc2017a9",
+      "input_hash": "9ddebec31b4d918c8c94b27c3051866a0a2574bb19d88f96cc19d1b3bf2464bf",
+      "source_snapshot_id": "2fd7fd549a7a47b9428811bd54859d4313e1d0a6e5aba8bd0eef86621286c35c",
+      "result_hash": "269c29a114a0d85f6914b96d383dab46fd1a0c8620014da6f7d915440ab86488"
+    },
+    "F04": {
+      "status": "DRAFT_PARTIAL",
+      "file": "SYNTHETIC-utility_scale_ground-资料来源与假设清单.xlsx",
+      "project_id": "SYNTHETIC-utility_scale_ground",
+      "scenario_id": "BASE",
+      "input_hash": "9ddebec31b4d918c8c94b27c3051866a0a2574bb19d88f96cc19d1b3bf2464bf",
+      "source_snapshot_id": "2fd7fd549a7a47b9428811bd54859d4313e1d0a6e5aba8bd0eef86621286c35c",
+      "result_hash": "269c29a114a0d85f6914b96d383dab46fd1a0c8620014da6f7d915440ab86488",
+      "sha256": "8c402f293db3e7807edfb39b0e4c2a8d3b8787ae125adc83b0a5e153cb8705ca",
+      "sheets": [
+        "输入台账",
+        "气象与地理来源",
+        "政策适用性",
+        "设备与成本来源",
+        "案例对标",
+        "假设清单",
+        "冲突与缺口",
+        "变更与复核记录",
+        "变量-术语词典",
+        "资料授权说明"
+      ],
+      "generation_seconds": 1.139657,
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "72bd0d6e-e466-46ab-87de-7c3fbc2017a9"
+    },
+    "F02": {
+      "status": "BLOCKED",
+      "reason": "PDF_RENDERER_UNAVAILABLE",
+      "renderer": null
+    }
+  },
+  "coverage": {
+    "chapters": 18,
+    "chapter_items": 100,
+    "appendices": 13,
+    "appendix_items": 26,
+    "model_sheets": 19,
+    "source_sheets": 10
+  },
+  "pdf_status": "BLOCKED",
+  "calculation_status": "PARTIAL",
+  "four_file_gate": "BLOCKED",
+  "elapsed_seconds": 1.948922,
+  "not_decision_ready": true,
+  "sensitive_raw_attachments_included": false
+}

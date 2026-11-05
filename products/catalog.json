@@ -421,8 +421,8 @@
       ]
     },
     {
-      "active_version": "0.1.0",
-      "development": "Phase 7 local candidate; platform runtime and PDF renderer unverified",
+      "active_version": "0.1.1",
+      "development": "Phase 7H local candidate; CLI runtime distribution and PDF renderer unverified",
       "id": "wangbin-solar-pv-prestudy",
       "license_policy": {
         "decision": "UNKNOWN",
@@ -445,12 +445,47 @@
       "validation_metrics": "products/metrics.json",
       "versions": [
         {
-          "archive_evidence": "dist/wangbin-solar-pv-prestudy-0.1.0-skill-candidate.zip",
-          "candidate": "dist/wangbin-solar-pv-prestudy-0.1.0-skill-candidate.zip",
+          "archive_evidence": "dist/wangbin-solar-pv-prestudy-0.1.1-skill-candidate.zip",
+          "candidate": "dist/wangbin-solar-pv-prestudy-0.1.1-skill-candidate.zip",
           "date": "2026-11-05",
           "published_at": "UNKNOWN",
-          "sha256": "71a9eb25a63620b2fdc4d2a7217cba100bcd255a740779c0fe5d86b0544964ef",
+          "sha256": "e839aa16eac479d70d518890f948508ffb0bbefdfca08669780a3dfc93960002",
           "source": "packages/skills/wangbin-solar-pv-prestudy",
+          "version": "0.1.1"
+        }
+      ]
+    },
+    {
+      "active_version": "0.1.0",
+      "development": "Phase 7H CLI + Skill runtime candidate; trusted wheel distribution and platform runtime unverified",
+      "id": "wangbin-solar-pv-cli",
+      "license_policy": {
+        "decision": "UNKNOWN",
+        "dependency_review": "REQUIRES_MANUAL_REVIEW",
+        "dependency_review_evidence": "packages/connectors/wangbin-solar-pv-cli/README.md",
+        "platform_agreement": "NOT_VERIFIED",
+        "rights_review": "REQUIRES_MANUAL_REVIEW",
+        "rights_review_evidence": "packages/connectors/wangbin-solar-pv-cli/LICENSE",
+        "type": "PROPRIETARY"
+      },
+      "maintenance": "UNKNOWN",
+      "name": "光伏预可研计算 CLI",
+      "published_at": "UNKNOWN",
+      "review_evidence": "No WorkBuddy platform receipt",
+      "review_status": "NOT_TESTED",
+      "scenario": "为光伏预可研 Skill 提供隔离 Python 计算与报告导出运行时",
+      "status": "DEVELOPING",
+      "target_users": "光伏项目开发与工程咨询人员",
+      "type": "Connector",
+      "validation_metrics": "products/metrics.json",
+      "versions": [
+        {
+          "archive_evidence": "dist/wangbin-solar-pv-cli-0.1.0-connector-candidate.zip",
+          "candidate": "dist/wangbin-solar-pv-cli-0.1.0-connector-candidate.zip",
+          "date": "2026-11-05",
+          "published_at": "UNKNOWN",
+          "sha256": "023dbcd64b09032d850017a5804090afa1837bb6e448f2e7b8783389eeb94c55",
+          "source": "packages/connectors/wangbin-solar-pv-cli",
           "version": "0.1.0"
         }
       ]

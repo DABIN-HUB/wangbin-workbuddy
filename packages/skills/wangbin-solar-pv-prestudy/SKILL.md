@@ -13,7 +13,7 @@ examples_en:
   - "Generate a preliminary feasibility report for this industrial rooftop PV project"
   - "Generate a preliminary feasibility report for this utility-scale ground PV project"
   - "Check which inputs are missing from this solar PV project package"
-version: 0.1.0
+version: 0.1.1
 author: 星核实验室 StarCore Lab
 allowed-tools: Read, Bash, Write
 license_type: PROPRIETARY
@@ -21,6 +21,12 @@ license_status: REQUIRES_MANUAL_REVIEW
 ---
 
 # 光伏预可研报告
+
+## 运行方式和依赖边界
+
+本 Skill ZIP 是提示词、契约、冻结定义和路由脚本包，不会自动安装 Python、pip 依赖或光伏计算引擎。推荐在 WorkBuddy 中同时安装配套 CLI Connector `wangbin-solar-pv-cli`；Connector 使用 WorkBuddy 托管的 Python runtime 和隔离虚拟环境安装已审阅的 `wangbin-solar-pv-input==0.3.0` 与 `wangbin-document-cli==1.2.0`。如果 Connector 未安装或状态不是 `LOCAL_READY`，不得声称已完成计算。
+
+普通 Skill 独立运行只在宿主环境已经提供 `wangbin_solar_pv`、`wangbin_document_engine` 及下述依赖时成立；Skill 不依赖开发者 Git 仓库、IDE 或本地 `PYTHONPATH`。WorkBuddy 平台安装、依赖解析和 Connector 获取来源在本候选中仍为 `NOT_TESTED`。
 
 当用户要求根据项目资料生成工商业屋顶或集中式地面光伏预可研报告时，按本技能执行。此技能只负责路由、资料边界、运行入口和结果交付；**不在大模型提示词中重新实现发电、消纳、收益、财务或敏感性计算**。
 
@@ -52,7 +58,7 @@ license_status: REQUIRES_MANUAL_REVIEW
 4. 检查输出文件和 manifest；明确每个文件是 `GENERATED`、`BLOCKED` 还是 `NOT_TESTED`。
 5. 只交付实际存在且重新读取验证过的文件。PDF 缺失时不得把 DOCX 改后缀或声明四文件完成。
 
-稳定包装脚本为 `@scripts/run_solar_pv.py`。脚本只使用 Python 标准库；它调用已安装的 `wangbin_solar_pv` 引擎，不复制算法。
+稳定包装脚本为 `@scripts/run_solar_pv.py`。脚本只使用 Python 标准库；它调用已安装的 `wangbin_solar_pv` 引擎，不复制算法，并优先使用包内冻结基线副本或已安装引擎提供的基线。
 
 ### 已有 canonical 的导出调用
 
@@ -61,8 +67,7 @@ python scripts/run_solar_pv.py report \
   --project-type industrial_rooftop \
   --workspace "<授权私有工作区>" \
   --result "<workspace 内 canonical.json>" \
-  --output "<新的输出目录>" \
-  --engine-root "<solar-pv-engine 或仓库根目录>"
+  --output "<新的输出目录>"
 ```
 
 地面项目仅将 `--project-type` 改为 `utility_scale_ground`；脚本会调用 `ground-report`。
@@ -78,11 +83,10 @@ python scripts/run_solar_pv.py project-report \
   --bundle "<D3 bundle 目录>" \
   --budget "<bundle budget.json>" \
   --project-output "<新的计算目录>" \
-  --report-output "<新的报告目录>" \
-  --engine-root "<solar-pv-engine 或仓库根目录>"
+  --report-output "<新的报告目录>"
 ```
 
-完整参数和运行前提见 `@references/runtime.md`。如果运行环境找不到引擎、Python 依赖或合法 PDF 转换器，脚本必须返回稳定阻断状态，不能假装成功。
+完整参数和运行前提见 `@references/runtime.md`。开发者本地源码调试可以显式传 `--engine-root`，普通用户和 WorkBuddy 运行不应依赖该参数。如果运行环境找不到引擎、Python 依赖或合法 PDF 转换器，脚本必须返回稳定阻断状态，不能假装成功。
 
 ## 4. 报告交付规则
 

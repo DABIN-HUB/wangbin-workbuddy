@@ -1,0 +1,2597 @@
+{
+  "schema_version": "1.0.0-phase1",
+  "methodology_version": "METHOD-CONTRACT-v1",
+  "phase": "PHASE_1_METHOD_FREEZE_ONLY",
+  "document_date": "2026-10-28",
+  "method_status": "FROZEN_FOR_REVIEW",
+  "engine_status": "NOT_IMPLEMENTED",
+  "numerical_validation_status": "PLANNED",
+  "standard_verification_status": "PENDING_FULL_TEXT_REVIEW",
+  "provenance": {
+    "USER-BASELINE": "完整阅读附件 hermes-完整提示词.md，共213行；本次交付仅承接 §6 公式/术语并与 §3/§7/§8 关联。",
+    "METHOD-CONTRACT-v1": "本文件的方法约定标签，不是外部来源注册表 source_id。",
+    "external_sources_policy": "仅对实际读取正文的官方材料给出 title/url/access_status，不假造另一代理的 source_id 或标准条款号。"
+  },
+  "integration_contract": {
+    "field_ids": "公式域字段通过05-field-bindings.json显式闭合到03输入、定义常量或C层计算账簿；词条与公式引用由08文档校验器核对，不代表运行时实现。",
+    "chapter_ids": "CH01…CH18 是本任务稳定局部章节 ID；如总纲使用其他 ID，父任务做单一映射。",
+    "test_ids": "每条 T-<formula_id去除F-前缀> 仅未来测试规格标识，不代表测试文件存在；全部 PLANNED。",
+    "formula_ids": "采用 F-DC-CAPACITY、F-AC-CAPACITY 等可读稳定 ID，后续不复用旧 ID 表示新物理/财务边界。",
+    "status_propagation": "UNKNOWN/CONFLICT/PENDING_VERIFICATION 不自动填0；NOT_APPLICABLE 必须理由；无根/多根/分母零保持类型化非数值状态。",
+    "currency": "金额统一为评价币种元；如用其他币种需汇率/时点/单位独立输入，不静默当人民币。"
+  },
+  "term_count": 169,
+  "minimum_baseline_abbreviations": [
+    "GHI",
+    "DNI",
+    "DHI",
+    "POA",
+    "GTI",
+    "PVOUT",
+    "PR",
+    "DC",
+    "AC",
+    "STC",
+    "CAPEX",
+    "OPEX",
+    "PPA",
+    "NPV",
+    "IRR",
+    "LCOE",
+    "DSCR",
+    "CFADS",
+    "SOC",
+    "EPC",
+    "GIS",
+    "TMY"
+  ],
+  "terms": [
+    {
+      "term_id": "TERM-GHI",
+      "chinese_name": "水平面总辐照度",
+      "english_name": "Global Horizontal Irradiance",
+      "abbreviation": "GHI",
+      "first_occurrence_form": "水平面总辐照度（Global Horizontal Irradiance，GHI）",
+      "definition_zh": "水平面收到的太阳总辐射功率密度，含直射投影和天空散射。",
+      "unit_or_dimension": "W/m² 或规范为 kW/m²",
+      "distinction_and_boundary": "GHI 缩写在数据集中可能表示累计量，必须读字段元数据；瞬时/平均辐照度不能直接当年辐照量。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-GHI-IRRADIATION",
+      "chinese_name": "水平面总辐照量",
+      "english_name": "Global Horizontal Irradiation",
+      "abbreviation": "GHI",
+      "first_occurrence_form": "水平面总辐照量（Global Horizontal Irradiation，GHI）",
+      "definition_zh": "水平面总辐照度在指定期间的积分；与辐照度共享缩写时须加期间和单位。",
+      "unit_or_dimension": "kWh/m²/指定期间",
+      "distinction_and_boundary": "必须同时写期间；不是 kW/m²，不直接当阵列面 POA。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-DNI",
+      "chinese_name": "直接法向辐照度",
+      "english_name": "Direct Normal Irradiance",
+      "abbreviation": "DNI",
+      "first_occurrence_form": "直接法向辐照度（Direct Normal Irradiance，DNI）",
+      "definition_zh": "始终与太阳直射方向垂直平面上的直射太阳辐射功率密度。",
+      "unit_or_dimension": "W/m² 或 kW/m²",
+      "distinction_and_boundary": "不是水平面直射分量，也不是累计量。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-DNI-IRRADIATION",
+      "chinese_name": "直接法向辐照量",
+      "english_name": "Direct Normal Irradiation",
+      "abbreviation": "DNI",
+      "first_occurrence_form": "直接法向辐照量（Direct Normal Irradiation，DNI）",
+      "definition_zh": "直接法向辐照度在指定时段的累计能量面密度。",
+      "unit_or_dimension": "kWh/m²/指定期间",
+      "distinction_and_boundary": "数据字段使用 DNI 时必须依单位区分辐照度与辐照量。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-DHI",
+      "chinese_name": "水平面散射辐照度",
+      "english_name": "Diffuse Horizontal Irradiance",
+      "abbreviation": "DHI",
+      "first_occurrence_form": "水平面散射辐照度（Diffuse Horizontal Irradiance，DHI）",
+      "definition_zh": "水平面接收的天空散射太阳辐射功率密度。",
+      "unit_or_dimension": "W/m² 或 kW/m²",
+      "distinction_and_boundary": "不是总辐照度，也不是累计量。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-DHI-IRRADIATION",
+      "chinese_name": "水平面散射辐照量",
+      "english_name": "Diffuse Horizontal Irradiation",
+      "abbreviation": "DHI",
+      "first_occurrence_form": "水平面散射辐照量（Diffuse Horizontal Irradiation，DHI）",
+      "definition_zh": "水平面散射辐照度在指定期间积分。",
+      "unit_or_dimension": "kWh/m²/指定期间",
+      "distinction_and_boundary": "不能把 W/m² 样点和 kWh/m² 月量相加。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-POA",
+      "chinese_name": "组件阵列平面",
+      "english_name": "Plane of Array",
+      "abbreviation": "POA",
+      "first_occurrence_form": "组件阵列平面（Plane of Array，POA）",
+      "definition_zh": "用于定义光伏组件朝向与倾角的阵列平面；本身是几何参照而非数值量。",
+      "unit_or_dimension": "几何参照",
+      "distinction_and_boundary": "POA irradiance 与 POA irradiation 必须分开。",
+      "related_formula_ids": [
+        "F-POA-IRRADIATION"
+      ],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-POA-IRRADIANCE",
+      "chinese_name": "阵列面辐照度",
+      "english_name": "Plane-of-Array Irradiance",
+      "abbreviation": "POA irradiance",
+      "first_occurrence_form": "阵列面辐照度（Plane-of-Array Irradiance，POA irradiance）",
+      "definition_zh": "组件阵列平面接收的太阳辐射功率密度，遮挡前后/有效量边界须明确。",
+      "unit_or_dimension": "W/m² 或 kW/m²",
+      "distinction_and_boundary": "与 GHI 平面可能不同；有效辐照度不能再重复扣遮挡和污损。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-POA-IRRADIATION",
+      "chinese_name": "阵列面辐照量",
+      "english_name": "Plane-of-Array Irradiation",
+      "abbreviation": "POA irradiation",
+      "first_occurrence_form": "阵列面辐照量（Plane-of-Array Irradiation，POA irradiation）",
+      "definition_zh": "阵列面辐照度在指定时段累计的能量面密度。",
+      "unit_or_dimension": "kWh/m²/指定期间",
+      "distinction_and_boundary": "可用于 PR 简式的 H_POA；不是光伏电量 kWh。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-GTI",
+      "chinese_name": "倾斜面总辐照量",
+      "english_name": "Global Tilted Irradiation",
+      "abbreviation": "GTI",
+      "first_occurrence_form": "倾斜面总辐照量（Global Tilted Irradiation，GTI）",
+      "definition_zh": "特定倾角和方位角表面的总辐照累计量；地面反射、遮挡边界依数据定义。",
+      "unit_or_dimension": "kWh/m²/指定期间",
+      "distinction_and_boundary": "不把 Irradiation 写成 Irradiance；GTI 与 POA 只有几何、时段和分量定义一致才可比。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-PVOUT",
+      "chinese_name": "单位装机光伏发电量",
+      "english_name": "Specific PV Power Output",
+      "abbreviation": "PVOUT",
+      "first_occurrence_form": "单位装机光伏发电量（Specific PV Power Output，PVOUT）",
+      "definition_zh": "数据源按其设备、损失和气象模型给定的单位装机发电量。",
+      "unit_or_dimension": "常见 kWh/kWp/指定期间，实际以源定义为准",
+      "distinction_and_boundary": "不得把 PVOUT 当 GHI 或 POA；模型已扣损失时不能再乘 PR。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-PR",
+      "chinese_name": "性能比",
+      "english_name": "Performance Ratio",
+      "abbreviation": "PR",
+      "first_occurrence_form": "性能比（Performance Ratio，PR）",
+      "definition_zh": "按参考辐照量规范化后的实际/模型发电产出比；计量点与损失边界一致。",
+      "unit_or_dimension": "1",
+      "distinction_and_boundary": "不是逆变器转换效率；假设 PR 与校核 PR 不循环互作输入。",
+      "related_formula_ids": [
+        "F-FIRST-YEAR-ENERGY",
+        "F-PR-OBSERVED"
+      ],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-DC",
+      "chinese_name": "直流",
+      "english_name": "Direct Current",
+      "abbreviation": "DC",
+      "first_occurrence_form": "直流（Direct Current，DC）",
+      "definition_zh": "本项目特指组件阵列等直流侧电气边界。",
+      "unit_or_dimension": "kWdc / kWp 等",
+      "distinction_and_boundary": "DC 容量不等于 AC 可并网容量。",
+      "related_formula_ids": [
+        "F-DC-CAPACITY",
+        "F-DC-AC-RATIO"
+      ],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-AC",
+      "chinese_name": "交流",
+      "english_name": "Alternating Current",
+      "abbreviation": "AC",
+      "first_occurrence_form": "交流（Alternating Current，AC）",
+      "definition_zh": "本项目特指逆变器及其后交流侧电气边界。",
+      "unit_or_dimension": "kWac / MWac 等",
+      "distinction_and_boundary": "交流有功 kW 与视在功率 kVA 不等价。",
+      "related_formula_ids": [
+        "F-AC-CAPACITY",
+        "F-DC-AC-RATIO"
+      ],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-STC",
+      "chinese_name": "标准测试条件",
+      "english_name": "Standard Test Conditions",
+      "abbreviation": "STC",
+      "first_occurrence_form": "标准测试条件（Standard Test Conditions，STC）",
+      "definition_zh": "用于组件额定性能的规定测试条件；本方法辐照度基准采用附件定义的 1 kW/m²，其他条件以设备资料和适用标准核验。",
+      "unit_or_dimension": "条件集合",
+      "distinction_and_boundary": "不是现场全年工作条件，不凭铭牌功率当每时段实际功率。",
+      "related_formula_ids": [
+        "F-FIRST-YEAR-ENERGY",
+        "F-DC-TIME-POWER"
+      ],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-CAPEX",
+      "chinese_name": "资本性支出",
+      "english_name": "Capital Expenditure",
+      "abbreviation": "CAPEX",
+      "first_occurrence_form": "资本性支出（Capital Expenditure，CAPEX）",
+      "definition_zh": "工程开发建设及资本化新增/更换的投资项目；估算、资产基数与现金付款分别建账。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "含税状态、土地/储能/建期利息范围必须显示；折旧不是新增 CAPEX。",
+      "related_formula_ids": [
+        "F-CAPEX-TOTAL"
+      ],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-OPEX",
+      "chinese_name": "运营支出",
+      "english_name": "Operating Expenditure",
+      "abbreviation": "OPEX",
+      "first_occurrence_form": "运营支出（Operating Expenditure，OPEX）",
+      "definition_zh": "运营维护、租金、保险等现金费用；分类和税价边界需明示。",
+      "unit_or_dimension": "元/年或元/期",
+      "distinction_and_boundary": "不含非现金折旧；税费及资本化更换若单列不重计。",
+      "related_formula_ids": [
+        "F-ANNUAL-OPEX"
+      ],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-PPA",
+      "chinese_name": "购售电协议",
+      "english_name": "Power Purchase Agreement",
+      "abbreviation": "PPA",
+      "first_occurrence_form": "购售电协议（Power Purchase Agreement，PPA）",
+      "definition_zh": "约定供购电主体、计量、价格、时段、结算、责任和期限的合同。",
+      "unit_or_dimension": "合同",
+      "distinction_and_boundary": "第三方售电收入不等于用电方全部避免购电成本。",
+      "related_formula_ids": [
+        "F-PPA-REVENUE"
+      ],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-NPV",
+      "chinese_name": "净现值",
+      "english_name": "Net Present Value",
+      "abbreviation": "NPV",
+      "first_occurrence_form": "净现值（Net Present Value，NPV）",
+      "definition_zh": "按同基准日同口径折现的净现金流总和。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "区分项目/资本金、名义/实际、所得税前/后。",
+      "related_formula_ids": [
+        "F-NPV",
+        "F-DATED-NPV"
+      ],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-IRR",
+      "chinese_name": "内部收益率",
+      "english_name": "Internal Rate of Return",
+      "abbreviation": "IRR",
+      "first_occurrence_form": "内部收益率（Internal Rate of Return，IRR）",
+      "definition_zh": "使指定现金流净现值为零的收益率实根；根的有效性和唯一性需判定。",
+      "unit_or_dimension": "每年比例",
+      "distinction_and_boundary": "无根、多根、全零或未收敛必须返回原因，不任意挑一个百分比。",
+      "related_formula_ids": [
+        "F-IRR-PROJECT",
+        "F-IRR-EQUITY"
+      ],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-LCOE",
+      "chinese_name": "平准化度电成本",
+      "english_name": "Levelized Cost of Energy",
+      "abbreviation": "LCOE",
+      "first_occurrence_form": "平准化度电成本（Levelized Cost of Energy，LCOE）",
+      "definition_zh": "同边界生命周期折现净成本除以折现可利用交付电量。",
+      "unit_or_dimension": "元/kWh",
+      "distinction_and_boundary": "本方法默认无杠杆所得税前，不是电价预测或售电利润；公开对标须同税/融资/补贴边界。",
+      "related_formula_ids": [
+        "F-LCOE"
+      ],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-DSCR",
+      "chinese_name": "偿债备付率",
+      "english_name": "Debt Service Coverage Ratio",
+      "abbreviation": "DSCR",
+      "first_occurrence_form": "偿债备付率（Debt Service Coverage Ratio，DSCR）",
+      "definition_zh": "同期可用于偿债现金流与合同应付债务服务之比。",
+      "unit_or_dimension": "1",
+      "distinction_and_boundary": "无债务不适用，零服务期不输出无穷；不得以实际少付伪造偿债能力。",
+      "related_formula_ids": [
+        "F-DSCR"
+      ],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-CFADS",
+      "chinese_name": "可用于偿债的现金流",
+      "english_name": "Cash Flow Available for Debt Service",
+      "abbreviation": "CFADS",
+      "first_occurrence_form": "可用于偿债的现金流（Cash Flow Available for Debt Service，CFADS）",
+      "definition_zh": "按融资协议在偿付本息前可用于债务服务的现金流。",
+      "unit_or_dimension": "元/期",
+      "distinction_and_boundary": "不是净利润，不含提款和股东出资，不重复扣本息。",
+      "related_formula_ids": [
+        "F-CFADS"
+      ],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-SOC",
+      "chinese_name": "荷电状态",
+      "english_name": "State of Charge",
+      "abbreviation": "SOC",
+      "first_occurrence_form": "荷电状态（State of Charge，SOC）",
+      "definition_zh": "储能在规定容量基准上的剩余电能状态比例。",
+      "unit_or_dimension": "1 或展示 %",
+      "distinction_and_boundary": "储能分类尚未实现；本公式字典不提供充放电状态演进，不得用无储能消纳式宣称支持储能。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-EPC",
+      "chinese_name": "设计采购施工总承包",
+      "english_name": "Engineering, Procurement and Construction",
+      "abbreviation": "EPC",
+      "first_occurrence_form": "设计采购施工总承包（Engineering, Procurement and Construction，EPC）",
+      "definition_zh": "工程设计、采购与施工一体合同或承包范围。",
+      "unit_or_dimension": "合同范围",
+      "distinction_and_boundary": "报价可能不含土地、送出、税费等，不能直接当全部 CAPEX。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-GIS",
+      "chinese_name": "地理信息系统",
+      "english_name": "Geographic Information System",
+      "abbreviation": "GIS",
+      "first_occurrence_form": "地理信息系统（Geographic Information System，GIS）",
+      "definition_zh": "存储处理地理坐标、边界和空间属性的数据与工具系统。",
+      "unit_or_dimension": "坐标/几何",
+      "distinction_and_boundary": "坐标系、许可、精度须明确，不由地图推断产权或建设许可。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-TMY",
+      "chinese_name": "典型气象年",
+      "english_name": "Typical Meteorological Year",
+      "abbreviation": "TMY",
+      "first_occurrence_form": "典型气象年（Typical Meteorological Year，TMY）",
+      "definition_zh": "用特定长期资料和方法组合的代表性气象年时序。",
+      "unit_or_dimension": "气象时序",
+      "distinction_and_boundary": "不是真实某一年的实测完整时序，不保证未来年产量。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-CF",
+      "chinese_name": "现金流",
+      "english_name": "Cash Flow",
+      "abbreviation": "CF",
+      "first_occurrence_form": "现金流（Cash Flow，CF）",
+      "definition_zh": "指定主体、时点及税融资口径的现金净收付。",
+      "unit_or_dimension": "元/期",
+      "distinction_and_boundary": "与 capacity factor 的 CF 缩写冲突；本字典容量因子写 CF_cap，财务写 CF_P/CF_E。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-CAPACITY-FACTOR",
+      "chinese_name": "容量因子",
+      "english_name": "Capacity Factor",
+      "abbreviation": "CF_cap",
+      "first_occurrence_form": "容量因子（Capacity Factor，CF_cap）",
+      "definition_zh": "年度电量除以参考容量和对应小时数。",
+      "unit_or_dimension": "1",
+      "distinction_and_boundary": "DC/AC 参考容量和闰年/不完整年小时数需标明。",
+      "related_formula_ids": [
+        "F-CAPACITY-FACTOR"
+      ],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-POWER",
+      "chinese_name": "功率",
+      "english_name": "Power",
+      "abbreviation": null,
+      "first_occurrence_form": "功率（Power）",
+      "definition_zh": "能量流速率，本方法区分直流/交流及额定/实际。",
+      "unit_or_dimension": "W、kW、MW",
+      "distinction_and_boundary": "不能与能量 kWh 互换，必须经持续时间/积分。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-ENERGY",
+      "chinese_name": "电量或能量",
+      "english_name": "Energy",
+      "abbreviation": null,
+      "first_occurrence_form": "电量或能量（Energy）",
+      "definition_zh": "指定期间转移或交付的能量。",
+      "unit_or_dimension": "Wh、kWh、MWh",
+      "distinction_and_boundary": "不是功率；kWh/时段是每区间电量标签，求和无需再乘小时。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-IRRADIANCE",
+      "chinese_name": "辐照度",
+      "english_name": "Irradiance",
+      "abbreviation": null,
+      "first_occurrence_form": "辐照度（Irradiance）",
+      "definition_zh": "单位面积接收的辐射功率，瞬时值或区间均值需明确。",
+      "unit_or_dimension": "W/m²、kW/m²",
+      "distinction_and_boundary": "累计后才是辐照量；并非电功率。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-IRRADIATION",
+      "chinese_name": "辐照量",
+      "english_name": "Irradiation",
+      "abbreviation": null,
+      "first_occurrence_form": "辐照量（Irradiation）",
+      "definition_zh": "辐照度对时间积分所得单位面积辐射能量。",
+      "unit_or_dimension": "kWh/m²、MJ/m²（转换需明确）",
+      "distinction_and_boundary": "必须写累计期间，不以 Irradiance 作为英文名称。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-KWP",
+      "chinese_name": "千瓦峰值",
+      "english_name": "Kilowatt-peak",
+      "abbreviation": "kWp",
+      "first_occurrence_form": "千瓦峰值（Kilowatt-peak，kWp）",
+      "definition_zh": "组件在规定额定条件下的千瓦级峰值功率标签。",
+      "unit_or_dimension": "kWp",
+      "distinction_and_boundary": "p 是峰值标签，不是持续满发承诺；不写成 kWh。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-MWP",
+      "chinese_name": "兆瓦峰值",
+      "english_name": "Megawatt-peak",
+      "abbreviation": "MWp",
+      "first_occurrence_form": "兆瓦峰值（Megawatt-peak，MWp）",
+      "definition_zh": "兆瓦级直流组件峰值容量。",
+      "unit_or_dimension": "MWp",
+      "distinction_and_boundary": "与 MWac 物理侧不同；单位变换不能跨侧替换。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-MWAC",
+      "chinese_name": "兆瓦交流额定容量",
+      "english_name": "Megawatt AC",
+      "abbreviation": "MWac",
+      "first_occurrence_form": "兆瓦交流额定容量（Megawatt AC，MWac）",
+      "definition_zh": "兆瓦级交流额定有功容量。",
+      "unit_or_dimension": "MWac",
+      "distinction_and_boundary": "交流逆变额定与并网点限制、变压器 kVA 分别登记。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-SPECIFIC-INVESTMENT",
+      "chinese_name": "单位投资",
+      "english_name": "Specific Capital Investment",
+      "abbreviation": null,
+      "first_occurrence_form": "单位投资（Specific Capital Investment）",
+      "definition_zh": "指定成本范围总投资除以明确 DC/AC 装机容量。",
+      "unit_or_dimension": "元/Wp、元/kWp、元/kWac",
+      "distinction_and_boundary": "元/Wp 与元/kWp 相差十进制千倍，转换方向不可颠倒。",
+      "related_formula_ids": [
+        "F-UNIT-INVESTMENT"
+      ],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-VAT",
+      "chinese_name": "增值税",
+      "english_name": "Value Added Tax",
+      "abbreviation": "VAT",
+      "first_occurrence_form": "增值税（Value Added Tax，VAT）",
+      "definition_zh": "依法适用的货物/服务增值环节税制，本字典只冻结金额/现金桥，不给定现行税率。",
+      "unit_or_dimension": "元；税率比例",
+      "distinction_and_boundary": "含税/不含税与所得税前/后是两组不同属性。",
+      "related_formula_ids": [
+        "F-VAT-CREDIT-BALANCE",
+        "F-CASH-TAX-TOTAL"
+      ],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-INCOME-TAX",
+      "chinese_name": "所得税",
+      "english_name": "Income Tax",
+      "abbreviation": null,
+      "first_occurrence_form": "所得税（Income Tax）",
+      "definition_zh": "按适用主体和税基核定的税额及其现金缴纳。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "计提、缴纳、预缴、亏损结转分开；未核实政策不输出确定税后值。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-DEPRECIATION",
+      "chinese_name": "折旧",
+      "english_name": "Depreciation",
+      "abbreviation": null,
+      "first_occurrence_form": "折旧（Depreciation）",
+      "definition_zh": "将可折旧资产基础按规则分摊至受益期间的非现金费用。",
+      "unit_or_dimension": "元/年",
+      "distinction_and_boundary": "只通过税盾和账面净值影响现金桥，不作第二次现金支出。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-AMORTIZATION",
+      "chinese_name": "摊销",
+      "english_name": "Amortization",
+      "abbreviation": null,
+      "first_occurrence_form": "摊销（Amortization）",
+      "definition_zh": "按规则分摊无形/递延资产等成本；本字典不将其误作债务本金摊还。",
+      "unit_or_dimension": "元/期",
+      "distinction_and_boundary": "会计摊销与贷款还本英文同形时必须注明对象。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-RESIDUAL-VALUE",
+      "chinese_name": "残值",
+      "english_name": "Residual Value",
+      "abbreviation": null,
+      "first_occurrence_form": "残值（Residual Value）",
+      "definition_zh": "资产折旧底值或终期处置金额，二者需分字段。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "会计残值不等于终期可收现金，实际处置税费另计。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-WORKING-CAPITAL",
+      "chinese_name": "营运资金",
+      "english_name": "Working Capital",
+      "abbreviation": "NWC",
+      "first_occurrence_form": "营运资金（Working Capital，NWC）",
+      "definition_zh": "经营性流动资产减经营性流动负债的净占用，具体包含项冻结。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "不含已单列的现金、债务、税资产负债或受限储备，除非明确桥项；不与收款法重复调整。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-PROJECT-CASH-FLOW",
+      "chinese_name": "项目投资现金流",
+      "english_name": "Project Investment Cash Flow",
+      "abbreviation": null,
+      "first_occurrence_form": "项目投资现金流（Project Investment Cash Flow）",
+      "definition_zh": "不混入债务提款/本息和股东出入资的无杠杆项目增量现金流。",
+      "unit_or_dimension": "元/期",
+      "distinction_and_boundary": "税前/税后独立标签；建设期利息不得同时混入无杠杆投资成本。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-EQUITY-CASH-FLOW",
+      "chinese_name": "资本金现金流",
+      "english_name": "Equity Cash Flow",
+      "abbreviation": null,
+      "first_occurrence_form": "资本金现金流（Equity Cash Flow）",
+      "definition_zh": "从股东实际出资、分配和退出收付构建的现金流。",
+      "unit_or_dimension": "元/期",
+      "distinction_and_boundary": "可供股权余缺不一定已经分配；受限分红和资金滞留影响资本金 IRR 时点。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-UNLEVERED",
+      "chinese_name": "无杠杆",
+      "english_name": "Unlevered",
+      "abbreviation": null,
+      "first_occurrence_form": "无杠杆（Unlevered）",
+      "definition_zh": "不计融资资金收付及债务利息税盾的项目口径。",
+      "unit_or_dimension": "口径",
+      "distinction_and_boundary": "不是零投资，也不是没有税。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-LEVERED",
+      "chinese_name": "融资后",
+      "english_name": "Levered",
+      "abbreviation": null,
+      "first_occurrence_form": "融资后（Levered）",
+      "definition_zh": "明确计入债务融资影响和合法融资税盾的口径。",
+      "unit_or_dimension": "口径",
+      "distinction_and_boundary": "项目收益率与股东收益率不混用。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-DEBT-SERVICE",
+      "chinese_name": "债务服务",
+      "english_name": "Debt Service",
+      "abbreviation": null,
+      "first_occurrence_form": "债务服务（Debt Service）",
+      "definition_zh": "同一合同期间应付本金、利息及约定纳入费用。",
+      "unit_or_dimension": "元/期",
+      "distinction_and_boundary": "应付和实付分开，逾期不能降低 DSCR 分母。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-DEBT-DRAWDOWN",
+      "chinese_name": "债务提款",
+      "english_name": "Debt Drawdown",
+      "abbreviation": null,
+      "first_occurrence_form": "债务提款（Debt Drawdown）",
+      "definition_zh": "借款人在指定时点实际取得的借款现金。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "未付资本化利息不属于现金提款。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-PRINCIPAL",
+      "chinese_name": "本金",
+      "english_name": "Principal",
+      "abbreviation": null,
+      "first_occurrence_form": "本金（Principal）",
+      "definition_zh": "贷款未偿基础金额及其还款对象。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "利息资本化可增加本金；本金归还不是可扣所得税费用。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-INTEREST",
+      "chinese_name": "利息",
+      "english_name": "Interest",
+      "abbreviation": null,
+      "first_occurrence_form": "利息（Interest）",
+      "definition_zh": "基于计息本金、利率和合同期间的融资费用。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "计提、实际支付、资本化及可税前扣除利息均可不同。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-IDC",
+      "chinese_name": "建设期利息",
+      "english_name": "Interest During Construction",
+      "abbreviation": "IDC",
+      "first_occurrence_form": "建设期利息（Interest During Construction，IDC）",
+      "definition_zh": "建设期间发生的融资利息；投资估算和融资现金桥单独披露。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "已资本化记账未必付现，不能在资产付款和利息支付双扣。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-BALLOON",
+      "chinese_name": "到期集中偿还本金",
+      "english_name": "Balloon Payment",
+      "abbreviation": null,
+      "first_occurrence_form": "到期集中偿还本金（Balloon Payment）",
+      "definition_zh": "贷款到期时集中支付的剩余本金。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "不能在评价末期自动注销未偿债务。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-TAX-SHIELD",
+      "chinese_name": "税盾",
+      "english_name": "Tax Shield",
+      "abbreviation": null,
+      "first_occurrence_form": "税盾（Tax Shield）",
+      "definition_zh": "合法可扣费用导致的所得税减少。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "只在适用税制和可用税基下生效，不能无条件用利息乘税率。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-PAYBACK",
+      "chinese_name": "回收期",
+      "english_name": "Payback Period",
+      "abbreviation": null,
+      "first_occurrence_form": "回收期（Payback Period）",
+      "definition_zh": "累计净现金流首次负转非负的时间。",
+      "unit_or_dimension": "年",
+      "distinction_and_boundary": "动态需折现，静态不折现；期内未回收返回状态而非随意年数。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-DISCOUNT-RATE",
+      "chinese_name": "折现率",
+      "english_name": "Discount Rate",
+      "abbreviation": null,
+      "first_occurrence_form": "折现率（Discount Rate）",
+      "definition_zh": "把同口径未来现金流折算到基期的收益要求或方法参数。",
+      "unit_or_dimension": "每年比例",
+      "distinction_and_boundary": "名义/实际、税前/后、项目/股权均匹配。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-NOMINAL",
+      "chinese_name": "名义价格口径",
+      "english_name": "Nominal Price Basis",
+      "abbreviation": null,
+      "first_occurrence_form": "名义价格口径（Nominal Price Basis）",
+      "definition_zh": "包含一般通胀影响的货币流口径。",
+      "unit_or_dimension": "指定年份币值",
+      "distinction_and_boundary": "配名义折现率，不再混用实际折现率。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-REAL",
+      "chinese_name": "实际价格口径",
+      "english_name": "Real Price Basis",
+      "abbreviation": null,
+      "first_occurrence_form": "实际价格口径（Real Price Basis）",
+      "definition_zh": "以固定购买力币值表示的价格/现金流。",
+      "unit_or_dimension": "基准年币值",
+      "distinction_and_boundary": "仍可有相对价格变化，不等于所有价格恒定。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-INFLATION",
+      "chinese_name": "通货膨胀",
+      "english_name": "Inflation",
+      "abbreviation": null,
+      "first_occurrence_form": "通货膨胀（Inflation）",
+      "definition_zh": "一般价格水平的期间变化率假设。",
+      "unit_or_dimension": "每年比例",
+      "distinction_and_boundary": "资产专项涨价、合同电价变化与一般通胀不同。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-CASH-WATERFALL",
+      "chinese_name": "现金分配瀑布",
+      "english_name": "Cash Waterfall",
+      "abbreviation": null,
+      "first_occurrence_form": "现金分配瀑布（Cash Waterfall）",
+      "definition_zh": "按合同顺序分配经营现金至税费、储备、债务和股东的规则。",
+      "unit_or_dimension": "规则",
+      "distinction_and_boundary": "可供分配不等于已经分配，顺序以协议为准。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-SENSITIVITY",
+      "chinese_name": "敏感性分析",
+      "english_name": "Sensitivity Analysis",
+      "abbreviation": null,
+      "first_occurrence_form": "敏感性分析（Sensitivity Analysis）",
+      "definition_zh": "改变指定因素并完整重算指标以评价影响。",
+      "unit_or_dimension": "指标原单位/归一化比例",
+      "distinction_and_boundary": "单因素其他外生量固定，内生税/融资需跟随重算。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-ELASTICITY",
+      "chinese_name": "归一化敏感性系数",
+      "english_name": "Sensitivity Elasticity",
+      "abbreviation": null,
+      "first_occurrence_form": "归一化敏感性系数（Sensitivity Elasticity）",
+      "definition_zh": "指标相对变化与因素相对变化之比。",
+      "unit_or_dimension": "1",
+      "distinction_and_boundary": "基准指标或因素为零时不定义，不制造无穷。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-SCENARIO",
+      "chinese_name": "情景",
+      "english_name": "Scenario",
+      "abbreviation": null,
+      "first_occurrence_form": "情景（Scenario）",
+      "definition_zh": "经声明的一组一致输入和方法假设。",
+      "unit_or_dimension": "情景向量",
+      "distinction_and_boundary": "悲观/基准/乐观不等于已知概率分布。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-BREAK-EVEN-TARIFF",
+      "chinese_name": "盈亏平衡电价",
+      "english_name": "Break-even Tariff",
+      "abbreviation": null,
+      "first_occurrence_form": "盈亏平衡电价（Break-even Tariff）",
+      "definition_zh": "本方法指在给定折现率下令 NPV=0 的电价根。",
+      "unit_or_dimension": "元/kWh",
+      "distinction_and_boundary": "不是会计利润为零电价，求根需约束搜索域。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-CURTAILMENT",
+      "chinese_name": "弃光限发",
+      "english_name": "Curtailment",
+      "abbreviation": null,
+      "first_occurrence_form": "弃光限发（Curtailment）",
+      "definition_zh": "因消纳、调度或上网约束未能交付的可用电量。",
+      "unit_or_dimension": "kWh 或比例",
+      "distinction_and_boundary": "与温度、线损等技术损失不同；不在可用电量前后重复扣除。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-SELF-CONSUMPTION",
+      "chinese_name": "自用电量",
+      "english_name": "Self-consumption",
+      "abbreviation": null,
+      "first_occurrence_form": "自用电量（Self-consumption）",
+      "definition_zh": "同计量边界同时间粒度直接由光伏供给的负荷电量。",
+      "unit_or_dimension": "kWh",
+      "distinction_and_boundary": "发电侧自用率与负荷侧自给率分母不同。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-LOAD",
+      "chinese_name": "负荷",
+      "english_name": "Load",
+      "abbreviation": null,
+      "first_occurrence_form": "负荷（Load）",
+      "definition_zh": "在指定计量边界时段的用电功率或电量，必须标单位。",
+      "unit_or_dimension": "kW 或 kWh/时段",
+      "distinction_and_boundary": "年总电量不能构成真实逐时匹配；功率需积分成电量。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-EXPORT-LIMIT",
+      "chinese_name": "上网限制",
+      "english_name": "Export Limit",
+      "abbreviation": null,
+      "first_occurrence_form": "上网限制（Export Limit）",
+      "definition_zh": "合同/电网对上网有功功率或区间电量的上限。",
+      "unit_or_dimension": "kW 或 kWh/时段",
+      "distinction_and_boundary": "功率限制转电量必须乘有效时长，未知不等于无限。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-DELIVERED-ENERGY",
+      "chinese_name": "交付电量",
+      "english_name": "Delivered Energy",
+      "abbreviation": null,
+      "first_occurrence_form": "交付电量（Delivered Energy）",
+      "definition_zh": "同一项目计量边界实际可利用的自用与上网电量之和或另声明边界。",
+      "unit_or_dimension": "kWh",
+      "distinction_and_boundary": "不含弃光；LCOE 不用理论直流量代替。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-AVAILABILITY",
+      "chinese_name": "可利用率",
+      "english_name": "Availability",
+      "abbreviation": null,
+      "first_occurrence_form": "可利用率（Availability）",
+      "definition_zh": "设备在指定时间或能量基准下可工作的程度。",
+      "unit_or_dimension": "1",
+      "distinction_and_boundary": "时间可利用率与能量可利用率不可不加说明互换；停机已模拟不重复乘率。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-SHADING",
+      "chinese_name": "遮挡",
+      "english_name": "Shading",
+      "abbreviation": null,
+      "first_occurrence_form": "遮挡（Shading）",
+      "definition_zh": "周边障碍、地形或组件间遮挡对有效辐照的影响。",
+      "unit_or_dimension": "时序/损失比例",
+      "distinction_and_boundary": "耦合影响优先时序建模，避免与 PR 重复。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-SOILING",
+      "chinese_name": "污损",
+      "english_name": "Soiling",
+      "abbreviation": null,
+      "first_occurrence_form": "污损（Soiling）",
+      "definition_zh": "灰尘污物造成光入射/输出降低的现象。",
+      "unit_or_dimension": "损失比例/时序",
+      "distinction_and_boundary": "清洗计划影响时序，不是无来源固定默认率。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-SNOW",
+      "chinese_name": "积雪损失",
+      "english_name": "Snow Loss",
+      "abbreviation": null,
+      "first_occurrence_form": "积雪损失（Snow Loss）",
+      "definition_zh": "积雪遮盖组件或相关工况造成的输出减少。",
+      "unit_or_dimension": "损失比例/时序",
+      "distinction_and_boundary": "场址无数据不能用未经核实统一默认。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-MISMATCH",
+      "chinese_name": "失配",
+      "english_name": "Mismatch",
+      "abbreviation": null,
+      "first_occurrence_form": "失配（Mismatch）",
+      "definition_zh": "组件/串/阵列电气不一致导致的产出损失。",
+      "unit_or_dimension": "损失比例/模型",
+      "distinction_and_boundary": "不能把单体功率差简单当额外完整系统损失再扣一次。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-CLIPPING",
+      "chinese_name": "逆变限幅",
+      "english_name": "Inverter Clipping",
+      "abbreviation": null,
+      "first_occurrence_form": "逆变限幅（Inverter Clipping）",
+      "definition_zh": "直流输入可转换输出超过逆变器功率能力时被限制的部分。",
+      "unit_or_dimension": "kW 或 kWh",
+      "distinction_and_boundary": "需先设备级限幅再汇总，不与外部限发混淆。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-EFFICIENCY",
+      "chinese_name": "转换效率",
+      "english_name": "Conversion Efficiency",
+      "abbreviation": null,
+      "first_occurrence_form": "转换效率（Conversion Efficiency）",
+      "definition_zh": "指定工况能量/功率输出与输入之比。",
+      "unit_or_dimension": "1",
+      "distinction_and_boundary": "不等于 PR，效率工况变化不得无来源恒定化。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-CELL-TEMPERATURE",
+      "chinese_name": "电池片温度",
+      "english_name": "Cell Temperature",
+      "abbreviation": null,
+      "first_occurrence_form": "电池片温度（Cell Temperature）",
+      "definition_zh": "组件电池片实际工作温度或经核验模型估计值。",
+      "unit_or_dimension": "°C",
+      "distinction_and_boundary": "不是环境气温；温差用 ℃ 或 K 数值一致但绝对温度不直接混用。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-DEGRADATION",
+      "chinese_name": "性能衰减",
+      "english_name": "Performance Degradation",
+      "abbreviation": null,
+      "first_occurrence_form": "性能衰减（Performance Degradation）",
+      "definition_zh": "设备随时间相对基准性能的变化。",
+      "unit_or_dimension": "每运营年比例",
+      "distinction_and_boundary": "首年初始损失与后续衰减分开，更换/天气/限发变化不能统归衰减。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-LID",
+      "chinese_name": "光致初始衰减",
+      "english_name": "Light-Induced Degradation",
+      "abbreviation": "LID",
+      "first_occurrence_form": "光致初始衰减（Light-Induced Degradation，LID）",
+      "definition_zh": "组件初期受光产生的性能损失类别。",
+      "unit_or_dimension": "损失比例",
+      "distinction_and_boundary": "只在模型尚未包含时显式单列，具体机制/数值以设备资料核验。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-LINE-LOSS",
+      "chinese_name": "线路损失",
+      "english_name": "Line Loss",
+      "abbreviation": null,
+      "first_occurrence_form": "线路损失（Line Loss）",
+      "definition_zh": "电能在直流、交流或送出线路传输中的损耗。",
+      "unit_or_dimension": "kWh 或比例",
+      "distinction_and_boundary": "必须标线路段，模拟已含部分不重复。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-TRANSFORMER-LOSS",
+      "chinese_name": "变压器损耗",
+      "english_name": "Transformer Loss",
+      "abbreviation": null,
+      "first_occurrence_form": "变压器损耗（Transformer Loss）",
+      "definition_zh": "变压器空载和负载相关损耗的合计。",
+      "unit_or_dimension": "kW、kWh",
+      "distinction_and_boundary": "低负荷下不必能用统一比例逼近，需实际模型。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-AUXILIARY",
+      "chinese_name": "站用电",
+      "english_name": "Auxiliary Consumption",
+      "abbreviation": null,
+      "first_occurrence_form": "站用电（Auxiliary Consumption）",
+      "definition_zh": "站内设备运行消耗电量。",
+      "unit_or_dimension": "kWh",
+      "distinction_and_boundary": "进口站用电可另作购电成本，不以负发电量掩盖。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-AZIMUTH",
+      "chinese_name": "方位角",
+      "english_name": "Azimuth",
+      "abbreviation": null,
+      "first_occurrence_form": "方位角（Azimuth）",
+      "definition_zh": "组件/地理对象水平朝向的角度。",
+      "unit_or_dimension": "°",
+      "distinction_and_boundary": "北零/南零、顺逆时针定义依源明确，不能跨源静默替换。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-TILT",
+      "chinese_name": "倾角",
+      "english_name": "Tilt",
+      "abbreviation": null,
+      "first_occurrence_form": "倾角（Tilt）",
+      "definition_zh": "组件平面与水平面夹角。",
+      "unit_or_dimension": "°",
+      "distinction_and_boundary": "倾角和坡度不能不经几何定义直接互用。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-TIME-STEP",
+      "chinese_name": "时间步长",
+      "english_name": "Time Step",
+      "abbreviation": null,
+      "first_occurrence_form": "时间步长（Time Step）",
+      "definition_zh": "一条时序区间的实际持续时间。",
+      "unit_or_dimension": "h",
+      "distinction_and_boundary": "时区、夏令时、缺测和闰年需处理；kWh/时段不再乘时长。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-TIME-ZONE",
+      "chinese_name": "时区",
+      "english_name": "Time Zone",
+      "abbreviation": null,
+      "first_occurrence_form": "时区（Time Zone）",
+      "definition_zh": "时间戳与协调时间之间的地域规则。",
+      "unit_or_dimension": "时区标识",
+      "distinction_and_boundary": "发电与负荷时区不一致会产生伪自用率。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-DAY-COUNT",
+      "chinese_name": "日计数惯例",
+      "english_name": "Day-count Convention",
+      "abbreviation": null,
+      "first_occurrence_form": "日计数惯例（Day-count Convention）",
+      "definition_zh": "合同或方法将日历期间转为年分数的规则。",
+      "unit_or_dimension": "年分数",
+      "distinction_and_boundary": "利息和日期净现值都必须声明规则，不能默认相同。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-ROOT",
+      "chinese_name": "实根",
+      "english_name": "Real Root",
+      "abbreviation": null,
+      "first_occurrence_form": "实根（Real Root）",
+      "definition_zh": "使给定函数等于零的实数解。",
+      "unit_or_dimension": "视函数",
+      "distinction_and_boundary": "符号变化不保证根唯一；数值残差小不代表已查遍全部根。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-SEARCH-DOMAIN",
+      "chinese_name": "搜索域",
+      "english_name": "Search Domain",
+      "abbreviation": null,
+      "first_occurrence_form": "搜索域（Search Domain）",
+      "definition_zh": "事先规定求根算法可搜索的变量范围。",
+      "unit_or_dimension": "率域/价格域",
+      "distinction_and_boundary": "域内无根不能宣称全实域无根；域外根必须说明。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-TOLERANCE",
+      "chinese_name": "数值容差",
+      "english_name": "Numerical Tolerance",
+      "abbreviation": null,
+      "first_occurrence_form": "数值容差（Numerical Tolerance）",
+      "definition_zh": "未来算法用于残差、收敛和对账的绝对/相对阈值。",
+      "unit_or_dimension": "与被比量匹配",
+      "distinction_and_boundary": "Phase 1 不编造已通过数值容差测试；实施期须冻结精度。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-PROVENANCE",
+      "chinese_name": "来源追溯",
+      "english_name": "Provenance",
+      "abbreviation": null,
+      "first_occurrence_form": "来源追溯（Provenance）",
+      "definition_zh": "输入至转换、计算、输出的可追溯证据链。",
+      "unit_or_dimension": "元数据",
+      "distinction_and_boundary": "来源状态不能仅凭一个 confidence 数字自证。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-CANONICAL-RESULT",
+      "chinese_name": "规范计算结果",
+      "english_name": "Canonical Calculation Result",
+      "abbreviation": null,
+      "first_occurrence_form": "规范计算结果（Canonical Calculation Result）",
+      "definition_zh": "报告、图表与工作簿共享的带版本计算结果对象。",
+      "unit_or_dimension": "结构化对象",
+      "distinction_and_boundary": "Phase 1 只有字典，不宣称已生成可运行结果对象。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-FIXTURE",
+      "chinese_name": "离线固定测试资料",
+      "english_name": "Fixture",
+      "abbreviation": null,
+      "first_occurrence_form": "离线固定测试资料（Fixture）",
+      "definition_zh": "未来确定性验证专用的标注虚构或授权参考输入。",
+      "unit_or_dimension": "资料集",
+      "distinction_and_boundary": "不冒充站址真实气象/电价；本阶段仅规划不实施。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-API",
+      "chinese_name": "应用程序编程接口",
+      "english_name": "Application Programming Interface",
+      "abbreviation": "API",
+      "first_occurrence_form": "应用程序编程接口（Application Programming Interface，API）",
+      "definition_zh": "数据/软件间定义的访问接口。",
+      "unit_or_dimension": "接口契约",
+      "distinction_and_boundary": "来源接口不可用需安全降级，不合成所谓真实响应。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-JSON",
+      "chinese_name": "对象交换数据格式",
+      "english_name": "JavaScript Object Notation",
+      "abbreviation": "JSON",
+      "first_occurrence_form": "对象交换数据格式（JavaScript Object Notation，JSON）",
+      "definition_zh": "本任务使用的机器可读结构化字典格式。",
+      "unit_or_dimension": "文件格式",
+      "distinction_and_boundary": "语法可解析不代表数值公式已实现或已验证。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-HASH",
+      "chinese_name": "哈希值",
+      "english_name": "Hash",
+      "abbreviation": null,
+      "first_occurrence_form": "哈希值（Hash）",
+      "definition_zh": "用于标识输入/版本/结果字节内容的摘要。",
+      "unit_or_dimension": "摘要",
+      "distinction_and_boundary": "此任务未生成计算结果哈希，不虚构运行证据。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-BIPV",
+      "chinese_name": "建筑一体化光伏",
+      "english_name": "Building-Integrated Photovoltaics",
+      "abbreviation": "BIPV",
+      "first_occurrence_form": "建筑一体化光伏（Building-Integrated Photovoltaics，BIPV）",
+      "definition_zh": "光伏系统与建筑构件功能结合的项目类别。",
+      "unit_or_dimension": "项目分类",
+      "distinction_and_boundary": "P2 未实现，不能借屋顶模型声明支持。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-PV",
+      "chinese_name": "光伏",
+      "english_name": "Photovoltaics",
+      "abbreviation": "PV",
+      "first_occurrence_form": "光伏（Photovoltaics，PV）",
+      "definition_zh": "利用光伏效应进行发电的技术与项目。",
+      "unit_or_dimension": "技术类别",
+      "distinction_and_boundary": "仅预可研方法基线，不替代有资质设计与审查。",
+      "related_formula_ids": [],
+      "source_reference": "USER-BASELINE §6 术语清单及项目方法定义",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-DC-CAPACITY",
+      "chinese_name": "直流装机容量",
+      "english_name": "DC nameplate capacity",
+      "abbreviation": null,
+      "first_occurrence_form": "直流装机容量（DC nameplate capacity）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-DC-CAPACITY；组件铭牌端，不是逆变器交流输出或并网许可容量。混用组件规格须逐类求和。",
+      "unit_or_dimension": "kWp",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-DC-CAPACITY"
+      ],
+      "source_reference": "USER-BASELINE §6 第1组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-AC-CAPACITY",
+      "chinese_name": "逆变器交流额定容量",
+      "english_name": "AC inverter nameplate capacity",
+      "abbreviation": null,
+      "first_occurrence_form": "逆变器交流额定容量（AC inverter nameplate capacity）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-AC-CAPACITY；逆变器交流端；变压器 kVA、并网点 kW 和无功约束不能直接等同该值。",
+      "unit_or_dimension": "kWac",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-AC-CAPACITY"
+      ],
+      "source_reference": "USER-BASELINE §6 第1组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-DC-AC-RATIO",
+      "chinese_name": "直交流容配比",
+      "english_name": "DC-to-AC ratio",
+      "abbreviation": null,
+      "first_occurrence_form": "直交流容配比（DC-to-AC ratio）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-DC-AC-RATIO；比较额定功率数值，保留 DC/AC 标签；不是实时效率，也不是并网容量比。",
+      "unit_or_dimension": "1",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-DC-AC-RATIO"
+      ],
+      "source_reference": "USER-BASELINE §6 第1组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-POA-IRRADIATION",
+      "chinese_name": "阵列面辐照量积分",
+      "english_name": "POA irradiation integration",
+      "abbreviation": null,
+      "first_occurrence_form": "阵列面辐照量积分（POA irradiation integration）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-POA-IRRADIATION；同一阵列朝向、时间标准、已说明遮挡前后边界；GHI/DNI/DHI 不直接当 POA。",
+      "unit_or_dimension": "kWh/m²",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-POA-IRRADIATION"
+      ],
+      "source_reference": "USER-BASELINE §6 第2组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-FIRST-YEAR-ENERGY",
+      "chinese_name": "首年性能比简化发电量",
+      "english_name": "First-year PR-based energy",
+      "abbreviation": null,
+      "first_occurrence_form": "首年性能比简化发电量（First-year PR-based energy）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-FIRST-YEAR-ENERGY；PR 假设法仅用于资料不足的简化估算；明确输出在逆变器端或并网点、限发前或后。",
+      "unit_or_dimension": "kWh",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-FIRST-YEAR-ENERGY"
+      ],
+      "source_reference": "USER-BASELINE §6 第2组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-LOSS-COMPOSITE",
+      "chinese_name": "独立损失复合系数",
+      "english_name": "Multiplicative loss retention",
+      "abbreviation": null,
+      "first_occurrence_form": "独立损失复合系数（Multiplicative loss retention）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-LOSS-COMPOSITE；仅用于独立、同一基准边界的比例损失；不能替代遮挡、温度、限幅的逐时耦合模型。",
+      "unit_or_dimension": "1",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-LOSS-COMPOSITE"
+      ],
+      "source_reference": "USER-BASELINE §6 第3组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-DC-TIME-POWER",
+      "chinese_name": "时段直流功率近似",
+      "english_name": "Time-step DC power approximation",
+      "abbreviation": null,
+      "first_occurrence_form": "时段直流功率近似（Time-step DC power approximation）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-DC-TIME-POWER；用于明确版本的线性温度近似；不是宣称复现 PVWatts 全算法。",
+      "unit_or_dimension": "kW",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-DC-TIME-POWER"
+      ],
+      "source_reference": "USER-BASELINE §6 第3组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-AC-INVERTER-POWER",
+      "chinese_name": "逆变转换与限幅",
+      "english_name": "Inverter conversion and clipping",
+      "abbreviation": null,
+      "first_occurrence_form": "逆变转换与限幅（Inverter conversion and clipping）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-AC-INVERTER-POWER；每台/同质组先转换限幅再相加；不同设备不得只用总容量掩盖单机限幅。",
+      "unit_or_dimension": "kW",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-AC-INVERTER-POWER"
+      ],
+      "source_reference": "USER-BASELINE §6 第3组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-AVAILABLE-ENERGY",
+      "chinese_name": "计量点限发前可用电量",
+      "english_name": "Pre-curtailment available energy",
+      "abbreviation": null,
+      "first_occurrence_form": "计量点限发前可用电量（Pre-curtailment available energy）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-AVAILABLE-ENERGY；逆变器→交流线→变压器→送出线→明确计量点，限发另由消纳平衡扣；屋顶若计量点不同需禁用不适用段。",
+      "unit_or_dimension": "kWh/时段",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-AVAILABLE-ENERGY"
+      ],
+      "source_reference": "USER-BASELINE §6 第3组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-ENERGY-AGGREGATION",
+      "chinese_name": "月年度电量汇总",
+      "english_name": "Monthly and annual energy aggregation",
+      "abbreviation": null,
+      "first_occurrence_form": "月年度电量汇总（Monthly and annual energy aggregation）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-ENERGY-AGGREGATION；不混合限发前/后和 DC/AC 边界；账期与自然年不能静默合并。",
+      "unit_or_dimension": "kWh",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-ENERGY-AGGREGATION"
+      ],
+      "source_reference": "USER-BASELINE §6 第3组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-INITIAL-DEGRADATION",
+      "chinese_name": "首年初始衰减",
+      "english_name": "Initial first-year degradation",
+      "abbreviation": null,
+      "first_occurrence_form": "首年初始衰减（Initial first-year degradation）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-INITIAL-DEGRADATION；只适用于首年初始损失尚未由组件模型/PR/损失表包含的情况。",
+      "unit_or_dimension": "kWh",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-INITIAL-DEGRADATION"
+      ],
+      "source_reference": "USER-BASELINE §6 第4组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-ANNUAL-DEGRADATION",
+      "chinese_name": "后续恒定衰减",
+      "english_name": "Constant annual degradation",
+      "abbreviation": null,
+      "first_occurrence_form": "后续恒定衰减（Constant annual degradation）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-ANNUAL-DEGRADATION；天气、限发、自用、设备状态保持可比时才可整年比例缩放；财务基期不是 y=1。",
+      "unit_or_dimension": "kWh",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-ANNUAL-DEGRADATION"
+      ],
+      "source_reference": "USER-BASELINE §6 第4组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-PIECEWISE-DEGRADATION",
+      "chinese_name": "分段衰减性能系数",
+      "english_name": "Piecewise degradation retention",
+      "abbreviation": null,
+      "first_occurrence_form": "分段衰减性能系数（Piecewise degradation retention）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-PIECEWISE-DEGRADATION；只更新性能，不替代年度天气/停机/限发重算；设备增容需修改容量而非伪装修复。",
+      "unit_or_dimension": "1",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-PIECEWISE-DEGRADATION"
+      ],
+      "source_reference": "USER-BASELINE §6 第4组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-EQUIVALENT-HOURS",
+      "chinese_name": "等效利用小时",
+      "english_name": "Equivalent full-load hours",
+      "abbreviation": null,
+      "first_occurrence_form": "等效利用小时（Equivalent full-load hours）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-EQUIVALENT-HOURS；必须同时输出 reference_capacity_basis=DC/AC 和计量点，不能跨口径对标。",
+      "unit_or_dimension": "h",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-EQUIVALENT-HOURS"
+      ],
+      "source_reference": "USER-BASELINE §6 第5组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-PR-OBSERVED",
+      "chinese_name": "同边界性能比校核",
+      "english_name": "Boundary-consistent performance ratio",
+      "abbreviation": null,
+      "first_occurrence_form": "同边界性能比校核（Boundary-consistent performance ratio）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-PR-OBSERVED；性能比不是逆变器效率；限发/停机含否需标签；不与 PR 假设法形成循环输入。",
+      "unit_or_dimension": "1",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-PR-OBSERVED"
+      ],
+      "source_reference": "USER-BASELINE §6 第5组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-EXPORT-LIMIT-ENERGY",
+      "chinese_name": "上网功率限制换算电量",
+      "english_name": "Export power-to-energy limit",
+      "abbreviation": null,
+      "first_occurrence_form": "上网功率限制换算电量（Export power-to-energy limit）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-EXPORT-LIMIT-ENERGY；功率限额在区间内有效且恒定/以保守等效值表示；合同直接给电量上限时直接使用不再乘时长。",
+      "unit_or_dimension": "kWh/时段",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-EXPORT-LIMIT-ENERGY"
+      ],
+      "source_reference": "USER-BASELINE §6 第6组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-SELF-CONSUMPTION",
+      "chinese_name": "时段自用电量",
+      "english_name": "Interval self-consumption",
+      "abbreviation": null,
+      "first_occurrence_form": "时段自用电量（Interval self-consumption）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-SELF-CONSUMPTION；非负、同区间 kWh；E_available 是同计量边界限发前电量，L 是同点可抵减负荷；本公式不充分描述含储能/跨区间净计量/不同电表边界。",
+      "unit_or_dimension": "kWh/时段",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-SELF-CONSUMPTION"
+      ],
+      "source_reference": "USER-BASELINE §6 第6组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-EXPORTED-ENERGY",
+      "chinese_name": "时段上网电量",
+      "english_name": "Interval exported energy",
+      "abbreviation": null,
+      "first_occurrence_form": "时段上网电量（Interval exported energy）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-EXPORTED-ENERGY；非负、同区间 kWh；E_available 是同计量边界限发前电量，L 是同点可抵减负荷；本公式不充分描述含储能/跨区间净计量/不同电表边界。",
+      "unit_or_dimension": "kWh/时段",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-EXPORTED-ENERGY"
+      ],
+      "source_reference": "USER-BASELINE §6 第6组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-CURTAILED-ENERGY",
+      "chinese_name": "时段弃光限发电量",
+      "english_name": "Interval curtailed energy",
+      "abbreviation": null,
+      "first_occurrence_form": "时段弃光限发电量（Interval curtailed energy）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-CURTAILED-ENERGY；非负、同区间 kWh；E_available 是同计量边界限发前电量，L 是同点可抵减负荷；本公式不充分描述含储能/跨区间净计量/不同电表边界。",
+      "unit_or_dimension": "kWh/时段",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-CURTAILED-ENERGY"
+      ],
+      "source_reference": "USER-BASELINE §6 第6组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-ENERGY-BALANCE",
+      "chinese_name": "时段电量平衡残差",
+      "english_name": "Interval energy balance residual",
+      "abbreviation": null,
+      "first_occurrence_form": "时段电量平衡残差（Interval energy balance residual）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-ENERGY-BALANCE；非负、同区间 kWh；E_available 是同计量边界限发前电量，L 是同点可抵减负荷；本公式不充分描述含储能/跨区间净计量/不同电表边界。",
+      "unit_or_dimension": "kWh/时段",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-ENERGY-BALANCE"
+      ],
+      "source_reference": "USER-BASELINE §6 第6组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-DELIVERED-ENERGY",
+      "chinese_name": "可利用交付电量",
+      "english_name": "Delivered usable energy",
+      "abbreviation": null,
+      "first_occurrence_form": "可利用交付电量（Delivered usable energy）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-DELIVERED-ENERGY；用于 LCOE 的可利用边界；剔除弃光，不得用理论直流电量替代。",
+      "unit_or_dimension": "kWh",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-DELIVERED-ENERGY"
+      ],
+      "source_reference": "USER-BASELINE §6 第6组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-SELF-CONSUMPTION-RATIO",
+      "chinese_name": "发电侧自用率",
+      "english_name": "Generation-side self-consumption ratio",
+      "abbreviation": null,
+      "first_occurrence_form": "发电侧自用率（Generation-side self-consumption ratio）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-SELF-CONSUMPTION-RATIO；明确分母为交付电量；另需限发前自用比例时须新 ID，不能混称；不是负荷自给率。",
+      "unit_or_dimension": "1",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-SELF-CONSUMPTION-RATIO"
+      ],
+      "source_reference": "USER-BASELINE §6 第6组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-LOAD-COVERAGE-RATIO",
+      "chinese_name": "负荷侧自给率",
+      "english_name": "Load coverage ratio",
+      "abbreviation": null,
+      "first_occurrence_form": "负荷侧自给率（Load coverage ratio）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-LOAD-COVERAGE-RATIO；同一负荷表边界；不与发电侧自用率混用。",
+      "unit_or_dimension": "1",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-LOAD-COVERAGE-RATIO"
+      ],
+      "source_reference": "USER-BASELINE §6 第6组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-ENERGY-REVENUE",
+      "chinese_name": "自持项目电量经济收益",
+      "english_name": "Owner-operated energy benefit",
+      "abbreviation": null,
+      "first_occurrence_form": "自持项目电量经济收益（Owner-operated energy benefit）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-ENERGY-REVENUE；自持自用节省属于项目经济收益但不是另一笔到账销售现金；进现金流时用避免支出法或增量收益法二选一。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-ENERGY-REVENUE"
+      ],
+      "source_reference": "USER-BASELINE §6 第7组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-PPA-REVENUE",
+      "chinese_name": "第三方购售电合同收入",
+      "english_name": "Third-party PPA revenue",
+      "abbreviation": null,
+      "first_occurrence_form": "第三方购售电合同收入（Third-party PPA revenue）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-PPA-REVENUE；从投资方视角；不得再加用电方避免购电收益。租金/收益分成/交易费另入相应费用。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-PPA-REVENUE"
+      ],
+      "source_reference": "USER-BASELINE §6 第7组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-TAX-EXCLUSIVE-AMOUNT",
+      "chinese_name": "含税金额剥离",
+      "english_name": "Tax-inclusive amount separation",
+      "abbreviation": null,
+      "first_occurrence_form": "含税金额剥离（Tax-inclusive amount separation）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-TAX-EXCLUSIVE-AMOUNT；逐笔按项目/货物/服务适用税率处理，不用统一税率剥离混合成本；免税规则需人工确认。",
+      "unit_or_dimension": "与输入同金额单位",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-TAX-EXCLUSIVE-AMOUNT"
+      ],
+      "source_reference": "USER-BASELINE §6 第7组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-CASH-RECEIPTS",
+      "chinese_name": "权责收益到收款口径",
+      "english_name": "Accrual-to-cash receipts bridge",
+      "abbreviation": null,
+      "first_occurrence_form": "权责收益到收款口径（Accrual-to-cash receipts bridge）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-CASH-RECEIPTS；用于现金到账核对，不与已扣全部 ΔNWC 的现金流再同时扣应收；模型选择权责+营运资金桥或直接现金法二选一。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-CASH-RECEIPTS"
+      ],
+      "source_reference": "USER-BASELINE §6 第7组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-CAPEX-TOTAL",
+      "chinese_name": "分类投资估算总额",
+      "english_name": "Categorized CAPEX total",
+      "abbreviation": null,
+      "first_occurrence_form": "分类投资估算总额（Categorized CAPEX total）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-CAPEX-TOTAL；组件、逆变器、支架、电缆、变配电、送出、土建、屋顶加固、施工、运输、设计、开发、管理、预备费、建设期利息逐项纳入/剔除及理由；储能/土地同样显式标识。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-CAPEX-TOTAL"
+      ],
+      "source_reference": "USER-BASELINE §6 第8组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-ANNUAL-OPEX",
+      "chinese_name": "年度现金运营费用计划",
+      "english_name": "Annual cash OPEX schedule",
+      "abbreviation": null,
+      "first_occurrence_form": "年度现金运营费用计划（Annual cash OPEX schedule）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-ANNUAL-OPEX；折旧非现金；所得税、增值税、债务本息、资本化更换不在此重复；费用化维修与资本化替换需互斥。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-ANNUAL-OPEX"
+      ],
+      "source_reference": "USER-BASELINE §6 第8组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-OPEX-ESCALATION",
+      "chinese_name": "单项运营费用递增",
+      "english_name": "OPEX escalation schedule",
+      "abbreviation": null,
+      "first_occurrence_form": "单项运营费用递增（OPEX escalation schedule）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-OPEX-ESCALATION；仅适用合同按年度递增的项目；租赁阶梯、一次性更换独立排期，不能同一项重复通胀。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-OPEX-ESCALATION"
+      ],
+      "source_reference": "USER-BASELINE §6 第8组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-STRAIGHT-LINE-DEPRECIATION",
+      "chinese_name": "分类直线折旧",
+      "english_name": "Asset-class straight-line depreciation",
+      "abbreviation": null,
+      "first_occurrence_form": "分类直线折旧（Asset-class straight-line depreciation）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-STRAIGHT-LINE-DEPRECIATION；完整年度直线法；投产当年按生效规则折算，更换资产新增账簿；税折旧与账面折旧分字段。",
+      "unit_or_dimension": "元/财务年",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-STRAIGHT-LINE-DEPRECIATION"
+      ],
+      "source_reference": "USER-BASELINE §6 第9组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-ASSET-BOOK-VALUE",
+      "chinese_name": "资产净值滚动",
+      "english_name": "Asset net book value roll-forward",
+      "abbreviation": null,
+      "first_occurrence_form": "资产净值滚动（Asset net book value roll-forward）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-ASSET-BOOK-VALUE；资产处置收入另进入现金流，处置损益另入税基；账面和税务滚动不混用。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-ASSET-BOOK-VALUE"
+      ],
+      "source_reference": "USER-BASELINE §6 第9组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-TAXABLE-INCOME-PROJECT",
+      "chinese_name": "项目无杠杆应税利润基数",
+      "english_name": "Unlevered project taxable income base",
+      "abbreviation": null,
+      "first_occurrence_form": "项目无杠杆应税利润基数（Unlevered project taxable income base）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-TAXABLE-INCOME-PROJECT；这是无杠杆项目评估的税基，不是主体实际申报；自用节省税务影响需反事实税基明确。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-TAXABLE-INCOME-PROJECT"
+      ],
+      "source_reference": "USER-BASELINE §6 第9组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-TAXABLE-INCOME-EQUITY",
+      "chinese_name": "融资后主体应税利润基数",
+      "english_name": "Levered entity taxable income base",
+      "abbreviation": null,
+      "first_occurrence_form": "融资后主体应税利润基数（Levered entity taxable income base）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-TAXABLE-INCOME-EQUITY；资本化利息与费用按实际税务口径处理，不能既进折旧又全额当期扣除。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-TAXABLE-INCOME-EQUITY"
+      ],
+      "source_reference": "USER-BASELINE §6 第9组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-INCOME-TAX-ACCRUAL",
+      "chinese_name": "所得税计提与亏损使用",
+      "english_name": "Income tax charge and loss utilization",
+      "abbreviation": null,
+      "first_occurrence_form": "所得税计提与亏损使用（Income tax charge and loss utilization）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-INCOME-TAX-ACCRUAL；计提不是现金缴纳；亏损使用需逐批年份、期限、限额和政策适用台账，不把负税基直接作退税。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-INCOME-TAX-ACCRUAL"
+      ],
+      "source_reference": "USER-BASELINE §6 第9组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-TAX-LOSS-BALANCE",
+      "chinese_name": "税务亏损余额校验",
+      "english_name": "Tax loss carryforward balance",
+      "abbreviation": null,
+      "first_occurrence_form": "税务亏损余额校验（Tax loss carryforward balance）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-TAX-LOSS-BALANCE；公式是聚合平衡，不能替代逐批到期和法定抵扣限制判断。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-TAX-LOSS-BALANCE"
+      ],
+      "source_reference": "USER-BASELINE §6 第9组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-TAX-CASH-BRIDGE",
+      "chinese_name": "所得税计提到现金桥",
+      "english_name": "Income tax cash bridge",
+      "abbreviation": null,
+      "first_occurrence_form": "所得税计提到现金桥（Income tax cash bridge）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-TAX-CASH-BRIDGE；现金流用本条现金税，不用计提税替代；若营运资金中已含同税资产负债则剔除避免双计。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-TAX-CASH-BRIDGE"
+      ],
+      "source_reference": "USER-BASELINE §6 第9组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-VAT-CREDIT-BALANCE",
+      "chinese_name": "增值税留抵平衡",
+      "english_name": "VAT input-credit balance",
+      "abbreviation": null,
+      "first_occurrence_form": "增值税留抵平衡（VAT input-credit balance）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-VAT-CREDIT-BALANCE；简化连续期对账，须先以法定纳税期建明细再汇总年度；不可抵扣进项进入资产或费用，不进 VI。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-VAT-CREDIT-BALANCE"
+      ],
+      "source_reference": "USER-BASELINE §6 第9组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-OTHER-CASH-TAXES",
+      "chinese_name": "其他现金税费合计",
+      "english_name": "Other cash taxes and levies",
+      "abbreviation": null,
+      "first_occurrence_form": "其他现金税费合计（Other cash taxes and levies）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-OTHER-CASH-TAXES；本条只合计，不杜撰统一税种/税率；不得再纳入 OPEX 或税务桥重复扣除。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-OTHER-CASH-TAXES"
+      ],
+      "source_reference": "USER-BASELINE §6 第9组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-PROJECT-CASH-FLOW",
+      "chinese_name": "项目投资无杠杆净现金流",
+      "english_name": "Unlevered project investment cash flow",
+      "abbreviation": null,
+      "first_occurrence_form": "项目投资无杠杆净现金流（Unlevered project investment cash flow）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-PROJECT-CASH-FLOW；建设期、运营期、替换和退出全时点；绝不含贷款提款、本息、融资费或股东出入资。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "source_reference": "USER-BASELINE §6 第10组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-PROJECT-PRETAX-CASH-FLOW",
+      "chinese_name": "项目所得税前现金流",
+      "english_name": "Project pre-income-tax cash flow",
+      "abbreviation": null,
+      "first_occurrence_form": "项目所得税前现金流（Project pre-income-tax cash flow）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-PROJECT-PRETAX-CASH-FLOW；所得税前不等于不含增值税/全部免税；保留合法其他现金税费和税价桥。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-PROJECT-PRETAX-CASH-FLOW"
+      ],
+      "source_reference": "USER-BASELINE §6 第10组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-EQUITY-AVAILABLE-CASH-FLOW",
+      "chinese_name": "股权可分配增量现金流",
+      "english_name": "Cash flow available to equity",
+      "abbreviation": null,
+      "first_occurrence_form": "股权可分配增量现金流（Cash flow available to equity）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-EQUITY-AVAILABLE-CASH-FLOW；明确包含融资并使用融资后税负；项目流不能原样加融资后忽略利息税盾。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-EQUITY-AVAILABLE-CASH-FLOW"
+      ],
+      "source_reference": "USER-BASELINE §6 第10组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-EQUITY-INVESTOR-CASH-FLOW",
+      "chinese_name": "股东实际投入分配现金流",
+      "english_name": "Equity investor cash flow",
+      "abbreviation": null,
+      "first_occurrence_form": "股东实际投入分配现金流（Equity investor cash flow）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-EQUITY-INVESTOR-CASH-FLOW；分红限制、储备账户、资金滞留需反映实际收付；CF_E,avail 只有立即全额弥补/分配且无滞留时才与此相等。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-EQUITY-INVESTOR-CASH-FLOW"
+      ],
+      "source_reference": "USER-BASELINE §6 第10组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-CASH-FUNDING-BALANCE",
+      "chinese_name": "融资与现金账户平衡",
+      "english_name": "Sources-and-uses cash balance",
+      "abbreviation": null,
+      "first_occurrence_form": "融资与现金账户平衡（Sources-and-uses cash balance）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-CASH-FUNDING-BALANCE；本条验证主体现金账户；独立第三方支付的股权转让 EXIT 不经过主体账户；终期资产处置已在 CF_E,avail 中。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-CASH-FUNDING-BALANCE"
+      ],
+      "source_reference": "USER-BASELINE §6 第10组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-DEBT-BALANCE",
+      "chinese_name": "债务本金余额滚动",
+      "english_name": "Debt principal balance roll-forward",
+      "abbreviation": null,
+      "first_occurrence_form": "债务本金余额滚动（Debt principal balance roll-forward）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-DEBT-BALANCE；逐贷款、逐币种、逐合同先算再汇总；本金与应付未资本化利息分账。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-DEBT-BALANCE"
+      ],
+      "source_reference": "USER-BASELINE §6 第10组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-DEBT-INTEREST",
+      "chinese_name": "债务利息计提",
+      "english_name": "Debt interest accrual",
+      "abbreviation": null,
+      "first_occurrence_form": "债务利息计提（Debt interest accrual）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-DEBT-INTEREST；提款/还本/利率变化处切分，利息计提、付现、资本化及应付余额需桥接；不擅自定年初或平均余额。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-DEBT-INTEREST"
+      ],
+      "source_reference": "USER-BASELINE §6 第10组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-INTEREST-BALANCE",
+      "chinese_name": "应付利息平衡",
+      "english_name": "Interest payable balance",
+      "abbreviation": null,
+      "first_occurrence_form": "应付利息平衡（Interest payable balance）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-INTEREST-BALANCE；同一贷款同一计息期间；资本化利息不能又当付现，再当资本支出重复扣。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-INTEREST-BALANCE"
+      ],
+      "source_reference": "USER-BASELINE §6 第10组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-DATED-NPV",
+      "chinese_name": "非整年时点净现值",
+      "english_name": "Dated net present value",
+      "abbreviation": null,
+      "first_occurrence_form": "非整年时点净现值（Dated net present value）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-DATED-NPV；建设跨年、分期出资优先采用；日计数采用的年分数规则须写入方法版本，不默认日历除数。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-DATED-NPV"
+      ],
+      "source_reference": "USER-BASELINE §6 第11组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-NOMINAL-REAL-RATE",
+      "chinese_name": "名义与实际折现率桥",
+      "english_name": "Nominal-real discount rate relation",
+      "abbreviation": null,
+      "first_occurrence_form": "名义与实际折现率桥（Nominal-real discount rate relation）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-NOMINAL-REAL-RATE；仅作同一税/风险/币种口径下的通胀转换；不能拿资产特定电价变化替代一般通胀。",
+      "unit_or_dimension": "1/年",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-NOMINAL-REAL-RATE"
+      ],
+      "source_reference": "USER-BASELINE §6 第11组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-IRR-PROJECT",
+      "chinese_name": "项目投资内部收益率根集",
+      "english_name": "Project investment IRR root set",
+      "abbreviation": null,
+      "first_occurrence_form": "项目投资内部收益率根集（Project investment IRR root set）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-IRR-PROJECT；无债务流；税前与税后分别调用并分别输出，不以同字段覆盖；非整年时点改用同口径 dated-NPV 求根版本。",
+      "unit_or_dimension": "集合（元素为每年比例）",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-IRR-PROJECT"
+      ],
+      "source_reference": "USER-BASELINE §6 第12组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-IRR-EQUITY",
+      "chinese_name": "资本金内部收益率根集",
+      "english_name": "Equity investor IRR root set",
+      "abbreviation": null,
+      "first_occurrence_form": "资本金内部收益率根集（Equity investor IRR root set）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-IRR-EQUITY；必须计融资及分红限制，不能用项目现金流或单纯会计利润代替；日期不齐改 dated-NPV。",
+      "unit_or_dimension": "集合（元素为每年比例）",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-IRR-EQUITY"
+      ],
+      "source_reference": "USER-BASELINE §6 第12组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-CUMULATIVE-CASH-FLOW",
+      "chinese_name": "静态累计现金流",
+      "english_name": "Undiscounted cumulative cash flow",
+      "abbreviation": null,
+      "first_occurrence_form": "静态累计现金流（Undiscounted cumulative cash flow）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-CUMULATIVE-CASH-FLOW；从首次纳入评价的建设出资基期起算，不从投产时重置亏损；如使用运营回收期必须另标起点。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-CUMULATIVE-CASH-FLOW"
+      ],
+      "source_reference": "USER-BASELINE §6 第13组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-STATIC-PAYBACK",
+      "chinese_name": "静态首次回收期",
+      "english_name": "Static first payback period",
+      "abbreviation": null,
+      "first_occurrence_form": "静态首次回收期（Static first payback period）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-STATIC-PAYBACK；仅当 n≥1、A_(n−1)<0、A_n≥0、CF_n>0；区间内线性流入是假设而非真实日期。",
+      "unit_or_dimension": "年",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-STATIC-PAYBACK"
+      ],
+      "source_reference": "USER-BASELINE §6 第13组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-DISCOUNTED-CUMULATIVE-CASH",
+      "chinese_name": "动态累计现金流",
+      "english_name": "Discounted cumulative cash flow",
+      "abbreviation": null,
+      "first_occurrence_form": "动态累计现金流（Discounted cumulative cash flow）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-DISCOUNTED-CUMULATIVE-CASH；与 NPV 同基准日、同年末假设；不能静态累计配动态年度流。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-DISCOUNTED-CUMULATIVE-CASH"
+      ],
+      "source_reference": "USER-BASELINE §6 第13组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-DYNAMIC-PAYBACK",
+      "chinese_name": "动态首次回收期",
+      "english_name": "Discounted first payback period",
+      "abbreviation": null,
+      "first_occurrence_form": "动态首次回收期（Discounted first payback period）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-DYNAMIC-PAYBACK；与静态回收期同起点；线性插值基于年度折现值，只是近似，不代表精确日历回收日。",
+      "unit_or_dimension": "年",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-DYNAMIC-PAYBACK"
+      ],
+      "source_reference": "USER-BASELINE §6 第13组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-LIFECYCLE-COST",
+      "chinese_name": "无杠杆生命周期净成本",
+      "english_name": "Unlevered lifecycle net cost",
+      "abbreviation": null,
+      "first_occurrence_form": "无杠杆生命周期净成本（Unlevered lifecycle net cost）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-LIFECYCLE-COST；默认方法冻结为项目无杠杆税前所得税 LCOE，保留适用其他税；融资本息不混入再用含融资成本折现率双计；补贴抵成本/收益二选一。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-LIFECYCLE-COST"
+      ],
+      "source_reference": "USER-BASELINE §6 第14组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-DEBT-SERVICE",
+      "chinese_name": "应付债务服务",
+      "english_name": "Scheduled debt service",
+      "abbreviation": null,
+      "first_occurrence_form": "应付债务服务（Scheduled debt service）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-DEBT-SERVICE；DSCR 用应付口径；现金流用实付口径，逾期二者差异单独披露；不同债务协议先独立。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-DEBT-SERVICE"
+      ],
+      "source_reference": "USER-BASELINE §6 第15组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-BREAK-EVEN-PRICE",
+      "chinese_name": "净现值为零的盈亏平衡电价",
+      "english_name": "NPV break-even tariff",
+      "abbreviation": null,
+      "first_occurrence_form": "净现值为零的盈亏平衡电价（NPV break-even tariff）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-BREAK-EVEN-PRICE；冻结“使 NPV=0”的定义，不混称会计利润盈亏平衡；分时电价可对指定倍率求根但需新输出字段。",
+      "unit_or_dimension": "集合（元素元/kWh）",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-BREAK-EVEN-PRICE"
+      ],
+      "source_reference": "USER-BASELINE §6 第16组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-SINGLE-FACTOR-SENSITIVITY",
+      "chinese_name": "单因素绝对与相对敏感性",
+      "english_name": "One-factor absolute and relative sensitivity",
+      "abbreviation": null,
+      "first_occurrence_form": "单因素绝对与相对敏感性（One-factor absolute and relative sensitivity）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-SINGLE-FACTOR-SENSITIVITY；CAPEX、电价、发电量、可利用率、自用率、限发、OPEX、利率分别列情景，所有内生税/债务/现金流需重算。",
+      "unit_or_dimension": "与 M 同单位",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-SINGLE-FACTOR-SENSITIVITY"
+      ],
+      "source_reference": "USER-BASELINE §6 第16组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-SENSITIVITY-ELASTICITY",
+      "chinese_name": "归一化敏感性系数",
+      "english_name": "Normalized sensitivity elasticity",
+      "abbreviation": null,
+      "first_occurrence_form": "归一化敏感性系数（Normalized sensitivity elasticity）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-SENSITIVITY-ELASTICITY；仅适用于 M_0≠0、x_0≠0、x_1≠x_0；基准 NPV 为零时应报 UNDEFINED 并展示绝对变化，不做夸大比率。",
+      "unit_or_dimension": "1",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-SENSITIVITY-ELASTICITY"
+      ],
+      "source_reference": "USER-BASELINE §6 第16组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-SCENARIO-METRIC",
+      "chinese_name": "联合情景全模型重算",
+      "english_name": "Joint scenario model recalculation",
+      "abbreviation": null,
+      "first_occurrence_form": "联合情景全模型重算（Joint scenario model recalculation）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-SCENARIO-METRIC；联合情景不同于单因素敏感性；同一参数不能在 x_s 和 z_s 同时出现且值不同。",
+      "unit_or_dimension": "逐指标原单位",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-SCENARIO-METRIC"
+      ],
+      "source_reference": "USER-BASELINE §6 第16组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-WORST-CASH-YEAR",
+      "chinese_name": "最差现金流年份集合",
+      "english_name": "Worst cash-flow year set",
+      "abbreviation": null,
+      "first_occurrence_form": "最差现金流年份集合（Worst cash-flow year set）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-WORST-CASH-YEAR；必须同时列最小现金额和比较范围；含建设期与运营最差年各自输出，不能借大建设负数掩盖运营缺口。",
+      "unit_or_dimension": "集合（年份标签）",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-WORST-CASH-YEAR"
+      ],
+      "source_reference": "USER-BASELINE §6 第16组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-CAPEX-PAYMENT-BALANCE",
+      "chinese_name": "投资估算付款平衡",
+      "english_name": "CAPEX payment reconciliation",
+      "abbreviation": null,
+      "first_occurrence_form": "投资估算付款平衡（CAPEX payment reconciliation）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-CAPEX-PAYMENT-BALANCE；用相同含税/不含税和资本化利息范围；不能把未付合同总额与无杠杆现金流无桥对账。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-CAPEX-PAYMENT-BALANCE"
+      ],
+      "source_reference": "USER-BASELINE §6 第16组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-INVESTMENT-HURDLE-GAP",
+      "chinese_name": "投资门槛差距",
+      "english_name": "Investment hurdle gap",
+      "abbreviation": null,
+      "first_occurrence_form": "投资门槛差距（Investment hurdle gap）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-INVESTMENT-HURDLE-GAP；IRR 下限差距≥0 倾向满足；回收期上限差距≤0 才满足，方向由指标定义而非本式自动推断。",
+      "unit_or_dimension": "与 M 同单位",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-INVESTMENT-HURDLE-GAP"
+      ],
+      "source_reference": "USER-BASELINE §6 第16组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-CASH-TAX-TOTAL",
+      "chinese_name": "同口径现金税费总额",
+      "english_name": "Boundary-consistent total cash taxes",
+      "abbreviation": null,
+      "first_occurrence_form": "同口径现金税费总额（Boundary-consistent total cash taxes）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-CASH-TAX-TOTAL；含税收付时净缴退税直接入流；不含税收付时必须显式记录 VAT 桥，不能既除税又全扣净缴税漏掉税收付。输出按 b 投影到 tax.project_cash_total 或 tax.equity_cash_total。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-CASH-TAX-TOTAL"
+      ],
+      "source_reference": "USER-BASELINE §6 第9组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-UNIT-KW-MW",
+      "chinese_name": "功率千瓦至兆瓦换算",
+      "english_name": "Kilowatt to megawatt conversion",
+      "abbreviation": null,
+      "first_occurrence_form": "功率千瓦至兆瓦换算（Kilowatt to megawatt conversion）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-UNIT-KW-MW；仅变换单位数值，保留物理维度、DC/AC、峰值和税价标签；kW 与 kWh 不互换。",
+      "unit_or_dimension": "MW",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-UNIT-KW-MW"
+      ],
+      "source_reference": "USER-BASELINE §6 第1组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-UNIT-KWH-MWH",
+      "chinese_name": "电量千瓦时至兆瓦时换算",
+      "english_name": "Kilowatt-hour to megawatt-hour conversion",
+      "abbreviation": null,
+      "first_occurrence_form": "电量千瓦时至兆瓦时换算（Kilowatt-hour to megawatt-hour conversion）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-UNIT-KWH-MWH；仅变换单位数值，保留物理维度、DC/AC、峰值和税价标签；kW 与 kWh 不互换。",
+      "unit_or_dimension": "MWh",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-UNIT-KWH-MWH"
+      ],
+      "source_reference": "USER-BASELINE §6 第1组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-UNIT-IRRADIANCE-W-KW",
+      "chinese_name": "辐照度瓦至千瓦换算",
+      "english_name": "Irradiance watt-to-kilowatt conversion",
+      "abbreviation": null,
+      "first_occurrence_form": "辐照度瓦至千瓦换算（Irradiance watt-to-kilowatt conversion）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-UNIT-IRRADIANCE-W-KW；仅变换单位数值，保留物理维度、DC/AC、峰值和税价标签；kW 与 kWh 不互换。",
+      "unit_or_dimension": "kW/m²",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-UNIT-IRRADIANCE-W-KW"
+      ],
+      "source_reference": "USER-BASELINE §6 第1组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-UNIT-COST-WP-KWP",
+      "chinese_name": "单位投资瓦峰至千瓦峰换算",
+      "english_name": "Per-watt-peak to per-kilowatt-peak cost conversion",
+      "abbreviation": null,
+      "first_occurrence_form": "单位投资瓦峰至千瓦峰换算（Per-watt-peak to per-kilowatt-peak cost conversion）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-UNIT-COST-WP-KWP；仅变换单位数值，保留物理维度、DC/AC、峰值和税价标签；kW 与 kWh 不互换。",
+      "unit_or_dimension": "元/kWp",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-UNIT-COST-WP-KWP"
+      ],
+      "source_reference": "USER-BASELINE §6 第1组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-UNIT-DC-CAPACITY",
+      "chinese_name": "峰值直流装机单位换算",
+      "english_name": "Peak DC capacity unit conversion",
+      "abbreviation": null,
+      "first_occurrence_form": "峰值直流装机单位换算（Peak DC capacity unit conversion）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-UNIT-DC-CAPACITY；这是单位映射，不是 DC→AC 转换模型；MWp 不能直接替代 MWac。",
+      "unit_or_dimension": "MWp",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-UNIT-DC-CAPACITY"
+      ],
+      "source_reference": "USER-BASELINE §6 第1组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    },
+    {
+      "term_id": "TERM-F-UNIT-AC-CAPACITY",
+      "chinese_name": "额定交流容量单位换算",
+      "english_name": "Rated AC capacity unit conversion",
+      "abbreviation": null,
+      "first_occurrence_form": "额定交流容量单位换算（Rated AC capacity unit conversion）",
+      "definition_zh": "该计算方法的定义、符号、输入输出及异常边界见 F-UNIT-AC-CAPACITY；这是单位映射，不是 DC→AC 转换模型；MWp 不能直接替代 MWac。",
+      "unit_or_dimension": "MWac",
+      "distinction_and_boundary": "它是具体方法名，不替代具有不同税/融资/计量边界的同名行业指标。",
+      "related_formula_ids": [
+        "F-UNIT-AC-CAPACITY"
+      ],
+      "source_reference": "USER-BASELINE §6 第1组及 METHOD-CONTRACT-v1",
+      "review_status": "METHOD_DEFINED_STANDARD_OR_DATASET_DEFINITION_REVIEW_PENDING",
+      "english_usage_policy": "正文首次出现使用 first_occurrence_form，后续可用缩写；缩写歧义按上下文明确。"
+    }
+  ]
+}

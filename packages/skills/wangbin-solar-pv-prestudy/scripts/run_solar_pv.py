@@ -8,10 +8,12 @@ small JSON receipt. The engine remains an explicit runtime dependency.
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 import os
 from pathlib import Path
 import re
+import stat
 import subprocess
 import sys
 import time
@@ -31,6 +33,17 @@ class WrapperError(Exception):
         self.message = message
 
 
+def _is_link(path: Path) -> bool:
+    """Reject symlinks and Windows junctions/reparse points at the boundary."""
+    if path.is_symlink():
+        return True
+    try:
+        attributes = getattr(path.lstat(), "st_file_attributes", 0)
+    except OSError:
+        return False
+    return bool(attributes & getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400))
+
+
 def _safe_relative(value: str, label: str) -> Path:
     if not isinstance(value, str) or not value.strip():
         raise WrapperError("INVALID_PATH", f"{label} is required")
@@ -41,14 +54,18 @@ def _safe_relative(value: str, label: str) -> Path:
 
 
 def _workspace(value: str) -> Path:
-    path = Path(value).expanduser().resolve()
-    if not path.is_dir() or path.is_symlink():
+    supplied = Path(value).expanduser()
+    if _is_link(supplied) or any(_is_link(parent) for parent in supplied.parents if parent.exists()):
+        raise WrapperError("WORKSPACE_SYMLINK", "workspace and its existing ancestors must not be symlinks")
+    path = supplied.resolve()
+    if not path.is_dir():
         raise WrapperError("WORKSPACE_UNAVAILABLE", "workspace must be an existing non-symlink directory")
     return path
 
 
 def _engine(value: str | None) -> tuple[Path, Path, Path]:
     raw = value or os.environ.get("SOLAR_PV_ENGINE_ROOT")
+    bundled_baseline = Path(__file__).resolve().parents[1] / "references" / "baseline"
     candidates: list[Path] = ([Path(raw).expanduser().resolve()] if raw else [
         Path.cwd().resolve(),
         Path(__file__).resolve().parents[3],
@@ -65,11 +82,19 @@ def _engine(value: str | None) -> tuple[Path, Path, Path]:
         if engine_root is not None:
             break
     if engine_root is None or src is None:
-        raise WrapperError("ENGINE_UNAVAILABLE", "wangbin_solar_pv engine source was not found")
+        if raw:
+            raise WrapperError("ENGINE_UNAVAILABLE", "wangbin_solar_pv engine source was not found")
+        spec = importlib.util.find_spec("wangbin_solar_pv")
+        package_dir = Path(spec.origin).parent if spec and spec.origin else None
+        if package_dir is None or not package_dir.is_dir():
+            raise WrapperError("ENGINE_UNAVAILABLE", "wangbin_solar_pv engine is not installed")
+        engine_root, src = package_dir.parent, package_dir.parent
     repo_root = engine_root.parent.parent if engine_root.name == "solar-pv-engine" else engine_root
     baseline = repo_root / "docs" / "solar-pv"
     if not baseline.is_dir():
         baseline = engine_root / "docs" / "solar-pv"
+    if not baseline.is_dir() and bundled_baseline.is_dir():
+        baseline = bundled_baseline
     if not baseline.is_dir():
         raise WrapperError("BASELINE_UNAVAILABLE", "solar-PV frozen baseline directory was not found")
     return engine_root, src, baseline
@@ -77,7 +102,7 @@ def _engine(value: str | None) -> tuple[Path, Path, Path]:
 
 def _read_result(workspace: Path, relative: Path, project_type: str) -> dict[str, Any]:
     path = workspace / relative
-    if not path.is_file() or path.is_symlink():
+    if not path.is_file() or _is_link(path):
         raise WrapperError("RESULT_UNAVAILABLE", "canonical result is missing")
     try:
         result = json.loads(path.read_text(encoding="utf-8"))
@@ -127,7 +152,7 @@ def _report(args: argparse.Namespace) -> dict[str, Any]:
     result_rel = _safe_relative(args.result, "result")
     output_rel = _safe_relative(args.output, "output")
     output = workspace / output_rel
-    if output.exists() or output.is_symlink():
+    if output.exists() or _is_link(output):
         raise WrapperError("OUTPUT_EXISTS", "output directory already exists")
     _read_result(workspace, result_rel, args.project_type)
     arguments = ["--result", result_rel.as_posix(), "--output", output_rel.as_posix()]
@@ -144,7 +169,8 @@ def _project_report(args: argparse.Namespace) -> dict[str, Any]:
     engine_root, src, baseline = _engine(args.engine_root)
     project_output = _safe_relative(args.project_output, "project-output")
     report_output = _safe_relative(args.report_output, "report-output")
-    if (workspace / project_output).exists() or (workspace / report_output).exists():
+    if (_is_link(workspace / project_output) or (workspace / project_output).exists()
+            or _is_link(workspace / report_output) or (workspace / report_output).exists()):
         raise WrapperError("OUTPUT_EXISTS", "project-output or report-output already exists")
     project_args = ["--input", _safe_relative(args.input, "input").as_posix(),
                     "--methods", _safe_relative(args.methods, "methods").as_posix(),

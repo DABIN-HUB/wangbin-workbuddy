@@ -1,13 +1,27 @@
 {
   "id": "wangbin-solar-pv-prestudy",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "星核实验室 StarCore Lab",
   "kind": "workbuddy-skill-candidate",
   "license_type": "PROPRIETARY",
   "license_status": "REQUIRES_MANUAL_REVIEW",
   "runtime": {
+    "mode": "cli-plus-skill",
+    "connector": "wangbin-solar-pv-cli",
     "python": ">=3.12,<3.15",
     "engine": "wangbin-solar-pv-input==0.3.0",
+    "document_engine": "wangbin-document-cli==1.2.0",
+    "dependencies": [
+      "jsonschema==4.26.0",
+      "wangbin-document-cli==1.2.0",
+      "wangbin-solar-pv-input==0.3.0",
+      "openpyxl==3.1.5",
+      "python-docx==1.2.0",
+      "pdfminer.six==20260107",
+      "defusedxml==0.7.1",
+      "tzdata==2026.5",
+      "markitdown[pdf,docx,xlsx,pptx]==0.1.9"
+    ],
     "pdf": "optional-soffice-or-libreoffice"
   },
   "platform_upload_status": "LOCAL_CANDIDATE_ONLY"

@@ -1,0 +1,20 @@
+{
+  "name": "wangbin 光伏预可研计算 CLI",
+  "name_zh": "wangbin 光伏预可研计算 CLI",
+  "name_en": "wangbin Solar PV Pre-study CLI",
+  "description": "为光伏预可研 Skill 提供隔离的本地 Python 计算与报告导出 CLI，不上传用户项目资料。",
+  "description_zh": "为光伏预可研 Skill 提供 WorkBuddy 托管 Python runtime 中的项目计算、屋顶报告和地面报告导出能力；不上传用户项目资料。",
+  "description_en": "Provides isolated local Python calculation and report export for the solar PV pre-study Skill without uploading project files.",
+  "source": "wangbin-solar-pv-cli",
+  "type": "cli",
+  "version": "0.1.0",
+  "minWorkbuddyVersion": "5.0.0",
+  "examples_zh": [
+    "检查光伏预可研计算 CLI 是否就绪",
+    "根据已授权资料生成工商业屋顶或集中式地面光伏预可研报告"
+  ],
+  "examples_en": [
+    "Check whether the solar PV pre-study CLI is ready",
+    "Generate a rooftop or utility-scale ground PV pre-study report from authorized files"
+  ]
+}

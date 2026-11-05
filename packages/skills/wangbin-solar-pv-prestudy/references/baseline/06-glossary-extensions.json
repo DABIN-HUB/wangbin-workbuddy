@@ -1,0 +1,290 @@
+{
+  "schema_version": "1.0.0",
+  "scope": "与06-glossary.json合并为全部词典；未声明算法实现",
+  "terms": [
+    {
+      "term_id": "TERM-F-STORAGE-ENERGY-UPDATE",
+      "chinese_name": "储能时段储能更新",
+      "english_name": "Battery stored energy update",
+      "abbreviation": null,
+      "first_occurrence_form": "储能时段储能更新（Battery stored energy update）",
+      "definition_zh": "独立储能模型；充/放电量端口明示，PCS已含效率不重扣；外部供电辅机不能再扣电池内能量。",
+      "unit_or_dimension": "kWh",
+      "distinction_and_boundary": "设计/验收用词；算法尚未实现/专业复核。",
+      "related_formula_ids": [
+        "F-STORAGE-ENERGY-UPDATE"
+      ],
+      "source_reference": "USER-BASELINE；本项目边界冻结",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-F-STORAGE-SOC",
+      "chinese_name": "储能荷电状态",
+      "english_name": "Battery state of charge",
+      "abbreviation": null,
+      "first_occurrence_form": "储能荷电状态（Battery state of charge）",
+      "definition_zh": "当前可用容量分母，非始终不变铭牌容量。",
+      "unit_or_dimension": "1",
+      "distinction_and_boundary": "设计/验收用词；算法尚未实现/专业复核。",
+      "related_formula_ids": [
+        "F-STORAGE-SOC"
+      ],
+      "source_reference": "USER-BASELINE；本项目边界冻结",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-F-STORAGE-CHARGE-LIMIT",
+      "chinese_name": "储能充电能量上限",
+      "english_name": "Battery charge energy limit",
+      "abbreviation": null,
+      "first_occurrence_form": "储能充电能量上限（Battery charge energy limit）",
+      "definition_zh": "功率/能量上限同时受SOC可用裕量和变流器边界限制。",
+      "unit_or_dimension": "kWh/时段",
+      "distinction_and_boundary": "设计/验收用词；算法尚未实现/专业复核。",
+      "related_formula_ids": [
+        "F-STORAGE-CHARGE-LIMIT"
+      ],
+      "source_reference": "USER-BASELINE；本项目边界冻结",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-F-STORAGE-DISCHARGE-LIMIT",
+      "chinese_name": "储能放电能量上限",
+      "english_name": "Battery discharge energy limit",
+      "abbreviation": null,
+      "first_occurrence_form": "储能放电能量上限（Battery discharge energy limit）",
+      "definition_zh": "与SOC/功率下限和端口效率共同验收。",
+      "unit_or_dimension": "kWh/时段",
+      "distinction_and_boundary": "设计/验收用词；算法尚未实现/专业复核。",
+      "related_formula_ids": [
+        "F-STORAGE-DISCHARGE-LIMIT"
+      ],
+      "source_reference": "USER-BASELINE；本项目边界冻结",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-F-STORAGE-PV-BALANCE",
+      "chinese_name": "光储光伏节点守恒",
+      "english_name": "PV node energy balance",
+      "abbreviation": null,
+      "first_occurrence_form": "光储光伏节点守恒（PV node energy balance）",
+      "definition_zh": "光伏至储能耦合点，同节点电量，额外变换损耗须在节点台账独立列出。",
+      "unit_or_dimension": "kWh/时段",
+      "distinction_and_boundary": "设计/验收用词；算法尚未实现/专业复核。",
+      "related_formula_ids": [
+        "F-STORAGE-PV-BALANCE"
+      ],
+      "source_reference": "USER-BASELINE；本项目边界冻结",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-F-STORAGE-LOAD-BALANCE",
+      "chinese_name": "光储负荷节点守恒",
+      "english_name": "Load node energy balance",
+      "abbreviation": null,
+      "first_occurrence_form": "光储负荷节点守恒（Load node energy balance）",
+      "definition_zh": "负荷节点单独计量，若系统不可满足负荷需另列未供电项而非强制伪平衡。",
+      "unit_or_dimension": "kWh/时段",
+      "distinction_and_boundary": "设计/验收用词；算法尚未实现/专业复核。",
+      "related_formula_ids": [
+        "F-STORAGE-LOAD-BALANCE"
+      ],
+      "source_reference": "USER-BASELINE；本项目边界冻结",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-F-STORAGE-CYCLE-COUNT",
+      "chinese_name": "等效完整循环计数",
+      "english_name": "Equivalent full cycle count",
+      "abbreviation": null,
+      "first_occurrence_form": "等效完整循环计数（Equivalent full cycle count）",
+      "definition_zh": "仅当设备循环协议采用累计放电量定义时使用；其他吞吐/雨流计数须另注册，不混成统一事实。",
+      "unit_or_dimension": "次",
+      "distinction_and_boundary": "设计/验收用词；算法尚未实现/专业复核。",
+      "related_formula_ids": [
+        "F-STORAGE-CYCLE-COUNT"
+      ],
+      "source_reference": "USER-BASELINE；本项目边界冻结",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-F-USABLE-AREA",
+      "chinese_name": "可利用面积核算",
+      "english_name": "Usable area accounting",
+      "abbreviation": null,
+      "first_occurrence_form": "可利用面积核算（Usable area accounting）",
+      "definition_zh": "边界坐标系/投影与面积同一，排除区先做空间并集去重后计算。",
+      "unit_or_dimension": "m²",
+      "distinction_and_boundary": "设计/验收用词；算法尚未实现/专业复核。",
+      "related_formula_ids": [
+        "F-USABLE-AREA"
+      ],
+      "source_reference": "USER-BASELINE；本项目边界冻结",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-F-AVERAGE-ANNUAL-ENERGY",
+      "chinese_name": "评价期年均电量",
+      "english_name": "Average annual energy",
+      "abbreviation": null,
+      "first_occurrence_form": "评价期年均电量（Average annual energy）",
+      "definition_zh": "完整运营年算术均值；含不足年采用时长加权并另注册方法，不以建设年补0混淆。",
+      "unit_or_dimension": "kWh/年",
+      "distinction_and_boundary": "设计/验收用词；算法尚未实现/专业复核。",
+      "related_formula_ids": [
+        "F-AVERAGE-ANNUAL-ENERGY"
+      ],
+      "source_reference": "USER-BASELINE；本项目边界冻结",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-F-EMISSIONS-AVOIDED",
+      "chinese_name": "有边界的减排估算",
+      "english_name": "Boundary specific avoided emissions",
+      "abbreviation": null,
+      "first_occurrence_form": "有边界的减排估算（Boundary specific avoided emissions）",
+      "definition_zh": "仅适用因子匹配时估算，生命周期/运行边际/平均排放因子不可混用；储能网充影响单独。",
+      "unit_or_dimension": "tCO2e",
+      "distinction_and_boundary": "设计/验收用词；算法尚未实现/专业复核。",
+      "related_formula_ids": [
+        "F-EMISSIONS-AVOIDED"
+      ],
+      "source_reference": "USER-BASELINE；本项目边界冻结",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-F-TRANSFORMER-ACTIVE-LIMIT",
+      "chinese_name": "变压器有功容量校核",
+      "english_name": "Transformer active power limit",
+      "abbreviation": null,
+      "first_occurrence_form": "变压器有功容量校核（Transformer active power limit）",
+      "definition_zh": "只是有功换算；可用接入还需负荷占用/电网限制/无功和温升核查，不能因此认定许可。",
+      "unit_or_dimension": "kW",
+      "distinction_and_boundary": "设计/验收用词；算法尚未实现/专业复核。",
+      "related_formula_ids": [
+        "F-TRANSFORMER-ACTIVE-LIMIT"
+      ],
+      "source_reference": "USER-BASELINE；本项目边界冻结",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-F-CAPEX-ITEM-AMOUNT",
+      "chinese_name": "投资分项金额",
+      "english_name": "Capital cost item amount",
+      "abbreviation": null,
+      "first_occurrence_form": "投资分项金额（Capital cost item amount）",
+      "definition_zh": "数量、单价、金额税与币种一致再比较；总包固定金额可独立提供而不是伪造工程量。",
+      "unit_or_dimension": "元",
+      "distinction_and_boundary": "设计/验收用词；算法尚未实现/专业复核。",
+      "related_formula_ids": [
+        "F-CAPEX-ITEM-AMOUNT"
+      ],
+      "source_reference": "USER-BASELINE；本项目边界冻结",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-PCS",
+      "chinese_name": "储能功率变换系统",
+      "english_name": "Power Conversion System",
+      "abbreviation": "PCS",
+      "first_occurrence_form": "储能功率变换系统（Power Conversion System，PCS）",
+      "definition_zh": "储能功率变换系统，适用定义与时间/设备/排放边界分别声明。",
+      "unit_or_dimension": "按实际上下文",
+      "distinction_and_boundary": "不可跨时区/设备/因子口径混用；容量因子用CF_cap与现金流CF区分。",
+      "related_formula_ids": [],
+      "source_reference": "项目术语扩展，适用设备/数据集术语需实施时核对",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-MPPT",
+      "chinese_name": "最大功率点跟踪",
+      "english_name": "Maximum Power Point Tracking",
+      "abbreviation": "MPPT",
+      "first_occurrence_form": "最大功率点跟踪（Maximum Power Point Tracking，MPPT）",
+      "definition_zh": "最大功率点跟踪，适用定义与时间/设备/排放边界分别声明。",
+      "unit_or_dimension": "按实际上下文",
+      "distinction_and_boundary": "不可跨时区/设备/因子口径混用；容量因子用CF_cap与现金流CF区分。",
+      "related_formula_ids": [],
+      "source_reference": "项目术语扩展，适用设备/数据集术语需实施时核对",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-DST",
+      "chinese_name": "夏令时",
+      "english_name": "Daylight Saving Time",
+      "abbreviation": "DST",
+      "first_occurrence_form": "夏令时（Daylight Saving Time，DST）",
+      "definition_zh": "夏令时，适用定义与时间/设备/排放边界分别声明。",
+      "unit_or_dimension": "按实际上下文",
+      "distinction_and_boundary": "不可跨时区/设备/因子口径混用；容量因子用CF_cap与现金流CF区分。",
+      "related_formula_ids": [],
+      "source_reference": "项目术语扩展，适用设备/数据集术语需实施时核对",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-UTC",
+      "chinese_name": "协调世界时",
+      "english_name": "Coordinated Universal Time",
+      "abbreviation": "UTC",
+      "first_occurrence_form": "协调世界时（Coordinated Universal Time，UTC）",
+      "definition_zh": "协调世界时，适用定义与时间/设备/排放边界分别声明。",
+      "unit_or_dimension": "按实际上下文",
+      "distinction_and_boundary": "不可跨时区/设备/因子口径混用；容量因子用CF_cap与现金流CF区分。",
+      "related_formula_ids": [],
+      "source_reference": "项目术语扩展，适用设备/数据集术语需实施时核对",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-LST",
+      "chinese_name": "地方太阳时",
+      "english_name": "Local Solar Time",
+      "abbreviation": "LST",
+      "first_occurrence_form": "地方太阳时（Local Solar Time，LST）",
+      "definition_zh": "地方太阳时，适用定义与时间/设备/排放边界分别声明。",
+      "unit_or_dimension": "按实际上下文",
+      "distinction_and_boundary": "不可跨时区/设备/因子口径混用；容量因子用CF_cap与现金流CF区分。",
+      "related_formula_ids": [],
+      "source_reference": "项目术语扩展，适用设备/数据集术语需实施时核对",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-EFC",
+      "chinese_name": "等效完整循环",
+      "english_name": "Equivalent Full Cycle",
+      "abbreviation": "EFC",
+      "first_occurrence_form": "等效完整循环（Equivalent Full Cycle，EFC）",
+      "definition_zh": "等效完整循环，适用定义与时间/设备/排放边界分别声明。",
+      "unit_or_dimension": "按实际上下文",
+      "distinction_and_boundary": "不可跨时区/设备/因子口径混用；容量因子用CF_cap与现金流CF区分。",
+      "related_formula_ids": [],
+      "source_reference": "项目术语扩展，适用设备/数据集术语需实施时核对",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-CO2e",
+      "chinese_name": "二氧化碳当量",
+      "english_name": "Carbon Dioxide Equivalent",
+      "abbreviation": "CO2e",
+      "first_occurrence_form": "二氧化碳当量（Carbon Dioxide Equivalent，CO2e）",
+      "definition_zh": "二氧化碳当量，适用定义与时间/设备/排放边界分别声明。",
+      "unit_or_dimension": "按实际上下文",
+      "distinction_and_boundary": "不可跨时区/设备/因子口径混用；容量因子用CF_cap与现金流CF区分。",
+      "related_formula_ids": [],
+      "source_reference": "项目术语扩展，适用设备/数据集术语需实施时核对",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    },
+    {
+      "term_id": "TERM-CAPACITY_FACTOR",
+      "chinese_name": "容量因子",
+      "english_name": "Capacity Factor",
+      "abbreviation": null,
+      "first_occurrence_form": "容量因子（Capacity Factor）",
+      "definition_zh": "容量因子，适用定义与时间/设备/排放边界分别声明。",
+      "unit_or_dimension": "按实际上下文",
+      "distinction_and_boundary": "不可跨时区/设备/因子口径混用；容量因子用CF_cap与现金流CF区分。",
+      "related_formula_ids": [],
+      "source_reference": "项目术语扩展，适用设备/数据集术语需实施时核对",
+      "review_status": "METHOD_REVIEW_REQUIRED"
+    }
+  ]
+}
