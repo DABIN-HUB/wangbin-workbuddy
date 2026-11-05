@@ -52,8 +52,8 @@
 | `SYNTHETIC-utility_scale_ground-光伏预可研报告.docx` | GENERATED | 49,024 | `1b577617dc0753d5c95ebe76c54b7ad00165865b59ab466982189b2031bbae65` |
 | `SYNTHETIC-utility_scale_ground-光伏预可研报告.pdf` | BLOCKED (`PDF_RENDERER_UNAVAILABLE`) | — | — |
 | `SYNTHETIC-utility_scale_ground-测算模型.xlsx` | GENERATED, `STATIC_SNAPSHOT` | 58,355 | `4cff69ad8449324e61f6612ca0a4d6c799d860323d5c73bfaee90f328acfcb08` |
-| `SYNTHETIC-utility_scale_ground-资料来源与假设清单.xlsx` | GENERATED, `DRAFT_PARTIAL` | 由 manifest 登记 | `2bd113c2dc1e937119b7450be989e2f15405bec63afeb44fefb4d9f5a43f4e19` |
-| `manifest.json` | GENERATED | 4,058 | 见目录内 manifest `manifest` 字段 |
+| `SYNTHETIC-utility_scale_ground-资料来源与假设清单.xlsx` | GENERATED, `DRAFT_PARTIAL` | 75,064 | `2bd113c2dc1e937119b7450be989e2f15405bec63afeb44fefb4d9f5a43f4e19` |
+| `manifest.json` | GENERATED | 4,058 | `c5500ae282f174d81eb9cd7cdc0b3a04cc88e044bf872e158527a811dc509122` |
 
 F01/F03/F04 均绑定上方同一组五项身份；F04 含 10 个来源工作表；F03 含 19 个测算工作表。PDF 缺失，所以四文件门禁保持 `BLOCKED`。
 
