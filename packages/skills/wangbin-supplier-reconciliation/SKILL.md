@@ -5,8 +5,16 @@ display_name_en: Supplier Reconciliation Difference Locator
 description: 供应商对账差异定位，帮助采购、财务和对账人员核对供应商对账单与内部明细。
 description_zh: 把供应商对账单与内部明细放在一起逐项核对，定位金额一致、金额差异、单侧记录、需人工核对或无效输入，并保留来源位置。
 description_en: Compare supplier statements with internal details and locate traceable reconciliation differences.
-version: 0.1.3
+version: 0.1.4
 author: wangbin
+examples_zh:
+  - "我有一份供应商对账单和一份公司内部账目，能帮我核对两边的金额是否一致，并生成 Excel 对账结果吗？"
+  - "帮我比较供应商账单和公司采购明细，找出金额不同、供应商有但公司没有、公司有但供应商没有的单据。"
+  - "这两份账单中有没有重复单据、缺少单据编号或金额填写错误的记录？请列出需要人工核实的问题和原始记录位置。"
+examples_en:
+  - "Compare my supplier statement with our internal ledger and create an Excel reconciliation report."
+  - "Find amount differences and documents missing from either side of these two statements."
+  - "Check these statements for duplicate documents, missing document numbers and invalid amounts."
 license_type: PROPRIETARY
 license_status: REQUIRES_MANUAL_REVIEW
 allowed-tools: Read, Bash
