@@ -159,3 +159,64 @@ key_env: HERMES_CUSTOM_172_16_5_65_API_KEY
 | `LICENSE` / `PLATFORM_ACCEPTANCE` / `INDEPENDENT_VALUE` | BLOCKED（目标 LICENSE/授权缺失） / NOT_TESTED（WorkBuddy 安装、对话、审核） / REVIEW_REQUIRED（反重复及独立价值人工审核）。未擅自改既有 PROPRIETARY 许可。 |
 
 **最终 `TEAM_READY=PARTIAL`**：四角色和本地研发→QA→返工→候选打包链路已运行，但群聊定向消息、经理通知唤醒、正式许可与平台门禁未闭环。只有在支持的 Desktop 群聊中实际发出无副作用 `@wb-manager` 消息并核查路由/静默、为经理订阅真实 QA 阻断通知并实测唤醒、由授权人提供许可证且完成平台/独立性审核后，才能重新评估 PASS；本轮未 push、merge、上传或发布。
+
+## 2026-11-05 自动化缺口收尾（当前最新状态）
+
+本轮没有重新初始化 Profile、Board 或群聊，没有修改模型/认证配置，没有重启 Gateway，没有触碰主仓库或光伏工作树，也没有重跑原有七卡流程和大型测试。此前记录的 Gateway PID 为 18768；本轮未重启 Gateway，也不把该历史 PID 当作当前进程的新证据。`hermes config get kanban` 实际值为 `auto_subscribe_on_create=true`、`notify_in_gateway=true`、`dispatch_in_gateway=true`、调度间隔 60 秒。`hermes kanban notify-list --help` 与 `notify-subscribe --help` 均显示当前 v0.22.2 官方字段支持 `platform/chat-id/thread-id/user-id/chat-type/notifier-profile/delivery-mode`，其中 `notify+wake` 是官方模式；未猜测 Desktop 群聊的外部平台身份，也未伪造 platform、chat-id、thread-id 或 session-id。
+
+### 最新三项 READY 汇总
+
+| 最新状态 | 结果 | 证据与边界 |
+|---|---|---|
+| `LOCAL_PIPELINE_READY` | **PASS** | 原有七卡全部 done；本地研发、独立 QA、真实缺陷返工、候选 ZIP/哈希证据完整。前次扩大运行范围仍保留 `130 passed / 5 skipped / 2 个基线或环境失败`，不称全量回归通过。 |
+| `AUTONOMOUS_TEAM_READY` | **PARTIAL** | Kanban Dispatcher 真实领取已通过；现有四人群聊定向消息未收到可核对的 `GROUP_ROUTE_OK`；官方 `notify+wake` 订阅可建立并记录 ping，但本次没有观察到经理真实会话被唤醒。 |
+| `WORKBUDDY_PUBLISH_READY` | **BLOCKED** | 虚构产品只允许本地候选；目标 LICENSE/授权缺失，WorkBuddy 平台解析、安装、运行、对话、审核未测，反重复/独立价值仍需人工审核。 |
+
+### 任务 A：群聊定向消息
+
+- 现有群聊仍可在 Hermes Desktop 的会话/群聊视图中识别为“星核实验室 · WorkBuddy Skill 开发团队”，四个 Profile 仍存在：`wb-manager`、`wb-analyst`、`wb-developer`、`wb-quality`。
+- 本轮没有代替用户发送 `@wb-manager 请只回复 GROUP_ROUTE_OK。这是路由测试，不要创建 Kanban 任务。`，也没有在可核查群聊记录中发现该消息或 `GROUP_ROUTE_OK`。
+- 因此：`GROUP_CHAT_PASS=NOT_TESTED`。不能用 CLI 私聊、Kanban 派单或四个 Profile 单独问答冒充群聊通过；其他三个 Bot 是否保持静默也没有可宣称的证据。
+- 本轮没有因群聊测试创建业务任务或修改仓库。
+
+### 任务 B：官方 Kanban 通知与自动唤醒
+
+#### 只读检查结论
+
+已有历史订阅的真实字段为 `platform=local`、`chat_type=dm`、`notifier_profile=wb-manager`、`delivery_mode=notify+wake`，目标是已经使用过的本地经理 DM 路由；它不是 Desktop 群聊。当前 `notify-list --json` 在收尾清理后只保留原有 T03/返工卡订阅，没有残留本次测试订阅。
+
+#### 最小受控联调
+
+为避免重新运行产品流程，创建了唯一受控卡 `t_9f03be48`（标题 `AUTO-WAKE-CHECK-20261105-082954`，tenant `wb-skill-factory-finalization`，assignee `wb-quality`，scratch workspace，idempotency key 唯一）。该卡明确禁止读写仓库、创建 Worktree、运行 Skill 测试或创建修复卡。
+
+| 项目 | 实际结果 |
+|---|---|
+| Worker | Dispatcher 真实领取并运行 run #9；session `local-6797aa51d27edbcac33e77346001b33335c478879758cf574bcb7f50974ada48`；模型调用成功，退出码 0。 |
+| 阻断 | Worker 通过当前任务上下文 `kanban_block` 真实阻断，原因含 `AUTO_WAKE_CONTROLLED_BLOCK`；没有文件操作、人工提醒或修复卡。 |
+| 订阅 | 通过官方 `notify-subscribe` 为该卡建立真实订阅：`platform=local`、`chat_type=dm`、`notifier_profile=wb-manager`、`delivery_mode=notify+wake`；回读 JSON 成功，`last_event_id=142`。 |
+| 通知事件 | 阻断后回读得到 `last_ping_event_id=149`，说明 Notifier 为该订阅记录了 ping；但经理 profile 的 Gateway 日志没有对应该测试卡的 `inbound message`、模型 API 调用、响应或 Kanban comment。 |
+| 经理处理 | 未观察到 `AUTO_WAKE_HANDLED` 评论；未创建修复任务；不存在重复派单。不能把随后独立的角色问答误记为自动唤醒。 |
+| 清理 | 为避免留下活动订阅，使用官方 `notify-unsubscribe` 删除本次订阅，并将受控卡归档；归档保留事件与 Worker 日志。Board 恢复为原七张业务卡全部 done、其他状态均为 0。 |
+
+结论：`NOTIFY_SUBSCRIPTION_CREATED=PASS`（建立、字段和回读均真实）；`NOTIFY_EVENT_RECORDED=PARTIAL`（有 `last_ping_event_id`，没有经理会话投递回执）；`AUTO_MANAGER_WAKEUP_PASS=NOT_VERIFIED`。没有完整观察到“阻断→通知实际投递→经理无人提示启动模型→读取任务→评论/测试约定处理”，所以不得升级为 PASS。测试没有修改全局配置、Gateway、模型或认证，也没有开发常驻调度服务。
+
+### SOUL 会话注入补证
+
+为补齐此前未完整保留的低成本证据，分别对四个现有 Profile 执行“不调用工具、只回答角色/允许修改范围/Board”的单轮问答，四次退出码均为 0：
+
+- `wb-manager`：回复项目经理、仅协调任务与 Kanban、禁止直接修改生产代码；Board `wb-skill-factory`。
+- `wb-analyst`：回复需求分析师、仅修改产品 worktree 需求文档；Board `wb-skill-factory`。
+- `wb-developer`：回复 Skill 开发工程师、仅产品专属 worktree 明确允许目录；当前任务绑定 Board。
+- `wb-quality`：回复独立质量验收工程师、仅授权报告与候选目录；未提供任务时不擅自推断 Board。
+
+因此 `SOUL_RUNTIME_CHECK=PASS`（本轮四个实际问答均有返回），但这仍不证明 OS/NTFS 强隔离或独立凭证物理隔离。
+
+### 本轮改动、证据与提交
+
+- **仓库生产代码：无修改。** 本轮没有修改任何正式 Skill、虚构 Skill、测试代码、许可证、主仓库或光伏工作树。
+- **团队配置工作树唯一文件改动：** `F:/ideaWorkSpace/wangbin-workbuddy-team/team/reports/acceptance.md`，追加本节最新状态、任务 ID、事件字段、限制和三项 READY 汇总；保留所有历史记录。
+- **Kanban 状态改动：** 新建受控卡 `t_9f03be48`，官方订阅建立后按实测结果取消，卡片归档；没有新业务卡、修复卡或重复派单。Board 当前 stats 实际为 `done=7`、`blocked=0`、其余状态为 0。
+- **本轮验证：** 只读配置/help、Gateway 状态、Profile/Board/订阅回读、受控 Worker 实际阻断、经理日志核查、四个低成本 SOUL 问答；遵照要求未重复运行大型测试。原有候选 ZIP SHA-256 和两项基线/环境失败沿用已有证据，不改写。
+- **待提交：** 本节写入后在团队配置工作树创建本地 Git commit；不 push。
+
+**当前最终结论：`LOCAL_PIPELINE_READY=PASS`、`AUTONOMOUS_TEAM_READY=PARTIAL`、`WORKBUDDY_PUBLISH_READY=BLOCKED`。** 因为群聊消息仍未由用户实际发送并核查，且 `notify+wake` 只记录了 ping、没有经理自动模型运行和处理证据，整体 `TEAM_READY=PARTIAL` 保持不变。
