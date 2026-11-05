@@ -1,0 +1,58 @@
+{
+  "archive": "dist/wangbin-supplier-reconciliation-0.1.2-skill-candidate.zip",
+  "id": "wangbin-supplier-reconciliation",
+  "members": [
+    {
+      "path": "wangbin-supplier-reconciliation/SKILL.md",
+      "sha256": "d287852751c905603d99429c303c2a89ff12137b8c972e99358c7dd61d9b502a",
+      "size": 3407
+    },
+    {
+      "path": "wangbin-supplier-reconciliation/examples/fictional-config.json",
+      "sha256": "529c1e2e0992999f8428a3f9d33b6d7379628ff5fd7b0579314de1606c9fc91c",
+      "size": 353
+    },
+    {
+      "path": "wangbin-supplier-reconciliation/examples/fictional-internal.csv",
+      "sha256": "9ee8c792c051cd679fd54591d1ed2399fc313c5153cd9d71e576ce7a73b8a3a3",
+      "size": 132
+    },
+    {
+      "path": "wangbin-supplier-reconciliation/examples/fictional-supplier.csv",
+      "sha256": "cbb68365ce673f36722f5c783dbc51558e469e1585ed124bee76dd6a11dc5403",
+      "size": 132
+    },
+    {
+      "path": "wangbin-supplier-reconciliation/examples/minimal-config.json",
+      "sha256": "815a1a759b991f0e74cebcb8bfc0b027ec9e955893f9c585a69a06680f216201",
+      "size": 175
+    },
+    {
+      "path": "wangbin-supplier-reconciliation/examples/minimal-internal.csv",
+      "sha256": "b9718508d27dbc4c62d85e82a08c9490ed985b18a357a2e2f5e695f951d17b1c",
+      "size": 48
+    },
+    {
+      "path": "wangbin-supplier-reconciliation/examples/minimal-supplier.csv",
+      "sha256": "874ccd0472dd768fa82edd8c49717553cce6789c9e761313b6f0fae76df464b4",
+      "size": 48
+    },
+    {
+      "path": "wangbin-supplier-reconciliation/manifest.json",
+      "sha256": "4a5a59e3b4e7d075693e6e02dbbab97e8f6992eaf30555558e9940b125e5a4bb",
+      "size": 193
+    },
+    {
+      "path": "wangbin-supplier-reconciliation/scripts/reconcile.py",
+      "sha256": "abeb9a995fee5cf11ff33fc58fa519cb542f4a4716d7b4a53639165aefdd47d3",
+      "size": 21667
+    }
+  ],
+  "payload_snapshot_sha256": "f6b59ff54a402434cfdc814af1a00a7c55ca845a63c0a1f012a7845c46bcad92",
+  "platform": "BLOCKED",
+  "scope": "local archive integrity only",
+  "sha256": "9fe126d2e5c3383d58002514ce2d1f953ee7de605e901b97efb7d5bb55d209d1",
+  "source": "packages/skills/wangbin-supplier-reconciliation",
+  "status": "PASS",
+  "version": "0.1.2"
+}

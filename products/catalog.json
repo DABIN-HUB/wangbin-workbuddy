@@ -421,7 +421,7 @@
       ]
     },
     {
-      "active_version": "0.1.1",
+      "active_version": "0.1.2",
       "development": "Local supplier reconciliation MVP; independent QA pending",
       "id": "wangbin-supplier-reconciliation",
       "maintenance": "UNKNOWN",
@@ -453,6 +453,15 @@
           "sha256": "4cb4afc9e7717f1d443b02c0b0e26c48ace5e43b52ca4f0cb2c9caf427a3453c",
           "source": "packages/skills/wangbin-supplier-reconciliation",
           "version": "0.1.1"
+        },
+        {
+          "archive_evidence": "dist/wangbin-supplier-reconciliation-0.1.2-skill-candidate.zip",
+          "candidate": "dist/wangbin-supplier-reconciliation-0.1.2-skill-candidate.zip",
+          "date": "2026-11-05",
+          "published_at": "NOT_PUBLISHED",
+          "sha256": "9fe126d2e5c3383d58002514ce2d1f953ee7de605e901b97efb7d5bb55d209d1",
+          "source": "packages/skills/wangbin-supplier-reconciliation",
+          "version": "0.1.2"
         }
       ]
     }

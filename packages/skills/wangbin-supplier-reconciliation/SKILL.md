@@ -5,7 +5,7 @@ display_name_en: Supplier Reconciliation
 description: 对授权的供应商与内部 CSV/XLSX 明细进行离线确定性逐行核对。
 description_zh: 以明确业务键和 Decimal 金额核对双侧来源，输出六类状态与证据。
 description_en: Offline deterministic two-sided reconciliation with traceable evidence.
-version: 0.1.1
+version: 0.1.2
 author: wangbin
 license_type: PROPRIETARY
 license_status: REQUIRES_MANUAL_REVIEW
