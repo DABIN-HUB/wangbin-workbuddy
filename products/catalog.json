@@ -81,7 +81,7 @@
       ]
     },
     {
-      "active_version": "0.2.2",
+      "active_version": "0.2.3",
       "development": "MVP candidate",
       "id": "wangbin-tender-analyzer",
       "maintenance": "UNKNOWN",
@@ -131,6 +131,15 @@
           "sha256": "42c3abdb1b757dc2ae937e143a31b0579f088ab406958107107f5b65550178e2",
           "source": "packages/skills/wangbin-tender-analyzer",
           "version": "0.2.2"
+        },
+        {
+          "archive_evidence": "dist/wangbin-tender-analyzer-0.2.3-skill-candidate.zip",
+          "candidate": "dist/wangbin-tender-analyzer-0.2.3-skill-candidate.zip",
+          "date": "2026-11-07",
+          "published_at": "UNKNOWN",
+          "sha256": "5ebba11d8a750d4807c88e715b5458a3cf449672f9b8dd5d7df3eb37d5c977ce",
+          "source": "packages/skills/wangbin-tender-analyzer",
+          "version": "0.2.3"
         }
       ]
     },

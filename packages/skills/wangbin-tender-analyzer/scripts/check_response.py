@@ -374,7 +374,8 @@ def write_outputs(rows: list[dict], catalog: list[dict], edges: list[dict], args
         md_lines += ['## ' + heading]
         for r in rows:
             for note in selector(r):
-                md_lines.append(f"- {r['id']} (原编号 {r['number'] or '无'}；{r['source']}；响应 {', '.join(r['locations']) or '未定位'})：{note}。四维：{r['existence']} / {r['coverage']} / {r['attachment']} / {r['support']}。")
+                evidence_position = ('；材料 ' + '、'.join(r['evidence_locations'])) if r['evidence_locations'] else ''
+                md_lines.append(f"- {r['id']} (原编号 {r['number'] or '无'}；{r['source']}；响应 {', '.join(r['locations']) or '未定位'}{evidence_position})：{note}。四维：{r['existence']} / {r['coverage']} / {r['attachment']} / {r['support']}。")
         md_lines.append('')
     temp_x = temp_m = None
     try:

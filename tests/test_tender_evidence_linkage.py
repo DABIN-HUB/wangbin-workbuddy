@@ -15,6 +15,12 @@ def test_a04_response_reference_without_catalog(tmp_path):
     assert 'response.txt:1' in row[5]
     assert 'certificate.txt' in str(list(book['附件核对'].values))
     assert '不支持（文本层面）' in md
+    assert isinstance(md, str)
+    relevant = [line for line in md.splitlines() if line.startswith('- ' + str(row[0]) + ' ')]
+    assert len(relevant) == 3
+    assert all('响应 response.txt:1；材料 certificate.txt:1' in line for line in relevant)
+    assert all('已提供（可读文本） / 不支持（文本层面）' in line for line in relevant)
+    assert '不认证资质真伪' in md
 
 
 def test_core_unrelated_file_not_bound_and_a11_added_material(tmp_path):
@@ -32,7 +38,7 @@ def test_core_unrelated_file_not_bound_and_a11_added_material(tmp_path):
 
 
 def test_no_cross_requirement_or_bare_candidate_binding(tmp_path):
-    cp, book, _ = run(tmp_path / 'cross',
+    cp, book, md = run(tmp_path / 'cross',
                       '1. 提交甲资格证明。\n2. 提交乙资格证明。',
                       '1. 见 certificate.txt。\n2. 见 another.txt。',
                       '附件名称,关联要求编号\ncertificate.txt,2\nanother.txt,2\n',
@@ -40,6 +46,10 @@ def test_no_cross_requirement_or_bare_candidate_binding(tmp_path):
     assert cp.returncode == 0, cp.stderr
     assert matrix(book)[0][11:13] == ('待确认', '待确认')
     assert 'certificate.txt:1' not in str(matrix(book)[0][8])
+    assert isinstance(md, str)
+    first_id = str(matrix(book)[0][0])
+    assert all('材料 certificate.txt:1' not in line for line in md.splitlines()
+               if line.startswith('- ' + first_id + ' '))
     cp, book, _ = run(tmp_path / 'candidate', '7. 提交甲资格证明。',
                       '7a. 见 certificate.txt，提交甲资格证明。', evidence={'certificate.txt': '有效期至2026年。'})
     assert cp.returncode == 0, cp.stderr
