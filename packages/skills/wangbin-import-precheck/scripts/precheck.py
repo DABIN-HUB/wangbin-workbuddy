@@ -191,8 +191,42 @@ def rules_from_template(path, sheet=None):
                              'rule_source': f"template {meta['file']} sha256:{meta['sha256']}"}
                        for col in meta['columns']}}
 
+def compare_report(previous_report, source_hash, current, current_reference_hash):
+    """Compare explicit immutable prior report by stable source-row evidence, not finding IDs."""
+    previous = safe_path(previous_report)
+    try:
+        wb = load_workbook(previous, read_only=True, data_only=True)
+        if not set(HEADINGS).issubset(wb.sheetnames):
+            raise InputError('PREVIOUS_REPORT_INVALID: missing report sheets')
+        overview = {str(k): v for k, v in wb['检查概览'].values if k is not None}
+        if overview.get('源SHA256') != source_hash:
+            raise InputError('PREVIOUS_SOURCE_MISMATCH: use a report from the same source bytes')
+        rows = list(wb['问题明细'].values)
+        if list(rows[0]) != HEADINGS['问题明细']:
+            raise InputError('PREVIOUS_REPORT_INVALID: unexpected finding columns')
+        prior = [dict(zip(('finding_id','row_id','file','sheet','line','field','value','rule','category','description','advice','blocking'), row)) for row in rows[1:]]
+        for item in prior:
+            if item['line'] is not None and str(item['line']).isdigit():
+                item['line'] = int(str(item['line']))
+    except InputError:
+        raise
+    except (ValueError, KeyError, IndexError, OSError, zipfile.BadZipFile) as exc:
+        raise InputError('PREVIOUS_REPORT_INVALID: unreadable report') from exc
+    finally:
+        if 'wb' in locals():
+            wb.close()
+    def key(item):
+        return tuple(str(item[k] if item[k] is not None else '') for k in ('row_id','file','sheet','line','field','value','rule','category'))
+    old_keys = {key(item) for item in prior}
+    new_keys = {key(item) for item in current}
+    return {'previous_report': str(previous), 'previous_report_sha256': digest(previous),
+            'previous_reference_sha256': overview.get('参考SHA256'), 'current_reference_sha256': current_reference_hash,
+            'resolved': [f for f in prior if key(f) not in new_keys],
+            'continuing': [f for f in current if key(f) in old_keys],
+            'new': [f for f in current if key(f) not in old_keys]}
+
 def analyze(source, output, rules=None, reference=None, *, sheet=None, reference_sheet=None,
-            header=1, split=False, candidate=False, transformations=None, authorization=None):
+            header=1, split=False, candidate=False, transformations=None, authorization=None, previous_report=None):
     source = safe_path(source)
     output = safe_path(output, output=True)
     if source.parent == output or output in source.parents:
@@ -209,7 +243,12 @@ def analyze(source, output, rules=None, reference=None, *, sheet=None, reference
         raise InputError('TRANSFORMATION_REQUIRES_CANDIDATE')
     ref_meta = None
     if reference:
-        ref_meta, ref_rows = read_table(reference, reference_sheet)
+        try:
+            ref_meta, ref_rows = read_table(reference, reference_sheet)
+        except InputError as exc:
+            if str(exc).startswith('SHEET_SELECTION_REQUIRED:'):
+                raise InputError('REFERENCE_SHEET_SELECTION_REQUIRED: ' + str(exc).split(': ', 1)[1]) from exc
+            raise
     mappings = []
     selected = {}
     unresolved = set()
@@ -246,12 +285,17 @@ def analyze(source, output, rules=None, reference=None, *, sheet=None, reference
                 selected.pop(t, None)
                 unchecked.append([fields[t].get('rule_id', t), 'source mapped to multiple targets', col, 'confirm mapping'])
     findings = []
-    def finding(row, field, rule, kind, description, value=None, blocking=True):
+    def finding(row, field, rule, kind, description, value=None, blocking=True, origin=None, origin_row=None):
         cell = row['cells'].get(field, {}) if row else {}
+        if origin_row is not None:
+            cell = origin_row['cells'][field]
         findings.append({'finding_id': f'F{len(findings)+1:05d}', 'row_id': row['id'] if row else '', 'file': meta['file'],
                          'sheet': meta['sheet'], 'line': row['line'] if row else '', 'field': cell.get('coordinate', field),
                          'value': safe_text(value if value is not None else cell.get('value')), 'rule': rule,
                          'category': kind, 'description': description, 'advice': 'confirm against source/rule', 'blocking': blocking})
+        if origin is not None:
+            findings[-1].update(file=origin['file'], sheet=origin['sheet'], line=origin_row['line'],
+                                field=cell['coordinate'])
     for row in records:
         row['id'] = f"{before[:16]}:{meta['sheet'] or 'CSV'}:{row['line']}"
     checked = set()
@@ -334,10 +378,12 @@ def analyze(source, output, rules=None, reference=None, *, sheet=None, reference
         checked.add(rule_id + ':reference')
         lookup = defaultdict(list)
         for r in ref_rows:
-            lookup[r['cells'][ref_key]['value']].append(r['line'])
-        for key, lines in lookup.items():
-            if len(lines) > 1:
-                finding(None, ref_key, rule_id, 'REFERENCE_AMBIGUITY', 'duplicate reference key at lines ' + ','.join(map(str, lines)), key, False)
+            lookup[r['cells'][ref_key]['value']].append(r)
+        for key, members in lookup.items():
+            if len(members) > 1:
+                finding(None, ref_key, rule_id, 'REFERENCE_AMBIGUITY',
+                        'duplicate reference key at lines ' + ','.join(str(r['line']) for r in members),
+                        key, False, origin=ref_meta, origin_row=members[0])
         for row in records:
             val = row['cells'][selected[target]]['value']
             if val is None or val == '':
@@ -358,6 +404,29 @@ def analyze(source, output, rules=None, reference=None, *, sheet=None, reference
                 if new != old:
                     transformed[row['id']][selected[target]] = new
                     changes.append([row['id'], target, old, new, actions, authorization])
+    # A transformed unique key must be checked as it will actually be exported. Avoid
+    # counting an already-reported source duplicate group twice.
+    for group, targets in sorted(groups.items()):
+        if not transformations or not any(t in transformations for t in targets) or any(t not in selected for t in targets):
+            continue
+        original = defaultdict(list)
+        exported = defaultdict(list)
+        for row in records:
+            old_key = tuple(row['cells'][selected[t]]['value'] for t in targets)
+            new_key = tuple(transformed[row['id']][selected[t]] for t in targets)
+            if not any(v is None or v == '' for v in old_key):
+                original[old_key].append(row)
+            if not any(v is None or v == '' for v in new_key):
+                exported[new_key].append(row)
+        existing = {(group, f['row_id']) for f in findings if f['category'] == 'DUPLICATE_KEY'}
+        for key, members in exported.items():
+            if len(members) > 1:
+                if not any(len(original[tuple(r['cells'][selected[t]]['value'] for t in targets)]) > 1 for r in members):
+                    duplicate_groups += 1
+                for row in members:
+                    if (group, row['id']) not in existing:
+                        finding(row, selected[targets[0]], group, 'DUPLICATE_KEY',
+                                'authorized transformation creates same key at lines ' + ','.join(str(r['line']) for r in members), key[0])
     if digest(source) != before:
         raise InputError('SOURCE_CHANGED_DURING_RUN')
     if reference and digest(safe_path(reference)) != ref_meta['sha256']:
@@ -365,7 +434,10 @@ def analyze(source, output, rules=None, reference=None, *, sheet=None, reference
     if candidate or split:
         if unresolved or not fields or any(t not in selected for t in fields):
             raise InputError('CANDIDATE_MAPPING_UNRESOLVED')
+    if candidate and not split and any(f['category']=='DUPLICATE_KEY' and 'authorized transformation' in f['description'] for f in findings):
+        raise InputError('TRANSFORMED_UNIQUE_COLLISION: use --split to quarantine conflicting rows')
     affected = {f['row_id'] for f in findings if f['row_id'] and f['blocking']}
+    comparison = compare_report(previous_report, before, findings, ref_meta['sha256'] if ref_meta else 'NOT_PROVIDED') if previous_report else None
     report = next_path(output, source.stem + '-导入预检')
     status = 'PARTIAL' if unchecked else 'COMPLETED'
     overview = [['输入记录数', len(records)], ['完全空白行数', meta['blank_rows']], ['无阻断记录数', len(records)-len(affected)],
@@ -373,6 +445,13 @@ def analyze(source, output, rules=None, reference=None, *, sheet=None, reference
                 ['检查模式', '有限数据质量模式' if not fields else '已知规则预检'], ['已检查规则', ','.join(sorted(checked))],
                 ['未检查规则', len(unchecked)], ['执行状态', status], ['源SHA256', before], ['参考SHA256', ref_meta['sha256'] if ref_meta else 'NOT_PROVIDED'],
                 ['源编码/分隔符', json.dumps({k: meta[k] for k in ('encoding','delimiter') if k in meta}, ensure_ascii=False)]]
+    if comparison:
+        overview.extend([['对照旧报告', comparison['previous_report']], ['旧报告SHA256', comparison['previous_report_sha256']],
+                         ['旧参考SHA256', comparison['previous_reference_sha256']], ['已解决问题数', len(comparison['resolved'])],
+                         ['持续问题数', len(comparison['continuing'])], ['新增问题数', len(comparison['new'])]])
+        for label, items in (('已解决', comparison['resolved']), ('持续', comparison['continuing']), ('新增', comparison['new'])):
+            for item in items:
+                overview.append([label + '问题', json.dumps({k: item[k] for k in ('row_id','line','field','category','value')}, ensure_ascii=False)])
     tables = {name: (headers, []) for name, headers in HEADINGS.items()}
     tables['检查概览'] = (HEADINGS['检查概览'], overview)
     tables['字段映射'] = (HEADINGS['字段映射'], mappings)
@@ -396,7 +475,7 @@ def analyze(source, output, rules=None, reference=None, *, sheet=None, reference
             outputs['quarantine'] = str(p)
             assert {r['id'] for r in accepted}.isdisjoint({r['id'] for r in isolated})
             assert len(accepted) + len(isolated) == len(records)
-    return {'status': status, 'input_records': len(records), 'findings': len(findings), 'affected_records': len(affected),
+    return {'status': status, 'comparison': comparison, 'input_records': len(records), 'findings': len(findings), 'affected_records': len(affected),
             'duplicate_groups': duplicate_groups, 'source_sha256': before, 'reference_sha256': ref_meta['sha256'] if ref_meta else None,
             'unchecked': tables['未检查项'][1], 'checked': sorted(checked), 'outputs': outputs,
             'finding_details': findings, 'rows': [{'row_id':r['id'], 'line':r['line']} for r in records],
@@ -412,6 +491,7 @@ def main():
     parser.add_argument('--reference')
     parser.add_argument('--sheet')
     parser.add_argument('--reference-sheet')
+    parser.add_argument('--previous-report', help='explicit earlier five-sheet report from same source for resolved/continuing/new comparison')
     parser.add_argument('--header', type=int, default=1)
     parser.add_argument('--candidate', action='store_true')
     parser.add_argument('--split', action='store_true', help='explicit request for passing subset and quarantine')
@@ -425,10 +505,16 @@ def main():
         rules = rules_from_json(args.rules) if args.rules else rules_from_template(args.template, args.template_sheet) if args.template else {}
         result = analyze(args.input, args.output_dir, rules, args.reference,
                          sheet=args.sheet, reference_sheet=args.reference_sheet, header=args.header,
-                         candidate=args.candidate, split=args.split, transformations=transforms, authorization=args.authorization)
+                         candidate=args.candidate, split=args.split, transformations=transforms, authorization=args.authorization,
+                         previous_report=args.previous_report)
         print(json.dumps(result, ensure_ascii=False, indent=2, default=str))
         return 0
     except (InputError, OSError, ValueError, KeyError, TypeError) as exc:
+        if isinstance(exc, InputError) and str(exc).startswith(('SHEET_SELECTION_REQUIRED:', 'REFERENCE_SHEET_SELECTION_REQUIRED:')):
+            flag = '--reference-sheet' if str(exc).startswith('REFERENCE_') else '--sheet'
+            print(json.dumps({'status':'NEEDS_INPUT', 'reason': str(exc),
+                              'next_action':f'Select one worksheet explicitly with {flag}; no report was produced.'}, ensure_ascii=False))
+            return 0
         print(json.dumps({'status': 'REJECTED' if isinstance(exc, InputError) else 'FAILED', 'reason': str(exc)}, ensure_ascii=False), file=sys.stderr)
         return 2
 

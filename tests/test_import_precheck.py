@@ -169,3 +169,72 @@ def test_confirmed_transform_is_audited(tmp_path):
     assert changes.max_row==2 and changes['D2'].value=='FOO' and changes['F2'].value
     candidate=load_workbook(receipt['outputs']['candidate']).active
     assert candidate.cell(candidate.max_row,4).value=='FOO'
+
+def test_d2_transform_unique_collision_quarantines_both(tmp_path):
+    src=tmp_path/'collision.csv'; src.write_text('code\n A \nA\n',encoding='utf-8')
+    out=tmp_path/'out'; out.mkdir()
+    rules={'fields':{'code':{'required':True,'data_type':'text','unique_group':'code'}}}
+    before=hashlib.sha256(src.read_bytes()).hexdigest()
+    result=module.analyze(src,out,rules,split=True,authorization='trim and split',transformations={'code':'strip'})
+    assert (result['findings'],result['affected_records'],result['duplicate_groups'])==(2,2,1)
+    assert {f['line'] for f in result['finding_details'] if f['category']=='DUPLICATE_KEY'}=={2,3}
+    candidate=load_workbook(result['outputs']['candidate']).active
+    quarantine=load_workbook(result['outputs']['quarantine']).active
+    assert candidate is not None and candidate.max_row==1
+    assert quarantine is not None and quarantine.max_row==3
+    assert hashlib.sha256(src.read_bytes()).hexdigest()==before
+    with pytest.raises(module.InputError, match='TRANSFORMED_UNIQUE_COLLISION'):
+        module.analyze(src,out,rules,candidate=True,authorization='trim',transformations={'code':'strip'})
+
+def test_d1_previous_report_diff_separate_directories(tmp_path):
+    src,ref,old_out=sample(tmp_path)
+    old=module.analyze(src,old_out,RULES,ref)
+    old_bytes=Path(old['outputs']['report']).read_bytes()
+    new_ref=tmp_path/'new-ref.csv'; new_ref.write_text(ref.read_text(encoding='utf-8')+'R99\n',encoding='utf-8')
+    new_out=tmp_path/'new-out'; new_out.mkdir()
+    new=module.analyze(src,new_out,RULES,new_ref,previous_report=old['outputs']['report'])
+    diff=new['comparison']
+    assert diff['previous_report']==old['outputs']['report']
+    assert diff['previous_reference_sha256']==old['reference_sha256']
+    assert diff['current_reference_sha256']==new['reference_sha256']
+    assert [(f['line'],f['category'],f['value']) for f in diff['resolved']]==[(3,'NOT_IN_REFERENCE','R99')]
+    assert len(diff['continuing'])==3 and not diff['new']
+    overview=load_workbook(new['outputs']['report'])['检查概览']
+    summary={str(k):v for k,v in overview.values if k is not None}
+    assert 'R99' in str(summary['已解决问题']) and summary['对照旧报告']==str(old['outputs']['report'])
+    assert Path(old['outputs']['report']).read_bytes()==old_bytes
+    different=tmp_path/'different.csv'; different.write_text('code\n1\n',encoding='utf-8')
+    with pytest.raises(module.InputError,match='PREVIOUS_SOURCE_MISMATCH'):
+        module.analyze(different,new_out,previous_report=old['outputs']['report'])
+
+def test_d3_multisheet_needs_input_cli(tmp_path):
+    src,ref,out=sample(tmp_path,True)
+    wb=load_workbook(src); backup=wb.create_sheet('backup'); backup.append(['customer_code','customer_name','region']); wb.save(src)
+    run=subprocess.run([sys.executable,str(SCRIPT),'--input',str(src),'--output-dir',str(out)],capture_output=True,text=True)
+    assert run.returncode==0 and json.loads(run.stdout)['status']=='NEEDS_INPUT'
+    assert 'Sheet' in run.stdout and 'backup' in run.stdout and '--sheet' in run.stdout
+    assert not list(out.iterdir())
+    assert module.analyze(src,out,RULES,ref,sheet='backup')['status'] in ('PARTIAL','COMPLETED')
+    refbook=Workbook(); ws=refbook.active; assert ws is not None
+    ws.title='region-main'; ws.append(['region']); ws.append(['R01'])
+    refbook.create_sheet('region-backup'); refbook.save(tmp_path/'refs.xlsx')
+    run=subprocess.run([sys.executable,str(SCRIPT),'--input',str(src),'--sheet','Sheet','--output-dir',str(out),
+                        '--reference',str(tmp_path/'refs.xlsx')],capture_output=True,text=True)
+    assert run.returncode==0 and json.loads(run.stdout)['status']=='NEEDS_INPUT'
+    assert '--reference-sheet' in run.stdout and 'region-backup' in run.stdout
+
+@pytest.mark.parametrize('xlsx',[False,True])
+def test_d4_reference_duplicate_coordinates(tmp_path,xlsx):
+    src,ref,out=sample(tmp_path)
+    if xlsx:
+        wb=Workbook(); ws=wb.active; assert ws is not None
+        ws.title='地区'; ws.append(['region']); ws.append(['R01']); ws.append(['R01']); wb.save(tmp_path/'region.xlsx'); ref=tmp_path/'region.xlsx'
+    else:
+        ref.write_text('region\nR01\nR01\nR02\n',encoding='utf-8')
+    result=module.analyze(src,out,RULES,ref)
+    ambiguity=[f for f in result['finding_details'] if f['category']=='REFERENCE_AMBIGUITY'][0]
+    assert ambiguity['file']==ref.name and ambiguity['sheet']==('地区' if xlsx else '')
+    assert ambiguity['line']==2 and '2,3' in ambiguity['description']
+    assert ('A2' if xlsx else 'region:line2')==ambiguity['field']
+    details=load_workbook(result['outputs']['report'])['问题明细']
+    assert any(row[2].value==ref.name and row[4].value=='2' for row in list(details.rows)[1:])
