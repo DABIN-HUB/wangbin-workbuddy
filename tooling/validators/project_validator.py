@@ -19,7 +19,7 @@ _ABSOLUTE_GUARANTEE = re.compile(r"(?i)(?:guarantee|always|never fail|100%|绝�
 _PLATFORM_CLAIM = re.compile(r"(?i)(?:适用于所有|支持所有|all platforms|any platform|guaranteed? on)")
 _END_PUNCT = "。.!！?？;；:：,，、…"
 CANONICAL_SECTIONS = (("Preparation", "准备"), ("Usage", "使用"), ("Processing", "处理"),
-                      ("Outputs", "输出"), ("Limits", "边界"))
+                      ("Outputs", "输出"), ("Limits", "限制"))
 
 
 def _normalized_user_text(value: str) -> str:

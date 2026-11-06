@@ -5,6 +5,7 @@ from typing import Any
 import pytest
 
 from tooling.validators import Finding
+from tooling.generators import generate_skill
 from tooling.validators.project_validator import validate_user_facing_standard
 
 
@@ -13,7 +14,7 @@ SECTIONS = "\n".join([
     "## Usage / 使用\n描述你希望整理的用户目标。",
     "## Processing / 处理\n按用户选择处理内容并保留原始事实。",
     "## Outputs / 输出\n输出可供用户查看的结果文件。",
-    "## Limits / 边界\n不能保证复杂布局和未提供内容的准确性。",
+    "## Limits / 限制\n不能保证复杂布局和未提供内容的准确性。",
 ])
 
 
@@ -71,3 +72,27 @@ def test_yaml_mapping_and_missing_limits_are_failures(tmp_path):
     body = SECTIONS.replace("不能保证复杂布局和未提供内容的准确性。", "")
     checks, findings = run(tmp_path, front(), body)
     assert checks["skill.USER_SECTIONS_PASS"] == "FAIL"
+
+
+def test_wrong_limits_heading_is_rejected(tmp_path):
+    body = SECTIONS.replace("## Limits / 限制", "## Limits / 边界")
+    checks, findings = run(tmp_path, front(), body)
+    assert checks["skill.USER_SECTIONS_PASS"] == "FAIL"
+    assert any(item.code == "USER_SECTIONS_PASS" for item in findings)
+
+
+def test_generator_writes_frozen_limits_heading(tmp_path):
+    target = tmp_path / "generated"
+    generate_skill(
+        target,
+        skill_id="document-organizer",
+        display_name="文档整理",
+        display_name_en="Document Organizer",
+        author="Factory",
+        version="1.0.0",
+        description_zh="帮助用户整理已授权的办公文件。",
+        description_en="Help users organize authorized office files.",
+    )
+    body = (target / "SKILL.md").read_text(encoding="utf-8")
+    assert "## Limits / 限制" in body
+    assert "## Limits / 边界" not in body

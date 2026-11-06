@@ -36,7 +36,7 @@ def generate_skill(target: Path, *, skill_id: str, display_name: str, display_na
         "按目标整理可读取内容；遇到缺失或不清晰的信息时保留事实并提示用户。\n\n"
         "## Outputs / 输出\n"
         "返回用户可查看的整理结果，并说明结果所依据的输入范围。\n\n"
-        "## Limits / 边界\n"
+        "## Limits / 限制\n"
         "不能替代人工核对，也不支持未提供内容或无法读取格式的准确判断。\n"
     )
     (target / "SKILL.md").write_text(frontmatter, encoding="utf-8")
