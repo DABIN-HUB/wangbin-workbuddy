@@ -16,7 +16,7 @@ CHAPTER_FIELDS: dict[str, tuple[str, ...]] = {
     # OUTLINE_FIELDS
     'CH01': (
         'project.name project.pv_type site.address',  # CH01.01
-        'system.dc_capacity system.ac_capacity project.evaluation_years',  # CH01.02
+        'system.dc_capacity system.ac_capacity project.evaluation_years roof.remaining_life site.rights_status site.land_classification',  # CH01.02
         'capex.items finance.project_discount_rate finance.equity_discount_rate',  # CH01.03
         'project.sales_mode load.series tariff.periods',  # CH01.04
         'risk.items targets.project_irr targets.payback_years',  # CH01.05
@@ -69,7 +69,7 @@ CHAPTER_FIELDS: dict[str, tuple[str, ...]] = {
     ),
     'CH08': (
         'resource.model_method resource.poa_boundary system.capacity_boundary',  # CH08.01
-        'resource.monthly system.losses system.first_year_degradation',  # CH08.02
+        'resource.monthly system.losses system.first_year_degradation system.annual_degradation',  # CH08.02
         'system.degradation_segments system.annual_degradation assets.replacements',  # CH08.03
         'system.dc_capacity system.ac_capacity system.losses',  # CH08.04
         'system.unavailability grid.curtailment_assumption',  # CH08.05
@@ -77,7 +77,7 @@ CHAPTER_FIELDS: dict[str, tuple[str, ...]] = {
     ),
     'CH09': (
         'grid.connection_point grid.connection_voltage grid.metering_boundary',  # CH09.01
-        'grid.transformer_capacity grid.power_factor grid.available_capacity grid.line_length',  # CH09.02
+        'grid.transformer_capacity grid.power_factor grid.available_capacity grid.line_length grid.export_power_limit grid.opinion_status',  # CH09.02
         'grid.upgrade_plan grid.protection_plan capex.items',  # CH09.03
         'grid.opinion_status grid.opinion_attachment_id grid.opinion_valid_until grid.transaction_opinion',  # CH09.04
         'grid.export_power_limit grid.curtailment_basis risk.items',  # CH09.05
@@ -128,9 +128,9 @@ CHAPTER_FIELDS: dict[str, tuple[str, ...]] = {
     ),
     'CH16': (
         'tariff.periods tariff.market_series revenue.other_items assets.depreciation.residual_value',  # CH16.01
-        'capex.items opex.items tax.regime_reference finance.working_capital',  # CH16.02
+        'capex.items opex.items tax.regime_reference finance.working_capital project.sales_mode',  # CH16.02
         'finance.debt_schedule finance.debt_ratio finance.loan_rate',  # CH16.03
-        'finance.project_discount_rate finance.equity_discount_rate project.price_basis',  # CH16.04
+        'finance.project_discount_rate finance.equity_discount_rate project.price_basis project.evaluation_years finance.cashflow_timing project.cashflow_tax_basis',  # CH16.04
         'targets.payback_years targets.payback_basis',  # CH16.05
         'system.capacity_boundary grid.export_power_limit project.cashflow_tax_basis',  # CH16.06
         'finance.cfads_definition finance.debt_schedule.dscr_covenant',  # CH16.07
@@ -173,7 +173,7 @@ CHAPTER_METRICS: dict[str, tuple[str, ...]] = {
     "CH13": ("", "", "", "", ""),
     "CH14": ("financial.capex.total", "financial.capex.total", "financial.capex.total", "", "", "financial.unit_investment"),
     "CH15": ("financial.opex.cash_lifecycle", "financial.asset.ending_book_value", "", "financial.tax.cash_lifecycle", "financial.opex.cash_lifecycle"),
-    "CH16": ("revenue.year.1", "financial.phase3e.project_cash_flow", "financial.phase3e.equity-investor-cash-flow", "financial.phase3e.project_npv financial.phase3e.project_irr", "financial.phase3e.static_payback financial.phase3e.dynamic_payback", "financial.phase3e.lcoe energy.delivered.year.1", "financial.phase3e.dscr financial.phase3e.cfads", "financial.phase3e.break-even-price financial.phase3e.investment-hurdle-gap"),
+    "CH16": ("revenue.year.1", "financial.phase3e.project_cash_flow", "financial.phase3e.equity-investor-cash-flow", "financial.phase3e.project_npv financial.phase3e.project_irr financial.phase3e.static_payback financial.phase3e.dynamic_payback", "financial.phase3e.static_payback financial.phase3e.dynamic_payback", "financial.phase3e.lcoe energy.delivered.year.1", "financial.phase3e.dscr financial.phase3e.cfads", "financial.phase3e.break-even-price financial.phase3e.investment-hurdle-gap"),
     "CH17": ("", "", "", "", ""),
     "CH18": ("", "", "", "", ""),
 }
@@ -250,7 +250,7 @@ ITEM_JUDGMENTS = {
   '局部计算结果不足以解除权属、接网及完整现金流的独立决策门槛。'),
  'CH02': (
   '项目名称或开发主体输入不能证明建设需求和主体授权。',
-  '评价期和价格口径不能代替实际收付款日期与项目、股东现金流分界。',
+  '年度项目评价使用预测的期末现金流，不要求逐笔银行流水；带日期指标和投资者出资分红另有事件边界。',
   '政策须按地区、生效期和条款核验；登记条目不是批准文件。',
   '资料登记只提供出处线索，不能证明原件、覆盖年份或授权已核实。',
   '合成参数是研究假设，不是现场或合同事实；变更应重算。'),
@@ -342,8 +342,8 @@ ITEM_JUDGMENTS = {
  'CH16': (
   '收入预测不是实际回款，账面残值不能自动计入终期现金。',
   '项目现金流须闭合投资、运营、税和终期实际收付，缺口阻断回报。',
-  '股东现金流另含出资、提款、还本及分配，不能照搬项目现金流。',
-  '净现值和内部收益率需要有日期的完整净现金流，收入及CAPEX不能代替。',
+  '融资后可供权益分配现金不等于投资者出资、实际分红或退出回款；借款提款不是股东收款。',
+  '净现值按声明的年度期末现金流与折现率评价；逐笔日期NPV另需有日期事件，IRR需核根集。',
   '回收期依赖逐期现金结余，不能由单年收入推算年限。',
   '平准化度电成本须配对无杠杆成本与同边界全期交付电量。',
   '偿债倍数需合同债务服务及可供偿债现金，零债务不能记作零倍。',
@@ -415,6 +415,8 @@ def _has_value(value: Any) -> bool:
 
 def _reader_unit(field_id: str, unit: str | None) -> str:
     """Keep engineering units, not source-schema tokens, in consulting prose."""
+    if field_id == "financial.unit_investment":
+        return "元/kWp"
     if field_id == "system.module_count":
         return "块"
     if field_id == "system.modules_per_string":
@@ -484,6 +486,172 @@ def category_fields(item_id: str, fields: tuple[str, ...], pv_type: str,
     return tuple(dict.fromkeys(selected))
 
 
+def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[[Any], str]) -> str:
+    """Write six bounded conclusions from this run's Phase 2, ledger and metrics."""
+    result = model.result
+    n = result["inputs"].get("normalized", {})
+    records = result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
+    bound = {row.get("field_id"): row.get("value") for row in records if row.get("source_id")
+             and row.get("status") not in {"REJECTED", "INVALID"}}
+    category = result.get("pv_type")
+    ground = category == "utility_scale_ground"
+
+    def inp(fid):
+        # The Phase 2 record must identify the *same* value, not merely a field
+        # name; list-child source metadata is flattened only for comparison.
+        source = bound.get(fid)
+        if fid == "capex.items" and isinstance(source, list):
+            source = [{"row_id": row.get("row_id"), "fields": {
+                key: atom.get("value") if isinstance(atom, dict) and "value" in atom else atom
+                for key, atom in row.get("fields", {}).items()}}
+                      for row in source if isinstance(row, dict)]
+        return n.get(fid) if source is not None and source == n.get(fid) else None
+
+    def metric(mid):
+        row = model.metric(mid)
+        return row.get("value") if row and row.get("status") == "CALCULATED" else None
+
+    def money(number):
+        return f"{format_value(number)}元"
+
+    def pct(number):
+        return f"{format_value(Decimal(str(number)) * 100)}%"
+
+    dc, ac, year1 = metric("dc_capacity"), metric("ac_capacity"), metric("energy.year.1")
+    years = inp("project.evaluation_years")
+    if item_id == "CH01.02":
+        if dc is None or ac is None or years is None:
+            return "本次容量与评价期尚不能在同一来源快照下核定，暂不推定项目建设规模。"
+        location = ("厂房屋面剩余年限按" + format_value(inp("roof.remaining_life")) + "年假设，仍需权属、结构荷载、防水和消防通道复核"
+                    if not ground and inp("roof.remaining_life") is not None else
+                    "地面场址的土地权属、地勘与道路排水仍需逐项核验" if ground else
+                    "屋面权属与结构条件尚需复核")
+        energy = f"；首年合成资源下预测发电{format_value(year1)}kWh" if year1 is not None else "；首年发电结果尚未形成"
+        return (f"本次方案按{format_value(dc)}kWp直流组件和{format_value(ac)}kW交流逆变器配置，"
+                f"以{format_value(years)}年作为测算期{energy}。这只是设备铭牌与模型发电边界，"
+                f"并非获批装机或保底上网电量；{location}。")
+    if item_id == "CH08.02":
+        months = metric("energy.monthly.year.1")
+        if not isinstance(months, list) or len(months) != 12 or year1 is None:
+            return "首年月度与年度发电未同时形成可对账结果，暂不推断季节发电。"
+        reconciled = abs(sum(Decimal(str(x)) for x in months) - Decimal(str(year1))) < Decimal("0.01")
+        reconciliation = ("与年度发电指标一致" if reconciled else "与年度发电指标不符，需先查清口径")
+        depreciation = inp("system.annual_degradation")
+        tail = (f"后续年份按{pct(depreciation)}年衰减另行重算" if depreciation is not None
+                else "后续年份衰减假设尚需核对")
+        boundary = "屋顶自用与余电上网" if not ground else "地面集中送出与结算"
+        return (f"首年合成资源计算的12个月发电量中，1月为{format_value(months[0])}kWh、"
+                f"12月为{format_value(months[-1])}kWh；逐月汇总{reconciliation}，对应年度"
+                f"{format_value(year1)}kWh。月份的发电序列不是辐照实测，也不能直接作为{boundary}电量；"
+                f"{tail}，仍需真实资源、损失和计量边界核验。")
+    if item_id == "CH09.02":
+        transformer, available, export = (inp("grid.transformer_capacity"),
+                                         inp("grid.available_capacity"), inp("grid.export_power_limit"))
+        if ac is None or transformer is None or available is None:
+            return "变压器、可用接入余量与交流铭牌尚未同时绑定，不能作出并网可行结论。"
+        constraint = (f"可用接入余量低于{format_value(ac)}kW交流铭牌，不能以变压器额定容量直接认定可全额送出"
+                      if Decimal(str(available)) < Decimal(str(ac)) else
+                      "可用接入余量不低于交流铭牌，但仍不等于核准可送出功率")
+        export_text = f"；送出限值假设另为{format_value(export)}kW" if export is not None else ""
+        point = "屋顶自用后的余电" if not ground else "地面电站集中上网的全部电量"
+        opinion = inp("grid.opinion_status")
+        opinion_text = "待取得" if opinion == "pending" else (str(opinion) if opinion else "待核")
+        factor = inp("grid.power_factor")
+        factor_text = (f"本次功率因数{format_value(factor)}仍是合成假设" if factor is not None
+                       else "功率因数未提供，不将kVA强行折算为可接入kW")
+        return (f"{format_value(transformer)}kVA变压器是设备视在容量，不能直接与kW有功功率比较；"
+                f"{factor_text}。本次填报可用接入余量{format_value(available)}kWac，{constraint}{export_text}。"
+                f"{point}还受保护、线路与计量边界约束；正式接网意见{opinion_text}，"
+                "仅属合成条件，正式电网接入与送出限值待批复，不视为已获接入许可。")
+    if item_id == "CH14.02":
+        items = inp("capex.items")
+        rows = [r.get("fields", {}) for r in items if isinstance(r, dict)] if isinstance(items, list) else []
+        initial = [r for r in rows if str(r.get("capex.items.payment_date", ""))[:4] <= str(result.get("evaluation_date", ""))[:4]]
+        later = [r for r in rows if r not in initial]
+        equipment = {"modules": ("组件", "块"), "inverters": ("逆变器", "台"),
+                     "mounting": ("支架", "项"), "cables": ("电缆", "项"),
+                     "transformer": ("变压器", "台"), "electrical": ("电气设备", "项"),
+                     "storage": ("储能设备", "套")}
+        listed = [r for r in initial if r.get("capex.items.category") in equipment]
+        if not listed:
+            return "本次未取得可绑定的设备分项数量、单价和税口径，设备费用不能由总额倒推。"
+        largest = max(listed, key=lambda r: Decimal(str(r.get("capex.items.amount", 0))))
+        descriptions = [f"{equipment[r['capex.items.category']][0]}{format_value(r['capex.items.quantity'])}"
+                        f"{equipment[r['capex.items.category']][1]}×{money(r['capex.items.unit_price'])}/"
+                        f"{equipment[r['capex.items.category']][1]}={money(r['capex.items.amount'])}"
+                        for r in listed if all(r.get('capex.items.' + key) is not None for key in ('quantity', 'unit_price', 'amount'))]
+        if not descriptions:
+            return "设备分项的数量或单价不完整，暂不能形成逐项费用判断。"
+        tax = {r.get("capex.items.vat_rate") for r in listed}
+        tax_note = (f"均按含税价、增值税率{pct(next(iter(tax)))}输入"
+                    if len(tax) == 1 and None not in tax and all(r.get("capex.items.tax_included") is True for r in listed)
+                    else "税价口径需按各分项来源分别核对")
+        ledger = result.get("evidence", {}).get("financial-ledger", {}).get("annual", ())
+        construction = ledger[0] if ledger and ledger[0].get("period") == "CONSTRUCTION" else {}
+        initial_cost = construction.get("capex_cash_paid")
+        lifecycle = metric("financial.capex.total")
+        replacement = [r for r in later if r.get("capex.items.category") == "inverters"]
+        future = ("；计划在" + "、".join(
+            f"第{int(r['capex.items.payment_date'][:4]) - int(result['evaluation_date'][:4])}年逆变器更换"
+            f"{money(r['capex.items.amount'])}" for r in replacement
+            if str(r.get("capex.items.payment_date", ""))[:4].isdigit())
+            + "，属于后期支出，不是初始设备采购" if replacement else "")
+        initial_text = (f"建设期计划支付资本支出{money(initial_cost)}" if initial_cost is not None
+                        else "建设期支付资本支出尚待核对")
+        lifecycle_text = (f"，25年CAPEX合计{money(lifecycle)}" if lifecycle is not None and years == 25
+                          else f"，评价期CAPEX合计{money(lifecycle)}" if lifecycle is not None else "")
+        civil = [r for r in initial if r.get("capex.items.category") == "construction"]
+        civil_text = (f"，其中土建施工{money(civil[0]['capex.items.amount'])}另列，不能充作设备费"
+                      if civil and civil[0].get("capex.items.amount") is not None else "")
+        return (f"本次设备清单以{equipment[largest['capex.items.category']][0]}"
+                f"{money(largest['capex.items.amount'])}占已列初始设备分项最大份额："
+                f"{'、'.join(descriptions)}；上述{tax_note}。{initial_text}{lifecycle_text}{civil_text}{future}。"
+                "这些是合成数量与价格而非供应商签署报价，实际工程量、税额抵扣及采购付款仍须核验。")
+    if item_id == "CH16.02":
+        flow = metric("financial.phase3e.project_cash_flow")
+        ledger = result.get("evidence", {}).get("financial-ledger", {}).get("annual", ())
+        if not isinstance(flow, list) or len(flow) < 2 or len(ledger) < 2:
+            return "项目现金流未与建设期及运营年账簿同时闭合，不能将收入预测写成实际收款。"
+        build, first = ledger[:2]
+        start, wc = build.get("capex_cash_paid"), build.get("working_capital_increase")
+        receipts, savings = first.get("revenue_cash_receipts"), first.get("self_use_avoided_expenditure")
+        opex, tax = first.get("opex_cash_paid"), first.get("cash_tax_total_project")
+        if any(v is None for v in (start, wc, receipts, opex, tax)):
+            return "项目现金流虽有结果，但缺少与之配套的投资、营运资金或首年收支账簿，不能作分项解释。"
+        benefit = (f"合成的余电预计回款{money(receipts)}与自用节费{money(savings)}"
+                   if not ground and savings is not None else f"预计上网回款{money(receipts)}")
+        replacements = [r for r in ledger[1:] if r.get("replacement_cash_paid")]
+        renewal = (f"；第{replacements[0]['period'].removeprefix('OPERATING_YEAR_')}年计划更换支出"
+                   f"{money(replacements[0]['replacement_cash_paid'])}"
+                   if replacements and str(replacements[0].get("period", "")).startswith("OPERATING_YEAR_") else "")
+        return (f"项目税后年度现金流建设期为{money(flow[0])}，由建设期计划资本支出{money(start)}"
+                f"和营运资金投入{money(wc)}构成；运营首年{benefit}，"
+                f"扣运维现金{money(opex)}与项目现金税费{money(tax)}后，"
+                f"对应首年净流入{money(flow[1])}{renewal}，已在后续年度扣除而非重复计入初始投资。"
+                "本项是合成年度项目收支预测，不是实际银行流水、已收回款或投资者分红；"
+                "股东出资及分配事件未闭合，不能由项目净流量替代。")
+    if item_id == "CH16.04":
+        npv, irr = metric("financial.phase3e.project_npv"), metric("financial.phase3e.project_irr")
+        static, dynamic = metric("financial.phase3e.static_payback"), metric("financial.phase3e.dynamic_payback")
+        discount = inp("finance.project_discount_rate")
+        flow = metric("financial.phase3e.project_cash_flow")
+        if (any(x is None for x in (npv, irr, static, dynamic, discount, years))
+                or not isinstance(flow, list)
+                or inp("project.price_basis") != "nominal"
+                or inp("project.cashflow_tax_basis") != "post_tax"
+                or inp("finance.cashflow_timing") != "PERIOD_END"):
+            return "项目税后NPV、IRR、回收期与折现率尚未在同一计算边界闭合，不可替代为投资者收益。"
+        outcome = ("在本次假设下NPV为正且IRR高于折现率，模型项目回报超过折现假设"
+                   if npv > 0 and Decimal(str(irr)) > Decimal(str(discount)) else
+                   "本次测算未同时满足NPV为正及IRR高于折现率的条件")
+        return (f"按合成的{format_value(years)}年项目税后、名义价格及年度期末现金流，"
+                f"使用{pct(discount)}项目折现率得到年度NPV{money(npv)}、IRR{pct(irr)}；"
+                f"静态回收期{format_value(static)}年、动态回收期{format_value(dynamic)}年，{outcome}。"
+                "这不是逐笔日期NPV或实际投资者出资—分红回报：未提供股东现金事件及真实银行流水，"
+                "也未获得现场审批、签署交易与专业复核，不能据此批准投资。")
+    return ""
+
+
 def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_rule: str,
                 field_ids: tuple[str, ...], metric_ids: tuple[str, ...], pv_type: str,
                 format_value: Callable[[Any], str], label_metric: Callable[[str], str]) -> dict[str, Any]:
@@ -533,6 +701,8 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
         judgment = "未配置储能不意味着屋面结构、防水和消防专项设计已审查；这些边界仍需独立核实。"
     elif item_id == "CH11.02":
         judgment = "屋面锚固须依结构鉴定与防水构造确定，合成支架类型不足以证明屋面连接安全。"
+    if item_id == "CH16.02" and (cashflow := model.metric("financial.phase3e.project_cash_flow")) and cashflow.get("status") == "CALCULATED":
+        judgment = "年度项目现金流已按本次预测来源与终期假设计算；它不等于历史银行流水或投资者分红，真实项目收益仍须核验。"
     if item_id == "CH18.01" and (model.result.get("status") == "COMPLETE"
                                  and model.result.get("maturity", {}).get("real_project") == "VERIFIED"):
         judgment = "即使计算与来源门禁完成，投资建议仍须经过独立专业审查和决策授权。"
@@ -600,7 +770,9 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
             facts = ["本次统一结果保留了公式快照身份，完整定义仍须在公式工作表逐条核验"]
         # The judgment is authored for this object; observed values qualify it,
         # rather than a title-prefixed inventory masquerading as a conclusion.
-        claim = judgment + ("本次测算显示：" + "；".join(facts) + "。" if facts else "")
+        specific = _specific_project_judgment(model, item_id, format_value)
+        claim = (specific if item_id in {"CH01.02", "CH08.02", "CH09.02", "CH14.02", "CH16.02", "CH16.04"}
+                 else judgment + ("本次测算显示：" + "；".join(facts) + "。" if facts else ""))
         if blocked_metrics:
             bound = f"{label_metric(blocked_metrics[0])}未形成可引用结果"
         elif absent_fields:
@@ -621,9 +793,12 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
             decision = "暂缓投资决定；" + "、".join(blockers or ["真实项目的独立核验"]) + "尚未闭合。"
         gaps = []
         if absent_fields:
-            gaps.append("原始资料仍不完整，具体输入见内容检查表")
+            gaps.append("缺少直接输入：" + "、".join(absent_fields))
         if blocked_metrics:
-            gaps.append(label_metric(blocked_metrics[0]) + "没有有效计算值")
+            blocked_id = blocked_metrics[0]
+            blocked_metric = model.metric(blocked_id)
+            gaps.append(label_metric(blocked_id) + "未形成有效计算值（" +
+                        str(blocked_metric.get("reason") if blocked_metric else "结果不存在") + "）")
         if not sources:
             gaps.append("无直接来源绑定")
         gaps.append("合成或未验证资料不构成真实项目第三方证明")

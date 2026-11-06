@@ -125,12 +125,13 @@ class ReportModel:
     result: dict[str, Any]
     metrics: tuple[dict[str, Any], ...]
     metric_by_id: dict[str, dict[str, Any]]
+    catalog: Any | None = None
 
     @classmethod
     def from_result(cls, result: dict[str, Any], catalog) -> "ReportModel":
         validated = validate_result(result, catalog)
         metrics = tuple(validated["results"]["metrics"])
-        return cls(validated, metrics, {m["metric_id"]: m for m in metrics})
+        return cls(validated, metrics, {m["metric_id"]: m for m in metrics}, catalog)
 
     @property
     def identity(self) -> dict[str, str]:
@@ -262,10 +263,17 @@ def _metric_rows(model: ReportModel, *, prefixes: tuple[str, ...] = ()) -> list[
     for metric in model.metrics:
         if prefixes and not metric["metric_id"].startswith(prefixes):
             continue
-        rows.append([metric["metric_id"], metric["status"], _metric_cell_value(metric), metric.get("unit") or "UNKNOWN",
+        rows.append([metric["metric_id"], metric["status"], _metric_cell_value(metric), _metric_unit(metric),
                      metric.get("formula_id") or "UNKNOWN", ",".join(metric.get("source_ids") or []) or "UNKNOWN",
                      metric.get("reason") or "", _raw_value(metric.get("value"))])
     return rows
+
+
+def _metric_unit(metric: dict[str, Any]) -> str:
+    # Frozen F-UNIT-INVESTMENT metadata says CNY, but its denominator is DC kWp.
+    if metric.get("formula_id") == "F-UNIT-INVESTMENT" and metric.get("metric_id") == "financial.unit_investment":
+        return "元/kWp"
+    return metric.get("unit") or "UNKNOWN"
 
 
 def _normalized_rows(model: ReportModel, *, prefixes: tuple[str, ...] = ()) -> list[list[Any]]:
@@ -273,6 +281,12 @@ def _normalized_rows(model: ReportModel, *, prefixes: tuple[str, ...] = ()) -> l
     used_sources = model.result["inputs"].get("used_sources", {})
     return [[key, value, "INPUT", ",".join(used_sources.get(key, [])) if isinstance(used_sources, dict) else _string(used_sources), _raw_value(value)]
             for key, value in sorted(normalized.items()) if not prefixes or key.startswith(prefixes)]
+
+
+def _financial_input_rows(model: ReportModel, *, prefixes: tuple[str, ...]) -> list[list[Any]]:
+    """Align Phase 2 inputs with the eight-column financial metric layout."""
+    return [[field, status, value, "UNKNOWN", "INPUT", source or "UNKNOWN", "", raw]
+            for field, value, status, source, raw in _normalized_rows(model, prefixes=prefixes)]
 
 
 def _identity_rows(model: ReportModel) -> list[list[Any]]:
@@ -317,36 +331,45 @@ def _canonical_chart_specs(model: ReportModel) -> list[dict[str, Any]]:
     return specs
 
 
+def _chart_axis_geometry(values: list[float], *, top: int, bottom: int) -> tuple[list[tuple[float, int]], list[int]]:
+    """Use one ascending numerical scale for tick labels and points."""
+    low, high = min(values), max(values)
+    padding = max(abs(low) * 0.05, 1.0) if low == high else (high - low) * 0.08
+    low, high = low - padding, high + padding
+    ticks = [(low + index * (high - low) / 4, int(bottom - index * (bottom - top) / 4))
+             for index in range(5)]
+    points = [int(bottom - (value - low) / (high - low) * (bottom - top)) for value in values]
+    return ticks, points
+
+
+def _chart_axis_labels(spec: dict[str, Any]) -> tuple[str, str, str]:
+    monthly = spec["metric_id"] == "energy.monthly.year.1"
+    title = spec.get("title", "发电量变化") + ("（首年）" if monthly else "（评价期）")
+    return title, ("月份" if monthly else "运营年（第1年起）"), f"发电量（{spec.get('unit') or 'UNKNOWN'}）"
+
+
 def _chart_png(spec: dict[str, Any]) -> BytesIO:
     """Render one canonical series as a small, dependency-local PNG."""
     width, height = 1200, 500
     image = Image.new("RGB", (width, height), f"#{_D_STYLE['white']}")
     draw = ImageDraw.Draw(image)
     font = ImageFont.load_default()
-    title = spec.get("title", "发电量变化")
+    title, x_label, y_label = _chart_axis_labels(spec)
     draw.text((72, 26), title, fill=f"#{_D_STYLE['ink']}", font=font)
+    draw.text((86, 48), y_label, fill=f"#{_D_STYLE['muted']}", font=font)
+    draw.text((width // 2, height - 30), x_label, fill=f"#{_D_STYLE['muted']}", font=font)
     left, top, right, bottom = 86, 62, width - 36, height - 68
     values = spec["values"]
-    low, high = min(values), max(values)
-    if low == high:
-        padding = max(abs(low) * 0.05, 1.0)
-        low, high = low - padding, high + padding
-    else:
-        padding = (high - low) * 0.08
-        low, high = low - padding, high + padding
-    for index in range(5):
-        ratio = index / 4
-        y = int(bottom - ratio * (bottom - top))
+    ticks, y_values = _chart_axis_geometry(values, top=top, bottom=bottom)
+    for tick, y in ticks:
         draw.line((left, y, right, y), fill=f"#{_D_STYLE['line']}", width=1)
-        tick = high - ratio * (high - low)
         draw.text((8, y - 7), f"{tick:,.0f}", fill=f"#{_D_STYLE['muted']}", font=font)
     draw.line((left, top, left, bottom), fill=f"#{_D_STYLE['ink']}", width=2)
     draw.line((left, bottom, right, bottom), fill=f"#{_D_STYLE['ink']}", width=2)
     step = (right - left) / max(1, len(values) - 1)
     points = []
-    for index, value in enumerate(values):
+    for index, y in enumerate(y_values):
         x = int(left + index * step)
-        y = int(bottom - ((value - low) / (high - low)) * (bottom - top))
         points.append((x, y))
         label = str(index + 1).zfill(2)
         draw.text((x - 5, bottom + 12), label, fill=f"#{_D_STYLE['muted']}", font=font)
@@ -411,9 +434,10 @@ def _embed_xlsx_chart(ws, spec: dict[str, Any], header_row: int, data_start: int
     """Embed an Excel-native chart over cells already populated from canonical data."""
     data_end = data_start + len(spec["values"]) - 1
     chart = LineChart()
-    chart.title = f"Canonical · {spec['metric_id']}"
-    chart.y_axis.title = spec["unit"]
-    chart.x_axis.title = "序号"
+    title, x_label, y_label = _chart_axis_labels(spec)
+    chart.title = f"Canonical · {title}"
+    chart.y_axis.title = y_label
+    chart.x_axis.title = x_label
     chart.style = 13
     chart.height = 7.0
     chart.width = 15.5
@@ -430,26 +454,177 @@ def _embed_xlsx_chart(ws, spec: dict[str, Any], header_row: int, data_start: int
             "source": "CANONICAL", "formula_id": spec["formula_id"], "source_ids": list(spec["source_ids"])}
 
 
+def _formula_definitions(model: ReportModel) -> list[dict[str, Any]]:
+    snapshot = model.result.get("formula_snapshot", {})
+    referenced = {metric["formula_id"] for metric in model.metrics if metric.get("formula_id")}
+    definitions = {}
+    for group in ("engineering_definitions", "consumption_definitions", "financial_definitions"):
+        for fid, definition in snapshot.get(group, {}).items():
+            if fid in referenced and isinstance(definition, dict):
+                definitions[fid] = definition
+    missing = referenced - definitions.keys()
+    if missing and model.catalog is not None:
+        if snapshot.get("definition_hash") != model.catalog.definition_hash:
+            raise ContractError("REPORT_FORMULA_DEFINITION_IDENTITY_MISMATCH")
+        for fid in missing:
+            if fid in model.catalog.formulas:
+                definitions[fid] = model.catalog.formulas[fid]
+    return [definitions[fid] for fid in sorted(definitions)]
+
+
+# This is an editorial bilingual glossary, not a formula or a source of measured data.
+_GLOSSARY = (
+    ("光伏", "Photovoltaic", "PV", "太阳光电转换技术；不代表已获准并网"),
+    ("直流", "Direct Current", "DC", "组件侧额定峰值功率使用 kWp"),
+    ("交流", "Alternating Current", "AC", "逆变器侧额定功率使用 kWac"),
+    ("资本性支出", "Capital Expenditure", "CAPEX", "须区别建设期初始支出与运营期更换"),
+    ("运营性支出", "Operating Expenditure", "OPEX", "现金运维与非现金折旧分列"),
+    ("净现值", "Net Present Value", "NPV", "年度项目评价与逐笔日期评价分属不同口径"),
+    ("内部收益率", "Internal Rate of Return", "IRR", "注明项目/投资者及税前/税后边界"),
+    ("平准化度电成本", "Levelized Cost of Energy", "LCOE", "成本与可交付电量必须同边界"),
+    ("可供偿债现金流", "Cash Flow Available for Debt Service", "CFADS", "不可替代股东实收分红"),
+    ("偿债覆盖倍数", "Debt Service Coverage Ratio", "DSCR", "无债务时不适用"),
+    ("阵列面辐照", "Plane-of-Array Irradiation", "POA", "辐照量与发电电量不可互换"),
+    ("系统性能比", "Performance Ratio", "PR", "发电能量与阵列面资源的口径配对"),
+)
+
+
+def _appendix_rows(model: ReportModel, app_id: str) -> tuple[list[str], list[list[Any]]]:
+    definitions = _formula_definitions(model)
+    if app_id == "APP11.01":
+        return (["公式ID", "正式名称", "公式文本", "结果单位", "适用边界"],
+                [[f["formula_id"], f.get("chinese_name", "未定义"),
+                  f.get("text_equation") or f.get("latex") or "未提供公式文本",
+                  f.get("unit") or "未定义", f.get("calculation_boundary") or "未定义"] for f in definitions])
+    if app_id == "APP11.02":
+        return (["公式ID", "完整符号", "定义", "单位", "下标与求和范围"],
+                [[f["formula_id"], s.get("symbol") or "未定义", s.get("definition_zh") or "未定义",
+                  s.get("unit") or "未定义",
+                  _string(f.get("subscript_definition") or {}) + "；" + _string(f.get("set_and_range_definition") or [])]
+                 for f in definitions for s in f.get("every_symbol_definition", ())])
+    if app_id == "APP12.01":
+        return ["中文", "English", "缩写", "受控释义/边界"], [list(row) for row in _GLOSSARY]
+    if app_id == "APP12.02":
+        return ["单位/符号", "含义", "不得混用的边界"], [
+            ["kWp", "直流峰值千瓦", "不等于 kWac"], ["kWac", "交流额定千瓦", "不等于 kWh"],
+            ["kWh", "电量千瓦时", "不等于辐照量 kWh/㎡"], ["kWh/㎡", "单位面积辐照量", "不等于交付电量"],
+            ["元/kWp", "每直流峰值千瓦单位投资", "不等于元/Wp或未说明边界的CNY"]]
+    raise ValueError(app_id)
+
+
+def _appendix_content(model: ReportModel, item_id: str) -> str:
+    _headers, rows = _appendix_rows(model, item_id)
+    if not rows:
+        return "本次结果未绑定可列示的正式公式定义；不补造符号或英文全称。"
+    return "；".join(" / ".join(map(str, row)) for row in rows[:3])
+
+
+def _resource_rows(model: ReportModel) -> tuple[list[str], list[list[Any]]]:
+    """Show source-bound monthly resource inputs, never generated electricity."""
+    normalized = model.result["inputs"].get("normalized", {})
+    columns = ("ghi", "dni", "dhi", "poa", "ambient_temperature", "wind_speed", "coverage")
+    headers = ["月份", "GHI (kWh/㎡)", "DNI (kWh/㎡)", "DHI (kWh/㎡)",
+               "POA (kWh/㎡)", "气温 (°C)", "风速 (m/s)", "覆盖率", "来源与使用边界"]
+    records = model.result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
+    source = next((record for record in records if record.get("field_id") == "resource.monthly"
+                   and record.get("source_id") and record.get("status") in {"ASSUMED", "VERIFIED"}), None)
+    rows = []
+    monthly = normalized.get("resource.monthly")
+    if source and isinstance(monthly, list):
+        seen = set()
+        for item in monthly:
+            fields = item.get("fields", {}) if isinstance(item, dict) else {}
+            month = fields.get("resource.monthly.month")
+            if not isinstance(month, int) or month < 1 or month > 12 or month in seen:
+                continue
+            seen.add(month)
+            cells = []
+            for key in columns:
+                fid = "resource.monthly." + key
+                value = fields.get(fid)
+                bound = any(record.get("field_id") == fid and record.get("value") == value
+                            and record.get("source_id") == source["source_id"]
+                            and record.get("status") in {"ASSUMED", "VERIFIED"}
+                            for record in records)
+                cells.append(value if value is not None and bound else "UNKNOWN")
+            rows.append([month, *cells, f"{source['source_id']}；Phase 2 资源输入，非D3实测或发电量"])
+        rows.sort(key=lambda row: row[0])
+    if not rows:
+        dataset = _dataset_rows(model.result).get("resource.timeseries")
+        if dataset:
+            rows.append(["未聚合", *(["UNKNOWN"] * 7),
+                         f"D3时序{dataset['row_count']}条；未取得有来源的月度资源输入，不以月发电量代替"])
+        else:
+            rows.append(["UNKNOWN", *(["UNKNOWN"] * 7), "未提供有来源的月度资源输入；不可用月发电量代替"])
+    return headers, rows
+
+
+def _capex_boundary_rows(model: ReportModel) -> list[list[Any]]:
+    ledger = model.result.get("evidence", {}).get("financial-ledger", {}).get("annual", ())
+    if not isinstance(ledger, list) or not ledger:
+        return [["initial_capex_cash_paid", "LEDGER_MISSING", "UNKNOWN", "CNY", "", "", "未提供建设期账簿", "UNKNOWN"]]
+    construction = [row for row in ledger if row.get("period") == "CONSTRUCTION"]
+    if not construction or any("capex_cash_paid" not in row for row in construction):
+        return [["initial_capex_cash_paid", "LEDGER_MISSING", "UNKNOWN", "CNY", "", "", "建设期付款未闭合", "UNKNOWN"]]
+    initial = sum(Decimal(str(row["capex_cash_paid"])) for row in construction)
+    operating = [row for row in ledger if row.get("period", "").startswith("OPERATING_YEAR_")]
+    rows = [["initial_capex_cash_paid", "LEDGER", initial, "CNY", "", "", "建设期现金付款（不含营运资金）", str(initial)]]
+    if operating and all("capex_cash_paid" in row and "replacement_cash_paid" in row for row in operating):
+        lifecycle = initial + sum(Decimal(str(row["capex_cash_paid"])) for row in operating)
+        replacement = sum(Decimal(str(row["replacement_cash_paid"])) for row in operating)
+        rows.append(["lifecycle_capex_cash_paid", "LEDGER", lifecycle, "CNY", "", "", "全部期间资本现金付款（含递延初始付款及更换）", str(lifecycle)])
+        rows.append(["replacement_cash_paid", "LEDGER", replacement, "CNY", "", "", "运营期更换现金支出，已含在全期资本付款内", str(replacement)])
+    else:
+        rows.append(["lifecycle_capex_cash_paid", "LEDGER_INCOMPLETE", "UNKNOWN", "CNY", "", "", "更换付款序列未闭合", "UNKNOWN"])
+    if all("working_capital_increase" in row for row in construction):
+        capital = sum(Decimal(str(row["working_capital_increase"])) for row in construction)
+        rows.append(["working_capital_increase", "LEDGER", capital, "CNY", "", "", "建设期营运资金单列", str(capital)])
+    return rows
+
+
+def _scenario_rows(model: ReportModel, kind: str) -> list[list[Any]]:
+    receipts = model.result.get("evidence", {}).get("scenario_receipts", ())
+    matched = [row for row in receipts if isinstance(row, dict)
+               and row.get("baseline_result_hash") == model.result["result_hash"]
+               and row.get("result_hash") and row.get("scenario_id")
+               and row.get("run_id") and row.get("kind") == kind] if isinstance(receipts, list) else []
+    if not matched:
+        return [[kind, "NOT_TESTED", "当前canonical没有绑定基准结果哈希的独立情景回执；不推断情景结果", "UNKNOWN"]]
+    return [[row["scenario_id"], row.get("status") or "UNKNOWN", row["run_id"], row["result_hash"]]
+            for row in matched]
+
+
 def _sheet_data(model: ReportModel, sheet_id: str, title: str, pv_type: str) -> tuple[list[str], list[list[Any]]]:
     normalized = model.result["inputs"].get("normalized", {})
     metrics = model.metrics
     if sheet_id == "M01":
         rows = _identity_rows(model) + [["pv_type", model.result["pv_type"], "CANONICAL", _raw_value(model.result["pv_type"])], ["currency", model.result["currency"], "CANONICAL", _raw_value(model.result["currency"])],
-            ["evaluation_date", model.result["evaluation_date"], "CANONICAL", _raw_value(model.result["evaluation_date"])], ["calculation_status", model.result["status"], "CANONICAL", _raw_value(model.result["status"])]] + _normalized_rows(model, prefixes=("project.", "site.", "system."))
+            ["evaluation_date", model.result["evaluation_date"], "CANONICAL", _raw_value(model.result["evaluation_date"])], ["calculation_status", model.result["status"], "CANONICAL", _raw_value(model.result["status"])]]
+        rows += [[field, value, source or "UNKNOWN", raw]
+                 for field, value, _status, source, raw in _normalized_rows(model, prefixes=("project.", "site.", "system."))]
         headers = ["参数", "值", "来源", "canonical_raw"]
     elif sheet_id == "M02":
-        rows = [[m["formula_id"], m["metric_id"], m["unit"] or "UNKNOWN", m["status"], m.get("reason") or "", ",".join(m.get("report_locations") or [])] for m in metrics]
-        headers = ["formula_id", "metric_id", "单位", "状态", "边界/原因", "章节"]
+        rows = [[f["formula_id"], f.get("chinese_name") or "UNKNOWN",
+                 f.get("text_equation") or f.get("latex") or "未提供公式文本",
+                 f.get("unit") or "UNKNOWN", f.get("calculation_boundary") or "UNKNOWN",
+                 "；".join(f"{s.get('symbol')}: {s.get('definition_zh')} ({s.get('unit')})"
+                           for s in f.get("every_symbol_definition", ())) or "未提供逐符号定义"]
+                for f in _formula_definitions(model)]
+        headers = ["formula_id", "正式名称", "公式文本", "单位", "适用边界", "逐符号定义"]
     elif sheet_id == "M03":
         rows = [["maturity.calculation", model.result["maturity"]["calculation"], "CANONICAL"], ["maturity.real_project", model.result["maturity"]["real_project"], "CANONICAL"], ["maturity.four_files", "DRAFT_PARTIAL", "EXPORTER"]]
         rows += [[m["metric_id"], m["status"], m.get("reason") or "", ",".join(m.get("source_ids") or []) or "UNKNOWN"] for m in metrics]
         rows += [["finding", item.get("code", "UNKNOWN"), item.get("status", "UNKNOWN"), "需保留并人工关闭"] for item in model.result.get("findings", [])]
         headers = ["质量轴/指标", "状态/值", "原因", "来源/说明"]
-    elif sheet_id in {"M04", "M06"}:
+    elif sheet_id == "M04":
+        headers, rows = _resource_rows(model)
+    elif sheet_id == "M06":
         metric = model.metric("energy.monthly.year.1")
-        values = metric.get("value") if metric and metric.get("status") == "CALCULATED" else None
-        rows = [[index, value if values is not None else "UNKNOWN", "energy.monthly.year.1" if values is not None else "UNKNOWN", metric.get("status") if metric else "UNKNOWN"] for index, value in enumerate(values or [None] * 12, 1)]
-        headers = ["月份", "kWh", "formula/metric", "状态"]
+        values = metric.get("value") if metric and metric.get("status") == "CALCULATED" and isinstance(metric.get("value"), list) else None
+        rows = [[index, value, "energy.monthly.year.1", "kWh", metric.get("status")]
+                for index, value in enumerate(values, 1)] if values is not None else [
+                    ["UNKNOWN", "UNKNOWN", "energy.monthly.year.1", "kWh", metric.get("status") if metric else "UNKNOWN"]]
+        headers = ["月份", "发电量", "formula/metric", "单位", "状态"]
     elif sheet_id == "M05":
         rows = [["dc_capacity", _metric_cell_value(model.metric("dc_capacity")), "kWp", "F-DC-CAPACITY"], ["ac_capacity", _metric_cell_value(model.metric("ac_capacity")), "kWac", "F-AC-CAPACITY"], ["dc_ac_ratio", _metric_cell_value(model.metric("dc_ac_ratio")), "1", "F-DC-AC-RATIO"]]
         losses = normalized.get("system.losses")
@@ -468,23 +643,37 @@ def _sheet_data(model: ReportModel, sheet_id: str, title: str, pv_type: str) -> 
             rows = _metric_rows(model, prefixes=("consumption", "energy.delivered"))
         headers = ["metric_id", "状态", "值", "单位", "公式", "来源", "原因", "canonical_raw"]
     elif sheet_id == "M09":
-        rows = _metric_rows(model, prefixes=("revenue",)) + _normalized_rows(model, prefixes=("project.sales", "revenue.", "tariff."))
-        headers = ["metric/field", "状态/值", "显示值", "单位/来源", "公式", "来源", "原因", "canonical_raw"]
+        rows = _metric_rows(model, prefixes=("revenue",)) + _financial_input_rows(model, prefixes=("project.sales", "revenue.", "tariff."))
+        headers = ["metric/field", "状态", "值", "单位", "公式", "来源", "原因", "canonical_raw"]
     elif sheet_id in {"M10", "M11", "M12", "M13"}:
         prefixes = {"M10": ("capex.",), "M11": ("opex.",), "M12": ("assets.", "tax."), "M13": ("finance.",)}[sheet_id]
-        rows = _normalized_rows(model, prefixes=prefixes) + _metric_rows(model, prefixes=("financial.",))
-        headers = ["field/metric", "值", "状态/来源", "source_ids", "canonical_raw"]
-    elif sheet_id in {"M14", "M15", "M16"}:
-        rows = _metric_rows(model, prefixes=("financial.", "npv"))
+        rows = _financial_input_rows(model, prefixes=prefixes)
+        if sheet_id == "M10":
+            rows += _capex_boundary_rows(model) + _metric_rows(model, prefixes=("financial.capex.", "financial.unit_investment"))
+        else:
+            financial_prefix = {"M11": ("financial.opex.",), "M12": ("financial.asset.", "financial.tax."),
+                                "M13": ("financial.debt.", "financial.phase3e.cfads", "financial.phase3e.dscr")}[sheet_id]
+            rows += _metric_rows(model, prefixes=financial_prefix)
+        headers = ["field/metric", "状态", "值", "单位", "公式", "来源", "边界/原因", "canonical_raw"]
+    elif sheet_id == "M14":
+        rows = _metric_rows(model, prefixes=("financial.phase3e.project_cash_flow", "financial.phase3e.project_pretax_cash_flow",
+                                             "financial.phase3e.cumulative_cash_flow", "financial.phase3e.discounted_cumulative_cash"))
+        headers = ["metric_id", "状态", "值/阻断原因", "单位", "公式", "来源", "原因", "canonical_raw"]
+    elif sheet_id == "M15":
+        rows = _metric_rows(model, prefixes=("financial.phase3e.equity-investor-cash-flow",
+                                             "financial.phase3e.equity-available-cash-flow"))
+        headers = ["metric_id", "状态", "值/阻断原因", "单位", "公式", "来源", "原因", "canonical_raw"]
+    elif sheet_id == "M16":
+        rows = [row for row in _metric_rows(model, prefixes=("financial.phase3e.",))
+                if not any(term in row[0] for term in ("cash_flow", "cash-flow", "cumulative", "cash-funding", "cfads", "equity-available"))]
         headers = ["metric_id", "状态", "值/阻断原因", "单位", "公式", "来源", "原因", "canonical_raw"]
     elif sheet_id == "M17":
-        rows = [["sensitivity", "NOT_TESTED", "未提供合法独立敏感性重算结果", "UNKNOWN"]]
-        rows += [[item.get("code", "finding"), item.get("status", "UNKNOWN"), "请补充来源后执行", "UNKNOWN"] for item in model.result.get("findings", [])]
-        headers = ["因素/证据", "状态", "说明", "值"]
+        rows = _scenario_rows(model, "SENSITIVITY")
+        headers = ["因素/场景", "状态", "运行ID/说明", "结果哈希/值"]
     elif sheet_id == "M18":
-        description = "仅有当前SYNTHETIC地面并网基准；无合法替代方案" if pv_type == "utility_scale_ground" else "仅有当前SYNTHETIC屋顶基准；无合法替代方案"
-        rows = [["BASE", model.result["scenario_id"], model.result["status"], description], ["alternative", "NOT_TESTED", "UNKNOWN", "未建模，不比较"]]
-        headers = ["方案", "场景", "状态", "说明"]
+        rows = [["BASE", model.result["scenario_id"], model.result["status"], model.result["result_hash"]]]
+        rows += _scenario_rows(model, "ALTERNATIVE")
+        headers = ["方案", "场景/状态", "状态/运行ID", "说明/结果哈希"]
     else:
         rows = [["identity", key, value, "一致性依据"] for key, value in model.identity.items()]
         rows += [["metric_status", m["metric_id"], m["status"], _display_metric(m)] for m in metrics]
@@ -844,7 +1033,7 @@ def _word_metric_rows(model: ReportModel, source_map: dict[str, str], prefixes: 
     for metric in model.metrics:
         if prefixes and not metric["metric_id"].startswith(prefixes):
             continue
-        rows.append([metric["metric_id"], _word_metric_value(metric), metric.get("unit") or "UNKNOWN",
+        rows.append([metric["metric_id"], _word_metric_value(metric), _metric_unit(metric),
                      metric.get("status", "UNKNOWN"), metric.get("formula_id") or "UNKNOWN",
                      _word_sources(metric.get("source_ids") or [], source_map)])
     return rows
@@ -858,8 +1047,8 @@ _METRIC_LABELS = {
     "available_kwh.year.1": "首年可利用发电量",
     "energy.mean_annual": "评价期年均发电量",
     "energy.delivered.year.1": "首年可交付电量",
-    "financial.capex.total": "工程总投资",
-    "financial.unit_investment": "单位投资",
+    "financial.capex.total": "评价期资本支出估算（含更换，须按账簿复核）",
+    "financial.unit_investment": "评价期CAPEX单位直流投资",
     "financial.opex.cash_lifecycle": "全周期现金运营费用",
     "financial.phase3e.project_npv": "项目净现值",
     "financial.phase3e.project_irr": "项目内部收益率",
@@ -945,24 +1134,25 @@ def _professional_metric_rows(model: ReportModel, metric_ids: tuple[str, ...]) -
             note = "合成参数测算；非实测或合同承诺"
         elif status.startswith("BLOCKED"):
             display = "暂不具备有效评价条件"
-            note = ("缺终期实际收付及完整项目现金流" if metric_id in {
-                "financial.phase3e.project_cash_flow", "financial.phase3e.project_npv",
-                "financial.phase3e.project_irr", "financial.phase3e.static_payback",
-                "financial.phase3e.dynamic_payback"} else
-                "缺股东收付及融资日期事件" if metric_id == "financial.phase3e.equity-investor-cash-flow" else
-                "缺可供偿债现金的定义与控制" if metric_id == "financial.phase3e.cfads" else
-                "缺终期成本现金边界" if metric_id == "financial.phase3e.lcoe" else
-                "缺同边界价格情景重算" if metric_id == "financial.phase3e.break-even-price" else
-                "缺用户投资门槛" if metric_id == "financial.phase3e.investment-hurdle-gap" else
-                "必要现金事件或方法依据尚未闭合")
+            note = (str(metric.get("reason") or "当前评价项未形成有效结果")[:160]
+                    if metric_id in {"financial.phase3e.project_cash_flow", "financial.phase3e.project_npv",
+                                     "financial.phase3e.project_irr", "financial.phase3e.static_payback",
+                                     "financial.phase3e.dynamic_payback"} else
+                    "缺股东出资、分配及退出现金事件" if metric_id == "financial.phase3e.equity-investor-cash-flow" else
+                    "缺可供偿债现金的定义与控制" if metric_id == "financial.phase3e.cfads" else
+                    "缺终期成本现金边界" if metric_id == "financial.phase3e.lcoe" else
+                    "缺同边界价格情景重算" if metric_id == "financial.phase3e.break-even-price" else
+                    "缺用户投资门槛" if metric_id == "financial.phase3e.investment-hurdle-gap" else
+                    str(metric.get("reason") or "必要现金事件或方法依据尚未闭合")[:160])
         elif status == "NOT_APPLICABLE":
             continue
         else:
             continue
-        unit = metric.get("unit") or "—"
+        unit = _metric_unit(metric)
         rows.append([_metric_label(metric_id), display,
                      "—" if status != "CALCULATED" and str(unit).startswith("集合") else
-                     "比值" if unit == "1" else unit, note])
+                     "比值" if unit == "1" else unit,
+                     "按直流kWp计；分子为评价期CAPEX，非仅建设期付款" if metric_id == "financial.unit_investment" and status == "CALCULATED" else note])
     return rows
 
 
@@ -1443,8 +1633,17 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             item_title = APPENDIX_TITLES[item_id]
             document.add_heading(f"{item_id} {item_title}", level=2)
             evidence = _appendix_evidence(model, pv_type, app_id, item_no)
+            if app_id in {"APP11", "APP12"}:
+                detail = _appendix_content(model, item_id)
+                evidence["narrative"] = [detail]
+                evidence["summary"] = detail
             for text in evidence["narrative"]:
                 document.add_paragraph(text[:760])
+            if app_id in {"APP11", "APP12"}:
+                appendix_headers, appendix_rows = _appendix_rows(model, item_id)
+                if appendix_rows:
+                    _add_table(document, appendix_headers, appendix_rows,
+                               f"{item_id} · 本次快照正式定义或受控编辑词典", font_size=7.5)
             checklist.append({"id": item_id, "title": item_title,
                               "content_summary": evidence["summary"][:600], "input_field_ids": evidence["field_ids"],
                               "metric_ids": evidence["metric_ids"], "source_ids": evidence["source_ids"],
