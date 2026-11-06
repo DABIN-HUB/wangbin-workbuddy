@@ -15,6 +15,11 @@ except ImportError:  # pragma: no cover
     load_workbook = Workbook = None
 
 SHEETS = ["Match Summary", "Line Results", "Exceptions", "Unmatched Receipts", "Unmatched Invoices", "Source Trace", "Run Manifest"]
+SUMMARY_HEADERS = ["comparison_key", "status", "ordered_quantity", "received_quantity", "invoiced_quantity", "receipt_variance", "invoice_variance", "expected_amount", "expected_amount_source", "invoiced_amount", "amount_variance", "weighted_invoice_unit_price", "currency", "uom", "exception_codes", "source_file", "source_sheet", "source_row_number"]
+EXCEPTION_HEADERS = ["comparison_key", "exception_code", "source_row_reference"]
+UNMATCHED_HEADERS = ["po_number", "po_line_id", "item_code", "reason", "source_file", "source_sheet", "source_row_number", "original_key_values", "source_row_hash"]
+TRACE_HEADERS = ["po_number", "po_line_id", "item_code", "source_file", "source_sheet", "source_row_number", "original_key_values", "source_row_hash", "_kind", "_reason"]
+MANIFEST_HEADERS = ["product_id", "version", "input_files", "row_counts", "limits", "completion_status"]
 DEFAULT_LIMITS = {"max_file_bytes": 50*1024*1024, "max_files": 50, "max_batch_bytes": 200*1024*1024}
 KEY_FIELDS = ["po_number", "po_line_id", "item_code"]
 REQ = {
@@ -157,6 +162,10 @@ def main_match(manifest: dict[str, Any], output: Path, manifest_dir: Path | None
         iq=sum(iq_values,Decimal(0)) if iq_values and all(x is not None for x in iq_values) else None
         ia=sum(ia_values,Decimal(0)) if ia_values and all(x is not None for x in ia_values) else None
         if oq is None or price is None: codes.append("NOT_COMPARABLE")
+        # A missing/invalid physical side is unavailable evidence, never a
+        # passing comparison. In particular, a receipt row with a missing
+        # item_code is excluded above and must prevent MATCHED/matched counts.
+        if not rs or rq is None or not ins or iq is None: codes.append("NOT_COMPARABLE")
         rv=(rq-oq) if rq is not None and oq is not None else None; iv=(iq-oq) if iq is not None and oq is not None else None
         if rv is not None and not tol(cfg,"quantity_tolerance",rv,oq): codes.append("QTY_OVER" if rv>0 else "QTY_UNDER")
         if iv is not None and not tol(cfg,"quantity_tolerance",iv,oq): codes.append("QTY_OVER" if iv>0 else "QTY_UNDER")
@@ -192,18 +201,45 @@ def main_match(manifest: dict[str, Any], output: Path, manifest_dir: Path | None
         exceptions.append({"comparison_key":json.dumps(r.get("_key") or json.loads(r["original_key_values"]), ensure_ascii=False),"exception_code":code,"source_row_reference":r["source_file"]+":"+str(r["source_row_number"])})
     out.mkdir(parents=True,exist_ok=False)
     summary={"schema_version":"1.0","run_status":"SUCCEEDED_WITH_EXCEPTIONS" if exceptions or invalid else "SUCCEEDED","totals":{"po_keys":len(results),"matched":sum(x["status"]=="MATCHED" for x in results),"exceptions":len(exceptions)},"exception_code_counts":dict(sorted(Counter(x["exception_code"] for x in exceptions).items())),"output_file_references":{"workbook":"threeway_match.xlsx","report":"report.md"}}
-    manifest_out={"product_id":"wangbin-purchase-threeway-match","version":"0.1.0","input_files":[{"name":p.name,"sha256":hashlib.sha256(p.read_bytes()).hexdigest()} for p in files],"row_counts":{k:len(v) for k,v in groups.items()},"limits":limits,"completion_status":summary["run_status"]}
+    manifest_out={"product_id":"wangbin-purchase-threeway-match","version":"0.1.1","input_files":[{"name":p.name,"sha256":hashlib.sha256(p.read_bytes()).hexdigest()} for p in files],"row_counts":{k:len(v) for k,v in groups.items()},"limits":limits,"completion_status":summary["run_status"]}
     (out/"summary.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2,sort_keys=True)+"\n",encoding="utf-8")
-    (out/"report.md").write_text("# 采购三单匹配 / Purchase three-way match\n\n本地确定性结果；例外需人工复核，不代表批准或付款。\n\nStatus: "+summary["run_status"]+"\n",encoding="utf-8")
+    exception_lines = [
+        f"- `{code}`: {count}"
+        for code, count in summary["exception_code_counts"].items()
+    ] or ["- None"]
+    detail_lines = [
+        f"- `{x['exception_code']}` at `{x['source_row_reference']}` for `{x['comparison_key']}`"
+        for x in exceptions
+    ] or ["- None"]
+    report = "\n".join([
+        "# 采购三单匹配 / Purchase three-way match",
+        "",
+        "本地确定性结果；例外需人工复核，不代表批准或付款。",
+        "Deterministic local result; exceptions require human review and do not approve payment.",
+        "",
+        f"- 状态 / Status: `{summary['run_status']}`",
+        f"- PO keys / PO 键: `{summary['totals']['po_keys']}`",
+        f"- Matched / 已匹配: `{summary['totals']['matched']}`",
+        f"- Exceptions / 例外数: `{summary['totals']['exceptions']}`",
+        "",
+        "## Exception counts / 例外统计",
+        *exception_lines,
+        "",
+        "## Evidence / 证据行引用",
+        *detail_lines,
+        "",
+        "See the seven worksheets, especially `Exceptions`, `Unmatched Receipts`, `Unmatched Invoices`, and `Source Trace`.",
+        "详见七个工作表，重点查看 `Exceptions`、`Unmatched Receipts`、`Unmatched Invoices` 和 `Source Trace`。",
+        "",
+    ])
+    (out/"report.md").write_text(report, encoding="utf-8")
     if Workbook is not None:
         wb=Workbook(); wb.remove(wb.active)
         line_rows=results
         exception_rows=[{"comparison_key":x["comparison_key"],"exception_code":x["exception_code"],"source_row_reference":x["source_row_reference"]} for x in exceptions]
-        trace_rows=[{k:v for k,v in r.items() if not k.startswith("_")} for r in trace]
+        trace_rows=[{**{k:v for k,v in r.items() if not k.startswith("_")}, "_kind": r.get("_kind"), "_reason": r.get("_reason")} for r in trace]
         sheet_rows=[results,line_rows,exception_rows,unmatched_r,unmatched_i,trace_rows,[manifest_out]]
-        headers=[list(x[0].keys()) if x else ["empty"] for x in sheet_rows]
-        headers[0]=list(results[0].keys()) if results else ["comparison_key","status"]
-        headers[1]=headers[0]
+        headers=[SUMMARY_HEADERS, SUMMARY_HEADERS, EXCEPTION_HEADERS, UNMATCHED_HEADERS, UNMATCHED_HEADERS, TRACE_HEADERS, MANIFEST_HEADERS]
         for name, rows, hs in zip(SHEETS,sheet_rows,headers):
             ws=wb.create_sheet(name); ws.append([safe_cell(x) for x in hs])
             for row in rows: ws.append([safe_cell(row.get(x)) for x in hs])

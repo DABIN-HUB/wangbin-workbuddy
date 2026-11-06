@@ -41,10 +41,10 @@ The independent job is a three-document control: ordered quantity/price/amount v
 - Trim surrounding whitespace from text fields; preserve original values in traceability fields.
 - Key comparison is case-sensitive unless configuration explicitly sets `case_insensitive=true`; no fuzzy matching, transliteration, or guessed aliases.
 - Receipt and invoice rows are aggregated by the exact configured PO composite key. Splits are allowed across files, sheets, documents, dates, and row numbers.
-- A row with a missing key component is not aggregated or matched; it receives `MISSING_REQUIRED_FIELD` and `AMBIGUOUS_KEY` where applicable.
+- A row with a missing key component is not aggregated or matched; it receives exactly one `MISSING_REQUIRED_FIELD` finding for the missing required key data and is retained once in the relevant unmatched output. Missing key data is not evidence of multiple candidates and must not be labeled `AMBIGUOUS_KEY`.
 - Numeric fields are parsed as decimal values only. Blank, `NA`, `-`, malformed, negative (where not explicitly allowed), or contradictory values are not converted to zero.
 - If line amount is supplied, compare it to `quantity × unit_price` using `amount_tolerance`; if absent, do not fabricate it. Derived amounts must be labeled derived.
-- Currency and unit of measure must agree across compared records, unless an explicit conversion table/configuration is supplied. No exchange rate or unit conversion is guessed.
+- Currency and unit of measure must agree across records that provide the corresponding field, unless an explicit conversion table/configuration is supplied. The Receipt input has no currency field in this contract; therefore currency comparison is between PO and Invoice only. No exchange rate or unit conversion is guessed.
 
 ### 4.2 Matching and tolerance
 
@@ -63,7 +63,7 @@ For each distinct PO key:
 
 - Duplicate PO composite keys are `DUPLICATE_PO_KEY` unless configuration explicitly permits repeated PO lines with an additional disambiguating field.
 - Duplicate receipt or invoice document-line identifiers are `DUPLICATE_SOURCE_ROW`; they remain visible and are not deduplicated silently.
-- A source row matching multiple candidate PO keys is `AMBIGUOUS_KEY`; it contributes to no aggregate.
+- A complete source row whose explicit configured key matches multiple candidate PO keys is `AMBIGUOUS_KEY`; it contributes to no aggregate. A source row with an incomplete key is handled only as `MISSING_REQUIRED_FIELD` and contributes to no aggregate; do not infer candidates or manufacture ambiguity.
 - Unmatched receipts/invoices are retained as exceptions (`ORPHAN_RECEIPT`, `ORPHAN_INVOICE`).
 - Exception codes are an ordered set, not a single enum. A result row may contain multiple codes, joined deterministically with `;` and also emitted as separate exception rows.
 

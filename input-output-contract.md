@@ -102,7 +102,7 @@ Additional outputs:
 | `INVALID_INPUT` | missing/unreadable/unsupported file or schema | fail affected logical input; no success claim |
 | `LIMIT_EXCEEDED` | file/batch/container/row/time limit | stop affected work and record actual limit |
 | `MISSING_REQUIRED_FIELD` | required field blank/missing | exclude row from comparison; retain trace |
-| `AMBIGUOUS_KEY` | maps to >1 candidate or incomplete key | exclude from aggregate |
+| `AMBIGUOUS_KEY` | a complete explicit key maps to >1 candidate PO keys | exclude from aggregate; do not use this code merely because a required key component is missing |
 | `DUPLICATE_PO_KEY` | repeated PO key without explicit permission | exception; do not silently merge |
 | `DUPLICATE_SOURCE_ROW` | repeated receipt/invoice document-line identity | retain both; flag |
 | `ORPHAN_RECEIPT` / `ORPHAN_INVOICE` | no valid PO key | unmatched sheet + exception |

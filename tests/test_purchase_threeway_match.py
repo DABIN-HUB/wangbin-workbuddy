@@ -70,3 +70,50 @@ def test_regression_invalid_numeric_and_manifest_relative_root(tmp_path, monkeyp
     # Calling from an unrelated CWD must still resolve input_root beside manifest.
     monkeypatch.chdir(tmp_path.parent)
     assert (tmp_path / "output" / "threeway_match.xlsx").exists()
+
+
+def test_a09_missing_receipt_item_code_cannot_match_or_count(tmp_path):
+    key = {"po_number": "P09", "po_line_id": "1", "item_code": "I09"}
+    po = [{**key, "ordered_quantity": "1", "po_unit_price": "2", "currency": "USD", "uom": "EA"}]
+    receipts = [{**key, "item_code": "", "receipt_number": "R09", "receipt_line_id": "1", "received_quantity": "1", "uom": "EA"}]
+    invoices = [{**key, "invoice_number": "I09", "invoice_line_id": "1", "invoiced_quantity": "1", "invoice_unit_price": "2", "invoice_amount": "2", "currency": "USD", "uom": "EA"}]
+    _, summary, wb = _run_fixture(tmp_path, po, receipts, invoices)
+    assert summary["totals"]["matched"] == 0
+    assert summary["exception_code_counts"]["MISSING_REQUIRED_FIELD"] == 1
+    assert summary["exception_code_counts"]["NOT_COMPARABLE"] == 1
+    assert len(list(wb["Unmatched Receipts"].values)) == 2
+
+
+def test_a11_incomplete_invoice_is_retained_once_without_ambiguity(tmp_path):
+    key = {"po_number": "P11", "po_line_id": "1", "item_code": "I11"}
+    po = [{**key, "ordered_quantity": "1", "po_unit_price": "2", "currency": "USD", "uom": "EA"}]
+    receipts = [{**key, "receipt_number": "R11", "receipt_line_id": "1", "received_quantity": "1", "uom": "EA"}]
+    invoices = [{**key, "item_code": "", "invoice_number": "INV11", "invoice_line_id": "1", "invoiced_quantity": "1", "invoice_unit_price": "2", "invoice_amount": "2", "currency": "USD", "uom": "EA"}]
+    _, summary, wb = _run_fixture(tmp_path, po, receipts, invoices)
+    assert summary["exception_code_counts"]["MISSING_REQUIRED_FIELD"] == 1
+    assert "AMBIGUOUS_KEY" not in summary["exception_code_counts"]
+    assert len(list(wb["Unmatched Invoices"].values)) == 2
+    assert list(wb["Unmatched Invoices"].values)[1][3] == "MISSING_REQUIRED_FIELD"
+
+
+def test_a14_orphans_only_get_orphan_evidence_not_unrelated_not_comparable(tmp_path):
+    key = {"po_number": "P14", "po_line_id": "1", "item_code": "I14"}
+    po = []
+    receipts = [{"po_number": "ORPHAN", "po_line_id": "1", "item_code": "X", "receipt_number": "R14", "receipt_line_id": "1", "received_quantity": "1", "uom": "EA"}]
+    invoices = [{"po_number": "ORPHAN", "po_line_id": "1", "item_code": "X", "invoice_number": "INV14", "invoice_line_id": "1", "invoiced_quantity": "1", "invoice_unit_price": "2", "invoice_amount": "2", "currency": "USD", "uom": "EA"}]
+    _, summary, wb = _run_fixture(tmp_path, po, receipts, invoices)
+    assert summary["exception_code_counts"]["ORPHAN_RECEIPT"] == 1
+    assert summary["exception_code_counts"]["ORPHAN_INVOICE"] == 1
+    assert "NOT_COMPARABLE" not in summary["exception_code_counts"]
+    assert "PO keys / PO 键: `0`" in (tmp_path / "output" / "report.md").read_text(encoding="utf-8")
+    assert list(wb["Unmatched Receipts"].values)[0][3] == "reason"
+    assert list(wb["Unmatched Invoices"].values)[0][3] == "reason"
+
+
+def test_user_copy_has_three_distinct_bilingual_examples_and_no_internal_terms_in_descriptions():
+    text = (SCRIPT.parent.parent / "SKILL.md").read_text(encoding="utf-8")
+    assert text.count("  - ") >= 6
+    assert text.count("examples_zh:") == 1 and text.count("examples_en:") == 1
+    ordinary = text.split("## 技术说明 / Technical notes", 1)[0]
+    for term in ("Decimal", "JSON", "Python", "SHA-256"):
+        assert term not in ordinary
