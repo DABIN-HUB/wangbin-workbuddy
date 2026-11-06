@@ -13,7 +13,7 @@ examples_en:
   - Match these purchase orders, receipt records, and supplier invoices, allowing one order line to be received and invoiced in splits; show totals, exceptions, and source row references, and flag amounts beyond 0.01 for review.
   - Review invoice rows missing an order number, line number, or item code; do not infer ownership, retain each row once, and explain the missing information in unmatched invoices and source trace.
   - Check receipts and invoices with no corresponding purchase order; place them in their respective unmatched sheets and exception details without creating unrelated non-comparable results for orphan records.
-version: 0.1.3
+version: 0.1.4
 author: Wangbin Research
 license_type: PROPRIETARY
 license_status: REQUIRES_MANUAL_REVIEW

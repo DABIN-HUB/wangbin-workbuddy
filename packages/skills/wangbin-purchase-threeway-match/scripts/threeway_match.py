@@ -250,7 +250,7 @@ def main_match(manifest: dict[str, Any], output: Path, manifest_dir: Path | None
         exceptions.append({"comparison_key":json.dumps(r.get("_key") or json.loads(r["original_key_values"]), ensure_ascii=False),"exception_code":code,"source_row_reference":r["source_file"]+":"+str(r["source_row_number"])})
     out.mkdir(parents=True,exist_ok=False)
     summary={"schema_version":"1.0","run_status":"SUCCEEDED_WITH_EXCEPTIONS" if exceptions or invalid else "SUCCEEDED","totals":{"po_keys":len(results),"matched":sum(x["status"]=="MATCHED" for x in results),"exceptions":len(exceptions)},"exception_code_counts":dict(sorted(Counter(x["exception_code"] for x in exceptions).items())),"line_results":results,"output_file_references":{"workbook":"threeway_match.xlsx","report":"report.md"}}
-    manifest_out={"product_id":"wangbin-purchase-threeway-match","version":"0.1.3","input_files":[{"name":p.name,"sha256":hashlib.sha256(p.read_bytes()).hexdigest()} for p in files],"row_counts":{k:len(v) for k,v in groups.items()},"limits":limits,"completion_status":summary["run_status"]}
+    manifest_out={"product_id":"wangbin-purchase-threeway-match","version":"0.1.4","input_files":[{"name":p.name,"sha256":hashlib.sha256(p.read_bytes()).hexdigest()} for p in files],"row_counts":{k:len(v) for k,v in groups.items()},"limits":limits,"completion_status":summary["run_status"]}
     (out/"summary.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2,sort_keys=True)+"\n",encoding="utf-8")
     exception_lines = [
         f"- `{code}`: {count}"
