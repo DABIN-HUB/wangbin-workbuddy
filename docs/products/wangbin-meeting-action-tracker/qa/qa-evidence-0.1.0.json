@@ -1,0 +1,840 @@
+[
+  {
+    "case": "ZIP integrity",
+    "expected": "e9ce10c7979bdd510e08b20e1bb877fc28f7e66ef437c05b5e1a19117c0eac20",
+    "actual": "e9ce10c7979bdd510e08b20e1bb877fc28f7e66ef437c05b5e1a19117c0eac20",
+    "verdict": "PASS"
+  },
+  {
+    "case": "ZIP members",
+    "expected": [
+      "wangbin-meeting-action-tracker/SKILL.md",
+      "wangbin-meeting-action-tracker/manifest.json",
+      "wangbin-meeting-action-tracker/scripts/track.py"
+    ],
+    "actual": {
+      "bad": null,
+      "names": [
+        "wangbin-meeting-action-tracker/SKILL.md",
+        "wangbin-meeting-action-tracker/manifest.json",
+        "wangbin-meeting-action-tracker/scripts/track.py"
+      ]
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "member wangbin-meeting-action-tracker/SKILL.md",
+    "expected": "f6e73800711629a22531e765e6001e147ceb0bf2cd9751db21d0dbf86262a9d9",
+    "actual": "f6e73800711629a22531e765e6001e147ceb0bf2cd9751db21d0dbf86262a9d9",
+    "verdict": "PASS"
+  },
+  {
+    "case": "member wangbin-meeting-action-tracker/manifest.json",
+    "expected": "927bedc4a66af3611b05436e3da7358e7c03c9e177615ddcbb214c6b0aab69c4",
+    "actual": "927bedc4a66af3611b05436e3da7358e7c03c9e177615ddcbb214c6b0aab69c4",
+    "verdict": "PASS"
+  },
+  {
+    "case": "member wangbin-meeting-action-tracker/scripts/track.py",
+    "expected": "52f29ebee99c8fdb6e7dbf01fc05df8f9b0c68b89c1a63ea89391652c5fd8cc3",
+    "actual": "52f29ebee99c8fdb6e7dbf01fc05df8f9b0c68b89c1a63ea89391652c5fd8cc3",
+    "verdict": "PASS"
+  },
+  {
+    "case": "clean extraction",
+    "expected": "script present",
+    "actual": "C:\\Users\\wangbin\\AppData\\Local\\Temp\\meeting-qa-jey2pj15\\package\\wangbin-meeting-action-tracker\\scripts\\track.py",
+    "verdict": "PASS"
+  },
+  {
+    "case": "CORE sheets/open",
+    "expected": "four exact ordered sheets and headers",
+    "actual": {
+      "exit": 0,
+      "names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "headers": {
+        "当前任务": [
+          "task_id",
+          "任务内容",
+          "负责人",
+          "负责人确认状态",
+          "截止时间",
+          "截止时间确认状态",
+          "执行状态",
+          "完成证据",
+          "是否逾期",
+          "逾期判断依据",
+          "来源",
+          "最近变更"
+        ],
+        "本次新增与变化": [
+          "task_id",
+          "关联原任务",
+          "变化类型",
+          "原值",
+          "新值",
+          "确认状态",
+          "来源",
+          "event_id"
+        ],
+        "待确认事项": [
+          "task_id",
+          "待确认字段",
+          "候选值或问题",
+          "原因",
+          "候选来源",
+          "建议用户确认内容"
+        ],
+        "状态历史": [
+          "event_id",
+          "task_id",
+          "事件类型",
+          "原值",
+          "新值",
+          "来源",
+          "会议或用户确认时间",
+          "是否存在冲突"
+        ]
+      }
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "CORE old/new proposal",
+    "expected": "T01 unchanged, T02 canceled, one new not confirmed owner",
+    "actual": {
+      "T01": {
+        "task_id": "T01",
+        "任务内容": "整理演练清单",
+        "负责人": "王工",
+        "负责人确认状态": "已确认",
+        "截止时间": "2026-11-05",
+        "截止时间确认状态": "已确认",
+        "执行状态": "进行中",
+        "完成证据": null,
+        "是否逾期": "无法判断",
+        "逾期判断依据": "缺核查日或已确认截止日",
+        "来源": "old.csv:行2",
+        "最近变更": "无新增进展"
+      },
+      "T02": {
+        "task_id": "T02",
+        "任务内容": "准备演练培训",
+        "负责人": null,
+        "负责人确认状态": null,
+        "截止时间": null,
+        "截止时间确认状态": null,
+        "执行状态": "待执行",
+        "完成证据": null,
+        "是否逾期": "无法判断",
+        "逾期判断依据": "缺核查日或已确认截止日",
+        "来源": "old.csv:行3",
+        "最近变更": "无新增进展"
+      },
+      "new": [
+        {
+          "task_id": "MTG-AE8024A065B44789",
+          "任务内容": "检查演练接口 T03",
+          "负责人": null,
+          "负责人确认状态": "建议",
+          "截止时间": null,
+          "截止时间确认状态": null,
+          "执行状态": "待执行",
+          "完成证据": null,
+          "是否逾期": "无法判断",
+          "逾期判断依据": "缺核查日或已确认截止日",
+          "来源": "meeting.md:行1：新增事项：检查演练接口 T03",
+          "最近变更": "新增"
+        }
+      ],
+      "history": [
+        {
+          "event_id": "EV-aba0251e804f332beddf",
+          "task_id": "MTG-AE8024A065B44789",
+          "事件类型": "新增",
+          "原值": null,
+          "新值": "检查演练接口 T03",
+          "来源": "meeting.md:行1：新增事项：检查演练接口 T03",
+          "会议或用户确认时间": "2026-11-06",
+          "是否存在冲突": "否"
+        },
+        {
+          "event_id": "EV-fab6363ed99ec0e42284",
+          "task_id": "MTG-AE8024A065B44789",
+          "事件类型": "负责人变更",
+          "原值": null,
+          "新值": "李工",
+          "来源": "meeting.md:行1：建议由李工负责，尚未获其接受",
+          "会议或用户确认时间": "2026-11-06",
+          "是否存在冲突": "否"
+        }
+      ],
+      "questions": [
+        {
+          "task_id": "T02",
+          "待确认字段": "执行状态",
+          "候选值或问题": "T02 经会议明确取消，原因：模拟需求撤回",
+          "原因": "仅为取消提议",
+          "候选来源": "meeting.md:行1：T02 经会议明确取消，原因：模拟需求撤回",
+          "建议用户确认内容": "请确认 T02 的执行状态及依据"
+        },
+        {
+          "task_id": "MTG-AE8024A065B44789",
+          "待确认字段": "负责人",
+          "候选值或问题": "李工",
+          "原因": "仅为建议或未获确认",
+          "候选来源": "meeting.md:行1：建议由李工负责，尚未获其接受",
+          "建议用户确认内容": "请确认 MTG-AE8024A065B44789 的负责人及依据"
+        }
+      ]
+    },
+    "verdict": "FAIL"
+  },
+  {
+    "case": "A11 missing check date and canceled",
+    "expected": "T01 unknown, T02 not overdue",
+    "actual": {
+      "T01": "无法判断",
+      "T02": "无法判断"
+    },
+    "verdict": "FAIL"
+  },
+  {
+    "case": "A11 explicit date",
+    "expected": "overdue yes with due and check dates",
+    "actual": {
+      "task_id": "T01",
+      "任务内容": "整理演练清单",
+      "负责人": "王工",
+      "负责人确认状态": "已确认",
+      "截止时间": "2026-11-05",
+      "截止时间确认状态": "已确认",
+      "执行状态": "进行中",
+      "完成证据": null,
+      "是否逾期": "是",
+      "逾期判断依据": "截止日 2026-11-05；核查日 2026-11-06；时区 日期比较",
+      "来源": "old.csv:行2",
+      "最近变更": "无新增进展"
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "A02 first confirmed owner",
+    "expected": "one new task and confirmed 周工, sourced new event",
+    "actual": [
+      {
+        "task_id": "MTG-209CEA2D90B5F182",
+        "任务内容": "编写演练纪要",
+        "负责人": "周工",
+        "负责人确认状态": "已确认",
+        "截止时间": null,
+        "截止时间确认状态": null,
+        "执行状态": "待执行",
+        "完成证据": null,
+        "是否逾期": "无法判断",
+        "逾期判断依据": "缺核查日或已确认截止日",
+        "来源": "meeting.md:行1：决定新增：编写演练纪要，由周工确认负责",
+        "最近变更": "负责人变更"
+      }
+    ],
+    "verdict": "PASS"
+  },
+  {
+    "case": "A03 repeated import",
+    "expected": "identical IDs and event IDs/count",
+    "actual": {
+      "ids": [
+        "MTG-209CEA2D90B5F182"
+      ],
+      "events": [
+        "EV-40ec8c5a816b88289792",
+        "EV-85e38336dc142aff2f61"
+      ]
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "A03 reordered IDs/events",
+    "expected": "same two IDs/events after reordered import",
+    "actual": {
+      "initial_ids": [
+        "MTG-28D7C159A2442207",
+        "MTG-9B6D5E8D63787E55"
+      ],
+      "reordered_ids": [
+        "MTG-28D7C159A2442207",
+        "MTG-9B6D5E8D63787E55"
+      ],
+      "initial_events": [
+        "EV-925f7363f6f93600c791",
+        "EV-f8264587c463bdf5f587"
+      ],
+      "reordered_events": [
+        "EV-925f7363f6f93600c791",
+        "EV-f8264587c463bdf5f587"
+      ]
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "A04 distinct similar",
+    "expected": "A and B separate",
+    "actual": [
+      "检查演练接口 B",
+      "检查演练接口 A",
+      "整理演练清单",
+      "准备演练培训"
+    ],
+    "verdict": "PASS"
+  },
+  {
+    "case": "A05 owner handover",
+    "expected": "周工 confirmed; event 王工→周工",
+    "actual": {
+      "task": {
+        "task_id": "T01",
+        "任务内容": "整理演练清单",
+        "负责人": "周工",
+        "负责人确认状态": "已确认",
+        "截止时间": "2026-11-05",
+        "截止时间确认状态": "已确认",
+        "执行状态": "进行中",
+        "完成证据": null,
+        "是否逾期": "无法判断",
+        "逾期判断依据": "缺核查日或已确认截止日",
+        "来源": "meeting.md:行1：T01 现改由周工负责，周工确认接受 T01",
+        "最近变更": "负责人变更"
+      },
+      "events": [
+        {
+          "event_id": "EV-1295cf14845500d48dd5",
+          "task_id": "T01",
+          "事件类型": "负责人变更",
+          "原值": "王工",
+          "新值": "周工",
+          "来源": "meeting.md:行1：T01 现改由周工负责，周工确认接受 T01",
+          "会议或用户确认时间": "2026-11-06",
+          "是否存在冲突": "否"
+        }
+      ]
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "A06 tomorrow",
+    "expected": "2026-11-07 and source baseline 2026-11-06",
+    "actual": {
+      "task_id": "T01",
+      "任务内容": "整理演练清单",
+      "负责人": "王工",
+      "负责人确认状态": "已确认",
+      "截止时间": "2026-11-07",
+      "截止时间确认状态": "已确认",
+      "执行状态": "进行中",
+      "完成证据": null,
+      "是否逾期": "无法判断",
+      "逾期判断依据": "缺核查日或已确认截止日",
+      "来源": "meeting.md:行1：T01 明天交（基准会议日 2026-11-06，明天）",
+      "最近变更": "期限变更"
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "A07 no baseline",
+    "expected": "old due unchanged; pending no meeting date",
+    "actual": {
+      "task": {
+        "task_id": "T01",
+        "任务内容": "整理演练清单",
+        "负责人": "王工",
+        "负责人确认状态": "已确认",
+        "截止时间": "2026-11-05",
+        "截止时间确认状态": "待确认",
+        "执行状态": "进行中",
+        "完成证据": null,
+        "是否逾期": "无法判断",
+        "逾期判断依据": "缺核查日或已确认截止日",
+        "来源": "old.csv:行2",
+        "最近变更": "无新增进展"
+      },
+      "questions": [
+        {
+          "task_id": "T01",
+          "待确认字段": "截止时间",
+          "候选值或问题": "T01 明天交",
+          "原因": "缺会议日或相对期限不唯一",
+          "候选来源": "meeting.md:行1：T01 明天交",
+          "建议用户确认内容": "请确认 T01 的截止时间及依据"
+        }
+      ]
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "A08 report alone",
+    "expected": "report complete, no evidence",
+    "actual": {
+      "task_id": "T01",
+      "任务内容": "整理演练清单",
+      "负责人": "王工",
+      "负责人确认状态": "已确认",
+      "截止时间": "2026-11-05",
+      "截止时间确认状态": "已确认",
+      "执行状态": "报告完成",
+      "完成证据": null,
+      "是否逾期": "无法判断",
+      "逾期判断依据": "报告完成尚无验收证据",
+      "来源": "meeting.md:行1：T01 已完成",
+      "最近变更": "报告完成"
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "A08 evidence later",
+    "expected": "evidence complete with both events and caveat",
+    "actual": {
+      "task": {
+        "task_id": "T01",
+        "任务内容": "整理演练清单",
+        "负责人": "王工",
+        "负责人确认状态": "已确认",
+        "截止时间": "2026-11-05",
+        "截止时间确认状态": "已确认",
+        "执行状态": "证据确认完成",
+        "完成证据": "T01 验收单 E-7 已签收（提交材料所称证据，未独立核验；meeting.md:行1：T01 验收单 E-7 已签收）",
+        "是否逾期": "否",
+        "逾期判断依据": "任务已取消或证据确认完成，不列入逾期未完成",
+        "来源": "meeting.md:行1：T01 验收单 E-7 已签收",
+        "最近变更": "证据确认完成"
+      },
+      "events": [
+        {
+          "event_id": "EV-2d0c2848ad380fd57329",
+          "task_id": "T01",
+          "事件类型": "证据确认完成",
+          "原值": null,
+          "新值": "T01 验收单 E-7 已签收（提交材料所称证据，未独立核验；meeting.md:行1：T01 验收单 E-7 已签收）",
+          "来源": "meeting.md:行1：T01 验收单 E-7 已签收",
+          "会议或用户确认时间": "2026-11-07",
+          "是否存在冲突": "否"
+        },
+        {
+          "event_id": "EV-a1797e762cf3b2eeaf94",
+          "task_id": "T01",
+          "事件类型": "报告完成",
+          "原值": "进行中",
+          "新值": "报告完成",
+          "来源": "meeting.md:行1：T01 已完成",
+          "会议或用户确认时间": "2026-11-06",
+          "是否存在冲突": "否"
+        },
+        {
+          "event_id": "EV-e846c9e98b5fbb754691",
+          "task_id": "T01",
+          "事件类型": "证据确认完成",
+          "原值": "报告完成",
+          "新值": "证据确认完成",
+          "来源": "meeting.md:行1：T01 验收单 E-7 已签收",
+          "会议或用户确认时间": "2026-11-07",
+          "是否存在冲突": "否"
+        }
+      ]
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "A09 conflict ['T01 进行中', 'T01 取消']",
+    "expected": "original 进行中, conflict and pending both sources",
+    "actual": {
+      "task": {
+        "task_id": "T01",
+        "任务内容": "整理演练清单",
+        "负责人": "王工",
+        "负责人确认状态": "已确认",
+        "截止时间": "2026-11-05",
+        "截止时间确认状态": "已确认",
+        "执行状态": "进行中",
+        "完成证据": null,
+        "是否逾期": "无法判断",
+        "逾期判断依据": "缺核查日或已确认截止日",
+        "来源": "old.csv:行2",
+        "最近变更": "无新增进展"
+      },
+      "history": [
+        {
+          "event_id": "EV-7f4c951b39efc815dc68",
+          "task_id": "T01",
+          "事件类型": "冲突",
+          "原值": "进行中",
+          "新值": "取消 [用户补充:行1：T01 取消]；进行中 [用户补充:行1：T01 进行中]",
+          "来源": "用户补充:行1：T01 取消；用户补充:行1：T01 进行中",
+          "会议或用户确认时间": "2026-11-06",
+          "是否存在冲突": "是"
+        }
+      ],
+      "questions": [
+        {
+          "task_id": "T01",
+          "待确认字段": "执行状态",
+          "候选值或问题": "取消 [用户补充:行1：T01 取消]；进行中 [用户补充:行1：T01 进行中]",
+          "原因": "同等权威来源相互矛盾，原确认值保留",
+          "候选来源": "用户补充:行1：T01 取消；用户补充:行1：T01 进行中",
+          "建议用户确认内容": "请确认 T01 的执行状态及依据"
+        }
+      ]
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "A09 conflict ['T01 取消', 'T01 进行中']",
+    "expected": "original 进行中, conflict and pending both sources",
+    "actual": {
+      "task": {
+        "task_id": "T01",
+        "任务内容": "整理演练清单",
+        "负责人": "王工",
+        "负责人确认状态": "已确认",
+        "截止时间": "2026-11-05",
+        "截止时间确认状态": "已确认",
+        "执行状态": "进行中",
+        "完成证据": null,
+        "是否逾期": "无法判断",
+        "逾期判断依据": "缺核查日或已确认截止日",
+        "来源": "old.csv:行2",
+        "最近变更": "无新增进展"
+      },
+      "history": [
+        {
+          "event_id": "EV-7f4c951b39efc815dc68",
+          "task_id": "T01",
+          "事件类型": "冲突",
+          "原值": "进行中",
+          "新值": "取消 [用户补充:行1：T01 取消]；进行中 [用户补充:行1：T01 进行中]",
+          "来源": "用户补充:行1：T01 取消；用户补充:行1：T01 进行中",
+          "会议或用户确认时间": "2026-11-06",
+          "是否存在冲突": "是"
+        }
+      ],
+      "questions": [
+        {
+          "task_id": "T01",
+          "待确认字段": "执行状态",
+          "候选值或问题": "取消 [用户补充:行1：T01 取消]；进行中 [用户补充:行1：T01 进行中]",
+          "原因": "同等权威来源相互矛盾，原确认值保留",
+          "候选来源": "用户补充:行1：T01 取消；用户补充:行1：T01 进行中",
+          "建议用户确认内容": "请确认 T01 的执行状态及依据"
+        }
+      ]
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "A10 reopen",
+    "expected": "cancel and reopen events with original values",
+    "actual": {
+      "T02": {
+        "task_id": "T02",
+        "任务内容": "准备演练培训",
+        "负责人": null,
+        "负责人确认状态": null,
+        "截止时间": null,
+        "截止时间确认状态": null,
+        "执行状态": "待执行",
+        "完成证据": null,
+        "是否逾期": "无法判断",
+        "逾期判断依据": "缺核查日或已确认截止日",
+        "来源": "meeting.md:行1：会议决定重新开启 T02",
+        "最近变更": "重新开启"
+      },
+      "events": [
+        {
+          "event_id": "EV-254935e1f8f217a52a1a",
+          "task_id": "T02",
+          "事件类型": "取消",
+          "原值": "待执行",
+          "新值": "取消",
+          "来源": "meeting.md:行1：T02 经会议明确取消",
+          "会议或用户确认时间": "2026-11-06",
+          "是否存在冲突": "否"
+        },
+        {
+          "event_id": "EV-fed26442c274c8adf770",
+          "task_id": "T02",
+          "事件类型": "重新开启",
+          "原值": "取消",
+          "新值": "待执行",
+          "来源": "meeting.md:行1：会议决定重新开启 T02",
+          "会议或用户确认时间": "2026-11-07",
+          "是否存在冲突": "否"
+        }
+      ]
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "A10 proposed",
+    "expected": "still canceled",
+    "actual": {
+      "task_id": "T02",
+      "任务内容": "准备演练培训",
+      "负责人": null,
+      "负责人确认状态": null,
+      "截止时间": null,
+      "截止时间确认状态": null,
+      "执行状态": "取消",
+      "完成证据": null,
+      "是否逾期": "否",
+      "逾期判断依据": "任务已取消或证据确认完成，不列入逾期未完成",
+      "来源": "meeting.md:行1：T02 经会议明确取消",
+      "最近变更": "无新增进展"
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "A12 one sentence",
+    "expected": "one short sentence, no files, no claimed send",
+    "actual": {
+      "summary": "本次记录2项变化、2处待确认，未提及的旧任务保持原状态。",
+      "followup_draft": "",
+      "exit": 0,
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\Temp\\meeting-qa-jey2pj15\\package\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\Temp\\meeting-qa-jey2pj15\\case18\\meeting.md",
+        "--project-name",
+        "蓝桥演练",
+        "--response-mode",
+        "one_sentence",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\Temp\\meeting-qa-jey2pj15\\case18\\out",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\Temp\\meeting-qa-jey2pj15\\old.csv"
+      ]
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "A13 scoped evidence",
+    "expected": "T01 unchanged and evidence scoped to T02",
+    "actual": {
+      "T01": {
+        "task_id": "T01",
+        "任务内容": "整理演练清单",
+        "负责人": "王工",
+        "负责人确认状态": "已确认",
+        "截止时间": "2026-11-05",
+        "截止时间确认状态": "已确认",
+        "执行状态": "进行中",
+        "完成证据": null,
+        "是否逾期": "无法判断",
+        "逾期判断依据": "缺核查日或已确认截止日",
+        "来源": "old.csv:行2",
+        "最近变更": "无新增进展"
+      },
+      "T02": {
+        "task_id": "T02",
+        "任务内容": "准备演练培训",
+        "负责人": null,
+        "负责人确认状态": null,
+        "截止时间": null,
+        "截止时间确认状态": null,
+        "执行状态": "证据确认完成",
+        "完成证据": "T02 交付确认记录 E-9 已签收（提交材料所称证据，未独立核验；用户补充:行1：T02 交付确认记录 E-9 已签收）",
+        "是否逾期": "否",
+        "逾期判断依据": "任务已取消或证据确认完成，不列入逾期未完成",
+        "来源": "用户补充:行1：T02 交付确认记录 E-9 已签收",
+        "最近变更": "证据确认完成"
+      }
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "E07 draft",
+    "expected": "labeled unsent draft only on request",
+    "actual": "【草稿，未发送】请核实待确认事项及报告完成项的验收凭据，例会前反馈进展。",
+    "verdict": "PASS"
+  },
+  {
+    "case": "DOCX read",
+    "expected": "zero with one task",
+    "actual": 0,
+    "verdict": "PASS"
+  },
+  {
+    "case": "A14 fake DOCX",
+    "expected": "CORRUPT_INPUT exit 2, old unchanged",
+    "actual": {
+      "exit": 2,
+      "status": "CORRUPT_INPUT",
+      "old_sha": "288533127d1540c777cc995f9ee1374d8ee7c418ae92446c8e19478790ba9df8"
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "A14 invalid extension",
+    "expected": "INVALID_FORMAT exit 2, old unchanged",
+    "actual": {
+      "exit": 2,
+      "status": "INVALID_FORMAT",
+      "old_sha": "288533127d1540c777cc995f9ee1374d8ee7c418ae92446c8e19478790ba9df8"
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "A14 invalid CSV",
+    "expected": "INVALID_PREVIOUS_SCHEMA exit 2, old unchanged",
+    "actual": {
+      "exit": 2,
+      "status": "INVALID_PREVIOUS_SCHEMA",
+      "old_sha": "288533127d1540c777cc995f9ee1374d8ee7c418ae92446c8e19478790ba9df8"
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "A14 blank meeting",
+    "expected": "EMPTY_MEETING exit 2, old unchanged",
+    "actual": {
+      "exit": 2,
+      "status": "EMPTY_MEETING",
+      "old_sha": "288533127d1540c777cc995f9ee1374d8ee7c418ae92446c8e19478790ba9df8"
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "E05 formula",
+    "expected": "no formula cells",
+    "actual": {
+      "types": "{'inlineStr', 's'}",
+      "leading": [
+        "'=HYPERLINK(\"https://invalid.t",
+        "'+1",
+        "'@网络",
+        "'=HYPERLINK(\"https://invalid.t",
+        "'+1",
+        "'@网络",
+        "'@网络",
+        "'+1",
+        "'=HYPERLINK(\"https://invalid.t"
+      ]
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "E01 owner proposed",
+    "expected": "王工 remains confirmed; 周工 pending",
+    "actual": {
+      "task": {
+        "task_id": "T01",
+        "任务内容": "整理演练清单",
+        "负责人": "王工",
+        "负责人确认状态": "已确认",
+        "截止时间": "2026-11-05",
+        "截止时间确认状态": "已确认",
+        "执行状态": "进行中",
+        "完成证据": null,
+        "是否逾期": "无法判断",
+        "逾期判断依据": "缺核查日或已确认截止日",
+        "来源": "old.csv:行2",
+        "最近变更": "无新增进展"
+      },
+      "pending": [
+        {
+          "task_id": "T01",
+          "待确认字段": "负责人",
+          "候选值或问题": "周工",
+          "原因": "仅为建议或未获确认",
+          "候选来源": "meeting.md:行1：建议周工负责 T01",
+          "建议用户确认内容": "请确认 T01 的负责人及依据"
+        }
+      ]
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "E02 explicit correction",
+    "expected": "new due, old/new event",
+    "actual": {
+      "task": {
+        "task_id": "T01",
+        "任务内容": "整理演练清单",
+        "负责人": "王工",
+        "负责人确认状态": "已确认",
+        "截止时间": "2026-11-10",
+        "截止时间确认状态": "已确认",
+        "执行状态": "进行中",
+        "完成证据": null,
+        "是否逾期": "无法判断",
+        "逾期判断依据": "缺核查日或已确认截止日",
+        "来源": "用户更正:行1：将 T01 截止日更正为 2026-11-10",
+        "最近变更": "用户更正"
+      },
+      "history": [
+        {
+          "event_id": "EV-dba5882cfb48797cff58",
+          "task_id": "T01",
+          "事件类型": "用户更正",
+          "原值": "2026-11-05",
+          "新值": "2026-11-10",
+          "来源": "用户更正:行1：将 T01 截止日更正为 2026-11-10",
+          "会议或用户确认时间": "2026-11-06",
+          "是否存在冲突": "否"
+        }
+      ]
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "E06 duplicate ID",
+    "expected": "DUPLICATE_TASK_ID exit 2",
+    "actual": {
+      "exit": 2,
+      "status": "DUPLICATE_TASK_ID"
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "E06 existing output protected",
+    "expected": "OUTPUT_FAILED, original workbook intact",
+    "actual": {
+      "exit": 2,
+      "status": "OUTPUT_FAILED",
+      "original_sha": "176e80f99b0aee8fca1a9ad5a8fc702a7cda937576b053f81a3ec950ade60d73"
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "E08 six literal prompts",
+    "expected": "six exact both",
+    "actual": {
+      "present_skill": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "present_requirements": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    "verdict": "PASS"
+  },
+  {
+    "case": "old input immutable",
+    "expected": "288533127d1540c777cc995f9ee1374d8ee7c418ae92446c8e19478790ba9df8",
+    "actual": "288533127d1540c777cc995f9ee1374d8ee7c418ae92446c8e19478790ba9df8",
+    "verdict": "PASS"
+  }
+]
