@@ -505,6 +505,16 @@ def _source_atom_value(atom: Any, known_sources: set[str]) -> Any:
     return atom
 
 
+RESOURCE_MONTHLY_UNITS = {
+    'resource.monthly.ghi': 'kWh/m2', 'resource.monthly.dni': 'kWh/m2',
+    'resource.monthly.dhi': 'kWh/m2', 'resource.monthly.poa': 'kWh/m2',
+    'resource.monthly.ambient_temperature': 'degC',
+    'resource.monthly.wind_speed': 'm/s', 'resource.monthly.coverage': '1',
+    'resource.monthly.days': 'day', 'resource.monthly.month': None,
+    'resource.monthly.row_id': None,
+}
+
+
 def _sourced_rows(value: Any, records: tuple | list, group: str) -> list | None:
     """Bind each repeated child to its stable Phase 2 row and flat atom."""
     parents = [record for record in records if record.get('field_id') == group]
@@ -532,6 +542,8 @@ def _sourced_rows(value: Any, records: tuple | list, group: str) -> list | None:
 
     def same_source(atom: Any, fid: str, instance: str) -> bool:
         return (isinstance(atom, dict) and atom.get('field_id') == fid
+                and (group != 'resource.monthly'
+                     or (fid in RESOURCE_MONTHLY_UNITS and atom.get('unit') == RESOURCE_MONTHLY_UNITS[fid]))
                 and atom.get('field_instance_id') == instance
                 and atom.get('source_id') == source_id
                 and atom.get('source_url_or_attachment') == origin
@@ -609,6 +621,7 @@ def _source_value(normalized: dict, records: tuple | list, fid: str) -> Any:
         if rows is None:
             return None
         if parent == 'resource.monthly':
+            source = next(record for record in records if record.get('field_id') == parent)
             months = [row['fields'].get('resource.monthly.month') for row in rows]
             if (len(rows) != 12 or any(type(month) is not int for month in months)
                     or set(months) != set(range(1, 13))):
@@ -619,6 +632,9 @@ def _source_value(normalized: dict, records: tuple | list, fid: str) -> Any:
                 matches = [record for record in records if record.get('field_id') == key]
                 if (len(matches) != 1 or matches[0].get('field_instance_id') != key
                         or matches[0].get('value') != normalized.get(key)
+                        or any(matches[0].get(identity) != source.get(identity) for identity in
+                               ('source_id', 'source_url_or_attachment', 'source_kind', 'source_section_or_cell'))
+                        or matches[0].get('unit') is not None
                         or matches[0].get('status') not in {'ASSUMED', 'VERIFIED'}
                         or matches[0].get('license_status') != 'AUTHORIZED'):
                     return None

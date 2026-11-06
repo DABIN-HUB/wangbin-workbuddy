@@ -42,7 +42,7 @@ from .calculation.result_contract import validate_result
 from .errors import ContractError
 from .local_files import Workspace
 from .report_narrative import guidance, validate_fixture
-from .report_claims import APPENDIX_RULES, APPENDIX_TITLES, CHAPTER_FIELDS, CHAPTER_METRICS, build_claim, category_fields, _dataset_rows, _source_value
+from .report_claims import APPENDIX_RULES, APPENDIX_TITLES, CHAPTER_FIELDS, CHAPTER_METRICS, RESOURCE_MONTHLY_UNITS, build_claim, category_fields, _dataset_rows, _source_value
 from .serialization import dumps
 from .source_xlsx import create_source_workbook
 
@@ -122,7 +122,7 @@ _D_STYLE = {
     "white": "FFFFFF",
 }
 
-REPORT_CONTENT_VERSION = "phase7l-r2-v4"
+REPORT_CONTENT_VERSION = "phase7l-r2-v5"
 
 
 @dataclass(frozen=True)
@@ -651,8 +651,9 @@ def _appendix_content(model: ReportModel, item_id: str) -> str:
 def _resource_rows(model: ReportModel) -> tuple[list[str], list[list[Any]]]:
     """Show source-bound monthly resource inputs, never generated electricity."""
     normalized = model.result["inputs"].get("normalized", {})
-    units = {"ghi": "kWh/m2", "dni": "kWh/m2", "dhi": "kWh/m2", "poa": "kWh/m2",
-             "ambient_temperature": "degC", "wind_speed": "m/s", "coverage": "1"}
+    units = {field.removeprefix("resource.monthly."): unit
+             for field, unit in RESOURCE_MONTHLY_UNITS.items()
+             if field not in {"resource.monthly.days", "resource.monthly.month", "resource.monthly.row_id"}}
     headers = ["月份", "GHI (kWh/㎡)", "DNI (kWh/㎡)", "DHI (kWh/㎡)",
                "POA (kWh/㎡)", "气温 (°C)", "风速 (m/s)", "覆盖率", "来源与使用边界"]
     records = model.result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
@@ -678,6 +679,7 @@ def _resource_rows(model: ReportModel) -> tuple[list[str], list[list[Any]]]:
     def parent_bound(atom: dict[str, Any] | None) -> bool:
         return (active(atom) and atom["source_id"] == source["source_id"]
                 and atom["source_url_or_attachment"] == source["source_url_or_attachment"]
+                and atom.get("source_section_or_cell") == source.get("source_section_or_cell")
                 and atom.get("source_kind") == source.get("source_kind"))
 
     flat = {}
@@ -710,7 +712,8 @@ def _resource_rows(model: ReportModel) -> tuple[list[str], list[list[Any]]]:
     metadata = {}
     for fid in ("resource.dataset_id", "resource.version", "site.timezone"):
         matches = [record for record in records if record.get("field_id") == fid]
-        if (len(matches) == 1 and active(matches[0]) and matches[0].get("field_instance_id") == fid
+        if (len(matches) == 1 and source and parent_bound(matches[0])
+                and matches[0].get("field_instance_id") == fid and matches[0].get("unit") is None
                 and matches[0].get("value") == normalized.get(fid)):
             metadata[fid] = matches[0]["value"]
     try:
