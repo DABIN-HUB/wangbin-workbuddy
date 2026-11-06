@@ -177,6 +177,9 @@ def relation_rows(reqs: list[dict], amendments: list[tuple[str, str]]) -> list[d
     for e in edges:
         old, new = e['old'], e['new']
         new['pending'] = [p for p in new['pending'] if '关系未证实' not in p]
+        new['supersedes'] = old['number']
+        revised = re.search(r'(?:替换为|改为)(\d+日|纸质[一二三四五六七八九十\d]+份)', new['raw'])
+        new['revised_value'] = revised.group(1) if revised else None
         if by_old[old['id']] > 1:
             old['version'] = new['version'] = '待确认（冲突补遗）'
             old['pending'].append('多个正式补遗针对同一旧条款，需书面确定相互优先依据')
@@ -240,6 +243,17 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
             gaps.append('附件仅目录登记，需补实际材料并核内容')
         if support == '不支持（文本层面）':
             gaps.append('实际材料内容与声明矛盾或未支持；需人工核验')
+        revised = r.get('revised_value')
+        obsolete = [(n, line) for n, line, num in replies if num == r.get('supersedes') and revised and revised not in line]
+        if r['version'] == '适用（正式补遗）' and obsolete:
+            gaps.append('版本冲突：响应仍沿用旧要求，正式补遗新值 ' + quote(revised) + '；响应 ' + '、'.join(loc(response_name or '', n) for n, _ in obsolete))
+            for n, _ in obsolete:
+                if loc(response_name or '', n) not in positions:
+                    positions.append(loc(response_name or '', n))
+            if existence == '未找到（限已提供响应）':
+                existence = '候选待确认'
+                gaps = [g for g in gaps if g != '在已提供响应中未找到']
+            condition_state = '可能不充分'
         pending = r['pending'][:]
         if ambiguous:
             pending.append('响应候选歧义或编号改变；逐一核对双向原句')

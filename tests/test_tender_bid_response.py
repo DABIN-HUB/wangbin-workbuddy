@@ -99,6 +99,8 @@ def test_formal_amendment_and_conflicting_amendments(tmp_path):
     assert cp.returncode == 0, cp.stderr
     assert len(matrix(book)) == 2
     assert matrix(book)[0][15] == '已替换/撤销（不适用）'
+    assert '版本冲突' in str(matrix(book)[1])
+    assert 'response.txt:1' in str(matrix(book)[1])
     assert 'amendment-1.txt:1' in str(list(book['补遗与版本'].values))
     cp, book, _ = run(tmp_path / 'other', '6. 提供纸质两份。', '6. 提供纸质一份。', amendments=[
         '正式补遗A：原第6条改为纸质一份。', '正式补遗B：原第6条改为纸质三份。'])
