@@ -412,7 +412,7 @@
       ]
     },
     {
-      "active_version": "0.1.0",
+      "active_version": "0.1.1",
       "development": "Local pre-QA implementation; independent QA pending",
       "id": "wangbin-project-acceptance-check",
       "maintenance": "UNKNOWN",
@@ -435,6 +435,15 @@
           "sha256": "6ad24750f55af4d74ea8a039a28486f54717caf57d6b74ef640dd7097eee8d0c",
           "source": "packages/skills/wangbin-project-acceptance-check",
           "version": "0.1.0"
+        },
+        {
+          "archive_evidence": "UNKNOWN",
+          "candidate": "UNKNOWN",
+          "date": "UNKNOWN",
+          "published_at": "UNKNOWN",
+          "sha256": "UNKNOWN",
+          "source": "packages/skills/wangbin-project-acceptance-check",
+          "version": "0.1.1"
         }
       ]
     }

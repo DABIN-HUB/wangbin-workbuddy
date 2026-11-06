@@ -162,6 +162,18 @@ def test_a13_a14_output_references_and_formula_cells(tmp_path):
     assert app.safe_cell('-2') == "'-2"
 
 
+def test_changed_source_retains_both_provenance_versions(tmp_path):
+    (tmp_path / 'scope.md').write_text('R01：提供培训记录。', encoding='utf-8')
+    groups = {'scope': ['scope.md'], 'delivery': [], 'evidence': [], 'change': []}
+    old = app.analyze('虚构项目', tmp_path, groups)
+    (tmp_path / 'scope.md').write_text('R01：提供培训记录和交接说明。', encoding='utf-8')
+    new = app.analyze('虚构项目', tmp_path, groups, previous=old)
+    assert new['result'] == 'PARTIAL'
+    assert any('IDENTITY_REVIEW' in line for line in new['limitations'])
+    assert len(new['sources']) == 2
+    assert {x['source_id'] for x in new['records']} == {x['source_id'] for x in new['sources']}
+
+
 def test_symlink_and_size_boundary_and_cli_codes(tmp_path):
     (tmp_path / 'scope.md').write_text(SCOPE, encoding='utf-8')
     (tmp_path / 'out').mkdir()

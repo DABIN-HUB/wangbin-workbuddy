@@ -176,7 +176,8 @@ def read_source(root, rel):
         raise ValueError('UNSUPPORTED_FORMAT: only txt/md/docx/csv/xlsx')
     if not rows:
         raise ValueError('UNREADABLE_SOURCE: no readable content')
-    source = {'source_id': stable('SRC', rel), 'path': rel, 'sha256': hashlib.sha256(raw).hexdigest(), 'type': suffix}
+    source = {'source_id': stable('SRC', rel), 'path': rel, 'sha256': hashlib.sha256(raw).hexdigest(), 'type': suffix,
+              'unsupported_content': suffix == '.docx' and (b'<w:drawing' in raw or any('media/' in n for n in zipfile.ZipFile(io.BytesIO(raw)).namelist()))}
     for i, row in enumerate(rows):
         row['source_id'] = source['source_id']
         row['source'] = f"{rel}/{row['location']}"
@@ -234,7 +235,7 @@ def evaluate_condition(cond, req, records):
 
 def analyze(project, root, groups, previous=None, effective_version_ref=''):
     old = previous or {}
-    sources = {s['path']: s for s in old.get('sources', [])}
+    sources = {s['source_id']: s for s in old.get('sources', [])}
     records = {r['record_id']: r for r in old.get('records', [])}
     diagnostics = []
     if sum(len(v) for v in groups.values()) > MAX_FILES:
@@ -243,13 +244,16 @@ def analyze(project, root, groups, previous=None, effective_version_ref=''):
         for rel in paths:
             try:
                 src, rows = read_source(root, rel)
-                if rel in sources and sources[rel]['sha256'] != src['sha256']:
+                previous_src = next((s for s in sources.values() if s['path'] == rel and s['sha256'] != src['sha256']), None)
+                if previous_src:
                     diagnostics.append({'source': rel, 'code': 'IDENTITY_REVIEW', 'reason': 'changed source; old and new records retained'})
                     src['source_id'] = stable('SRC', rel, src['sha256'])
                     for row in rows:
                         row['source_id'] = src['source_id']
                         row['record_id'] = stable('REC', row['source_id'], row['location'])
-                sources[rel] = src
+                sources[src['source_id']] = src
+                if src['unsupported_content']:
+                    diagnostics.append({'source': rel, 'code': 'UNSUPPORTED_CONTENT', 'reason': 'embedded images/objects were not examined'})
                 for row in rows:
                     text = first(row, 'text') or (row['text'] if 'text' in row else '')
                     if role == 'delivery' and not text:
