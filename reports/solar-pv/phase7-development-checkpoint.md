@@ -445,3 +445,45 @@ Connector `cli.json` 和 Skill manifest 现在显式固定：Python `>=3.12,<3.1
 - 两类 manifest 均保持 `status=DRAFT_PARTIAL`、`calculation_status=PARTIAL`、`not_decision_ready=true`、`PDF_RENDER=BLOCKED`、`FOUR_FILE_GATE=BLOCKED`；九项财务阻断没有被正文润色掩盖。
 - `TOC_VALID=FIELD_REQUIRES_RENDER_REFRESH`；本机仍没有 `soffice`/`libreoffice`，没有生成假 PDF，因此实际页数、目录页码和逐页视觉检查仍为 `VISUAL_REVIEW=NOT_TESTED`、`CONTENT_READABILITY=NOT_TESTED_RENDER`、`NO_OVERFLOW=NOT_TESTED_RENDER`。
 - 本轮没有上传 WorkBuddy、没有 push、没有提交审核/发布、没有启动 Phase 8；等待用户直接审阅新 DOCX 的专业语言、内容和排版。
+
+## Phase 7K：合成项目资料补全与专业内容深度写作（2026-11-06）
+
+### 7K.1 生产代码与资料边界
+
+- 保持 `18/100/13/26` 冻结结构、既有 Phase 2–3G 计算链、19 张测算工作表、10 张来源与假设工作表及冻结财务公式不变；本轮没有重建计算引擎，也没有修改 canonical 数值。
+- 新增 `services/solar-pv-engine/src/wangbin_solar_pv/report_narrative.py`，提供按 CH01–CH18、逐项研究问题组织的专业内容 guidance，并严格校验编辑性 fixture 的版本、项目类型、章节覆盖和 canonical `result_hash` 绑定。
+- 新增两套版本化编辑性资料：
+  - `services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_editorial/industrial_rooftop.json`
+  - `services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_editorial/utility_scale_ground.json`
+  两套资料明确为 `SYNTHETIC_DEMO` / `EDITORIAL_TEST_ASSUMPTION`。屋顶资料覆盖权属、结构、防水消防、负荷、自发自用和余电上网；地面资料覆盖土地、测绘地勘、道路排水、升压送出、集中并网和交易结算。它们只进入报告写作层，不自动进入计算引擎。
+- 修改 `report_export.py`：导出器新增显式 `editorial_fixture` 参数；正文按研究对象输出工程事实、方法、条件性分析、资料影响和后续核验，缺少 fixture 时仍可对 partial canonical 使用同一套非套话策略。fixture 的项目别名只用于读者封面，不改变 canonical 项目身份。
+- 新增 `reports/solar-pv/phase7k-golden-samples.json`，人工记录执行摘要、工程概况、选址、资源、系统设计、发电、消纳、投资、财务和风险结论十个黄金样本的输入资料、可用结果、编辑性假设、目标写法、禁止结论和证据关联；样本用于规则核查，不直接复制固定数字到生产报告。
+
+### 7K.2 实际生成的四类审阅产物
+
+使用已通过身份核验的 Phase 7I partial canonical，未重复执行数百秒的计算链；同时生成高覆盖度合成编辑模式和资料不充分模式，各覆盖屋顶与集中式地面两类：
+
+- 合成编辑性模式：`C:/Users/wangbin/AppData/Local/hermes/cache/scratch/phase7k-synthetic-editorial/`
+  - 屋顶 DOCX：`industrial_rooftop/SYNTHETIC-industrial_rooftop-光伏预可研报告.docx`，SHA-256 `e8b23d6361f20dc5fe4ff486892abd5b4b079a01cb8f93e736f0adc54e254d72`。
+  - 屋顶测算 XLSX：SHA-256 `4b1dab9d2daeec66bc23bf4fd6685ea7151daeadf2d162cd803c10a10b297801`；来源与假设 XLSX：`2103e46cfa2ada8f8d8f75d21994aa21e946c9410af792cdf491e9e460f66de5`。
+  - 地面 DOCX：`utility_scale_ground/SYNTHETIC-utility_scale_ground-光伏预可研报告.docx`，SHA-256 `b6713893a1faa28a9408329abdd5c3c7fb18675d7fc7c19be453298672d15b12`。
+  - 地面测算 XLSX：SHA-256 `48f547beb6806a5dacc351016e641621da9be6998f15af40c9e318f42b4ecd7c`；来源与假设 XLSX：`bad13e9b2e9046b3da221e3df7c13c1c2de057b99bf6b688a35aae00e196be4a`。
+- 资料不充分模式：`C:/Users/wangbin/AppData/Local/hermes/cache/scratch/phase7k-partial-editorial/`
+  - 屋顶 DOCX：`industrial_rooftop/SYNTHETIC-industrial_rooftop-光伏预可研报告.docx`，SHA-256 `ed389fa3c2eb8e38ff355c0d32294e17c4b4f60fd3c668b5a2f887590c886cdc`。
+  - 地面 DOCX：`utility_scale_ground/SYNTHETIC-utility_scale_ground-光伏预可研报告.docx`，SHA-256 `edbc3d490cd0e7e7703514c140465dc49b8757b7fe72ec3547b93eec8745cef5`。
+- 每套目录均实际生成 DOCX、测算模型 XLSX、来源与假设 XLSX、canonical、manifest、content checklist 和 chain receipt；四类报告均保持 19/10 工作表和 18/100/13/26 结构。
+
+### 7K.3 内容与证据验收
+
+- 四份 DOCX 均通过 `docx_validate.py`：`{"ok": true, "issues": []}`。
+- 四份报告生成后的实际正文扫描均为：旧模板标签 `0`、程序状态/内部字段 `0`、精确重复 `0`、近似模板 `0`；`PROFESSIONAL_NARRATIVE=PASS`、`NO_PROGRAMMING_LANGUAGE_IN_BODY=PASS`、`EVIDENCE_GROUNDED_CLAIMS=PASS`、`CATEGORY_SPECIFIC_NARRATIVE=PASS`。
+- 合成编辑性模式 manifest 明确记录 `editorial_mode=SYNTHETIC_DEMO`、`EDITORIAL_TEST_ASSUMPTION`、十个黄金样本章节和与 canonical `result_hash` 一致的身份绑定；资料不充分模式明确记录 `editorial_mode=PARTIAL_CANONICAL`，不加载虚构背景资料。
+- 屋顶正文实际包含屋面权属、结构、防水消防、负荷、自发自用和余电上网语境；地面正文实际包含土地、地勘、道路排水、升压送出、集中并网和交易边界语境；不将屋顶模型套用于地面项目。
+- 发电、可利用、可交付和收入边界继续分开表达；资源章节不使用年度发电量替代辐照/温度/风速证据；CAPEX 不替代现金流；财务阻断未被编辑性假设解除。
+
+### 7K.4 真实阻断和停止点
+
+- 四份报告均保持 `DRAFT_PARTIAL` / `calculation_status=PARTIAL` / `not_decision_ready=true`；九项财务阻断、资料缺口和合成边界仍保留。
+- 本机无 `soffice`/`libreoffice`，四份报告均为 `PDF_RENDER=BLOCKED`、`VISUAL_REVIEW=NOT_TESTED`、`FOUR_FILE_GATE=BLOCKED`；没有生成假 PDF，未宣布页面视觉或 Word 最终排版通过。Excel 仍为 `NOT_TESTED_STATIC_SNAPSHOT`。
+- 本轮未创建测试类、未修改测试代码、未运行测试套件；仅执行生产代码编译、DOCX 静态结构验证、生成后内容/重复/证据扫描、XLSX 工作表和身份一致性检查。
+- 本轮未上传、未 push、未提交审核/发布、未启动 Phase 8；等待用户和 ChatGPT 实际审阅四类本地产物。

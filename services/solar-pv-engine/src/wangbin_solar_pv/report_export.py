@@ -38,6 +38,7 @@ from PIL import Image, ImageDraw, ImageFont
 from .calculation.result_contract import validate_result
 from .errors import ContractError
 from .local_files import Workspace
+from .report_narrative import guidance, validate_fixture
 from .serialization import dumps
 from .source_xlsx import create_source_workbook
 
@@ -971,7 +972,8 @@ def _professional_missing(title: str, chapter_id: str, pv_type: str) -> str:
 
 
 def _professional_narrative(model: ReportModel, pv_type: str, chapter_id: str, title: str,
-                            evidence: dict[str, Any]) -> tuple[list[str], str, str]:
+                            evidence: dict[str, Any], *, item_no: int = 1,
+                            editorial_fixture: dict[str, Any] | None = None) -> tuple[list[str], str, str]:
     """Build category-aware consulting prose from bound evidence, not template labels."""
     facts = _evidence_facts(evidence)
     fact_text = "；".join(facts) + "。" if facts else ""
@@ -995,15 +997,27 @@ def _professional_narrative(model: ReportModel, pv_type: str, chapter_id: str, t
     elif chapter_id == "CH18":
         lead = f"{title}综合建设条件、技术方案、发电预测、消纳并网和财务边界形成阶段性意见。{fact_text}"
     else:
-        lead = f"针对{title}，本阶段结合{_CHAPTER_METHOD.get(chapter_id, '相关工程条件')}进行核查。{fact_text}"
+        lead = f"{title}纳入{_CHAPTER_METHOD.get(chapter_id, '相关工程条件')}的研究范围。{fact_text}"
+    chapter_items = next(items for cid, _chapter_title, items in CHAPTERS if cid == chapter_id)
+    research_focus = guidance(f"{chapter_id}.{item_no:02d}", chapter_items)
+    editorial = [f"“{title}”的研究重点是{research_focus}"]
+    if editorial_fixture:
+        record = editorial_fixture["chapters"][chapter_id]
+        if item_no == 1:
+            editorial.append(f"围绕“{title}”，本章背景采用编辑性测试假设：{record['background']}")
+        elif item_no % 3 == 2:
+            editorial.append(f"围绕“{title}”，在编辑性测试边界内的拟议做法为：{record['proposal']}")
+        else:
+            editorial.append(f"围绕“{title}”，该设定的核验要求是：{record['verification']}")
     if evidence["state"] == "EVIDENCED":
-        tail = f"就“{title}”而言，上述结果仅适用于本次合成数据和当前计算边界，可作为本阶段方案检查依据，不能替代现场实测、审批文件或正式设计审查。"
+        tail = f"在“{title}”的当前边界内，已有结果仅适用于合成输入和本次计算，可用于方案检查，不能替代现场实测、审批文件或正式设计审查。"
         claim_status = "EVIDENCE_BOUND_CONDITIONAL"
     else:
-        missing = _professional_missing(title, chapter_id, pv_type)
-        tail = f"就“{title}”而言，{missing}"
+        missing = _topic_missing(title, chapter_id, pv_type, _professional_missing(title, chapter_id, pv_type))
+        tail = f"“{title}”仍受以下条件约束：{missing}"
         claim_status = "LIMITED_BY_MISSING_EVIDENCE"
-    return [lead, tail], lead + tail, claim_status
+    paragraphs = [lead, *editorial, tail]
+    return paragraphs, "".join(paragraphs), claim_status
 
 
 def _field_present(model: ReportModel, field_id: str) -> bool:
@@ -1149,7 +1163,8 @@ def _topic_missing(title: str, chapter_id: str, pv_type: str, fallback: str) -> 
     return f"需补充与“{title}”直接对应的原始字段、来源位置、授权状态、计算结果或专业审查记录。"
 
 
-def _item_evidence(model: ReportModel, pv_type: str, chapter_id: str, title: str) -> dict[str, Any]:
+def _item_evidence(model: ReportModel, pv_type: str, chapter_id: str, title: str, *, item_no: int = 1,
+                   editorial_fixture: dict[str, Any] | None = None) -> dict[str, Any]:
     metric_ids, field_ids, missing = _item_rule(pv_type, chapter_id, title)
     metrics = [model.metric(metric_id) for metric_id in metric_ids if model.metric(metric_id)]
     if not metrics:
@@ -1177,9 +1192,11 @@ def _item_evidence(model: ReportModel, pv_type: str, chapter_id: str, title: str
     if not rows:
         rows.append({"kind": "missing", "id": "NO_DIRECT_EVIDENCE", "value": "UNKNOWN",
                      "unit": "UNKNOWN", "status": state, "formula_id": "UNKNOWN", "source_ids": []})
-    missing_detail = _professional_missing(title, chapter_id, pv_type) if state != "NOT_APPLICABLE" else ""
+    missing_detail = (_topic_missing(title, chapter_id, pv_type, _professional_missing(title, chapter_id, pv_type))
+                      if state != "NOT_APPLICABLE" else "")
     provisional = {"state": state, "rows": rows}
-    narrative, summary, claim_status = _professional_narrative(model, pv_type, chapter_id, title, provisional)
+    narrative, summary, claim_status = _professional_narrative(
+        model, pv_type, chapter_id, title, provisional, item_no=item_no, editorial_fixture=editorial_fixture)
     conclusion = narrative[-1]
     return {"state": state, "state_reason": state_reason, "topic": title, "summary": summary,
             "metric_ids": [metric["metric_id"] for metric in metrics], "field_ids": field_ids,
@@ -1240,9 +1257,9 @@ def _appendix_evidence(model: ReportModel, pv_type: str, app_id: str, item_no: i
     summary = f"{focus}本附录用于记录与正文结论对应的追溯材料，当前{state_text}。"
     narrative = [
         f"{focus}。本附录第{item_no}项用于支持正文的资料核查和结果复核，不改变正文对项目条件的边界判断。",
-        ("现有记录可用于本阶段结果复核，但仍应结合原始附件和专业审查材料确认。"
+        f"围绕“{focus}”的现有记录可用于本阶段结果复核，但仍应结合原始附件和专业审查材料确认。"
          if state == "EVIDENCED" else
-         f"在“{focus}”所对应的资料范围内，相关资料、授权或专业复核尚未完整取得，下一阶段应按本附录列出的范围补齐并回写新的运行结果。"),
+         f"在“{focus}”所对应的资料范围内，相关资料、授权或专业复核尚未完整取得，下一阶段应按本附录列出的范围补齐并回写新的运行结果。",
     ]
     return {"state": state, "summary": summary, "focus": focus, "metric_ids": metric_ids,
             "field_ids": field_ids, "rows": rows,
@@ -1256,7 +1273,8 @@ def _add_evidence_table(document: Document, evidence: dict[str, Any], caption: s
     _add_table(document, ["类型", "指标/字段", "值", "单位", "状态", "公式/绑定", "source_ids"], rows, caption)
 
 
-def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: str) -> dict[str, Any]:
+def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: str,
+                editorial_fixture: dict[str, Any] | None = None) -> dict[str, Any]:
     profile = REPORT_PROFILES[pv_type]
     source_map = _source_ref_map(model)
     document = Document()
@@ -1315,12 +1333,19 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
         run.bold = True
         run.font.size = Pt(16)
         run.font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
+    sample_status = "合成编辑性样件 · 阶段性草稿" if editorial_fixture else "资料不充分样件 · 阶段性草稿"
     _add_table(document, ["项目类型", "编制状态", "评价日期"],
-               [[profile["boundary"], "合成数据样件 · 阶段性草稿", str(model.result["evaluation_date"])]],
+               [[profile["boundary"], sample_status, str(model.result["evaluation_date"])]],
                widths_cm=(5.3, 6.0, 5.7), font_size=9)
     cover_note = document.add_paragraph("本报告为基于本次统一测算结果的预可研开发样件。计算结果、资料成熟度和财务限制均按当前状态呈现，不替代正式可研、设计审查、并网意见、合同审核或投资决策。")
     cover_note.paragraph_format.space_before = Pt(20)
     cover_note.paragraph_format.line_spacing = 1.3
+    if editorial_fixture:
+        identity_note = document.add_paragraph("资料身份：EDITORIAL_TEST_ASSUMPTION（仅用于合成项目编辑性测试，不作为真实第三方证据，也不进入计算引擎）。")
+        identity_note.paragraph_format.space_before = Pt(8)
+        for run in identity_note.runs:
+            run.font.size = Pt(9)
+            run.font.color.rgb = RGBColor.from_string(_D_STYLE["muted"])
     cover_footer = document.add_paragraph("版本状态：阶段性草稿  ·  仅限本地审阅  ·  资料不足，暂不具备决策条件")
     for run in cover_footer.runs:
         run.font.size = Pt(9)
@@ -1331,7 +1356,10 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     _add_toc(document)
     document.add_page_break()
     document.add_heading("执行摘要", level=1)
-    document.add_paragraph(f"本项目属于{profile['boundary']}。本阶段依据现有合成资料开展方案边界和计算流程核查，重点关注装机规模、发电预测、投资估算、消纳并网和财务评价条件。由于项目资料尚未达到正式可研深度，以下结论均为有边界的阶段性判断。")
+    basis_text = ("本阶段同时使用明确标识的编辑性测试假设，用于检验工程背景与计算结果的衔接；这些假设不进入计算引擎，也不构成第三方证据。"
+                  if editorial_fixture else
+                  "本阶段仅使用已有的部分资料和统一测算结果，不补填缺失事实；正文将具体说明资料不足对专业判断的影响。")
+    document.add_paragraph(f"本项目属于{profile['boundary']}。本阶段依据现有测算结果开展方案边界和计算流程核查，重点关注装机规模、发电预测、投资估算、消纳并网和财务评价条件。{basis_text}由于项目资料尚未达到正式可研深度，以下结论均为有边界的阶段性判断。")
     key_prefixes = ("dc_capacity", "ac_capacity", "energy.year", "consumption.year", "revenue.year", "financial.")
     key_rows = _professional_metric_rows(model, key_prefixes)[:18]
     _add_table(document, ["专业指标", "本阶段结果", "单位", "说明"], key_rows,
@@ -1360,7 +1388,8 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
         for number, item in enumerate(items, 1):
             item_id = f"{chapter_id}.{number:02d}"
             document.add_heading(f"{item_id} {item}", level=2)
-            evidence = _item_evidence(model, pv_type, chapter_id, item)
+            evidence = _item_evidence(model, pv_type, chapter_id, item, item_no=number,
+                                       editorial_fixture=editorial_fixture)
             _add_professional_narrative(document, evidence)
             checklist.append({"id": item_id, "title": item,
                               "content_summary": evidence["summary"][:600], "input_field_ids": evidence["field_ids"],
@@ -1453,7 +1482,9 @@ def _assert_same_identity(files: dict[str, Any], identity: dict[str, str]) -> No
             raise ContractError("REPORT_IDENTITY_MISMATCH")
 
 
-def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output_dir: str, *, formula_map: dict[str, Any] | None, expected_pv_type: str, phase: str) -> dict[str, Any]:
+def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output_dir: str, *, formula_map: dict[str, Any] | None,
+                   expected_pv_type: str, phase: str,
+                   editorial_fixture: dict[str, Any] | None = None) -> dict[str, Any]:
     """Generate a bounded DRAFT_PARTIAL report set from one category-bound canonical result."""
     if not isinstance(workspace, Workspace) or not isinstance(output_dir, str) or not output_dir.strip():
         raise ContractError("REPORT_OUTPUT_TARGET")
@@ -1466,6 +1497,11 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
     model = ReportModel.from_result(result, catalog)
     if model.result["pv_type"] != expected_pv_type:
         raise ContractError("REPORT_CATEGORY_MISMATCH")
+    try:
+        editorial_fixture = validate_fixture(editorial_fixture, pv_type=expected_pv_type,
+                                              result_hash=model.result["result_hash"])
+    except ValueError as exc:
+        raise ContractError(str(exc)) from exc
     normalized = model.result["inputs"].get("normalized", {})
     display_name, name_mapping = _safe_stem(normalized.get("project.name") or model.result["project_id"])
     stem = display_name
@@ -1477,7 +1513,9 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
     if any(path.exists() for path in (docx_path, xlsx_path, root / source_name)):
         raise ContractError("REPORT_OUTPUT_EXISTS")
     artifact_started = time.perf_counter()
-    files["F01"] = _write_docx(model, docx_path, _cover_project_name(expected_pv_type), expected_pv_type)
+    cover_name = (editorial_fixture.get("project_alias") if editorial_fixture else None) or _cover_project_name(expected_pv_type)
+    files["F01"] = _write_docx(model, docx_path, cover_name, expected_pv_type,
+                                editorial_fixture=editorial_fixture)
     files["F01"]["generation_seconds"] = round(time.perf_counter() - artifact_started, 6)
     checklist = files["F01"].pop("content_checklist")
     coverage = _validate_checklist_coverage(checklist)
@@ -1492,6 +1530,9 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
         "records": checklist,
         "quality_axes": {"structure_status": "GENERATED", "coverage_status": "PASS", "substantive_content_status": "RECORDED_PER_ITEM",
                          "legal_evidence_status": "SYNTHETIC_OR_SOURCE_BOUND", "visual_layout_status": "NOT_TESTED",
+                         "editorial_fixture_status": "BOUND_IDENTITY" if editorial_fixture else "NOT_SELECTED",
+                         "editorial_fixture_kind": editorial_fixture.get("evidence_kind") if editorial_fixture else None,
+                         "golden_sample_chapters": editorial_fixture.get("golden_sample_chapters", []) if editorial_fixture else [],
                          "no_duplicate_template_abuse": duplicate_scan.get("status", "UNKNOWN"),
                          "professional_narrative": language_scan.get("professional_narrative", "UNKNOWN"),
                          "no_programming_language_in_body": language_scan.get("no_programming_language_in_body", "UNKNOWN"),
@@ -1550,6 +1591,8 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
             "CHAPTER_SEMANTIC_ALIGNMENT": "PASS" if len(_CHAPTER_METHOD) == len(CHAPTERS) else "REVIEW_REQUIRED",
             "EVIDENCE_GROUNDED_CLAIMS": language_scan.get("evidence_grounded", "UNKNOWN"),
             "CATEGORY_SPECIFIC_NARRATIVE": language_scan.get("category_specific", "UNKNOWN"),
+            "EDITORIAL_FIXTURE_IDENTITY": "PASS" if editorial_fixture else "NOT_SELECTED",
+            "GOLDEN_SAMPLE_COVERAGE": "PASS" if editorial_fixture and len(editorial_fixture.get("golden_sample_chapters", [])) >= 10 else "NOT_SELECTED",
             "DOCUMENT_CONTENT_REVIEW": "PARTIAL_STATIC_LANGUAGE_REVIEW",
             "CHAPTER_COVERAGE": "PASS",
             "CHART_DATA_CONSISTENCY": "PASS" if files["F01"].get("charts") else "NOT_APPLICABLE",
@@ -1562,6 +1605,10 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
             "FOUR_FILE_GATE": "BLOCKED" if files["F02"].get("status") != "GENERATED" else "NOT_FORMAL_ACCEPTANCE",
         },
         "calculation_status": model.result["status"], "four_file_gate": "BLOCKED" if files["F02"].get("status") != "GENERATED" else "NOT_FORMAL_ACCEPTANCE",
+        "editorial_mode": "SYNTHETIC_DEMO" if editorial_fixture else "PARTIAL_CANONICAL",
+        "editorial_fixture": {"kind": editorial_fixture["evidence_kind"], "result_hash": editorial_fixture["result_hash"],
+                              "golden_sample_chapters": editorial_fixture.get("golden_sample_chapters", [])}
+        if editorial_fixture else None,
         "elapsed_seconds": round(time.perf_counter() - started, 6),
         "not_decision_ready": True,
         "sensitive_raw_attachments_included": False,
@@ -1572,11 +1619,15 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
     return receipt
 
 
-def export_rooftop_report(result: dict[str, Any], catalog, workspace: Workspace, output_dir: str, *, formula_map: dict[str, Any] | None = None) -> dict[str, Any]:
+def export_rooftop_report(result: dict[str, Any], catalog, workspace: Workspace, output_dir: str, *, formula_map: dict[str, Any] | None = None,
+                          editorial_fixture: dict[str, Any] | None = None) -> dict[str, Any]:
     return _export_report(result, catalog, workspace, output_dir, formula_map=formula_map,
-                          expected_pv_type="industrial_rooftop", phase="PHASE5_INDUSTRIAL_ROOFTOP_REPORT_EXPORT")
+                          expected_pv_type="industrial_rooftop", phase="PHASE5_INDUSTRIAL_ROOFTOP_REPORT_EXPORT",
+                          editorial_fixture=editorial_fixture)
 
 
-def export_ground_report(result: dict[str, Any], catalog, workspace: Workspace, output_dir: str, *, formula_map: dict[str, Any] | None = None) -> dict[str, Any]:
+def export_ground_report(result: dict[str, Any], catalog, workspace: Workspace, output_dir: str, *, formula_map: dict[str, Any] | None = None,
+                         editorial_fixture: dict[str, Any] | None = None) -> dict[str, Any]:
     return _export_report(result, catalog, workspace, output_dir, formula_map=formula_map,
-                          expected_pv_type="utility_scale_ground", phase="PHASE6_UTILITY_SCALE_GROUND_REPORT_EXPORT")
+                          expected_pv_type="utility_scale_ground", phase="PHASE6_UTILITY_SCALE_GROUND_REPORT_EXPORT",
+                          editorial_fixture=editorial_fixture)
