@@ -1,0 +1,5 @@
+customer_code,customer_name,region
+00123,甲客户,R01
+00123,乙客户,R99
+123,丙客户,R02
+00007,,R01

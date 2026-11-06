@@ -1,0 +1,1 @@
+{"fields":{"customer_code":{"sources":["customer_code"],"rule_id":"CODE","required":true,"data_type":"text","unique_group":"code"},"customer_name":{"sources":["customer_name"],"rule_id":"NAME","required":true},"region":{"sources":["region"],"rule_id":"REGION","reference_key":"region"}}}
