@@ -51,6 +51,11 @@ def safe_file(path, suffix, root):
         raise CheckError('UNSUPPORTED_OR_SPOOFED', f'{suffix} input must be a regular file under input-root')
     if p.stat().st_size > MAX_BYTES:
         raise CheckError('RESOURCE_LIMIT', f'file exceeds {MAX_BYTES} bytes')
+    # A non-ZIP payload with an OOXML suffix is a spoof, not a damaged OOXML archive.
+    with p.open('rb') as stream:
+        signature = stream.read(4)
+    if signature not in (b'PK\x03\x04', b'PK\x05\x06', b'PK\x07\x08'):
+        raise CheckError('UNSUPPORTED_OR_SPOOFED', 'file is not an OOXML ZIP container')
     try:
         with zipfile.ZipFile(p) as z:
             names = z.namelist()
@@ -124,8 +129,9 @@ def extract_source(path, context):
                 if cell.value is None and cell.data_type != 'f':
                     continue
                 header = headers[cell.column - 1] if cell.column <= len(headers) else ''
-                # Single merged text header may contain all dimensions.
-                combined = ' '.join((ws.title, headers[0] if headers else '', header))
+                # A first-column header may name a different metric/currency: never
+                # let its dimensions overwrite this operand's own column header.
+                combined = ' '.join((ws.title, header))
                 metric = label(header) or label(combined)
                 value = cached[ws.title][cell.coordinate].value if cell.data_type == 'f' else cell.value
                 rows.append(dict(sheet=ws.title, cell=cell.coordinate, header=combined, metric=metric,
@@ -188,7 +194,41 @@ def decimal_value(value):
         return None, 'NON_NUMERIC_OPERAND'
 
 
-def source_rule(rule, sources):
+def rule_compatibility(found, rule, report_identity):
+    """Reject incompatible operand identities before any arithmetic or evidence claim."""
+    op = rule['op']
+    units = [s['unit'] for s in found]
+    kinds = [('ratio' if u == '%' else 'money' if u in SCALE else 'unknown') for u in units]
+    if 'money' in kinds and 'ratio' in kinds:
+        return 'NOT_COMPARABLE'
+    for key in FIELDS:
+        known = {str(s['identity'][key]) for s in found if s['identity'][key]}
+        missing = any(not s['identity'][key] for s in found)
+        if len(known) > 1:
+            return 'NOT_COMPARABLE'
+        if known and missing:
+            return 'PENDING_CONFIRMATION'
+        if report_identity and known and report_identity[key] and report_identity[key] not in known:
+            return 'NOT_COMPARABLE'
+    units = [s['unit'] for s in found]
+    kinds = [('ratio' if u == '%' else 'money' if u in SCALE else 'unknown') for u in units]
+    if len(set(kinds)) > 1:
+        return 'PENDING_CONFIRMATION' if 'unknown' in kinds else 'NOT_COMPARABLE'
+    if 'unknown' in kinds and op not in ('multiply', 'divide', 'ratio') and not rule.get('unit'):
+        return 'PENDING_CONFIRMATION'
+    target = rule.get('unit', '')
+    if target and target not in SCALE:
+        return 'PENDING_CONFIRMATION'
+    if target and 'unknown' not in kinds and (target == '%') != (kinds[0] == 'ratio') and op in ('direct', 'sum', 'add', 'subtract'):
+        return 'NOT_COMPARABLE'
+    if op in ('divide', 'ratio') and target and target != '%':
+        return 'NOT_COMPARABLE'
+    if op == 'multiply' and len(found) > 1 and kinds[0] != 'ratio':
+        return 'NOT_COMPARABLE'  # money × money is not money
+    return ''
+
+
+def source_rule(rule, sources, report_identity=None):
     if not isinstance(rule, dict) or rule.get('op') not in ('direct', 'sum', 'add', 'subtract', 'multiply', 'divide', 'ratio'):
         raise CheckError('INVALID_RULE', 'only structured whitelist rules are accepted')
     addresses = rule.get('cells', [])
@@ -215,9 +255,9 @@ def source_rule(rule, sources):
     op = rule['op']
     if op == 'direct' and len(values) != 1 or op in ('divide', 'ratio', 'subtract') and len(values) != 2 or op == 'multiply' and len(values) != 2:
         raise CheckError('INVALID_RULE', 'operand count invalid')
-    if len({s['unit'] for s in found}) > 1 and op in ('sum', 'add', 'subtract'):
-        if not all(s['unit'] in ('元', '万元', '亿元') for s in found):
-            return None, 'NOT_COMPARABLE', addresses, ''
+    compatible = rule_compatibility(found, rule, report_identity)
+    if compatible:
+        return None, compatible, addresses, ''
     if op in ('divide', 'ratio') and values[1] == 0:
         return None, 'ZERO_DENOMINATOR', addresses, ''
     calc = {'direct': lambda: values[0], 'sum': lambda: sum(values), 'add': lambda: sum(values),
@@ -238,7 +278,7 @@ def compare(item, sources, context, source_path, report_path):
     provenance = ''
     selected = candidates[0] if len(candidates) == 1 else None
     if rule:
-        sv, error, addresses, provenance = source_rule(rule, sources)
+        sv, error, addresses, provenance = source_rule(rule, sources, item['identity'])
         status = error
         selected = next((s for s in sources if f"{s['sheet']}!{s['cell']}" == addresses[0]), None)
     elif len(candidates) > 1:

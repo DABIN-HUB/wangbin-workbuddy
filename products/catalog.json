@@ -412,7 +412,7 @@
       ]
     },
     {
-      "active_version": "0.1.2",
+      "active_version": "0.1.3",
       "development": "Local XLSX-DOCX consistency candidate; independent QA pending",
       "id": "wangbin-report-consistency-check",
       "maintenance": "UNKNOWN",
@@ -423,7 +423,7 @@
       "scenario": "Traceable source-to-report number and metric-definition checks",
       "status": "DEVELOPING",
       "target_users": "经营分析与财务复核人员",
-      "test_path": "tests/test_report_consistency_check.py",
+      "test_path": "tests/test_report_consistency_fix.py",
       "type": "Skill",
       "validation_metrics": "products/metrics.json",
       "versions": [
@@ -453,6 +453,15 @@
           "sha256": "4bf56c5786343c65c38dfa1aa4ecfde722bac861e7574432d8881d005457f0f8",
           "source": "packages/skills/wangbin-report-consistency-check",
           "version": "0.1.2"
+        },
+        {
+          "archive_evidence": "dist/wangbin-report-consistency-check-0.1.3-skill-candidate.zip",
+          "candidate": "dist/wangbin-report-consistency-check-0.1.3-skill-candidate.zip",
+          "date": "2026-11-07",
+          "published_at": "UNKNOWN",
+          "sha256": "549111865465d3feb9faf5aaedf69738be6efd48094b1f61dd127e0b29ed9b38",
+          "source": "packages/skills/wangbin-report-consistency-check",
+          "version": "0.1.3"
         }
       ]
     }
