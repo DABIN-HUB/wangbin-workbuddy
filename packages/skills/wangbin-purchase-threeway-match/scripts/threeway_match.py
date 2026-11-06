@@ -84,8 +84,13 @@ def tol(config: dict, name: str, variance: Decimal, expected: Decimal | None) ->
     allowed=value if obj.get("mode", "absolute")=="absolute" else max(Decimal(0), (abs(expected or Decimal(0))*value))
     return abs(variance) <= allowed
 
-def main_match(manifest: dict[str, Any], output: Path) -> dict[str, Any]:
-    root=Path(manifest.get("input_root", "")).resolve()
+def main_match(manifest: dict[str, Any], output: Path, manifest_dir: Path | None = None) -> dict[str, Any]:
+    input_root = manifest.get("input_root", "")
+    # A manifest is a portable document: resolve its relative root beside the
+    # manifest, not beside the caller's current working directory.
+    if manifest_dir is not None and isinstance(input_root, str) and not Path(input_root).is_absolute():
+        input_root = str(manifest_dir / input_root)
+    root=Path(input_root).resolve()
     if not root.is_dir() or root.is_symlink(): raise MatchError("INVALID_INPUT", "input_root must be a directory")
     out=output.resolve();
     if out == root or root in out.parents: raise MatchError("INVALID_INPUT", "output root must be distinct")
@@ -105,11 +110,20 @@ def main_match(manifest: dict[str, Any], output: Path) -> dict[str, Any]:
     if len(files)>limits["max_files"] or sum(p.stat().st_size for p in files)>limits["max_batch_bytes"]: raise MatchError("LIMIT_EXCEEDED", "batch limit exceeded")
     groups={k: [r for r in source if r["_kind"]==k] for k in ("po","receipt","invoice")}
     trace=[]; invalid=[]
+    numeric_fields = {
+        "po": ("ordered_quantity", "po_unit_price", "po_amount"),
+        "receipt": ("received_quantity",),
+        "invoice": ("invoiced_quantity", "invoice_unit_price", "invoice_amount"),
+    }
     for kind, rows in groups.items():
         for r in rows:
             missing=[f for f in REQ[kind] if text(r.get(f))==""]
             r["_key"]=key_of(r,key_ci)
-            if missing: r["_reason"]="MISSING_REQUIRED_FIELD"; invalid.append(r)
+            malformed=[f for f in numeric_fields[kind] if text(r.get(f)) and dec(r.get(f)) is None]
+            negative=[f for f in numeric_fields[kind] if dec(r.get(f)) is not None and dec(r.get(f)) < 0]
+            if missing: r["_reason"]="MISSING_REQUIRED_FIELD"; r["_invalid_fields"]=missing; invalid.append(r)
+            elif malformed or negative:
+                r["_reason"]="INVALID_INPUT"; r["_invalid_fields"]=malformed + negative; invalid.append(r)
             elif r["_key"] is None: r["_reason"]="AMBIGUOUS_KEY"; invalid.append(r)
             else: r["_reason"]="INCLUDED"
             trace.append(r)
@@ -131,34 +145,51 @@ def main_match(manifest: dict[str, Any], output: Path) -> dict[str, Any]:
         ps=pos.get(key,[]); rs=receipts.get(key,[]); ins=invoices.get(key,[]); codes=[]
         if len(ps)>1 and not cfg.get("allow_repeated_po_lines",False): codes.append("DUPLICATE_PO_KEY")
         if not ps:
-            for r in rs: unmatched_r.append({**r,"reason":"ORPHAN_RECEIPT"}); exceptions.append({"comparison_key":json.dumps(key),"exception_code":"ORPHAN_RECEIPT","source_row_reference":r["source_file"]+":"+str(r["source_row_number"])})
-            for r in ins: unmatched_i.append({**r,"reason":"ORPHAN_INVOICE"}); exceptions.append({"comparison_key":json.dumps(key),"exception_code":"ORPHAN_INVOICE","source_row_reference":r["source_file"]+":"+str(r["source_row_number"])})
+            for r in rs:
+                unmatched_r.append({**r,"reason":"ORPHAN_RECEIPT"})
+                exceptions.append({"comparison_key":json.dumps(key),"exception_code":"ORPHAN_RECEIPT","source_row_reference":r["source_file"]+":"+str(r["source_row_number"])})
+            for r in ins:
+                unmatched_i.append({**r,"reason":"ORPHAN_INVOICE"})
+                exceptions.append({"comparison_key":json.dumps(key),"exception_code":"ORPHAN_INVOICE","source_row_reference":r["source_file"]+":"+str(r["source_row_number"])})
             continue
-        po=ps[0]; oq=dec(po.get("ordered_quantity")); price=dec(po.get("po_unit_price")); po_amt=dec(po.get("po_amount")); rq=sum((dec(r.get("received_quantity")) or 0 for r in rs),Decimal(0)); iq=sum((dec(r.get("invoiced_quantity")) or 0 for r in ins),Decimal(0)); ia=sum((dec(r.get("invoice_amount")) or 0 for r in ins),Decimal(0))
+        po=ps[0]; oq=dec(po.get("ordered_quantity")); price=dec(po.get("po_unit_price")); po_amt=dec(po.get("po_amount")); rq_values=[dec(r.get("received_quantity")) for r in rs]; iq_values=[dec(r.get("invoiced_quantity")) for r in ins]; ia_values=[dec(r.get("invoice_amount")) for r in ins]
+        rq=sum(rq_values,Decimal(0)) if rq_values and all(x is not None for x in rq_values) else None
+        iq=sum(iq_values,Decimal(0)) if iq_values and all(x is not None for x in iq_values) else None
+        ia=sum(ia_values,Decimal(0)) if ia_values and all(x is not None for x in ia_values) else None
         if oq is None or price is None: codes.append("NOT_COMPARABLE")
-        rv=(rq-oq) if oq is not None else None; iv=(iq-oq) if oq is not None else None
+        rv=(rq-oq) if rq is not None and oq is not None else None; iv=(iq-oq) if iq is not None and oq is not None else None
         if rv is not None and not tol(cfg,"quantity_tolerance",rv,oq): codes.append("QTY_OVER" if rv>0 else "QTY_UNDER")
         if iv is not None and not tol(cfg,"quantity_tolerance",iv,oq): codes.append("QTY_OVER" if iv>0 else "QTY_UNDER")
         currencies={text(x.get("currency")) for x in [po,*ins] if text(x.get("currency"))}; uoms={text(x.get("uom")) for x in [po,*rs,*ins] if text(x.get("uom"))}
         if len(currencies)>1: codes += ["CURRENCY_MISMATCH","NOT_COMPARABLE"]
         if len(uoms)>1: codes += ["UOM_MISMATCH","NOT_COMPARABLE"]
-        weighted=(sum((dec(x.get("invoiced_quantity")) or 0)*(dec(x.get("invoice_unit_price")) or 0) for x in ins)/iq) if iq else None
+        weighted=(sum(dec(x.get("invoiced_quantity"))*dec(x.get("invoice_unit_price")) for x in ins)/iq) if iq and all(dec(x.get("invoiced_quantity")) is not None and dec(x.get("invoice_unit_price")) is not None for x in ins) else None
         if weighted is not None and price is not None and not tol(cfg,"unit_price_tolerance",weighted-price,price): codes.append("PRICE_MISMATCH")
         expected=po_amt if po_amt is not None else ((oq*price) if oq is not None and price is not None else None)
-        av=(ia-expected) if expected is not None else None
+        av=(ia-expected) if ia is not None and expected is not None else None
         if av is None: codes.append("NOT_COMPARABLE")
         elif not tol(cfg,"amount_tolerance",av,expected): codes.append("AMOUNT_MISMATCH")
         for r in rs+ins:
             ident=tuple(text(r.get(x)) for x in (("receipt_number","receipt_line_id") if r["_kind"]=="receipt" else ("invoice_number","invoice_line_id")))
             if ident in duplicate_sources: codes.append("DUPLICATE_SOURCE_ROW")
         codes=list(dict.fromkeys(codes)); status="MATCHED" if not codes else min(codes,key=lambda x:precedence.get(x,99))
-        result={"comparison_key":json.dumps(key,ensure_ascii=False),"status":status,"ordered_quantity":str(oq) if oq is not None else "NOT_AVAILABLE","received_quantity":str(rq),"invoiced_quantity":str(iq),"receipt_variance":str(rv) if rv is not None else "NOT_AVAILABLE","invoice_variance":str(iv) if iv is not None else "NOT_AVAILABLE","expected_amount":str(expected) if expected is not None else "NOT_AVAILABLE","invoiced_amount":str(ia),"amount_variance":str(av) if av is not None else "NOT_AVAILABLE","weighted_invoice_unit_price":str(weighted) if weighted is not None else "NOT_AVAILABLE","currency":text(po.get("currency")),"uom":text(po.get("uom")),"exception_codes":";".join(codes),"source_file":po["source_file"],"source_sheet":po["source_sheet"],"source_row_number":po["source_row_number"]}
+        result={"comparison_key":json.dumps(key,ensure_ascii=False),"status":status,"ordered_quantity":str(oq) if oq is not None else "NOT_AVAILABLE","received_quantity":str(rq) if rq is not None else "NOT_AVAILABLE","invoiced_quantity":str(iq) if iq is not None else "NOT_AVAILABLE","receipt_variance":str(rv) if rv is not None else "NOT_AVAILABLE","invoice_variance":str(iv) if iv is not None else "NOT_AVAILABLE","expected_amount":str(expected) if expected is not None else "NOT_AVAILABLE","expected_amount_source":"SUPPLIED" if po_amt is not None else ("DERIVED" if expected is not None else "NOT_AVAILABLE"),"invoiced_amount":str(ia) if ia is not None else "NOT_AVAILABLE","amount_variance":str(av) if av is not None else "NOT_AVAILABLE","weighted_invoice_unit_price":str(weighted) if weighted is not None else "NOT_AVAILABLE","currency":text(po.get("currency")),"uom":text(po.get("uom")),"exception_codes":";".join(codes),"source_file":po["source_file"],"source_sheet":po["source_sheet"],"source_row_number":po["source_row_number"]}
         results.append(result)
-        for c in codes: exceptions.append({"comparison_key":result["comparison_key"],"exception_code":c,"source_row_reference":po["source_file"]+":"+str(po["source_row_number"])})
-    for r in groups["receipt"]:
-        if r.get("_key") not in pos or r.get("_reason")!="INCLUDED": unmatched_r.append({**r,"reason":r.get("_reason","ORPHAN_RECEIPT")})
-    for r in groups["invoice"]:
-        if r.get("_key") not in pos or r.get("_reason")!="INCLUDED": unmatched_i.append({**r,"reason":r.get("_reason","ORPHAN_INVOICE")})
+        for c in codes:
+            source_rows = (rs + ins) if c == "DUPLICATE_SOURCE_ROW" else [po]
+            for source in source_rows:
+                if c == "DUPLICATE_SOURCE_ROW":
+                    ident=tuple(text(source.get(x)) for x in (("receipt_number","receipt_line_id") if source["_kind"]=="receipt" else ("invoice_number","invoice_line_id")))
+                    if ident not in duplicate_sources: continue
+                exceptions.append({"comparison_key":result["comparison_key"],"exception_code":c,"source_row_reference":source["source_file"]+":"+str(source["source_row_number"])})
+    # Invalid/incomplete physical rows are retained exactly once and do not
+    # participate in aggregate keys. This also covers ambiguous keys.
+    for r in invalid:
+        reason=r["_reason"]
+        target=unmatched_r if r["_kind"]=="receipt" else unmatched_i if r["_kind"]=="invoice" else None
+        if target is not None: target.append({**r,"reason":reason})
+        code = "INVALID_INPUT" if reason == "INVALID_INPUT" else reason
+        exceptions.append({"comparison_key":json.dumps(r.get("_key") or json.loads(r["original_key_values"]), ensure_ascii=False),"exception_code":code,"source_row_reference":r["source_file"]+":"+str(r["source_row_number"])})
     out.mkdir(parents=True,exist_ok=False)
     summary={"schema_version":"1.0","run_status":"SUCCEEDED_WITH_EXCEPTIONS" if exceptions or invalid else "SUCCEEDED","totals":{"po_keys":len(results),"matched":sum(x["status"]=="MATCHED" for x in results),"exceptions":len(exceptions)},"exception_code_counts":dict(sorted(Counter(x["exception_code"] for x in exceptions).items())),"output_file_references":{"workbook":"threeway_match.xlsx","report":"report.md"}}
     manifest_out={"product_id":"wangbin-purchase-threeway-match","version":"0.1.0","input_files":[{"name":p.name,"sha256":hashlib.sha256(p.read_bytes()).hexdigest()} for p in files],"row_counts":{k:len(v) for k,v in groups.items()},"limits":limits,"completion_status":summary["run_status"]}
@@ -181,6 +212,7 @@ def main_match(manifest: dict[str, Any], output: Path) -> dict[str, Any]:
 
 def cli() -> int:
     ap=argparse.ArgumentParser(); ap.add_argument("--manifest",required=True); ap.add_argument("--output",required=True); args=ap.parse_args()
-    try: print(json.dumps(main_match(json.loads(Path(args.manifest).read_text(encoding="utf-8")),Path(args.output)),ensure_ascii=False,indent=2)); return 0
+    manifest_path=Path(args.manifest).resolve()
+    try: print(json.dumps(main_match(json.loads(manifest_path.read_text(encoding="utf-8")),Path(args.output),manifest_path.parent),ensure_ascii=False,indent=2)); return 0
     except MatchError as e: print(json.dumps({"run_status":"FAILED_INPUT" if e.code=="INVALID_INPUT" else "FAILED_LIMIT","error_code":e.code,"message":e.message}),file=sys.stderr); return 2
 if __name__=="__main__": raise SystemExit(cli())
