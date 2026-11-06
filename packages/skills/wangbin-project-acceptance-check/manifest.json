@@ -1,0 +1,10 @@
+{
+  "id": "wangbin-project-acceptance-check",
+  "version": "0.1.0",
+  "author": "wangbin",
+  "license_type": "PROPRIETARY",
+  "license_status": "NOT_VERIFIED",
+  "runtime": "Python 3.11+ with python-docx 1.2.0 and openpyxl 3.1.x; WorkBuddy environment NOT_TESTED",
+  "description_zh": "对应合同要求、交付物与验证证据，发现验收资料缺口并生成可追溯的准备报告。",
+  "description_en": "Map software project requirements to deliverables and verification evidence, identify gaps, and prepare traceable acceptance materials."
+}
