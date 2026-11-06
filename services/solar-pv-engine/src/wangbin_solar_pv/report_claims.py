@@ -504,12 +504,113 @@ def _source_atom_value(atom: Any, known_sources: set[str]) -> Any:
     return atom
 
 
+def _sourced_tasks(value: Any, records: tuple | list) -> list | None:
+    """Bind every schedule atom to its own Phase 2 row and parent source."""
+    parents = [record for record in records if record.get('field_id') == 'schedule.tasks']
+    if len(parents) != 1 or not isinstance(value, list) or not value:
+        return None
+    parent = parents[0]
+    source_id, origin = parent.get('source_id'), parent.get('source_url_or_attachment')
+    kind, status = parent.get('source_kind'), parent.get('status')
+    if (parent.get('field_instance_id') != 'schedule.tasks'
+            or not isinstance(source_id, str) or not source_id
+            or not isinstance(origin, str) or not origin
+            or status not in {'ASSUMED', 'VERIFIED'}
+            or parent.get('license_status') != 'AUTHORIZED'
+            or not parent.get('source_section_or_cell')
+            or (kind == 'ASSUMPTION') != (status == 'ASSUMED')
+            or kind not in {'USER_PROVIDED', 'DOCUMENT_EXTRACTED',
+                            'EXTERNAL_SOURCE', 'CALCULATED', 'ASSUMPTION'}):
+        return None
+
+    flat = {}
+    for record in records:
+        if record.get('field_instance_id'):
+            flat.setdefault(record['field_instance_id'], []).append(record)
+    nested_instances = set()
+
+    def same_source(atom: Any, fid: str, instance: str) -> bool:
+        return (isinstance(atom, dict) and atom.get('field_id') == fid
+                and atom.get('field_instance_id') == instance
+                and atom.get('source_id') == source_id
+                and atom.get('source_url_or_attachment') == origin
+                and atom.get('source_kind') == kind
+                and atom.get('status') in {'ASSUMED', 'VERIFIED'}
+                and atom.get('license_status') == 'AUTHORIZED'
+                and atom.get('source_section_or_cell') == parent['source_section_or_cell']
+                and (kind == 'ASSUMPTION') == (atom['status'] == 'ASSUMED'))
+
+    def bound(atom: Any, fid: str, instance: str, expected: Any) -> bool:
+        return (same_source(atom, fid, instance)
+                and instance not in nested_instances
+                and len(flat.get(instance, ())) == 1
+                and flat[instance][0] == atom
+                and type(atom.get('value')) is type(expected)
+                and atom['value'] == expected)
+
+    source_rows = parent.get('value')
+    if not isinstance(source_rows, list) or len(source_rows) != len(value):
+        return None
+    by_id = {}
+    for row in source_rows:
+        if not isinstance(row, dict) or not isinstance(row.get('row_id'), str) or not row['row_id'] or row['row_id'] in by_id:
+            return None
+        by_id[row['row_id']] = row
+    seen = set()
+    for row in value:
+        if not isinstance(row, dict) or not isinstance(row.get('row_id'), str) or not row['row_id'] or row['row_id'] in seen:
+            return None
+        row_id = row['row_id']
+        seen.add(row_id)
+        source = by_id.get(row_id)
+        fields = row.get('fields')
+        atoms = source.get('fields') if isinstance(source, dict) else None
+        if not isinstance(fields, dict) or not isinstance(atoms, dict) or fields.keys() != atoms.keys():
+            return None
+        for fid, expected in fields.items():
+            if not isinstance(fid, str) or not fid.startswith('schedule.tasks.'):
+                return None
+            instance = f'schedule.tasks:{row_id}:{fid.removeprefix("schedule.tasks.")}'
+            atom = atoms[fid]
+            if fid == 'schedule.tasks.predecessor_ids' and isinstance(expected, list):
+                if (not isinstance(atom, dict) or not isinstance(atom.get('value'), list)
+                        or len(atom['value']) != len(expected)
+                        or not same_source(atom, fid, instance)
+                        or instance in nested_instances
+                        or len(flat.get(instance, ())) != 1 or flat[instance][0] != atom):
+                    return None
+                nested_instances.add(instance)
+                for index, (predecessor, task_id) in enumerate(zip(atom['value'], expected)):
+                    if (not isinstance(task_id, str)
+                            or not isinstance(predecessor, dict)
+                            or predecessor.get('field_instance_id') not in {
+                                f'schedule.tasks:{row_id}:predecessor:{task_id}',
+                                f'{instance}:element:{index}'}
+                            or not bound(predecessor, fid, predecessor['field_instance_id'], task_id)):
+                        return None
+                    nested_instances.add(predecessor['field_instance_id'])
+            elif not bound(atom, fid, instance, expected):
+                return None
+            else:
+                nested_instances.add(instance)
+        if 'schedule.tasks.row_id' in fields and fields['schedule.tasks.row_id'] != row_id:
+            return None
+    return value
+
 def _source_value(normalized: dict, records: tuple | list, fid: str) -> Any:
     """Return only matching Phase 2 atoms, including repeated parent children."""
     parent = _parent_field(fid)
     value = normalized.get(parent)
     if not _has_value(value):
         return None
+    if parent == 'schedule.tasks':
+        tasks = _sourced_tasks(value, records)
+        if tasks is None:
+            return None
+        if fid == parent:
+            return tasks
+        children = [row['fields'][fid] for row in tasks if fid in row['fields']]
+        return children or None
     known_sources = {record['source_id'] for record in records
                      if record.get('source_id') and record.get('status') not in {'REJECTED', 'INVALID'}}
     for record in records:
@@ -670,6 +771,39 @@ def category_fields(item_id: str, fields: tuple[str, ...], pv_type: str,
     return tuple(dict.fromkeys(selected))
 
 
+def _project_irr_claim(model: Any) -> str:
+    """Reader-facing project IRR root-set status; never select a favoured root."""
+    metric = model.metric('financial.phase3e.project_irr')
+    if not metric:
+        return '项目IRR尚无可核验结果'
+    details = metric.get('details') or {}
+    roots, domain = details.get('roots'), details.get('domain')
+    if (not isinstance(roots, list) or not isinstance(domain, dict)
+            or details.get('unexhausted') is not False or type(details.get('root_count')) is not int
+            or details['root_count'] != len(roots)
+            or any(isinstance(domain.get(key), bool) or not isinstance(domain.get(key), (int, float, Decimal))
+                   for key in ('minimum', 'maximum'))
+            or any(isinstance(root, bool) or not isinstance(root, (int, float, Decimal)) for root in roots)):
+        return '项目IRR根集尚未核验，不推断单一回报率'
+    bounds = (f"声明搜索域{Decimal(str(domain['minimum'])) * 100}%至"
+              f"{Decimal(str(domain['maximum'])) * 100}%内")
+    if metric.get('status') == 'UNDEFINED' and metric.get('reason') == 'NO_ROOT' and not roots:
+        return f'项目IRR在{bounds}无根，不等于IRR为0，也不代表整个实数域无根'
+    if (metric.get('status') == 'UNDEFINED' and metric.get('reason') == 'MULTIPLE_ROOTS'
+            and metric.get('value') is None and len(roots) > 1):
+        values = [Decimal(str(root)) * 100 for root in roots]
+        precision = next((digits for digits in range(2, 19)
+                          if len({f'{value:.{digits}f}' for value in values}) == len(values)), None)
+        labels = [f'根{index}≈{value:.{precision}f}%' if precision is not None else
+                  f'根{index}≈{value}%' for index, value in enumerate(values, 1)]
+        return (f'项目IRR在{bounds}有{len(roots)}个已认证根（' + '、'.join(labels) +
+                '），非唯一IRR，不据此择优比较折现率')
+    if (metric.get('status') == 'CALCULATED' and len(roots) == 1
+            and metric.get('value') == roots[0]):
+        return f'项目IRR在{bounds}唯一已认证根为{Decimal(str(roots[0])) * 100:.4f}%'
+    return '项目IRR指标状态与根集不一致，不推断单一回报率'
+
+
 def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[[Any], str]) -> str:
     """Write six bounded conclusions from this run's Phase 2, ledger and metrics."""
     result = model.result
@@ -815,22 +949,28 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
                 "本项是合成年度项目收支预测，不是实际银行流水、已收回款或投资者分红；"
                 "股东出资及分配事件未闭合，不能由项目净流量替代。")
     if item_id == "CH16.04":
-        npv, irr = metric("financial.phase3e.project_npv"), metric("financial.phase3e.project_irr")
+        npv = metric("financial.phase3e.project_npv")
         static, dynamic = metric("financial.phase3e.static_payback"), metric("financial.phase3e.dynamic_payback")
         discount = inp("finance.project_discount_rate")
         flow = metric("financial.phase3e.project_cash_flow")
-        if (any(x is None for x in (npv, irr, static, dynamic, discount, years))
+        if (any(x is None for x in (npv, discount, years))
                 or not isinstance(flow, list)
                 or inp("project.price_basis") != "nominal"
                 or inp("project.cashflow_tax_basis") != "post_tax"
                 or inp("finance.cashflow_timing") != "PERIOD_END"):
-            return "项目税后NPV、IRR、回收期与折现率尚未在同一计算边界闭合，不可替代为投资者收益。"
-        outcome = ("在本次假设下NPV为正且IRR高于折现率，模型项目回报超过折现假设"
-                   if npv > 0 and Decimal(str(irr)) > Decimal(str(discount)) else
-                   "本次测算未同时满足NPV为正及IRR高于折现率的条件")
+            return "项目税后NPV与折现率尚未在同一计算边界闭合，不可替代为投资者收益。"
+        irr_metric = model.metric('financial.phase3e.project_irr') or {}
+        single = (irr_metric.get('status') == 'CALCULATED'
+                  and '唯一已认证根' in _project_irr_claim(model))
+        outcome = ("在本次假设下NPV为正且唯一IRR高于同口径折现率，模型项目回报超过折现假设"
+                   if single and npv > 0 and Decimal(str(irr_metric['value'])) > Decimal(str(discount)) else
+                   "NPV为正，但IRR非唯一或未高于同口径折现率，不据此下单根回报结论"
+                   if npv > 0 else "本次NPV未为正，不据此下正收益结论")
+        payback = (f"静态回收期{format_value(static)}年、动态回收期{format_value(dynamic)}年，"
+                   if static is not None and dynamic is not None else "回收期按其独立指标状态核查，")
         return (f"按合成的{format_value(years)}年项目税后、名义价格及年度期末现金流，"
-                f"使用{pct(discount)}项目折现率得到年度NPV{money(npv)}、IRR{pct(irr)}；"
-                f"静态回收期{format_value(static)}年、动态回收期{format_value(dynamic)}年，{outcome}。"
+                f"使用{pct(discount)}项目折现率得到年度NPV{money(npv)}；{_project_irr_claim(model)}；"
+                f"{payback}{outcome}。"
                 "这不是逐笔日期NPV或实际投资者出资—分红回报：未提供股东现金事件及真实银行流水，"
                 "也未获得现场审批、签署交易与专业复核，不能据此批准投资。")
     return ""
@@ -863,6 +1003,9 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
         if item_id in {'CH18.01', 'CH17.03'} or (item_id == 'CH08.03' and mid.startswith('energy.year.')) or (item_id == 'CH01.05' and mid == 'financial.phase3e.project_npv'):
             continue
         if ground and item_id == 'CH03.04' and mid.startswith('consumption.'):
+            continue
+        if mid == 'financial.phase3e.project_irr' and item_id.startswith('CH01.'):
+            facts.append(_project_irr_claim(model))
             continue
         value = calculated(mid)
         if not isinstance(value, (int, float, Decimal)) or isinstance(value, bool):
@@ -1025,13 +1168,7 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
         if item_id in {'CH18.01', 'CH17.03'}:
             if npv is not None:
                 facts.insert(0, f'合成项目税后年度NPV计算为{fmt(npv)}元')
-            if irr is not None:
-                irr_details = (model.metric('financial.phase3e.project_irr') or {}).get('details', {})
-                if irr_details.get('root_count') == 1 and not irr_details.get('unexhausted'):
-                    facts.insert(1 if npv is not None else 0,
-                                 f'项目IRR在声明求根区间内唯一根为{fmt(Decimal(str(irr)) * 100)}%')
-                else:
-                    facts.append('项目IRR根集尚需单独核验，不选取未经证实的单根')
+            facts.insert(1 if npv is not None else 0, _project_irr_claim(model))
         if item_id.startswith('CH17.'):
             scenario = get('scenarios.options')
             if not scenario:
@@ -1091,11 +1228,8 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
         npv = calculated('financial.phase3e.project_npv')
         irr = calculated('financial.phase3e.project_irr')
         years = get('project.evaluation_years')
-        if npv is not None and irr is not None and years is not None:
-            roots = (model.metric('financial.phase3e.project_irr') or {}).get('details', {})
-            irr_note = (f'项目IRR在声明求根区间内唯一根为{fmt(Decimal(str(irr)) * 100)}%'
-                        if roots.get('root_count') == 1 and not roots.get('unexhausted') else
-                        '项目IRR根集尚未取得可单根引用的证明')
+        if npv is not None and years is not None:
+            irr_note = _project_irr_claim(model)
             construction = result.get('evidence', {}).get('financial-ledger', {}).get('annual', ())
             initial = (construction[0].get('capex_cash_paid') if construction
                        and calculated('financial.phase3e.project_cash_flow') is not None else None)

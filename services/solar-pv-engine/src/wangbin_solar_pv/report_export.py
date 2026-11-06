@@ -9,6 +9,8 @@ formatters but are category-bound at the export boundary.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import calendar
+from datetime import date
 from decimal import Decimal
 from hashlib import sha256
 from io import BytesIO
@@ -22,6 +24,7 @@ import subprocess
 import tempfile
 import time
 from typing import Any
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from docx import Document
 from docx.enum.table import WD_TABLE_ALIGNMENT, WD_CELL_VERTICAL_ALIGNMENT
@@ -119,7 +122,7 @@ _D_STYLE = {
     "white": "FFFFFF",
 }
 
-REPORT_CONTENT_VERSION = "phase7l-r2-v1"
+REPORT_CONTENT_VERSION = "phase7l-r2-v2"
 
 
 @dataclass(frozen=True)
@@ -231,6 +234,8 @@ def _reader_text(text: str) -> str:
 
 
 def _word_metric_value(metric: dict[str, Any]) -> str:
+    if metric.get("metric_id") == "financial.phase3e.project_irr":
+        return _irr_presentation(metric)[0]
     if metric.get("status") != "CALCULATED":
         reason = str(metric.get("reason") or "未提供可用数值")
         return f"{metric.get('status', 'UNKNOWN')}：{reason[:180]}"
@@ -239,21 +244,33 @@ def _word_metric_value(metric: dict[str, Any]) -> str:
 def _irr_presentation(metric: dict[str, Any]) -> tuple[str, str]:
     """Present the reported root set, not an arbitrarily chosen IRR."""
     details = metric.get("details") or {}
+    domain = details.get("domain") or {}
     roots = details.get("roots")
-    if roots is None:
-        roots = metric.get("value")
-    if roots is None:
-        roots = []
-    if not isinstance(roots, list):
-        roots = [roots]
-    if details.get("root_count") is not None and details["root_count"] != len(roots):
-        return "根集待核对", "根数与所列根不一致；不选取单个根"
-    if not roots:
-        return "无根", "本次搜索范围内未得到有效根"
-    if any(isinstance(root, bool) or not isinstance(root, (int, float, Decimal)) for root in roots):
-        return "根集待核对", "非数值根；不选取单个根"
-    display = "、".join(f"{float(root) * 100:,.2f}".rstrip("0").rstrip(".") + "%" for root in roots)
-    return display, "单根" if len(roots) == 1 else f"多根（{len(roots)}个；不选取单个根）"
+    if (not isinstance(roots, list) or details.get("unexhausted") is not False
+            or type(details.get("root_count")) is not int or details["root_count"] != len(roots)
+            or not isinstance(domain, dict)
+            or any(isinstance(domain.get(bound), bool) or not isinstance(domain.get(bound), (int, float, Decimal))
+                   for bound in ("minimum", "maximum"))
+            or any(isinstance(root, bool) or not isinstance(root, (int, float, Decimal)) for root in roots)):
+        return "根集待核验", "根集、搜索域或穷尽状态未核实；不选取单个根"
+    bounds = (f"搜索域{_word_number(Decimal(str(domain['minimum'])) * 100)}%至"
+              f"{_word_number(Decimal(str(domain['maximum'])) * 100)}%内")
+    status, reason = metric.get("status"), metric.get("reason")
+    if status == "UNDEFINED" and reason == "NO_ROOT" and not roots:
+        return "搜索域内无根", f"{bounds}无根，不表示整个实数域无根；IRR不等于0"
+    if status == "UNDEFINED" and reason == "MULTIPLE_ROOTS" and len(roots) > 1 and metric.get("value") is None:
+        values = [Decimal(str(root)) * 100 for root in roots]
+        # Keep root indices even if their rounded percentage strings coincide.
+        precision = next((digits for digits in range(2, 19)
+                          if len({f"{value:.{digits}f}" for value in values}) == len(values)), None)
+        labels = [f"根{index}≈{value:.{precision}f}%" if precision is not None
+                  else f"根{index}≈{value}%" for index, value in enumerate(values, 1)]
+        return "、".join(labels), f"多根；{bounds}存在{len(roots)}个已认证根；IRR非唯一，不与折现率择优比较"
+    if (status == "CALCULATED" and len(roots) == 1
+            and isinstance(metric.get("value"), (int, float, Decimal))
+            and not isinstance(metric["value"], bool) and metric["value"] == roots[0]):
+        return f"{Decimal(str(roots[0])) * 100:.2f}%", f"单根；{bounds}唯一已认证根；年度项目税后口径"
+    return "根集待核验", "指标状态与所列根不一致；不选取单个根"
 
 
 def _word_sources(source_ids: list[str] | tuple[str, ...], source_map: dict[str, str]) -> str:
@@ -274,6 +291,9 @@ def _source_ref_map(model: ReportModel) -> dict[str, str]:
 
 
 def _display_metric(metric: dict[str, Any]) -> str:
+    if metric.get("metric_id") == "financial.phase3e.project_irr":
+        display, note = _irr_presentation(metric)
+        return f"{display}；{note}"
     if metric.get("status") == "CALCULATED":
         return _string(metric.get("value"))
     return f"{metric.get('status', 'UNKNOWN')}：{metric.get('reason') or '未提供可用数值'}"
@@ -296,9 +316,13 @@ def _metric_rows(model: ReportModel, *, prefixes: tuple[str, ...] = ()) -> list[
     for metric in model.metrics:
         if prefixes and not metric["metric_id"].startswith(prefixes):
             continue
-        rows.append([metric["metric_id"], metric["status"], _metric_cell_value(metric), _metric_unit(metric),
+        irr = metric["metric_id"] == "financial.phase3e.project_irr"
+        display, note = _irr_presentation(metric) if irr else (None, None)
+        rows.append([metric["metric_id"], metric["status"], display if irr else _metric_cell_value(metric),
+                     "%" if irr else _metric_unit(metric),
                      metric.get("formula_id") or "UNKNOWN", ",".join(metric.get("source_ids") or []) or "UNKNOWN",
-                     metric.get("reason") or "", _raw_value(metric.get("value"))])
+                     f"{metric.get('reason') or ''}；{note}；认证根原值={dumps((metric.get('details') or {}).get('roots'))}" if irr else metric.get("reason") or "",
+                     _raw_value(metric.get("value"))])
     return rows
 
 
@@ -627,32 +651,137 @@ def _appendix_content(model: ReportModel, item_id: str) -> str:
 def _resource_rows(model: ReportModel) -> tuple[list[str], list[list[Any]]]:
     """Show source-bound monthly resource inputs, never generated electricity."""
     normalized = model.result["inputs"].get("normalized", {})
-    columns = ("ghi", "dni", "dhi", "poa", "ambient_temperature", "wind_speed", "coverage")
+    units = {"ghi": "kWh/m2", "dni": "kWh/m2", "dhi": "kWh/m2", "poa": "kWh/m2",
+             "ambient_temperature": "degC", "wind_speed": "m/s", "coverage": "1"}
     headers = ["月份", "GHI (kWh/㎡)", "DNI (kWh/㎡)", "DHI (kWh/㎡)",
                "POA (kWh/㎡)", "气温 (°C)", "风速 (m/s)", "覆盖率", "来源与使用边界"]
     records = model.result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
-    source = next((record for record in records if record.get("field_id") == "resource.monthly"
-                   and record.get("source_id") and record.get("status") in {"ASSUMED", "VERIFIED"}), None)
     rows = []
     monthly = normalized.get("resource.monthly")
-    if source and isinstance(monthly, list):
-        seen = set()
+    parents = [record for record in records if record.get("field_id") == "resource.monthly"]
+    source = parents[0] if len(parents) == 1 else None
+    evaluation = model.result.get("evaluation_date")
+
+    def active(atom: dict[str, Any] | None) -> bool:
+        if not isinstance(atom, dict) or atom.get("status") not in {"ASSUMED", "VERIFIED"}:
+            return False
+        if (not atom.get("source_id") or not atom.get("source_url_or_attachment")
+                or atom.get("license_status") != "AUTHORIZED"):
+            return False
+        try:
+            today = date.fromisoformat(evaluation)
+            return (not atom.get("effective_from") or date.fromisoformat(atom["effective_from"][:10]) <= today) and (
+                not atom.get("effective_to") or date.fromisoformat(atom["effective_to"][:10]) >= today)
+        except (TypeError, ValueError):
+            return False
+
+    def parent_bound(atom: dict[str, Any] | None) -> bool:
+        return (active(atom) and atom["source_id"] == source["source_id"]
+                and atom["source_url_or_attachment"] == source["source_url_or_attachment"]
+                and atom.get("source_kind") == source.get("source_kind"))
+
+    flat = {}
+    for record in records:
+        instance = record.get("field_instance_id")
+        if instance:
+            flat.setdefault(instance, []).append(record)
+    source_rows = {}
+    nested_instances = {}
+    if source and isinstance(source.get("value"), list):
+        for row in source["value"]:
+            if isinstance(row, dict):
+                source_rows.setdefault(row.get("row_id"), []).append(row)
+                for child in row.get("fields", {}).values():
+                    if isinstance(child, dict) and child.get("field_instance_id"):
+                        instance = child["field_instance_id"]
+                        nested_instances[instance] = nested_instances.get(instance, 0) + 1
+    period = {}
+    for fid in ("resource.period_start", "resource.period_end"):
+        matches = [record for record in records if record.get("field_id") == fid]
+        if (len(matches) == 1 and source and parent_bound(matches[0])
+                and matches[0].get("value") == normalized.get(fid)):
+            try:
+                period[fid] = date.fromisoformat(matches[0]["value"])
+            except (TypeError, ValueError):
+                pass
+    start, end = period.get("resource.period_start"), period.get("resource.period_end")
+    # The frozen monthly path consumes one complete local calendar year. A
+    # month number without a sourced dataset and site time zone is ambiguous.
+    metadata = {}
+    for fid in ("resource.dataset_id", "resource.version", "site.timezone"):
+        matches = [record for record in records if record.get("field_id") == fid]
+        if (len(matches) == 1 and active(matches[0]) and matches[0].get("field_instance_id") == fid
+                and matches[0].get("value") == normalized.get(fid)):
+            metadata[fid] = matches[0]["value"]
+    try:
+        zone = ZoneInfo(metadata["site.timezone"])
+    except (KeyError, TypeError, ValueError, ZoneInfoNotFoundError):
+        zone = None
+    calendar_bound = (start is not None and end is not None and
+                      start == date(start.year, 1, 1) and end == date(start.year, 12, 31)
+                      and zone is not None and bool(metadata.get("resource.dataset_id"))
+                      and bool(metadata.get("resource.version")))
+    months = {}
+    row_ids = {}
+    if isinstance(monthly, list):
+        for item in monthly:
+            if isinstance(item, dict):
+                row_id = item.get("row_id")
+                month = item.get("fields", {}).get("resource.monthly.month")
+                row_ids[row_id] = row_ids.get(row_id, 0) + 1
+                months[month] = months.get(month, 0) + 1
+
+    if source and active(source) and isinstance(monthly, list):
         for item in monthly:
             fields = item.get("fields", {}) if isinstance(item, dict) else {}
             month = fields.get("resource.monthly.month")
-            if not isinstance(month, int) or month < 1 or month > 12 or month in seen:
+            row_id = item.get("row_id") if isinstance(item, dict) else None
+            if not isinstance(month, int) or isinstance(month, bool) or month < 1 or month > 12:
                 continue
-            seen.add(month)
+            matching_rows = source_rows.get(row_id, [])
+            sourced = matching_rows[0].get("fields", {}) if len(matching_rows) == 1 else {}
+            if not isinstance(sourced, dict):
+                sourced = {}
+            month_start = date(start.year, month, 1) if calendar_bound else None
+            month_end = (date(start.year, month, calendar.monthrange(start.year, month)[1])
+                         if month_start else None)
+
+            def bound(fid: str, value: Any, unit: str | None) -> dict[str, Any] | None:
+                atom = sourced.get(fid)
+                if (not isinstance(atom, dict) or atom.get("field_id") != fid
+                        or atom.get("value") != value or atom.get("unit") != unit
+                        or not parent_bound(atom)
+                        or atom.get("field_instance_id") != f"resource.monthly:{row_id}:{fid.removeprefix('resource.monthly.')}"):
+                    return None
+                matches = flat.get(atom["field_instance_id"], [])
+                if (len(matches) != 1 or matches[0] != atom
+                        or nested_instances.get(atom["field_instance_id"]) != 1):
+                    return None
+                return atom
+
+            month_ok = (isinstance(row_id, str) and bool(row_id) and row_ids.get(row_id) == 1
+                        and months.get(month) == 1 and month_start is not None
+                        and start <= month_start <= month_end <= end
+                        and fields.get("resource.monthly.row_id") == row_id
+                        and bound("resource.monthly.month", month, None) is not None
+                        and bound("resource.monthly.row_id", row_id, None) is not None)
             cells = []
-            for key in columns:
+            lineage = []
+            for key, unit in units.items():
                 fid = "resource.monthly." + key
                 value = fields.get(fid)
-                bound = any(record.get("field_id") == fid and record.get("value") == value
-                            and record.get("source_id") == source["source_id"]
-                            and record.get("status") in {"ASSUMED", "VERIFIED"}
-                            for record in records)
-                cells.append(value if value is not None and bound else "UNKNOWN")
-            rows.append([month, *cells, f"{source['source_id']}；Phase 2 资源输入，非D3实测或发电量"])
+                atom = bound(fid, value, unit) if month_ok and value is not None else None
+                cells.append(value if atom else "UNKNOWN")
+                if atom:
+                    lineage.append(f"{fid}={atom['field_instance_id']}({atom['status']},{unit},{atom['source_id']})")
+            identity = (f"数据集{metadata['resource.dataset_id']}（{metadata['resource.version']}）；"
+                        f"本地时区{zone.key}；{month_start.isoformat()}—{month_end.isoformat()}；"
+                        f"{source['source_id']}；{source['source_url_or_attachment']}"
+                        if lineage else "UNKNOWN")
+            note = (f"{identity}；row_id={row_id}；辐照为已提供月累计量，气温及风速为已提供月统计值；"
+                    "Phase 2 资源输入，非D3实测或发电量"
+                    + ("；" + "；".join(lineage) if lineage else "；行/字段来源未闭合"))
+            rows.append([month, *cells, note])
         rows.sort(key=lambda row: row[0])
     if not rows:
         dataset = _dataset_rows(model.result).get("resource.timeseries")
@@ -1258,13 +1387,12 @@ def _professional_metric_rows(model: ReportModel, metric_ids: tuple[str, ...]) -
         if metric is None:
             continue
         status = metric.get("status", "UNKNOWN")
-        if status == "CALCULATED":
-            if metric_id.endswith("project_irr"):
-                display, roots_note = _irr_presentation(metric)
-                note = f"项目年度税后现金流；{roots_note}；合成测算"
-            else:
-                display = _word_metric_value(metric)
-                note = "合成参数测算；非实测或合同承诺"
+        if metric_id == "financial.phase3e.project_irr" and status in {"CALCULATED", "UNDEFINED"}:
+            display, roots_note = _irr_presentation(metric)
+            note = f"项目年度税后现金流；{roots_note}；合成测算"
+        elif status == "CALCULATED":
+            display = _word_metric_value(metric)
+            note = "合成参数测算；非实测或合同承诺"
         elif status.startswith("BLOCKED"):
             display = "暂不具备有效评价条件"
             note = (str(metric.get("reason") or "当前评价项未形成有效结果")[:160]
@@ -1317,9 +1445,10 @@ def _project_summary(model: ReportModel) -> str:
            "financial.phase3e.static_payback", "financial.phase3e.dynamic_payback")
     calculated = []
     for mid in ids:
-        if model.status(mid) == "CALCULATED":
-            label, value, unit, _note = _professional_metric_rows(model, (mid,))[0]
-            calculated.append(f"{label} {value}{'' if value.endswith('%') else unit}")
+        if model.status(mid) == "CALCULATED" or (mid.endswith("project_irr") and model.status(mid) == "UNDEFINED"):
+            label, value, unit, note = _professional_metric_rows(model, (mid,))[0]
+            calculated.append(f"{label} {value}{'' if mid.endswith('project_irr') or value.endswith('%') else unit}"
+                              + (f"（{note}）" if mid.endswith("project_irr") else ""))
     if calculated:
         discount = inputs.get("finance.project_discount_rate")
         basis = f"，项目折现率{_word_number(discount * 100)}%" if isinstance(discount, (int, float, Decimal)) else ""
