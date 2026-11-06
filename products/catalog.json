@@ -437,11 +437,11 @@
           "version": "0.1.0"
         },
         {
-          "archive_evidence": "UNKNOWN",
-          "candidate": "UNKNOWN",
+          "archive_evidence": "dist/wangbin-project-acceptance-check-0.1.1-skill-candidate.zip",
+          "candidate": "dist/wangbin-project-acceptance-check-0.1.1-skill-candidate.zip",
           "date": "UNKNOWN",
           "published_at": "UNKNOWN",
-          "sha256": "UNKNOWN",
+          "sha256": "74210b2a9e35074f247173f71909848acddb615da40fb39fa24eff74bb99d958",
           "source": "packages/skills/wangbin-project-acceptance-check",
           "version": "0.1.1"
         }
