@@ -1,6 +1,34 @@
 {
   "products": [
     {
+      "active_version": "0.1.0",
+      "development": "Local MVP candidate; WorkBuddy runtime not tested",
+      "id": "wangbin-meeting-action-tracker",
+      "maintenance": "UNKNOWN",
+      "name": "会议决议与任务跟踪",
+      "name_en": "Meeting Decisions and Action Tracker",
+      "published_at": "UNKNOWN",
+      "review_evidence": "No platform evidence",
+      "review_status": "NOT_TESTED",
+      "scenario": "跨次会议任务状态与证据追踪",
+      "status": "DEVELOPING",
+      "target_users": "会议组织者与项目经理",
+      "test_path": "tests/test_meeting_action_tracker.py",
+      "type": "Skill",
+      "validation_metrics": "products/metrics.json",
+      "versions": [
+        {
+          "archive_evidence": "dist/wangbin-meeting-action-tracker-0.1.0-skill-candidate.zip",
+          "candidate": "dist/wangbin-meeting-action-tracker-0.1.0-skill-candidate.zip",
+          "date": "UNKNOWN",
+          "published_at": "UNKNOWN",
+          "sha256": "e9ce10c7979bdd510e08b20e1bb877fc28f7e66ef437c05b5e1a19117c0eac20",
+          "source": "packages/skills/wangbin-meeting-action-tracker",
+          "version": "0.1.0"
+        }
+      ]
+    },
+    {
       "active_version": "1.0.0",
       "development": "Existing local candidate",
       "id": "wangbin-document-assistant",
