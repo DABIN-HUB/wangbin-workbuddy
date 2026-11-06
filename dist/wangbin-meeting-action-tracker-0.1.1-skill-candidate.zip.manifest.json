@@ -1,0 +1,28 @@
+{
+  "archive": "dist/wangbin-meeting-action-tracker-0.1.1-skill-candidate.zip",
+  "id": "wangbin-meeting-action-tracker",
+  "members": [
+    {
+      "path": "wangbin-meeting-action-tracker/SKILL.md",
+      "sha256": "07a6ee5e23ec7d534fd08416c39166c7db2b4b93d7360d18a194787010033c90",
+      "size": 4206
+    },
+    {
+      "path": "wangbin-meeting-action-tracker/manifest.json",
+      "sha256": "3fda62f1bc062b1dbeae32dce51575e6a09c51ba13f94cab72bd8854d65a632c",
+      "size": 216
+    },
+    {
+      "path": "wangbin-meeting-action-tracker/scripts/track.py",
+      "sha256": "95a253c224fd2c16c41c452ec2053d6223572cf6ff8c2a5737f703c1a1f16a7d",
+      "size": 22349
+    }
+  ],
+  "payload_snapshot_sha256": "731e8a7b7900baf4887f6ac1669b5cd6f33f15b4d292c326b8374d0e04430663",
+  "platform": "BLOCKED",
+  "scope": "local archive integrity only",
+  "sha256": "5f5f0bc86ca469c89d758010194d8768e27badc96584791495e4b71c8ef745ae",
+  "source": "packages/skills/wangbin-meeting-action-tracker",
+  "status": "PASS",
+  "version": "0.1.1"
+}

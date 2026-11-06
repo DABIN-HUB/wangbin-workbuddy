@@ -27,11 +27,11 @@
           "version": "0.1.0"
         },
         {
-          "archive_evidence": "UNKNOWN",
-          "candidate": "UNKNOWN",
+          "archive_evidence": "dist/wangbin-meeting-action-tracker-0.1.1-skill-candidate.zip",
+          "candidate": "dist/wangbin-meeting-action-tracker-0.1.1-skill-candidate.zip",
           "date": "UNKNOWN",
           "published_at": "UNKNOWN",
-          "sha256": "UNKNOWN",
+          "sha256": "5f5f0bc86ca469c89d758010194d8768e27badc96584791495e4b71c8ef745ae",
           "source": "packages/skills/wangbin-meeting-action-tracker",
           "version": "0.1.1"
         }
