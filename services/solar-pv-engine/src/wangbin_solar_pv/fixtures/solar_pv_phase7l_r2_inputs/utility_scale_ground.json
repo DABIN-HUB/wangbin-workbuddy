@@ -1,0 +1,24 @@
+{
+  "schema_version": "solar-pv-phase7l-r2-inputs/2.0.0",
+  "project_id": "SYNTHETIC-PHASE7L-R2-GROUND-25Y-330KWP",
+  "pv_type": "utility_scale_ground",
+  "site_model": "Fictional 10000 m2 ground parcel with 1000 m2 roads and drainage exclusion, 9000 m2 usable and modeled rights through 2052. No surveyed boundary, geotechnical study, flood study or verified land title.",
+  "engineering_model": "600 x 550 Wp modules, 3 x 100 kWac inverters; 30 strings of 20; modeled 25-year horizon. Inverter renewal at year 13 with linked cash CAPEX and one-year downtime scenario.",
+  "commercial_model": "Full export at a modeled 2025 hourly market price including signed negative midday price; synthetic resource is an explicit representative year, not 25 observed meteorological years. No executed grid connection or trading agreement.",
+  "capital_model": "Initial modules 600 x 700 CNY, inverters 3 x 45000 CNY, mounting 220000 CNY, construction 175000 CNY; year-13 replacement inverters 3 x 45000 CNY. All declared paid in scenario, not historical cash proof.",
+  "operating_model": "Maintenance 15000 CNY and insurance 9500 CNY per first year, 2% annual escalation through year 25. Unlevered financing, CNY nominal post-tax end-year discount 7.5%; forecast collections and OPEX payments 100% each period.",
+  "constraints": "No real land right, construction approval, geotechnical or flood report, grid permission, market trading contract, supplier quote, tax opinion, or legal certification. All documentary references are authored synthetic modeling notes only.",
+  "discount_rate": "0.075",
+  "replacement_year": 13,
+  "replacement_asset": "scenario-inverters",
+  "replacement_cost": 135000,
+  "replacement_life": 13,
+  "replacement_downtime_days": 6,
+  "planning_tasks": [
+    {"task_id": "ground-design", "name": "SYNTHETIC site/drainage/connection concept planning", "start_date": "2026-11-06", "finish_date": "2026-11-20", "predecessor_ids": [], "owner": "Fictional model engineering team", "critical_path": true},
+    {"task_id": "ground-readiness", "name": "SYNTHETIC title/geotechnical/grid review gate planning; approvals remain pending", "start_date": "2026-11-21", "finish_date": "2026-11-30", "predecessor_ids": ["ground-design"], "owner": "Fictional model sponsor", "critical_path": true},
+    {"task_id": "ground-build", "name": "SYNTHETIC ground civil and array works, conditional on real clearances", "start_date": "2026-12-01", "finish_date": "2026-12-20", "predecessor_ids": ["ground-readiness"], "owner": "Fictional model construction team", "critical_path": true},
+    {"task_id": "ground-test", "name": "SYNTHETIC grid interface testing plan, not grid consent", "start_date": "2026-12-21", "finish_date": "2026-12-31", "predecessor_ids": ["ground-build"], "owner": "Fictional model operations team", "critical_path": true},
+    {"task_id": "ground-milestone", "name": "SYNTHETIC commissioning milestone assumption, not permission to operate", "start_date": "2027-01-01", "finish_date": "2027-01-01", "predecessor_ids": ["ground-test"], "owner": "Fictional model sponsor", "critical_path": true}
+  ]
+}

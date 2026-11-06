@@ -1,0 +1,7 @@
+SYNTHETIC no-disposition forecast v2.0.0; project_id=SYNTHETIC-PHASE7L-R2-ROOF-25Y-165KWP terminal_date=2051-12-31
+asset_id=scenario-construction
+asset_id=scenario-inverters
+asset_id=scenario-modules
+asset_id=scenario-mounting
+no additional recovery; tax_treatment=NO_DISPOSITION_TAX; working_capital_treatment=LEDGER_ALREADY_RECOVERED
+Not an approval, legal opinion, actual payment or asset-disposition contract.

@@ -5,6 +5,7 @@ editorial fixture is never an evidence source. Missing results remain missing.
 """
 from __future__ import annotations
 
+from datetime import date
 from functools import lru_cache
 from decimal import Decimal
 import json
@@ -410,8 +411,191 @@ INPUT_FACT_LABELS = {
 }
 
 
+# Reader-facing names for the bounded per-section evidence cards. Unlisted
+# documentary IDs are not printed as if they were verified engineering facts.
+FIELD_LABELS = {
+    'project.owner': '建设主体', 'project.developer': '开发主体',
+    'project.name': '项目名称', 'project.pv_type': '项目类别',
+    'project.investor': '投资主体', 'project.operator': '运营主体',
+    'project.ownership_mode': '投资方式', 'project.sales_mode': '售电方式',
+    'project.evaluation_years': '评价期', 'project.evaluation_date': '评价基准日',
+    'project.price_basis': '价格口径', 'project.cashflow_tax_basis': '税口径',
+    'site.address': '拟议场址', 'site.total_area': '场址总面积',
+    'site.usable_area': '可用面积', 'site.exclusion_area': '排除区面积',
+    'site.elevation': '场址高程', 'site.terrain_slope': '地形坡度',
+    'site.shading_fraction': '遮挡比例', 'site.rights_status': '权属核验',
+    'site.rights_expiry': '权利期限', 'site.transport_access': '运输条件',
+    'system.mounting_type': '支架形式', 'system.topology': '电气拓扑',
+    'resource.is_tmy': '典型气象年来源',
+    'resource.period_start': '资源起始日期', 'resource.period_end': '资源截止日期',
+    'targets.risk_preference': '风险偏好',
+    'capex.includes_construction_interest': '资本支出是否包含建设期利息',
+    'capex.estimate_basis': '估算依据',
+    'grid.protection_plan': '保护方案', 'grid.upgrade_plan': '电网改造计划',
+    'roof.waterproof_plan': '防水方案',
+    'roof.allowable_additional_load': '屋面允许附加荷载',
+    'roof.design_added_load': '设计附加荷载', 'roof.remaining_life': '屋面剩余年限',
+    'layout.tilt': '阵列倾角', 'layout.azimuth': '阵列方位角',
+    'layout.row_pitch': '阵列行距', 'layout.fire_setback': '消防退让',
+    'layout.ground_coverage_ratio': '用地覆盖率',
+    'system.dc_capacity': '直流装机', 'system.ac_capacity': '交流装机',
+    'system.dc_ac_ratio': '容配比', 'system.module_count': '组件数量',
+    'system.module_power': '单块组件功率', 'system.module_efficiency': '组件效率',
+    'system.inverter_unit_ac': '单台逆变器额定功率',
+    'system.modules_per_string': '每串组件数', 'system.parallel_strings': '并联组串数',
+    'system.module_voc': '组件开路电压',
+    'system.inverter_max_dc_voltage': '逆变器直流上限电压',
+    'system.inverter_max_input_current': '逆变器最大输入电流',
+    'system.first_year_degradation': '首年衰减',
+    'system.annual_degradation': '后续年衰减',
+    'system.unavailability': '不可用比例',
+    'grid.connection_voltage': '接入电压', 'grid.transformer_capacity': '变压器视在容量',
+    'grid.available_capacity': '申报可接入容量',
+    'grid.export_power_limit': '申报送出有功上限',
+    'grid.power_factor': '功率因数', 'grid.line_length': '线路长度',
+    'grid.opinion_status': '正式接网意见',
+    'finance.project_discount_rate': '项目折现率',
+    'finance.equity_discount_rate': '股权折现率',
+    'finance.working_capital': '营运资金投入', 'finance.debt_ratio': '债务比例',
+    'capex.contingency_rate': '预备费率', 'tax.corporate_income_rate': '所得税率',
+    'resource.uncertainty_fraction': '资源不确定性输入',
+    'environment.grid_emission_factor': '减排因子假设',
+    'schedule.construction_start': '计划开工',
+    'schedule.commissioning_date': '计划投运',
+}
+
+ENUM_LABELS = {
+    'pending': '待取得正式核验', 'owner_invested': '业主自投',
+    'industrial_rooftop': '工商业屋面', 'utility_scale_ground': '集中式地面',
+    'FIXED': '固定支架', 'FIXED_STRING_INVERTERS': '固定支架组串式逆变器',
+    'self_use_surplus_export': '自发自用、余电上网',
+    'full_export': '全额上网', 'nominal': '名义价格',
+    'post_tax': '税后', 'PERIOD_END': '年度期末',
+    'balanced': '均衡风险偏好', 'GRID_DELIVERABLE': '并网交付边界',
+}
+
+RATE_FIELDS = {'site.shading_fraction', 'layout.ground_coverage_ratio',
+               'system.module_efficiency', 'system.first_year_degradation',
+               'system.annual_degradation', 'system.unavailability',
+               'finance.project_discount_rate', 'finance.equity_discount_rate',
+               'finance.debt_ratio', 'capex.contingency_rate',
+               'tax.corporate_income_rate', 'resource.uncertainty_fraction'}
+
+
+REPEATED_FIELDS = ('resource.monthly', 'capex.items', 'opex.items',
+                   'schedule.tasks', 'assets.replacements', 'assets.depreciation',
+                   'system.losses', 'tariff.periods', 'risk.items',
+                   'attachments.register', 'policy.applicability', 'scenarios.options',
+                   'finance.debt_schedule', 'revenue.other_items')
+
+
+def _parent_field(fid: str) -> str:
+    return next((parent for parent in REPEATED_FIELDS if fid.startswith(parent + '.')), fid)
+
+
+def _source_atom_value(atom: Any, known_sources: set[str]) -> Any:
+    """Unwrap each sourced child, including atomic predecessor lists."""
+    if isinstance(atom, list):
+        return [_source_atom_value(child, known_sources) for child in atom]
+    if isinstance(atom, dict) and 'value' in atom:
+        if atom.get('source_id') not in known_sources or atom.get('status') in {'REJECTED', 'INVALID'}:
+            return object()  # Never match an accepted normalized input.
+        return _source_atom_value(atom['value'], known_sources)
+    return atom
+
+
+def _source_value(normalized: dict, records: tuple | list, fid: str) -> Any:
+    """Return only matching Phase 2 atoms, including repeated parent children."""
+    parent = _parent_field(fid)
+    value = normalized.get(parent)
+    if not _has_value(value):
+        return None
+    known_sources = {record['source_id'] for record in records
+                     if record.get('source_id') and record.get('status') not in {'REJECTED', 'INVALID'}}
+    for record in records:
+        if (record.get('field_id') != parent or not record.get('source_id')
+                or record.get('status') in {'REJECTED', 'INVALID'}):
+            continue
+        source = record.get('value')
+        if isinstance(value, list) and isinstance(source, list):
+            source = [{"row_id": row.get("row_id"), "fields": {
+                key: _source_atom_value(atom, known_sources)
+                for key, atom in row.get('fields', {}).items()}}
+                      for row in source if isinstance(row, dict)]
+        if source != value:
+            continue
+        if parent == fid:
+            return value
+        children = [row['fields'][fid] for row in value if isinstance(row, dict)
+                    and fid in row.get('fields', {})]
+        return children or None
+    return None
+
+
+def _text_value(fid: str, value: Any, fmt: Callable[[Any], str]) -> str | None:
+    if isinstance(value, bool):
+        return '是' if value else '否'
+    if isinstance(value, (int, float, Decimal)):
+        number = Decimal(str(value)) * (100 if fid in RATE_FIELDS else 1)
+        unit = '%' if fid in RATE_FIELDS else _reader_unit(fid, {
+            'site.total_area': 'm2', 'site.usable_area': 'm2', 'site.exclusion_area': 'm2',
+            'layout.row_pitch': 'm', 'layout.fire_setback': 'm',
+            'layout.azimuth': 'degree', 'layout.tilt': 'degree',
+            'site.elevation': 'm', 'site.terrain_slope': 'degree',
+            'roof.allowable_additional_load': 'kN/m2',
+            'roof.design_added_load': 'kN/m2',
+            'grid.connection_voltage': 'kV', 'grid.line_length': 'km',
+            'system.inverter_max_input_current': 'A',
+            'roof.remaining_life': 'year', 'project.evaluation_years': 'year',
+            'grid.transformer_capacity': 'kVA', 'grid.available_capacity': 'kW',
+            'grid.export_power_limit': 'kW', 'system.dc_capacity': 'kWp',
+            'system.ac_capacity': 'kW', 'system.inverter_unit_ac': 'kW',
+            'system.module_power': 'Wp',
+            'finance.working_capital': 'CNY', 'system.module_voc': 'V',
+            'system.inverter_max_dc_voltage': 'V',
+        }.get(fid))
+        return fmt(number) + unit
+    if isinstance(value, str):
+        if fid == 'capex.estimate_basis' and value == 'SYNTHETIC item costs; no supplier quotations or approved budget':
+            return '按合成分项成本编制；无供应商报价或批准预算'
+        if fid == 'site.transport_access' and value == 'Concept only; road and lifting access not surveyed':
+            return '仅为概念方案；道路及吊装条件未经勘察'
+        if value in ENUM_LABELS:
+            return ENUM_LABELS[value]
+        if value.startswith(('SYNTHETIC-', 'SYNTHETIC_', 'FICTIONAL_NOT_', 'NO_')):
+            return None
+        if value == 'FICTIONAL: same model owner':
+            return '同一合成演示主体'
+        if value.startswith('FICTIONAL'):
+            return value.replace('FICTIONAL ENTITY: ', '合成演示主体：').replace('FICTIONAL: ', '合成演示主体：').replace('FICTIONAL ', '合成演示').replace(' (not registered)', '（未核实注册）')
+        if value.startswith(('Synthetic ', 'No real ', 'Not quantified ', 'Authored offline')):
+            return None
+        if len(value) <= 80 and all(c not in value for c in '{}[]'):
+            return value
+    return None
+
+
 def _has_value(value: Any) -> bool:
     return value is not None and value != "" and value != [] and value != {}
+
+
+def _task_display_name(name: str) -> str:
+    """Translate authored planning roles for readers without changing sources."""
+    if not name.startswith('SYNTHETIC '):
+        return name
+    description = name.removeprefix('SYNTHETIC ')
+    roles = (
+        ('roof layout', '屋面排布与结构复核计划'),
+        ('rights/fire/grid review gate', '权属、消防及接网待核节点计划'),
+        ('site/drainage/connection', '场址、排水及接网概念方案计划'),
+        ('title/geotechnical/grid review gate', '用地、地勘及接网待核节点计划'),
+        ('rooftop installation', '屋面安装施工计划（须先取得真实许可）'),
+        ('ground civil and array', '地面土建与阵列施工计划（须先取得真实许可）'),
+        ('electrical testing and meter', '电气测试与计量方案计划（非投运批准）'),
+        ('grid interface testing', '并网接口测试计划（非接网批准）'),
+        ('commissioning milestone', '拟投运里程碑（非获准投运）'),
+    )
+    return next((label for phrase, label in roles if phrase in description.lower()), description)
 
 def _reader_unit(field_id: str, unit: str | None) -> str:
     """Keep engineering units, not source-schema tokens, in consulting prose."""
@@ -423,7 +607,7 @@ def _reader_unit(field_id: str, unit: str | None) -> str:
         return "块/串"
     if field_id == "system.parallel_strings":
         return "串"
-    return {"degree": "°", "m2": "㎡", "year": "年", "piece": "件", "1": ""}.get(unit or "", unit or "")
+    return {"degree": "°", "m2": "㎡", "kN/m2": "kN/㎡", "CNY": "元", "year": "年", "piece": "件", "1": ""}.get(unit or "", unit or "")
 
 
 @lru_cache(maxsize=4)
@@ -652,6 +836,286 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
     return ""
 
 
+def _project_narrative(model: Any, item_id: str, judgment: str,
+                       fields: tuple[str, ...], metrics: tuple[str, ...],
+                       fmt: Callable[[Any], str], label_metric: Callable[[str], str]) -> str:
+    """Compose evidence and consequence for the actual item's fixed research object.
+
+    No title keyword classifier: only explicitly bound fields, metrics and the
+    section's own authored engineering judgment can enter the body.
+    """
+    result = model.result
+    n = result['inputs'].get('normalized', {})
+    records = result.get('source_snapshot', {}).get('phase2', {}).get('records', ())
+    get = lambda fid: _source_value(n, records, fid)
+    calculated = lambda mid: (row.get('value') if (row := model.metric(mid))
+                              and row.get('status') == 'CALCULATED' else None)
+    ground = result.get('pv_type') == 'utility_scale_ground'
+    facts = []
+    for fid in fields:
+        if fid not in FIELD_LABELS:
+            continue
+        value = get(fid)
+        rendered = _text_value(fid, value, fmt)
+        if rendered is not None:
+            facts.append(f'{FIELD_LABELS[fid]}按合成输入为{rendered}')
+    for mid in metrics:
+        if item_id in {'CH18.01', 'CH17.03'} or (item_id == 'CH08.03' and mid.startswith('energy.year.')) or (item_id == 'CH01.05' and mid == 'financial.phase3e.project_npv'):
+            continue
+        if ground and item_id == 'CH03.04' and mid.startswith('consumption.'):
+            continue
+        value = calculated(mid)
+        if not isinstance(value, (int, float, Decimal)) or isinstance(value, bool):
+            continue
+        row = model.metric(mid)
+        unit = _reader_unit(mid, row.get('unit'))
+        if mid.endswith(('_irr',)) or mid in {'pr_observed.year.1', 'capacity_factor.year.1'}:
+            value, unit = Decimal(str(value)) * 100, '%'
+        if unit == 'CNY':
+            unit = '元'
+        facts.append(f'{label_metric(mid)}计算为{fmt(value)}{unit}')
+    # Different arrays carry different physical meanings; never stringify the
+    # normalized list or use an arbitrary count as a resource finding.
+    if item_id.startswith('CH05.'):
+        months = get('resource.monthly')
+        if isinstance(months, list) and months:
+            if item_id == 'CH05.02':
+                parts = []
+                for key, label in (('ghi', '水平面总辐照'), ('dni', '直接辐照'),
+                                   ('dhi', '散射辐照'), ('poa', '阵列面辐照')):
+                    numbers = [row.get('fields', {}).get('resource.monthly.' + key) for row in months]
+                    if len(numbers) == 12 and all(isinstance(x, (float, int, Decimal)) for x in numbers):
+                        parts.append(f'{label}按12个月输入求和为{fmt(sum(Decimal(str(x)) for x in numbers))}kWh/㎡')
+                if parts:
+                    return '；'.join(parts) + '。这是合成月值的算术汇总，不是多年实测资源或已核定发电量；' + judgment
+            if item_id == 'CH05.03':
+                parts = []
+                for key, label, unit in (('ambient_temperature', '月均气温', '℃'),
+                                          ('wind_speed', '月均风速', 'm/s')):
+                    values = [r.get('fields', {}).get('resource.monthly.' + key) for r in months]
+                    if len(values) == 12 and all(isinstance(x, (int, float, Decimal)) for x in values):
+                        parts.append(f'{label}输入范围{fmt(min(values))}—{fmt(max(values))}{unit}')
+                if parts:
+                    return '、'.join(parts) + '；月均值无法给出极端温度或设计风速，' + judgment
+        if item_id == 'CH05.01':
+            start, end = get('resource.period_start'), get('resource.period_end')
+            if start and end:
+                facts.append(f'合成资源时段为{start}至{end}')
+    if item_id == 'CH02.04':
+        attachments = get('attachments.register')
+        if isinstance(attachments, list):
+            facts.append(f'已登记{len(attachments)}项合成附件；登记数量不代表原件或授权已核验')
+    if item_id == 'CH07.04':
+        losses = get('system.losses')
+        if isinstance(losses, list):
+            names = {'shading': '遮挡', 'soiling': '积灰', 'mismatch': '失配',
+                     'dc_cable': '直流线损', 'ac_cable': '交流线损'}
+            for row in losses:
+                atom = row.get('fields', {})
+                kind, value = atom.get('system.losses.kind'), atom.get('system.losses.value')
+                if kind in names and isinstance(value, (int, float, Decimal)):
+                    facts.append(f'{names[kind]}损失假设{fmt(Decimal(str(value)) * 100)}%')
+            facts = facts[:3]
+    if item_id == 'CH08.03':
+        annual = calculated('energy.annual_array')
+        changes = get('assets.replacements')
+        if isinstance(annual, list) and len(annual) > 1:
+            facts.insert(0, f'首年预测{fmt(annual[0])}kWh、末年预测{fmt(annual[-1])}kWh')
+            if isinstance(changes, list):
+                for row in changes[:2]:
+                    atom = row.get('fields', {})
+                    year = atom.get('assets.replacements.year')
+                    if isinstance(year, int) and 1 < year <= len(annual):
+                        facts.append(f'第{year}年逆变器更换计划对应预测{fmt(annual[year - 1])}kWh，'
+                                     f'上年为{fmt(annual[year - 2])}kWh')
+                        metric = model.metric(f'energy.year.{year}')
+                        performance = metric.get('details', {}).get('performance', {}) if metric and metric.get('status') == 'CALCULATED' else {}
+                        event = performance.get('event') or {}
+                        if (event.get('asset_id') == atom.get('assets.replacements.asset_id')
+                                and event.get('downtime_days') == atom.get('assets.replacements.downtime_days')):
+                            facts.append(f"本次模型计入更换停机{fmt(event['downtime_days'])}天" +
+                                         ('且无性能恢复增益' if performance.get('replacement_uplift') == 0 else
+                                          '；性能恢复幅度须按事件记录核查'))
+    if item_id.startswith('CH13.'):
+        tasks = get('schedule.tasks')
+        if isinstance(tasks, list) and tasks:
+            names = {r.get('fields', {}).get('schedule.tasks.task_id'):
+                     _task_display_name(r.get('fields', {}).get('schedule.tasks.name', ''))
+                     for r in tasks if r.get('fields', {}).get('schedule.tasks.task_id')}
+            task_facts = []
+            for row in tasks:
+                task = row.get('fields', {})
+                name = task.get('schedule.tasks.name')
+                start, finish = task.get('schedule.tasks.start_date'), task.get('schedule.tasks.finish_date')
+                if not name or not start or not finish:
+                    continue
+                predecessors = task.get('schedule.tasks.predecessor_ids') or []
+                previous = ('；前置任务：' + '、'.join(names.get(pid, '未核实任务') for pid in predecessors)
+                            if predecessors else '；前置任务：无')
+                path = '，列为计划关键路径' if task.get('schedule.tasks.critical_path') is True else ''
+                duration = (date.fromisoformat(str(finish)) - date.fromisoformat(str(start))).days + 1
+                if duration <= 0:
+                    continue
+                if item_id == 'CH13.03':
+                    task_facts.append(f'{_task_display_name(name)}{previous}{path}')
+                else:
+                    task_facts.append(f'合成任务“{_task_display_name(name)}”安排{start}至{finish}，'
+                                      f'{duration}个日历日{previous}{path}')
+            if item_id in {'CH13.02', 'CH13.03'} and task_facts:
+                prefix = ('合成任务及持续时间按输入顺序安排：' if item_id == 'CH13.02'
+                          else '本次合成任务的前置依赖链为：')
+                return (prefix + '；'.join(task_facts) + '。'
+                        '前置关系仅表示计划依赖，不代表任何外部审批已通过；' + judgment)
+            if item_id == 'CH13.05':
+                milestones = [row for row in tasks if 'milestone' in
+                              str(row.get('fields', {}).get('schedule.tasks.task_id', '')).lower()]
+                if milestones:
+                    milestone = milestones[0]['fields']
+                    predecessor = '、'.join(names.get(pid, '未核实任务')
+                                           for pid in milestone.get('schedule.tasks.predecessor_ids', []))
+                    return (f"拟投运里程碑按合成任务安排为{milestone['schedule.tasks.start_date']}，"
+                            f"前置任务为{predecessor or '无'}。里程碑日期不是实际开工、获批并网或验收完成；" + judgment)
+            if item_id == 'CH13.01':
+                facts.append(f'另录入{len(tasks)}项合成实施任务，组织责任仍须在正式文件中落实')
+            if item_id == 'CH13.04':
+                facts.append(f'实施进度按{len(tasks)}项合成任务预排，真实通道与审批窗口尚需核实')
+            if not task_facts and item_id in {'CH13.02', 'CH13.03'}:
+                facts.append(f'已提供{len(tasks)}项任务，但名称或起止日期不完整，不能锁定持续时间')
+        else:
+            facts.append('施工任务、持续时间与前置依赖尚未提供，不能倒排关键路径')
+    if item_id.startswith('CH14.'):
+        items = get('capex.items')
+        if isinstance(items, list) and items and item_id in {'CH14.01', 'CH14.03', 'CH14.04', 'CH14.05'}:
+            categories = {'construction': '土建', 'mounting': '支架',
+                          'cables': '电缆', 'transformer': '变压器',
+                          'electrical': '电气', 'modules': '组件', 'inverters': '逆变器',
+                          'land': '用地', 'grid': '送出', 'contingency': '预备'}
+            focus = ({'CH14.03': {'construction', 'land', 'grid'},
+                      'CH14.04': {'contingency'}, 'CH14.05': set()}.get(item_id))
+            parts = [f"{categories[row['fields']['capex.items.category']]}计划费用{fmt(row['fields']['capex.items.amount'])}元"
+                     for row in items if row.get('fields', {}).get('capex.items.category') in categories
+                     and isinstance(row['fields'].get('capex.items.amount'), (float, int))
+                     and (focus is None or row['fields']['capex.items.category'] in focus)]
+            facts.extend(parts[:3])
+    if item_id.startswith('CH15.'):
+        opex_items = get('opex.items')
+        if isinstance(opex_items, list) and item_id in {'CH15.01', 'CH15.05'}:
+            names = {'maintenance': '检修维护', 'insurance': '保险', 'land_lease': '场地租赁'}
+            for row in opex_items[:3]:
+                detail = row.get('fields', {})
+                category = detail.get('opex.items.category')
+                amount = detail.get('opex.items.base_amount')
+                if category in names and isinstance(amount, (int, float)):
+                    facts.append(f'{names[category]}首年基价输入{fmt(amount)}元')
+        annual = result.get('evidence', {}).get('financial-ledger', {}).get('annual', ())
+        if calculated('financial.phase3e.project_cash_flow') is not None and len(annual) > 1:
+            key = {'CH15.01': ('opex_cash_paid', '首年运维现金支出'),
+                   'CH15.02': ('depreciation', '首年非现金折旧'),
+                   'CH15.04': ('cash_tax_total_project', '首年项目现金税费'),
+                   'CH15.05': ('opex_cash_paid', '首年运维现金支出')}.get(item_id)
+            if key and annual[1].get(key[0]) is not None:
+                facts.insert(0, f'{key[1]}按年度账簿为{fmt(annual[1][key[0]])}元')
+            replacements = [r for r in annual[1:] if r.get('replacement_cash_paid')]
+            if replacements and item_id in {'CH15.03', 'CH15.05'}:
+                r = replacements[0]
+                facts.append(f"第{r['period'].removeprefix('OPERATING_YEAR_')}年更换现金支出为{fmt(r['replacement_cash_paid'])}元")
+    if item_id.startswith(('CH17.', 'CH18.')):
+        npv = calculated('financial.phase3e.project_npv')
+        irr = calculated('financial.phase3e.project_irr')
+        if item_id in {'CH18.01', 'CH17.03'}:
+            if npv is not None:
+                facts.insert(0, f'合成项目税后年度NPV计算为{fmt(npv)}元')
+            if irr is not None:
+                irr_details = (model.metric('financial.phase3e.project_irr') or {}).get('details', {})
+                if irr_details.get('root_count') == 1 and not irr_details.get('unexhausted'):
+                    facts.insert(1 if npv is not None else 0,
+                                 f'项目IRR在声明求根区间内唯一根为{fmt(Decimal(str(irr)) * 100)}%')
+                else:
+                    facts.append('项目IRR根集尚需单独核验，不选取未经证实的单根')
+        if item_id.startswith('CH17.'):
+            scenario = get('scenarios.options')
+            if not scenario:
+                facts.append('未执行独立扰动或组合情景，无法报告敏感性斜率及耐受阈值')
+    if item_id in {'CH17.04', 'CH18.02', 'CH18.04'}:
+        risks = get('risk.items')
+        if isinstance(risks, list) and risks:
+            categories = {'DOCUMENTARY': '权属及专业文件', 'GRID': '接网',
+                          'RESOURCE': '资源代表性', 'ENGINEERING': '施工工程'}
+            labels = [categories[r.get('fields', {}).get('risk.items.category')]
+                      for r in risks if r.get('fields', {}).get('risk.items.category') in categories]
+            if labels:
+                facts.append('风险清单登记' + '、'.join(dict.fromkeys(labels[:3])) + '核验事项')
+    if item_id == 'CH18.01':
+        year1 = calculated('energy.delivered.year.1')
+        payback = calculated('financial.phase3e.static_payback')
+        ledger = result.get('evidence', {}).get('financial-ledger', {}).get('annual', ())
+        if calculated('financial.phase3e.project_cash_flow') is not None and ledger and ledger[0].get('capex_cash_paid') is not None:
+            facts.append(f"建设期资本支出按账簿计划支付{fmt(ledger[0]['capex_cash_paid'])}元")
+        if year1 is not None:
+            facts.append(f'首年交付预测{fmt(year1)}kWh')
+        if payback is not None:
+            facts.append(f'项目静态回收期{fmt(payback)}年')
+    if item_id == 'CH16.03' and calculated('financial.phase3e.equity-investor-cash-flow') is None:
+        facts.append('投资者出资—分配现金流未形成；融资后权益可用现金不等于股东IRR')
+    if item_id == 'CH03.02':
+        facts.insert(0, '本项目拟按地面集中送出研究' if ground else '本项目拟按厂房屋面自用及余电上网研究')
+    if item_id == 'CH01.05' and calculated('financial.phase3e.project_npv') is not None:
+        facts.append(f"项目年度NPV已按合成假设计算为{fmt(calculated('financial.phase3e.project_npv'))}元")
+        judgment = '项目现金流已形成，并不解除权属、接网、真实来源和投资者现金流的独立决策门槛。'
+    if item_id == 'CH11.03' and ground and get('site.geotechnical_reference'):
+        facts.append('地勘仅有合成方案引用，未取得签署的地基承载及桩基设计依据')
+    if item_id == 'CH04.02' and ground:
+        judgment = '可用地面积还须结合实测坡度、道路、排水和设备间距核定，不能仅凭面积输入认定可建。'
+    if item_id == 'CH04.04' and ground:
+        judgment = '地面阵列遮挡及桩基承载需依据排布和地勘复核，不能沿用屋面荷载判断。'
+    if item_id == 'CH14.03':
+        judgment = ('地面基础、道路与送出工程须专项核量，不能以设备费用覆盖。' if ground else
+                    '屋面加固与防水须专项核量，不能以组件费用覆盖。')
+    if item_id == 'CH18.01':
+        judgment = ('这些已计算项目指标仅支持合成假设下的阶段性比较，'
+                    '不构成股东回报或真实项目投资批准；权属、工程及接网仍需独立核验。'
+                    if npv is not None else
+                    '项目收益指标未形成完整可引用结果，暂不能作投资回报判断；权属与接网仍需核验。')
+    elif item_id == 'CH18.02':
+        judgment = ('屋顶权属、结构与接网意见各可独立限制项目实施。' if not ground else
+                    '土地使用、地勘道路排水与集中接网意见各可独立限制项目实施。')
+    if item_id == 'CH03.01':
+        owner, investor, operator = get('project.owner'), get('project.investor'), get('project.operator')
+        if owner and investor and operator:
+            principal = _text_value('project.owner', owner, fmt)
+            if principal and owner == investor:
+                return (f'本次合成方案把建设和投资责任均赋予{principal}，运营主体记为'
+                        f'{_text_value("project.operator", operator, fmt) or "未核实主体"}。'
+                        '这一安排便于将投资与运维责任置于同一模型边界，但不是法人授权或已签署运营委托。')
+    if item_id == 'CH18.01':
+        npv = calculated('financial.phase3e.project_npv')
+        irr = calculated('financial.phase3e.project_irr')
+        years = get('project.evaluation_years')
+        if npv is not None and irr is not None and years is not None:
+            roots = (model.metric('financial.phase3e.project_irr') or {}).get('details', {})
+            irr_note = (f'项目IRR在声明求根区间内唯一根为{fmt(Decimal(str(irr)) * 100)}%'
+                        if roots.get('root_count') == 1 and not roots.get('unexhausted') else
+                        '项目IRR根集尚未取得可单根引用的证明')
+            construction = result.get('evidence', {}).get('financial-ledger', {}).get('annual', ())
+            initial = (construction[0].get('capex_cash_paid') if construction
+                       and calculated('financial.phase3e.project_cash_flow') is not None else None)
+            investment = (f'建设期计划资本支出{fmt(initial)}元，' if initial is not None else '')
+            delivered = calculated('energy.delivered.year.1')
+            energy = f'首年交付预测{fmt(delivered)}kWh；' if delivered is not None else ''
+            payback = calculated('financial.phase3e.static_payback')
+            recovery = f'静态回收期{fmt(payback)}年。' if payback is not None else ''
+            return (f'按合成的{fmt(years)}年税后项目现金流，{investment}{energy}'
+                    f'年度期末NPV为{fmt(npv)}元，{irr_note}；{recovery}'
+                    '上述是模型项目回报，不是股东回报或真实投资批准；'
+                    + ('土地权属、地勘道路排水及集中接网意见仍须独立核验。' if ground else
+                       '屋面权属、荷载防水及余电接网意见仍须独立核验。'))
+    if facts:
+        return '；'.join(facts[:5]) + '。' + judgment
+    missing = [FIELD_LABELS[fid] for fid in fields if fid in FIELD_LABELS and get(fid) is None]
+    return ('本项尚缺' + '、'.join(missing[:3]) + '等直接可追溯条件；' if missing else
+            '本项尚未形成可引用的项目直接结果；') + judgment
+
+
 def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_rule: str,
                 field_ids: tuple[str, ...], metric_ids: tuple[str, ...], pv_type: str,
                 format_value: Callable[[Any], str], label_metric: Callable[[str], str]) -> dict[str, Any]:
@@ -659,13 +1123,35 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
     normalized = model.result["inputs"].get("normalized", {})
     used_sources = model.result["inputs"].get("used_sources", {})
     records = model.result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
+    field_ids = category_fields(item_id, field_ids, pv_type, normalized.get('project.has_storage') is True)
+    if item_id == 'CH08.06':
+        field_ids += ('resource.uncertainty_fraction',)
+    if pv_type == 'utility_scale_ground' and item_id == 'CH03.04':
+        metric_ids = tuple(mid for mid in metric_ids if not mid.startswith('consumption.'))
+    if item_id == 'CH01.05':
+        metric_ids += ('financial.phase3e.project_npv',)
+    if item_id == 'CH18.01':
+        field_ids += ('project.evaluation_years',)
+        metric_ids += ('financial.phase3e.project_npv', 'financial.phase3e.project_irr',
+                       'energy.delivered.year.1', 'financial.phase3e.static_payback',
+                       'financial.phase3e.project_cash_flow')
+    if item_id == 'CH17.03':
+        metric_ids += ('financial.phase3e.project_npv', 'financial.phase3e.project_irr')
+    if item_id == 'CH08.03':
+        replacement_rows = _source_value(normalized, records, 'assets.replacements')
+        if isinstance(replacement_rows, list):
+            for row in replacement_rows[:2]:
+                year = row.get('fields', {}).get('assets.replacements.year')
+                if isinstance(year, int) and year > 1:
+                    metric_ids += (f'energy.year.{year}',)
     datasets = _dataset_rows(model.result)
     input_records = {fid: [record for record in records
-                            if record.get("field_id") == fid and record.get("value") == normalized.get(fid)]
-                     for fid in field_ids if _has_value(normalized.get(fid))}
+                            if record.get("field_id") == _parent_field(fid)
+                            and record.get('source_id')]
+                     for fid in field_ids if _has_value(_source_value(normalized, records, fid))}
     metric_rows = [model.metric(mid) for mid in metric_ids]
     observed_metrics = [metric for metric in metric_rows if metric is not None]
-    present_fields = [fid for fid in field_ids if _has_value(normalized.get(fid)) or fid in datasets]
+    present_fields = [fid for fid in field_ids if fid in input_records or fid in datasets]
     absent_fields = [fid for fid in field_ids if fid not in present_fields]
     blocked_metrics = [mid for mid, metric in zip(metric_ids, metric_rows)
                        if metric is None or metric.get("status") != "CALCULATED"]
@@ -706,9 +1192,10 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
     if item_id == "CH18.01" and (model.result.get("status") == "COMPLETE"
                                  and model.result.get("maturity", {}).get("real_project") == "VERIFIED"):
         judgment = "即使计算与来源门禁完成，投资建议仍须经过独立专业审查和决策授权。"
-    no_storage = normalized.get("project.has_storage") is False
-    no_debt = normalized.get("finance.debt_ratio") == 0
-    not_applicable = ((ground and item_id in {"CH10.01", "CH10.03"})
+    no_storage = _source_value(normalized, records, 'project.has_storage') is False
+    no_debt = _source_value(normalized, records, 'finance.debt_ratio') == 0
+    not_applicable = ((ground and _source_value(normalized, records, 'project.pv_type') == 'utility_scale_ground'
+                       and item_id in {"CH10.01", "CH10.03"})
                       or (no_storage and item_id == "CH10.06")
                       or (no_debt and item_id in {"CH16.07", "APP07.01"}))
     if not_applicable:
@@ -732,7 +1219,15 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
                        "确认储能配置变更后再单独建立调度与安全证据链。"
                        if no_storage and item_id in {"CH07.06", "CH10.06"} else
                        "核对融资协议及债务比例；如新增债务，重建偿债计划。")
-        supporting_metric_ids, supporting_field_ids, sources, field_instance_ids = [], [], [], []
+        proof = ('project.pv_type' if ground and item_id in {'CH10.01', 'CH10.03'} else
+                 'project.has_storage' if no_storage and item_id == 'CH10.06' else
+                 'finance.debt_ratio')
+        matched = [row for row in records if row.get('field_id') == proof
+                   and row.get('source_id') and row.get('value') == normalized.get(proof)]
+        supporting_metric_ids = []
+        supporting_field_ids = [proof] if matched else []
+        sources = sorted({row['source_id'] for row in matched})
+        field_instance_ids = sorted({row['field_instance_id'] for row in matched if row.get('field_instance_id')})
     else:
         supporting_metric_ids = [metric["metric_id"] for metric in observed_metrics
                                  if metric.get("status") == "CALCULATED"]
@@ -770,9 +1265,12 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
             facts = ["本次统一结果保留了公式快照身份，完整定义仍须在公式工作表逐条核验"]
         # The judgment is authored for this object; observed values qualify it,
         # rather than a title-prefixed inventory masquerading as a conclusion.
-        specific = _specific_project_judgment(model, item_id, format_value)
-        claim = (specific if item_id in {"CH01.02", "CH08.02", "CH09.02", "CH14.02", "CH16.02", "CH16.04"}
-                 else judgment + ("本次测算显示：" + "；".join(facts) + "。" if facts else ""))
+        specific_items = {"CH01.02", "CH08.02", "CH09.02", "CH14.02", "CH16.02", "CH16.04"}
+        specific = _specific_project_judgment(model, item_id, format_value) if item_id in specific_items else ''
+        claim = (specific if item_id in specific_items
+                 else _project_narrative(model, item_id, judgment, field_ids, metric_ids,
+                                         format_value, label_metric) if item_id.startswith('CH')
+                 else judgment + ("本次证据：" + "；".join(facts) + "。" if facts else ""))
         if blocked_metrics:
             bound = f"{label_metric(blocked_metrics[0])}未形成可引用结果"
         elif absent_fields:
@@ -786,8 +1284,8 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
                     "本项尚不能形成无条件工程、合规或投资认可。")
         if item_id in {"CH01.05", "CH18.01"} and (model.result.get("status") != "COMPLETE"
                                                   or model.result.get("maturity", {}).get("real_project") != "VERIFIED"):
-            blockers = (["权属"] if not _has_value(normalized.get("site.rights_status")) else [])
-            blockers += (["接网意见"] if not _has_value(normalized.get("grid.opinion_status")) else [])
+            blockers = (["权属核验"] if _source_value(normalized, records, 'site.rights_status') not in {'verified', 'VERIFIED', 'approved'} else [])
+            blockers += (["正式接网意见"] if _source_value(normalized, records, 'grid.opinion_status') not in {'approved', 'APPROVED', 'verified', 'VERIFIED'} else [])
             cashflow = model.metric("financial.phase3e.project_cash_flow")
             blockers += (["完整现金流"] if cashflow is None or cashflow.get("status") != "CALCULATED" else [])
             decision = "暂缓投资决定；" + "、".join(blockers or ["真实项目的独立核验"]) + "尚未闭合。"
