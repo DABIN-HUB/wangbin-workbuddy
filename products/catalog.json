@@ -410,6 +410,42 @@
           "version": "0.1.3"
         }
       ]
+    },
+    {
+      "active_version": "0.1.1",
+      "development": "Local XLSX-DOCX consistency candidate; independent QA pending",
+      "id": "wangbin-report-consistency-check",
+      "maintenance": "UNKNOWN",
+      "name": "经营报告数字一致性检查",
+      "published_at": "UNKNOWN",
+      "review_evidence": "No platform receipt",
+      "review_status": "NOT_TESTED",
+      "scenario": "Traceable source-to-report number and metric-definition checks",
+      "status": "DEVELOPING",
+      "target_users": "经营分析与财务复核人员",
+      "test_path": "tests/test_report_consistency_check.py",
+      "type": "Skill",
+      "validation_metrics": "products/metrics.json",
+      "versions": [
+        {
+          "archive_evidence": "dist/wangbin-report-consistency-check-0.1.0-skill-candidate.zip",
+          "candidate": "dist/wangbin-report-consistency-check-0.1.0-skill-candidate.zip",
+          "date": "UNKNOWN",
+          "published_at": "UNKNOWN",
+          "sha256": "2eb13c0a4a5e1ab56838237ec53eabe9146d29f79f1429886c0e1f395893988b",
+          "source": "packages/skills/wangbin-report-consistency-check",
+          "version": "0.1.0"
+        },
+        {
+          "archive_evidence": "dist/wangbin-report-consistency-check-0.1.1-skill-candidate.zip",
+          "candidate": "dist/wangbin-report-consistency-check-0.1.1-skill-candidate.zip",
+          "date": "2026-11-07",
+          "published_at": "UNKNOWN",
+          "sha256": "130174b1565a111002d5b6a95a677ea87bec355b66e37c4073794eadfac3f559",
+          "source": "packages/skills/wangbin-report-consistency-check",
+          "version": "0.1.1"
+        }
+      ]
     }
   ],
   "schema_version": 1

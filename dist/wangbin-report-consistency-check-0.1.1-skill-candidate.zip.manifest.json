@@ -1,0 +1,33 @@
+{
+  "archive": "dist/wangbin-report-consistency-check-0.1.1-skill-candidate.zip",
+  "id": "wangbin-report-consistency-check",
+  "members": [
+    {
+      "path": "wangbin-report-consistency-check/SKILL.md",
+      "sha256": "fefa9258d5d6b98598d57c983fec131053e47dd4e810c974ff83a3191bac0a00",
+      "size": 3475
+    },
+    {
+      "path": "wangbin-report-consistency-check/manifest.json",
+      "sha256": "8c79837a60148f7c4d74ffdcf6633ffd87c815b8a57a176e391b138ad6378f8f",
+      "size": 544
+    },
+    {
+      "path": "wangbin-report-consistency-check/scripts/check_report.py",
+      "sha256": "195718fd4dcb4086228b7fba3cacf4bafe8c0be41ae9cc7b4f458cfebe25f680",
+      "size": 26772
+    },
+    {
+      "path": "wangbin-report-consistency-check/templates/context.example.json",
+      "sha256": "a4134427363c6e7821fdd58fe6cae451a2e8c711dd8c6ca4c37408d5f43de49e",
+      "size": 224
+    }
+  ],
+  "payload_snapshot_sha256": "624fbe055e5f5f6a65c0691931b3ae713883acbd8395e4a4e97c3abf6df550a3",
+  "platform": "BLOCKED",
+  "scope": "local archive integrity only",
+  "sha256": "130174b1565a111002d5b6a95a677ea87bec355b66e37c4073794eadfac3f559",
+  "source": "packages/skills/wangbin-report-consistency-check",
+  "status": "PASS",
+  "version": "0.1.1"
+}
