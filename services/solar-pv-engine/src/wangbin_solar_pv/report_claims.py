@@ -6,6 +6,7 @@ editorial fixture is never an evidence source. Missing results remain missing.
 from __future__ import annotations
 
 from datetime import date
+from zoneinfo import ZoneInfo
 from functools import lru_cache
 from decimal import Decimal
 import json
@@ -504,15 +505,15 @@ def _source_atom_value(atom: Any, known_sources: set[str]) -> Any:
     return atom
 
 
-def _sourced_tasks(value: Any, records: tuple | list) -> list | None:
-    """Bind every schedule atom to its own Phase 2 row and parent source."""
-    parents = [record for record in records if record.get('field_id') == 'schedule.tasks']
+def _sourced_rows(value: Any, records: tuple | list, group: str) -> list | None:
+    """Bind each repeated child to its stable Phase 2 row and flat atom."""
+    parents = [record for record in records if record.get('field_id') == group]
     if len(parents) != 1 or not isinstance(value, list) or not value:
         return None
     parent = parents[0]
     source_id, origin = parent.get('source_id'), parent.get('source_url_or_attachment')
     kind, status = parent.get('source_kind'), parent.get('status')
-    if (parent.get('field_instance_id') != 'schedule.tasks'
+    if (parent.get('field_instance_id') != group
             or not isinstance(source_id, str) or not source_id
             or not isinstance(origin, str) or not origin
             or status not in {'ASSUMED', 'VERIFIED'}
@@ -568,11 +569,11 @@ def _sourced_tasks(value: Any, records: tuple | list) -> list | None:
         if not isinstance(fields, dict) or not isinstance(atoms, dict) or fields.keys() != atoms.keys():
             return None
         for fid, expected in fields.items():
-            if not isinstance(fid, str) or not fid.startswith('schedule.tasks.'):
+            if not isinstance(fid, str) or not fid.startswith(group + '.'):
                 return None
-            instance = f'schedule.tasks:{row_id}:{fid.removeprefix("schedule.tasks.")}'
+            instance = f'{group}:{row_id}:{fid.removeprefix(group + ".")}'
             atom = atoms[fid]
-            if fid == 'schedule.tasks.predecessor_ids' and isinstance(expected, list):
+            if group == 'schedule.tasks' and fid == 'schedule.tasks.predecessor_ids' and isinstance(expected, list):
                 if (not isinstance(atom, dict) or not isinstance(atom.get('value'), list)
                         or len(atom['value']) != len(expected)
                         or not same_source(atom, fid, instance)
@@ -584,7 +585,7 @@ def _sourced_tasks(value: Any, records: tuple | list) -> list | None:
                     if (not isinstance(task_id, str)
                             or not isinstance(predecessor, dict)
                             or predecessor.get('field_instance_id') not in {
-                                f'schedule.tasks:{row_id}:predecessor:{task_id}',
+                                f'{group}:{row_id}:predecessor:{task_id}',
                                 f'{instance}:element:{index}'}
                             or not bound(predecessor, fid, predecessor['field_instance_id'], task_id)):
                         return None
@@ -593,7 +594,7 @@ def _sourced_tasks(value: Any, records: tuple | list) -> list | None:
                 return None
             else:
                 nested_instances.add(instance)
-        if 'schedule.tasks.row_id' in fields and fields['schedule.tasks.row_id'] != row_id:
+        if group + '.row_id' in fields and fields[group + '.row_id'] != row_id:
             return None
     return value
 
@@ -603,13 +604,37 @@ def _source_value(normalized: dict, records: tuple | list, fid: str) -> Any:
     value = normalized.get(parent)
     if not _has_value(value):
         return None
-    if parent == 'schedule.tasks':
-        tasks = _sourced_tasks(value, records)
-        if tasks is None:
+    if parent in {'schedule.tasks', 'resource.monthly'}:
+        rows = _sourced_rows(value, records, parent)
+        if rows is None:
             return None
+        if parent == 'resource.monthly':
+            months = [row['fields'].get('resource.monthly.month') for row in rows]
+            if (len(rows) != 12 or any(type(month) is not int for month in months)
+                    or set(months) != set(range(1, 13))):
+                return None
+            metadata = {}
+            for key in ('resource.period_start', 'resource.period_end', 'resource.dataset_id',
+                        'resource.version', 'site.timezone'):
+                matches = [record for record in records if record.get('field_id') == key]
+                if (len(matches) != 1 or matches[0].get('field_instance_id') != key
+                        or matches[0].get('value') != normalized.get(key)
+                        or matches[0].get('status') not in {'ASSUMED', 'VERIFIED'}
+                        or matches[0].get('license_status') != 'AUTHORIZED'):
+                    return None
+                metadata[key] = matches[0]['value']
+            try:
+                start = date.fromisoformat(metadata['resource.period_start'])
+                end = date.fromisoformat(metadata['resource.period_end'])
+                ZoneInfo(metadata['site.timezone'])
+            except (KeyError, TypeError, ValueError):
+                return None
+            if (start != date(start.year, 1, 1) or end != date(start.year, 12, 31)
+                    or not metadata['resource.dataset_id'] or not metadata['resource.version']):
+                return None
         if fid == parent:
-            return tasks
-        children = [row['fields'][fid] for row in tasks if fid in row['fields']]
+            return rows
+        children = [row['fields'][fid] for row in rows if fid in row['fields']]
         return children or None
     known_sources = {record['source_id'] for record in records
                      if record.get('source_id') and record.get('status') not in {'REJECTED', 'INVALID'}}

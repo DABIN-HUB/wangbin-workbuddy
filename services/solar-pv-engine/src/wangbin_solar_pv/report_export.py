@@ -122,7 +122,7 @@ _D_STYLE = {
     "white": "FFFFFF",
 }
 
-REPORT_CONTENT_VERSION = "phase7l-r2-v2"
+REPORT_CONTENT_VERSION = "phase7l-r2-v3"
 
 
 @dataclass(frozen=True)
