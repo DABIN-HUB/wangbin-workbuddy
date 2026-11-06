@@ -97,7 +97,7 @@ def read_source(root, rel):
     elif suffix in ('.csv', '.xlsx'):
         if suffix == '.xlsx':
             if not zipfile.is_zipfile(io.BytesIO(raw)):
-                raise ValueError('UNSUPPORTED_FORMAT: fake xlsx')
+                raise ValueError('UNREADABLE_SOURCE: corrupt xlsx archive' if raw.startswith(b'PK\x03\x04') else 'UNSUPPORTED_FORMAT: fake xlsx')
             check_zip(raw)
             try:
                 book = load_workbook(io.BytesIO(raw), read_only=True, data_only=False)
@@ -141,7 +141,7 @@ def read_source(root, rel):
                 raise ValueError('UNREADABLE_SOURCE: CSV is not UTF-8') from exc
     elif suffix == '.docx':
         if not zipfile.is_zipfile(io.BytesIO(raw)):
-            raise ValueError('UNSUPPORTED_FORMAT: fake docx')
+            raise ValueError('UNREADABLE_SOURCE: corrupt docx archive' if raw.startswith(b'PK\x03\x04') else 'UNSUPPORTED_FORMAT: fake docx')
         check_zip(raw)
         try:
             doc = Document(io.BytesIO(raw))
@@ -201,6 +201,13 @@ def conditions(text, explicit=''):
         return ['端点', '请求参数', '返回字段']
     if '接口文档和部署说明' in text:
         return ['接口文档', '部署说明']
+    # Split only recognized, independently checkable delivery obligations.
+    # Keep the required deployment environment attached to its own condition.
+    deploy = r'(?:Windows Server 2019\s*)?部署(?:说明|步骤|文档)'
+    composite = re.search(rf'({deploy})\s*[和与及]\s*(培训记录)|'
+                          rf'(培训记录)\s*[和与及]\s*({deploy})', text)
+    if composite:
+        return [part for part in composite.groups() if part]
     return [text]
 
 
@@ -212,7 +219,9 @@ def evaluate_condition(cond, req, records):
         reference = ev.get('reference', '')
         explicit = bool(req['number'] and (reference == req['number'] or re.search(r'(?<!\w)' + re.escape(req['number']) + r'(?!\w)', text)))
         keywords = ('培训记录', '接口文档', '部署说明', '端点', '请求参数', '返回字段')
-        relevant = explicit or (any(k in cond and k in text for k in keywords) and ev['role'] == 'delivery')
+        deploy_related = '部署' in cond and bool(re.search(r'部署说明|部署步骤|部署文档', text))
+        relevant = explicit or (ev['role'] == 'delivery' and
+                                (deploy_related or any(k in cond and k in text for k in keywords)))
         if not relevant or ('部署说明' in cond and not re.search(r'部署说明|部署步骤|部署文档', text)) or ('接口文档' in cond and not re.search(r'接口文档|接口说明', text)):
             continue
         if ev['role'] == 'change' or ev.get('listed_only') or ev.get('claim_only'):

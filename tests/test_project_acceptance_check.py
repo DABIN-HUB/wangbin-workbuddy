@@ -114,8 +114,47 @@ def test_a12_invalid_files_partial_and_all_invalid(tmp_path):
     groups = {'scope': ['ok.md'], 'delivery': ['broken.docx', 'fake.docx', 'diagram.pdf'], 'evidence': [], 'change': []}
     result = app.analyze('虚构项目', tmp_path, groups)
     assert result['result'] == 'PARTIAL' and len(result['limitations']) == 3
+    diagnostic = {d.split(': ', 1)[0]: d for d in result['limitations']}
+    assert 'UNREADABLE_SOURCE' in diagnostic['broken.docx']
+    assert 'UNSUPPORTED_FORMAT' in diagnostic['fake.docx']
+    assert 'UNSUPPORTED_FORMAT' in diagnostic['diagram.pdf']
+    (tmp_path / 'broken.xlsx').write_bytes(b'PK\x03\x04broken')
+    (tmp_path / 'fake.xlsx').write_text('plain text', encoding='utf-8')
+    for name, code in [('broken.xlsx', 'UNREADABLE_SOURCE'), ('fake.xlsx', 'UNSUPPORTED_FORMAT')]:
+        with pytest.raises(ValueError, match=code):
+            app.read_source(tmp_path, name)
     with pytest.raises(ValueError, match='no readable material'):
         app.analyze('虚构项目', tmp_path, {'scope': ['broken.docx'], 'delivery': [], 'evidence': [], 'change': []})
+
+
+def test_a01_implicit_ubuntu_negative_and_a09_incremental(tmp_path):
+    before, doc = run_case(tmp_path, delivery={
+        'interface.md': 'D01：接口文档端点 /demo/items，请求参数：item_id，返回字段：name。',
+        'deploy.md': 'D02：仅 Ubuntu 部署步骤，未提供 Windows Server 2019 步骤。'})
+    r02 = before['requirements'][1]
+    assert [r['status'] for r in before['requirements']] == ['EVIDENCE_FOUND', 'NONCONFORMING', 'NO_EVIDENCE_FOUND']
+    assert r02['results'][0]['negative'] and r02['results'][0]['sources'] == ['deploy.md/行1']
+    assert {g['type'] for g in before['findings'] if g['requirement_id'] == r02['requirement_id']} == {'NONCONFORMING', 'MISSING'}
+    assert 'NONCONFORMING' in ' '.join(c.text for row in doc.tables[0].rows for c in row.cells)
+    after, _ = run_case(tmp_path, delivery={'training.md': '本项目 R03 培训记录：议程及签到。'}, previous=before)
+    assert [r['status'] for r in after['requirements']] == ['EVIDENCE_FOUND', 'NONCONFORMING', 'EVIDENCE_FOUND']
+    assert after['requirements'][1]['results'][0]['sources'] == ['deploy.md/行1']
+    assert any(u['type'] == 'RESOLVED' for u in after['updates'])
+
+
+@pytest.mark.parametrize('scope, expected', [
+    ('提供 Windows Server 2019 部署说明和培训记录。', ['Windows Server 2019 部署说明', '培训记录']),
+    ('提供培训记录与部署说明。', ['培训记录', '部署说明']),
+])
+def test_b02_general_deployment_training_split(tmp_path, scope, expected):
+    result, doc = run_case(tmp_path, scope='R01：' + scope,
+                             delivery={'deploy.md': 'R01：仅 Ubuntu 部署步骤，未提供 Windows Server 2019 步骤。'})
+    req = result['requirements'][0]
+    assert req['conditions'] == expected and len(req['results']) == 2
+    assert req['status'] == 'NONCONFORMING' and result['coverage'] == '0/2'
+    assert [x['status'] for x in req['results']] == (['NO_EVIDENCE_FOUND', 'NONCONFORMING'] if expected[0] == '培训记录' else ['NONCONFORMING', 'NO_EVIDENCE_FOUND'])
+    assert {g['type'] for g in result['findings']} == {'NONCONFORMING', 'MISSING'}
+    assert any('deploy.md/行1' in c.text for row in doc.tables[0].rows for c in row.cells)
 
 
 def test_a07_candidate_no_binding(tmp_path):
