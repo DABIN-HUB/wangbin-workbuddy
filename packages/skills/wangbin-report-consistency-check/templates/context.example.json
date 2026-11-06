@@ -1,0 +1,1 @@
+{"subjects":["青禾公司","青禾","云杉"],"exact":true,"mappings":{"收入":"数据!B2"},"rules":{"完成率":{"op":"ratio","cells":["数据!B2","数据!C2"]}},"rounding":{"收入":{"mode":"ROUND_HALF_UP","places":1}}}
