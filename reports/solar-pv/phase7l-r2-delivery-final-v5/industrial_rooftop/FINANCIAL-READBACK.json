@@ -1,0 +1,14 @@
+{
+  "case": "industrial_rooftop",
+  "result_hash": "398474aff972dee9f0a34bf85380a348bb27f8d4b102d7337ca0478ae0d34fe4",
+  "metric_status": "CALCULATED",
+  "canonical_irr_fraction": "0.2308099504510150168368198819734971038997173309326171875",
+  "workbook_irr_display": "23.08%",
+  "workbook_irr_state": "CALCULATED",
+  "npv_status": "CALCULATED",
+  "npv_cny": "679601.68641650991921019095104917972675972586306063098856642813717739788010438617",
+  "word_summary_has_unique_root": true,
+  "word_ch16_has_unique_root_and_npv": true,
+  "multiple_root_report_present": false,
+  "multiple_root_presentation_checked_by_isolated_regressions_only": true
+}

@@ -94,3 +94,37 @@ def test_ch05_and_app02_resource_values_reject_wrong_row_source_just_as_m04_does
     assert _source_value(normalized, records, "resource.monthly") is None
     assert _source_value(normalized, records, "resource.monthly.ghi") is None
     assert _resource_rows(model)[1][0][1] == "UNKNOWN"
+
+
+def test_monthly_metadata_with_same_value_but_foreign_registered_source_fails_closed():
+    for category in ("industrial_rooftop", "utility_scale_ground"):
+        result = loads((CASES / category / "project/canonical.json").read_bytes())
+        normalized = result["inputs"]["normalized"]
+        records = result["source_snapshot"]["phase2"]["records"]
+        metadata = next(row for row in records if row["field_id"] == "resource.dataset_id")
+        other = "utility_scale_ground" if category == "industrial_rooftop" else "industrial_rooftop"
+        foreign_result = loads((CASES / other / "project/canonical.json").read_bytes())
+        foreign = next(row for row in foreign_result["source_snapshot"]["phase2"]["records"]
+                       if row["field_id"] == "finance.project_discount_rate")
+        assert metadata["source_id"] != foreign["source_id"]
+        metadata["source_id"] = foreign["source_id"]
+        records.append({"field_id": "unrelated.foreign.source", "field_instance_id": "unrelated.foreign.source",
+                        "value": True, "status": "ASSUMED", "source_id": foreign["source_id"]})
+        assert _source_value(normalized, records, "resource.monthly") is None
+        metrics = tuple(result["results"]["metrics"])
+        model = ReportModel(result, metrics, {row["metric_id"]: row for row in metrics})
+        assert all(row[1] == "UNKNOWN" for row in _resource_rows(model)[1])
+
+
+def test_monthly_atom_unit_mutation_does_not_survive_ch05_binding():
+    result = loads((CASES / "industrial_rooftop" / "project/canonical.json").read_bytes())
+    normalized = result["inputs"]["normalized"]
+    records = result["source_snapshot"]["phase2"]["records"]
+    parent = next(row for row in records if row["field_id"] == "resource.monthly")
+    atom = parent["value"][0]["fields"]["resource.monthly.ghi"]
+    _flat(records, atom["field_instance_id"])["unit"] = "MWh/m2"
+    atom["unit"] = "MWh/m2"
+    assert _source_value(normalized, records, "resource.monthly") is None
+    metrics = tuple(result["results"]["metrics"])
+    model = ReportModel(result, metrics, {row["metric_id"]: row for row in metrics})
+    assert _resource_rows(model)[1][0][1] == "UNKNOWN"

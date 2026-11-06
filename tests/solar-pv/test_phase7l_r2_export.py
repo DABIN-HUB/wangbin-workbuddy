@@ -161,7 +161,7 @@ def test_toc_contains_editable_outline_without_pretending_to_have_refreshed_page
     assert "CH01 执行摘要与初步结论" in xml and "APP11 公式逐符号字典" in xml
     assert "PAGEREF" not in xml
     assert receipt["toc_status"] == "FIELD_REQUIRES_RENDER_REFRESH"
-    assert receipt["report_content_version"] == "phase7l-r2-v4"
+    assert receipt["report_content_version"] == "phase7l-r2-v5"
 
 
 def test_input_display_changes_with_snapshot_and_distinguishes_assumption_from_approval():

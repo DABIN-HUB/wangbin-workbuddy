@@ -1,0 +1,1748 @@
+{
+  "schema_version": "phase7l-human-claim-review/1.0.0",
+  "identity": {
+    "model_version": "solar-pv-engine/0.3.0",
+    "run_id": "1ea495b0-b638-4a35-986d-38d9d364586d",
+    "input_hash": "656f694764e2afc1437cb6db603ecc23a9072fa5bea28495c9b036d540624556",
+    "source_snapshot_id": "99d4cf30ec62cb5fa433fb94f91af514b2de7e93c723b4ef87e31f950d392dd9",
+    "result_hash": "398474aff972dee9f0a34bf85380a348bb27f8d4b102d7337ca0478ae0d34fe4"
+  },
+  "status": "HUMAN_REVIEW_REQUIRED",
+  "reason": "Field/metric binding and text presence cannot prove professional content quality",
+  "items": [
+    {
+      "section_id": "CH01.01",
+      "question": "项目识别及方案版本：确认项目身份、编制时点及演示数据与真实项目的界限？",
+      "central_claim": "项目名称按合成输入为合成演示主体：165 kWp factory-roof calculation demo (no real site)；项目类别按合成输入为工商业屋面。项目身份只界定合成测算对象，不能确认真实业主或获批方案。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；确认项目身份、编制时点及演示数据与真实项目的界限。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH01.02",
+      "question": "DC/AC及发电指标：交代直交流规模和预测电量的计量边界，避免把发电预测当作保证值？",
+      "central_claim": "本次方案按165kWp直流组件和150kW交流逆变器配置，以25年作为测算期；首年合成资源下预测发电245,313.45kWh。这只是设备铭牌与模型发电边界，并非获批装机或保底上网电量；厂房屋面剩余年限按30年假设，仍需权属、结构荷载、防水和消防通道复核。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-AC-CAPACITY",
+        "F-AVERAGE-ANNUAL-ENERGY",
+        "F-DC-AC-RATIO",
+        "F-DC-CAPACITY",
+        "F-ENERGY-AGGREGATION"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；交代直交流规模和预测电量的计量边界，避免把发电预测当作保证值。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH01.03",
+      "question": "投资及财务指标：区分工程费用估算与尚未形成的完整投资回报评价？",
+      "central_claim": "项目折现率按合成输入为7.5%；股权折现率按合成输入为9%；评价期资本支出估算（含更换，须按账簿复核）计算为539,000元；评价期CAPEX单位直流投资计算为3,266.67元/kWp；项目IRR在声明搜索域-90.0%至500%内唯一已认证根为23.0810%。工程投资汇总与投资回报不是同一结论；现金事件不完整时不能由造价推出收益。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-CAPEX-TOTAL",
+        "F-IRR-PROJECT",
+        "F-NPV",
+        "F-UNIT-INVESTMENT"
+      ],
+      "reasoning": "平准化度电成本未形成可引用结果；区分工程费用估算与尚未形成的完整投资回报评价。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH01.04",
+      "question": "消纳售电与资料成熟度：解释发电、可交付和可结算电量之间的边界及售电前提？",
+      "central_claim": "售电方式按合成输入为自发自用、余电上网；首年消纳电量计算为160,600kWh；首年收入计算为157,635.65元；首年可交付电量计算为245,313.45kWh。发电、交付和结算跨越损失、计量及交易边界，模型收入不是实际回款。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-DELIVERED-ENERGY",
+        "F-ENERGY-REVENUE",
+        "F-SELF-CONSUMPTION"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；解释发电、可交付和可结算电量之间的边界及售电前提。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH01.05",
+      "question": "阻断风险和四态建议：将待核实事项与可引用的模型结果分开，避免提前给出投资建议？",
+      "central_claim": "权属核验按合成输入为待取得正式核验；正式接网意见按合成输入为待取得正式核验；项目年度NPV已按合成假设计算为679,601.69元。项目现金流已形成，并不解除权属、接网、真实来源和投资者现金流的独立决策门槛。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-NPV",
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reasoning": "原始条件尚未全部进入本项证据链；将待核实事项与可引用的模型结果分开，避免提前给出投资建议。",
+      "decision": "暂缓投资决定；权属核验、正式接网意见尚未闭合。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH02.01",
+      "question": "项目背景与目的：说明建设动机来自哪一项用能或供电需求；没有业主资料时不认定必要性？",
+      "central_claim": "建设主体按合成输入为合成演示主体：Demo Factory Roof Owner（未核实注册）；开发主体按合成输入为同一合成演示主体。项目名称或开发主体输入不能证明建设需求和主体授权。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；说明建设动机来自哪一项用能或供电需求；没有业主资料时不认定必要性。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH02.02",
+      "question": "评价范围与价格现金流口径：明确价格、评价期及现金事件口径，不用收入替代现金流？",
+      "central_claim": "评价基准日按合成输入为2026-12-31；评价期按合成输入为25年；价格口径按合成输入为名义价格；税口径按合成输入为税后。年度项目评价使用预测的期末现金流，不要求逐笔银行流水；带日期指标和投资者出资分红另有事件边界。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reasoning": "资本金投资者全期现金流未形成可引用结果；明确价格、评价期及现金事件口径，不用收入替代现金流。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH02.03",
+      "question": "标准与政策适用：核对适用标准的版本和项目适用性，引用标准不等于取得审批？",
+      "central_claim": "本项尚未形成可引用的项目直接结果；政策须按地区、生效期和条款核验；登记条目不是批准文件。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；核对适用标准的版本和项目适用性，引用标准不等于取得审批。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH02.04",
+      "question": "资料目录与数据年份：追溯资料的时间范围、授权和更新日期，指出缺少站址实证的影响？",
+      "central_claim": "资源起始日期按合成输入为2025-01-01；资源截止日期按合成输入为2025-12-31；已登记1项合成附件；登记数量不代表原件或授权已核验。资料登记只提供出处线索，不能证明原件、覆盖年份或授权已核实。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；追溯资料的时间范围、授权和更新日期，指出缺少站址实证的影响。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH02.05",
+      "question": "假设、版本及免责：区分计算假设、编辑性设想和经核验的现场事实？",
+      "central_claim": "本项尚未形成可引用的项目直接结果；合成参数是研究假设，不是现场或合同事实；变更应重算。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；区分计算假设、编辑性设想和经核验的现场事实。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH03.01",
+      "question": "业主与投资运营主体：明确投资和运营主体是否有授权文件，不能以虚构企业充当业主？",
+      "central_claim": "本次合成方案把建设和投资责任均赋予合成演示主体：Demo Factory Roof Owner（未核实注册），运营主体记为同一合成演示主体。这一安排便于将投资与运维责任置于同一模型边界，但不是法人授权或已签署运营委托。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；明确投资和运营主体是否有授权文件，不能以虚构企业充当业主。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH03.02",
+      "question": "站址及工程分类：说明拟建对象与场址分类，核实其是否符合项目类型边界？",
+      "central_claim": "本项目拟按厂房屋面自用及余电上网研究；项目类别按合成输入为工商业屋面。分类决定屋顶自用或地面集中送出的研究路径，坐标仍需测绘定位。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；说明拟建对象与场址分类，核实其是否符合项目类型边界。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH03.03",
+      "question": "建设及权属模式：厘清建筑使用权或土地使用权与运营期限的衔接？",
+      "central_claim": "投资方式按合成输入为业主自投。可运营年限取决于使用权期限，投资模式不能补足权利文件。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；厘清建筑使用权或土地使用权与运营期限的衔接。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH03.04",
+      "question": "用能及售电模式：说明负荷消纳或集中送出的拟议方式及结算前提？",
+      "central_claim": "售电方式按合成输入为自发自用、余电上网；首年消纳电量计算为160,600kWh；首年收入计算为157,635.65元。售电模式只是结算计算边界，不是已签署的购售电承诺。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ENERGY-REVENUE",
+        "F-SELF-CONSUMPTION"
+      ],
+      "reasoning": "原始条件尚未全部进入本项证据链；说明负荷消纳或集中送出的拟议方式及结算前提。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH03.05",
+      "question": "规模目标与建设必要性：只有建设任务与需求依据一致，才能进一步论证建设必要性？",
+      "central_claim": "直流装机按合成输入为165kWp；直流侧装机容量计算为165kWp。规模目标只描述拟议任务，不能单独证明真实需求和建设必要性。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-DC-CAPACITY"
+      ],
+      "reasoning": "原始条件尚未全部进入本项证据链；只有建设任务与需求依据一致，才能进一步论证建设必要性。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH04.01",
+      "question": "位置坐标与边界：核实项目位置、边界和排除区；没有测绘成果不能认定可建设范围？",
+      "central_claim": "本项尚缺拟议场址等直接可追溯条件；项目名称及面积输入不能定位场址红线；坐标、坐标系和边界尚无可核验的测绘依据。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；核实项目位置、边界和排除区；没有测绘成果不能认定可建设范围。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH04.02",
+      "question": "地形海拔与面积核算：结合面积口径、地形或屋面障碍复核阵列布置的可实施空间？",
+      "central_claim": "场址高程按合成输入为30m；地形坡度按合成输入为0°；场址总面积按合成输入为3,500㎡；可用面积按合成输入为3,000㎡；排除区面积按合成输入为500㎡。可用面积仍需结合实测坡度或屋面障碍落位，不能据面积输入认定可建。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；结合面积口径、地形或屋面障碍复核阵列布置的可实施空间。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH04.03",
+      "question": "土地屋顶权属与期限：取得权属及使用期限依据，分析其与评价期的匹配？",
+      "central_claim": "权属核验按合成输入为待取得正式核验；权利期限按合成输入为2052-12-31。土地或屋面权利期限须覆盖运营期；分类标识不证明合法使用。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；取得权属及使用期限依据，分析其与评价期的匹配。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH04.04",
+      "question": "遮挡与结构安全：取得遮挡测量和结构承载结论，再确定可布置区域及加固需求？",
+      "central_claim": "遮挡比例按合成输入为2.5%；屋面允许附加荷载按合成输入为0.2kN/㎡；设计附加荷载按合成输入为0.12kN/㎡；屋面剩余年限按合成输入为30年。遮挡输入及设计荷载不能代替结构鉴定、遮挡实测和消防审查。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；取得遮挡测量和结构承载结论，再确定可布置区域及加固需求。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH04.05",
+      "question": "交通生态灾害限制：核查施工通道、灾害暴露和生态限制对工程组织的影响？",
+      "central_claim": "运输条件按合成输入为仅为概念方案；道路及吊装条件未经勘察。运输、生态及灾害暴露未经调查时，施工可达性仍未确定。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；核查施工通道、灾害暴露和生态限制对工程组织的影响。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH04.06",
+      "question": "专项建设条件与缺口：汇总仍需开展的场址专题，不以概念条件替代勘察结论？",
+      "central_claim": "本项尚未形成可引用的项目直接结果；地勘及防洪尚无正式结论时，不应锁定基础和场址工程方案。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；汇总仍需开展的场址专题，不以概念条件替代勘察结论。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH05.01",
+      "question": "数据集元信息与授权：核实资源数据集的覆盖期、时区、质量控制及使用许可？",
+      "central_claim": "合成资源时段为2025-01-01至2025-12-31。资源数据标识不等于获授权的长期气象记录，覆盖期和质量须核验。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；核实资源数据集的覆盖期、时区、质量控制及使用许可。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH05.02",
+      "question": "辐照分量与单位：分清水平面与阵列面辐照口径；没有辐照分量不作资源等级判断？",
+      "central_claim": "水平面总辐照按12个月输入求和为1,387kWh/㎡；直接辐照按12个月输入求和为1,022kWh/㎡；散射辐照按12个月输入求和为365kWh/㎡；阵列面辐照按12个月输入求和为1,766.6kWh/㎡。这是合成月值的算术汇总，不是多年实测资源或已核定发电量；水平面与阵列面辐照不同；发电结果不能倒推缺失的辐照分量。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；分清水平面与阵列面辐照口径；没有辐照分量不作资源等级判断。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH05.03",
+      "question": "温度风速与12个月：气温和风速的时序质量会影响温度损失与结构设计，应核对原始资料？",
+      "central_claim": "月均气温输入范围24—24℃、月均风速输入范围1.5—1.5m/s；月均值无法给出极端温度或设计风速，气温和风速分别影响温度损失及抗风设计，月份序列不能证明极端工况。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；气温和风速的时序质量会影响温度损失与结构设计，应核对原始资料。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH05.04",
+      "question": "逐年差异与典型气象年：评价多年代表性需要逐年观测或授权典型年，单年合成时序不足以替代？",
+      "central_claim": "典型气象年来源按合成输入为否。单一合成年或典型年设定不能证明多年资源代表性。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；评价多年代表性需要逐年观测或授权典型年，单年合成时序不足以替代。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH05.05",
+      "question": "平面转置与气象适配：检查倾角、方位角及转置方法对阵列面资源的影响，不反推辐照值？",
+      "central_claim": "阵列倾角按合成输入为18°；阵列方位角按合成输入为180°。倾角、方位角和转置方法影响阵列面资源，未经原始辐照核验不评资源等级。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；检查倾角、方位角及转置方法对阵列面资源的影响，不反推辐照值。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH05.06",
+      "question": "误差与交叉验证降级：通过独立数据交叉验证预测不确定性，缺失时应保持限定性判断？",
+      "central_claim": "资源不确定性输入按合成输入为15%。缺少独立交叉验证时，预测不确定性不能转化为保证发电区间。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；通过独立数据交叉验证预测不确定性，缺失时应保持限定性判断。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH06.01",
+      "question": "任务与可利用面积：先核实可用面积与建设任务的对应，再确认装机容量是否可落地？",
+      "central_claim": "可用面积按合成输入为3,000㎡；消防退让按合成输入为2m；用地覆盖率按合成输入为55%；直流侧装机容量计算为165kWp。建设任务须落在扣除退让区的有效面积内，容量目标不足以证明可建。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-DC-CAPACITY"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；先核实可用面积与建设任务的对应，再确认装机容量是否可落地。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH06.02",
+      "question": "组件排列与数量：组件数量与布置间距需同时满足阵列遮挡、通行和消防要求？",
+      "central_claim": "组件数量按合成输入为300块；阵列行距按合成输入为3.5m；直流侧装机容量计算为165kWp。组件数量和行距必须同时满足遮挡、检修及消防退让要求。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-DC-CAPACITY"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；组件数量与布置间距需同时满足阵列遮挡、通行和消防要求。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH06.03",
+      "question": "DC/AC规模与比例：说明直流装机、逆变器容量及容配比的当前配置，不据此证明接入可行？",
+      "central_claim": "直流装机按合成输入为165kWp；交流装机按合成输入为150kW；容配比按合成输入为1.1；直流侧装机容量计算为165kWp；交流侧额定容量计算为150kWac。容配比刻画设备配置，不等于变压器余量或电网接入许可。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-AC-CAPACITY",
+        "F-DC-AC-RATIO",
+        "F-DC-CAPACITY"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；说明直流装机、逆变器容量及容配比的当前配置，不据此证明接入可行。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH06.04",
+      "question": "基准与可行替代方案：仅在替代方案有同口径计算与工程条件时比较，不虚构比选结果？",
+      "central_claim": "本项尚未形成可引用的项目直接结果；只有基准输入而无同边界备选方案，不构成技术经济比选。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；仅在替代方案有同口径计算与工程条件时比较，不虚构比选结果。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH06.05",
+      "question": "比选口径与选择理由：比较设备、占地、发电与投资口径时应明确权重及约束？",
+      "central_claim": "申报可接入容量按合成输入为110kW。预算、接入容量和场址约束需并列比较；无备选结果不排序推荐。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；比较设备、占地、发电与投资口径时应明确权重及约束。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH06.06",
+      "question": "分类专项方案：区分屋顶结构消防或地面用地送出等项目类型专属方案？",
+      "central_claim": "本项尚未形成可引用的项目直接结果；分类专项须取得屋面结构消防或地面用地地勘送出依据，不跨类型套用。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；区分屋顶结构消防或地面用地送出等项目类型专属方案。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH07.01",
+      "question": "组件与逆变器选择：说明拟用组件和逆变器的容量参数，型号与认证仍需设备资料校核？",
+      "central_claim": "单块组件功率按合成输入为550Wp；组件效率按合成输入为21.5%；单台逆变器额定功率按合成输入为50kW；直流侧装机容量计算为165kWp；交流侧额定容量计算为150kWac。额定参数可构成初步容量组合，型号认证仍须设备数据表证明。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-AC-CAPACITY",
+        "F-DC-CAPACITY"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；说明拟用组件和逆变器的容量参数，型号与认证仍需设备资料校核。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH07.02",
+      "question": "支架及几何参数：支架倾角、方位角及排布密度须与实际结构和遮挡条件相协调？",
+      "central_claim": "支架形式按合成输入为固定支架；阵列方位角按合成输入为180°；阵列倾角按合成输入为18°；阵列行距按合成输入为3.5m。倾角和行距受遮挡与支架受力双重约束，不能只按发电效率优化。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；支架倾角、方位角及排布密度须与实际结构和遮挡条件相协调。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH07.03",
+      "question": "串并联与电压电流校核：串并联方案需复核极端温度下的电压、电流和逆变器跟踪范围？",
+      "central_claim": "每串组件数按合成输入为15块/串；并联组串数按合成输入为20串；组件开路电压按合成输入为50V；逆变器直流上限电压按合成输入为1,100V；逆变器最大输入电流按合成输入为120A。串并联须按极端温度核查电压、电流和逆变器范围，名义容量不证明安全。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；串并联方案需复核极端温度下的电压、电流和逆变器跟踪范围。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH07.04",
+      "question": "损失分项与物理顺序：明确各项损失所属的物理边界及是否已在上游数据中计入？",
+      "central_claim": "遮挡损失假设2.5%；积灰损失假设1.8%；失配损失假设1.2%。遮挡、温度、线路及逆变损失须按物理顺序和已含边界去重。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；明确各项损失所属的物理边界及是否已在上游数据中计入。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH07.05",
+      "question": "系统结构及接口：核实组串汇流、逆变、计量和保护之间的实际接口？",
+      "central_claim": "电气拓扑按合成输入为固定支架组串式逆变器。拓扑必须落实汇流、保护及计量交接点才能形成可审查接口。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；核实组串汇流、逆变、计量和保护之间的实际接口。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH07.06",
+      "question": "储能或分类专项设计：未申报储能时不拟制储能收益；分类专项设计另按实证条件开展？",
+      "central_claim": "本项尚未形成可引用的项目直接结果；未配置储能不意味着屋面结构、防水和消防专项设计已审查；这些边界仍需独立核实。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [],
+      "formula_ids": [],
+      "reasoning": "缺少可追溯的直接来源；未申报储能时不拟制储能收益；分类专项设计另按实证条件开展。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH08.01",
+      "question": "预测方法及能量边界：说明时序资源、系统损失及首年退化进入预测的先后关系？",
+      "central_claim": "首年发电量计算为245,313.45kWh。阵列面资源、容量、损失和退化共同限定预测，单一资源值不能解释总电量。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ENERGY-AGGREGATION"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；说明时序资源、系统损失及首年退化进入预测的先后关系。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH08.02",
+      "question": "月度与首年电量：月度电量反映合成输入下的季节变化，首年总量需与月度合计核对？",
+      "central_claim": "首年合成资源计算的12个月发电量中，1月为20,834.84kWh、12月为20,834.84kWh；逐月汇总与年度发电指标一致，对应年度245,313.45kWh。月份的发电序列不是辐照实测，也不能直接作为屋顶自用与余电上网电量；后续年份按0.8%年衰减另行重算，仍需真实资源、损失和计量边界核验。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ENERGY-AGGREGATION"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；月度电量反映合成输入下的季节变化，首年总量需与月度合计核对。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH08.03",
+      "question": "逐年衰减和更换：年度衰减与设备更换事件应分别解释，不能以单一衰减率覆盖两者？",
+      "central_claim": "首年预测245,313.45kWh、末年预测201,259.36kWh；后续年衰减按合成输入为0.8%；第13年逆变器更换计划对应预测218,572.65kWh，上年为224,065.81kWh；本次模型计入更换停机6天且无性能恢复增益。年度衰减与更换事件时点不同，电量曲线不证明更换计划已落实。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ENERGY-AGGREGATION"
+      ],
+      "reasoning": "原始条件尚未全部进入本项证据链；年度衰减与设备更换事件应分别解释，不能以单一衰减率覆盖两者。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH08.04",
+      "question": "PR、等效小时和容量因子：等效小时、容量因数和性能比口径不同，不可互相代替或视为实测？",
+      "central_claim": "直流装机按合成输入为165kWp；交流装机按合成输入为150kW；系统性能比计算为84.1587%；等效利用小时数计算为1,486.75h；容量因数计算为16.972%。性能比、等效小时和容量因数分母不同，不能互证现场效率。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-CAPACITY-FACTOR",
+        "F-EQUIVALENT-HOURS",
+        "F-PR-OBSERVED"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；等效小时、容量因数和性能比口径不同，不可互相代替或视为实测。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH08.05",
+      "question": "不可利用与限发校核：可利用电量、限发和可交付电量应逐边界对账，不推定已全部结算？",
+      "central_claim": "不可用比例按合成输入为1.2%；首年可利用发电量计算为245,313.45kWh；首年可交付电量计算为245,313.45kWh。可利用量与交付量受不可用和限发约束，交付预测不是结算电量。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-AVAILABLE-ENERGY",
+        "F-DELIVERED-ENERGY"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；可利用电量、限发和可交付电量应逐边界对账，不推定已全部结算。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH08.06",
+      "question": "不确定性与结果限制：复核异常高的等效利用小时及资源代表性，再讨论长期预测可信度？",
+      "central_claim": "资源不确定性输入按合成输入为15%。长期电量可信度仍取决于资源代表性，不由首年结果外推保证。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；复核异常高的等效利用小时及资源代表性，再讨论长期预测可信度。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH09.01",
+      "question": "接入点与电压：拟议接入点与电压等级须以电网接入论证为准？",
+      "central_claim": "接入电压按合成输入为0.4kV。接入点与电压输入仅供初设定位，不能代表电网批准。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；拟议接入点与电压等级须以电网接入论证为准。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH09.02",
+      "question": "变压器线路与容量约束：现有变压器或线路参数不等于获准接入容量，应取得电网校核意见？",
+      "central_claim": "250kVA变压器是设备视在容量，不能直接与kW有功功率比较；本次功率因数0.95仍是合成假设。本次填报可用接入余量110kWac，可用接入余量低于150kW交流铭牌，不能以变压器额定容量直接认定可全额送出；送出限值假设另为100kW。屋顶自用后的余电还受保护、线路与计量边界约束；正式接网意见待取得，仅属合成条件，正式电网接入与送出限值待批复，不视为已获接入许可。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-AC-CAPACITY"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；现有变压器或线路参数不等于获准接入容量，应取得电网校核意见。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH09.03",
+      "question": "升压保护及送出工程：保护配置、送出路径和升压设施仍需专题设计？",
+      "central_claim": "电网改造计划按合成输入为No upgrade confirmed; cost exposure unverified；保护方案按合成输入为Concept protection only; engineering review pending。保护及送出工程量依赖线路方案和整定审查，不能从设备清单推断。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；保护配置、送出路径和升压设施仍需专题设计。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH09.04",
+      "question": "并网与交易核验：并网协议与交易准入分别核验，不能用技术方案替代批复？",
+      "central_claim": "正式接网意见按合成输入为待取得正式核验。并网技术意见与交易准入须分别取得，模型状态不能替代具名外部意见。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；并网协议与交易准入分别核验，不能用技术方案替代批复。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH09.05",
+      "question": "限发与尚待电网确认：限发条件取决于接网和调度约束，应取得具名电网资料？",
+      "central_claim": "申报送出有功上限按合成输入为100kW。限发及送出上限影响可交付量，调度条件未经核实不能承诺消纳。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；限发条件取决于接网和调度约束，应取得具名电网资料。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH10.01",
+      "question": "负荷资料与同粒度匹配：屋顶负荷应按同一时区和计量粒度与发电时序匹配；地面项目不适用自用模型？",
+      "central_claim": "首年消纳电量计算为160,600kWh。屋顶自用须将同边界负荷与发电逐时匹配，月账单不足以证明比例。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-SELF-CONSUMPTION"
+      ],
+      "reasoning": "原始条件尚未全部进入本项证据链；屋顶负荷应按同一时区和计量粒度与发电时序匹配；地面项目不适用自用模型。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH10.02",
+      "question": "自用、上网与限发平衡：区分自用、上网、限发及实际结算边界，不把预测发电量等同于收入电量？",
+      "central_claim": "售电方式按合成输入为自发自用、余电上网；申报送出有功上限按合成输入为100kW；首年消纳电量计算为160,600kWh；首年可交付电量计算为245,313.45kWh。交付预测包含自用和上网部分，不是全部上网或已结算售电量。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-DELIVERED-ENERGY",
+        "F-SELF-CONSUMPTION"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；区分自用、上网、限发及实际结算边界，不把预测发电量等同于收入电量。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH10.03",
+      "question": "分时电价与可避免费用：分时电价与节省电费须结合生效合同和计量规则复核？",
+      "central_claim": "首年收入计算为157,635.65元。节省电费须按生效分时合同和可避免费用核算，不能全额套用零售价。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ENERGY-REVENUE"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；分时电价与节省电费须结合生效合同和计量规则复核。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH10.04",
+      "question": "合同与交易结算模式：交易主体、结算周期和合同价格未确认前只能描述拟议售电模式？",
+      "central_claim": "首年收入计算为157,635.65元。售电主体、价格和交易费须合同核验，模型收入不构成收款承诺。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ENERGY-REVENUE"
+      ],
+      "reasoning": "原始条件尚未全部进入本项证据链；交易主体、结算周期和合同价格未确认前只能描述拟议售电模式。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH10.05",
+      "question": "逐时市场价与其他收益：逐时市场价格和其他收益只有明确来源与执行规则才能计入？",
+      "central_claim": "本项尚未形成可引用的项目直接结果；市场现货价及其他收益无有效时序和执行规则时不应补进基准。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；逐时市场价格和其他收益只有明确来源与执行规则才能计入。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH10.06",
+      "question": "储能调度独立边界：未配置储能时不开展储能调度收益评价？",
+      "central_claim": "本项目未配置储能，充放电调度及收益测算不适用。",
+      "claim_status": "NOT_APPLICABLE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前配置未设置储能，不存在储能调度或设备专项评价；只有适用前提改变才应重新计算。",
+      "decision": "保留本项并标注不适用，不代入其他项目类型模型。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH11.01",
+      "question": "总平面与功能分区：功能分区应以建筑可使用面或地面征地红线及排除区为边界？",
+      "central_claim": "阵列行距按合成输入为3.5m；消防退让按合成输入为2m。总平面须预留排除区、检修和消防空间，输入边界不能代替实测布置图。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；功能分区应以建筑可使用面或地面征地红线及排除区为边界。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH11.02",
+      "question": "地基与支架基础：屋顶支架锚固与地面基础分别需要结构或地勘成果支撑？",
+      "central_claim": "支架形式按合成输入为固定支架。屋面锚固须依结构鉴定与防水构造确定，合成支架类型不足以证明屋面连接安全。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；屋顶支架锚固与地面基础分别需要结构或地勘成果支撑。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH11.03",
+      "question": "结构承载与安全疏散：消防疏散及承载安全需具名专业复核，不据概念布置认定合格？",
+      "central_claim": "设计附加荷载按合成输入为0.12kN/㎡。荷载及通道需要具名专业复核，报告编号或预留宽度不是审查结论。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；消防疏散及承载安全需具名专业复核，不据概念布置认定合格。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH11.04",
+      "question": "施工物流道路与排水：复核运输、吊装、施工道路、排水对施工组织的限制？",
+      "central_claim": "运输条件按合成输入为仅为概念方案；道路及吊装条件未经勘察。物流吊装与排水限制施工窗口，现阶段不宜锁定施工组织。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；复核运输、吊装、施工道路、排水对施工组织的限制。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH11.05",
+      "question": "专项勘察及工程量缺口：缺少专项勘察及工程量时暂不锁定土建费用和工期？",
+      "central_claim": "本项尚未形成可引用的项目直接结果；专项勘察及工程量缺口传导至造价和工期，费用汇总不能反证工程量。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；缺少专项勘察及工程量时暂不锁定土建费用和工期。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH12.01",
+      "question": "节能减排与因子：减排量需要经确认的电量边界与排放因子，未核算不列确定效益？",
+      "central_claim": "减排因子假设按合成输入为0.55。减排量需同边界交付电量及适用排放因子，不能由发电量单独宣称。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；减排量需要经确认的电量边界与排放因子，未核算不列确定效益。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH12.02",
+      "question": "环境生态与水土保持：生态和水土保持措施需结合场址调查及适用审批确定？",
+      "central_claim": "本项尚未形成可引用的项目直接结果；生态及水保义务取决于场址调查和审批，登记资料不是专题评估。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；生态和水土保持措施需结合场址调查及适用审批确定。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH12.03",
+      "question": "消防与施工运行安全：消防设计与施工运行安全分别落实责任和专项审查？",
+      "central_claim": "本项尚未形成可引用的项目直接结果；消防通道、储能消防及施工风险各有责任边界，未经审查不能称合规。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；消防设计与施工运行安全分别落实责任和专项审查。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH12.04",
+      "question": "社会影响与利益主体：说明周边主体与利益影响仍需沟通，不能虚构协商结果？",
+      "central_claim": "本项尚未形成可引用的项目直接结果；产权人和周边主体同意须有文件支持，项目身份不代表已获同意。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；说明周边主体与利益影响仍需沟通，不能虚构协商结果。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH12.05",
+      "question": "专项评估与合规阻断：未取得专题评价和审批时不得认定项目合规？",
+      "central_claim": "本项尚未形成可引用的项目直接结果；政策及专项评价须逐条核验，风险清单不是行政合规结论。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；未取得专题评价和审批时不得认定项目合规。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH13.01",
+      "question": "开发前提与组织分工：开发责任分工应落实权属、技术、并网及投资前置条件？",
+      "central_claim": "开发主体按合成输入为同一合成演示主体；运营主体按合成输入为同一合成演示主体；另录入5项合成实施任务，组织责任仍须在正式文件中落实。开发投资运营分工须对应权属、接网及资金条件，主体名称不落实责任。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；开发责任分工应落实权属、技术、并网及投资前置条件。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH13.02",
+      "question": "初设采购施工调试验收：初设、采购、施工、调试和验收应按依赖关系安排而非预填日期？",
+      "central_claim": "合成任务及持续时间按输入顺序安排：合成任务“屋面排布与结构复核计划”安排2026-11-06至2026-11-20，15个日历日；前置任务：无，列为计划关键路径；合成任务“权属、消防及接网待核节点计划”安排2026-11-21至2026-11-30，10个日历日；前置任务：屋面排布与结构复核计划，列为计划关键路径；合成任务“屋面安装施工计划（须先取得真实许可）”安排2026-12-01至2026-12-20，20个日历日；前置任务：权属、消防及接网待核节点计划，列为计划关键路径；合成任务“电气测试与计量方案计划（非投运批准）”安排2026-12-21至2026-12-31，11个日历日；前置任务：屋面安装施工计划（须先取得真实许可），列为计划关键路径；合成任务“拟投运里程碑（非获准投运）”安排2027-01-01至2027-01-01，1个日历日；前置任务：电气测试与计量方案计划（非投运批准），列为计划关键路径。前置关系仅表示计划依赖，不代表任何外部审批已通过；采购施工调试日期须按审批与交付依赖排定，计划不是开工许可。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；初设、采购、施工、调试和验收应按依赖关系安排而非预填日期。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH13.03",
+      "question": "依赖关系与关键路径：接入审批、设备采购和施工窗口形成关键路径，需逐项核实？",
+      "central_claim": "本次合成任务的前置依赖链为：屋面排布与结构复核计划；前置任务：无，列为计划关键路径；权属、消防及接网待核节点计划；前置任务：屋面排布与结构复核计划，列为计划关键路径；屋面安装施工计划（须先取得真实许可）；前置任务：权属、消防及接网待核节点计划，列为计划关键路径；电气测试与计量方案计划（非投运批准）；前置任务：屋面安装施工计划（须先取得真实许可），列为计划关键路径；拟投运里程碑（非获准投运）；前置任务：电气测试与计量方案计划（非投运批准），列为计划关键路径。前置关系仅表示计划依赖，不代表任何外部审批已通过；关键路径取决于前置关系和审批时长，未核验时不能承诺并网日。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；接入审批、设备采购和施工窗口形成关键路径，需逐项核实。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH13.04",
+      "question": "建设风险与缓释：识别施工停工、供应与并网延误的条件及缓释责任？",
+      "central_claim": "运输条件按合成输入为仅为概念方案；道路及吊装条件未经勘察；实施进度按5项合成任务预排，真实通道与审批窗口尚需核实。施工通道、供货和电网窗口分别可能延误进度，缓释责任须落实。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；识别施工停工、供应与并网延误的条件及缓释责任。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH13.05",
+      "question": "里程碑与进入下一阶段条件：只有前置资料闭合后才形成可执行里程碑与启动条件？",
+      "central_claim": "拟投运里程碑按合成任务安排为2027-01-01，前置任务为电气测试与计量方案计划（非投运批准）。里程碑日期不是实际开工、获批并网或验收完成；启动节点须由权属、专业审查及资金共同触发，不由评价日触发。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；只有前置资料闭合后才形成可执行里程碑与启动条件。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH14.01",
+      "question": "估算依据与边界：估算仅依据当前合成费用项目和计价口径，不等于市场报价？",
+      "central_claim": "估算依据按合成输入为按合成分项成本编制；无供应商报价或批准预算；评价期资本支出估算（含更换，须按账簿复核）计算为539,000元；组件计划费用210,000元；逆变器计划费用72,000元；支架计划费用90,000元。估算总额按本次费用分类汇集，合成价格不是可采购报价。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-CAPEX-TOTAL"
+      ],
+      "reasoning": "原始条件尚未全部进入本项证据链；估算仅依据当前合成费用项目和计价口径，不等于市场报价。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH14.02",
+      "question": "设备材料投资：组件、逆变器与材料费用需对数量、单价和税口径逐项复核？",
+      "central_claim": "本次设备清单以组件210,000元占已列初始设备分项最大份额：组件300块×700元/块=210,000元、逆变器3台×24,000元/台=72,000元、支架1项×90,000元/项=90,000元；上述均按含税价、增值税率13%输入。建设期计划支付资本支出467,000元，25年CAPEX合计539,000元，其中土建施工95,000元另列，不能充作设备费；计划在第13年逆变器更换72,000元，属于后期支出，不是初始设备采购。这些是合成数量与价格而非供应商签署报价，实际工程量、税额抵扣及采购付款仍须核验。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-CAPEX-TOTAL"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；组件、逆变器与材料费用需对数量、单价和税口径逐项复核。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH14.03",
+      "question": "工程建设与场址专项：屋顶加固或地面基础、道路及送出工程需独立核量？",
+      "central_claim": "评价期资本支出估算（含更换，须按账簿复核）计算为539,000元；土建计划费用95,000元。屋面加固与防水须专项核量，不能以组件费用覆盖。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-CAPEX-TOTAL"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；屋顶加固或地面基础、道路及送出工程需独立核量。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH14.04",
+      "question": "前期与管理及预备费：管理、前期与预备费应按已声明的费用边界核对有无重复？",
+      "central_claim": "预备费率按合成输入为4%。管理、前期及预备费用须核查类别及基数，避免总投资重复计列。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；管理、前期与预备费应按已声明的费用边界核对有无重复。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH14.05",
+      "question": "建设期利息与资金进度：建设期利息取决于真实提款和进度，不由工程总额推断？",
+      "central_claim": "资本支出是否包含建设期利息按合成输入为否。建设期利息由提款日期、利率及进度决定，不按CAPEX比例猜测。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；建设期利息取决于真实提款和进度，不由工程总额推断。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH14.06",
+      "question": "税口径与单位投资校核：区分含税、可抵扣与单位投资的分母口径？",
+      "central_claim": "评价期CAPEX单位直流投资计算为3,266.67元/kWp。单位投资分子须明确税及专项范围，分母须说明直流或交流装机。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-UNIT-INVESTMENT"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；区分含税、可抵扣与单位投资的分母口径。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH15.01",
+      "question": "年度运营费：运维、保险和使用权成本需以费用项目及合同依据分别说明？",
+      "central_claim": "首年运维现金支出按年度账簿为11,220元；全周期现金运营费用计算为359,379.96元；检修维护首年基价输入7,200元；保险首年基价输入3,800元。现金运维费按项目汇集，保险及场地费仍需合同与期间依据。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ANNUAL-OPEX"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；运维、保险和使用权成本需以费用项目及合同依据分别说明。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH15.02",
+      "question": "资产分类折旧与残值：折旧和残值属于非现金口径，不能直接作为终期收款？",
+      "central_claim": "首年非现金折旧按年度账簿为40,774.34元；期末资产账面价值计算为17,477.88元。折旧和账面价值是会计分摊，不等于处置所得或终期现金。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ASSET-BOOK-VALUE"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；折旧和残值属于非现金口径，不能直接作为终期收款。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH15.03",
+      "question": "更换与寿命计划：更换年份与设备寿命需和发电预测、现金支出保持一致？",
+      "central_claim": "第13年更换现金支出为72,000元。设备更换同时影响停机及现金支出，不能用单一退化率代替。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；更换年份与设备寿命需和发电预测、现金支出保持一致。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH15.04",
+      "question": "税制与实际现金税金：实际所得税与增值税现金缴纳需由税基及支付事件支持？",
+      "central_claim": "首年项目现金税费按年度账簿为29,472.76元；所得税率按合成输入为25%；全周期现金税费计算为806,049.75元。现金税费须按税基和支付事件区分应计、应付及实付。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-CASH-TAX-TOTAL"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；实际所得税与增值税现金缴纳需由税基及支付事件支持。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH15.05",
+      "question": "非现金与年度汇总校核：核对现金费用与非现金折旧，防止年度成本重复计列？",
+      "central_claim": "首年运维现金支出按年度账簿为11,220元；全周期现金运营费用计算为359,379.96元；检修维护首年基价输入7,200元；保险首年基价输入3,800元；第13年更换现金支出为72,000元。现金运维、非现金折旧和更换支出分账后才能避免重复列费。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ANNUAL-OPEX"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；核对现金费用与非现金折旧，防止年度成本重复计列。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH16.01",
+      "question": "收入与残值：收入预测不等于实际回款；终期残值尚需可执行的处置依据？",
+      "central_claim": "首年收入计算为157,635.65元。收入预测不是实际回款，账面残值不能自动计入终期现金。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ENERGY-REVENUE"
+      ],
+      "reasoning": "原始条件尚未全部进入本项证据链；收入预测不等于实际回款；终期残值尚需可执行的处置依据。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH16.02",
+      "question": "项目投资现金流：项目投资现金流需完整覆盖投资、运营、税与终期事件？",
+      "central_claim": "项目税后年度现金流建设期为-479,000元，由建设期计划资本支出467,000元和营运资金投入12,000元构成；运营首年合成的余电预计回款35,579.65元与自用节费122,056元，扣运维现金11,220元与项目现金税费29,472.76元后，对应首年净流入116,942.89元；第13年计划更换支出72,000元，已在后续年度扣除而非重复计入初始投资。本项是合成年度项目收支预测，不是实际银行流水、已收回款或投资者分红；股东出资及分配事件未闭合，不能由项目净流量替代。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；项目投资现金流需完整覆盖投资、运营、税与终期事件。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH16.03",
+      "question": "股东现金流与融资偿债：股东现金流需单独核实出资、借款、偿债与分配事件？",
+      "central_claim": "债务比例按合成输入为0%；投资者出资—分配现金流未形成；融资后权益可用现金不等于股东IRR。融资后可供权益分配现金不等于投资者出资、实际分红或退出回款；借款提款不是股东收款。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "资本金投资者全期现金流未形成可引用结果；股东现金流需单独核实出资、借款、偿债与分配事件。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH16.04",
+      "question": "NPV与IRR：净现值与内部收益率必须以完整且有日期的现金事件计算？",
+      "central_claim": "按合成的25年项目税后、名义价格及年度期末现金流，使用7.5%项目折现率得到年度NPV679,601.69元；项目IRR在声明搜索域-90.0%至500%内唯一已认证根为23.0810%；静态回收期4.1397年、动态回收期5.1598年，在本次假设下NPV为正且唯一IRR高于同口径折现率，模型项目回报超过折现假设。这不是逐笔日期NPV或实际投资者出资—分红回报：未提供股东现金事件及真实银行流水，也未获得现场审批、签署交易与专业复核，不能据此批准投资。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-DYNAMIC-PAYBACK",
+        "F-IRR-PROJECT",
+        "F-NPV",
+        "F-STATIC-PAYBACK"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；净现值与内部收益率必须以完整且有日期的现金事件计算。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH16.05",
+      "question": "静态动态回收期：回收期须有逐期净现金流，不据工程投资与单年收入推算？",
+      "central_claim": "静态投资回收期计算为4.1397年；动态投资回收期计算为5.1598年。回收期依赖逐期现金结余，不能由单年收入推算年限。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-DYNAMIC-PAYBACK",
+        "F-STATIC-PAYBACK"
+      ],
+      "reasoning": "原始条件尚未全部进入本项证据链；回收期须有逐期净现金流，不据工程投资与单年收入推算。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH16.06",
+      "question": "LCOE与可交付电量：平准化成本须用同期无杠杆成本及同边界可交付电量？",
+      "central_claim": "申报送出有功上限按合成输入为100kW；税口径按合成输入为税后；首年可交付电量计算为245,313.45kWh。平准化度电成本须配对无杠杆成本与同边界全期交付电量。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-DELIVERED-ENERGY"
+      ],
+      "reasoning": "平准化度电成本未形成可引用结果；平准化成本须用同期无杠杆成本及同边界可交付电量。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH16.07",
+      "question": "DSCR与债务条件：偿债覆盖指标要求合同还本付息及可供偿债现金流？",
+      "central_claim": "明确无债务时本次不计算偿债覆盖倍数，零倍不能表述偿债能力。",
+      "claim_status": "NOT_APPLICABLE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前明确配置为无债务，偿债覆盖率不适用；只有适用前提改变才应重新计算。",
+      "decision": "保留本项并标注不适用，不代入其他项目类型模型。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH16.08",
+      "question": "盈亏平衡与目标差距：盈亏平衡与目标差距须有独立重算及明确目标口径？",
+      "central_claim": "本项尚未形成可引用的项目直接结果；盈亏平衡及目标差距需明确门槛和反向重算，不凭基准收入猜测。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "盈亏平衡电价未形成可引用结果；盈亏平衡与目标差距须有独立重算及明确目标口径。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH17.01",
+      "question": "单因素敏感性：单因素扰动需要独立运行及响应结果，基准参数表不是敏感性分析？",
+      "central_claim": "资源不确定性输入按合成输入为15%；未执行独立扰动或组合情景，无法报告敏感性斜率及耐受阈值。基准结果没有单因素扰动运行，不能报告敏感性斜率。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；单因素扰动需要独立运行及响应结果，基准参数表不是敏感性分析。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH17.02",
+      "question": "悲观基准乐观组合：乐观与悲观情景必须各自声明参数组合和运行身份？",
+      "central_claim": "未执行独立扰动或组合情景，无法报告敏感性斜率及耐受阈值。悲观乐观组合须各自定义参数并重算，单一基准不是三情景。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；乐观与悲观情景必须各自声明参数组合和运行身份。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH17.03",
+      "question": "阈值与稳健性：稳健性与阈值须经完整重算，不以基准结果外推？",
+      "central_claim": "合成项目税后年度NPV计算为679,601.69元；项目IRR在声明搜索域-90.0%至500%内唯一已认证根为23.0810%；未执行独立扰动或组合情景，无法报告敏感性斜率及耐受阈值。稳健性门槛须现金流和扰动均闭合后检验，不推断耐受区间。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-IRR-PROJECT",
+        "F-NPV"
+      ],
+      "reasoning": "原始条件尚未全部进入本项证据链；稳健性与阈值须经完整重算，不以基准结果外推。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH17.04",
+      "question": "风险清单与证据状态：权属、资源、工程、并网及交易风险应分别描述影响路径？",
+      "central_claim": "未执行独立扰动或组合情景，无法报告敏感性斜率及耐受阈值；风险清单登记权属及专业文件核验事项。权属、资源、工程和并网风险可分别阻断项目，风险登记不量化概率。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；权属、资源、工程、并网及交易风险应分别描述影响路径。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH17.05",
+      "question": "属性及反向约束校核：检验任何判断是否超出数据授权、计量边界和项目类型？",
+      "central_claim": "未执行独立扰动或组合情景，无法报告敏感性斜率及耐受阈值。反向约束须检验来源授权、计量边界和项目类型，单次结果不是验收。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；检验任何判断是否超出数据授权、计量边界和项目类型。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH18.01",
+      "question": "四态唯一建议：当前仅可形成条件性阶段意见，不将合成测算表述为项目可行？",
+      "central_claim": "按合成的25年税后项目现金流，建设期计划资本支出467,000元，首年交付预测245,313.45kWh；年度期末NPV为679,601.69元，项目IRR在声明搜索域-90.0%至500%内唯一已认证根为23.0810%；静态回收期4.1397年。上述是模型项目回报，不是股东回报或真实投资批准；屋面权属、荷载防水及余电接网意见仍须独立核验。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-DELIVERED-ENERGY",
+        "F-IRR-PROJECT",
+        "F-NPV",
+        "F-PROJECT-CASH-FLOW",
+        "F-STATIC-PAYBACK"
+      ],
+      "reasoning": "原始条件尚未全部进入本项证据链；当前仅可形成条件性阶段意见，不将合成测算表述为项目可行。",
+      "decision": "暂缓投资决定；权属核验、正式接网意见尚未闭合。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH18.02",
+      "question": "结论证据及独立否决：列出仍可能独立否决工程推进的权属、资源及接网事项？",
+      "central_claim": "权属核验按合成输入为待取得正式核验；正式接网意见按合成输入为待取得正式核验；风险清单登记权属及专业文件核验事项。屋顶权属、结构与接网意见各可独立限制项目实施。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；列出仍可能独立否决工程推进的权属、资源及接网事项。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH18.03",
+      "question": "推进条件与触发阈值：明确进入下一阶段需要的资料和专题，不虚构触发阈值？",
+      "central_claim": "风险偏好按合成输入为均衡风险偏好。进入下一阶段须先取得权属、工程及接入证据，再检验现金流门槛。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；明确进入下一阶段需要的资料和专题，不虚构触发阈值。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH18.04",
+      "question": "资料缺口与专项核查：按工程、并网、价格与财务专题提出分工明确的核查事项？",
+      "central_claim": "风险清单登记权属及专业文件核验事项。待核事项须按场址、资源、售电及财务分别取证，版本更新不等于关闭。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；按工程、并网、价格与财务专题提出分工明确的核查事项。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "CH18.05",
+      "question": "决策里程碑及免责：决策里程碑以审批和专业审查完成为前提，不许诺开工日期？",
+      "central_claim": "评价基准日按合成输入为2026-12-31。决策里程碑以具名审批和专业复核为前提，评价日期不是开工承诺。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；决策里程碑以审批和专业审查完成为前提，不许诺开工日期。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP01.01",
+      "question": "本次使用的资料是否逐份有身份、授权和可读位置？",
+      "central_claim": "来源编号只是索引，原件位置、授权和可读性仍须逐份核查。本次证据：本次结果保留来源登记及字段实例记录，但授权和原始附件位置仍须逐条核对。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；核验来源登记、附件位置与授权，不把来源编号当作已读全文。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP01.02",
+      "question": "关键输入能否回溯到字段实例与原始来源？",
+      "central_claim": "字段实例同时指向来源及原始位置，输入血缘才足以复核。本次证据：本次结果保留来源登记及字段实例记录，但授权和原始附件位置仍须逐条核对。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；逐项核对输入血缘，缺少实例位置时保留追溯缺口。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP02.01",
+      "question": "12个月气象资料的分量、覆盖和单位能否核查？",
+      "central_claim": "月度气象须核单位、覆盖期及授权，不能由发电量倒推辐照。本次证据：资源时序登记8760条（合成假设）。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；取得资源原始月表及授权；月发电量不能倒推辐照分量。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP02.02",
+      "question": "月度发电、消纳与交付电量能否同边界对账？",
+      "central_claim": "月发电、消纳与交付须同月同时区对账，总发电不代替结算。本次证据：月度发电量为序列（12项；首值 20,834.84；末值 20,834.84） kWh；首年发电量为245,313.45 kWh；负荷时序登记8760条（合成假设）。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-DELIVERED-ENERGY",
+        "F-ENERGY-AGGREGATION"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；核对时区、月度能量和结算边界，不由发电量代替交付。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP03.01",
+      "question": "设备和布局的原子参数是否有可核验型号？",
+      "central_claim": "装机结果可追溯设备输入，型号认证仍须数据表核查。本次证据：直流侧装机容量为165 kWp；交流侧额定容量为150 kWac；阵列行距假设为3.5 m。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-AC-CAPACITY",
+        "F-DC-CAPACITY"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；取得组件、逆变器和支架数据表并逐字段复核。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP03.02",
+      "question": "每项损失与退化是否只计入一次？",
+      "central_claim": "损失顺序及退化时点决定是否重复扣减，年度曲线不证明审查。本次证据：年度发电量为序列（25项；首值 245,313.45；末值 201,259.36） kWh。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ENERGY-AGGREGATION"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；核查损失顺序、已含标志与衰减时点。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP04.01",
+      "question": "费用清单是否覆盖设备、土建、预备与专项投资？",
+      "central_claim": "总投资只在本次分类范围内成立，专项费用仍须逐项核量。本次证据：评价期资本支出估算（含更换，须按账簿复核）为539,000 元。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-CAPEX-TOTAL"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；逐项核实工程量、数量单价、税与分类专项范围。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP04.02",
+      "question": "报价、付款与投资总额能否勾稽？",
+      "central_claim": "报价、应付和实付不同，账面总额不证明付款发生。本次证据：评价期资本支出估算（含更换，须按账簿复核）为539,000 元。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-CAPEX-TOTAL"
+      ],
+      "reasoning": "原始条件尚未全部进入本项证据链；补充报价有效期及付款时点，避免应付替代实付。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP05.01",
+      "question": "年度现金运维与更换、非现金折旧是否分账？",
+      "central_claim": "运维现金、折旧和更换须分列年度，折旧不是现金支出。本次证据：全周期现金运营费用为359,379.96 元。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ANNUAL-OPEX"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；核对全期运维、更换与残值计划，折旧不作为现金支出。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP05.02",
+      "question": "适用税制与实际税金能否逐年衔接？",
+      "central_claim": "现金税金与条款仍需应计、应付及实付逐年对账。本次证据：全周期现金税费为806,049.75 元。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-CASH-TAX-TOTAL"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；取得税制与现金支付依据，对账应计、应付及实付。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP06.01",
+      "question": "建设至终期的项目投资现金事件是否闭合？",
+      "central_claim": "项目全期现金流须覆盖建设至终期实际事件，收入不补缺口。本次证据：项目投资全期现金流为序列（26项；首值 -479,000；末值 100,583.47） 元。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；取得有日期的投资、税、营运资金和终期收付记录。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP06.02",
+      "question": "资本金全期现金流是否独立包含提款和偿债？",
+      "central_claim": "资本金现金流须独立记录出资和债务事件，不沿用项目现金流。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "资本金投资者全期现金流未形成可引用结果；核实股东出资、提款、本息和分配，不能沿用项目现金流。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP07.01",
+      "question": "有债务时偿债计划与可偿债现金是否逐期匹配？",
+      "central_claim": "无债务安排不存在有债务偿还计划，不能据此宣称偿债覆盖达标。",
+      "claim_status": "NOT_APPLICABLE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前明确配置为无债务，偿债覆盖率不适用；只有适用前提改变才应重新计算。",
+      "decision": "保留本项并标注不适用，不代入其他项目类型模型。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP07.02",
+      "question": "无债务与偿债零分母是否被正确区分？",
+      "central_claim": "无债务不适用、零分母未定义，两者都不是零倍覆盖。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "债务偿付覆盖倍数未形成可引用结果；核查债务比例与每期偿债额，零分母不得填零倍。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP08.01",
+      "question": "单因素和组合情景是否分别独立运行？",
+      "central_claim": "单因素及组合情景各需独立运行，基准结果不是情景底表。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；提供各因素变化、控制变量及运行身份后比较结果。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP08.02",
+      "question": "阈值与反向约束是否经独立数值验收？",
+      "central_claim": "盈亏门槛需目标口径、重算及方向验收，展示值不证明约束。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "盈亏平衡电价未形成可引用结果；补充门槛目标、重算结果和方向性复核。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP09.01",
+      "question": "政策原文、地区及生效日期能否定位？",
+      "central_claim": "政策须定位文号、地区及有效期，适用意向不是现行证明。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；取得政策文号、原文条款与有效期，不推定现行适用。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP09.02",
+      "question": "政策适用或冲突是否经过逐条审查？",
+      "central_claim": "政策冲突须逐条审查，未核验文本不能形成合法性意见。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [],
+      "formula_ids": [],
+      "reasoning": "原始条件尚未全部进入本项证据链；按项目地区和类型记录有效、过期、待核和冲突依据。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP10.01",
+      "question": "阻断事项是否逐一具名并给出关闭证据？",
+      "central_claim": "阻断事项须关联关闭材料和责任，发现项存在不等于解除。本次证据：现有发现项仍需逐项核对关闭材料。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；核对当前发现项、责任人及关闭材料，不将未核实项目视为关闭。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP10.02",
+      "question": "资料关闭后才允许进入哪些决策里程碑？",
+      "central_claim": "推进门槛须映射权属、工程、接网及现金流证据，不由日期满足。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；核对权属、工程、并网及现金流门槛与重启条件。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP11.01",
+      "question": "所引用公式能否对应注册定义和版本？",
+      "central_claim": "公式快照只是定义索引，适用边界仍须逐条核对。本次证据：本次统一结果保留了公式快照身份，完整定义仍须在公式工作表逐条核验。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [],
+      "formula_ids": [],
+      "reasoning": "缺少可追溯的直接来源；从正式公式快照核验名称、输入、边界及验证记录，不在报告中补造公式。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP11.02",
+      "question": "出现的符号是否逐一有单位、定义和来源？",
+      "central_claim": "符号须解释单位、下标及求和边界，编号不定义变量。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [],
+      "formula_ids": [],
+      "reasoning": "缺少可追溯的直接来源；对照公式工作表复核上下标、求和范围和每个输入来源。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP12.01",
+      "question": "正文术语是否有中文、英文全称与缩写对应？",
+      "central_claim": "缩写须对应中英全称和首次出现位置，避免同名异义。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [],
+      "formula_ids": [],
+      "reasoning": "缺少可追溯的直接来源；核对术语索引、首次定义与使用位置，不把缩写当定义。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP12.02",
+      "question": "功率、能量与辐照量单位是否在首次出现处区分？",
+      "central_claim": "功率、能量及辐照单位不可互换，单位投资须说明装机分母。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [],
+      "formula_ids": [],
+      "reasoning": "缺少可追溯的直接来源；检查DC/AC、辐照度/辐照量和单位投资的口径。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP13.01",
+      "question": "配套文件是否与本次统一结果身份一致？",
+      "central_claim": "配套文件须指向同次模型、运行、输入、来源及结果，不能拼接历史快照。本次证据：本次模型、运行、输入、来源及结果身份均保存在统一结果中。",
+      "claim_status": "EVIDENCE_BOUND_CONDITIONAL",
+      "source_ids": [],
+      "formula_ids": [],
+      "reasoning": "当前仅有合成或待核实的来源，不代表现场审查；比对模型、运行、输入、来源和结果哈希，不沿用历史附件。",
+      "decision": "已计算数据仅供本次方案边界复核，不作为真实项目批准或投资意见。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    },
+    {
+      "section_id": "APP13.02",
+      "question": "质量与审阅状态是否与可用证据一致？",
+      "central_claim": "结构生成、计算成熟度、真实来源及页面审阅是不同门禁。本次证据：当前计算尚未闭合；真实项目资料未核验。",
+      "claim_status": "LIMITED_BY_MISSING_EVIDENCE",
+      "source_ids": [],
+      "formula_ids": [],
+      "reasoning": "缺少可追溯的直接来源；区分合成资料、未验证来源、静态快照与页面审阅状态。",
+      "decision": "本项尚不能形成无条件工程、合规或投资认可。",
+      "review_status": "NOT_MANUALLY_APPROVED"
+    }
+  ]
+}
