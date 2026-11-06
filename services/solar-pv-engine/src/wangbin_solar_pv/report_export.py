@@ -39,6 +39,7 @@ from .calculation.result_contract import validate_result
 from .errors import ContractError
 from .local_files import Workspace
 from .report_narrative import guidance, validate_fixture
+from .report_claims import APPENDIX_RULES, APPENDIX_TITLES, CHAPTER_FIELDS, CHAPTER_METRICS, build_claim, category_fields, _dataset_rows
 from .serialization import dumps
 from .source_xlsx import create_source_workbook
 
@@ -685,6 +686,38 @@ def _validate_checklist_coverage(checklist: list[dict[str, Any]]) -> dict[str, i
     }
 
 
+def _claim_binding_error(model: ReportModel, record: dict[str, Any]) -> bool:
+    """Check cited IDs against this canonical result, never editorial background."""
+    if record["canonical_result_hash"] != model.result["result_hash"]:
+        return True
+    normalized = model.result["inputs"].get("normalized", {})
+    provenance = model.result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
+    datasets = _dataset_rows(model.result)
+    known_sources = ({row["source_id"] for row in provenance if row.get("source_id")}
+                     | {row["header"]["source_id"] for row in datasets.values()
+                        if row.get("header", {}).get("source_id")})
+    known_instances = ({row.get("field_instance_id") for row in provenance}
+                       | {row["header"].get("field_instance_id") for row in datasets.values()})
+    metric_ids = set(record["metric_ids"])
+    for metric_id in record["supporting_metric_ids"]:
+        metric = model.metric(metric_id)
+        if metric_id not in metric_ids or metric is None or metric.get("status") != "CALCULATED":
+            return True
+    if not set(record["supporting_input_field_ids"]).issubset(record["input_field_ids"]):
+        return True
+    if any(normalized.get(fid) in (None, "", [], {}) and fid not in datasets
+           for fid in record["supporting_input_field_ids"]):
+        return True
+    if not set(record["field_instance_ids"]).issubset(known_instances):
+        return True
+    metric_sources = {source for metric_id in metric_ids if (metric := model.metric(metric_id))
+                      for source in (metric.get("source_ids") or ())}
+    if not set(record["source_ids"]).issubset(known_sources | metric_sources):
+        return True
+    formulas = {model.metric(mid).get("formula_id") for mid in record["supporting_metric_ids"]}
+    return not set(record["supporting_formula_ids"]).issubset(formulas)
+
+
 def _scan_duplicate_paragraphs(document: Document, checklist: list[dict[str, Any]]) -> dict[str, Any]:
     """Scan generated body paragraphs rather than trusting template metadata."""
     current_heading = "未标记章节"
@@ -781,11 +814,11 @@ def _scan_professional_language(document: Document, pv_type: str, checklist: lis
         "legacy_template_counts": legacy_counts,
         "programming_language_counts": programming_counts,
         "professional_marker_count": professional_markers,
-        "category_specific": "PASS" if category_specific else "REVIEW_REQUIRED",
-        "evidence_grounded": "PASS" if evidence_grounded else "REVIEW_REQUIRED",
-        "professional_narrative": "PASS" if not any(legacy_counts.values()) and professional_markers >= 18 else "REVIEW_REQUIRED",
-        "no_generic_template_abuse": "PASS" if not any(legacy_counts.values()) else "REVIEW_REQUIRED",
-        "no_programming_language_in_body": "PASS" if not any(programming_counts.values()) else "REVIEW_REQUIRED",
+        "category_specific": "STATIC_MARKER_PRESENT" if category_specific else "REVIEW_REQUIRED",
+        "evidence_grounded": "CONTENT_REVIEW_REQUIRED" if evidence_grounded else "REVIEW_REQUIRED",
+        "professional_narrative": "CONTENT_REVIEW_REQUIRED",
+        "no_generic_template_abuse": "CONTENT_REVIEW_REQUIRED",
+        "no_programming_language_in_body": "STATIC_SCAN_CLEAR" if not any(programming_counts.values()) else "REVIEW_REQUIRED",
     }
 
 
@@ -822,15 +855,25 @@ _METRIC_LABELS = {
     "ac_capacity": "交流侧额定容量",
     "dc_ac_ratio": "直交流容配比",
     "energy.year.1": "首年发电量",
+    "available_kwh.year.1": "首年可利用发电量",
+    "energy.mean_annual": "评价期年均发电量",
     "energy.delivered.year.1": "首年可交付电量",
     "financial.capex.total": "工程总投资",
     "financial.unit_investment": "单位投资",
     "financial.opex.cash_lifecycle": "全周期现金运营费用",
     "financial.phase3e.project_npv": "项目净现值",
     "financial.phase3e.project_irr": "项目内部收益率",
+    "financial.phase3e.project_cash_flow": "项目投资全期现金流",
+    "financial.phase3e.equity-investor-cash-flow": "资本金投资者全期现金流",
     "financial.phase3e.static_payback": "静态投资回收期",
+    "financial.phase3e.dynamic_payback": "动态投资回收期",
     "financial.phase3e.lcoe": "平准化度电成本",
     "financial.phase3e.dscr": "债务偿付覆盖倍数",
+    "financial.phase3e.cfads": "可供偿债现金流",
+    "financial.phase3e.break-even-price": "盈亏平衡电价",
+    "financial.phase3e.investment-hurdle-gap": "投资目标差距",
+    "financial.tax.cash_lifecycle": "全周期现金税费",
+    "financial.asset.ending_book_value": "期末资产账面价值",
     "revenue.year.1": "首年收入",
     "consumption.year.1": "首年消纳电量",
 }
@@ -889,24 +932,37 @@ def _input_label(field_id: str) -> str:
     return "项目专属输入"
 
 
-def _professional_metric_rows(model: ReportModel, prefixes: tuple[str, ...] = ()) -> list[list[str]]:
-    """Render decision-facing metric rows without exposing engine identifiers."""
+def _professional_metric_rows(model: ReportModel, metric_ids: tuple[str, ...]) -> list[list[str]]:
+    """Show only explicitly selected, named decision metrics; keep the full ledger in Excel."""
     rows = []
-    for metric in model.metrics:
-        metric_id = metric["metric_id"]
-        if prefixes and not metric_id.startswith(prefixes):
+    for metric_id in metric_ids:
+        metric = model.metric(metric_id)
+        if metric is None:
             continue
         status = metric.get("status", "UNKNOWN")
         if status == "CALCULATED":
             display = _word_metric_value(metric)
-            note = "在当前合成输入和计算边界内可引用"
+            note = "合成参数测算；非实测或合同承诺"
         elif status.startswith("BLOCKED"):
             display = "暂不具备有效评价条件"
-            note = "现金流或必要输入尚未闭合"
+            note = ("缺终期实际收付及完整项目现金流" if metric_id in {
+                "financial.phase3e.project_cash_flow", "financial.phase3e.project_npv",
+                "financial.phase3e.project_irr", "financial.phase3e.static_payback",
+                "financial.phase3e.dynamic_payback"} else
+                "缺股东收付及融资日期事件" if metric_id == "financial.phase3e.equity-investor-cash-flow" else
+                "缺可供偿债现金的定义与控制" if metric_id == "financial.phase3e.cfads" else
+                "缺终期成本现金边界" if metric_id == "financial.phase3e.lcoe" else
+                "缺同边界价格情景重算" if metric_id == "financial.phase3e.break-even-price" else
+                "缺用户投资门槛" if metric_id == "financial.phase3e.investment-hurdle-gap" else
+                "必要现金事件或方法依据尚未闭合")
+        elif status == "NOT_APPLICABLE":
+            continue
         else:
-            display = "尚待核实"
-            note = "需补充对应资料或专业复核"
-        rows.append([_metric_label(metric_id), display, metric.get("unit") or "—", note])
+            continue
+        unit = metric.get("unit") or "—"
+        rows.append([_metric_label(metric_id), display,
+                     "—" if status != "CALCULATED" and str(unit).startswith("集合") else
+                     "比值" if unit == "1" else unit, note])
     return rows
 
 
@@ -1165,43 +1221,23 @@ def _topic_missing(title: str, chapter_id: str, pv_type: str, fallback: str) -> 
 
 def _item_evidence(model: ReportModel, pv_type: str, chapter_id: str, title: str, *, item_no: int = 1,
                    editorial_fixture: dict[str, Any] | None = None) -> dict[str, Any]:
-    metric_ids, field_ids, missing = _item_rule(pv_type, chapter_id, title)
-    metrics = [model.metric(metric_id) for metric_id in metric_ids if model.metric(metric_id)]
-    if not metrics:
-        metrics = [metric for metric in model.metrics if chapter_id in (metric.get("report_locations") or [])][:4]
-    normalized = model.result["inputs"].get("normalized", {})
-    used_sources = model.result["inputs"].get("used_sources", {})
-    fields = []
-    for field_id in field_ids:
-        if field_id in normalized:
-            fields.append({"field_id": field_id, "value": normalized[field_id],
-                           "source_ids": used_sources.get(field_id, []) if isinstance(used_sources, dict) else []})
-    sources = sorted({source for metric in metrics for source in (metric.get("source_ids") or [])}
-                     | {source for field in fields for source in field["source_ids"]})
-    state, state_reason = _item_state(model, pv_type, chapter_id, title)
-    rows = []
-    for metric in metrics:
-        rows.append({"kind": "metric", "id": metric["metric_id"], "value": _word_metric_value(metric),
-                     "unit": metric.get("unit") or "UNKNOWN", "status": metric.get("status", "UNKNOWN"),
-                     "formula_id": metric.get("formula_id") or "UNKNOWN",
-                     "source_ids": metric.get("source_ids") or []})
-    for field in fields:
-        rows.append({"kind": "input", "id": field["field_id"], "value": field["value"],
-                     "unit": "按冻结字段字典", "status": "PRESENT", "formula_id": "INPUT",
-                     "source_ids": field["source_ids"]})
-    if not rows:
-        rows.append({"kind": "missing", "id": "NO_DIRECT_EVIDENCE", "value": "UNKNOWN",
-                     "unit": "UNKNOWN", "status": state, "formula_id": "UNKNOWN", "source_ids": []})
-    missing_detail = (_topic_missing(title, chapter_id, pv_type, _professional_missing(title, chapter_id, pv_type))
-                      if state != "NOT_APPLICABLE" else "")
-    provisional = {"state": state, "rows": rows}
-    narrative, summary, claim_status = _professional_narrative(
-        model, pv_type, chapter_id, title, provisional, item_no=item_no, editorial_fixture=editorial_fixture)
-    conclusion = narrative[-1]
-    return {"state": state, "state_reason": state_reason, "topic": title, "summary": summary,
-            "metric_ids": [metric["metric_id"] for metric in metrics], "field_ids": field_ids,
-            "source_ids": sources, "rows": rows, "missing": missing_detail,
-            "conclusion": conclusion, "narrative": narrative, "claim_status": claim_status}
+    items = next(items for cid, _chapter_title, items in CHAPTERS if cid == chapter_id)
+    item_id = f"{chapter_id}.{item_no:02d}"
+    rule = guidance(item_id, items)
+    fields = category_fields(item_id, CHAPTER_FIELDS[chapter_id][item_no - 1], pv_type,
+                             model.result["inputs"].get("normalized", {}).get("project.has_storage") is not False)
+    metrics = CHAPTER_METRICS[chapter_id][item_no - 1]
+    if item_id in {"CH01.05", "CH18.01"}:
+        fields = tuple(dict.fromkeys((*fields, "site.rights_status", "grid.opinion_status")))
+        metrics = (*metrics, "financial.phase3e.project_cash_flow")
+    if pv_type == "utility_scale_ground" and item_id in {"CH01.04", "CH10.02"}:
+        metrics = tuple(metric for metric in metrics if not metric.startswith("consumption."))
+    claim = build_claim(model, item_id, title, f"{title}：{rule.rstrip('。')}？", rule,
+                        fields, metrics,
+                        pv_type, _word_value, _metric_label)
+    return {**claim, "field_ids": list(fields), "metric_ids": list(metrics),
+            "missing": claim["unresolved"] if claim["state"] != "NOT_APPLICABLE" else "",
+            "conclusion": claim["decision"]}
 
 
 def profile_name(pv_type: str) -> str:
@@ -1225,46 +1261,16 @@ def _appendix_rule(app_id: str, pv_type: str) -> tuple[tuple[str, ...], tuple[st
 
 
 def _appendix_evidence(model: ReportModel, pv_type: str, app_id: str, item_no: int) -> dict[str, Any]:
-    metric_ids, field_ids, focus = _appendix_rule(app_id, pv_type)
-    metrics = [model.metric(metric_id) for metric_id in metric_ids if model.metric(metric_id)]
-    normalized = model.result["inputs"].get("normalized", {})
-    fields = [field_id for field_id in field_ids if field_id in normalized]
-    if app_id == "APP10":
-        rows = [{"kind": "finding", "id": finding.get("code", "UNKNOWN"), "value": finding.get("status", "UNKNOWN"),
-                 "status": finding.get("status", "UNKNOWN"), "unit": "状态", "formula_id": "FINDING", "source_ids": []}
-                for finding in model.result.get("findings", [])]
-    elif app_id == "APP11":
-        rows = [{"kind": "formula", "id": metric.get("formula_id") or "UNKNOWN", "value": metric.get("metric_id"),
-                 "status": metric.get("status", "UNKNOWN"), "unit": metric.get("unit") or "UNKNOWN",
-                 "formula_id": metric.get("formula_id") or "UNKNOWN", "source_ids": metric.get("source_ids") or []}
-                for metric in model.metrics[:12]]
-    else:
-        rows = [{"kind": "metric", "id": metric["metric_id"], "value": _display_metric(metric),
-                 "status": metric.get("status", "UNKNOWN"), "unit": metric.get("unit") or "UNKNOWN",
-                 "formula_id": metric.get("formula_id") or "UNKNOWN", "source_ids": metric.get("source_ids") or []}
-                for metric in metrics]
-        rows.extend({"kind": "input", "id": field_id, "value": _raw_value(normalized[field_id]),
-                     "status": "PRESENT", "unit": "按冻结字段字典", "formula_id": "INPUT", "source_ids": []}
-                    for field_id in fields)
-    if not rows:
-        rows = [{"kind": "missing", "id": "NO_DIRECT_EVIDENCE", "value": "UNKNOWN", "status": "UNKNOWN",
-                 "unit": "UNKNOWN", "formula_id": "UNKNOWN", "source_ids": []}]
-    state = "EVIDENCED" if any(row["status"] == "CALCULATED" for row in rows) else "PENDING_VERIFICATION"
-    if item_no == 2:
-        state = "PENDING_VERIFICATION"
-        focus += " 第二项专门记录授权、质量、缺口和复核动作，不把已有数值当作资料闭合。"
-    state_text = "已有可引用结果" if state == "EVIDENCED" else "需要进一步核验"
-    summary = f"{focus}本附录用于记录与正文结论对应的追溯材料，当前{state_text}。"
-    narrative = [
-        f"{focus}。本附录第{item_no}项用于支持正文的资料核查和结果复核，不改变正文对项目条件的边界判断。",
-        f"围绕“{focus}”的现有记录可用于本阶段结果复核，但仍应结合原始附件和专业审查材料确认。"
-         if state == "EVIDENCED" else
-         f"在“{focus}”所对应的资料范围内，相关资料、授权或专业复核尚未完整取得，下一阶段应按本附录列出的范围补齐并回写新的运行结果。",
-    ]
-    return {"state": state, "summary": summary, "focus": focus, "metric_ids": metric_ids,
-            "field_ids": field_ids, "rows": rows,
-            "missing": "需按上述清单补齐原始附件、授权、专业复核或重新计算证据。" if state != "EVIDENCED" else "",
-            "narrative": narrative}
+    item_id = f"{app_id}.{item_no:02d}"
+    question, rule, field_ids, metric_ids = APPENDIX_RULES[item_id]
+    title = APPENDIX_TITLES[item_id]
+    field_ids = category_fields(item_id, field_ids, pv_type,
+                                model.result["inputs"].get("normalized", {}).get("project.has_storage") is not False)
+    claim = build_claim(model, item_id, title, question, rule, field_ids, metric_ids,
+                        pv_type, _word_value, _metric_label)
+    return {**claim, "field_ids": list(field_ids), "metric_ids": list(metric_ids),
+            "missing": claim["unresolved"] if claim["state"] != "NOT_APPLICABLE" else "",
+            "conclusion": claim["decision"]}
 
 
 def _add_evidence_table(document: Document, evidence: dict[str, Any], caption: str) -> None:
@@ -1333,7 +1339,12 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
         run.bold = True
         run.font.size = Pt(16)
         run.font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
-    sample_status = "合成编辑性样件 · 阶段性草稿" if editorial_fixture else "资料不充分样件 · 阶段性草稿"
+    synthetic_calculation = (str(model.result["project_id"]).startswith("SYNTHETIC")
+                             and model.result["maturity"].get("real_project") != "VERIFIED")
+    sample_status = ("合成计算 · 部分结果 · 未经现场核验"
+                     if synthetic_calculation else "资料不充分样件 · 阶段性草稿")
+    if editorial_fixture:
+        sample_status = "合成计算及编辑假设样件 · 结果仍为部分完成"
     _add_table(document, ["项目类型", "编制状态", "评价日期"],
                [[profile["boundary"], sample_status, str(model.result["evaluation_date"])]],
                widths_cm=(5.3, 6.0, 5.7), font_size=9)
@@ -1360,8 +1371,9 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                   if editorial_fixture else
                   "本阶段仅使用已有的部分资料和统一测算结果，不补填缺失事实；正文将具体说明资料不足对专业判断的影响。")
     document.add_paragraph(f"本项目属于{profile['boundary']}。本阶段依据现有测算结果开展方案边界和计算流程核查，重点关注装机规模、发电预测、投资估算、消纳并网和财务评价条件。{basis_text}由于项目资料尚未达到正式可研深度，以下结论均为有边界的阶段性判断。")
-    key_prefixes = ("dc_capacity", "ac_capacity", "energy.year", "consumption.year", "revenue.year", "financial.")
-    key_rows = _professional_metric_rows(model, key_prefixes)[:18]
+    key_ids = ("dc_capacity", "ac_capacity", "energy.year.1", "consumption.year.1",
+               "energy.delivered.year.1", "revenue.year.1", "financial.capex.total")
+    key_rows = _professional_metric_rows(model, key_ids)
     _add_table(document, ["专业指标", "本阶段结果", "单位", "说明"], key_rows,
                "关键结果（完整精度和追溯字段见测算模型.xlsx）", widths_cm=(4.0, 4.8, 2.0, 5.0))
     normalized = model.result["inputs"].get("normalized", {})
@@ -1394,6 +1406,15 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             checklist.append({"id": item_id, "title": item,
                               "content_summary": evidence["summary"][:600], "input_field_ids": evidence["field_ids"],
                               "metric_ids": evidence["metric_ids"], "source_ids": evidence["source_ids"],
+                              "claim_id": evidence["claim_id"], "canonical_result_hash": evidence["canonical_result_hash"],
+                              "core_question": evidence["core_question"],
+                              "central_claim": evidence["central_claim"],
+                              "supporting_metric_ids": evidence["supporting_metric_ids"],
+                              "supporting_input_field_ids": evidence["supporting_input_field_ids"],
+                              "supporting_formula_ids": evidence["supporting_formula_ids"],
+                              "field_instance_ids": evidence["field_instance_ids"],
+                              "causal_reasoning": evidence["causal_reasoning"], "decision": evidence["decision"],
+                              "unresolved": evidence["unresolved"], "next_action": evidence["next_action"],
                               "professional_content_status": evidence["state"], "claim_status": evidence["claim_status"], "structure_status": "GENERATED",
                               "duplicate_template": False, "wrong_evidence_binding": False,
                               "visual_layout_status": "NOT_TESTED", "missing_materials": evidence["missing"],
@@ -1402,7 +1423,14 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     document.add_heading("结果与公式索引", level=1)
     document.add_paragraph("本节仅列示与投资评价直接相关的专业指标。完整数值精度、计算口径和来源绑定保留在配套测算模型中，正文不重复展开审计字段。")
     blocked = [metric for metric in model.metrics if str(metric.get("status", "")).startswith("BLOCKED")]
-    index_rows = _professional_metric_rows(model, ("financial.", "npv"))[:24]
+    index_ids = ("financial.capex.total", "financial.opex.cash_lifecycle",
+                 "financial.tax.cash_lifecycle", "financial.asset.ending_book_value",
+                 "financial.phase3e.project_cash_flow", "financial.phase3e.project_npv",
+                 "financial.phase3e.project_irr", "financial.phase3e.static_payback",
+                 "financial.phase3e.dynamic_payback", "financial.phase3e.equity-investor-cash-flow",
+                 "financial.phase3e.cfads", "financial.phase3e.lcoe",
+                 "financial.phase3e.break-even-price", "financial.phase3e.investment-hurdle-gap")
+    index_rows = _professional_metric_rows(model, index_ids)
     _add_table(document, ["专业指标", "本阶段结果", "单位", "说明"], index_rows,
                "财务与项目指标摘要", widths_cm=(4.0, 4.8, 2.0, 5.0))
     if blocked:
@@ -1410,19 +1438,29 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     for app_id, app_title in APPENDICES:
         document.add_heading(f"{app_id} {app_title}", level=1)
         document.add_paragraph(f"{app_id}《{app_title}》提供受控追溯摘要；完整字段、原始精度和来源编号保留在配套 Excel，避免正文被审计数据撑宽。")
-        for item_no, item_title in ((1, "资料或结果明细"), (2, "状态、限制与后续核验")):
+        for item_no in (1, 2):
             item_id = f"{app_id}.{item_no:02d}"
+            item_title = APPENDIX_TITLES[item_id]
             document.add_heading(f"{item_id} {item_title}", level=2)
             evidence = _appendix_evidence(model, pv_type, app_id, item_no)
             for text in evidence["narrative"]:
                 document.add_paragraph(text[:760])
             checklist.append({"id": item_id, "title": item_title,
                               "content_summary": evidence["summary"][:600], "input_field_ids": evidence["field_ids"],
-                              "metric_ids": evidence["metric_ids"], "source_ids": sorted({source for row in evidence["rows"] for source in row["source_ids"]}),
-                              "professional_content_status": evidence["state"], "claim_status": "TRACEABILITY_ONLY", "structure_status": "GENERATED",
+                              "metric_ids": evidence["metric_ids"], "source_ids": evidence["source_ids"],
+                              "claim_id": evidence["claim_id"], "canonical_result_hash": evidence["canonical_result_hash"],
+                              "core_question": evidence["core_question"],
+                              "central_claim": evidence["central_claim"],
+                              "supporting_metric_ids": evidence["supporting_metric_ids"],
+                              "supporting_input_field_ids": evidence["supporting_input_field_ids"],
+                              "supporting_formula_ids": evidence["supporting_formula_ids"],
+                              "field_instance_ids": evidence["field_instance_ids"],
+                              "causal_reasoning": evidence["causal_reasoning"], "decision": evidence["decision"],
+                              "unresolved": evidence["unresolved"], "next_action": evidence["next_action"],
+                              "professional_content_status": evidence["state"], "claim_status": evidence["claim_status"], "structure_status": "GENERATED",
                               "duplicate_template": False, "wrong_evidence_binding": False,
                               "visual_layout_status": "NOT_TESTED", "missing_materials": evidence["missing"],
-                              "final_conclusion": "附录仅用于追溯和复核，不改变正文的资料边界和阶段性结论。"})
+                              "final_conclusion": evidence["conclusion"]})
 
     document.add_heading("术语与公式说明", level=1)
     document.add_paragraph("公式定义、版本、变量、单位、输入字段和完整来源绑定见测算模型.xlsx 的公式说明工作表，以及资料来源与假设清单.xlsx 的公式/方法工作表。正文不复制原始对象或过高精度小数。")
@@ -1437,6 +1475,16 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     fld.set(qn("w:instr"), "PAGE")
     footer._p.append(fld)
     coverage = _validate_checklist_coverage(checklist)
+    claim_fields = ("claim_id", "core_question", "central_claim", "claim_status",
+                    "causal_reasoning", "decision", "unresolved", "next_action")
+    if (len({record["claim_id"] for record in checklist}) != len(checklist)
+            or len({record["core_question"] for record in checklist}) != len(checklist)
+            or any(not all(record.get(key) for key in claim_fields) for record in checklist)):
+        raise ContractError("REPORT_CLAIM_COVERAGE")
+    for record in checklist:
+        record["wrong_evidence_binding"] = _claim_binding_error(model, record)
+    if any(record["wrong_evidence_binding"] for record in checklist):
+        raise ContractError("REPORT_CLAIM_BINDING")
     duplicate_scan = _scan_duplicate_paragraphs(document, checklist)
     language_scan = _scan_professional_language(document, pv_type, checklist)
     tmp = output.with_name("." + output.name + ".tmp")
@@ -1524,23 +1572,26 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
     checklist_path = root / "content-checklist.json"
     checklist_payload = {
         "schema_version": "phase7i-content-checklist-v1",
+        "claim_contract_version": "phase7l-central-claim-v1",
         "project_id": model.result["project_id"], "pv_type": model.result["pv_type"],
         "identity": model.identity,
         "coverage": coverage,
         "records": checklist,
-        "quality_axes": {"structure_status": "GENERATED", "coverage_status": "PASS", "substantive_content_status": "RECORDED_PER_ITEM",
+        "quality_axes": {"structure_status": "GENERATED", "coverage_status": "PASS", "substantive_content_status": "CONTENT_REVIEW_REQUIRED",
+                         "central_claim_contract": "PASS", "central_claim_contract_scope": "STRUCTURAL_FIELDS_AND_BINDINGS_ONLY",
+                         "substantive_claim_review": "NOT_REVIEWED",
                          "legal_evidence_status": "SYNTHETIC_OR_SOURCE_BOUND", "visual_layout_status": "NOT_TESTED",
                          "editorial_fixture_status": "BOUND_IDENTITY" if editorial_fixture else "NOT_SELECTED",
                          "editorial_fixture_kind": editorial_fixture.get("evidence_kind") if editorial_fixture else None,
                          "golden_sample_chapters": editorial_fixture.get("golden_sample_chapters", []) if editorial_fixture else [],
-                         "no_duplicate_template_abuse": duplicate_scan.get("status", "UNKNOWN"),
-                         "professional_narrative": language_scan.get("professional_narrative", "UNKNOWN"),
+                         "no_duplicate_template_abuse": "CONTENT_REVIEW_REQUIRED",
+                         "professional_narrative": "CONTENT_REVIEW_REQUIRED",
                          "no_programming_language_in_body": language_scan.get("no_programming_language_in_body", "UNKNOWN"),
-                         "no_generic_template_abuse": language_scan.get("no_generic_template_abuse", "UNKNOWN"),
-                         "chapter_semantic_alignment": "PASS" if len(_CHAPTER_METHOD) == len(CHAPTERS) else "REVIEW_REQUIRED",
-                         "evidence_grounded_claims": language_scan.get("evidence_grounded", "UNKNOWN"),
-                         "category_specific_narrative": language_scan.get("category_specific", "UNKNOWN"),
-                         "document_content_review": "PARTIAL_STATIC_LANGUAGE_REVIEW"},
+                         "no_generic_template_abuse": "CONTENT_REVIEW_REQUIRED",
+                         "chapter_semantic_alignment": "CONTENT_REVIEW_REQUIRED",
+                         "evidence_grounded_claims": "CONTENT_REVIEW_REQUIRED",
+                         "category_specific_narrative": "CONTENT_REVIEW_REQUIRED",
+                         "document_content_review": "NOT_REVIEWED"},
         "duplicate_scan": duplicate_scan,
         "language_scan": language_scan,
     }
@@ -1584,28 +1635,33 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
             "TABLE_LAYOUT": "COMPACT_SUMMARY_AND_XLSX_TRACEABILITY",
             "CONTENT_READABILITY": "NOT_TESTED_RENDER",
             "NO_OVERFLOW": "NOT_TESTED_RENDER",
-            "NO_DUPLICATE_TEMPLATE_ABUSE": duplicate_scan.get("status", "UNKNOWN"),
-            "PROFESSIONAL_NARRATIVE": language_scan.get("professional_narrative", "UNKNOWN"),
+            "NO_DUPLICATE_TEMPLATE_ABUSE": "CONTENT_REVIEW_REQUIRED",
+            "EXACT_DUPLICATE_SCAN": duplicate_scan.get("status", "UNKNOWN"),
+            "PROFESSIONAL_NARRATIVE": "CONTENT_REVIEW_REQUIRED",
             "NO_PROGRAMMING_LANGUAGE_IN_BODY": language_scan.get("no_programming_language_in_body", "UNKNOWN"),
-            "NO_GENERIC_TEMPLATE_ABUSE": language_scan.get("no_generic_template_abuse", "UNKNOWN"),
-            "CHAPTER_SEMANTIC_ALIGNMENT": "PASS" if len(_CHAPTER_METHOD) == len(CHAPTERS) else "REVIEW_REQUIRED",
-            "EVIDENCE_GROUNDED_CLAIMS": language_scan.get("evidence_grounded", "UNKNOWN"),
-            "CATEGORY_SPECIFIC_NARRATIVE": language_scan.get("category_specific", "UNKNOWN"),
+            "NO_GENERIC_TEMPLATE_ABUSE": "CONTENT_REVIEW_REQUIRED",
+            "CHAPTER_SEMANTIC_ALIGNMENT": "CONTENT_REVIEW_REQUIRED",
+            "EVIDENCE_GROUNDED_CLAIMS": "CONTENT_REVIEW_REQUIRED",
+            "CENTRAL_CLAIM_CONTRACT": "PASS",
+            "CENTRAL_CLAIM_CONTRACT_SCOPE": "STRUCTURAL_FIELDS_AND_BINDINGS_ONLY",
+            "CATEGORY_SPECIFIC_NARRATIVE": "CONTENT_REVIEW_REQUIRED",
             "EDITORIAL_FIXTURE_IDENTITY": "PASS" if editorial_fixture else "NOT_SELECTED",
-            "GOLDEN_SAMPLE_COVERAGE": "PASS" if editorial_fixture and len(editorial_fixture.get("golden_sample_chapters", [])) >= 10 else "NOT_SELECTED",
-            "DOCUMENT_CONTENT_REVIEW": "PARTIAL_STATIC_LANGUAGE_REVIEW",
+            "GOLDEN_SAMPLE_COVERAGE": "STRUCTURAL_COVERAGE_ONLY" if editorial_fixture and len(editorial_fixture.get("golden_sample_chapters", [])) >= 10 else "NOT_SELECTED",
+            "DOCUMENT_CONTENT_REVIEW": "NOT_REVIEWED",
             "CHAPTER_COVERAGE": "PASS",
-            "CHART_DATA_CONSISTENCY": "PASS" if files["F01"].get("charts") else "NOT_APPLICABLE",
+            "CHART_DATA_CONSISTENCY": "STATIC_CANONICAL_BINDING" if files["F01"].get("charts") else "NOT_APPLICABLE",
             "CANONICAL_IDENTITY": "PASS",
-            "CANONICAL_DATA_CONSISTENCY": "PASS",
-            "D_BUSINESS_STYLE_REGRESSION": "PASS",
-            "XLSX_CONTENT": "PASS",
+            "CANONICAL_DATA_CONSISTENCY": "STATIC_BINDING_CHECK",
+            "D_BUSINESS_STYLE_REGRESSION": "NOT_TESTED_RENDER",
+            "XLSX_CONTENT": "STATIC_STRUCTURE_CHECK",
             "PDF_RENDER": files["F02"].get("status", "UNKNOWN"),
             "VISUAL_REVIEW": "NOT_TESTED",
             "FOUR_FILE_GATE": "BLOCKED" if files["F02"].get("status") != "GENERATED" else "NOT_FORMAL_ACCEPTANCE",
         },
         "calculation_status": model.result["status"], "four_file_gate": "BLOCKED" if files["F02"].get("status") != "GENERATED" else "NOT_FORMAL_ACCEPTANCE",
-        "editorial_mode": "SYNTHETIC_DEMO" if editorial_fixture else "PARTIAL_CANONICAL",
+        "editorial_mode": ("SYNTHETIC_DEMO" if editorial_fixture else
+                           "SYNTHETIC_CALCULATION_PARTIAL" if str(model.result["project_id"]).startswith("SYNTHETIC")
+                           and model.result["status"] == "PARTIAL" else "PARTIAL_CANONICAL"),
         "editorial_fixture": {"kind": editorial_fixture["evidence_kind"], "result_hash": editorial_fixture["result_hash"],
                               "golden_sample_chapters": editorial_fixture.get("golden_sample_chapters", [])}
         if editorial_fixture else None,

@@ -1,0 +1,334 @@
+{
+  "status": "DRAFT_PARTIAL",
+  "phase": "PHASE5_INDUSTRIAL_ROOFTOP_REPORT_EXPORT",
+  "project_id": "SYNTHETIC-CALC-ROOF-165KWP-2025",
+  "pv_type": "industrial_rooftop",
+  "display_name": "FICTIONAL_ 165 kWp factory-roof calculation demo (no real site)",
+  "name_mapping": "FICTIONAL: 165 kWp factory-roof calculation demo (no real site)",
+  "identity": {
+    "model_version": "solar-pv-engine/0.3.0",
+    "run_id": "9a5397d4-db41-41cb-b343-6b7c50c09ccd",
+    "input_hash": "c459d80eae8ddc92422fb47c62eadeeab7e8abdc6114fba65123b03893e81483",
+    "source_snapshot_id": "33015f0a1b850ca52b76b1395bc6e58fe6308ebf1ff11a23ebf5cc276ef7b740",
+    "result_hash": "49d912248ba2ba511983ce318882685444a75b9585588b3978af3bfe52e73454"
+  },
+  "files": {
+    "F01": {
+      "path": "FICTIONAL_ 165 kWp factory-roof calculation demo (no real site)-光伏预可研报告.docx",
+      "size": 66889,
+      "sha256": "9cf44378be775d07365e3b589625ad3b4782111aad11efdaf183cf0373fa4986",
+      "chapters": 18,
+      "chapter_items": 100,
+      "appendices": 13,
+      "appendix_items": 26,
+      "charts": [
+        {
+          "metric_id": "energy.monthly.year.1",
+          "points": 12,
+          "source": "CANONICAL",
+          "formula_id": "F-ENERGY-AGGREGATION",
+          "source_ids": [
+            "SYNTHETIC-CALC-industrial_rooftop"
+          ],
+          "format": "PNG_EMBEDDED"
+        },
+        {
+          "metric_id": "energy.annual_array",
+          "points": 3,
+          "source": "CANONICAL",
+          "formula_id": "F-ENERGY-AGGREGATION",
+          "source_ids": [
+            "SYNTHETIC-CALC-industrial_rooftop"
+          ],
+          "format": "PNG_EMBEDDED"
+        }
+      ],
+      "duplicate_scan": {
+        "paragraph_count_scanned": 81,
+        "exact_duplicate_count": 0,
+        "approximate_template_count": 0,
+        "exact_duplicates": [],
+        "approximate_templates": [],
+        "status": "PASS"
+      },
+      "language_scan": {
+        "body_paragraphs": 339,
+        "legacy_template_counts": {
+          "分析重点标签": 0,
+          "已知证据标签": 0,
+          "判定标签": 0,
+          "状态依据标签": 0,
+          "canonical执行说明": 0,
+          "本项围绕模板": 0,
+          "模板化缺口": 0
+        },
+        "programming_language_counts": {
+          "运行状态标识": 0,
+          "内部字段标识": 0
+        },
+        "professional_marker_count": 59,
+        "category_specific": "REVIEW_REQUIRED",
+        "evidence_grounded": "CONTENT_REVIEW_REQUIRED",
+        "professional_narrative": "CONTENT_REVIEW_REQUIRED",
+        "no_generic_template_abuse": "CONTENT_REVIEW_REQUIRED",
+        "no_programming_language_in_body": "STATIC_SCAN_CLEAR"
+      },
+      "toc_status": "FIELD_REQUIRES_RENDER_REFRESH",
+      "page_size": "A4",
+      "table_policy": "COMPACT_SUMMARY_AND_XLSX_TRACEABILITY",
+      "generation_seconds": 0.822536,
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "9a5397d4-db41-41cb-b343-6b7c50c09ccd",
+      "input_hash": "c459d80eae8ddc92422fb47c62eadeeab7e8abdc6114fba65123b03893e81483",
+      "source_snapshot_id": "33015f0a1b850ca52b76b1395bc6e58fe6308ebf1ff11a23ebf5cc276ef7b740",
+      "result_hash": "49d912248ba2ba511983ce318882685444a75b9585588b3978af3bfe52e73454"
+    },
+    "F05": {
+      "path": "content-checklist.json",
+      "size": 310424,
+      "sha256": "2d5797d7f4c37c7fe163e3cf06dca922f9853bcb151f13b10999306f2f9c70d8",
+      "records": 126,
+      "structure_status": "GENERATED",
+      "visual_layout_status": "NOT_TESTED",
+      "duplicate_scan": {
+        "paragraph_count_scanned": 81,
+        "exact_duplicate_count": 0,
+        "approximate_template_count": 0,
+        "exact_duplicates": [],
+        "approximate_templates": [],
+        "status": "PASS"
+      },
+      "language_scan": {
+        "body_paragraphs": 339,
+        "legacy_template_counts": {
+          "分析重点标签": 0,
+          "已知证据标签": 0,
+          "判定标签": 0,
+          "状态依据标签": 0,
+          "canonical执行说明": 0,
+          "本项围绕模板": 0,
+          "模板化缺口": 0
+        },
+        "programming_language_counts": {
+          "运行状态标识": 0,
+          "内部字段标识": 0
+        },
+        "professional_marker_count": 59,
+        "category_specific": "REVIEW_REQUIRED",
+        "evidence_grounded": "CONTENT_REVIEW_REQUIRED",
+        "professional_narrative": "CONTENT_REVIEW_REQUIRED",
+        "no_generic_template_abuse": "CONTENT_REVIEW_REQUIRED",
+        "no_programming_language_in_body": "STATIC_SCAN_CLEAR"
+      },
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "9a5397d4-db41-41cb-b343-6b7c50c09ccd",
+      "input_hash": "c459d80eae8ddc92422fb47c62eadeeab7e8abdc6114fba65123b03893e81483",
+      "source_snapshot_id": "33015f0a1b850ca52b76b1395bc6e58fe6308ebf1ff11a23ebf5cc276ef7b740",
+      "result_hash": "49d912248ba2ba511983ce318882685444a75b9585588b3978af3bfe52e73454"
+    },
+    "F06": {
+      "path": "canonical.json",
+      "size": 1881804,
+      "sha256": "38e7fb9cbbeb01f6da89b2884151619efcf4c1225956fd91c2cdc342d8631328",
+      "status": "GENERATED",
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "9a5397d4-db41-41cb-b343-6b7c50c09ccd",
+      "input_hash": "c459d80eae8ddc92422fb47c62eadeeab7e8abdc6114fba65123b03893e81483",
+      "source_snapshot_id": "33015f0a1b850ca52b76b1395bc6e58fe6308ebf1ff11a23ebf5cc276ef7b740",
+      "result_hash": "49d912248ba2ba511983ce318882685444a75b9585588b3978af3bfe52e73454"
+    },
+    "F03": {
+      "path": "FICTIONAL_ 165 kWp factory-roof calculation demo (no real site)-测算模型.xlsx",
+      "size": 71004,
+      "sha256": "0cd9f8e6827be1b79376d3864e722027f30de49f786bac0c6bc0e409560d71a8",
+      "sheets": [
+        "项目参数",
+        "术语和公式说明",
+        "数据质量",
+        "资源月度",
+        "系统容量与损耗",
+        "发电预测-月度",
+        "逐年衰减",
+        "负荷与消纳",
+        "电价与收入",
+        "CAPEX",
+        "OPEX",
+        "折旧与税费",
+        "融资与偿债",
+        "项目现金流",
+        "资本金现金流",
+        "财务指标",
+        "敏感性",
+        "方案比较",
+        "一致性校验"
+      ],
+      "mode": "STATIC_SNAPSHOT",
+      "charts": [
+        {
+          "metric_id": "energy.monthly.year.1",
+          "points": 12,
+          "sheet": "发电预测-月度",
+          "source": "CANONICAL",
+          "formula_id": "F-ENERGY-AGGREGATION",
+          "source_ids": [
+            "SYNTHETIC-CALC-industrial_rooftop"
+          ]
+        },
+        {
+          "metric_id": "energy.annual_array",
+          "points": 3,
+          "sheet": "逐年衰减",
+          "source": "CANONICAL",
+          "formula_id": "F-ENERGY-AGGREGATION",
+          "source_ids": [
+            "SYNTHETIC-CALC-industrial_rooftop"
+          ]
+        }
+      ],
+      "generation_seconds": 0.405268,
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "9a5397d4-db41-41cb-b343-6b7c50c09ccd",
+      "input_hash": "c459d80eae8ddc92422fb47c62eadeeab7e8abdc6114fba65123b03893e81483",
+      "source_snapshot_id": "33015f0a1b850ca52b76b1395bc6e58fe6308ebf1ff11a23ebf5cc276ef7b740",
+      "result_hash": "49d912248ba2ba511983ce318882685444a75b9585588b3978af3bfe52e73454"
+    },
+    "F04": {
+      "status": "DRAFT_PARTIAL",
+      "file": "FICTIONAL_ 165 kWp factory-roof calculation demo (no real site)-资料来源与假设清单.xlsx",
+      "project_id": "SYNTHETIC-CALC-ROOF-165KWP-2025",
+      "scenario_id": "BASE",
+      "input_hash": "c459d80eae8ddc92422fb47c62eadeeab7e8abdc6114fba65123b03893e81483",
+      "source_snapshot_id": "33015f0a1b850ca52b76b1395bc6e58fe6308ebf1ff11a23ebf5cc276ef7b740",
+      "result_hash": "49d912248ba2ba511983ce318882685444a75b9585588b3978af3bfe52e73454",
+      "sha256": "201ea927015b1d834faaf1fad0d90f10169a2a051a8eb5199ce5b2746268584f",
+      "sheets": [
+        "输入台账",
+        "气象与地理来源",
+        "政策适用性",
+        "设备与成本来源",
+        "案例对标",
+        "假设清单",
+        "冲突与缺口",
+        "变更与复核记录",
+        "变量-术语词典",
+        "资料授权说明"
+      ],
+      "generation_seconds": 1.523249,
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "9a5397d4-db41-41cb-b343-6b7c50c09ccd"
+    },
+    "F02": {
+      "status": "BLOCKED",
+      "reason": "PDF_RENDERER_UNAVAILABLE",
+      "renderer": null,
+      "generation_seconds": 0.119173
+    }
+  },
+  "charts": {
+    "docx": [
+      {
+        "metric_id": "energy.monthly.year.1",
+        "points": 12,
+        "source": "CANONICAL",
+        "formula_id": "F-ENERGY-AGGREGATION",
+        "source_ids": [
+          "SYNTHETIC-CALC-industrial_rooftop"
+        ],
+        "format": "PNG_EMBEDDED"
+      },
+      {
+        "metric_id": "energy.annual_array",
+        "points": 3,
+        "source": "CANONICAL",
+        "formula_id": "F-ENERGY-AGGREGATION",
+        "source_ids": [
+          "SYNTHETIC-CALC-industrial_rooftop"
+        ],
+        "format": "PNG_EMBEDDED"
+      }
+    ],
+    "xlsx": [
+      {
+        "metric_id": "energy.monthly.year.1",
+        "points": 12,
+        "sheet": "发电预测-月度",
+        "source": "CANONICAL",
+        "formula_id": "F-ENERGY-AGGREGATION",
+        "source_ids": [
+          "SYNTHETIC-CALC-industrial_rooftop"
+        ]
+      },
+      {
+        "metric_id": "energy.annual_array",
+        "points": 3,
+        "sheet": "逐年衰减",
+        "source": "CANONICAL",
+        "formula_id": "F-ENERGY-AGGREGATION",
+        "source_ids": [
+          "SYNTHETIC-CALC-industrial_rooftop"
+        ]
+      }
+    ]
+  },
+  "coverage": {
+    "chapters": 18,
+    "chapter_items": 100,
+    "appendices": 13,
+    "appendix_items": 26,
+    "model_sheets": 19,
+    "source_sheets": 10
+  },
+  "pdf_status": "BLOCKED",
+  "quality_gates": {
+    "PAGE_SIZE_A4": "A4",
+    "COVER_STYLE_D": "GENERATED",
+    "TOC_VALID": "FIELD_REQUIRES_RENDER_REFRESH",
+    "TABLE_LAYOUT": "COMPACT_SUMMARY_AND_XLSX_TRACEABILITY",
+    "CONTENT_READABILITY": "NOT_TESTED_RENDER",
+    "NO_OVERFLOW": "NOT_TESTED_RENDER",
+    "NO_DUPLICATE_TEMPLATE_ABUSE": "CONTENT_REVIEW_REQUIRED",
+    "EXACT_DUPLICATE_SCAN": "PASS",
+    "PROFESSIONAL_NARRATIVE": "CONTENT_REVIEW_REQUIRED",
+    "NO_PROGRAMMING_LANGUAGE_IN_BODY": "STATIC_SCAN_CLEAR",
+    "NO_GENERIC_TEMPLATE_ABUSE": "CONTENT_REVIEW_REQUIRED",
+    "CHAPTER_SEMANTIC_ALIGNMENT": "CONTENT_REVIEW_REQUIRED",
+    "EVIDENCE_GROUNDED_CLAIMS": "CONTENT_REVIEW_REQUIRED",
+    "CENTRAL_CLAIM_CONTRACT": "PASS",
+    "CENTRAL_CLAIM_CONTRACT_SCOPE": "STRUCTURAL_FIELDS_AND_BINDINGS_ONLY",
+    "CATEGORY_SPECIFIC_NARRATIVE": "CONTENT_REVIEW_REQUIRED",
+    "EDITORIAL_FIXTURE_IDENTITY": "PASS",
+    "GOLDEN_SAMPLE_COVERAGE": "STRUCTURAL_COVERAGE_ONLY",
+    "DOCUMENT_CONTENT_REVIEW": "NOT_REVIEWED",
+    "CHAPTER_COVERAGE": "PASS",
+    "CHART_DATA_CONSISTENCY": "STATIC_CANONICAL_BINDING",
+    "CANONICAL_IDENTITY": "PASS",
+    "CANONICAL_DATA_CONSISTENCY": "STATIC_BINDING_CHECK",
+    "D_BUSINESS_STYLE_REGRESSION": "NOT_TESTED_RENDER",
+    "XLSX_CONTENT": "STATIC_STRUCTURE_CHECK",
+    "PDF_RENDER": "BLOCKED",
+    "VISUAL_REVIEW": "NOT_TESTED",
+    "FOUR_FILE_GATE": "BLOCKED"
+  },
+  "calculation_status": "PARTIAL",
+  "four_file_gate": "BLOCKED",
+  "editorial_mode": "SYNTHETIC_DEMO",
+  "editorial_fixture": {
+    "kind": "EDITORIAL_TEST_ASSUMPTION",
+    "result_hash": "49d912248ba2ba511983ce318882685444a75b9585588b3978af3bfe52e73454",
+    "golden_sample_chapters": [
+      "CH01",
+      "CH03",
+      "CH04",
+      "CH05",
+      "CH07",
+      "CH08",
+      "CH10",
+      "CH14",
+      "CH16",
+      "CH18"
+    ]
+  },
+  "elapsed_seconds": 3.043427,
+  "not_decision_ready": true,
+  "sensitive_raw_attachments_included": false
+}

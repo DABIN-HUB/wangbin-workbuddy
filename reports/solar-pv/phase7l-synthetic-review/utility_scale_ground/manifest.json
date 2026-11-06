@@ -1,0 +1,334 @@
+{
+  "status": "DRAFT_PARTIAL",
+  "phase": "PHASE6_UTILITY_SCALE_GROUND_REPORT_EXPORT",
+  "project_id": "SYNTHETIC-CALC-GROUND-330KWP-2025",
+  "pv_type": "utility_scale_ground",
+  "display_name": "FICTIONAL_ 330 kWp ground PV calculation demo (no real site)",
+  "name_mapping": "FICTIONAL: 330 kWp ground PV calculation demo (no real site)",
+  "identity": {
+    "model_version": "solar-pv-engine/0.3.0",
+    "run_id": "f4f08b00-3585-4c8c-8c48-f39e07f886b4",
+    "input_hash": "e4a14cbce5a5b501a4ee7ddb855372e961fc52ef5c1e7961ddfd46d6adffdaeb",
+    "source_snapshot_id": "407b071fc506c3f164237cef279ba08aa0c2635405060b7c12e07403b2f1b1cc",
+    "result_hash": "69c8cec70cf8fd50d7f991770f41370d583219630e034bc0cde270c226081685"
+  },
+  "files": {
+    "F01": {
+      "path": "FICTIONAL_ 330 kWp ground PV calculation demo (no real site)-光伏预可研报告.docx",
+      "size": 66956,
+      "sha256": "9fa2f13b438257b3f86d00d531e6bc188497d03fad57b5a2cce587bd59a850c0",
+      "chapters": 18,
+      "chapter_items": 100,
+      "appendices": 13,
+      "appendix_items": 26,
+      "charts": [
+        {
+          "metric_id": "energy.monthly.year.1",
+          "points": 12,
+          "source": "CANONICAL",
+          "formula_id": "F-ENERGY-AGGREGATION",
+          "source_ids": [
+            "SYNTHETIC-CALC-utility_scale_ground"
+          ],
+          "format": "PNG_EMBEDDED"
+        },
+        {
+          "metric_id": "energy.annual_array",
+          "points": 3,
+          "source": "CANONICAL",
+          "formula_id": "F-ENERGY-AGGREGATION",
+          "source_ids": [
+            "SYNTHETIC-CALC-utility_scale_ground"
+          ],
+          "format": "PNG_EMBEDDED"
+        }
+      ],
+      "duplicate_scan": {
+        "paragraph_count_scanned": 78,
+        "exact_duplicate_count": 0,
+        "approximate_template_count": 0,
+        "exact_duplicates": [],
+        "approximate_templates": [],
+        "status": "PASS"
+      },
+      "language_scan": {
+        "body_paragraphs": 339,
+        "legacy_template_counts": {
+          "分析重点标签": 0,
+          "已知证据标签": 0,
+          "判定标签": 0,
+          "状态依据标签": 0,
+          "canonical执行说明": 0,
+          "本项围绕模板": 0,
+          "模板化缺口": 0
+        },
+        "programming_language_counts": {
+          "运行状态标识": 0,
+          "内部字段标识": 0
+        },
+        "professional_marker_count": 57,
+        "category_specific": "REVIEW_REQUIRED",
+        "evidence_grounded": "CONTENT_REVIEW_REQUIRED",
+        "professional_narrative": "CONTENT_REVIEW_REQUIRED",
+        "no_generic_template_abuse": "CONTENT_REVIEW_REQUIRED",
+        "no_programming_language_in_body": "STATIC_SCAN_CLEAR"
+      },
+      "toc_status": "FIELD_REQUIRES_RENDER_REFRESH",
+      "page_size": "A4",
+      "table_policy": "COMPACT_SUMMARY_AND_XLSX_TRACEABILITY",
+      "generation_seconds": 0.913653,
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "f4f08b00-3585-4c8c-8c48-f39e07f886b4",
+      "input_hash": "e4a14cbce5a5b501a4ee7ddb855372e961fc52ef5c1e7961ddfd46d6adffdaeb",
+      "source_snapshot_id": "407b071fc506c3f164237cef279ba08aa0c2635405060b7c12e07403b2f1b1cc",
+      "result_hash": "69c8cec70cf8fd50d7f991770f41370d583219630e034bc0cde270c226081685"
+    },
+    "F05": {
+      "path": "content-checklist.json",
+      "size": 304966,
+      "sha256": "5c92a1e7eff58f656f6d8b4b7bcaacb30824626e57ccb90385cee03560370829",
+      "records": 126,
+      "structure_status": "GENERATED",
+      "visual_layout_status": "NOT_TESTED",
+      "duplicate_scan": {
+        "paragraph_count_scanned": 78,
+        "exact_duplicate_count": 0,
+        "approximate_template_count": 0,
+        "exact_duplicates": [],
+        "approximate_templates": [],
+        "status": "PASS"
+      },
+      "language_scan": {
+        "body_paragraphs": 339,
+        "legacy_template_counts": {
+          "分析重点标签": 0,
+          "已知证据标签": 0,
+          "判定标签": 0,
+          "状态依据标签": 0,
+          "canonical执行说明": 0,
+          "本项围绕模板": 0,
+          "模板化缺口": 0
+        },
+        "programming_language_counts": {
+          "运行状态标识": 0,
+          "内部字段标识": 0
+        },
+        "professional_marker_count": 57,
+        "category_specific": "REVIEW_REQUIRED",
+        "evidence_grounded": "CONTENT_REVIEW_REQUIRED",
+        "professional_narrative": "CONTENT_REVIEW_REQUIRED",
+        "no_generic_template_abuse": "CONTENT_REVIEW_REQUIRED",
+        "no_programming_language_in_body": "STATIC_SCAN_CLEAR"
+      },
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "f4f08b00-3585-4c8c-8c48-f39e07f886b4",
+      "input_hash": "e4a14cbce5a5b501a4ee7ddb855372e961fc52ef5c1e7961ddfd46d6adffdaeb",
+      "source_snapshot_id": "407b071fc506c3f164237cef279ba08aa0c2635405060b7c12e07403b2f1b1cc",
+      "result_hash": "69c8cec70cf8fd50d7f991770f41370d583219630e034bc0cde270c226081685"
+    },
+    "F06": {
+      "path": "canonical.json",
+      "size": 1733449,
+      "sha256": "9a5536783198dea9f4d8955c7676ce77c0f065933a487ac5622e10bdb9084983",
+      "status": "GENERATED",
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "f4f08b00-3585-4c8c-8c48-f39e07f886b4",
+      "input_hash": "e4a14cbce5a5b501a4ee7ddb855372e961fc52ef5c1e7961ddfd46d6adffdaeb",
+      "source_snapshot_id": "407b071fc506c3f164237cef279ba08aa0c2635405060b7c12e07403b2f1b1cc",
+      "result_hash": "69c8cec70cf8fd50d7f991770f41370d583219630e034bc0cde270c226081685"
+    },
+    "F03": {
+      "path": "FICTIONAL_ 330 kWp ground PV calculation demo (no real site)-测算模型.xlsx",
+      "size": 70547,
+      "sha256": "19848f862fa8d43fac6a55cf185c3fce00f1ec08eba80db8e52160707124f599",
+      "sheets": [
+        "项目参数",
+        "术语和公式说明",
+        "数据质量",
+        "资源月度",
+        "系统容量与损耗",
+        "发电预测-月度",
+        "逐年衰减",
+        "负荷与消纳",
+        "电价与收入",
+        "CAPEX",
+        "OPEX",
+        "折旧与税费",
+        "融资与偿债",
+        "项目现金流",
+        "资本金现金流",
+        "财务指标",
+        "敏感性",
+        "方案比较",
+        "一致性校验"
+      ],
+      "mode": "STATIC_SNAPSHOT",
+      "charts": [
+        {
+          "metric_id": "energy.monthly.year.1",
+          "points": 12,
+          "sheet": "发电预测-月度",
+          "source": "CANONICAL",
+          "formula_id": "F-ENERGY-AGGREGATION",
+          "source_ids": [
+            "SYNTHETIC-CALC-utility_scale_ground"
+          ]
+        },
+        {
+          "metric_id": "energy.annual_array",
+          "points": 3,
+          "sheet": "逐年衰减",
+          "source": "CANONICAL",
+          "formula_id": "F-ENERGY-AGGREGATION",
+          "source_ids": [
+            "SYNTHETIC-CALC-utility_scale_ground"
+          ]
+        }
+      ],
+      "generation_seconds": 0.376107,
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "f4f08b00-3585-4c8c-8c48-f39e07f886b4",
+      "input_hash": "e4a14cbce5a5b501a4ee7ddb855372e961fc52ef5c1e7961ddfd46d6adffdaeb",
+      "source_snapshot_id": "407b071fc506c3f164237cef279ba08aa0c2635405060b7c12e07403b2f1b1cc",
+      "result_hash": "69c8cec70cf8fd50d7f991770f41370d583219630e034bc0cde270c226081685"
+    },
+    "F04": {
+      "status": "DRAFT_PARTIAL",
+      "file": "FICTIONAL_ 330 kWp ground PV calculation demo (no real site)-资料来源与假设清单.xlsx",
+      "project_id": "SYNTHETIC-CALC-GROUND-330KWP-2025",
+      "scenario_id": "BASE",
+      "input_hash": "e4a14cbce5a5b501a4ee7ddb855372e961fc52ef5c1e7961ddfd46d6adffdaeb",
+      "source_snapshot_id": "407b071fc506c3f164237cef279ba08aa0c2635405060b7c12e07403b2f1b1cc",
+      "result_hash": "69c8cec70cf8fd50d7f991770f41370d583219630e034bc0cde270c226081685",
+      "sha256": "65e6e98618788ee8c61242c219233415f653139a13910b9be7537200edf97700",
+      "sheets": [
+        "输入台账",
+        "气象与地理来源",
+        "政策适用性",
+        "设备与成本来源",
+        "案例对标",
+        "假设清单",
+        "冲突与缺口",
+        "变更与复核记录",
+        "变量-术语词典",
+        "资料授权说明"
+      ],
+      "generation_seconds": 1.376022,
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "f4f08b00-3585-4c8c-8c48-f39e07f886b4"
+    },
+    "F02": {
+      "status": "BLOCKED",
+      "reason": "PDF_RENDERER_UNAVAILABLE",
+      "renderer": null,
+      "generation_seconds": 0.127433
+    }
+  },
+  "charts": {
+    "docx": [
+      {
+        "metric_id": "energy.monthly.year.1",
+        "points": 12,
+        "source": "CANONICAL",
+        "formula_id": "F-ENERGY-AGGREGATION",
+        "source_ids": [
+          "SYNTHETIC-CALC-utility_scale_ground"
+        ],
+        "format": "PNG_EMBEDDED"
+      },
+      {
+        "metric_id": "energy.annual_array",
+        "points": 3,
+        "source": "CANONICAL",
+        "formula_id": "F-ENERGY-AGGREGATION",
+        "source_ids": [
+          "SYNTHETIC-CALC-utility_scale_ground"
+        ],
+        "format": "PNG_EMBEDDED"
+      }
+    ],
+    "xlsx": [
+      {
+        "metric_id": "energy.monthly.year.1",
+        "points": 12,
+        "sheet": "发电预测-月度",
+        "source": "CANONICAL",
+        "formula_id": "F-ENERGY-AGGREGATION",
+        "source_ids": [
+          "SYNTHETIC-CALC-utility_scale_ground"
+        ]
+      },
+      {
+        "metric_id": "energy.annual_array",
+        "points": 3,
+        "sheet": "逐年衰减",
+        "source": "CANONICAL",
+        "formula_id": "F-ENERGY-AGGREGATION",
+        "source_ids": [
+          "SYNTHETIC-CALC-utility_scale_ground"
+        ]
+      }
+    ]
+  },
+  "coverage": {
+    "chapters": 18,
+    "chapter_items": 100,
+    "appendices": 13,
+    "appendix_items": 26,
+    "model_sheets": 19,
+    "source_sheets": 10
+  },
+  "pdf_status": "BLOCKED",
+  "quality_gates": {
+    "PAGE_SIZE_A4": "A4",
+    "COVER_STYLE_D": "GENERATED",
+    "TOC_VALID": "FIELD_REQUIRES_RENDER_REFRESH",
+    "TABLE_LAYOUT": "COMPACT_SUMMARY_AND_XLSX_TRACEABILITY",
+    "CONTENT_READABILITY": "NOT_TESTED_RENDER",
+    "NO_OVERFLOW": "NOT_TESTED_RENDER",
+    "NO_DUPLICATE_TEMPLATE_ABUSE": "CONTENT_REVIEW_REQUIRED",
+    "EXACT_DUPLICATE_SCAN": "PASS",
+    "PROFESSIONAL_NARRATIVE": "CONTENT_REVIEW_REQUIRED",
+    "NO_PROGRAMMING_LANGUAGE_IN_BODY": "STATIC_SCAN_CLEAR",
+    "NO_GENERIC_TEMPLATE_ABUSE": "CONTENT_REVIEW_REQUIRED",
+    "CHAPTER_SEMANTIC_ALIGNMENT": "CONTENT_REVIEW_REQUIRED",
+    "EVIDENCE_GROUNDED_CLAIMS": "CONTENT_REVIEW_REQUIRED",
+    "CENTRAL_CLAIM_CONTRACT": "PASS",
+    "CENTRAL_CLAIM_CONTRACT_SCOPE": "STRUCTURAL_FIELDS_AND_BINDINGS_ONLY",
+    "CATEGORY_SPECIFIC_NARRATIVE": "CONTENT_REVIEW_REQUIRED",
+    "EDITORIAL_FIXTURE_IDENTITY": "PASS",
+    "GOLDEN_SAMPLE_COVERAGE": "STRUCTURAL_COVERAGE_ONLY",
+    "DOCUMENT_CONTENT_REVIEW": "NOT_REVIEWED",
+    "CHAPTER_COVERAGE": "PASS",
+    "CHART_DATA_CONSISTENCY": "STATIC_CANONICAL_BINDING",
+    "CANONICAL_IDENTITY": "PASS",
+    "CANONICAL_DATA_CONSISTENCY": "STATIC_BINDING_CHECK",
+    "D_BUSINESS_STYLE_REGRESSION": "NOT_TESTED_RENDER",
+    "XLSX_CONTENT": "STATIC_STRUCTURE_CHECK",
+    "PDF_RENDER": "BLOCKED",
+    "VISUAL_REVIEW": "NOT_TESTED",
+    "FOUR_FILE_GATE": "BLOCKED"
+  },
+  "calculation_status": "PARTIAL",
+  "four_file_gate": "BLOCKED",
+  "editorial_mode": "SYNTHETIC_DEMO",
+  "editorial_fixture": {
+    "kind": "EDITORIAL_TEST_ASSUMPTION",
+    "result_hash": "69c8cec70cf8fd50d7f991770f41370d583219630e034bc0cde270c226081685",
+    "golden_sample_chapters": [
+      "CH01",
+      "CH03",
+      "CH04",
+      "CH05",
+      "CH07",
+      "CH08",
+      "CH10",
+      "CH14",
+      "CH16",
+      "CH18"
+    ]
+  },
+  "elapsed_seconds": 2.961,
+  "not_decision_ready": true,
+  "sensitive_raw_attachments_included": false
+}
