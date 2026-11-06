@@ -10,7 +10,7 @@ from time import perf_counter
 
 from ..errors import ContractError
 from ..local_files import Workspace
-from ..serialization import digest, dumps
+from ..serialization import digest, dumps, loads
 from ..timeseries_bundle import BundleBudget, read_bundle
 from .break_even_replay import _remove_owned
 from .energy_yield import calculate_ground as generate_ground, calculate_rooftop as generate_rooftop
@@ -18,7 +18,8 @@ from .financial_ledger import calculate_financial_ledger, write_financial_bundle
 from .formula_execution import formula_execution_map
 from .input_contract import validate_export
 from .method_config import MethodConfig
-from .phase3e import calculate_phase3e, write_phase3e_bundle
+from .phase3e import calculate_phase3e, calculate_sourced_project_npv, write_phase3e_bundle
+from .terminal_disposition import VERSION as TERMINAL_VERSION
 from .result_contract import validate_result
 from .revenue import calculate_ground as settle_ground, calculate_rooftop as settle_rooftop
 from .scenario_runner import SCENARIO_IDS, _RUN_ID, prepare_scenario, run_scenario
@@ -52,7 +53,8 @@ def _prepare_cases(controls, original, methods, catalog):
 
 
 def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, run_id,
-                generation_dir=None, generation_result_hash=None, scenario_controls=None):
+                generation_dir=None, generation_result_hash=None, scenario_controls=None,
+                terminal_source=None, source_documents=None):
     """Run and publish a single, source-bound BASE project calculation.
 
     An externally pinned 3B trace is read-only; the real 3C consumer verifies
@@ -63,6 +65,8 @@ def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, ru
             or not isinstance(run_id, str) or _RUN_ID.fullmatch(run_id) is None
             or (generation_dir is None) != (generation_result_hash is None)):
         raise ContractError("PROJECT_EXECUTION_CONTEXT")
+    if (terminal_source is None) != (source_documents is None):
+        raise ContractError("PROJECT_TERMINAL_SOURCE_PAIR_REQUIRED")
     original = validate_export(exported, catalog).export
     config = MethodConfig.from_dict(methods.to_dict() if isinstance(methods, MethodConfig) else methods)
     pv_type = original["project"]["pv_type"]
@@ -97,6 +101,11 @@ def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, ru
                 timing["phase3b_seconds"] = perf_counter() - stage_started
             else:
                 generation_dir = Path(generation_dir)
+                if terminal_source is not None:
+                    generation = loads((generation_dir / "result.json").read_bytes())
+                    validate_result(generation, catalog)
+                    if generation["result_hash"] != generation_result_hash:
+                        raise ContractError("PROJECT_GENERATION_HASH_MISMATCH")
                 stages["3B"] = {"result_hash": generation_result_hash, "reuse": True}
                 timing["phase3b_seconds"] = 0.0
             settle = settle_ground if pv_type == "utility_scale_ground" else settle_rooftop
@@ -115,7 +124,30 @@ def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, ru
             stages["3D"] = {"result_hash": financial["result_hash"], "reuse": False}
             timing["phase3d_seconds"] = perf_counter() - stage_started
             stage_started = perf_counter()
-            result = calculate_phase3e(financial, config, catalog)
+            if terminal_source is None:
+                result = calculate_phase3e(financial, config, catalog)
+            else:
+                if not isinstance(terminal_source, dict):
+                    raise ContractError("PROJECT_TERMINAL_SOURCE_INVALID")
+                values = original["project"]["values"]
+                basis = values.get("project.cashflow_tax_basis", {}).get("value")
+                if basis not in {"pre_tax", "post_tax"}:
+                    raise ContractError("TERMINAL_BASIS_NOT_SELECTED")
+                carrier = {"schema_version": TERMINAL_VERSION, "source": terminal_source,
+                           "source_content_hash": digest(terminal_source), "binding": {
+                               "project_id": original["project"]["project_id"], "pv_type": pv_type,
+                               "evaluation_date": values["project.evaluation_date"]["value"],
+                               "currency": values["project.currency"]["value"], "scenario_id": financial["scenario_id"],
+                               "phase2_input_hash": original["input_hash"],
+                               "phase2_source_snapshot_id": original["source_snapshot_id"],
+                               "method_config_hash": config.hash, "d3_content_hash": bundle.content_hash,
+                               "phase3b_result_hash": generation_result_hash,
+                               "phase3c_result_hash": settlement["result_hash"],
+                               "phase3d_result_hash": financial["result_hash"],
+                               "basis": "项目税前" if basis == "pre_tax" else "项目税后",
+                           }}
+                result = calculate_sourced_project_npv(carrier, source_documents, original, config,
+                                                       bundle, generation, settlement, financial, catalog)
             validate_result(result, catalog)
             write_phase3e_bundle(result, root / "3e")
             stages["3E"] = {"result_hash": result["result_hash"], "reuse": False}

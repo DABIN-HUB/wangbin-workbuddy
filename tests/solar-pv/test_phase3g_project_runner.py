@@ -25,6 +25,15 @@ def test_project_requires_a_pinned_generation_pair_before_creating_output(tmp_pa
     assert not (tmp_path / "base").exists()
 
 
+def test_project_terminal_source_and_documents_are_an_indivisible_pair(tmp_path):
+    catalog, export, methods = _fixture()
+    with pytest.raises(ContractError, match="PROJECT_TERMINAL_SOURCE_PAIR_REQUIRED"):
+        run_project(export, methods, bundle_dir=tmp_path / "absent-d3",
+                    catalog=catalog, budget=BundleBudget(), workspace=Workspace(tmp_path),
+                    run_id="unbound", terminal_source={})
+    assert not (tmp_path / "unbound").exists()
+
+
 def test_project_revalidates_source_before_entering_a_bundle(tmp_path):
     catalog, export, methods = _fixture()
     altered = deepcopy(export)

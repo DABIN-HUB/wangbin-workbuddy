@@ -153,3 +153,58 @@ def test_uncollected_invoices_and_unpaid_tax_remain_balances_not_cash():
     assert rows[25]["accounts_receivable_closing"] == 0
     assert abs(rows[1]["income_tax_cash_paid"] * 2 - rows[1]["income_tax_accrual"]) < Decimal("1e-18")
     assert abs(rows[1]["income_tax_payable_closing"] - rows[1]["income_tax_cash_paid"]) < Decimal("1e-18")
+
+
+def test_debt_cash_schedule_fields_reach_every_3e_period():
+    exported, methods, settlement = updated_replacement_export("industrial_rooftop")
+    rows = calculate_financial_ledger(exported, methods, settlement)["evidence"]["financial-ledger"]["annual"]
+    for row in rows:
+        assert {"debt_drawdown", "principal_paid", "interest_paid", "finance_fees_paid"} <= row.keys()
+    assert rows[0]["debt_drawdown"] == Decimal("996000")
+    assert rows[0]["principal_paid"] == rows[0]["interest_paid"] == rows[0]["finance_fees_paid"] == 0
+    assert rows[1]["debt_drawdown"] == 0
+    assert rows[1]["interest_paid"] == rows[1]["interest_accrued"]
+    assert rows[1]["finance_fees_paid"] == 0
+
+
+def test_unproven_construction_interest_payment_is_not_a_zero_cash_event():
+    from wangbin_solar_pv.calculation.phase3e import _ledger_vectors
+    exported, methods, settlement = updated_replacement_export("industrial_rooftop")
+    methods = deepcopy(methods)
+    methods["parameters"]["debt.opening_interest_payable"]["value"] = Decimal("10")
+    methods["parameters"]["debt.interest_payment_fractions"]["value"][0] = Decimal(1)
+    rows = calculate_financial_ledger(exported, methods, settlement)["evidence"]["financial-ledger"]["annual"]
+    assert "interest_paid" not in rows[0]
+    vectors = _ledger_vectors(rows)
+    assert vectors["interest"] is None
+    assert vectors["missing"]["interest_paid"] == ["CONSTRUCTION"]
+
+
+def test_explicit_construction_fee_payment_reaches_3e_vector():
+    from wangbin_solar_pv.calculation.phase3e import _ledger_vectors
+    from wangbin_solar_pv.provenance import make_record
+    exported, methods, settlement = updated_replacement_export("industrial_rooftop")
+    catalog = Catalog()
+    project = ProjectData.from_dict(exported["project"], catalog)
+    row_id = "SYNTHETIC-construction-finance-fee"
+    facts = {"row_id": row_id, "date": "2025-12-01", "drawdown": Decimal(0),
+             "principal": Decimal(0), "interest": Decimal(0), "fees": Decimal(25),
+             "dscr_covenant": Decimal("1.2")}
+    basis = {"currency": "CNY", "price_year": 2025, "tax_basis": "inclusive", "price_basis": "nominal"}
+    fields = {}
+    for name, value in facts.items():
+        fid = "finance.debt_schedule." + name
+        fields[fid] = make_record(catalog, fid, value, source_kind="ASSUMPTION",
+            source_id="SYNTHETIC-construction-fee-plan", source_url_or_attachment="SYNTHETIC:fee-plan",
+            source_section_or_cell=fid, field_instance_id=row_id + "-" + name,
+            confidence_basis="Fictional scheduled construction fee payment, not bank actual",
+            license_status="AUTHORIZED",
+            economic_basis=basis if catalog.fields[fid]["unit"] == "currency" else None,
+            assumption={"reason": "Explicit synthetic construction fee", "method": "Forecast payment",
+                        "maturity_ceiling": "L1", "noncritical": False, "decision_invariant": False})
+    parent = project.values["finance.debt_schedule"]
+    parent["value"] = [{"row_id": row_id, "fields": fields}]
+    parent["original_value"] = deepcopy(parent["value"])
+    rows = calculate_financial_ledger(IntakeSession(project, catalog).export(), methods, settlement)["evidence"]["financial-ledger"]["annual"]
+    assert rows[0]["finance_fees_paid"] == Decimal(25)
+    assert _ledger_vectors(rows)["fees"][0] == Decimal(25)

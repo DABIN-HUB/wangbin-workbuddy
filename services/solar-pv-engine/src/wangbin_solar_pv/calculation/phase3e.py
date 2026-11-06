@@ -250,8 +250,8 @@ def calculate_phase3e(financial_result, methods, catalog):
 
 
 def calculate_sourced_project_npv(carrier, source_documents, exported, methods, bundle,
-                                 generation, settlement, financial, catalog, *, basis_control,
-                                 original_export, original_bundle):
+                                 generation, settlement, financial, catalog, *, basis_control=None,
+                                 original_export=None, original_bundle=None):
     """Calculate only sourced, year-end unlevered project metrics; other gates stay blocked."""
     bound = bind_terminal_candidate(carrier, source_documents, exported, methods, bundle,
                                     generation, settlement, financial, catalog)
@@ -285,26 +285,31 @@ def calculate_sourced_project_npv(carrier, source_documents, exported, methods, 
     declared_scope = f"{rate_scope}_{price_basis['value'].upper()}_{bound.source['currency']}_YEAR_END"
     if rate["source_section_or_cell"] != declared_scope:
         raise ContractError("PROJECT_NPV_RATE_BASIS_MISMATCH")
-    if not isinstance(basis_control, dict) or basis_control.get("basis") != chosen or basis_control.get("project_id") != bound.source["project_id"] or basis_control.get("pv_type") != bound.source["pv_type"] or basis_control.get("method_config_hash") != bound.binding["method_config_hash"] or basis_control.get("generation_result_hash") != bound.binding["phase3b_result_hash"]:
-        raise ContractError("PROJECT_NPV_EXECUTION_BASIS_MISMATCH")
-    control_source = basis_control.get("source", {})
-    if (control_source.get("status") != "ASSUMED" or control_source.get("source_kind") != "SYNTHETIC"
-            or control_source.get("license_status") != "AUTHORIZED" or not control_source.get("source_id")):
-        raise ContractError("PROJECT_NPV_EXECUTION_BASIS_MISMATCH")
-    selected_control = validate_price_selector(basis_control, original_export, methods, original_bundle, catalog)
-    source_is_original = exported["input_hash"] == basis_control.get("original_input_hash")
-    if source_is_original:
-        if (exported["source_snapshot_id"] != basis_control.get("original_source_snapshot_id") or
-                bundle.content_hash != original_bundle.content_hash or
-                dumps(exported) != dumps(validate_export(original_export, catalog).export)):
+    if basis_control is None:
+        if original_export is not None or original_bundle is not None:
             raise ContractError("PROJECT_NPV_EXECUTION_BASIS_MISMATCH")
+        control_source = None
     else:
-        key = basis_control["selector"]
-        actual_atom = _target(validate_export(exported, catalog), bundle, key["field_id"], key["row_id"])
-        derived, expected_atom = _derive(original_export, selected_control, actual_atom["value"], catalog)
-        if dumps(exported) != dumps(derived) or dumps(actual_atom) != dumps(expected_atom):
+        if not isinstance(basis_control, dict) or basis_control.get("basis") != chosen or basis_control.get("project_id") != bound.source["project_id"] or basis_control.get("pv_type") != bound.source["pv_type"] or basis_control.get("method_config_hash") != bound.binding["method_config_hash"] or basis_control.get("generation_result_hash") != bound.binding["phase3b_result_hash"]:
             raise ContractError("PROJECT_NPV_EXECUTION_BASIS_MISMATCH")
-        _verify_bundles(original_bundle, bundle, key["field_id"], key["row_id"])
+        control_source = basis_control.get("source", {})
+        if (control_source.get("status") != "ASSUMED" or control_source.get("source_kind") != "SYNTHETIC"
+                or control_source.get("license_status") != "AUTHORIZED" or not control_source.get("source_id")):
+            raise ContractError("PROJECT_NPV_EXECUTION_BASIS_MISMATCH")
+        selected_control = validate_price_selector(basis_control, original_export, methods, original_bundle, catalog)
+        source_is_original = exported["input_hash"] == basis_control.get("original_input_hash")
+        if source_is_original:
+            if (exported["source_snapshot_id"] != basis_control.get("original_source_snapshot_id") or
+                    bundle.content_hash != original_bundle.content_hash or
+                    dumps(exported) != dumps(validate_export(original_export, catalog).export)):
+                raise ContractError("PROJECT_NPV_EXECUTION_BASIS_MISMATCH")
+        else:
+            key = basis_control["selector"]
+            actual_atom = _target(validate_export(exported, catalog), bundle, key["field_id"], key["row_id"])
+            derived, expected_atom = _derive(original_export, selected_control, actual_atom["value"], catalog)
+            if dumps(exported) != dumps(derived) or dumps(actual_atom) != dumps(expected_atom):
+                raise ContractError("PROJECT_NPV_EXECUTION_BASIS_MISMATCH")
+            _verify_bundles(original_bundle, bundle, key["field_id"], key["row_id"])
 
     result = calculate_phase3e(financial, methods, catalog)
     annual = result["evidence"]["financial-ledger"]["annual"]
@@ -315,19 +320,24 @@ def calculate_sourced_project_npv(carrier, source_documents, exported, methods, 
         "source": bound.source, "source_content_hash": bound.source_content_hash,
         "binding": bound.binding, "binding_hash": bound.binding_hash,
         "phase3d_result_hash": bound.financial_result_hash,
-        "basis_control_hash": digest(basis_control), "basis_control": basis_control,
         "rate_source": rate,
     }
+    if basis_control is not None:
+        result["source_snapshot"]["phase3e_terminal"].update(
+            basis_control_hash=digest(basis_control), basis_control=basis_control)
     snapshot_id = digest(result["source_snapshot"])
     result["source_snapshot_id"] = snapshot_id
     payload = result["inputs"]["identity_payload"]
     payload.update(source_snapshot_id=snapshot_id, upstream_financial_result_hash=bound.financial_result_hash,
                    terminal_binding_hash=bound.binding_hash, terminal_source_content_hash=bound.source_content_hash,
-                   basis_control_hash=digest(basis_control), selected_project_rate_source_hash=digest(rate))
+                   selected_project_rate_source_hash=digest(rate))
+    if basis_control is not None:
+        payload["basis_control_hash"] = digest(basis_control)
     result["input_hash"] = digest(payload)
     source_ids = {bound.source["no_disposition"]["source"]["source_id"]}
     result["inputs"]["used_sources"] = sorted(set(result["inputs"].get("used_sources", [])) |
-                                                  source_ids | {rate["source_id"], control_source["source_id"]})
+                                                  source_ids | {rate["source_id"]} |
+                                                  ({control_source["source_id"]} if control_source is not None else set()))
     result["inputs"]["used_fields"] = sorted(set(result["inputs"].get("used_fields", [])) | {
         "project.cashflow_tax_basis", "project.ownership_mode", "project.price_basis",
         "finance.project_discount_rate", "project.evaluation_date", "project.evaluation_years",

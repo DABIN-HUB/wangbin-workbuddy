@@ -185,6 +185,11 @@ def _project_report(args: argparse.Namespace) -> dict[str, Any]:
         project_args.extend(["--generation-hash", args.generation_hash])
     if args.scenarios:
         project_args.extend(["--scenarios", _safe_relative(args.scenarios, "scenarios").as_posix()])
+    if bool(args.terminal_source) != bool(args.terminal_document):
+        raise WrapperError("INVALID_ARGUMENT", "terminal-source and terminal-document must be supplied together")
+    if args.terminal_source:
+        project_args.extend(["--terminal-source", _safe_relative(args.terminal_source, "terminal-source").as_posix(),
+                             "--terminal-document", _safe_relative(args.terminal_document, "terminal-document").as_posix()])
     calculation = _engine_command(engine_root, src, baseline, workspace, "project", project_args)
     if calculation.get("status") not in {"PASS", "PARTIAL"}:
         return {"status": calculation.get("status", "BLOCKED"), "project_type": args.project_type,
@@ -224,6 +229,8 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--generation")
     parser.add_argument("--generation-hash")
     parser.add_argument("--scenarios")
+    parser.add_argument("--terminal-source")
+    parser.add_argument("--terminal-document")
     return parser
 
 

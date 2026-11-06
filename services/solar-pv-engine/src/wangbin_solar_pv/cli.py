@@ -72,6 +72,8 @@ def _parser():
     project.add_argument("--generation", help="可选同项目只读3B轨迹目录；必须同时固定hash")
     project.add_argument("--generation-hash", help="可选3B唯一结果hash；不能单独传入")
     project.add_argument("--scenarios", help="可选BASE/PESSIMISTIC/OPTIMISTIC三场景显式控制JSON")
+    project.add_argument("--terminal-source", help="可选已授权终期来源事实JSON；须同时提供原始来源字节")
+    project.add_argument("--terminal-document", help="终期无处置来源原文字节；仅支持单一NO_DISPOSITION来源")
     project.add_argument("--output", required=True, help="单层新建私有项目目录，不覆盖")
     source_xlsx = commands.add_parser("source-xlsx", help="Phase4 F04资料来源与假设清单；只生成DRAFT_PARTIAL私有XLSX")
     source_xlsx.add_argument("--result", required=True, help="已验证canonical JSON")
@@ -187,13 +189,28 @@ def main(argv=None):
             budget_data = workspace.read(args.budget)[0]
             if not isinstance(budget_data, dict):
                 raise ContractError("BUNDLE_BUDGET")
+            if bool(args.terminal_source) != bool(args.terminal_document):
+                raise ContractError("PROJECT_TERMINAL_SOURCE_PAIR_REQUIRED")
+            terminal_source = workspace.read(args.terminal_source)[0] if args.terminal_source else None
+            source_documents = None
+            if terminal_source is not None:
+                if not isinstance(terminal_source, dict) or terminal_source.get("mode") != "NO_DISPOSITION" or not isinstance(terminal_source.get("no_disposition"), dict):
+                    raise ContractError("PROJECT_TERMINAL_DOCUMENTS_UNSUPPORTED")
+                source_id = terminal_source["no_disposition"].get("source", {}).get("source_id")
+                if not isinstance(source_id, str) or not source_id:
+                    raise ContractError("PROJECT_TERMINAL_SOURCE_INVALID")
+                document = workspace.path(args.terminal_document, json_only=False)
+                if document.stat().st_size > 1024 * 1024:
+                    raise ContractError("TERMINAL_SOURCE_BYTES_REQUIRED")
+                source_documents = {source_id: document.read_bytes()}
             receipt = run_project(workspace.read(args.input)[0], workspace.read(args.methods)[0],
                                   bundle_dir=workspace.path(args.bundle, json_only=False),
                                   catalog=catalog, budget=BundleBudget(**budget_data),
                                   workspace=workspace, run_id=args.output,
                                   generation_dir=workspace.path(args.generation, json_only=False) if args.generation else None,
                                   generation_result_hash=args.generation_hash,
-                                  scenario_controls=workspace.read(args.scenarios)[0] if args.scenarios else None)
+                                  scenario_controls=workspace.read(args.scenarios)[0] if args.scenarios else None,
+                                  terminal_source=terminal_source, source_documents=source_documents)
             print(dumps({"status": receipt["status"],
                          "canonical_result_hash": receipt["canonical_result_hash"],
                          "receipt_hash": receipt["receipt_hash"],
