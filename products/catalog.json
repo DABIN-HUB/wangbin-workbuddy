@@ -410,6 +410,51 @@
           "version": "0.1.3"
         }
       ]
+    },
+    {
+      "active_version": "0.1.2",
+      "development": "Local MVP candidate; independent QA pending",
+      "id": "wangbin-import-precheck",
+      "maintenance": "UNKNOWN",
+      "name": "数据导入前检查",
+      "published_at": "UNKNOWN",
+      "review_evidence": "No platform receipt",
+      "review_status": "NOT_TESTED",
+      "scenario": "Authorized CSV/XLSX precheck against confirmed import rules",
+      "status": "DEVELOPING",
+      "target_users": "Office import operators",
+      "test_path": "tests/test_import_precheck.py",
+      "type": "Skill",
+      "validation_metrics": "products/metrics.json",
+      "versions": [
+        {
+          "archive_evidence": "dist/wangbin-import-precheck-0.1.0-skill-candidate.zip",
+          "candidate": "dist/wangbin-import-precheck-0.1.0-skill-candidate.zip",
+          "date": "UNKNOWN",
+          "published_at": "UNKNOWN",
+          "sha256": "bacbef200a5cfa2db049c3b19007f5bd4645e103a70362da91af0e5ad5715797",
+          "source": "packages/skills/wangbin-import-precheck",
+          "version": "0.1.0"
+        },
+        {
+          "archive_evidence": "dist/wangbin-import-precheck-0.1.1-skill-candidate.zip",
+          "candidate": "dist/wangbin-import-precheck-0.1.1-skill-candidate.zip",
+          "date": "UNKNOWN",
+          "published_at": "UNKNOWN",
+          "sha256": "9f5f90f84024c52981606835c14f046eb82616d157e49bb5989d7bb1024f7913",
+          "source": "packages/skills/wangbin-import-precheck",
+          "version": "0.1.1"
+        },
+        {
+          "archive_evidence": "dist/wangbin-import-precheck-0.1.2-skill-candidate.zip",
+          "candidate": "dist/wangbin-import-precheck-0.1.2-skill-candidate.zip",
+          "date": "UNKNOWN",
+          "published_at": "UNKNOWN",
+          "sha256": "01f919ab6d4dd89ef0c6e934b0a95569b1ec59d7a28b892a283453de5bdde7e3",
+          "source": "packages/skills/wangbin-import-precheck",
+          "version": "0.1.2"
+        }
+      ]
     }
   ],
   "schema_version": 1
