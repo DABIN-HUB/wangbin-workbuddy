@@ -286,7 +286,7 @@
       ]
     },
     {
-      "active_version": "0.1.1",
+      "active_version": "0.1.2",
       "development": "MVP candidate; local focused matching run verified",
       "id": "wangbin-purchase-threeway-match",
       "maintenance": "UNKNOWN",
@@ -318,6 +318,15 @@
           "sha256": "664dcd9f3b30f6be4b40d21c6d14257085ef49dda2dbe049f3d01476a7b200c1",
           "source": "packages/skills/wangbin-purchase-threeway-match",
           "version": "0.1.1"
+        },
+        {
+          "archive_evidence": "dist/wangbin-purchase-threeway-match-0.1.2-skill-candidate.zip",
+          "candidate": "dist/wangbin-purchase-threeway-match-0.1.2-skill-candidate.zip",
+          "date": "UNKNOWN",
+          "published_at": "UNKNOWN",
+          "sha256": "aec7d2821c01ff092a6dce03ea94f2cf80c5c521d32e53fa6af76cc5a3b165e5",
+          "source": "packages/skills/wangbin-purchase-threeway-match",
+          "version": "0.1.2"
         }
       ]
     },

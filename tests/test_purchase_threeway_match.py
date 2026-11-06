@@ -94,6 +94,13 @@ def test_a11_incomplete_invoice_is_retained_once_without_ambiguity(tmp_path):
     assert "AMBIGUOUS_KEY" not in summary["exception_code_counts"]
     assert len(list(wb["Unmatched Invoices"].values)) == 2
     assert list(wb["Unmatched Invoices"].values)[1][3] == "MISSING_REQUIRED_FIELD"
+    assert summary["totals"]["matched"] == 0
+    assert summary["exception_code_counts"]["NOT_COMPARABLE"] == 1
+    trace = [dict(zip(list(wb["Source Trace"].values)[0], row)) for row in list(wb["Source Trace"].values)[1:]]
+    assert len([row for row in trace if row["_kind"] == "invoice" and row["source_file"] == "invoices.csv" and row["source_row_number"] == 2]) == 1
+    report = (tmp_path / "output" / "report.md").read_text(encoding="utf-8")
+    assert "无法匹配 / cannot match" in report
+    assert "MISSING_REQUIRED_FIELD" in report and "invoices.csv:2" in report
 
 
 def test_a14_orphans_only_get_orphan_evidence_not_unrelated_not_comparable(tmp_path):

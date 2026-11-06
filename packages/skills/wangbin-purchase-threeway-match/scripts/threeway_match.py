@@ -201,7 +201,7 @@ def main_match(manifest: dict[str, Any], output: Path, manifest_dir: Path | None
         exceptions.append({"comparison_key":json.dumps(r.get("_key") or json.loads(r["original_key_values"]), ensure_ascii=False),"exception_code":code,"source_row_reference":r["source_file"]+":"+str(r["source_row_number"])})
     out.mkdir(parents=True,exist_ok=False)
     summary={"schema_version":"1.0","run_status":"SUCCEEDED_WITH_EXCEPTIONS" if exceptions or invalid else "SUCCEEDED","totals":{"po_keys":len(results),"matched":sum(x["status"]=="MATCHED" for x in results),"exceptions":len(exceptions)},"exception_code_counts":dict(sorted(Counter(x["exception_code"] for x in exceptions).items())),"output_file_references":{"workbook":"threeway_match.xlsx","report":"report.md"}}
-    manifest_out={"product_id":"wangbin-purchase-threeway-match","version":"0.1.1","input_files":[{"name":p.name,"sha256":hashlib.sha256(p.read_bytes()).hexdigest()} for p in files],"row_counts":{k:len(v) for k,v in groups.items()},"limits":limits,"completion_status":summary["run_status"]}
+    manifest_out={"product_id":"wangbin-purchase-threeway-match","version":"0.1.2","input_files":[{"name":p.name,"sha256":hashlib.sha256(p.read_bytes()).hexdigest()} for p in files],"row_counts":{k:len(v) for k,v in groups.items()},"limits":limits,"completion_status":summary["run_status"]}
     (out/"summary.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2,sort_keys=True)+"\n",encoding="utf-8")
     exception_lines = [
         f"- `{code}`: {count}"
@@ -211,6 +211,13 @@ def main_match(manifest: dict[str, Any], output: Path, manifest_dir: Path | None
         f"- `{x['exception_code']}` at `{x['source_row_reference']}` for `{x['comparison_key']}`"
         for x in exceptions
     ] or ["- None"]
+    missing_invoice_lines = [
+        f"- 无法匹配 / cannot match: `{r['source_file']}:{r['source_row_number']}` "
+        f"缺少必需的完整键 / missing required exact key ({', '.join(f for f in KEY_FIELDS if not text(r.get(f)))}); "
+        "不推断候选 / no candidate inferred."
+        for r in unmatched_i
+        if r["reason"] == "MISSING_REQUIRED_FIELD" and key_of(r, key_ci) is None
+    ]
     report = "\n".join([
         "# 采购三单匹配 / Purchase three-way match",
         "",
@@ -227,6 +234,7 @@ def main_match(manifest: dict[str, Any], output: Path, manifest_dir: Path | None
         "",
         "## Evidence / 证据行引用",
         *detail_lines,
+        *missing_invoice_lines,
         "",
         "See the seven worksheets, especially `Exceptions`, `Unmatched Receipts`, `Unmatched Invoices`, and `Source Trace`.",
         "详见七个工作表，重点查看 `Exceptions`、`Unmatched Receipts`、`Unmatched Invoices` 和 `Source Trace`。",
