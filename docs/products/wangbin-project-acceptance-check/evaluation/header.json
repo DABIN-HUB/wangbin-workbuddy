@@ -1,0 +1,12 @@
+{
+  "dataset_name": "wangbin-project-acceptance-check-0.1.2-local-draft",
+  "profile": {
+    "dimensions": [
+      {"key": "task_completion", "name": "任务完成度", "weight": 0.4},
+      {"key": "instruction_follow", "name": "指令遵循", "weight": 0.2},
+      {"key": "factuality", "name": "事实准确性", "weight": 0.25},
+      {"key": "rule_compliance", "name": "规则合规", "weight": 0.15}
+    ],
+    "aggregation": {"pass_threshold": 60, "excellent_threshold": 85}
+  }
+}
