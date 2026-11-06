@@ -5,6 +5,7 @@ import json
 
 import subprocess
 import sys
+import zipfile
 from decimal import Decimal
 from pathlib import Path
 
@@ -192,6 +193,29 @@ def test_a12_mixed_currency_and_self_check_and_quantity(tmp_path):
     assert json.loads(r["invoice_amounts_by_currency"]) == {"USD": "25", "CNY": "351"}
     assert s["line_results"][0]["invoiced_amount"] == "NOT_AVAILABLE"
 
+def test_a12_absent_invoice_and_incompatible_uom_have_no_monetary_variance(tmp_path):
+    (tmp_path / "absent").mkdir(); (tmp_path / "uom").mkdir()
+    _, s, wb, _, _ = checked(tmp_path / "absent", invoices=[])
+    assert s["totals"]["matched"] == 0 and "NOT_COMPARABLE" in codes(wb)
+    assert all(line(wb)[field] == "NOT_AVAILABLE" for field in ("invoiced_amount", "amount_variance", "weighted_invoice_unit_price"))
+    _, s, wb, _, _ = checked(tmp_path / "uom", invoices=[invoice(uom="BOX", invoiced_quantity="1", invoice_unit_price="50", invoice_amount="50")])
+    assert {"UOM_MISMATCH", "NOT_COMPARABLE"} <= codes(wb)
+    assert not {"PRICE_MISMATCH", "AMOUNT_MISMATCH"} & codes(wb)
+    assert line(wb)["amount_variance"] == line(wb)["weighted_invoice_unit_price"] == "NOT_AVAILABLE"
+    assert s["totals"]["matched"] == 0
+
+def test_a12_invoice_internal_arithmetic_only_on_complete_invoice_row(tmp_path):
+    for name in ("consistent", "inconsistent", "missing_price"):
+        (tmp_path / name).mkdir()
+    _, s, wb, _, _ = checked(tmp_path / "consistent", invoices=[invoice(currency="CNY", invoice_unit_price="70", invoice_amount="700")])
+    assert codes(wb) == {"CURRENCY_MISMATCH", "NOT_COMPARABLE"}
+    _, s, wb, _, _ = checked(tmp_path / "inconsistent", invoices=[invoice(currency="CNY", invoice_unit_price="70", invoice_amount="701")])
+    assert codes(wb) == {"CURRENCY_MISMATCH", "NOT_COMPARABLE", "AMOUNT_MISMATCH"}
+    assert line(wb)["amount_variance"] == "NOT_AVAILABLE"
+    _, s, wb, _, _ = checked(tmp_path / "missing_price", invoices=[invoice(currency="CNY", invoice_unit_price="", invoice_amount="701")])
+    assert "MISSING_REQUIRED_FIELD" in s["exception_code_counts"]
+    assert "AMOUNT_MISMATCH" not in codes(wb)
+
 
 def test_a13_multi_exception_separate_rows(tmp_path):
     _, _, wb, _, _ = checked(tmp_path, receipts=[receipt(received_quantity="11")], invoices=[invoice(invoiced_quantity="11", invoice_unit_price="6", invoice_amount="66")])
@@ -249,11 +273,55 @@ def test_a17_file_limit(tmp_path):
     proc = subprocess.run([sys.executable, str(SCRIPT), "--manifest", str(mp), "--output", str(case / "limited")], capture_output=True, text=True)
     assert proc.returncode == 2 and json.loads(proc.stderr)["error_code"] == "LIMIT_EXCEEDED"
 
+def test_a17_real_default_file_limit_and_file_count(tmp_path):
+    case = tmp_path / "real"; case.mkdir()
+    root = case / "input"; root.mkdir()
+    oversized = root / "po.csv"
+    with oversized.open("wb") as stream:
+        stream.truncate(50 * 1024 * 1024 + 1)
+    manifest = {"input_root": "input", "po_files": ["po.csv"], "receipt_files": [], "invoice_files": [], "config": {}}
+    mp = case / "manifest.json"; mp.write_text(json.dumps(manifest), encoding="utf-8")
+    def rejected(name):
+        out = case / name
+        proc = subprocess.run([sys.executable, str(SCRIPT), "--manifest", str(mp), "--output", str(out)], capture_output=True, text=True)
+        assert proc.returncode == 2 and not out.exists()
+        assert json.loads(proc.stderr)["error_code"] == "LIMIT_EXCEEDED"
+        return json.loads(proc.stderr)["message"]
+    assert "52428801" in rejected("oversized") and oversized.stat().st_size == 50 * 1024 * 1024 + 1
+    oversized.unlink()
+    (root / "po.csv").write_text("po_number\n", encoding="utf-8")
+    manifest["po_files"] = ["po.csv"] * 51
+    mp.write_text(json.dumps(manifest), encoding="utf-8")
+    assert "50 files" in rejected("too_many_files")
+
 
 def test_a18_formula_text_injection(tmp_path):
     _, _, wb, _, _ = checked(tmp_path, pos=[po(item_code="=CMD")], receipts=[receipt(item_code="=CMD")], invoices=[invoice(item_code="=CMD")])
     assert all(r["item_code"].startswith("'=") for r in rows(wb["Source Trace"]))
     assert all(wb["Source Trace"].cell(row=i, column=3).data_type != "f" for i in range(2, 5))
+
+@pytest.mark.parametrize("hazard", ["formula", "ignored_sheet_formula", "macro", "external_link", "external_relationship"])
+def test_a18_reject_active_xlsx_with_traceable_error(tmp_path, hazard):
+    case = tmp_path / hazard
+    case.mkdir()
+    checked(case, xlsx=True)
+    source = case / "input" / "po0.xlsx"
+    if hazard in {"formula", "ignored_sheet_formula"}:
+        book = load_workbook(source)
+        book["ignored" if hazard == "ignored_sheet_formula" else "po"]["A2"] = "=1+1"
+        book.save(source)
+    else:
+        member = {"macro": "xl/vbaProject.bin", "external_link": "xl/externalLinks/externalLink1.xml", "external_relationship": "xl/worksheets/_rels/sheet1.xml.rels"}[hazard]
+        payload = (b'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+                   b'<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink" '
+                   b'Target="https://example.invalid/" TargetMode="External"/></Relationships>') if hazard == "external_relationship" else b"fixture"
+        with zipfile.ZipFile(source, "a") as archive:
+            archive.writestr(member, payload)
+    out = case / "hazard-output"
+    proc = subprocess.run([sys.executable, str(SCRIPT), "--manifest", str(case / "manifest.json"), "--output", str(out)], capture_output=True, text=True)
+    error = json.loads(proc.stderr)
+    assert proc.returncode == 2 and error["error_code"] == "INVALID_INPUT"
+    assert "po0.xlsx" in error["message"] and not out.exists()
 
 
 @pytest.mark.parametrize("value,field,expected", [("", "invoiced_quantity", "MISSING_REQUIRED_FIELD"), ("abc", "invoiced_quantity", "INVALID_INPUT"), ("BOX", "uom", "UOM_MISMATCH")])

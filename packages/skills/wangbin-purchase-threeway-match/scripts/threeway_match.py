@@ -3,7 +3,8 @@
 Usage: python threeway_match.py --manifest manifest.json --output output
 """
 from __future__ import annotations
-import argparse, csv, hashlib, json, os, sys
+import argparse, csv, hashlib, json, os, sys, zipfile
+from xml.etree import ElementTree
 from collections import Counter, defaultdict
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
@@ -64,10 +65,23 @@ def read_file(path: Path, sheet: str | None, kind: str, root: Path) -> list[dict
         actual_sheet = ""
     elif path.suffix.lower() == ".xlsx":
         if load_workbook is None: raise MatchError("INVALID_INPUT", "openpyxl is required for XLSX")
+        # Fail closed on active spreadsheet content; data_only=False alone does
+        # not make formula cells safe data or report the hazard to the caller.
+        with zipfile.ZipFile(path) as archive:
+            names = archive.namelist()
+            if any(name.lower().startswith("xl/externallinks/") or name.lower().endswith("vbaproject.bin") for name in names):
+                raise MatchError("INVALID_INPUT", f"{path.name}: XLSX external link or macro is not supported")
+            if any(entry.startswith("xl/") and entry.endswith(".rels") and
+                   any(link.get("TargetMode", "").lower() == "external" for link in ElementTree.fromstring(archive.read(entry)))
+                   for entry in names):
+                raise MatchError("INVALID_INPUT", f"{path.name}: XLSX external relationship is not supported")
         wb = load_workbook(path, read_only=True, data_only=False, keep_links=False)
         names = [sheet] if sheet else ([wb.sheetnames[0]] if len(wb.sheetnames) == 1 else [])
         if not names or names[0] not in wb.sheetnames: raise MatchError("INVALID_INPUT", "XLSX worksheet must be explicitly named when ambiguous")
-        ws = wb[names[0]]; values = list(ws.values)
+        ws = wb[names[0]]
+        if any(cell.data_type == "f" for worksheet in wb for row in worksheet for cell in row):
+            raise MatchError("INVALID_INPUT", f"{path.name}: XLSX formula is not supported")
+        values = list(ws.values)
         if not values: rows = []
         else:
             headers = [text(v) for v in values[0]]
