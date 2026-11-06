@@ -122,7 +122,7 @@ _D_STYLE = {
     "white": "FFFFFF",
 }
 
-REPORT_CONTENT_VERSION = "phase7l-r2-v3"
+REPORT_CONTENT_VERSION = "phase7l-r2-v4"
 
 
 @dataclass(frozen=True)
@@ -1966,6 +1966,16 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 evidence["summary"] = detail
             for text in evidence["narrative"]:
                 document.add_paragraph(_reader_text(text))
+            if item_id == "APP02.01":
+                resource_headers, resource_rows = _resource_rows(model)
+                # Keep the individual month and its source identity together in
+                # the reader-facing appendix; F03 retains every field atom.
+                resource_display = [row[:8] + [str(row[8]).split("；辐照为", 1)[0]]
+                                    for row in resource_rows]
+                _add_table(document, resource_headers, resource_display,
+                           "月度资源与逐行来源（完整字段实例见测算模型 M04）",
+                           widths_cm=(1.0, 1.4, 1.4, 1.4, 1.4, 1.5, 1.5, 1.4, 5.8),
+                           font_size=7)
             if app_id in {"APP11", "APP12"}:
                 appendix_headers, appendix_rows = _appendix_rows(model, item_id)
                 if item_id == "APP11.01" and appendix_rows:
