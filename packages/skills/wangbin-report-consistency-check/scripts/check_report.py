@@ -158,20 +158,21 @@ def report_items(path, context):
     for where, text in blocks:
         if re.search(r'^\s*第\s*\d+(?:\.\d+)*\s*节', text):
             continue
-        metric = label(text)
-        if not metric:
-            continue
-        numbers = list(NUMBER.finditer(text))
-        if not numbers:
-            continue
-        # Prefer number after metric; for "完成率由10%提高至12%" keep both.
-        after = [n for n in numbers if n.start() >= text.index(metric) + len(metric)]
-        if not after:
-            continue
-        for n in (after if metric == '完成率' and len(after) == 2 else after[:1]):
-            unit = n.group(2) or unit_in(text[n.end():n.end()+4]) or unit_in(text)
-            result.append(dict(where=where, quote=text, metric=metric, value=n.group(1).replace(',', ''),
-                               unit=unit, identity=identity(text, context)))
+        for fragment in re.split(r'[，；;]|(?<!\d),(?!\d)', text):
+            metric = label(fragment)
+            if not metric:
+                continue
+            numbers = list(NUMBER.finditer(fragment))
+            if not numbers:
+                continue
+            # Prefer number after metric; for "完成率由10%提高至12%" keep both.
+            after = [n for n in numbers if n.start() >= fragment.index(metric) + len(metric)]
+            if not after:
+                continue
+            for n in (after if metric == '完成率' and len(after) == 2 else after[:1]):
+                unit = n.group(2) or unit_in(fragment[n.end():n.end()+4]) or unit_in(fragment)
+                result.append(dict(where=where, quote=text, metric=metric, value=n.group(1).replace(',', ''),
+                                   unit=unit, identity=identity(text, context)))
     if doc.inline_shapes or any('graphic' in p._element.xml or 'pict' in p._element.xml for p in doc.paragraphs):
         uncovered.append(('DOCX', '图片/图表', '图片或图表非正文，需人工复核'))
     uncovered.append(('DOCX', '页眉页脚/脚注/嵌入对象', '不解析这些区域；若存在请人工复核'))

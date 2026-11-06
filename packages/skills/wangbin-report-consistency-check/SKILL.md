@@ -5,7 +5,7 @@ display_name_en: Business Report Number Consistency Check
 description: 对照 Excel 来源核查 Word 报告中的数字、单位与指标口径，输出可定位的差异清单。
 description_zh: 对照 Excel 来源核查 Word 报告中的数字、单位与指标口径，输出可定位的差异清单。
 description_en: Check figures in Word reports against Excel sources, accounting for units and metric definitions, with traceable differences and limitations.
-version: 0.1.1
+version: 0.1.2
 author: wangbin
 examples_zh:
   - 这是月度经营报告和原始 Excel，帮我核对收入、成本和完成率，口径不同的先说明。

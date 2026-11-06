@@ -191,6 +191,39 @@ def test_confirmed_independent_formula_rule(tmp_path):
     assert row[19] == 'MATCH' and row[13] == 'INDEPENDENT_RULE_RESULT'
 
 
+def test_two_explicit_rules_same_paragraph(tmp_path):
+    wb, _ = exercise(tmp_path,['总额/元','扣除/元'],[100,25],['净额75元，占比25%'],
+                     {'rules':{'净额':{'op':'subtract','cells':['数据!A2','数据!B2'],'unit':'元'},
+                               '占比':{'op':'ratio','cells':['数据!B2','数据!A2']}}})
+    rows = matrix(wb,'差异明细')[1:]
+    assert len(rows) == 2
+    assert {row[1]: row[19] for row in rows} == {'净额':'MATCH','占比':'MATCH'}
+
+
+def test_report_image_explicitly_uncovered(tmp_path):
+    import base64
+    inputs = tmp_path/'inputs'
+    inputs.mkdir()
+    output = tmp_path/'out'
+    output.mkdir()
+    wb = Workbook()
+    wb.active['B1'] = '6月实际收入/CNY/元'
+    wb.active['B2'] = 100000
+    source = inputs/'source.xlsx'
+    wb.save(source)
+    image = inputs/'chart.png'
+    image.write_bytes(base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScL/nwAAAABJRU5ErkJggg=='))
+    doc = Document()
+    doc.add_paragraph('6月实际收入10万元')
+    doc.add_picture(str(image))
+    report = inputs/'report.docx'
+    doc.save(report)
+    assert checker.main(['--input-root',str(inputs),'--source-xlsx',str(source),'--report-docx',str(report),'--output-dir',str(output)]) == 0
+    result = load_workbook(output/'report-数字一致性检查.xlsx')
+    assert any('图片/图表' in str(r) for r in matrix(result,'未覆盖项'))
+    assert len(matrix(result,'指标对应')) == 2
+
+
 def test_packaged_real_cli(tmp_path):
     """Run only after the factory produced an immutable archive; no repo imports in child."""
     candidate = os.environ.get('REPORT_CANDIDATE_ZIP')
