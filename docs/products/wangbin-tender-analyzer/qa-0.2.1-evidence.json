@@ -1,0 +1,700 @@
+{
+  "tested_commit": "d62d4193870fca5ac77e431be4e3c78a68b95537",
+  "archive_sha256": "1b2d07f43da301a3d78cf1a996a5f9987920b16000271f326608ea10d33255dc",
+  "case_count": 39,
+  "passed": 38,
+  "cases": [
+    {
+      "case": "ZIP_SHA",
+      "expected": "1b2d07f43da301a3d78cf1a996a5f9987920b16000271f326608ea10d33255dc",
+      "actual": "1b2d07f43da301a3d78cf1a996a5f9987920b16000271f326608ea10d33255dc",
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "ZIP_CRC",
+      "expected": null,
+      "actual": null,
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "ZIP_MEMBERS",
+      "expected": [
+        "wangbin-tender-analyzer/SKILL.md",
+        "wangbin-tender-analyzer/examples/README.md",
+        "wangbin-tender-analyzer/examples/certificate.txt",
+        "wangbin-tender-analyzer/examples/fictional-attachments.csv",
+        "wangbin-tender-analyzer/examples/fictional-bid-response.txt",
+        "wangbin-tender-analyzer/examples/fictional-bid-tender.txt",
+        "wangbin-tender-analyzer/examples/fictional-tender.expected.json",
+        "wangbin-tender-analyzer/examples/fictional-tender.txt",
+        "wangbin-tender-analyzer/scripts/analyze_tender.py",
+        "wangbin-tender-analyzer/scripts/check_response.py",
+        "wangbin-tender-analyzer/templates/tender-checklist.md"
+      ],
+      "actual": [
+        "wangbin-tender-analyzer/SKILL.md",
+        "wangbin-tender-analyzer/examples/README.md",
+        "wangbin-tender-analyzer/examples/certificate.txt",
+        "wangbin-tender-analyzer/examples/fictional-attachments.csv",
+        "wangbin-tender-analyzer/examples/fictional-bid-response.txt",
+        "wangbin-tender-analyzer/examples/fictional-bid-tender.txt",
+        "wangbin-tender-analyzer/examples/fictional-tender.expected.json",
+        "wangbin-tender-analyzer/examples/fictional-tender.txt",
+        "wangbin-tender-analyzer/scripts/analyze_tender.py",
+        "wangbin-tender-analyzer/scripts/check_response.py",
+        "wangbin-tender-analyzer/templates/tender-checklist.md"
+      ],
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "ZIP_MEMBER_wangbin-tender-analyzer/SKILL.md",
+      "expected": "8fd51f2377ea6fb6382e9ae1de91134a7980ac14b0d8ce8ff7dc42159839b16c",
+      "actual": "8fd51f2377ea6fb6382e9ae1de91134a7980ac14b0d8ce8ff7dc42159839b16c",
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "ZIP_MEMBER_wangbin-tender-analyzer/examples/README.md",
+      "expected": "88d3bd4535cba3191aa09c85e2a5d5ad1b46b4c72b055d7e1632dae4f9c38fef",
+      "actual": "88d3bd4535cba3191aa09c85e2a5d5ad1b46b4c72b055d7e1632dae4f9c38fef",
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "ZIP_MEMBER_wangbin-tender-analyzer/examples/certificate.txt",
+      "expected": "37a1ef3d5577c7f75c37f5e07123983c3d786098d8fc5131a10b83a27f946e6b",
+      "actual": "37a1ef3d5577c7f75c37f5e07123983c3d786098d8fc5131a10b83a27f946e6b",
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "ZIP_MEMBER_wangbin-tender-analyzer/examples/fictional-attachments.csv",
+      "expected": "f8a1c3540be8c77053af5b0ad53e275003ca3c23cdf884ea6357a4585385c77d",
+      "actual": "f8a1c3540be8c77053af5b0ad53e275003ca3c23cdf884ea6357a4585385c77d",
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "ZIP_MEMBER_wangbin-tender-analyzer/examples/fictional-bid-response.txt",
+      "expected": "e7b3033db2f1bec60a376f9504db8b4fb7e86d05ef41b84f102f39588027e76c",
+      "actual": "e7b3033db2f1bec60a376f9504db8b4fb7e86d05ef41b84f102f39588027e76c",
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "ZIP_MEMBER_wangbin-tender-analyzer/examples/fictional-bid-tender.txt",
+      "expected": "389b270c4b02fd3ada4c6a32757ff54899e52a3e685ec003bda14e0e248d52a7",
+      "actual": "389b270c4b02fd3ada4c6a32757ff54899e52a3e685ec003bda14e0e248d52a7",
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "ZIP_MEMBER_wangbin-tender-analyzer/examples/fictional-tender.expected.json",
+      "expected": "a1b4de633f5256b4962a4f15a9656fa483db8d35fee8c3d12ef14c2d4adac9d0",
+      "actual": "a1b4de633f5256b4962a4f15a9656fa483db8d35fee8c3d12ef14c2d4adac9d0",
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "ZIP_MEMBER_wangbin-tender-analyzer/examples/fictional-tender.txt",
+      "expected": "ca2c907ce99d67b872c2b27e02b2a05e0e72b7e7b8811e38b8adfe48f712dce3",
+      "actual": "ca2c907ce99d67b872c2b27e02b2a05e0e72b7e7b8811e38b8adfe48f712dce3",
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "ZIP_MEMBER_wangbin-tender-analyzer/scripts/analyze_tender.py",
+      "expected": "ffee9fed4c0f403e2688c1296da415d47031d9900962c651865fb54cf564becb",
+      "actual": "ffee9fed4c0f403e2688c1296da415d47031d9900962c651865fb54cf564becb",
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "ZIP_MEMBER_wangbin-tender-analyzer/scripts/check_response.py",
+      "expected": "b1aa21ece47392779bd1590f7d604d9096c7afc20a15c871beb67160855d45b5",
+      "actual": "b1aa21ece47392779bd1590f7d604d9096c7afc20a15c871beb67160855d45b5",
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "ZIP_MEMBER_wangbin-tender-analyzer/templates/tender-checklist.md",
+      "expected": "ea03d979c21c3699ef19b57694da50709eaf3dee5dada6cb5340619c8a328375",
+      "actual": "ea03d979c21c3699ef19b57694da50709eaf3dee5dada6cb5340619c8a328375",
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "CORE_five_sheets",
+      "expected": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "actual": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\core\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\core",
+        "--response",
+        "<QA_SCRATCH>\\core\\response.txt",
+        "--attachment-catalog",
+        "<QA_SCRATCH>\\core\\catalog.csv"
+      ]
+    },
+    {
+      "case": "CORE_no_fake_evidence",
+      "expected": "仅目录登记 / 未核验 / 不充分",
+      "actual": [
+        "仅目录登记",
+        "未核验",
+        "可能不充分"
+      ],
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\core\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\core",
+        "--response",
+        "<QA_SCRATCH>\\core\\response.txt",
+        "--attachment-catalog",
+        "<QA_SCRATCH>\\core\\catalog.csv"
+      ]
+    },
+    {
+      "case": "A09_prep",
+      "expected": "未核查、不报未找到",
+      "actual": [
+        "未核查",
+        "未核查"
+      ],
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\prepare\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\prepare"
+      ]
+    },
+    {
+      "case": "A09_missing_check",
+      "expected": "MISSING_RESPONSE exit2, no products",
+      "actual": {
+        "exit": 2,
+        "stdout": "",
+        "stderr": "ERROR MISSING_RESPONSE role=response",
+        "files": [],
+        "command": [
+          "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+          "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+          "--tender",
+          "<QA_SCRATCH>\\missing_response\\tender.txt",
+          "--output-dir",
+          "<QA_SCRATCH>\\missing_response",
+          "--mode",
+          "check"
+        ]
+      },
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\missing_response\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\missing_response",
+        "--mode",
+        "check"
+      ]
+    },
+    {
+      "case": "A02_unanswered",
+      "expected": "未找到",
+      "actual": "未找到（限已提供响应）",
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\a02\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\a02",
+        "--response",
+        "<QA_SCRATCH>\\a02\\response.txt"
+      ]
+    },
+    {
+      "case": "A03_partial",
+      "expected": "已定位/可能不充分/恢复时间",
+      "actual": {
+        "唯一ID": "1:1:3",
+        "要求编号": "3",
+        "要求原文": "3. 技术方案必须同时说明备份周期和恢复时间。",
+        "来源": "tender.txt:1",
+        "明确条件": "技术方案必须；说明备份周期；恢复时间",
+        "响应位置": "response.txt:1",
+        "响应内容": "3. 每日备份。",
+        "支持材料": null,
+        "证据位置": null,
+        "响应存在状态": "已定位",
+        "条件覆盖状态": "可能不充分",
+        "附件实际提供状态": "不适用",
+        "内容支持状态": "不适用",
+        "缺口": "明确条件未获得完整文本支持：技术方案必须、说明备份周期、恢复时间",
+        "建议": "按源文件行核对，不能推断投标结果",
+        "适用版本": "适用",
+        "候选及理由": "response.txt:1"
+      },
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\a03\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\a03",
+        "--response",
+        "<QA_SCRATCH>\\a03\\response.txt"
+      ]
+    },
+    {
+      "case": "A04_conflicting_certificate",
+      "expected": "已提供/不支持",
+      "actual": {
+        "states": [
+          "不适用",
+          "不适用"
+        ],
+        "matrix": {
+          "唯一ID": "1:1:4",
+          "要求编号": "4",
+          "要求原文": "4. 提供有效期覆盖2027年的资质证明。",
+          "来源": "tender.txt:1",
+          "明确条件": "提供有效期覆盖2027年的资质证明",
+          "响应位置": "response.txt:1",
+          "响应内容": "4. 资质有效期覆盖2027年，见 certificate.txt。",
+          "支持材料": null,
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "不适用",
+          "内容支持状态": "不适用",
+          "缺口": "明确条件未获得完整文本支持：提供有效期覆盖2027年的资质证明",
+          "建议": "按源文件行核对，不能推断投标结果",
+          "适用版本": "适用",
+          "候选及理由": "response.txt:1"
+        },
+        "attachment_rows": [],
+        "md": "# 未命名项目 · 提交前核对清单\n\n核查模式\n\n仅核对已提供范围；文本证据不认证资质真伪、保证金到账、结果或法律效力。\n摘录已限长脱敏，脱敏非完备；回原件核查。\n\n## 确定需要补资料（已提供范围）\n- 1:1:4 (原编号 4；tender.txt:1；响应 response.txt:1)：明确条件未获得完整文本支持：提供有效期覆盖2027年的资质证明。四维：已定位 / 可能不充分 / 不适用 / 不适用。\n\n## 需要人工确认\n\n## 已覆盖范围（仅文本层面）\n\n## 未覆盖范围（仅已提供材料）\n- 1:1:4 (原编号 4；tender.txt:1；响应 response.txt:1)：可能不充分。四维：已定位 / 可能不充分 / 不适用 / 不适用。\n\n",
+        "exit": 0
+      },
+      "pass_": false,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\a04\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\a04",
+        "--response",
+        "<QA_SCRATCH>\\a04\\response.txt",
+        "--evidence-file",
+        "<QA_SCRATCH>\\a04\\certificate.txt"
+      ]
+    },
+    {
+      "case": "A05_proven_supersession",
+      "expected": "旧不适用/新适用/版本冲突",
+      "actual": [
+        [
+          "已替换/撤销（不适用）",
+          "明确条件未获得完整文本支持：交付期为30日"
+        ],
+        [
+          "适用（正式补遗）",
+          "版本冲突：响应仍沿用旧要求，正式补遗新值 45日；响应 response.txt:1"
+        ]
+      ],
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\a05\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\a05",
+        "--response",
+        "<QA_SCRATCH>\\a05\\response.txt",
+        "--amendment",
+        "<QA_SCRATCH>\\a05\\amendment-0.txt"
+      ]
+    },
+    {
+      "case": "A06_conflicting_amendments",
+      "expected": "三条均待确认",
+      "actual": [
+        "待确认（冲突补遗）",
+        "待确认（冲突补遗）",
+        "待确认（冲突补遗）"
+      ],
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\a06\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\a06",
+        "--response",
+        "<QA_SCRATCH>\\a06\\response.txt",
+        "--amendment",
+        "<QA_SCRATCH>\\a06\\amendment-0.txt",
+        "--amendment",
+        "<QA_SCRATCH>\\a06\\amendment-1.txt"
+      ]
+    },
+    {
+      "case": "A07_renumber_candidate",
+      "expected": "候选待确认，双向原句",
+      "actual": {
+        "唯一ID": "1:1:7",
+        "要求编号": "7",
+        "要求原文": "7. 系统须支持离线查询。",
+        "来源": "tender.txt:1",
+        "明确条件": "系统须支持离线查询",
+        "响应位置": "response.txt:1",
+        "响应内容": null,
+        "支持材料": null,
+        "证据位置": null,
+        "响应存在状态": "候选待确认",
+        "条件覆盖状态": "待确认",
+        "附件实际提供状态": "不适用",
+        "内容支持状态": "不适用",
+        "缺口": null,
+        "建议": "响应候选歧义或编号改变；逐一核对双向原句",
+        "适用版本": "适用",
+        "候选及理由": "response.txt:1；编号变化/文本近似仅候选，需人工确认"
+      },
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\a07\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\a07",
+        "--response",
+        "<QA_SCRATCH>\\a07\\response.txt"
+      ]
+    },
+    {
+      "case": "A08_no_keyword_hijack",
+      "expected": "已定位但未覆盖",
+      "actual": {
+        "唯一ID": "1:1:8",
+        "要求编号": "8",
+        "要求原文": "8. 提供同城双活灾备方案。",
+        "来源": "tender.txt:1",
+        "明确条件": "提供同城双活灾备方案",
+        "响应位置": "response.txt:1；response.txt:2",
+        "响应内容": "8. 我方提供异地冷备方案。",
+        "支持材料": null,
+        "证据位置": null,
+        "响应存在状态": "已定位",
+        "条件覆盖状态": "可能不充分",
+        "附件实际提供状态": "不适用",
+        "内容支持状态": "不适用",
+        "缺口": "明确条件未获得完整文本支持：提供同城双活灾备方案",
+        "建议": "按源文件行核对，不能推断投标结果",
+        "适用版本": "适用",
+        "候选及理由": "response.txt:1；response.txt:2"
+      },
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\a08\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\a08",
+        "--response",
+        "<QA_SCRATCH>\\a08\\response.txt"
+      ]
+    },
+    {
+      "case": "A11_incremental_no_false_support",
+      "expected": "第一条实际存在但不支持；第二条不受影响",
+      "actual": [
+        "已提供（可读文本）",
+        "不支持（文本层面）",
+        "未找到（限已提供响应）"
+      ],
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\a11\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\a11",
+        "--response",
+        "<QA_SCRATCH>\\a11\\response.txt",
+        "--attachment-catalog",
+        "<QA_SCRATCH>\\a11\\catalog.csv",
+        "--evidence-file",
+        "<QA_SCRATCH>\\a11\\qualification.txt"
+      ]
+    },
+    {
+      "case": "A14_no_invented_facts",
+      "expected": "无臆造证书/日期/中标率",
+      "actual": "# 未命名项目 · 提交前核对清单\n\n核查模式\n\n仅核对已提供范围；文本证据不认证资质真伪、保证金到账、结果或法律效力。\n摘录已限长脱敏，脱敏非完备；回原件核查。\n\n## 确定需要补资料（已提供范围）\n- 1:1:10 (原编号 10；tender.txt:1；响应 response.txt:1)：明确条件未获得完整文本支持：须附有效资质与近三年案例、投标截止日期另行通知。四维：已定位 / 可能不充分 / 不适用 / 不适用。\n\n## 需要人工确认\n\n## 已覆盖范围（仅文本层面）\n\n## 未覆盖范围（仅已提供材料）\n- 1:1:10 (原编号 10；tender.txt:1；响应 response.txt:1)：可能不充分。四维：已定位 / 可能不充分 / 不适用 / 不适用。\n\n",
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\a14\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\a14",
+        "--response",
+        "<QA_SCRATCH>\\a14\\response.txt"
+      ]
+    },
+    {
+      "case": "BID05_no_unproven_edge",
+      "expected": "无已证明替换",
+      "actual": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ],
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\unofficial\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\unofficial",
+        "--response",
+        "<QA_SCRATCH>\\unofficial\\response.txt",
+        "--amendment",
+        "<QA_SCRATCH>\\unofficial\\amendment-0.txt"
+      ]
+    },
+    {
+      "case": "BID01_duplicate_ids",
+      "expected": "3 unique IDs, all original lines",
+      "actual": [
+        [
+          "1:1:1",
+          "tender.txt:1"
+        ],
+        [
+          "1:2:1",
+          "tender.txt:2"
+        ],
+        [
+          "2:1:1",
+          "amendment-0.txt:1"
+        ]
+      ],
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\duplicate_ids\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\duplicate_ids",
+        "--response",
+        "<QA_SCRATCH>\\duplicate_ids\\response.txt",
+        "--amendment",
+        "<QA_SCRATCH>\\duplicate_ids\\amendment-0.txt"
+      ]
+    },
+    {
+      "case": "XLSX_catalog",
+      "expected": "five sheets + catalog.xlsx/附件清单:2",
+      "actual": [
+        [
+          "1:1:1",
+          "qualification.txt",
+          "catalog.xlsx/附件清单:2",
+          null,
+          "仅目录登记",
+          "未核验",
+          null,
+          "仅目录不证明文件存在"
+        ]
+      ],
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\xlsx_catalog\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\xlsx_catalog",
+        "--response",
+        "<QA_SCRATCH>\\xlsx_catalog\\response.txt",
+        "--attachment-catalog",
+        "<QA_SCRATCH>\\xlsx_catalog\\catalog.xlsx"
+      ]
+    },
+    {
+      "case": "overview_matrix_counts",
+      "expected": "counts agree with matrix",
+      "actual": true,
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\core\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\core",
+        "--response",
+        "<QA_SCRATCH>\\core\\response.txt",
+        "--attachment-catalog",
+        "<QA_SCRATCH>\\core\\catalog.csv"
+      ]
+    },
+    {
+      "case": "MD_matrix_consistency",
+      "expected": "IDs and four states present",
+      "actual": "# 未命名项目 · 提交前核对清单\n\n核查模式\n\n仅核对已提供范围；文本证据不认证资质真伪、保证金到账、结果或法律效力。\n摘录已限长脱敏，脱敏非完备；回原件核查。\n\n## 确定需要补资料（已提供范围）\n- 1:1:1 (原编号 1；tender.txt:1；响应 response.txt:1)：明确条件未获得完整文本支持：必须提供指定资质证明 qualification.txt。四维：已定位 / 可能不充分 / 仅目录登记 / 未核验。\n- 1:1:1 (原编号 1；tender.txt:1；响应 response.txt:1)：附件仅目录登记，需补实际材料并核内容。四维：已定位 / 可能不充分 / 仅目录登记 / 未核验。\n\n## 需要人工确认\n\n## 已覆盖范围（仅文本层面）\n\n## 未覆盖范围（仅已提供材料）\n- 1:1:1 (原编号 1；tender.txt:1；响应 response.txt:1)：可能不充分。四维：已定位 / 可能不充分 / 仅目录登记 / 未核验。\n\n",
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\core\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\core",
+        "--response",
+        "<QA_SCRATCH>\\core\\response.txt",
+        "--attachment-catalog",
+        "<QA_SCRATCH>\\core\\catalog.csv"
+      ]
+    },
+    {
+      "case": "invalid_utf8",
+      "expected": "INVALID_UTF8",
+      "actual": {
+        "exit": 2,
+        "stderr": "ERROR INVALID_UTF8 role=response\n"
+      },
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "pdf_response",
+      "expected": "INPUT_TYPE_UNSUPPORTED",
+      "actual": {
+        "exit": 2,
+        "stderr": "ERROR INPUT_TYPE_UNSUPPORTED role=response\n"
+      },
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "bad_xlsx",
+      "expected": "CATALOG_READ_FAILED",
+      "actual": {
+        "exit": 2,
+        "stderr": "ERROR CATALOG_READ_FAILED role=attachment_catalog\n"
+      },
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "unsafe_project",
+      "expected": "OUTPUT_PATH_INVALID",
+      "actual": {
+        "exit": 2,
+        "stderr": "ERROR OUTPUT_PATH_INVALID role=project\n"
+      },
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "formula_cells",
+      "expected": "no formulas",
+      "actual": [],
+      "pass_": true,
+      "command": [
+        "F:\\ideaWorkSpace\\wangbin-workbuddy-tender-response-check\\.venv\\Scripts\\python.exe",
+        "<QA_SCRATCH>\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "<QA_SCRATCH>\\formula\\tender.txt",
+        "--output-dir",
+        "<QA_SCRATCH>\\formula",
+        "--response",
+        "<QA_SCRATCH>\\formula\\response.txt",
+        "--attachment-catalog",
+        "<QA_SCRATCH>\\formula\\catalog.csv"
+      ]
+    },
+    {
+      "case": "OLD_CLI_JSON",
+      "expected": "exit0 JSON exact old fixture",
+      "actual": {
+        "exit": 0,
+        "match": true,
+        "keys": [
+          "status",
+          "source_name",
+          "privacy",
+          "eligibility",
+          "scoring",
+          "technical",
+          "dates",
+          "checklist",
+          "risks",
+          "limitations",
+          "evidence"
+        ]
+      },
+      "pass_": true,
+      "command": null
+    },
+    {
+      "case": "OLD_CLI_ERROR",
+      "expected": "exit2 INPUT_NOT_FOUND",
+      "actual": {
+        "exit": 2,
+        "stderr": "ERROR INPUT_NOT_FOUND\n"
+      },
+      "pass_": true,
+      "command": null
+    }
+  ]
+}
