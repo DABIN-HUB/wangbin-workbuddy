@@ -1,0 +1,6398 @@
+{
+  "source_commit": "54e0fd900cfd9cb2c71f9256e22dd23f25244660",
+  "zip_sha256": "5117bd7202cd6a322c3aae8246dad79edeb4cd9a876cbcae800ee78ad2a9df57",
+  "members": [
+    {
+      "path": "wangbin-project-acceptance-check/LICENSE",
+      "sha256": "77e14f72b077bbcc88b3dad0d686fe7d30b45e766f5e25c274089aeef527d217",
+      "size": 268
+    },
+    {
+      "path": "wangbin-project-acceptance-check/SKILL.md",
+      "sha256": "f7d8fa0b94c952ea5e981e819e19b7a738c101d278179d18d1544fbe1a36ed33",
+      "size": 3165
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/README.md",
+      "sha256": "97b9830b6d4bc2a02747b28edac3c1534c115c2df2b529ab0bdc756e8cebb88f",
+      "size": 304
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/deploy.md",
+      "sha256": "7a8f1f68d71bbef7a25b20f29ba83b7136c0a5666e8efa328bb969f46512c980",
+      "size": 76
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/interface.md",
+      "sha256": "4dc1984259dad9dcf9713a6ec8989e55776f4356376489366c844fd9c9dbb097",
+      "size": 94
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/scope.md",
+      "sha256": "782bd91ee6a7f8099a0bd82193abcbd659d62a4ddcadb318d7d47d8bc54b38c3",
+      "size": 159
+    },
+    {
+      "path": "wangbin-project-acceptance-check/manifest.json",
+      "sha256": "e01df5145e2d6b81a0d7b9bf2412f343ed69d38cab4412e13635b0423cbc76be",
+      "size": 567
+    },
+    {
+      "path": "wangbin-project-acceptance-check/references/runtime.md",
+      "sha256": "24fdfab821e705bcb7cb9a4a79a5e4162e38ca51a81d90e17efad8662597bdf7",
+      "size": 2905
+    },
+    {
+      "path": "wangbin-project-acceptance-check/scripts/check_acceptance.py",
+      "sha256": "4a42f48f3beec46c9e5ad8e3115f4e859ff21720382fbe9f100a89809bcba389",
+      "size": 32164
+    }
+  ],
+  "cases": {
+    "A01": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A01",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A01\\output",
+        "--scope-source",
+        "scope.md",
+        "--delivery-source",
+        "interface.md",
+        "--delivery-source",
+        "deploy.md",
+        "--effective-version-ref",
+        "scope.md"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A01\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A01\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A01\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"3/5\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}, {\"number\": \"R02\", \"status\": \"NONCONFORMING\"}, {\"number\": \"R03\", \"status\": \"NO_EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "files": {
+        "scope.md": "503709dd69829120e13d59596227a03fcd7bc7dc0727a7513df73b6c95205b39",
+        "interface.md": "feba65d70a963fe447baea5b18d3b6de42110a686716f2808edea0f93bbc8289",
+        "deploy.md": "5e5856ebf892fd3902397b0a38573f869c27f9a81552b945c95657abccf32d75"
+      },
+      "snapshot": {
+        "schema_version": 1,
+        "project": "星桥演示平台",
+        "sources": [
+          {
+            "source_id": "SRC-221c68155d0f",
+            "path": "scope.md",
+            "sha256": "503709dd69829120e13d59596227a03fcd7bc7dc0727a7513df73b6c95205b39",
+            "type": ".md",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-d4ac8e6fd53e",
+            "path": "interface.md",
+            "sha256": "feba65d70a963fe447baea5b18d3b6de42110a686716f2808edea0f93bbc8289",
+            "type": ".md",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-8e764ec57cb2",
+            "path": "deploy.md",
+            "sha256": "5e5856ebf892fd3902397b0a38573f869c27f9a81552b945c95657abccf32d75",
+            "type": ".md",
+            "unsupported_content": false
+          }
+        ],
+        "records": [
+          {
+            "text": "提供包含端点、请求参数和返回字段的接口文档。",
+            "number": "R01",
+            "location": "行1",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行1",
+            "record_id": "REC-4f8120222f8f",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "提供 Windows Server 2019 部署说明。",
+            "number": "R02",
+            "location": "行2",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行2",
+            "record_id": "REC-f293676330a1",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "提供本项目培训记录。",
+            "number": "R03",
+            "location": "行3",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行3",
+            "record_id": "REC-5e29f6d5105e",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "接口文档端点 /demo/items，请求参数：item_id，返回字段：name。",
+            "number": "D01",
+            "location": "行1",
+            "source_id": "SRC-d4ac8e6fd53e",
+            "source": "interface.md/行1",
+            "record_id": "REC-eafc3ffac0c5",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "仅 Ubuntu 部署步骤，未提供 Windows Server 2019 步骤。",
+            "number": "D02",
+            "location": "行1",
+            "source_id": "SRC-8e764ec57cb2",
+            "source": "deploy.md/行1",
+            "record_id": "REC-42a511e22d0a",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "requirements": [
+          {
+            "requirement_id": "REQ-1568382cb39d",
+            "number": "R01",
+            "text": "提供包含端点、请求参数和返回字段的接口文档。",
+            "source": "scope.md/行1",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "端点",
+              "请求参数",
+              "返回字段"
+            ],
+            "status": "EVIDENCE_FOUND",
+            "results": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "端点",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-2f1b0d19a6db"
+                ],
+                "negative": [],
+                "sources": [
+                  "interface.md/行1"
+                ]
+              },
+              {
+                "condition_id": "COND-33f94e8bf64e",
+                "text": "请求参数",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-2f1b0d19a6db"
+                ],
+                "negative": [],
+                "sources": [
+                  "interface.md/行1"
+                ]
+              },
+              {
+                "condition_id": "COND-752e55e5bdf8",
+                "text": "返回字段",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-2f1b0d19a6db"
+                ],
+                "negative": [],
+                "sources": [
+                  "interface.md/行1"
+                ]
+              }
+            ]
+          },
+          {
+            "requirement_id": "REQ-b49e7452a7a1",
+            "number": "R02",
+            "text": "提供 Windows Server 2019 部署说明。",
+            "source": "scope.md/行2",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供 Windows Server 2019 部署说明。"
+            ],
+            "status": "NONCONFORMING",
+            "results": [
+              {
+                "condition_id": "COND-4fedbd9008ee",
+                "text": "提供 Windows Server 2019 部署说明。",
+                "status": "NONCONFORMING",
+                "support": [],
+                "negative": [
+                  "EVD-43f6809b08a6"
+                ],
+                "sources": [
+                  "deploy.md/行1"
+                ]
+              }
+            ]
+          },
+          {
+            "requirement_id": "REQ-78485ea32f5d",
+            "number": "R03",
+            "text": "提供本项目培训记录。",
+            "source": "scope.md/行3",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供本项目培训记录。"
+            ],
+            "status": "NO_EVIDENCE_FOUND",
+            "results": [
+              {
+                "condition_id": "COND-ea9aad543381",
+                "text": "提供本项目培训记录。",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "EVD-2f1b0d19a6db",
+            "source_id": "SRC-d4ac8e6fd53e",
+            "source": "interface.md/行1",
+            "text": "接口文档端点 /demo/items，请求参数：item_id，返回字段：name。",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "evidence_id": "EVD-43f6809b08a6",
+            "source_id": "SRC-8e764ec57cb2",
+            "source": "deploy.md/行1",
+            "text": "仅 Ubuntu 部署步骤，未提供 Windows Server 2019 步骤。",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "findings": [
+          {
+            "id": "GAP-22bbba9a12ce",
+            "requirement_id": "REQ-b49e7452a7a1",
+            "condition_id": "COND-4fedbd9008ee",
+            "type": "NONCONFORMING",
+            "text": "提供 Windows Server 2019 部署说明。",
+            "sources": [
+              "deploy.md/行1"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-b8846fe0e1bb",
+            "requirement_id": "REQ-b49e7452a7a1",
+            "condition_id": "COND-4fedbd9008ee",
+            "type": "MISSING",
+            "text": "提供 Windows Server 2019 部署说明。",
+            "sources": [
+              "scope.md/行2"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-8a3733dfe2fb",
+            "requirement_id": "REQ-78485ea32f5d",
+            "condition_id": "COND-ea9aad543381",
+            "type": "MISSING",
+            "text": "提供本项目培训记录。",
+            "sources": [
+              "scope.md/行3"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [],
+        "updates": [
+          {
+            "old_id": "",
+            "new_id": "GAP-22bbba9a12ce",
+            "type": "NEW",
+            "evidence": ""
+          },
+          {
+            "old_id": "",
+            "new_id": "GAP-b8846fe0e1bb",
+            "type": "NEW",
+            "evidence": ""
+          },
+          {
+            "old_id": "",
+            "new_id": "GAP-8a3733dfe2fb",
+            "type": "NEW",
+            "evidence": ""
+          }
+        ],
+        "coverage": "3/5",
+        "effective_version_ref": "scope.md",
+        "limitations": [],
+        "result": "OK"
+      },
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "3/5",
+            "scope.md",
+            "3",
+            "{'EVIDENCE_FOUND': 1, 'NONCONFORMING': 1, 'NO_EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供包含端点、请求参数和返回字段的接口文档。",
+            "scope.md/行1",
+            "端点; 请求参数; 返回字段",
+            "EVD-2f1b0d19a6db",
+            "interface.md/行1; interface.md/行1; interface.md/行1",
+            "EVIDENCE_FOUND",
+            "端点; 请求参数; 返回字段",
+            null,
+            null,
+            "按缺口补充材料"
+          ],
+          [
+            "REQ-b49e7452a7a1",
+            "R02",
+            "提供 Windows Server 2019 部署说明。",
+            "scope.md/行2",
+            "提供 Windows Server 2019 部署说明。",
+            "EVD-43f6809b08a6",
+            "deploy.md/行1",
+            "NONCONFORMING",
+            null,
+            "提供 Windows Server 2019 部署说明。",
+            "NONCONFORMING: 提供 Windows Server 2019 部署说明。; MISSING: 提供 Windows Server 2019 部署说明。",
+            "按缺口补充材料"
+          ],
+          [
+            "REQ-78485ea32f5d",
+            "R03",
+            "提供本项目培训记录。",
+            "scope.md/行3",
+            "提供本项目培训记录。",
+            null,
+            null,
+            "NO_EVIDENCE_FOUND",
+            null,
+            "提供本项目培训记录。",
+            "MISSING: 提供本项目培训记录。",
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-2f1b0d19a6db",
+            "interface.md/行1",
+            "接口文档端点 /demo/items，请求参数：item_id，返回字段：name。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47; REQ-1568382cb39d/COND-33f94e8bf64e; REQ-1568382cb39d/COND-752e55e5bdf8",
+            "NOT_CONFIRMED"
+          ],
+          [
+            "EVD-43f6809b08a6",
+            "deploy.md/行1",
+            "仅 Ubuntu 部署步骤，未提供 Windows Server 2019 步骤。",
+            "CONTENT",
+            "REQ-b49e7452a7a1/COND-4fedbd9008ee",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-22bbba9a12ce",
+            "REQ-b49e7452a7a1/COND-4fedbd9008ee",
+            "NONCONFORMING",
+            "提供 Windows Server 2019 部署说明。 | deploy.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-b8846fe0e1bb",
+            "REQ-b49e7452a7a1/COND-4fedbd9008ee",
+            "MISSING",
+            "提供 Windows Server 2019 部署说明。 | scope.md/行2",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-8a3733dfe2fb",
+            "REQ-78485ea32f5d/COND-ea9aad543381",
+            "MISSING",
+            "提供本项目培训记录。 | scope.md/行3",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-22bbba9a12ce",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-b8846fe0e1bb",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-8a3733dfe2fb",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx_paragraphs": [
+        "星桥演示平台 — 验收准备报告／草稿",
+        "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+        "项目及核查范围",
+        "星桥演示平台；有效范围依据：scope.md；覆盖：3/5",
+        "本次资料与有效版本",
+        "scope.md [SRC-221c68155d0f]；interface.md [SRC-d4ac8e6fd53e]；deploy.md [SRC-8e764ec57cb2]",
+        "主要发现",
+        "R01 EVIDENCE_FOUND scope.md/行1；R02 NONCONFORMING scope.md/行2；R03 NO_EVIDENCE_FOUND scope.md/行3",
+        "要求与证据概况",
+        "资料缺口和明确不符合",
+        "冲突及未确认变更",
+        "本次未识别到冲突",
+        "验收准备建议",
+        "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+        "来源和限制",
+        "仅支持用户授权的可读内容；不判定正式验收。"
+      ],
+      "docx_tables": [
+        [
+          [
+            "要求 ID",
+            "条件/状态",
+            "来源",
+            "证据来源"
+          ],
+          [
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "端点 EVIDENCE_FOUND",
+            "scope.md/行1",
+            "EVD-2f1b0d19a6db | interface.md/行1"
+          ],
+          [
+            "REQ-1568382cb39d/COND-33f94e8bf64e",
+            "请求参数 EVIDENCE_FOUND",
+            "scope.md/行1",
+            "EVD-2f1b0d19a6db | interface.md/行1"
+          ],
+          [
+            "REQ-1568382cb39d/COND-752e55e5bdf8",
+            "返回字段 EVIDENCE_FOUND",
+            "scope.md/行1",
+            "EVD-2f1b0d19a6db | interface.md/行1"
+          ],
+          [
+            "REQ-b49e7452a7a1/COND-4fedbd9008ee",
+            "提供 Windows Server 2019 部署说明。 NONCONFORMING",
+            "scope.md/行2",
+            "EVD-43f6809b08a6 | deploy.md/行1"
+          ],
+          [
+            "REQ-78485ea32f5d/COND-ea9aad543381",
+            "提供本项目培训记录。 NO_EVIDENCE_FOUND",
+            "scope.md/行3",
+            " | "
+          ]
+        ],
+        [
+          [
+            "发现 ID/类型",
+            "子条件",
+            "来源"
+          ],
+          [
+            "GAP-22bbba9a12ce NONCONFORMING",
+            "提供 Windows Server 2019 部署说明。",
+            "deploy.md/行1"
+          ],
+          [
+            "GAP-b8846fe0e1bb MISSING",
+            "提供 Windows Server 2019 部署说明。",
+            "scope.md/行2"
+          ],
+          [
+            "GAP-8a3733dfe2fb MISSING",
+            "提供本项目培训记录。",
+            "scope.md/行3"
+          ]
+        ]
+      ],
+      "formula_count": 0
+    },
+    "A02": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A02",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A02\\output",
+        "--scope-source",
+        "scope.md",
+        "--delivery-source",
+        "interface.md",
+        "--effective-version-ref",
+        "scope.md"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A02\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A02\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A02\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"1/2\", \"requirements\": [{\"number\": \"R01\", \"status\": \"PARTIAL_EVIDENCE\"}], \"limitations\": []}",
+      "stderr": "",
+      "files": {
+        "scope.md": "487e113a9b1d86688fcbc0c21f5fa9d1e613decf16e43bbe601e7e8cc6dc2c15",
+        "interface.md": "e7056939d00bedd3667d42b822f5689ed4dccb56d01a897254abe7e2812d2bdd"
+      },
+      "snapshot": {
+        "schema_version": 1,
+        "project": "星桥演示平台",
+        "sources": [
+          {
+            "source_id": "SRC-221c68155d0f",
+            "path": "scope.md",
+            "sha256": "487e113a9b1d86688fcbc0c21f5fa9d1e613decf16e43bbe601e7e8cc6dc2c15",
+            "type": ".md",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-d4ac8e6fd53e",
+            "path": "interface.md",
+            "sha256": "e7056939d00bedd3667d42b822f5689ed4dccb56d01a897254abe7e2812d2bdd",
+            "type": ".md",
+            "unsupported_content": false
+          }
+        ],
+        "records": [
+          {
+            "text": "提供接口文档和部署说明。",
+            "number": "R01",
+            "location": "行1",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行1",
+            "record_id": "REC-4f8120222f8f",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "接口文档包含授权接口说明。",
+            "number": "",
+            "location": "行1",
+            "source_id": "SRC-d4ac8e6fd53e",
+            "source": "interface.md/行1",
+            "record_id": "REC-eafc3ffac0c5",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "requirements": [
+          {
+            "requirement_id": "REQ-1568382cb39d",
+            "number": "R01",
+            "text": "提供接口文档和部署说明。",
+            "source": "scope.md/行1",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "接口文档",
+              "部署说明"
+            ],
+            "status": "PARTIAL_EVIDENCE",
+            "results": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "接口文档",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-2f1b0d19a6db"
+                ],
+                "negative": [],
+                "sources": [
+                  "interface.md/行1"
+                ]
+              },
+              {
+                "condition_id": "COND-33f94e8bf64e",
+                "text": "部署说明",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "EVD-2f1b0d19a6db",
+            "source_id": "SRC-d4ac8e6fd53e",
+            "source": "interface.md/行1",
+            "text": "接口文档包含授权接口说明。",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "findings": [
+          {
+            "id": "GAP-95a03bb9a8ef",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-33f94e8bf64e",
+            "type": "MISSING",
+            "text": "部署说明",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [],
+        "updates": [
+          {
+            "old_id": "",
+            "new_id": "GAP-95a03bb9a8ef",
+            "type": "NEW",
+            "evidence": ""
+          }
+        ],
+        "coverage": "1/2",
+        "effective_version_ref": "scope.md",
+        "limitations": [],
+        "result": "OK"
+      },
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "1/2",
+            "scope.md",
+            "2",
+            "{'PARTIAL_EVIDENCE': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供接口文档和部署说明。",
+            "scope.md/行1",
+            "接口文档; 部署说明",
+            "EVD-2f1b0d19a6db",
+            "interface.md/行1",
+            "PARTIAL_EVIDENCE",
+            "接口文档",
+            "部署说明",
+            "MISSING: 部署说明",
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-2f1b0d19a6db",
+            "interface.md/行1",
+            "接口文档包含授权接口说明。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-95a03bb9a8ef",
+            "REQ-1568382cb39d/COND-33f94e8bf64e",
+            "MISSING",
+            "部署说明 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-95a03bb9a8ef",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx_paragraphs": [
+        "星桥演示平台 — 验收准备报告／草稿",
+        "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+        "项目及核查范围",
+        "星桥演示平台；有效范围依据：scope.md；覆盖：1/2",
+        "本次资料与有效版本",
+        "scope.md [SRC-221c68155d0f]；interface.md [SRC-d4ac8e6fd53e]",
+        "主要发现",
+        "R01 PARTIAL_EVIDENCE scope.md/行1",
+        "要求与证据概况",
+        "资料缺口和明确不符合",
+        "冲突及未确认变更",
+        "本次未识别到冲突",
+        "验收准备建议",
+        "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+        "来源和限制",
+        "仅支持用户授权的可读内容；不判定正式验收。"
+      ],
+      "docx_tables": [
+        [
+          [
+            "要求 ID",
+            "条件/状态",
+            "来源",
+            "证据来源"
+          ],
+          [
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "接口文档 EVIDENCE_FOUND",
+            "scope.md/行1",
+            "EVD-2f1b0d19a6db | interface.md/行1"
+          ],
+          [
+            "REQ-1568382cb39d/COND-33f94e8bf64e",
+            "部署说明 NO_EVIDENCE_FOUND",
+            "scope.md/行1",
+            " | "
+          ]
+        ],
+        [
+          [
+            "发现 ID/类型",
+            "子条件",
+            "来源"
+          ],
+          [
+            "GAP-95a03bb9a8ef MISSING",
+            "部署说明",
+            "scope.md/行1"
+          ]
+        ]
+      ],
+      "formula_count": 0
+    },
+    "A03": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A03",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A03\\output",
+        "--scope-source",
+        "scope.md",
+        "--delivery-source",
+        "deliverables.csv",
+        "--effective-version-ref",
+        "scope.md"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A03\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A03\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A03\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"N/A\", \"requirements\": [{\"number\": \"R01\", \"status\": \"CONFLICT\"}], \"limitations\": [\"VERSION_CONFLICT: effective version requires explicit evidence; coverage N/A\"]}",
+      "stderr": "",
+      "files": {
+        "scope.md": "69657ea09f3609faf3ef9dff9dac47e43dfd4306f946678f1a5d3ba559c9c0b7",
+        "deliverables.csv": "f11aa5df0f4b091948f1d703ecb96cb4cfaef9a4d1bb40c9ddaf47aef0e2f554"
+      },
+      "snapshot": {
+        "schema_version": 1,
+        "project": "星桥演示平台",
+        "sources": [
+          {
+            "source_id": "SRC-221c68155d0f",
+            "path": "scope.md",
+            "sha256": "69657ea09f3609faf3ef9dff9dac47e43dfd4306f946678f1a5d3ba559c9c0b7",
+            "type": ".md",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-d54a6363997a",
+            "path": "deliverables.csv",
+            "sha256": "f11aa5df0f4b091948f1d703ecb96cb4cfaef9a4d1bb40c9ddaf47aef0e2f554",
+            "type": ".csv",
+            "unsupported_content": false
+          }
+        ],
+        "records": [
+          {
+            "text": "提供部署说明。",
+            "number": "R01",
+            "location": "行1",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行1",
+            "record_id": "REC-4f8120222f8f",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "名称": "部署说明",
+            "版本": "v1",
+            "要求原文": "仅 Ubuntu 部署说明",
+            "location": "行2/列1-3",
+            "source_id": "SRC-d54a6363997a",
+            "source": "deliverables.csv/行2/列1-3",
+            "record_id": "REC-3bda94cd0957",
+            "text": "仅 Ubuntu 部署说明",
+            "number": "",
+            "reference": "",
+            "version": "v1",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "名称": "部署说明",
+            "版本": "v2",
+            "要求原文": "Windows 部署说明",
+            "location": "行3/列1-3",
+            "source_id": "SRC-d54a6363997a",
+            "source": "deliverables.csv/行3/列1-3",
+            "record_id": "REC-155431327be7",
+            "text": "Windows 部署说明",
+            "number": "",
+            "reference": "",
+            "version": "v2",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "requirements": [
+          {
+            "requirement_id": "REQ-1568382cb39d",
+            "number": "R01",
+            "text": "提供部署说明。",
+            "source": "scope.md/行1",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供部署说明。"
+            ],
+            "status": "CONFLICT",
+            "results": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "提供部署说明。",
+                "status": "CONFLICT",
+                "support": [
+                  "EVD-222d3f77f399"
+                ],
+                "negative": [
+                  "EVD-8c55f45a8b98"
+                ],
+                "sources": [
+                  "deliverables.csv/行2/列1-3",
+                  "deliverables.csv/行3/列1-3"
+                ]
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "EVD-8c55f45a8b98",
+            "source_id": "SRC-d54a6363997a",
+            "source": "deliverables.csv/行2/列1-3",
+            "text": "仅 Ubuntu 部署说明",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "evidence_id": "EVD-222d3f77f399",
+            "source_id": "SRC-d54a6363997a",
+            "source": "deliverables.csv/行3/列1-3",
+            "text": "Windows 部署说明",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "findings": [
+          {
+            "id": "GAP-bd8680534f34",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "NONCONFORMING",
+            "text": "提供部署说明。",
+            "sources": [
+              "deliverables.csv/行2/列1-3"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-129f537ab8a8",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "MISSING",
+            "text": "提供部署说明。",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [
+          {
+            "type": "VERSION_CONFLICT",
+            "text": "部署说明",
+            "sources": [
+              "deliverables.csv/行2/列1-3",
+              "deliverables.csv/行3/列1-3"
+            ]
+          },
+          {
+            "type": "EVIDENCE_CONFLICT",
+            "text": "提供部署说明。",
+            "sources": [
+              "deliverables.csv/行2/列1-3",
+              "deliverables.csv/行3/列1-3"
+            ]
+          }
+        ],
+        "updates": [
+          {
+            "old_id": "",
+            "new_id": "GAP-bd8680534f34",
+            "type": "NEW",
+            "evidence": ""
+          },
+          {
+            "old_id": "",
+            "new_id": "GAP-129f537ab8a8",
+            "type": "NEW",
+            "evidence": ""
+          }
+        ],
+        "coverage": "N/A",
+        "effective_version_ref": "scope.md",
+        "limitations": [
+          "VERSION_CONFLICT: effective version requires explicit evidence; coverage N/A"
+        ],
+        "result": "OK"
+      },
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "N/A",
+            "scope.md",
+            "2",
+            "{'CONFLICT': 1}",
+            "VERSION_CONFLICT: effective version requires explicit evidence; coverage N/A"
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供部署说明。",
+            "scope.md/行1",
+            "提供部署说明。",
+            "EVD-8c55f45a8b98, EVD-222d3f77f399",
+            "deliverables.csv/行2/列1-3; deliverables.csv/行3/列1-3",
+            "CONFLICT",
+            null,
+            "提供部署说明。",
+            "NONCONFORMING: 提供部署说明。; MISSING: 提供部署说明。",
+            "确认候选或有效版本"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-8c55f45a8b98",
+            "deliverables.csv/行2/列1-3",
+            "仅 Ubuntu 部署说明",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ],
+          [
+            "EVD-222d3f77f399",
+            "deliverables.csv/行3/列1-3",
+            "Windows 部署说明",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-bd8680534f34",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NONCONFORMING",
+            "提供部署说明。 | deliverables.csv/行2/列1-3",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "提供部署说明。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ],
+          [
+            "VERSION_CONFLICT",
+            "部署说明",
+            "deliverables.csv/行2/列1-3; deliverables.csv/行3/列1-3",
+            "提供可追溯确认依据"
+          ],
+          [
+            "EVIDENCE_CONFLICT",
+            "提供部署说明。",
+            "deliverables.csv/行2/列1-3; deliverables.csv/行3/列1-3",
+            "提供可追溯确认依据"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-bd8680534f34",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-129f537ab8a8",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx_paragraphs": [
+        "星桥演示平台 — 验收准备报告／草稿",
+        "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+        "项目及核查范围",
+        "星桥演示平台；有效范围依据：scope.md；覆盖：N/A",
+        "本次资料与有效版本",
+        "scope.md [SRC-221c68155d0f]；deliverables.csv [SRC-d54a6363997a]",
+        "主要发现",
+        "R01 CONFLICT scope.md/行1",
+        "要求与证据概况",
+        "资料缺口和明确不符合",
+        "冲突及未确认变更",
+        "VERSION_CONFLICT 部署说明 deliverables.csv/行2/列1-3; deliverables.csv/行3/列1-3；EVIDENCE_CONFLICT 提供部署说明。 deliverables.csv/行2/列1-3; deliverables.csv/行3/列1-3",
+        "验收准备建议",
+        "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+        "来源和限制",
+        "VERSION_CONFLICT: effective version requires explicit evidence; coverage N/A"
+      ],
+      "docx_tables": [
+        [
+          [
+            "要求 ID",
+            "条件/状态",
+            "来源",
+            "证据来源"
+          ],
+          [
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "提供部署说明。 CONFLICT",
+            "scope.md/行1",
+            "EVD-222d3f77f399; EVD-8c55f45a8b98 | deliverables.csv/行2/列1-3; deliverables.csv/行3/列1-3"
+          ]
+        ],
+        [
+          [
+            "发现 ID/类型",
+            "子条件",
+            "来源"
+          ],
+          [
+            "GAP-bd8680534f34 NONCONFORMING",
+            "提供部署说明。",
+            "deliverables.csv/行2/列1-3"
+          ],
+          [
+            "GAP-129f537ab8a8 MISSING",
+            "提供部署说明。",
+            "scope.md/行1"
+          ]
+        ]
+      ],
+      "formula_count": 0
+    },
+    "A04": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A04",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A04\\output",
+        "--scope-source",
+        "a.csv",
+        "--scope-source",
+        "b.csv",
+        "--effective-version-ref",
+        "a.csv"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A04\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A04\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A04\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"N/A\", \"requirements\": [{\"number\": \"R01\", \"status\": \"PENDING_CONFIRMATION\"}, {\"number\": \"R01\", \"status\": \"PENDING_CONFIRMATION\"}], \"limitations\": []}",
+      "stderr": "",
+      "files": {
+        "a.csv": "44f2c5f1721716a28d1f8c62b2346bae9709fe3d11717fe6f049b89782cdc6c7",
+        "b.csv": "6484b92770d0439fbeb7f3df16372c34ea3fa325beb71b771c7e4cb83d5415b9"
+      },
+      "snapshot": {
+        "schema_version": 1,
+        "project": "星桥演示平台",
+        "sources": [
+          {
+            "source_id": "SRC-32f29f33d511",
+            "path": "a.csv",
+            "sha256": "44f2c5f1721716a28d1f8c62b2346bae9709fe3d11717fe6f049b89782cdc6c7",
+            "type": ".csv",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-010326a323b7",
+            "path": "b.csv",
+            "sha256": "6484b92770d0439fbeb7f3df16372c34ea3fa325beb71b771c7e4cb83d5415b9",
+            "type": ".csv",
+            "unsupported_content": false
+          }
+        ],
+        "records": [
+          {
+            "原始编号": "R01",
+            "要求原文": "提供接口文档",
+            "location": "行2/列1-2",
+            "source_id": "SRC-32f29f33d511",
+            "source": "a.csv/行2/列1-2",
+            "record_id": "REC-cc83b236baa4",
+            "text": "提供接口文档",
+            "number": "R01",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "原始编号": "R01",
+            "要求原文": "提供培训记录",
+            "location": "行2/列1-2",
+            "source_id": "SRC-010326a323b7",
+            "source": "b.csv/行2/列1-2",
+            "record_id": "REC-2438ed54b468",
+            "text": "提供培训记录",
+            "number": "R01",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "requirements": [
+          {
+            "requirement_id": "REQ-f331a9cc02a4",
+            "number": "R01",
+            "text": "提供接口文档",
+            "source": "a.csv/行2/列1-2",
+            "source_id": "SRC-32f29f33d511",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供接口文档"
+            ],
+            "status": "PENDING_CONFIRMATION",
+            "results": [
+              {
+                "condition_id": "COND-3efd44290ed7",
+                "text": "提供接口文档",
+                "status": "PENDING_CONFIRMATION",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          },
+          {
+            "requirement_id": "REQ-df14da9345ce",
+            "number": "R01",
+            "text": "提供培训记录",
+            "source": "b.csv/行2/列1-2",
+            "source_id": "SRC-010326a323b7",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供培训记录"
+            ],
+            "status": "PENDING_CONFIRMATION",
+            "results": [
+              {
+                "condition_id": "COND-e4cf6d4e3468",
+                "text": "提供培训记录",
+                "status": "PENDING_CONFIRMATION",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          }
+        ],
+        "evidence": [],
+        "findings": [
+          {
+            "id": "GAP-47e336574b12",
+            "requirement_id": "REQ-f331a9cc02a4",
+            "condition_id": "COND-3efd44290ed7",
+            "type": "MISSING",
+            "text": "提供接口文档",
+            "sources": [
+              "a.csv/行2/列1-2"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-815c4373eb70",
+            "requirement_id": "REQ-df14da9345ce",
+            "condition_id": "COND-e4cf6d4e3468",
+            "type": "MISSING",
+            "text": "提供培训记录",
+            "sources": [
+              "b.csv/行2/列1-2"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [
+          {
+            "type": "DUPLICATE_ID",
+            "text": "R01",
+            "sources": [
+              "a.csv/行2/列1-2",
+              "b.csv/行2/列1-2"
+            ]
+          }
+        ],
+        "updates": [
+          {
+            "old_id": "",
+            "new_id": "GAP-47e336574b12",
+            "type": "NEW",
+            "evidence": ""
+          },
+          {
+            "old_id": "",
+            "new_id": "GAP-815c4373eb70",
+            "type": "NEW",
+            "evidence": ""
+          }
+        ],
+        "coverage": "N/A",
+        "effective_version_ref": "a.csv",
+        "limitations": [],
+        "result": "OK"
+      },
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "N/A",
+            "a.csv",
+            "2",
+            "{'PENDING_CONFIRMATION': 2}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-f331a9cc02a4",
+            "R01",
+            "提供接口文档",
+            "a.csv/行2/列1-2",
+            "提供接口文档",
+            null,
+            null,
+            "PENDING_CONFIRMATION",
+            null,
+            "提供接口文档",
+            "MISSING: 提供接口文档",
+            "确认候选或有效版本"
+          ],
+          [
+            "REQ-df14da9345ce",
+            "R01",
+            "提供培训记录",
+            "b.csv/行2/列1-2",
+            "提供培训记录",
+            null,
+            null,
+            "PENDING_CONFIRMATION",
+            null,
+            "提供培训记录",
+            "MISSING: 提供培训记录",
+            "确认候选或有效版本"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-47e336574b12",
+            "REQ-f331a9cc02a4/COND-3efd44290ed7",
+            "MISSING",
+            "提供接口文档 | a.csv/行2/列1-2",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-815c4373eb70",
+            "REQ-df14da9345ce/COND-e4cf6d4e3468",
+            "MISSING",
+            "提供培训记录 | b.csv/行2/列1-2",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ],
+          [
+            "DUPLICATE_ID",
+            "R01",
+            "a.csv/行2/列1-2; b.csv/行2/列1-2",
+            "提供可追溯确认依据"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-47e336574b12",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-815c4373eb70",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx_paragraphs": [
+        "星桥演示平台 — 验收准备报告／草稿",
+        "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+        "项目及核查范围",
+        "星桥演示平台；有效范围依据：a.csv；覆盖：N/A",
+        "本次资料与有效版本",
+        "a.csv [SRC-32f29f33d511]；b.csv [SRC-010326a323b7]",
+        "主要发现",
+        "R01 PENDING_CONFIRMATION a.csv/行2/列1-2；R01 PENDING_CONFIRMATION b.csv/行2/列1-2",
+        "要求与证据概况",
+        "资料缺口和明确不符合",
+        "冲突及未确认变更",
+        "DUPLICATE_ID R01 a.csv/行2/列1-2; b.csv/行2/列1-2",
+        "验收准备建议",
+        "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+        "来源和限制",
+        "仅支持用户授权的可读内容；不判定正式验收。"
+      ],
+      "docx_tables": [
+        [
+          [
+            "要求 ID",
+            "条件/状态",
+            "来源",
+            "证据来源"
+          ],
+          [
+            "REQ-f331a9cc02a4/COND-3efd44290ed7",
+            "提供接口文档 PENDING_CONFIRMATION",
+            "a.csv/行2/列1-2",
+            " | "
+          ],
+          [
+            "REQ-df14da9345ce/COND-e4cf6d4e3468",
+            "提供培训记录 PENDING_CONFIRMATION",
+            "b.csv/行2/列1-2",
+            " | "
+          ]
+        ],
+        [
+          [
+            "发现 ID/类型",
+            "子条件",
+            "来源"
+          ],
+          [
+            "GAP-47e336574b12 MISSING",
+            "提供接口文档",
+            "a.csv/行2/列1-2"
+          ],
+          [
+            "GAP-815c4373eb70 MISSING",
+            "提供培训记录",
+            "b.csv/行2/列1-2"
+          ]
+        ]
+      ],
+      "formula_count": 0
+    },
+    "A05": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A05",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A05\\output",
+        "--scope-source",
+        "scope.md",
+        "--delivery-source",
+        "list.csv",
+        "--effective-version-ref",
+        "scope.md"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A05\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A05\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A05\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"0/3\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NO_EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "files": {
+        "scope.md": "53fbdfaa2b4ceb68bab39c0f5875b8bd88c9a96a8bb5afd0206efe343c4777a8",
+        "list.csv": "911789e30f57ea3b9893f786d161431c25e927c7a922839a1620d98238ffe29e"
+      },
+      "snapshot": {
+        "schema_version": 1,
+        "project": "星桥演示平台",
+        "sources": [
+          {
+            "source_id": "SRC-221c68155d0f",
+            "path": "scope.md",
+            "sha256": "53fbdfaa2b4ceb68bab39c0f5875b8bd88c9a96a8bb5afd0206efe343c4777a8",
+            "type": ".md",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-8d128affb964",
+            "path": "list.csv",
+            "sha256": "911789e30f57ea3b9893f786d161431c25e927c7a922839a1620d98238ffe29e",
+            "type": ".csv",
+            "unsupported_content": false
+          }
+        ],
+        "records": [
+          {
+            "text": "提供包含端点、请求参数和返回字段的接口文档。",
+            "number": "R01",
+            "location": "行1",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行1",
+            "record_id": "REC-4f8120222f8f",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "名称": "接口说明.docx",
+            "location": "行2/列1-1",
+            "source_id": "SRC-8d128affb964",
+            "source": "list.csv/行2/列1-1",
+            "record_id": "REC-044f88d8bc1d",
+            "text": "接口说明.docx",
+            "number": "",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "delivery",
+            "listed_only": true,
+            "claim_only": false
+          }
+        ],
+        "requirements": [
+          {
+            "requirement_id": "REQ-1568382cb39d",
+            "number": "R01",
+            "text": "提供包含端点、请求参数和返回字段的接口文档。",
+            "source": "scope.md/行1",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "端点",
+              "请求参数",
+              "返回字段"
+            ],
+            "status": "NO_EVIDENCE_FOUND",
+            "results": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "端点",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              },
+              {
+                "condition_id": "COND-33f94e8bf64e",
+                "text": "请求参数",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              },
+              {
+                "condition_id": "COND-752e55e5bdf8",
+                "text": "返回字段",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "EVD-ad4afbf128fd",
+            "source_id": "SRC-8d128affb964",
+            "source": "list.csv/行2/列1-1",
+            "text": "接口说明.docx",
+            "role": "delivery",
+            "listed_only": true,
+            "claim_only": false
+          }
+        ],
+        "findings": [
+          {
+            "id": "GAP-129f537ab8a8",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "MISSING",
+            "text": "端点",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-95a03bb9a8ef",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-33f94e8bf64e",
+            "type": "MISSING",
+            "text": "请求参数",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-031a240ed2d9",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-752e55e5bdf8",
+            "type": "MISSING",
+            "text": "返回字段",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [],
+        "updates": [
+          {
+            "old_id": "",
+            "new_id": "GAP-129f537ab8a8",
+            "type": "NEW",
+            "evidence": ""
+          },
+          {
+            "old_id": "",
+            "new_id": "GAP-95a03bb9a8ef",
+            "type": "NEW",
+            "evidence": ""
+          },
+          {
+            "old_id": "",
+            "new_id": "GAP-031a240ed2d9",
+            "type": "NEW",
+            "evidence": ""
+          }
+        ],
+        "coverage": "0/3",
+        "effective_version_ref": "scope.md",
+        "limitations": [],
+        "result": "OK"
+      },
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "0/3",
+            "scope.md",
+            "2",
+            "{'NO_EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供包含端点、请求参数和返回字段的接口文档。",
+            "scope.md/行1",
+            "端点; 请求参数; 返回字段",
+            null,
+            null,
+            "NO_EVIDENCE_FOUND",
+            null,
+            "端点; 请求参数; 返回字段",
+            "MISSING: 端点; MISSING: 请求参数; MISSING: 返回字段",
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-ad4afbf128fd",
+            "list.csv/行2/列1-1",
+            "接口说明.docx",
+            "LISTED_ONLY",
+            null,
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "端点 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-95a03bb9a8ef",
+            "REQ-1568382cb39d/COND-33f94e8bf64e",
+            "MISSING",
+            "请求参数 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-031a240ed2d9",
+            "REQ-1568382cb39d/COND-752e55e5bdf8",
+            "MISSING",
+            "返回字段 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-129f537ab8a8",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-95a03bb9a8ef",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-031a240ed2d9",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx_paragraphs": [
+        "星桥演示平台 — 验收准备报告／草稿",
+        "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+        "项目及核查范围",
+        "星桥演示平台；有效范围依据：scope.md；覆盖：0/3",
+        "本次资料与有效版本",
+        "scope.md [SRC-221c68155d0f]；list.csv [SRC-8d128affb964]",
+        "主要发现",
+        "R01 NO_EVIDENCE_FOUND scope.md/行1",
+        "要求与证据概况",
+        "资料缺口和明确不符合",
+        "冲突及未确认变更",
+        "本次未识别到冲突",
+        "验收准备建议",
+        "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+        "来源和限制",
+        "仅支持用户授权的可读内容；不判定正式验收。"
+      ],
+      "docx_tables": [
+        [
+          [
+            "要求 ID",
+            "条件/状态",
+            "来源",
+            "证据来源"
+          ],
+          [
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "端点 NO_EVIDENCE_FOUND",
+            "scope.md/行1",
+            " | "
+          ],
+          [
+            "REQ-1568382cb39d/COND-33f94e8bf64e",
+            "请求参数 NO_EVIDENCE_FOUND",
+            "scope.md/行1",
+            " | "
+          ],
+          [
+            "REQ-1568382cb39d/COND-752e55e5bdf8",
+            "返回字段 NO_EVIDENCE_FOUND",
+            "scope.md/行1",
+            " | "
+          ]
+        ],
+        [
+          [
+            "发现 ID/类型",
+            "子条件",
+            "来源"
+          ],
+          [
+            "GAP-129f537ab8a8 MISSING",
+            "端点",
+            "scope.md/行1"
+          ],
+          [
+            "GAP-95a03bb9a8ef MISSING",
+            "请求参数",
+            "scope.md/行1"
+          ],
+          [
+            "GAP-031a240ed2d9 MISSING",
+            "返回字段",
+            "scope.md/行1"
+          ]
+        ]
+      ],
+      "formula_count": 0
+    },
+    "A06": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A06",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A06\\output",
+        "--scope-source",
+        "scope.md",
+        "--delivery-source",
+        "dev.md",
+        "--effective-version-ref",
+        "scope.md"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A06\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A06\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A06\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R03\", \"status\": \"NO_EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "files": {
+        "scope.md": "18cf5e913f553c37a15bad5b0e3ff9587a13bcc5de452775157388f4fdc92bda",
+        "dev.md": "e29d4ffd51270e1ecf3b98e3c338698af0d0a1d8e1f5c95ded4114f11c1f1b5e"
+      },
+      "snapshot": {
+        "schema_version": 1,
+        "project": "星桥演示平台",
+        "sources": [
+          {
+            "source_id": "SRC-221c68155d0f",
+            "path": "scope.md",
+            "sha256": "18cf5e913f553c37a15bad5b0e3ff9587a13bcc5de452775157388f4fdc92bda",
+            "type": ".md",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-5cb465217355",
+            "path": "dev.md",
+            "sha256": "e29d4ffd51270e1ecf3b98e3c338698af0d0a1d8e1f5c95ded4114f11c1f1b5e",
+            "type": ".md",
+            "unsupported_content": false
+          }
+        ],
+        "records": [
+          {
+            "text": "提供本项目培训记录。",
+            "number": "R03",
+            "location": "行1",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行1",
+            "record_id": "REC-4f8120222f8f",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "R03 开发完成",
+            "number": "",
+            "location": "行1",
+            "source_id": "SRC-5cb465217355",
+            "source": "dev.md/行1",
+            "record_id": "REC-61a57562658a",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": true
+          }
+        ],
+        "requirements": [
+          {
+            "requirement_id": "REQ-1568382cb39d",
+            "number": "R03",
+            "text": "提供本项目培训记录。",
+            "source": "scope.md/行1",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供本项目培训记录。"
+            ],
+            "status": "NO_EVIDENCE_FOUND",
+            "results": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "提供本项目培训记录。",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "EVD-f6ffb8a12e2e",
+            "source_id": "SRC-5cb465217355",
+            "source": "dev.md/行1",
+            "text": "R03 开发完成",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": true
+          }
+        ],
+        "findings": [
+          {
+            "id": "GAP-129f537ab8a8",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "MISSING",
+            "text": "提供本项目培训记录。",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [],
+        "updates": [
+          {
+            "old_id": "",
+            "new_id": "GAP-129f537ab8a8",
+            "type": "NEW",
+            "evidence": ""
+          }
+        ],
+        "coverage": "0/1",
+        "effective_version_ref": "scope.md",
+        "limitations": [],
+        "result": "OK"
+      },
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "0/1",
+            "scope.md",
+            "2",
+            "{'NO_EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R03",
+            "提供本项目培训记录。",
+            "scope.md/行1",
+            "提供本项目培训记录。",
+            null,
+            null,
+            "NO_EVIDENCE_FOUND",
+            null,
+            "提供本项目培训记录。",
+            "MISSING: 提供本项目培训记录。",
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-f6ffb8a12e2e",
+            "dev.md/行1",
+            "R03 开发完成",
+            "CLAIM_ONLY",
+            null,
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "提供本项目培训记录。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-129f537ab8a8",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx_paragraphs": [
+        "星桥演示平台 — 验收准备报告／草稿",
+        "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+        "项目及核查范围",
+        "星桥演示平台；有效范围依据：scope.md；覆盖：0/1",
+        "本次资料与有效版本",
+        "scope.md [SRC-221c68155d0f]；dev.md [SRC-5cb465217355]",
+        "主要发现",
+        "R03 NO_EVIDENCE_FOUND scope.md/行1",
+        "要求与证据概况",
+        "资料缺口和明确不符合",
+        "冲突及未确认变更",
+        "本次未识别到冲突",
+        "验收准备建议",
+        "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+        "来源和限制",
+        "仅支持用户授权的可读内容；不判定正式验收。"
+      ],
+      "docx_tables": [
+        [
+          [
+            "要求 ID",
+            "条件/状态",
+            "来源",
+            "证据来源"
+          ],
+          [
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "提供本项目培训记录。 NO_EVIDENCE_FOUND",
+            "scope.md/行1",
+            " | "
+          ]
+        ],
+        [
+          [
+            "发现 ID/类型",
+            "子条件",
+            "来源"
+          ],
+          [
+            "GAP-129f537ab8a8 MISSING",
+            "提供本项目培训记录。",
+            "scope.md/行1"
+          ]
+        ]
+      ],
+      "formula_count": 0
+    },
+    "A07": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A07",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A07\\output",
+        "--scope-source",
+        "scope.md",
+        "--evidence-source",
+        "x.md",
+        "--evidence-source",
+        "y.md",
+        "--effective-version-ref",
+        "scope.md"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A07\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A07\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A07\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"0/2\", \"requirements\": [{\"number\": \"R01\", \"status\": \"PENDING_CONFIRMATION\"}, {\"number\": \"R02\", \"status\": \"PENDING_CONFIRMATION\"}], \"limitations\": []}",
+      "stderr": "",
+      "files": {
+        "scope.md": "9e644c3aa006f2616a523fb1c6104958f7da69a0308440b3e38a5b52b84944e2",
+        "x.md": "27d55476ba1dec4d0faa05f45fd0b9b2341178f59063dbee71a2498141f93e54",
+        "y.md": "c985e16115a84d591d21d71c87e930e5fa2dd5cf945a1494a539f949f81a49d0"
+      },
+      "snapshot": {
+        "schema_version": 1,
+        "project": "星桥演示平台",
+        "sources": [
+          {
+            "source_id": "SRC-221c68155d0f",
+            "path": "scope.md",
+            "sha256": "9e644c3aa006f2616a523fb1c6104958f7da69a0308440b3e38a5b52b84944e2",
+            "type": ".md",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-398842b60f4f",
+            "path": "x.md",
+            "sha256": "27d55476ba1dec4d0faa05f45fd0b9b2341178f59063dbee71a2498141f93e54",
+            "type": ".md",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-34e9d9b21fd7",
+            "path": "y.md",
+            "sha256": "c985e16115a84d591d21d71c87e930e5fa2dd5cf945a1494a539f949f81a49d0",
+            "type": ".md",
+            "unsupported_content": false
+          }
+        ],
+        "records": [
+          {
+            "text": "提供用户登录功能测试结果。",
+            "number": "R01",
+            "location": "行1",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行1",
+            "record_id": "REC-4f8120222f8f",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "提供用户登录安全测试记录。",
+            "number": "R02",
+            "location": "行2",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行2",
+            "record_id": "REC-f293676330a1",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "用户登录测试通过。",
+            "number": "",
+            "location": "行1",
+            "source_id": "SRC-398842b60f4f",
+            "source": "x.md/行1",
+            "record_id": "REC-327ea7d7445c",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "用户登录功能测试通过。",
+            "number": "",
+            "location": "行1",
+            "source_id": "SRC-34e9d9b21fd7",
+            "source": "y.md/行1",
+            "record_id": "REC-deb9004b4fdd",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "requirements": [
+          {
+            "requirement_id": "REQ-1568382cb39d",
+            "number": "R01",
+            "text": "提供用户登录功能测试结果。",
+            "source": "scope.md/行1",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供用户登录功能测试结果。"
+            ],
+            "status": "PENDING_CONFIRMATION",
+            "results": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "提供用户登录功能测试结果。",
+                "status": "PENDING_CONFIRMATION",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          },
+          {
+            "requirement_id": "REQ-b49e7452a7a1",
+            "number": "R02",
+            "text": "提供用户登录安全测试记录。",
+            "source": "scope.md/行2",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供用户登录安全测试记录。"
+            ],
+            "status": "PENDING_CONFIRMATION",
+            "results": [
+              {
+                "condition_id": "COND-4fedbd9008ee",
+                "text": "提供用户登录安全测试记录。",
+                "status": "PENDING_CONFIRMATION",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "EVD-6d9b9e76bfce",
+            "source_id": "SRC-398842b60f4f",
+            "source": "x.md/行1",
+            "text": "用户登录测试通过。",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "evidence_id": "EVD-8a6334184d67",
+            "source_id": "SRC-34e9d9b21fd7",
+            "source": "y.md/行1",
+            "text": "用户登录功能测试通过。",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "findings": [
+          {
+            "id": "GAP-129f537ab8a8",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "MISSING",
+            "text": "提供用户登录功能测试结果。",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-b8846fe0e1bb",
+            "requirement_id": "REQ-b49e7452a7a1",
+            "condition_id": "COND-4fedbd9008ee",
+            "type": "MISSING",
+            "text": "提供用户登录安全测试记录。",
+            "sources": [
+              "scope.md/行2"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [
+          {
+            "type": "MAPPING_CANDIDATE",
+            "text": "提供用户登录功能测试结果。",
+            "sources": [
+              "x.md/行1",
+              "y.md/行1",
+              "scope.md/行1"
+            ]
+          },
+          {
+            "type": "MAPPING_CANDIDATE",
+            "text": "提供用户登录安全测试记录。",
+            "sources": [
+              "x.md/行1",
+              "y.md/行1",
+              "scope.md/行2"
+            ]
+          }
+        ],
+        "updates": [
+          {
+            "old_id": "",
+            "new_id": "GAP-129f537ab8a8",
+            "type": "NEW",
+            "evidence": ""
+          },
+          {
+            "old_id": "",
+            "new_id": "GAP-b8846fe0e1bb",
+            "type": "NEW",
+            "evidence": ""
+          }
+        ],
+        "coverage": "0/2",
+        "effective_version_ref": "scope.md",
+        "limitations": [],
+        "result": "OK"
+      },
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "0/2",
+            "scope.md",
+            "3",
+            "{'PENDING_CONFIRMATION': 2}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供用户登录功能测试结果。",
+            "scope.md/行1",
+            "提供用户登录功能测试结果。",
+            null,
+            null,
+            "PENDING_CONFIRMATION",
+            null,
+            "提供用户登录功能测试结果。",
+            "MISSING: 提供用户登录功能测试结果。",
+            "确认候选或有效版本"
+          ],
+          [
+            "REQ-b49e7452a7a1",
+            "R02",
+            "提供用户登录安全测试记录。",
+            "scope.md/行2",
+            "提供用户登录安全测试记录。",
+            null,
+            null,
+            "PENDING_CONFIRMATION",
+            null,
+            "提供用户登录安全测试记录。",
+            "MISSING: 提供用户登录安全测试记录。",
+            "确认候选或有效版本"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-6d9b9e76bfce",
+            "x.md/行1",
+            "用户登录测试通过。",
+            "CONTENT",
+            null,
+            "NOT_CONFIRMED"
+          ],
+          [
+            "EVD-8a6334184d67",
+            "y.md/行1",
+            "用户登录功能测试通过。",
+            "CONTENT",
+            null,
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "提供用户登录功能测试结果。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-b8846fe0e1bb",
+            "REQ-b49e7452a7a1/COND-4fedbd9008ee",
+            "MISSING",
+            "提供用户登录安全测试记录。 | scope.md/行2",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ],
+          [
+            "MAPPING_CANDIDATE",
+            "提供用户登录功能测试结果。",
+            "x.md/行1; y.md/行1; scope.md/行1",
+            "提供可追溯确认依据"
+          ],
+          [
+            "MAPPING_CANDIDATE",
+            "提供用户登录安全测试记录。",
+            "x.md/行1; y.md/行1; scope.md/行2",
+            "提供可追溯确认依据"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-129f537ab8a8",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-b8846fe0e1bb",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx_paragraphs": [
+        "星桥演示平台 — 验收准备报告／草稿",
+        "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+        "项目及核查范围",
+        "星桥演示平台；有效范围依据：scope.md；覆盖：0/2",
+        "本次资料与有效版本",
+        "scope.md [SRC-221c68155d0f]；x.md [SRC-398842b60f4f]；y.md [SRC-34e9d9b21fd7]",
+        "主要发现",
+        "R01 PENDING_CONFIRMATION scope.md/行1；R02 PENDING_CONFIRMATION scope.md/行2",
+        "要求与证据概况",
+        "资料缺口和明确不符合",
+        "冲突及未确认变更",
+        "MAPPING_CANDIDATE 提供用户登录功能测试结果。 x.md/行1; y.md/行1; scope.md/行1；MAPPING_CANDIDATE 提供用户登录安全测试记录。 x.md/行1; y.md/行1; scope.md/行2",
+        "验收准备建议",
+        "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+        "来源和限制",
+        "仅支持用户授权的可读内容；不判定正式验收。"
+      ],
+      "docx_tables": [
+        [
+          [
+            "要求 ID",
+            "条件/状态",
+            "来源",
+            "证据来源"
+          ],
+          [
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "提供用户登录功能测试结果。 PENDING_CONFIRMATION",
+            "scope.md/行1",
+            " | "
+          ],
+          [
+            "REQ-b49e7452a7a1/COND-4fedbd9008ee",
+            "提供用户登录安全测试记录。 PENDING_CONFIRMATION",
+            "scope.md/行2",
+            " | "
+          ]
+        ],
+        [
+          [
+            "发现 ID/类型",
+            "子条件",
+            "来源"
+          ],
+          [
+            "GAP-129f537ab8a8 MISSING",
+            "提供用户登录功能测试结果。",
+            "scope.md/行1"
+          ],
+          [
+            "GAP-b8846fe0e1bb MISSING",
+            "提供用户登录安全测试记录。",
+            "scope.md/行2"
+          ]
+        ]
+      ],
+      "formula_count": 0
+    },
+    "A08": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A08",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A08\\output",
+        "--scope-source",
+        "scope.md",
+        "--change-source",
+        "change.md",
+        "--effective-version-ref",
+        "scope.md"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A08\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A08\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A08\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"0/5\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NO_EVIDENCE_FOUND\"}, {\"number\": \"R02\", \"status\": \"NO_EVIDENCE_FOUND\"}, {\"number\": \"R03\", \"status\": \"NO_EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "files": {
+        "scope.md": "503709dd69829120e13d59596227a03fcd7bc7dc0727a7513df73b6c95205b39",
+        "change.md": "e9341fdb932bcda44209eb16d4c601406db8df07107aceb22f51f45b2ad3e94a"
+      },
+      "snapshot": {
+        "schema_version": 1,
+        "project": "星桥演示平台",
+        "sources": [
+          {
+            "source_id": "SRC-221c68155d0f",
+            "path": "scope.md",
+            "sha256": "503709dd69829120e13d59596227a03fcd7bc7dc0727a7513df73b6c95205b39",
+            "type": ".md",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-35b726a246e9",
+            "path": "change.md",
+            "sha256": "e9341fdb932bcda44209eb16d4c601406db8df07107aceb22f51f45b2ad3e94a",
+            "type": ".md",
+            "unsupported_content": false
+          }
+        ],
+        "records": [
+          {
+            "text": "提供包含端点、请求参数和返回字段的接口文档。",
+            "number": "R01",
+            "location": "行1",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行1",
+            "record_id": "REC-4f8120222f8f",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "提供 Windows Server 2019 部署说明。",
+            "number": "R02",
+            "location": "行2",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行2",
+            "record_id": "REC-f293676330a1",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "提供本项目培训记录。",
+            "number": "R03",
+            "location": "行3",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行3",
+            "record_id": "REC-5e29f6d5105e",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "新增离线模式",
+            "number": "",
+            "location": "行1",
+            "source_id": "SRC-35b726a246e9",
+            "source": "change.md/行1",
+            "record_id": "REC-a0dad4139258",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "change",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "requirements": [
+          {
+            "requirement_id": "REQ-1568382cb39d",
+            "number": "R01",
+            "text": "提供包含端点、请求参数和返回字段的接口文档。",
+            "source": "scope.md/行1",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "端点",
+              "请求参数",
+              "返回字段"
+            ],
+            "status": "NO_EVIDENCE_FOUND",
+            "results": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "端点",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              },
+              {
+                "condition_id": "COND-33f94e8bf64e",
+                "text": "请求参数",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              },
+              {
+                "condition_id": "COND-752e55e5bdf8",
+                "text": "返回字段",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          },
+          {
+            "requirement_id": "REQ-b49e7452a7a1",
+            "number": "R02",
+            "text": "提供 Windows Server 2019 部署说明。",
+            "source": "scope.md/行2",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供 Windows Server 2019 部署说明。"
+            ],
+            "status": "NO_EVIDENCE_FOUND",
+            "results": [
+              {
+                "condition_id": "COND-4fedbd9008ee",
+                "text": "提供 Windows Server 2019 部署说明。",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          },
+          {
+            "requirement_id": "REQ-78485ea32f5d",
+            "number": "R03",
+            "text": "提供本项目培训记录。",
+            "source": "scope.md/行3",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供本项目培训记录。"
+            ],
+            "status": "NO_EVIDENCE_FOUND",
+            "results": [
+              {
+                "condition_id": "COND-ea9aad543381",
+                "text": "提供本项目培训记录。",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          }
+        ],
+        "evidence": [],
+        "findings": [
+          {
+            "id": "GAP-129f537ab8a8",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "MISSING",
+            "text": "端点",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-95a03bb9a8ef",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-33f94e8bf64e",
+            "type": "MISSING",
+            "text": "请求参数",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-031a240ed2d9",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-752e55e5bdf8",
+            "type": "MISSING",
+            "text": "返回字段",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-b8846fe0e1bb",
+            "requirement_id": "REQ-b49e7452a7a1",
+            "condition_id": "COND-4fedbd9008ee",
+            "type": "MISSING",
+            "text": "提供 Windows Server 2019 部署说明。",
+            "sources": [
+              "scope.md/行2"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-8a3733dfe2fb",
+            "requirement_id": "REQ-78485ea32f5d",
+            "condition_id": "COND-ea9aad543381",
+            "type": "MISSING",
+            "text": "提供本项目培训记录。",
+            "sources": [
+              "scope.md/行3"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [
+          {
+            "type": "UNCONFIRMED_CHANGE",
+            "text": "新增离线模式",
+            "sources": [
+              "change.md/行1"
+            ]
+          }
+        ],
+        "updates": [
+          {
+            "old_id": "",
+            "new_id": "GAP-129f537ab8a8",
+            "type": "NEW",
+            "evidence": ""
+          },
+          {
+            "old_id": "",
+            "new_id": "GAP-95a03bb9a8ef",
+            "type": "NEW",
+            "evidence": ""
+          },
+          {
+            "old_id": "",
+            "new_id": "GAP-031a240ed2d9",
+            "type": "NEW",
+            "evidence": ""
+          },
+          {
+            "old_id": "",
+            "new_id": "GAP-b8846fe0e1bb",
+            "type": "NEW",
+            "evidence": ""
+          },
+          {
+            "old_id": "",
+            "new_id": "GAP-8a3733dfe2fb",
+            "type": "NEW",
+            "evidence": ""
+          }
+        ],
+        "coverage": "0/5",
+        "effective_version_ref": "scope.md",
+        "limitations": [],
+        "result": "OK"
+      },
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "0/5",
+            "scope.md",
+            "2",
+            "{'NO_EVIDENCE_FOUND': 3}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供包含端点、请求参数和返回字段的接口文档。",
+            "scope.md/行1",
+            "端点; 请求参数; 返回字段",
+            null,
+            null,
+            "NO_EVIDENCE_FOUND",
+            null,
+            "端点; 请求参数; 返回字段",
+            "MISSING: 端点; MISSING: 请求参数; MISSING: 返回字段",
+            "按缺口补充材料"
+          ],
+          [
+            "REQ-b49e7452a7a1",
+            "R02",
+            "提供 Windows Server 2019 部署说明。",
+            "scope.md/行2",
+            "提供 Windows Server 2019 部署说明。",
+            null,
+            null,
+            "NO_EVIDENCE_FOUND",
+            null,
+            "提供 Windows Server 2019 部署说明。",
+            "MISSING: 提供 Windows Server 2019 部署说明。",
+            "按缺口补充材料"
+          ],
+          [
+            "REQ-78485ea32f5d",
+            "R03",
+            "提供本项目培训记录。",
+            "scope.md/行3",
+            "提供本项目培训记录。",
+            null,
+            null,
+            "NO_EVIDENCE_FOUND",
+            null,
+            "提供本项目培训记录。",
+            "MISSING: 提供本项目培训记录。",
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "端点 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-95a03bb9a8ef",
+            "REQ-1568382cb39d/COND-33f94e8bf64e",
+            "MISSING",
+            "请求参数 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-031a240ed2d9",
+            "REQ-1568382cb39d/COND-752e55e5bdf8",
+            "MISSING",
+            "返回字段 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-b8846fe0e1bb",
+            "REQ-b49e7452a7a1/COND-4fedbd9008ee",
+            "MISSING",
+            "提供 Windows Server 2019 部署说明。 | scope.md/行2",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-8a3733dfe2fb",
+            "REQ-78485ea32f5d/COND-ea9aad543381",
+            "MISSING",
+            "提供本项目培训记录。 | scope.md/行3",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ],
+          [
+            "UNCONFIRMED_CHANGE",
+            "新增离线模式",
+            "change.md/行1",
+            "提供可追溯确认依据"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-129f537ab8a8",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-95a03bb9a8ef",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-031a240ed2d9",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-b8846fe0e1bb",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-8a3733dfe2fb",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx_paragraphs": [
+        "星桥演示平台 — 验收准备报告／草稿",
+        "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+        "项目及核查范围",
+        "星桥演示平台；有效范围依据：scope.md；覆盖：0/5",
+        "本次资料与有效版本",
+        "scope.md [SRC-221c68155d0f]；change.md [SRC-35b726a246e9]",
+        "主要发现",
+        "R01 NO_EVIDENCE_FOUND scope.md/行1；R02 NO_EVIDENCE_FOUND scope.md/行2；R03 NO_EVIDENCE_FOUND scope.md/行3",
+        "要求与证据概况",
+        "资料缺口和明确不符合",
+        "冲突及未确认变更",
+        "UNCONFIRMED_CHANGE 新增离线模式 change.md/行1",
+        "验收准备建议",
+        "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+        "来源和限制",
+        "仅支持用户授权的可读内容；不判定正式验收。"
+      ],
+      "docx_tables": [
+        [
+          [
+            "要求 ID",
+            "条件/状态",
+            "来源",
+            "证据来源"
+          ],
+          [
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "端点 NO_EVIDENCE_FOUND",
+            "scope.md/行1",
+            " | "
+          ],
+          [
+            "REQ-1568382cb39d/COND-33f94e8bf64e",
+            "请求参数 NO_EVIDENCE_FOUND",
+            "scope.md/行1",
+            " | "
+          ],
+          [
+            "REQ-1568382cb39d/COND-752e55e5bdf8",
+            "返回字段 NO_EVIDENCE_FOUND",
+            "scope.md/行1",
+            " | "
+          ],
+          [
+            "REQ-b49e7452a7a1/COND-4fedbd9008ee",
+            "提供 Windows Server 2019 部署说明。 NO_EVIDENCE_FOUND",
+            "scope.md/行2",
+            " | "
+          ],
+          [
+            "REQ-78485ea32f5d/COND-ea9aad543381",
+            "提供本项目培训记录。 NO_EVIDENCE_FOUND",
+            "scope.md/行3",
+            " | "
+          ]
+        ],
+        [
+          [
+            "发现 ID/类型",
+            "子条件",
+            "来源"
+          ],
+          [
+            "GAP-129f537ab8a8 MISSING",
+            "端点",
+            "scope.md/行1"
+          ],
+          [
+            "GAP-95a03bb9a8ef MISSING",
+            "请求参数",
+            "scope.md/行1"
+          ],
+          [
+            "GAP-031a240ed2d9 MISSING",
+            "返回字段",
+            "scope.md/行1"
+          ],
+          [
+            "GAP-b8846fe0e1bb MISSING",
+            "提供 Windows Server 2019 部署说明。",
+            "scope.md/行2"
+          ],
+          [
+            "GAP-8a3733dfe2fb MISSING",
+            "提供本项目培训记录。",
+            "scope.md/行3"
+          ]
+        ]
+      ],
+      "formula_count": 0
+    },
+    "A09": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A09",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A09\\output",
+        "--delivery-source",
+        "training.md",
+        "--previous-snapshot",
+        "before.json"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A09\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A09\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A09\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"N/A\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}, {\"number\": \"R02\", \"status\": \"NONCONFORMING\"}, {\"number\": \"R03\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "files": {
+        "before.json": "5fbd012f99ae58c2816a9b11aa60f77026ab9d85d1c6a469aa6d9e00bf948e9b",
+        "training.md": "136ca35c22adee85344a549ce4793beb47bd08a793bd5f4dd0fee4d9d97d0ef4"
+      },
+      "snapshot": {
+        "schema_version": 1,
+        "project": "星桥演示平台",
+        "sources": [
+          {
+            "source_id": "SRC-221c68155d0f",
+            "path": "scope.md",
+            "sha256": "503709dd69829120e13d59596227a03fcd7bc7dc0727a7513df73b6c95205b39",
+            "type": ".md",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-d4ac8e6fd53e",
+            "path": "interface.md",
+            "sha256": "feba65d70a963fe447baea5b18d3b6de42110a686716f2808edea0f93bbc8289",
+            "type": ".md",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-8e764ec57cb2",
+            "path": "deploy.md",
+            "sha256": "5e5856ebf892fd3902397b0a38573f869c27f9a81552b945c95657abccf32d75",
+            "type": ".md",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-1f86759fdefb",
+            "path": "training.md",
+            "sha256": "136ca35c22adee85344a549ce4793beb47bd08a793bd5f4dd0fee4d9d97d0ef4",
+            "type": ".md",
+            "unsupported_content": false
+          }
+        ],
+        "records": [
+          {
+            "text": "提供包含端点、请求参数和返回字段的接口文档。",
+            "number": "R01",
+            "location": "行1",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行1",
+            "record_id": "REC-4f8120222f8f",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "提供 Windows Server 2019 部署说明。",
+            "number": "R02",
+            "location": "行2",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行2",
+            "record_id": "REC-f293676330a1",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "提供本项目培训记录。",
+            "number": "R03",
+            "location": "行3",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行3",
+            "record_id": "REC-5e29f6d5105e",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "接口文档端点 /demo/items，请求参数：item_id，返回字段：name。",
+            "number": "D01",
+            "location": "行1",
+            "source_id": "SRC-d4ac8e6fd53e",
+            "source": "interface.md/行1",
+            "record_id": "REC-eafc3ffac0c5",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "仅 Ubuntu 部署步骤，未提供 Windows Server 2019 步骤。",
+            "number": "D02",
+            "location": "行1",
+            "source_id": "SRC-8e764ec57cb2",
+            "source": "deploy.md/行1",
+            "record_id": "REC-42a511e22d0a",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "星桥演示平台 R03 培训记录：2026-01-10 培训议程及签到说明",
+            "number": "",
+            "location": "行1",
+            "source_id": "SRC-1f86759fdefb",
+            "source": "training.md/行1",
+            "record_id": "REC-2cc36bb4a870",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "requirements": [
+          {
+            "requirement_id": "REQ-1568382cb39d",
+            "number": "R01",
+            "text": "提供包含端点、请求参数和返回字段的接口文档。",
+            "source": "scope.md/行1",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "端点",
+              "请求参数",
+              "返回字段"
+            ],
+            "status": "EVIDENCE_FOUND",
+            "results": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "端点",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-2f1b0d19a6db"
+                ],
+                "negative": [],
+                "sources": [
+                  "interface.md/行1"
+                ]
+              },
+              {
+                "condition_id": "COND-33f94e8bf64e",
+                "text": "请求参数",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-2f1b0d19a6db"
+                ],
+                "negative": [],
+                "sources": [
+                  "interface.md/行1"
+                ]
+              },
+              {
+                "condition_id": "COND-752e55e5bdf8",
+                "text": "返回字段",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-2f1b0d19a6db"
+                ],
+                "negative": [],
+                "sources": [
+                  "interface.md/行1"
+                ]
+              }
+            ]
+          },
+          {
+            "requirement_id": "REQ-b49e7452a7a1",
+            "number": "R02",
+            "text": "提供 Windows Server 2019 部署说明。",
+            "source": "scope.md/行2",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供 Windows Server 2019 部署说明。"
+            ],
+            "status": "NONCONFORMING",
+            "results": [
+              {
+                "condition_id": "COND-4fedbd9008ee",
+                "text": "提供 Windows Server 2019 部署说明。",
+                "status": "NONCONFORMING",
+                "support": [],
+                "negative": [
+                  "EVD-43f6809b08a6"
+                ],
+                "sources": [
+                  "deploy.md/行1"
+                ]
+              }
+            ]
+          },
+          {
+            "requirement_id": "REQ-78485ea32f5d",
+            "number": "R03",
+            "text": "提供本项目培训记录。",
+            "source": "scope.md/行3",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供本项目培训记录。"
+            ],
+            "status": "EVIDENCE_FOUND",
+            "results": [
+              {
+                "condition_id": "COND-ea9aad543381",
+                "text": "提供本项目培训记录。",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-4613708264da"
+                ],
+                "negative": [],
+                "sources": [
+                  "training.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "EVD-2f1b0d19a6db",
+            "source_id": "SRC-d4ac8e6fd53e",
+            "source": "interface.md/行1",
+            "text": "接口文档端点 /demo/items，请求参数：item_id，返回字段：name。",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "evidence_id": "EVD-43f6809b08a6",
+            "source_id": "SRC-8e764ec57cb2",
+            "source": "deploy.md/行1",
+            "text": "仅 Ubuntu 部署步骤，未提供 Windows Server 2019 步骤。",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "evidence_id": "EVD-4613708264da",
+            "source_id": "SRC-1f86759fdefb",
+            "source": "training.md/行1",
+            "text": "星桥演示平台 R03 培训记录：2026-01-10 培训议程及签到说明",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "findings": [
+          {
+            "id": "GAP-22bbba9a12ce",
+            "requirement_id": "REQ-b49e7452a7a1",
+            "condition_id": "COND-4fedbd9008ee",
+            "type": "NONCONFORMING",
+            "text": "提供 Windows Server 2019 部署说明。",
+            "sources": [
+              "deploy.md/行1"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-b8846fe0e1bb",
+            "requirement_id": "REQ-b49e7452a7a1",
+            "condition_id": "COND-4fedbd9008ee",
+            "type": "MISSING",
+            "text": "提供 Windows Server 2019 部署说明。",
+            "sources": [
+              "scope.md/行2"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [],
+        "updates": [
+          {
+            "old_id": "GAP-22bbba9a12ce",
+            "new_id": "GAP-22bbba9a12ce",
+            "type": "UNCHANGED",
+            "evidence": ""
+          },
+          {
+            "old_id": "GAP-b8846fe0e1bb",
+            "new_id": "GAP-b8846fe0e1bb",
+            "type": "UNCHANGED",
+            "evidence": ""
+          },
+          {
+            "old_id": "GAP-8a3733dfe2fb",
+            "new_id": "",
+            "type": "RESOLVED",
+            "evidence": "EVD-4613708264da"
+          }
+        ],
+        "coverage": "N/A",
+        "effective_version_ref": "NOT_SPECIFIED",
+        "limitations": [],
+        "result": "OK"
+      },
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "N/A",
+            "NOT_SPECIFIED",
+            "4",
+            "{'EVIDENCE_FOUND': 2, 'NONCONFORMING': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供包含端点、请求参数和返回字段的接口文档。",
+            "scope.md/行1",
+            "端点; 请求参数; 返回字段",
+            "EVD-2f1b0d19a6db",
+            "interface.md/行1; interface.md/行1; interface.md/行1",
+            "EVIDENCE_FOUND",
+            "端点; 请求参数; 返回字段",
+            null,
+            null,
+            "按缺口补充材料"
+          ],
+          [
+            "REQ-b49e7452a7a1",
+            "R02",
+            "提供 Windows Server 2019 部署说明。",
+            "scope.md/行2",
+            "提供 Windows Server 2019 部署说明。",
+            "EVD-43f6809b08a6",
+            "deploy.md/行1",
+            "NONCONFORMING",
+            null,
+            "提供 Windows Server 2019 部署说明。",
+            "NONCONFORMING: 提供 Windows Server 2019 部署说明。; MISSING: 提供 Windows Server 2019 部署说明。",
+            "按缺口补充材料"
+          ],
+          [
+            "REQ-78485ea32f5d",
+            "R03",
+            "提供本项目培训记录。",
+            "scope.md/行3",
+            "提供本项目培训记录。",
+            "EVD-4613708264da",
+            "training.md/行1",
+            "EVIDENCE_FOUND",
+            "提供本项目培训记录。",
+            null,
+            null,
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-2f1b0d19a6db",
+            "interface.md/行1",
+            "接口文档端点 /demo/items，请求参数：item_id，返回字段：name。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47; REQ-1568382cb39d/COND-33f94e8bf64e; REQ-1568382cb39d/COND-752e55e5bdf8",
+            "NOT_CONFIRMED"
+          ],
+          [
+            "EVD-43f6809b08a6",
+            "deploy.md/行1",
+            "仅 Ubuntu 部署步骤，未提供 Windows Server 2019 步骤。",
+            "CONTENT",
+            "REQ-b49e7452a7a1/COND-4fedbd9008ee",
+            "NOT_CONFIRMED"
+          ],
+          [
+            "EVD-4613708264da",
+            "training.md/行1",
+            "星桥演示平台 R03 培训记录：2026-01-10 培训议程及签到说明",
+            "CONTENT",
+            "REQ-78485ea32f5d/COND-ea9aad543381",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-22bbba9a12ce",
+            "REQ-b49e7452a7a1/COND-4fedbd9008ee",
+            "NONCONFORMING",
+            "提供 Windows Server 2019 部署说明。 | deploy.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-b8846fe0e1bb",
+            "REQ-b49e7452a7a1/COND-4fedbd9008ee",
+            "MISSING",
+            "提供 Windows Server 2019 部署说明。 | scope.md/行2",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            "GAP-22bbba9a12ce",
+            "GAP-22bbba9a12ce",
+            "UNCHANGED",
+            null
+          ],
+          [
+            "GAP-b8846fe0e1bb",
+            "GAP-b8846fe0e1bb",
+            "UNCHANGED",
+            null
+          ],
+          [
+            "GAP-8a3733dfe2fb",
+            null,
+            "RESOLVED",
+            "EVD-4613708264da"
+          ]
+        ]
+      },
+      "docx_paragraphs": [
+        "星桥演示平台 — 验收准备报告／草稿",
+        "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+        "项目及核查范围",
+        "星桥演示平台；有效范围依据：NOT_SPECIFIED；覆盖：N/A",
+        "本次资料与有效版本",
+        "scope.md [SRC-221c68155d0f]；interface.md [SRC-d4ac8e6fd53e]；deploy.md [SRC-8e764ec57cb2]；training.md [SRC-1f86759fdefb]",
+        "主要发现",
+        "R01 EVIDENCE_FOUND scope.md/行1；R02 NONCONFORMING scope.md/行2；R03 EVIDENCE_FOUND scope.md/行3",
+        "要求与证据概况",
+        "资料缺口和明确不符合",
+        "冲突及未确认变更",
+        "本次未识别到冲突",
+        "验收准备建议",
+        "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+        "来源和限制",
+        "仅支持用户授权的可读内容；不判定正式验收。"
+      ],
+      "docx_tables": [
+        [
+          [
+            "要求 ID",
+            "条件/状态",
+            "来源",
+            "证据来源"
+          ],
+          [
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "端点 EVIDENCE_FOUND",
+            "scope.md/行1",
+            "EVD-2f1b0d19a6db | interface.md/行1"
+          ],
+          [
+            "REQ-1568382cb39d/COND-33f94e8bf64e",
+            "请求参数 EVIDENCE_FOUND",
+            "scope.md/行1",
+            "EVD-2f1b0d19a6db | interface.md/行1"
+          ],
+          [
+            "REQ-1568382cb39d/COND-752e55e5bdf8",
+            "返回字段 EVIDENCE_FOUND",
+            "scope.md/行1",
+            "EVD-2f1b0d19a6db | interface.md/行1"
+          ],
+          [
+            "REQ-b49e7452a7a1/COND-4fedbd9008ee",
+            "提供 Windows Server 2019 部署说明。 NONCONFORMING",
+            "scope.md/行2",
+            "EVD-43f6809b08a6 | deploy.md/行1"
+          ],
+          [
+            "REQ-78485ea32f5d/COND-ea9aad543381",
+            "提供本项目培训记录。 EVIDENCE_FOUND",
+            "scope.md/行3",
+            "EVD-4613708264da | training.md/行1"
+          ]
+        ],
+        [
+          [
+            "发现 ID/类型",
+            "子条件",
+            "来源"
+          ],
+          [
+            "GAP-22bbba9a12ce NONCONFORMING",
+            "提供 Windows Server 2019 部署说明。",
+            "deploy.md/行1"
+          ],
+          [
+            "GAP-b8846fe0e1bb MISSING",
+            "提供 Windows Server 2019 部署说明。",
+            "scope.md/行2"
+          ]
+        ]
+      ],
+      "formula_count": 0
+    },
+    "A10": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A10",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A10\\output",
+        "--scope-source",
+        "scope.md",
+        "--evidence-source",
+        "fail.md",
+        "--evidence-source",
+        "pass.md",
+        "--effective-version-ref",
+        "scope.md"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A10\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A10\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A10\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"CONFLICT\"}], \"limitations\": []}",
+      "stderr": "",
+      "files": {
+        "scope.md": "52c8216c55b2fe59846d495b18de487a86c213e3b788c3d5977ee4557a21336b",
+        "fail.md": "a181bbbc97eb848130b5a8176b0b55b212b39279fc4f1f5c9e5d54e595063c93",
+        "pass.md": "b38b2174b530d53b646f4f6f7a8a6ac6b09e95acb759e858b846f3d49360ab9d"
+      },
+      "snapshot": {
+        "schema_version": 1,
+        "project": "星桥演示平台",
+        "sources": [
+          {
+            "source_id": "SRC-221c68155d0f",
+            "path": "scope.md",
+            "sha256": "52c8216c55b2fe59846d495b18de487a86c213e3b788c3d5977ee4557a21336b",
+            "type": ".md",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-608da23341da",
+            "path": "fail.md",
+            "sha256": "a181bbbc97eb848130b5a8176b0b55b212b39279fc4f1f5c9e5d54e595063c93",
+            "type": ".md",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-749ddeabcdb4",
+            "path": "pass.md",
+            "sha256": "b38b2174b530d53b646f4f6f7a8a6ac6b09e95acb759e858b846f3d49360ab9d",
+            "type": ".md",
+            "unsupported_content": false
+          }
+        ],
+        "records": [
+          {
+            "text": "提供接口文档。",
+            "number": "R01",
+            "location": "行1",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行1",
+            "record_id": "REC-4f8120222f8f",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "R01 接口文档测试失败。",
+            "number": "",
+            "location": "行1",
+            "source_id": "SRC-608da23341da",
+            "source": "fail.md/行1",
+            "record_id": "REC-921b1528d957",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "R01 接口文档测试通过。",
+            "number": "",
+            "location": "行1",
+            "source_id": "SRC-749ddeabcdb4",
+            "source": "pass.md/行1",
+            "record_id": "REC-8c200744aea6",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "requirements": [
+          {
+            "requirement_id": "REQ-1568382cb39d",
+            "number": "R01",
+            "text": "提供接口文档。",
+            "source": "scope.md/行1",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供接口文档。"
+            ],
+            "status": "CONFLICT",
+            "results": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "提供接口文档。",
+                "status": "CONFLICT",
+                "support": [
+                  "EVD-c1dee521b0cf"
+                ],
+                "negative": [
+                  "EVD-efdc077901ee"
+                ],
+                "sources": [
+                  "fail.md/行1",
+                  "pass.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "EVD-efdc077901ee",
+            "source_id": "SRC-608da23341da",
+            "source": "fail.md/行1",
+            "text": "R01 接口文档测试失败。",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "evidence_id": "EVD-c1dee521b0cf",
+            "source_id": "SRC-749ddeabcdb4",
+            "source": "pass.md/行1",
+            "text": "R01 接口文档测试通过。",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "findings": [
+          {
+            "id": "GAP-bd8680534f34",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "NONCONFORMING",
+            "text": "提供接口文档。",
+            "sources": [
+              "fail.md/行1"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-129f537ab8a8",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "MISSING",
+            "text": "提供接口文档。",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [
+          {
+            "type": "EVIDENCE_CONFLICT",
+            "text": "提供接口文档。",
+            "sources": [
+              "fail.md/行1",
+              "pass.md/行1"
+            ]
+          }
+        ],
+        "updates": [
+          {
+            "old_id": "",
+            "new_id": "GAP-bd8680534f34",
+            "type": "NEW",
+            "evidence": ""
+          },
+          {
+            "old_id": "",
+            "new_id": "GAP-129f537ab8a8",
+            "type": "NEW",
+            "evidence": ""
+          }
+        ],
+        "coverage": "0/1",
+        "effective_version_ref": "scope.md",
+        "limitations": [],
+        "result": "OK"
+      },
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "0/1",
+            "scope.md",
+            "3",
+            "{'CONFLICT': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供接口文档。",
+            "scope.md/行1",
+            "提供接口文档。",
+            "EVD-efdc077901ee, EVD-c1dee521b0cf",
+            "fail.md/行1; pass.md/行1",
+            "CONFLICT",
+            null,
+            "提供接口文档。",
+            "NONCONFORMING: 提供接口文档。; MISSING: 提供接口文档。",
+            "确认候选或有效版本"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-efdc077901ee",
+            "fail.md/行1",
+            "R01 接口文档测试失败。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ],
+          [
+            "EVD-c1dee521b0cf",
+            "pass.md/行1",
+            "R01 接口文档测试通过。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-bd8680534f34",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NONCONFORMING",
+            "提供接口文档。 | fail.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "提供接口文档。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ],
+          [
+            "EVIDENCE_CONFLICT",
+            "提供接口文档。",
+            "fail.md/行1; pass.md/行1",
+            "提供可追溯确认依据"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-bd8680534f34",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-129f537ab8a8",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx_paragraphs": [
+        "星桥演示平台 — 验收准备报告／草稿",
+        "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+        "项目及核查范围",
+        "星桥演示平台；有效范围依据：scope.md；覆盖：0/1",
+        "本次资料与有效版本",
+        "scope.md [SRC-221c68155d0f]；fail.md [SRC-608da23341da]；pass.md [SRC-749ddeabcdb4]",
+        "主要发现",
+        "R01 CONFLICT scope.md/行1",
+        "要求与证据概况",
+        "资料缺口和明确不符合",
+        "冲突及未确认变更",
+        "EVIDENCE_CONFLICT 提供接口文档。 fail.md/行1; pass.md/行1",
+        "验收准备建议",
+        "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+        "来源和限制",
+        "仅支持用户授权的可读内容；不判定正式验收。"
+      ],
+      "docx_tables": [
+        [
+          [
+            "要求 ID",
+            "条件/状态",
+            "来源",
+            "证据来源"
+          ],
+          [
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "提供接口文档。 CONFLICT",
+            "scope.md/行1",
+            "EVD-c1dee521b0cf; EVD-efdc077901ee | fail.md/行1; pass.md/行1"
+          ]
+        ],
+        [
+          [
+            "发现 ID/类型",
+            "子条件",
+            "来源"
+          ],
+          [
+            "GAP-bd8680534f34 NONCONFORMING",
+            "提供接口文档。",
+            "fail.md/行1"
+          ],
+          [
+            "GAP-129f537ab8a8 MISSING",
+            "提供接口文档。",
+            "scope.md/行1"
+          ]
+        ]
+      ],
+      "formula_count": 0
+    },
+    "A11": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A11",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A11\\output",
+        "--scope-source",
+        "scope.docx",
+        "--effective-version-ref",
+        "scope.docx"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A11\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A11\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A11\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R03\", \"status\": \"NO_EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "files": {
+        "scope.docx": "f6a93c0aa52bf78248459791f571beeea7b56f50579ff392e5b9362d5c119332"
+      },
+      "snapshot": {
+        "schema_version": 1,
+        "project": "星桥演示平台",
+        "sources": [
+          {
+            "source_id": "SRC-cf7c91a3c1e4",
+            "path": "scope.docx",
+            "sha256": "f6a93c0aa52bf78248459791f571beeea7b56f50579ff392e5b9362d5c119332",
+            "type": ".docx",
+            "unsupported_content": false
+          }
+        ],
+        "records": [
+          {
+            "text": "提供本项目培训记录",
+            "number": "R03",
+            "location": "表1/行2/列2",
+            "source_id": "SRC-cf7c91a3c1e4",
+            "source": "scope.docx/表1/行2/列2",
+            "record_id": "REC-cc77c21fc4a2",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "requirements": [
+          {
+            "requirement_id": "REQ-dc4c7c337651",
+            "number": "R03",
+            "text": "提供本项目培训记录",
+            "source": "scope.docx/表1/行2/列2",
+            "source_id": "SRC-cf7c91a3c1e4",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供本项目培训记录"
+            ],
+            "status": "NO_EVIDENCE_FOUND",
+            "results": [
+              {
+                "condition_id": "COND-1354dfb5ecf4",
+                "text": "提供本项目培训记录",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          }
+        ],
+        "evidence": [],
+        "findings": [
+          {
+            "id": "GAP-cb647f56263f",
+            "requirement_id": "REQ-dc4c7c337651",
+            "condition_id": "COND-1354dfb5ecf4",
+            "type": "MISSING",
+            "text": "提供本项目培训记录",
+            "sources": [
+              "scope.docx/表1/行2/列2"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [],
+        "updates": [
+          {
+            "old_id": "",
+            "new_id": "GAP-cb647f56263f",
+            "type": "NEW",
+            "evidence": ""
+          }
+        ],
+        "coverage": "0/1",
+        "effective_version_ref": "scope.docx",
+        "limitations": [],
+        "result": "OK"
+      },
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "0/1",
+            "scope.docx",
+            "1",
+            "{'NO_EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-dc4c7c337651",
+            "R03",
+            "提供本项目培训记录",
+            "scope.docx/表1/行2/列2",
+            "提供本项目培训记录",
+            null,
+            null,
+            "NO_EVIDENCE_FOUND",
+            null,
+            "提供本项目培训记录",
+            "MISSING: 提供本项目培训记录",
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-cb647f56263f",
+            "REQ-dc4c7c337651/COND-1354dfb5ecf4",
+            "MISSING",
+            "提供本项目培训记录 | scope.docx/表1/行2/列2",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-cb647f56263f",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx_paragraphs": [
+        "星桥演示平台 — 验收准备报告／草稿",
+        "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+        "项目及核查范围",
+        "星桥演示平台；有效范围依据：scope.docx；覆盖：0/1",
+        "本次资料与有效版本",
+        "scope.docx [SRC-cf7c91a3c1e4]",
+        "主要发现",
+        "R03 NO_EVIDENCE_FOUND scope.docx/表1/行2/列2",
+        "要求与证据概况",
+        "资料缺口和明确不符合",
+        "冲突及未确认变更",
+        "本次未识别到冲突",
+        "验收准备建议",
+        "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+        "来源和限制",
+        "仅支持用户授权的可读内容；不判定正式验收。"
+      ],
+      "docx_tables": [
+        [
+          [
+            "要求 ID",
+            "条件/状态",
+            "来源",
+            "证据来源"
+          ],
+          [
+            "REQ-dc4c7c337651/COND-1354dfb5ecf4",
+            "提供本项目培训记录 NO_EVIDENCE_FOUND",
+            "scope.docx/表1/行2/列2",
+            " | "
+          ]
+        ],
+        [
+          [
+            "发现 ID/类型",
+            "子条件",
+            "来源"
+          ],
+          [
+            "GAP-cb647f56263f MISSING",
+            "提供本项目培训记录",
+            "scope.docx/表1/行2/列2"
+          ]
+        ]
+      ],
+      "formula_count": 0
+    },
+    "A12": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A12",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A12\\output",
+        "--scope-source",
+        "scope.md",
+        "--evidence-source",
+        "broken.docx",
+        "--evidence-source",
+        "fake.docx",
+        "--evidence-source",
+        "diagram.pdf",
+        "--evidence-source",
+        "test.csv",
+        "--effective-version-ref",
+        "scope.md"
+      ],
+      "exit": 3,
+      "expected_exit": 3,
+      "stdout": "{\"result\": \"PARTIAL\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A12\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A12\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\A12\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": [\"broken.docx: UNREADABLE_SOURCE (corrupt docx archive)\", \"fake.docx: UNSUPPORTED_FORMAT (fake docx)\", \"diagram.pdf: UNSUPPORTED_FORMAT (only txt/md/docx/csv/xlsx)\"]}",
+      "stderr": "",
+      "files": {
+        "scope.md": "52c8216c55b2fe59846d495b18de487a86c213e3b788c3d5977ee4557a21336b",
+        "broken.docx": "f0238e127c2a959023ee9d9e6bf3c1c7b32e38ca6a1a5b2b6ea32f360eee9bf0",
+        "fake.docx": "4de3401eb7be8501eee6f436b29d3285860c448d9b49775de9c8db73f3cf57f9",
+        "diagram.pdf": "c8ca01b35f9c00d56a3aff3de70c26d022b3add765b923eec0ad7d783d9cc033",
+        "test.csv": "0842ca2d51edeef7cce46b58beeba7fdae74e5d6d0cb752fb0ca6a2388e8bc51"
+      },
+      "snapshot": {
+        "schema_version": 1,
+        "project": "星桥演示平台",
+        "sources": [
+          {
+            "source_id": "SRC-221c68155d0f",
+            "path": "scope.md",
+            "sha256": "52c8216c55b2fe59846d495b18de487a86c213e3b788c3d5977ee4557a21336b",
+            "type": ".md",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-988f2a0fa73c",
+            "path": "test.csv",
+            "sha256": "0842ca2d51edeef7cce46b58beeba7fdae74e5d6d0cb752fb0ca6a2388e8bc51",
+            "type": ".csv",
+            "unsupported_content": false
+          }
+        ],
+        "records": [
+          {
+            "text": "提供接口文档。",
+            "number": "R01",
+            "location": "行1",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行1",
+            "record_id": "REC-4f8120222f8f",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "证据原文": "R01 接口文档测试通过",
+            "关联要求": "R01",
+            "location": "行2/列1-2",
+            "source_id": "SRC-988f2a0fa73c",
+            "source": "test.csv/行2/列1-2",
+            "record_id": "REC-443e09e1b517",
+            "text": "R01 接口文档测试通过",
+            "number": "",
+            "reference": "R01",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "requirements": [
+          {
+            "requirement_id": "REQ-1568382cb39d",
+            "number": "R01",
+            "text": "提供接口文档。",
+            "source": "scope.md/行1",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供接口文档。"
+            ],
+            "status": "EVIDENCE_FOUND",
+            "results": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "提供接口文档。",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-95f9c5b64dab"
+                ],
+                "negative": [],
+                "sources": [
+                  "test.csv/行2/列1-2"
+                ]
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "EVD-95f9c5b64dab",
+            "source_id": "SRC-988f2a0fa73c",
+            "source": "test.csv/行2/列1-2",
+            "text": "R01 接口文档测试通过",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "findings": [],
+        "conflicts": [],
+        "updates": [],
+        "coverage": "1/1",
+        "effective_version_ref": "scope.md",
+        "limitations": [
+          "broken.docx: UNREADABLE_SOURCE (corrupt docx archive)",
+          "fake.docx: UNSUPPORTED_FORMAT (fake docx)",
+          "diagram.pdf: UNSUPPORTED_FORMAT (only txt/md/docx/csv/xlsx)"
+        ],
+        "result": "PARTIAL"
+      },
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "1/1",
+            "scope.md",
+            "2",
+            "{'EVIDENCE_FOUND': 1}",
+            "broken.docx: UNREADABLE_SOURCE (corrupt docx archive); fake.docx: UNSUPPORTED_FORMAT (fake docx); diagram.pdf: UNSUPPORTED_FORMAT (only txt/md/docx/csv/xlsx)"
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供接口文档。",
+            "scope.md/行1",
+            "提供接口文档。",
+            "EVD-95f9c5b64dab",
+            "test.csv/行2/列1-2",
+            "EVIDENCE_FOUND",
+            "提供接口文档。",
+            null,
+            null,
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-95f9c5b64dab",
+            "test.csv/行2/列1-2",
+            "R01 接口文档测试通过",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ]
+        ]
+      },
+      "docx_paragraphs": [
+        "星桥演示平台 — 验收准备报告／草稿",
+        "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+        "项目及核查范围",
+        "星桥演示平台；有效范围依据：scope.md；覆盖：1/1",
+        "本次资料与有效版本",
+        "scope.md [SRC-221c68155d0f]；test.csv [SRC-988f2a0fa73c]",
+        "主要发现",
+        "R01 EVIDENCE_FOUND scope.md/行1",
+        "要求与证据概况",
+        "资料缺口和明确不符合",
+        "冲突及未确认变更",
+        "本次未识别到冲突",
+        "验收准备建议",
+        "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+        "来源和限制",
+        "broken.docx: UNREADABLE_SOURCE (corrupt docx archive)；fake.docx: UNSUPPORTED_FORMAT (fake docx)；diagram.pdf: UNSUPPORTED_FORMAT (only txt/md/docx/csv/xlsx)"
+      ],
+      "docx_tables": [
+        [
+          [
+            "要求 ID",
+            "条件/状态",
+            "来源",
+            "证据来源"
+          ],
+          [
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "提供接口文档。 EVIDENCE_FOUND",
+            "scope.md/行1",
+            "EVD-95f9c5b64dab | test.csv/行2/列1-2"
+          ]
+        ],
+        [
+          [
+            "发现 ID/类型",
+            "子条件",
+            "来源"
+          ]
+        ]
+      ],
+      "formula_count": 0
+    },
+    "A12-all-bad": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A12-all-bad",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\A12-all-bad\\output",
+        "--scope-source",
+        "broken.docx"
+      ],
+      "exit": 2,
+      "expected_exit": 2,
+      "stdout": "",
+      "stderr": "{\"result\": \"INVALID_INPUT\", \"reason\": \"no readable material\"}",
+      "files": {
+        "broken.docx": "f0238e127c2a959023ee9d9e6bf3c1c7b32e38ca6a1a5b2b6ea32f360eee9bf0"
+      }
+    },
+    "B01": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\B01",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\B01\\output",
+        "--delivery-source",
+        "list.csv"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\B01\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\B01\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\B01\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"N/A\", \"requirements\": [], \"limitations\": [\"NO_SCOPE_SOURCE: no readable scope; coverage N/A\"]}",
+      "stderr": "",
+      "files": {
+        "list.csv": "911789e30f57ea3b9893f786d161431c25e927c7a922839a1620d98238ffe29e"
+      },
+      "snapshot": {
+        "schema_version": 1,
+        "project": "星桥演示平台",
+        "sources": [
+          {
+            "source_id": "SRC-8d128affb964",
+            "path": "list.csv",
+            "sha256": "911789e30f57ea3b9893f786d161431c25e927c7a922839a1620d98238ffe29e",
+            "type": ".csv",
+            "unsupported_content": false
+          }
+        ],
+        "records": [
+          {
+            "名称": "接口说明.docx",
+            "location": "行2/列1-1",
+            "source_id": "SRC-8d128affb964",
+            "source": "list.csv/行2/列1-1",
+            "record_id": "REC-044f88d8bc1d",
+            "text": "接口说明.docx",
+            "number": "",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "delivery",
+            "listed_only": true,
+            "claim_only": false
+          }
+        ],
+        "requirements": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-ad4afbf128fd",
+            "source_id": "SRC-8d128affb964",
+            "source": "list.csv/行2/列1-1",
+            "text": "接口说明.docx",
+            "role": "delivery",
+            "listed_only": true,
+            "claim_only": false
+          }
+        ],
+        "findings": [],
+        "conflicts": [],
+        "updates": [],
+        "coverage": "N/A",
+        "effective_version_ref": "NOT_SPECIFIED",
+        "limitations": [
+          "NO_SCOPE_SOURCE: no readable scope; coverage N/A"
+        ],
+        "result": "OK"
+      },
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "N/A",
+            "NOT_SPECIFIED",
+            "1",
+            "{}",
+            "NO_SCOPE_SOURCE: no readable scope; coverage N/A"
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-ad4afbf128fd",
+            "list.csv/行2/列1-1",
+            "接口说明.docx",
+            "LISTED_ONLY",
+            null,
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ]
+        ]
+      },
+      "docx_paragraphs": [
+        "星桥演示平台 — 验收准备报告／草稿",
+        "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+        "项目及核查范围",
+        "星桥演示平台；有效范围依据：NOT_SPECIFIED；覆盖：N/A",
+        "本次资料与有效版本",
+        "list.csv [SRC-8d128affb964]",
+        "主要发现",
+        "无可核查范围",
+        "要求与证据概况",
+        "资料缺口和明确不符合",
+        "冲突及未确认变更",
+        "本次未识别到冲突",
+        "验收准备建议",
+        "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+        "来源和限制",
+        "NO_SCOPE_SOURCE: no readable scope; coverage N/A"
+      ],
+      "docx_tables": [
+        [
+          [
+            "要求 ID",
+            "条件/状态",
+            "来源",
+            "证据来源"
+          ]
+        ],
+        [
+          [
+            "发现 ID/类型",
+            "子条件",
+            "来源"
+          ]
+        ]
+      ],
+      "formula_count": 0
+    },
+    "B02": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\B02",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\B02\\output",
+        "--scope-source",
+        "scope.md",
+        "--delivery-source",
+        "deploy.md",
+        "--effective-version-ref",
+        "scope.md"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\B02\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\B02\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\B02\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"0/2\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NONCONFORMING\"}], \"limitations\": []}",
+      "stderr": "",
+      "files": {
+        "scope.md": "8fc2425208a8048760de44c497c6215d8df2e514651d195bb9d10decef1bda6e",
+        "deploy.md": "51f7f2d3a7fa61ab566550ddb7720dd53aead96eee90896d740518b5c23df004"
+      },
+      "snapshot": {
+        "schema_version": 1,
+        "project": "星桥演示平台",
+        "sources": [
+          {
+            "source_id": "SRC-221c68155d0f",
+            "path": "scope.md",
+            "sha256": "8fc2425208a8048760de44c497c6215d8df2e514651d195bb9d10decef1bda6e",
+            "type": ".md",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-8e764ec57cb2",
+            "path": "deploy.md",
+            "sha256": "51f7f2d3a7fa61ab566550ddb7720dd53aead96eee90896d740518b5c23df004",
+            "type": ".md",
+            "unsupported_content": false
+          }
+        ],
+        "records": [
+          {
+            "text": "提供 Windows Server 2019 部署说明和培训记录。",
+            "number": "R01",
+            "location": "行1",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行1",
+            "record_id": "REC-4f8120222f8f",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "仅 Ubuntu 部署步骤，未提供 Windows Server 2019 步骤。",
+            "number": "R01",
+            "location": "行1",
+            "source_id": "SRC-8e764ec57cb2",
+            "source": "deploy.md/行1",
+            "record_id": "REC-42a511e22d0a",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "requirements": [
+          {
+            "requirement_id": "REQ-1568382cb39d",
+            "number": "R01",
+            "text": "提供 Windows Server 2019 部署说明和培训记录。",
+            "source": "scope.md/行1",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "Windows Server 2019 部署说明",
+              "培训记录"
+            ],
+            "status": "NONCONFORMING",
+            "results": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "Windows Server 2019 部署说明",
+                "status": "NONCONFORMING",
+                "support": [],
+                "negative": [
+                  "EVD-43f6809b08a6"
+                ],
+                "sources": [
+                  "deploy.md/行1"
+                ]
+              },
+              {
+                "condition_id": "COND-33f94e8bf64e",
+                "text": "培训记录",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "EVD-43f6809b08a6",
+            "source_id": "SRC-8e764ec57cb2",
+            "source": "deploy.md/行1",
+            "text": "仅 Ubuntu 部署步骤，未提供 Windows Server 2019 步骤。",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "findings": [
+          {
+            "id": "GAP-bd8680534f34",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "NONCONFORMING",
+            "text": "Windows Server 2019 部署说明",
+            "sources": [
+              "deploy.md/行1"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-129f537ab8a8",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "MISSING",
+            "text": "Windows Server 2019 部署说明",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-95a03bb9a8ef",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-33f94e8bf64e",
+            "type": "MISSING",
+            "text": "培训记录",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [],
+        "updates": [
+          {
+            "old_id": "",
+            "new_id": "GAP-bd8680534f34",
+            "type": "NEW",
+            "evidence": ""
+          },
+          {
+            "old_id": "",
+            "new_id": "GAP-129f537ab8a8",
+            "type": "NEW",
+            "evidence": ""
+          },
+          {
+            "old_id": "",
+            "new_id": "GAP-95a03bb9a8ef",
+            "type": "NEW",
+            "evidence": ""
+          }
+        ],
+        "coverage": "0/2",
+        "effective_version_ref": "scope.md",
+        "limitations": [],
+        "result": "OK"
+      },
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "0/2",
+            "scope.md",
+            "2",
+            "{'NONCONFORMING': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供 Windows Server 2019 部署说明和培训记录。",
+            "scope.md/行1",
+            "Windows Server 2019 部署说明; 培训记录",
+            "EVD-43f6809b08a6",
+            "deploy.md/行1",
+            "NONCONFORMING",
+            null,
+            "Windows Server 2019 部署说明; 培训记录",
+            "NONCONFORMING: Windows Server 2019 部署说明; MISSING: Windows Server 2019 部署说明; MISSING: 培训记录",
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-43f6809b08a6",
+            "deploy.md/行1",
+            "仅 Ubuntu 部署步骤，未提供 Windows Server 2019 步骤。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-bd8680534f34",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NONCONFORMING",
+            "Windows Server 2019 部署说明 | deploy.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "Windows Server 2019 部署说明 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-95a03bb9a8ef",
+            "REQ-1568382cb39d/COND-33f94e8bf64e",
+            "MISSING",
+            "培训记录 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-bd8680534f34",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-129f537ab8a8",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-95a03bb9a8ef",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx_paragraphs": [
+        "星桥演示平台 — 验收准备报告／草稿",
+        "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+        "项目及核查范围",
+        "星桥演示平台；有效范围依据：scope.md；覆盖：0/2",
+        "本次资料与有效版本",
+        "scope.md [SRC-221c68155d0f]；deploy.md [SRC-8e764ec57cb2]",
+        "主要发现",
+        "R01 NONCONFORMING scope.md/行1",
+        "要求与证据概况",
+        "资料缺口和明确不符合",
+        "冲突及未确认变更",
+        "本次未识别到冲突",
+        "验收准备建议",
+        "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+        "来源和限制",
+        "仅支持用户授权的可读内容；不判定正式验收。"
+      ],
+      "docx_tables": [
+        [
+          [
+            "要求 ID",
+            "条件/状态",
+            "来源",
+            "证据来源"
+          ],
+          [
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "Windows Server 2019 部署说明 NONCONFORMING",
+            "scope.md/行1",
+            "EVD-43f6809b08a6 | deploy.md/行1"
+          ],
+          [
+            "REQ-1568382cb39d/COND-33f94e8bf64e",
+            "培训记录 NO_EVIDENCE_FOUND",
+            "scope.md/行1",
+            " | "
+          ]
+        ],
+        [
+          [
+            "发现 ID/类型",
+            "子条件",
+            "来源"
+          ],
+          [
+            "GAP-bd8680534f34 NONCONFORMING",
+            "Windows Server 2019 部署说明",
+            "deploy.md/行1"
+          ],
+          [
+            "GAP-129f537ab8a8 MISSING",
+            "Windows Server 2019 部署说明",
+            "scope.md/行1"
+          ],
+          [
+            "GAP-95a03bb9a8ef MISSING",
+            "培训记录",
+            "scope.md/行1"
+          ]
+        ]
+      ],
+      "formula_count": 0
+    },
+    "B04-traversal": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\B04-traversal",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\B04-traversal\\output",
+        "--scope-source",
+        "scope.md",
+        "--scope-source",
+        "../secret"
+      ],
+      "exit": 3,
+      "expected_exit": 3,
+      "stdout": "{\"result\": \"PARTIAL\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\B04-traversal\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\B04-traversal\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\B04-traversal\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"N/A\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NO_EVIDENCE_FOUND\"}], \"limitations\": [\"../secret: INVALID_INPUT (source must be a relative path within authorized root)\"]}",
+      "stderr": "",
+      "files": {
+        "scope.md": "52c8216c55b2fe59846d495b18de487a86c213e3b788c3d5977ee4557a21336b"
+      },
+      "snapshot": {
+        "schema_version": 1,
+        "project": "星桥演示平台",
+        "sources": [
+          {
+            "source_id": "SRC-221c68155d0f",
+            "path": "scope.md",
+            "sha256": "52c8216c55b2fe59846d495b18de487a86c213e3b788c3d5977ee4557a21336b",
+            "type": ".md",
+            "unsupported_content": false
+          }
+        ],
+        "records": [
+          {
+            "text": "提供接口文档。",
+            "number": "R01",
+            "location": "行1",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行1",
+            "record_id": "REC-4f8120222f8f",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "requirements": [
+          {
+            "requirement_id": "REQ-1568382cb39d",
+            "number": "R01",
+            "text": "提供接口文档。",
+            "source": "scope.md/行1",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供接口文档。"
+            ],
+            "status": "NO_EVIDENCE_FOUND",
+            "results": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "提供接口文档。",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          }
+        ],
+        "evidence": [],
+        "findings": [
+          {
+            "id": "GAP-129f537ab8a8",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "MISSING",
+            "text": "提供接口文档。",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [],
+        "updates": [
+          {
+            "old_id": "",
+            "new_id": "GAP-129f537ab8a8",
+            "type": "NEW",
+            "evidence": ""
+          }
+        ],
+        "coverage": "N/A",
+        "effective_version_ref": "NOT_SPECIFIED",
+        "limitations": [
+          "../secret: INVALID_INPUT (source must be a relative path within authorized root)"
+        ],
+        "result": "PARTIAL"
+      },
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "N/A",
+            "NOT_SPECIFIED",
+            "1",
+            "{'NO_EVIDENCE_FOUND': 1}",
+            "../secret: INVALID_INPUT (source must be a relative path within authorized root)"
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供接口文档。",
+            "scope.md/行1",
+            "提供接口文档。",
+            null,
+            null,
+            "NO_EVIDENCE_FOUND",
+            null,
+            "提供接口文档。",
+            "MISSING: 提供接口文档。",
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "提供接口文档。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-129f537ab8a8",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx_paragraphs": [
+        "星桥演示平台 — 验收准备报告／草稿",
+        "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+        "项目及核查范围",
+        "星桥演示平台；有效范围依据：NOT_SPECIFIED；覆盖：N/A",
+        "本次资料与有效版本",
+        "scope.md [SRC-221c68155d0f]",
+        "主要发现",
+        "R01 NO_EVIDENCE_FOUND scope.md/行1",
+        "要求与证据概况",
+        "资料缺口和明确不符合",
+        "冲突及未确认变更",
+        "本次未识别到冲突",
+        "验收准备建议",
+        "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+        "来源和限制",
+        "../secret: INVALID_INPUT (source must be a relative path within authorized root)"
+      ],
+      "docx_tables": [
+        [
+          [
+            "要求 ID",
+            "条件/状态",
+            "来源",
+            "证据来源"
+          ],
+          [
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "提供接口文档。 NO_EVIDENCE_FOUND",
+            "scope.md/行1",
+            " | "
+          ]
+        ],
+        [
+          [
+            "发现 ID/类型",
+            "子条件",
+            "来源"
+          ],
+          [
+            "GAP-129f537ab8a8 MISSING",
+            "提供接口文档。",
+            "scope.md/行1"
+          ]
+        ]
+      ],
+      "formula_count": 0
+    },
+    "B04-limit": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\B04-limit",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\B04-limit\\output",
+        "--scope-source",
+        "scope.md",
+        "--delivery-source",
+        "huge.md",
+        "--effective-version-ref",
+        "scope.md"
+      ],
+      "exit": 3,
+      "expected_exit": 3,
+      "stdout": "{\"result\": \"PARTIAL\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\B04-limit\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\B04-limit\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\B04-limit\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NO_EVIDENCE_FOUND\"}], \"limitations\": [\"huge.md: RESOURCE_LIMIT (file exceeds 4000000 bytes)\"]}",
+      "stderr": "",
+      "files": {
+        "scope.md": "52c8216c55b2fe59846d495b18de487a86c213e3b788c3d5977ee4557a21336b",
+        "huge.md": "de55671b077f84d67060bec2cb52c9ef77a20b21a2662ba92eb7f990021284c7"
+      },
+      "snapshot": {
+        "schema_version": 1,
+        "project": "星桥演示平台",
+        "sources": [
+          {
+            "source_id": "SRC-221c68155d0f",
+            "path": "scope.md",
+            "sha256": "52c8216c55b2fe59846d495b18de487a86c213e3b788c3d5977ee4557a21336b",
+            "type": ".md",
+            "unsupported_content": false
+          }
+        ],
+        "records": [
+          {
+            "text": "提供接口文档。",
+            "number": "R01",
+            "location": "行1",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行1",
+            "record_id": "REC-4f8120222f8f",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "requirements": [
+          {
+            "requirement_id": "REQ-1568382cb39d",
+            "number": "R01",
+            "text": "提供接口文档。",
+            "source": "scope.md/行1",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供接口文档。"
+            ],
+            "status": "NO_EVIDENCE_FOUND",
+            "results": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "提供接口文档。",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          }
+        ],
+        "evidence": [],
+        "findings": [
+          {
+            "id": "GAP-129f537ab8a8",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "MISSING",
+            "text": "提供接口文档。",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [],
+        "updates": [
+          {
+            "old_id": "",
+            "new_id": "GAP-129f537ab8a8",
+            "type": "NEW",
+            "evidence": ""
+          }
+        ],
+        "coverage": "0/1",
+        "effective_version_ref": "scope.md",
+        "limitations": [
+          "huge.md: RESOURCE_LIMIT (file exceeds 4000000 bytes)"
+        ],
+        "result": "PARTIAL"
+      },
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "0/1",
+            "scope.md",
+            "1",
+            "{'NO_EVIDENCE_FOUND': 1}",
+            "huge.md: RESOURCE_LIMIT (file exceeds 4000000 bytes)"
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供接口文档。",
+            "scope.md/行1",
+            "提供接口文档。",
+            null,
+            null,
+            "NO_EVIDENCE_FOUND",
+            null,
+            "提供接口文档。",
+            "MISSING: 提供接口文档。",
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "提供接口文档。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-129f537ab8a8",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx_paragraphs": [
+        "星桥演示平台 — 验收准备报告／草稿",
+        "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+        "项目及核查范围",
+        "星桥演示平台；有效范围依据：scope.md；覆盖：0/1",
+        "本次资料与有效版本",
+        "scope.md [SRC-221c68155d0f]",
+        "主要发现",
+        "R01 NO_EVIDENCE_FOUND scope.md/行1",
+        "要求与证据概况",
+        "资料缺口和明确不符合",
+        "冲突及未确认变更",
+        "本次未识别到冲突",
+        "验收准备建议",
+        "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+        "来源和限制",
+        "huge.md: RESOURCE_LIMIT (file exceeds 4000000 bytes)"
+      ],
+      "docx_tables": [
+        [
+          [
+            "要求 ID",
+            "条件/状态",
+            "来源",
+            "证据来源"
+          ],
+          [
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "提供接口文档。 NO_EVIDENCE_FOUND",
+            "scope.md/行1",
+            " | "
+          ]
+        ],
+        [
+          [
+            "发现 ID/类型",
+            "子条件",
+            "来源"
+          ],
+          [
+            "GAP-129f537ab8a8 MISSING",
+            "提供接口文档。",
+            "scope.md/行1"
+          ]
+        ]
+      ],
+      "formula_count": 0
+    },
+    "B04-formula": {
+      "args": [
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\B04-formula",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q02-rerun-spa3oqpr\\B04-formula\\output",
+        "--scope-source",
+        "scope.md",
+        "--delivery-source",
+        "evidence.md",
+        "--effective-version-ref",
+        "scope.md"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\B04-formula\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\B04-formula\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q02-rerun-spa3oqpr\\\\B04-formula\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NO_EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "files": {
+        "scope.md": "52c8216c55b2fe59846d495b18de487a86c213e3b788c3d5977ee4557a21336b",
+        "evidence.md": "c70c11c2268ab471a3147bf14634cbd0a229876624b555b457adcf8879bc201d"
+      },
+      "snapshot": {
+        "schema_version": 1,
+        "project": "星桥演示平台",
+        "sources": [
+          {
+            "source_id": "SRC-221c68155d0f",
+            "path": "scope.md",
+            "sha256": "52c8216c55b2fe59846d495b18de487a86c213e3b788c3d5977ee4557a21336b",
+            "type": ".md",
+            "unsupported_content": false
+          },
+          {
+            "source_id": "SRC-e4aaa733a7c9",
+            "path": "evidence.md",
+            "sha256": "c70c11c2268ab471a3147bf14634cbd0a229876624b555b457adcf8879bc201d",
+            "type": ".md",
+            "unsupported_content": false
+          }
+        ],
+        "records": [
+          {
+            "text": "提供接口文档。",
+            "number": "R01",
+            "location": "行1",
+            "source_id": "SRC-221c68155d0f",
+            "source": "scope.md/行1",
+            "record_id": "REC-4f8120222f8f",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "scope",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "text": "=HYPERLINK(\"https://example.invalid\",\"text\")",
+            "number": "R01",
+            "location": "行1",
+            "source_id": "SRC-e4aaa733a7c9",
+            "source": "evidence.md/行1",
+            "record_id": "REC-9dfebdd05451",
+            "reference": "",
+            "version": "",
+            "basis": "",
+            "condition": "",
+            "result": "",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "requirements": [
+          {
+            "requirement_id": "REQ-1568382cb39d",
+            "number": "R01",
+            "text": "提供接口文档。",
+            "source": "scope.md/行1",
+            "source_id": "SRC-221c68155d0f",
+            "version": "",
+            "basis": "",
+            "conditions": [
+              "提供接口文档。"
+            ],
+            "status": "NO_EVIDENCE_FOUND",
+            "results": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "提供接口文档。",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "EVD-c5543bc8a422",
+            "source_id": "SRC-e4aaa733a7c9",
+            "source": "evidence.md/行1",
+            "text": "=HYPERLINK(\"https://example.invalid\",\"text\")",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ],
+        "findings": [
+          {
+            "id": "GAP-129f537ab8a8",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "MISSING",
+            "text": "提供接口文档。",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [],
+        "updates": [
+          {
+            "old_id": "",
+            "new_id": "GAP-129f537ab8a8",
+            "type": "NEW",
+            "evidence": ""
+          }
+        ],
+        "coverage": "0/1",
+        "effective_version_ref": "scope.md",
+        "limitations": [],
+        "result": "OK"
+      },
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "0/1",
+            "scope.md",
+            "2",
+            "{'NO_EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供接口文档。",
+            "scope.md/行1",
+            "提供接口文档。",
+            null,
+            null,
+            "NO_EVIDENCE_FOUND",
+            null,
+            "提供接口文档。",
+            "MISSING: 提供接口文档。",
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-c5543bc8a422",
+            "evidence.md/行1",
+            "'=HYPERLINK(\"https://example.invalid\",\"text\")",
+            "CONTENT",
+            null,
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "提供接口文档。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-129f537ab8a8",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx_paragraphs": [
+        "星桥演示平台 — 验收准备报告／草稿",
+        "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+        "项目及核查范围",
+        "星桥演示平台；有效范围依据：scope.md；覆盖：0/1",
+        "本次资料与有效版本",
+        "scope.md [SRC-221c68155d0f]；evidence.md [SRC-e4aaa733a7c9]",
+        "主要发现",
+        "R01 NO_EVIDENCE_FOUND scope.md/行1",
+        "要求与证据概况",
+        "资料缺口和明确不符合",
+        "冲突及未确认变更",
+        "本次未识别到冲突",
+        "验收准备建议",
+        "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+        "来源和限制",
+        "仅支持用户授权的可读内容；不判定正式验收。"
+      ],
+      "docx_tables": [
+        [
+          [
+            "要求 ID",
+            "条件/状态",
+            "来源",
+            "证据来源"
+          ],
+          [
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "提供接口文档。 NO_EVIDENCE_FOUND",
+            "scope.md/行1",
+            " | "
+          ]
+        ],
+        [
+          [
+            "发现 ID/类型",
+            "子条件",
+            "来源"
+          ],
+          [
+            "GAP-129f537ab8a8 MISSING",
+            "提供接口文档。",
+            "scope.md/行1"
+          ]
+        ]
+      ],
+      "formula_count": 0
+    }
+  },
+  "checks": {
+    "A01_D1": true,
+    "A02": true,
+    "A03": true,
+    "A04": true,
+    "A05": true,
+    "A06": true,
+    "A07": true,
+    "A08": true,
+    "A09_D1": true,
+    "A10": true,
+    "A11": true,
+    "A12_D3": true,
+    "A12-all-bad": true,
+    "A13": true,
+    "A14": true,
+    "B01": true,
+    "B02_D2": true,
+    "B04-traversal": true,
+    "B04-limit": true,
+    "B04-formula": true,
+    "ZIP-source-alignment": true,
+    "ZIP-integrity": true,
+    "all-exits": true
+  }
+}
