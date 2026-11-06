@@ -196,6 +196,19 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
             catalog: list[dict], evidence: list[tuple[str, str]]) -> list[dict]:
     replies = [(n, line, number(line)) for n, line in enumerate((response or '').splitlines(), 1) if line.strip()]
     results = []
+    # A filename is evidence only if a unique requirement anchors it, not merely
+    # because a similarly named file happened to be supplied by the user.
+    numbered = Counter(r['number'] for r in reqs if r['number'])
+    evidence_names = Counter(name for name, _ in evidence)
+    catalog_names = Counter(c['name'] for c in catalog)
+    material_owners = {}
+    reply_refs = {}
+    for _, line, num in replies:
+        for material in MATERIAL.findall(line):
+            reply_refs.setdefault(material, set()).add(num)
+    for owner in reqs:
+        for material in owner['materials']:
+            material_owners.setdefault(material, set()).add(owner['id'])
     for r in reqs:
         candidates = []
         for n, line, num in replies:
@@ -215,10 +228,31 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
         uncovered = [p for p in cond if not covered(p, reply)] if selected else cond
         existence = '未核查' if response is None else '已定位' if unique else '候选待确认' if ambiguous else '未找到（限已提供响应）'
         condition_state = '未核查' if response is None else '待确认' if ambiguous else '可能不充分' if not unique or uncovered else '已覆盖（文本层面）'
-        materials = r['materials']
-        listed = [c for c in catalog if c['name'] in materials or r['number'] and c['number'] == r['number']]
-        present = [(name, txt) for name, txt in evidence if name in materials]
-        if not materials and not listed:
+        materials = r['materials'][:]
+        # A response-only reference is usable only with an unambiguous numbered
+        # reply and an explicit material requirement. Never scan arbitrary files.
+        response_only = [name for name in MATERIAL.findall(reply) if name not in materials]
+        if unique and re.search(r'附件|证明|证书|材料|资质', r['raw']):
+            materials += response_only
+        listed = [c for c in catalog if c['name'] in materials or
+                  (r['number'] and numbered[r['number']] == 1 and c['number'] == r['number'])]
+        names = set(materials) | {c['name'] for c in listed}
+        conflicting = {name for name in names if
+                       evidence_names[name] > 1 or catalog_names[name] > 1 or
+                       len(reply_refs.get(name, set())) > 1 or
+                       (name in response_only and not (tokens(body(r['raw'])) & tokens(body(reply)))) or
+                       material_owners.get(name, {r['id']}) - {r['id']} or
+                       any(c['name'] == name and c['number'] and
+                           (c['number'] != r['number'] or numbered[c['number']] != 1)
+                           for c in catalog)}
+        # Candidate response references and repeated original numbers are not
+        # strong enough to attribute a material to one requirement.
+        if not unique and not r['materials']:
+            conflicting.update(MATERIAL.findall(' '.join(line for _, line, _ in candidates)))
+        present = [(name, txt) for name, txt in evidence if name in names and name not in conflicting]
+        if conflicting:
+            attachment, support = '待确认', '待确认'
+        elif not names:
             attachment, support = '不适用', '不适用'
         elif present:
             attachment = '已提供（可读文本）'
@@ -257,13 +291,15 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
         pending = r['pending'][:]
         if ambiguous:
             pending.append('响应候选歧义或编号改变；逐一核对双向原句')
-        if attachment == '待确认' and materials:
+        if conflicting:
+            pending.append('材料候选重复、编号冲突或响应配对歧义；逐一核对文件与要求关联')
+        elif attachment == '待确认' and materials:
             pending.append('未提供完整附件集合/目录，无法判定实际缺失')
-        if support == '待确认':
+        if support == '待确认' and not conflicting:
             pending.append('材料文本关联不足或真实性需人工确认')
         results.append({**r, 'locations': positions, 'response': quote(reply) if reply else '',
                         'existence': existence, 'coverage': condition_state, 'attachment': attachment,
-                        'support': support, 'listed': listed, 'present': present,
+                        'support': support, 'listed': listed, 'present': present, 'conflicting': sorted(conflicting),
                         'evidence_locations': evidence_loc, 'gaps': gaps, 'pending': pending})
     return results
 
@@ -311,6 +347,9 @@ def write_outputs(rows: list[dict], catalog: list[dict], edges: list[dict], args
         if r['present'] and not r['listed']:
             for name, _ in r['present']:
                 attachments.append([r['id'], '', '', name, r['attachment'], r['support'], '；'.join(r['evidence_locations']), '文本支持不认证真伪'])
+        for name in r['conflicting']:
+            if not any(item['name'] == name for item in r['listed']):
+                attachments.append([r['id'], '', '', name, '待确认', '待确认', '', '文件与要求关联歧义，不能确认为已提供'])
     amendments.append(['原唯一ID', '新唯一ID', '关系', '原要求来源', '新要求来源', '依据位置', '依据原句', '适用/冲突'])
     for e in edges:
         amendments.append([e['old']['id'], e['new']['id'], e['type'], e['old']['source'], e['new']['source'], e['source'], e['text'], e['old']['version']])
