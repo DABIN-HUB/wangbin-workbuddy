@@ -1,0 +1,14 @@
+{
+  "case": "utility_scale_ground",
+  "result_hash": "cd4fca1268dea37283a65680512774053d8e3008cd268375e7dd9f7e9abb2b46",
+  "metric_status": "CALCULATED",
+  "canonical_irr_fraction": "0.1195029093658940555489067492089816369116306304931640625",
+  "workbook_irr_display": "11.95%",
+  "workbook_irr_state": "CALCULATED",
+  "npv_status": "CALCULATED",
+  "npv_cny": "321667.68896028695724269788416641373720486639453039281065292895792978049485733240",
+  "word_summary_has_unique_root": true,
+  "word_ch16_has_unique_root_and_npv": true,
+  "multiple_root_report_present": false,
+  "multiple_root_presentation_checked_by_isolated_regressions_only": true
+}
