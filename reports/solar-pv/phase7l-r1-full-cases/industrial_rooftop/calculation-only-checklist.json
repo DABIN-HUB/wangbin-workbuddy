@@ -1,0 +1,12 @@
+{
+  "project_id": "SYNTHETIC-PHASE7L-ROOF-25Y-165KWP",
+  "pv_type": "industrial_rooftop",
+  "identity": {
+    "run_id": "c5891524-af05-46f7-b150-f543828bf079",
+    "input_hash": "3480beab2286e73710b7e5dbb949b9d82dd492fe678f10b1cb7798a5d4667240",
+    "source_snapshot_id": "af0ea245cd8daf53b851ae06d7e4f0bad3b9643990b1b1c673ef40f24a8308e1",
+    "result_hash": "275022666b1fe8c0729eaa56cf6eb7f1cc40d5f5291c516a92b4e16930650900"
+  },
+  "records": [],
+  "status": "CALCULATION_ONLY_NO_REPORT_BINDINGS"
+}

@@ -1,0 +1,12 @@
+{
+  "project_id": "SYNTHETIC-PHASE7L-GROUND-25Y-330KWP",
+  "pv_type": "utility_scale_ground",
+  "identity": {
+    "run_id": "8c8eefd2-b187-425c-a141-f5603c597140",
+    "input_hash": "364dd8fa4ea70497d2ffb9dac3f48951331a5918e618fed0914855e38a06611b",
+    "source_snapshot_id": "9a6153569c9112760e47d835032ed288bcfa1501feeeb8bc9c24e21c1b744df8",
+    "result_hash": "5647d305b9abcceb3386b1bb6aefd752e26be84bfae263fa6efe5d6575139b74"
+  },
+  "records": [],
+  "status": "CALCULATION_ONLY_NO_REPORT_BINDINGS"
+}

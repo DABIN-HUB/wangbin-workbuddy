@@ -1,0 +1,130 @@
+{
+  "schema_version": "phase7l-file-manifest/1.0.0",
+  "files": [
+    {
+      "path": "REPRODUCE.md",
+      "bytes": 2627,
+      "sha256": "9cf3894b0b74de46e182d3fd2aca6677dc8619b606d54bc544403cc177dc9228"
+    },
+    {
+      "path": "actual-effective-obligation-matrix.json",
+      "bytes": 895548,
+      "sha256": "80310fcaec833597e2c3bfeccf00f49834a243e692aa7b5144b28e01f5a11438"
+    },
+    {
+      "path": "archived-d3-and-intervals.zip",
+      "bytes": 65375669,
+      "sha256": "1244954e91782238399de88ea4206cdd512676c738491e05a05a4060a553bfd4"
+    },
+    {
+      "path": "budget.json",
+      "bytes": 123,
+      "sha256": "53edf3855be8af1fb22a629e73146367ea9293d82bac662842999285c379e7f0"
+    },
+    {
+      "path": "bundle/manifest.json",
+      "bytes": 13359,
+      "sha256": "59ba6431d1d7e098089e5233b02c457514f5053d8fa7df0ee7c5094e804230c6"
+    },
+    {
+      "path": "calculation-only-checklist.json",
+      "bytes": 512,
+      "sha256": "83f63dc997fe8b60dafbbf9585894ff28b7154706d44aec947acb0ab6df7e944"
+    },
+    {
+      "path": "category-effective-obligations.json",
+      "bytes": 3376,
+      "sha256": "7141dd53d6397cf394cbfae222a98db97b7ddfb9809e23e2cf0d2544416256bd"
+    },
+    {
+      "path": "documents/source-material.md",
+      "bytes": 2626,
+      "sha256": "dd286e05171fce3178dff17804204c64422a10a1179e734f8ba123626a4ac13d"
+    },
+    {
+      "path": "expanded-file-manifest.json",
+      "bytes": 36137,
+      "sha256": "f8698f284fffe040619e7b22f4cc2b8877d4bb9d9ea2140f3a2843e390576d8a"
+    },
+    {
+      "path": "input.json",
+      "bytes": 5818639,
+      "sha256": "063b401f5b75c1f42ddfd83710fd9b9d179864af523bdf445b161fff254f71d3"
+    },
+    {
+      "path": "methods.json",
+      "bytes": 39203,
+      "sha256": "f99c157ffaeba34a96bfa02f402a8bd541cd644e3004609ed04a6a0a421c2c25"
+    },
+    {
+      "path": "project/3b/receipt.json",
+      "bytes": 10748,
+      "sha256": "deb01d1bf272407346fa6345e3c3132799ed7c2c7b60f932ec7b470030116648"
+    },
+    {
+      "path": "project/3b/result.json",
+      "bytes": 2810047,
+      "sha256": "9823e2a5dc78d66d3c1b843969c7c1dbcdfe089fd8fda59c89d04d1217a32b44"
+    },
+    {
+      "path": "project/3c/receipt.json",
+      "bytes": 5359,
+      "sha256": "753b7e1919f40ca520bc81b53be77ab4d8e4d751ebbe77a5cbb61f7d2800ab9a"
+    },
+    {
+      "path": "project/3c/result.json",
+      "bytes": 5869301,
+      "sha256": "97ac4a3fbcc74d4431dba3146c70a68aac1b16e04d5332a5bff4334aaffdb42d"
+    },
+    {
+      "path": "project/3d/result.json",
+      "bytes": 4315225,
+      "sha256": "39a3f54245a86fbf4647d0c9beedea4f71c754a2d387c57d21d0974765c79feb"
+    },
+    {
+      "path": "project/3d/result.sha256",
+      "bytes": 66,
+      "sha256": "4a7981527ed0f4631d83c91d632e5f8183372bf66a52a201e2e8cd8d735e365d"
+    },
+    {
+      "path": "project/3e/result.json",
+      "bytes": 4553848,
+      "sha256": "0199f9b89bb9298180909685f2000a7ff59c3fb7c02b782177d6359e784cb819"
+    },
+    {
+      "path": "project/3e/result.sha256",
+      "bytes": 66,
+      "sha256": "01c0f36978d12ea5844ddaeaa66cf6b83ac5eb6b385d0ff2684585ee35c373e6"
+    },
+    {
+      "path": "project/canonical.json",
+      "bytes": 4553849,
+      "sha256": "70bb034e090ac1fd2389e16a8417f59b98b28f9df572e9c173db15c0476fe2b2"
+    },
+    {
+      "path": "project/formula-execution.json",
+      "bytes": 40733,
+      "sha256": "1e3c1c74d141128876141cfece1f8e8c0b0815fda4d9ce0c8aec10d176795fbf"
+    },
+    {
+      "path": "project/receipt.json",
+      "bytes": 1614,
+      "sha256": "d8b4dfaf71d539ca3fefdb3a94349858a7d0f357a67bb1c1214f24fd48d98e3f"
+    },
+    {
+      "path": "terminal.json",
+      "bytes": 1155,
+      "sha256": "25aeabcb135b62baf0e05ec8445aa9dd91194f7e707874e4ad563f26c6848740"
+    },
+    {
+      "path": "terminal.txt",
+      "bytes": 411,
+      "sha256": "22fa752e86b6e64552f5151e37990328bdd496a00edd17ee0743ee4158c7d71b"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 12000,
+      "sha256": "991ca45adc1f058a7dfcda7cf59c65b2e263b34bed1392bd328e7dac03ca3026"
+    }
+  ]
+}
