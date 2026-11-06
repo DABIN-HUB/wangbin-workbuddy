@@ -6,10 +6,15 @@ DOCX, workbooks, a 469-row input audit and a human-review-required claim sheet.
 from __future__ import annotations
 
 import argparse
+from contextlib import ExitStack
 import hashlib
 import json
+import os
 from pathlib import Path
+import shutil
 import sys
+from tempfile import TemporaryDirectory
+import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "services/solar-pv-engine/src"))
@@ -49,7 +54,27 @@ def deliver(run_dir: Path, output_root: Path, output_name: str, *, fixture_file:
     if fixture and (fixture.get("linked_calculation_project_id") != result["project_id"]
                     or fixture.get("result_hash") != result["result_hash"]):
         raise ValueError("EDITORIAL_CALCULATION_IDENTITY_MISMATCH")
-    with read_bundle(run_dir / "bundle", catalog=catalog, budget=BundleBudget()) as bundle:
+    with ExitStack() as stack:
+        bundle_dir = run_dir / "bundle"
+        if not (bundle_dir / "base.json").is_file():
+            archive = run_dir / "archived-d3-and-intervals.zip"
+            if not archive.is_file():
+                raise FileNotFoundError("D3_BUNDLE_NOT_AVAILABLE")
+            restored = Path(stack.enter_context(TemporaryDirectory(prefix="phase7l-report-bundle-",
+                                                                    dir=os.getenv("TMPDIR")))) / "bundle"
+            restored.mkdir()
+            shutil.copyfile(bundle_dir / "manifest.json", restored / "manifest.json")
+            with zipfile.ZipFile(archive) as zipped:
+                for member in zipped.namelist():
+                    if not member.startswith("bundle/"):
+                        continue
+                    leaf = member.removeprefix("bundle/")
+                    if not leaf or "/" in leaf or "\\" in leaf or leaf in {".", ".."}:
+                        raise ValueError("D3_ARCHIVE_PATH_INVALID")
+                    with zipped.open(member) as source, (restored / leaf).open("wb") as target:
+                        shutil.copyfileobj(source, target)
+            bundle_dir = restored
+        bundle = stack.enter_context(read_bundle(bundle_dir, catalog=catalog, budget=BundleBudget()))
         if bundle.base_export != exported:
             raise ValueError("D3_INPUT_IDENTITY_MISMATCH")
         if result["pv_type"] == "industrial_rooftop":

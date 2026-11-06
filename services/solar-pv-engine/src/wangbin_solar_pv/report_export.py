@@ -39,7 +39,7 @@ from .calculation.result_contract import validate_result
 from .errors import ContractError
 from .local_files import Workspace
 from .report_narrative import guidance, validate_fixture
-from .report_claims import APPENDIX_RULES, APPENDIX_TITLES, CHAPTER_FIELDS, CHAPTER_METRICS, build_claim, category_fields, _dataset_rows
+from .report_claims import APPENDIX_RULES, APPENDIX_TITLES, CHAPTER_FIELDS, CHAPTER_METRICS, build_claim, category_fields, _dataset_rows, _source_value
 from .serialization import dumps
 from .source_xlsx import create_source_workbook
 
@@ -118,6 +118,8 @@ _D_STYLE = {
     "surface": "F8FAFC",
     "white": "FFFFFF",
 }
+
+REPORT_CONTENT_VERSION = "phase7l-r2-v1"
 
 
 @dataclass(frozen=True)
@@ -212,8 +214,20 @@ def _word_value(value: Any) -> str:
         keys = list(value)[:3]
         suffix = "、".join(str(key) for key in keys)
         return f"对象（{len(value)}个字段；{suffix}{'…' if len(value) > 3 else ''}）"
-    text = str(value)
+    text = _reader_text(str(value))
     return text if len(text) <= 180 else text[:177].rstrip() + "…"
+
+def _reader_text(text: str) -> str:
+    """Translate display-only tokens; canonical and audit identities are untouched."""
+    for source, label in (("GRID_DELIVERABLE", "电网可交付电量边界"),
+                          ("Concept protection only; engineering review pending", "仅为概念性保护方案，待工程审查"),
+                          ("FICTIONAL_NOT_APPROVED_METER_NODE", "仅用于合成测算的未审批计量点"),
+                          ("AVAILABLE_PRE_CONSUMPTION", "消纳前可用电量口径"),
+                          ("NOT_APPLICABLE", "不适用"),
+                          ("ZERO_DEBT_SERVICE", "本期无应偿债务本息")):
+        text = text.replace(source, label)
+    text = re.sub(r"\bOPERATING_YEAR_(\d+)\b", lambda match: f"第{match.group(1)}年", text)
+    return re.sub(r"\bpending\b", "待核验", text, flags=re.IGNORECASE)
 
 
 def _word_metric_value(metric: dict[str, Any]) -> str:
@@ -221,6 +235,25 @@ def _word_metric_value(metric: dict[str, Any]) -> str:
         reason = str(metric.get("reason") or "未提供可用数值")
         return f"{metric.get('status', 'UNKNOWN')}：{reason[:180]}"
     return _word_value(metric.get("value"))
+
+def _irr_presentation(metric: dict[str, Any]) -> tuple[str, str]:
+    """Present the reported root set, not an arbitrarily chosen IRR."""
+    details = metric.get("details") or {}
+    roots = details.get("roots")
+    if roots is None:
+        roots = metric.get("value")
+    if roots is None:
+        roots = []
+    if not isinstance(roots, list):
+        roots = [roots]
+    if details.get("root_count") is not None and details["root_count"] != len(roots):
+        return "根集待核对", "根数与所列根不一致；不选取单个根"
+    if not roots:
+        return "无根", "本次搜索范围内未得到有效根"
+    if any(isinstance(root, bool) or not isinstance(root, (int, float, Decimal)) for root in roots):
+        return "根集待核对", "非数值根；不选取单个根"
+    display = "、".join(f"{float(root) * 100:,.2f}".rstrip("0").rstrip(".") + "%" for root in roots)
+    return display, "单根" if len(roots) == 1 else f"多根（{len(roots)}个；不选取单个根）"
 
 
 def _word_sources(source_ids: list[str] | tuple[str, ...], source_map: dict[str, str]) -> str:
@@ -474,36 +507,108 @@ def _formula_definitions(model: ReportModel) -> list[dict[str, Any]]:
 
 # This is an editorial bilingual glossary, not a formula or a source of measured data.
 _GLOSSARY = (
-    ("光伏", "Photovoltaic", "PV", "太阳光电转换技术；不代表已获准并网"),
-    ("直流", "Direct Current", "DC", "组件侧额定峰值功率使用 kWp"),
-    ("交流", "Alternating Current", "AC", "逆变器侧额定功率使用 kWac"),
-    ("资本性支出", "Capital Expenditure", "CAPEX", "须区别建设期初始支出与运营期更换"),
-    ("运营性支出", "Operating Expenditure", "OPEX", "现金运维与非现金折旧分列"),
-    ("净现值", "Net Present Value", "NPV", "年度项目评价与逐笔日期评价分属不同口径"),
-    ("内部收益率", "Internal Rate of Return", "IRR", "注明项目/投资者及税前/税后边界"),
-    ("平准化度电成本", "Levelized Cost of Energy", "LCOE", "成本与可交付电量必须同边界"),
-    ("可供偿债现金流", "Cash Flow Available for Debt Service", "CFADS", "不可替代股东实收分红"),
-    ("偿债覆盖倍数", "Debt Service Coverage Ratio", "DSCR", "无债务时不适用"),
-    ("阵列面辐照", "Plane-of-Array Irradiation", "POA", "辐照量与发电电量不可互换"),
-    ("系统性能比", "Performance Ratio", "PR", "发电能量与阵列面资源的口径配对"),
+    ("光伏", "Photovoltaic", "PV", "利用光伏效应将太阳辐照转化为电能；装机不等于并网许可"),
+    ("直流", "Direct Current", "DC", "组件输出的单向电流侧；峰值装机以 kWp 标示，不是交流输出"),
+    ("交流", "Alternating Current", "AC", "逆变器输出的交变电流侧；额定容量以 kWac 标示"),
+    ("资本性支出", "Capital Expenditure", "CAPEX", "形成或更新长期资产的资本支出；区分初始建设款与运营期更换款"),
+    ("运营性支出", "Operating Expenditure", "OPEX", "运营中发生的费用；现金运维与非现金折旧分别核算"),
+    ("净现值", "Net Present Value", "NPV", "按指定折现率折现各期项目净现金流后的合计；年度项目口径不等于逐笔日期口径"),
+    ("内部收益率", "Internal Rate of Return", "IRR", "使指定现金流净现值为零的折现率根集；项目与投资者、税前与税后不混用"),
+    ("平准化度电成本", "Levelized Cost of Energy", "LCOE", "折现成本与同边界折现可交付电量之比；终期现金边界未闭合时不计算"),
+    ("可供偿债现金流", "Cash Flow Available for Debt Service", "CFADS", "在约定偿债口径下可用于支付本息的现金流；不是股东实收分红"),
+    ("偿债覆盖倍数", "Debt Service Coverage Ratio", "DSCR", "可供偿债现金流与同期应偿本息之比；无债务时不适用"),
+    ("阵列面辐照", "Plane-of-Array Irradiation", "POA", "入射到组件阵列平面的辐照量；单位面积资源不是发电电量"),
+    ("系统性能比", "Performance Ratio", "PR", "实际发电与按阵列面辐照及标称容量推算的参照发电之比；须保持同一时段和系统边界"),
 )
+
+def _formula_index_lines(formula: dict[str, Any]) -> list[str]:
+    """Flatten frozen notation into editable prose, once per formula."""
+    lines: list[str] = []
+    seen: set[tuple[str, str]] = set()
+    def add(token: str, meaning: str) -> None:
+        if (token, meaning) not in seen:
+            seen.add((token, meaning))
+            lines.append(f"{token}：{meaning}")
+    for key, value in (formula.get("subscript_definition") or {}).items():
+        add(key, value)
+    for item in formula.get("set_and_range_definition") or []:
+        if isinstance(item, dict):
+            add(item.get("token", "范围"), item.get("definition", "未定义"))
+        else:
+            add("范围", str(item))
+    superscripts = formula.get("superscript_definition")
+    if isinstance(superscripts, dict):
+        for key, value in superscripts.items():
+            if key != "说明" or "无上下标" not in value:
+                add(f"上标{key}", value)
+    elif isinstance(superscripts, str) and superscripts:
+        add("上标说明", superscripts)
+    return lines
+
+
+def _formula_contract_text(value: Any) -> str:
+    """Render a frozen notation contract as prose, never as an object dump."""
+    if isinstance(value, dict):
+        text = "；".join(f"{key}：{meaning}" for key, meaning in value.items())
+    elif isinstance(value, str):
+        text = value
+    else:
+        raise ContractError("REPORT_FORMULA_NOTATION_TYPE")
+    return (text.replace("every_symbol_definition", "本式完整符号表")
+            .replace("set_and_range_definition", "本式下标与求和范围"))
+
+
+def _formula_shared_contracts(definitions: list[dict[str, Any]]) -> tuple[list[tuple[str, str, int]], dict[tuple[str, str], int]]:
+    """Deduplicate identical *notation* contracts; never merge per-formula symbols."""
+    kinds = {"operator_definition": "运算符", "notation_contract": "记法与歧义",
+             "unit_convention": "单位约定"}
+    groups: list[tuple[str, str, int]] = []
+    ids: dict[tuple[str, str], int] = {}
+    for formula in definitions:
+        for key, label in kinds.items():
+            value = formula.get(key)
+            if not value:
+                continue
+            text = _formula_contract_text(value)
+            pair = (key, text)
+            if pair not in ids:
+                number = 1 + sum(group[0] == label for group in groups)
+                ids[pair] = number
+                groups.append((label, text, number))
+    return groups, ids
+
+
+def _formula_status(model: ReportModel, fid: str) -> str:
+    metrics = [m for m in model.metrics if m.get("formula_id") == fid]
+    if not metrics:
+        return "仅作方法说明；本项目未引用或执行"
+    calculated = sum(m.get("status") == "CALCULATED" for m in metrics)
+    blocked = sum(str(m.get("status", "")).startswith("BLOCKED") for m in metrics)
+    inapplicable = sum(m.get("status") == "NOT_APPLICABLE" for m in metrics)
+    unimplemented = sum(m.get("status") == "NOT_IMPLEMENTED" for m in metrics)
+    undefined = sum(m.get("status") == "UNDEFINED" for m in metrics)
+    unknown = len(metrics) - calculated - blocked - inapplicable - unimplemented - undefined
+    states = (("已计算", calculated), ("阻断", blocked), ("不适用", inapplicable),
+              ("方法未实现", unimplemented), ("数学未定义", undefined), ("待核对", unknown))
+    return "本次引用；" + "、".join(f"{name}{count}项" for name, count in states if count) + "。"
 
 
 def _appendix_rows(model: ReportModel, app_id: str) -> tuple[list[str], list[list[Any]]]:
     definitions = _formula_definitions(model)
     if app_id == "APP11.01":
-        return (["公式ID", "正式名称", "公式文本", "结果单位", "适用边界"],
+        return (["公式ID", "正式名称", "公式文本", "结果单位", "适用边界", "本次状态"],
                 [[f["formula_id"], f.get("chinese_name", "未定义"),
                   f.get("text_equation") or f.get("latex") or "未提供公式文本",
-                  f.get("unit") or "未定义", f.get("calculation_boundary") or "未定义"] for f in definitions])
+                  f.get("unit") or "未定义", f.get("calculation_boundary") or "未定义",
+                  _formula_status(model, f["formula_id"])] for f in definitions])
     if app_id == "APP11.02":
         return (["公式ID", "完整符号", "定义", "单位", "下标与求和范围"],
                 [[f["formula_id"], s.get("symbol") or "未定义", s.get("definition_zh") or "未定义",
                   s.get("unit") or "未定义",
-                  _string(f.get("subscript_definition") or {}) + "；" + _string(f.get("set_and_range_definition") or [])]
-                 for f in definitions for s in f.get("every_symbol_definition", ())])
+                  "；".join(_formula_index_lines(f)) if i == 0 else ""]
+                 for f in definitions for i, s in enumerate(f.get("every_symbol_definition", ()))])
     if app_id == "APP12.01":
-        return ["中文", "English", "缩写", "受控释义/边界"], [list(row) for row in _GLOSSARY]
+        return ["中文", "English", "缩写", "定义及适用边界"], [list(row) for row in _GLOSSARY]
     if app_id == "APP12.02":
         return ["单位/符号", "含义", "不得混用的边界"], [
             ["kWp", "直流峰值千瓦", "不等于 kWac"], ["kWac", "交流额定千瓦", "不等于 kWh"],
@@ -824,15 +929,21 @@ def _add_canonical_charts(document: Document, specs: list[dict[str, Any]], sourc
 
 
 def _add_toc(document: Document) -> None:
-    """Add a real TOC field; a renderer must refresh its page results."""
+    """Cache a readable outline inside a real TOC field; no invented pages."""
     paragraph = document.add_paragraph()
     paragraph.paragraph_format.space_after = Pt(6)
     run = paragraph.add_run()
     begin = OxmlElement("w:fldChar"); begin.set(qn("w:fldCharType"), "begin"); begin.set(qn("w:dirty"), "true")
     instruction = OxmlElement("w:instrText"); instruction.set(qn("xml:space"), "preserve"); instruction.text = 'TOC \\o "1-3" \\h \\z \\u'
     separate = OxmlElement("w:fldChar"); separate.set(qn("w:fldCharType"), "separate")
+    run._r.extend((begin, instruction, separate))
+    document.add_paragraph("章节索引（页码待 Word/渲染器刷新）")
+    for chapter_id, chapter_title, _items in CHAPTERS:
+        document.add_paragraph(f"{chapter_id} {chapter_title}")
+    for app_id, app_title in APPENDICES:
+        document.add_paragraph(f"{app_id} {app_title}")
     end = OxmlElement("w:fldChar"); end.set(qn("w:fldCharType"), "end")
-    run._r.extend((begin, instruction, separate, end))
+    document.paragraphs[-1].add_run()._r.append(end)
     settings = document.settings._element
     update = settings.find(qn("w:updateFields"))
     if update is None:
@@ -875,6 +986,11 @@ def _validate_checklist_coverage(checklist: list[dict[str, Any]]) -> dict[str, i
     }
 
 
+def _bound_report_input(normalized: dict[str, Any], provenance: list[dict[str, Any]], fid: str) -> Any:
+    """Recheck a cited scalar or repeated child against its Phase 2 source atom."""
+    return _source_value(normalized, provenance, fid)
+
+
 def _claim_binding_error(model: ReportModel, record: dict[str, Any]) -> bool:
     """Check cited IDs against this canonical result, never editorial background."""
     if record["canonical_result_hash"] != model.result["result_hash"]:
@@ -894,7 +1010,7 @@ def _claim_binding_error(model: ReportModel, record: dict[str, Any]) -> bool:
             return True
     if not set(record["supporting_input_field_ids"]).issubset(record["input_field_ids"]):
         return True
-    if any(normalized.get(fid) in (None, "", [], {}) and fid not in datasets
+    if any(_bound_report_input(normalized, provenance, fid) in (None, "", [], {}) and fid not in datasets
            for fid in record["supporting_input_field_ids"]):
         return True
     if not set(record["field_instance_ids"]).issubset(known_instances):
@@ -1024,7 +1140,7 @@ def _word_evidence_lines(evidence: dict[str, Any], source_map: dict[str, str], i
 def _add_professional_narrative(document: Document, evidence: dict[str, Any]) -> None:
     """Write consulting prose; audit identifiers remain in the checklist/XLSX."""
     for text in evidence.get("narrative", ()):
-        paragraph = document.add_paragraph(text[:760])
+        paragraph = document.add_paragraph(_reader_text(text))
         paragraph.paragraph_format.keep_together = True
 
 
@@ -1112,11 +1228,24 @@ def _input_label(field_id: str) -> str:
         "land_classification": "用地性质", "total_area": "总面积", "usable_area": "可利用面积",
         "area_basis": "面积依据", "transformer_capacity": "变压器容量",
         "available_capacity": "可接入容量", "export_power_limit": "送出功率限制",
+        "connection_point": "接入点", "connection_voltage": "接入电压",
+        "curtailment_assumption": "限发假设", "curtailment_basis": "限发依据",
+        "line_length": "线路长度", "metering_boundary": "并网计量边界",
+        "opinion_attachment_id": "接入意见附件", "opinion_status": "接入意见状态",
+        "opinion_valid_until": "接入意见有效期", "permit_reference": "并网许可依据",
+        "power_factor": "功率因数", "protection_plan": "保护方案",
+        "transaction_opinion": "电力交易意见", "upgrade_plan": "增容方案",
+        "annual_energy": "年度负荷电量", "meter_boundary": "负荷计量边界",
+        "profile_attachment_id": "负荷曲线附件", "work_schedule": "工作时段",
+        "age": "使用年限", "azimuth": "方位角", "design_added_load": "设计附加荷载",
+        "fire_access_reference": "消防通道依据", "material": "屋面材质",
+        "slope": "屋面坡度", "structure_type": "屋面结构类型",
+        "waterproof_plan": "防水方案",
     }
     for prefix, label in prefixes.items():
         if field_id.startswith(prefix):
             suffix_key = field_id[len(prefix):].split(".")[-1]
-            suffix = suffixes.get(suffix_key, "相关参数")
+            suffix = suffixes.get(suffix_key, suffix_key.replace("_", " "))
             return f"{label}·{suffix}"
     return "项目专属输入"
 
@@ -1130,8 +1259,12 @@ def _professional_metric_rows(model: ReportModel, metric_ids: tuple[str, ...]) -
             continue
         status = metric.get("status", "UNKNOWN")
         if status == "CALCULATED":
-            display = _word_metric_value(metric)
-            note = "合成参数测算；非实测或合同承诺"
+            if metric_id.endswith("project_irr"):
+                display, roots_note = _irr_presentation(metric)
+                note = f"项目年度税后现金流；{roots_note}；合成测算"
+            else:
+                display = _word_metric_value(metric)
+                note = "合成参数测算；非实测或合同承诺"
         elif status.startswith("BLOCKED"):
             display = "暂不具备有效评价条件"
             note = (str(metric.get("reason") or "当前评价项未形成有效结果")[:160]
@@ -1145,15 +1278,60 @@ def _professional_metric_rows(model: ReportModel, metric_ids: tuple[str, ...]) -
                     "缺用户投资门槛" if metric_id == "financial.phase3e.investment-hurdle-gap" else
                     str(metric.get("reason") or "必要现金事件或方法依据尚未闭合")[:160])
         elif status == "NOT_APPLICABLE":
-            continue
+            display, note = "不适用", "本项目无对应债务或业务适用条件；具体依据见测算模型"
+        elif status == "NOT_IMPLEMENTED":
+            display, note = "方法尚未实现", "所需方法或计算接口未接通；不以缺输入替代说明"
+        elif status == "UNDEFINED":
+            display, note = "数学上未定义", "当前现金流/评价边界下无有效数值"
         else:
-            continue
+            display, note = "状态待核对", "当前结果状态未知；不可当作不适用"
         unit = _metric_unit(metric)
         rows.append([_metric_label(metric_id), display,
+                     "%" if metric_id.endswith("project_irr") else
                      "—" if status != "CALCULATED" and str(unit).startswith("集合") else
                      "比值" if unit == "1" else unit,
                      "按直流kWp计；分子为评价期CAPEX，非仅建设期付款" if metric_id == "financial.unit_investment" and status == "CALCULATED" else note])
     return rows
+
+
+def _project_summary(model: ReportModel) -> str:
+    """Keep calculated project returns separate from real-source and equity gates."""
+    inputs = model.result["inputs"].get("normalized", {})
+    ledger = model.result.get("evidence", {}).get("financial-ledger", {}).get("annual", [])
+    years = inputs.get("project.evaluation_years")
+    lines = [f"本次采用{years}年评价期的合成项目测算；计算完整度与真实工程资料成熟度分别判断。" if years else
+             "本次为合成项目阶段性测算；评价期须核对输入。"]
+    if ledger:
+        initial = ledger[0].get("capex_cash_paid")
+        working = ledger[0].get("working_capital_increase")
+        if initial is not None:
+            lines.append(f"建设期初始资本支出现金付款 {_word_number(initial)}元；" +
+                         (f"营运资金投入 {_word_number(working)}元。" if working is not None else "营运资金待核对。"))
+        renewals = [(row.get("period", "运营期"), row["replacement_cash_paid"]) for row in ledger[1:]
+                    if isinstance(row.get("replacement_cash_paid"), (int, float, Decimal)) and row["replacement_cash_paid"]]
+        if renewals:
+            lines.append("后期更换 " + "、".join(f"{_reader_text(str(period))} {_word_number(amount)}元"
+                                             for period, amount in renewals) +
+                         "；这部分计入全期CAPEX，但不是初始建设款。")
+    ids = ("financial.phase3e.project_npv", "financial.phase3e.project_irr",
+           "financial.phase3e.static_payback", "financial.phase3e.dynamic_payback")
+    calculated = []
+    for mid in ids:
+        if model.status(mid) == "CALCULATED":
+            label, value, unit, _note = _professional_metric_rows(model, (mid,))[0]
+            calculated.append(f"{label} {value}{'' if value.endswith('%') else unit}")
+    if calculated:
+        discount = inputs.get("finance.project_discount_rate")
+        basis = f"，项目折现率{_word_number(discount * 100)}%" if isinstance(discount, (int, float, Decimal)) else ""
+        lines.append("按年度项目税后现金流评价" + basis + "：" + "、".join(calculated) +
+                     "。上述是项目而非投资者回报，不构成真实投资批准。")
+    else:
+        lines.append("项目NPV、IRR及回收期须按各自指标状态核验；当前不推断投资回报。")
+    blocked = _professional_metric_rows(model, ("financial.phase3e.equity-investor-cash-flow", "financial.phase3e.lcoe"))
+    if blocked:
+        lines.append("独立限制：" + "；".join(f"{row[0]}：{row[3]}" for row in blocked) + "。")
+    lines.append("阶段性判断仅支持当前合成假设下的方案与项目收益核查；真实产权、现场条件、并网意见及合同证据仍未核验，不构成投资批准。")
+    return "".join(lines)
 
 
 _CHAPTER_METHOD = {
@@ -1425,7 +1603,9 @@ def _item_evidence(model: ReportModel, pv_type: str, chapter_id: str, title: str
     claim = build_claim(model, item_id, title, f"{title}：{rule.rstrip('。')}？", rule,
                         fields, metrics,
                         pv_type, _word_value, _metric_label)
-    return {**claim, "field_ids": list(fields), "metric_ids": list(metrics),
+    cited_metrics = tuple(dict.fromkeys((*metrics, *claim["supporting_metric_ids"])))
+    cited_fields = tuple(dict.fromkeys((*fields, *claim["supporting_input_field_ids"])))
+    return {**claim, "field_ids": list(cited_fields), "metric_ids": list(cited_metrics),
             "missing": claim["unresolved"] if claim["state"] != "NOT_APPLICABLE" else "",
             "conclusion": claim["decision"]}
 
@@ -1458,7 +1638,9 @@ def _appendix_evidence(model: ReportModel, pv_type: str, app_id: str, item_no: i
                                 model.result["inputs"].get("normalized", {}).get("project.has_storage") is not False)
     claim = build_claim(model, item_id, title, question, rule, field_ids, metric_ids,
                         pv_type, _word_value, _metric_label)
-    return {**claim, "field_ids": list(field_ids), "metric_ids": list(metric_ids),
+    cited_fields = tuple(dict.fromkeys((*field_ids, *claim["supporting_input_field_ids"])))
+    cited_metrics = tuple(dict.fromkeys((*metric_ids, *claim["supporting_metric_ids"])))
+    return {**claim, "field_ids": list(cited_fields), "metric_ids": list(cited_metrics),
             "missing": claim["unresolved"] if claim["state"] != "NOT_APPLICABLE" else "",
             "conclusion": claim["decision"]}
 
@@ -1559,25 +1741,32 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     document.add_heading("执行摘要", level=1)
     basis_text = ("本阶段同时使用明确标识的编辑性测试假设，用于检验工程背景与计算结果的衔接；这些假设不进入计算引擎，也不构成第三方证据。"
                   if editorial_fixture else
-                  "本阶段仅使用已有的部分资料和统一测算结果，不补填缺失事实；正文将具体说明资料不足对专业判断的影响。")
-    document.add_paragraph(f"本项目属于{profile['boundary']}。本阶段依据现有测算结果开展方案边界和计算流程核查，重点关注装机规模、发电预测、投资估算、消纳并网和财务评价条件。{basis_text}由于项目资料尚未达到正式可研深度，以下结论均为有边界的阶段性判断。")
+                  "本次使用当前来源快照及已计算指标；缺失或未核验的真实工程事实不以占位值补足，具体项目收益见下表与初步结论。")
+    document.add_paragraph(f"本项目属于{profile['boundary']}。{basis_text}以下结果按指标实际状态列示，不以整体部分完成状态覆盖已计算项目指标。")
     key_ids = ("dc_capacity", "ac_capacity", "energy.year.1", "consumption.year.1",
-               "energy.delivered.year.1", "revenue.year.1", "financial.capex.total")
+               "energy.delivered.year.1", "revenue.year.1", "financial.capex.total",
+               "financial.phase3e.project_npv", "financial.phase3e.project_irr",
+               "financial.phase3e.static_payback", "financial.phase3e.dynamic_payback")
     key_rows = _professional_metric_rows(model, key_ids)
     _add_table(document, ["专业指标", "本阶段结果", "单位", "说明"], key_rows,
                "关键结果（完整精度和追溯字段见测算模型.xlsx）", widths_cm=(4.0, 4.8, 2.0, 5.0))
     normalized = model.result["inputs"].get("normalized", {})
     input_rows = []
+    records = model.result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
+    input_sources = {record.get("field_id"): record for record in records if record.get("source_id")}
     for key, value in sorted(normalized.items()):
         if profile["special_prefixes"] and key.startswith(profile["special_prefixes"]):
-            if isinstance(value, (dict, list)):
-                display = _word_value(value)
-            else:
-                display = _word_value(value)
-            input_rows.append([_input_label(key), display, "本阶段采用", "详细字段见来源清单"])
+            display = _word_value(value)
+            source = input_sources.get(key, {})
+            unit = source.get("unit")
+            if isinstance(value, (int, float, Decimal)) and not isinstance(value, bool) and unit not in (None, "", "1"):
+                display += f" {unit}"
+            state = "合成假设已提供；未真实核验" if source.get("status") == "ASSUMED" else (
+                "来源已核验" if source.get("status") == "VERIFIED" else "已提供；来源状态待核验")
+            input_rows.append([_input_label(key), display, state, "详细字段见来源清单"])
     _add_table(document, ["项目类型专属输入", "展示值", "采用情况", "追溯位置"], input_rows[:16],
                "项目类型专属输入摘要（不展开原始对象）", widths_cm=(4.2, 5.0, 3.0, 5.0))
-    document.add_paragraph("初步结论：当前结果可用于检查计算链和输入边界，不构成真实项目评价。部分财务评价所需的实际现金收付、融资安排、日期事件和终期现金资料尚未闭合，因此本阶段不对项目投资收益水平作确定性判断。")
+    document.add_paragraph("初步结论：" + _project_summary(model))
     chart_specs = _canonical_chart_specs(model)
     chart_receipts: list[dict[str, Any]] = []
     checklist: list[dict[str, Any]] = []
@@ -1624,26 +1813,70 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     _add_table(document, ["专业指标", "本阶段结果", "单位", "说明"], index_rows,
                "财务与项目指标摘要", widths_cm=(4.0, 4.8, 2.0, 5.0))
     if blocked:
-        document.add_paragraph("部分财务指标暂不具备有效评价条件，原因是现金事件、融资安排、日期边界或终期价值等必要依据尚未完整取得。该限制不代表计算方法失效，而是表示本项目当前证据尚不足以支撑投资回报判断。")
+        if model.status("financial.phase3e.project_npv") == "CALCULATED":
+            document.add_paragraph("以下阻断仅适用于各自指标；不撤销已计算的项目净现值。IRR、回收期须以其自身状态为准；股东现金事件与平准化成本边界须独立补证。")
+        else:
+            document.add_paragraph("以下指标按各自阻断理由补证；不能由尚未计算的项目回报或其他指标推断有效收益。")
     for app_id, app_title in APPENDICES:
         document.add_heading(f"{app_id} {app_title}", level=1)
-        document.add_paragraph(f"{app_id}《{app_title}》提供受控追溯摘要；完整字段、原始精度和来源编号保留在配套 Excel，避免正文被审计数据撑宽。")
+        document.add_paragraph(f"{app_id}《{app_title}》提供受控追溯摘要；完整字段、原始精度和来源编号保留在配套 Excel。")
         for item_no in (1, 2):
             item_id = f"{app_id}.{item_no:02d}"
             item_title = APPENDIX_TITLES[item_id]
             document.add_heading(f"{item_id} {item_title}", level=2)
             evidence = _appendix_evidence(model, pv_type, app_id, item_no)
             if app_id in {"APP11", "APP12"}:
-                detail = _appendix_content(model, item_id)
+                detail = (f"本次列示{len(_formula_definitions(model))}条被引用定义"
+                          + (f"，冻结字典共{len(model.catalog.formulas)}条" if model.catalog else "")
+                          + "；列示、引用与成功执行不等同。具体符号及边界按公式分组见下一节。"
+                          if item_id == "APP11.01" else
+                          "各公式的完整符号、下标、集合与适用边界分别列示；定义存在不代表已执行。"
+                          if item_id == "APP11.02" else
+                          "受控中英文术语按名称、全称、缩写、实际含义及适用边界列示。")
                 evidence["narrative"] = [detail]
                 evidence["summary"] = detail
             for text in evidence["narrative"]:
-                document.add_paragraph(text[:760])
+                document.add_paragraph(_reader_text(text))
             if app_id in {"APP11", "APP12"}:
                 appendix_headers, appendix_rows = _appendix_rows(model, item_id)
-                if appendix_rows:
+                if item_id == "APP11.01" and appendix_rows:
+                    _add_table(document, ["正式编号", "中文名称", "本次引用与执行"],
+                               [[row[0], row[1], row[5]] for row in appendix_rows],
+                               "公式索引（不等于冻结公式全部执行）", font_size=9)
+                elif item_id == "APP11.02":
+                    definitions = _formula_definitions(model)
+                    shared, shared_ids = _formula_shared_contracts(definitions)
+                    if shared:
+                        document.add_heading("共通记法契约（按原文一致性分组）", level=3)
+                        document.add_paragraph("相同契约仅在此处完整定义一次；每条公式在下方注明所适用的组号。逐符号定义及量纲仍逐公式列出。")
+                        for label, text, number in shared:
+                            document.add_paragraph(f"{label}第{number}组：{text}")
+                    for formula in definitions:
+                        fid = formula["formula_id"]
+                        heading = document.add_heading(f"{fid} {formula.get('chinese_name', '未定义')}", level=3)
+                        heading.paragraph_format.keep_with_next = True
+                        document.add_paragraph(f"公式：{formula.get('text_equation') or formula.get('latex') or '未提供'}（结果单位：{formula.get('unit') or '未定义'}）")
+                        document.add_paragraph("适用边界：" + _reader_text(str(formula.get("calculation_boundary") or "未定义")))
+                        document.add_paragraph("本项目状态：" + _formula_status(model, fid))
+                        references = [f"{label}第{shared_ids[key, _formula_contract_text(formula[key])]}组"
+                                      for key, label in (("operator_definition", "运算符"),
+                                                         ("notation_contract", "记法与歧义"),
+                                                         ("unit_convention", "单位约定")) if formula.get(key)]
+                        if references:
+                            document.add_paragraph("本式共通契约：" + "；".join(references))
+                        if formula.get("dimensional_check"):
+                            document.add_paragraph("本式量纲校核：" + _formula_contract_text(formula["dimensional_check"]))
+                        symbols = [[s.get("symbol") or "未定义", s.get("definition_zh") or "未定义",
+                                    s.get("unit") or "未定义"] for s in formula.get("every_symbol_definition", ())]
+                        if symbols:
+                            _add_table(document, ["完整符号", "中文定义", "单位"], symbols,
+                                       "完整符号（仅属于本公式）", widths_cm=(3, 11, 3), font_size=9)
+                        index_lines = _formula_index_lines(formula)
+                        if index_lines:
+                            document.add_paragraph("下标、索引、集合与求和范围：" + "；".join(index_lines))
+                elif appendix_rows:
                     _add_table(document, appendix_headers, appendix_rows,
-                               f"{item_id} · 本次快照正式定义或受控编辑词典", font_size=7.5)
+                               f"{item_id} · 受控编辑词典", font_size=9)
             checklist.append({"id": item_id, "title": item_title,
                               "content_summary": evidence["summary"][:600], "input_field_ids": evidence["field_ids"],
                               "metric_ids": evidence["metric_ids"], "source_ids": evidence["source_ids"],
@@ -1664,12 +1897,12 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     document.add_heading("术语与公式说明", level=1)
     document.add_paragraph("公式定义、版本、变量、单位、输入字段和完整来源绑定见测算模型.xlsx 的公式说明工作表，以及资料来源与假设清单.xlsx 的公式/方法工作表。正文不复制原始对象或过高精度小数。")
     document.add_heading("版本与质量声明", level=1)
-    document.add_paragraph(f"项目边界：{profile['boundary']}。配套 Excel 为本次测算快照；修改 Excel 不会使本报告或旧结果自动有效，必须重新运行计算程序生成新的统一身份。PDF 只有在真实转换器可用并成功解析时才生成；本次渲染、页面视觉和目录页码门禁以质量清单实际状态为准。")
+    document.add_paragraph(f"项目边界：{profile['boundary']}。报告内容版本：{REPORT_CONTENT_VERSION}；该版本只表示写作与排版，不修改计算结果身份。配套 Excel 为本次测算快照；修改 Excel 不会使本报告或旧结果自动有效，必须重新运行计算程序生成新的统一身份。PDF 只有在真实转换器可用并成功解析时才生成；本次渲染、页面视觉和目录页码门禁以质量清单实际状态为准。")
     _add_table(document, ["身份字段", "统一测算值"], [[key, str(value)] for key, value in model.identity.items()],
                "统一测算身份（仅在此处展示一次）", widths_cm=(4.5, 12.5), font_size=8.5)
     footer = section.footer.paragraphs[0]
     footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    footer.add_run("阶段性草稿 · 资料不足，暂不具备决策条件 · ")
+    footer.add_run("合成分析草稿 · 真实项目须经专业核验 · ")
     fld = OxmlElement("w:fldSimple")
     fld.set(qn("w:instr"), "PAGE")
     footer._p.append(fld)
@@ -1690,6 +1923,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     document.save(tmp)
     os.replace(tmp, output)
     return {"path": output.name, "size": output.stat().st_size, "sha256": _sha256(output),
+            "report_content_version": REPORT_CONTENT_VERSION,
             **coverage,
             "charts": chart_receipts, "content_checklist": checklist,
             "duplicate_scan": duplicate_scan, "language_scan": language_scan,
@@ -1772,6 +2006,7 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
     checklist_payload = {
         "schema_version": "phase7i-content-checklist-v1",
         "claim_contract_version": "phase7l-central-claim-v1",
+        "report_content_version": REPORT_CONTENT_VERSION,
         "project_id": model.result["project_id"], "pv_type": model.result["pv_type"],
         "identity": model.identity,
         "coverage": coverage,
@@ -1821,6 +2056,7 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
     receipt = {
         "status": "DRAFT_PARTIAL" if files["F02"].get("status") != "GENERATED" else "DRAFT_PARTIAL",
         "phase": phase,
+        "report_content_version": REPORT_CONTENT_VERSION,
         "project_id": model.result["project_id"], "pv_type": model.result["pv_type"],
         "display_name": display_name, "name_mapping": name_mapping,
         "identity": identity, "files": files,
