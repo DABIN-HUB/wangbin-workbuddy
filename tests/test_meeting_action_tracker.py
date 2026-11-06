@@ -57,6 +57,32 @@ def test_core(tmp_path):
     assert any(t["负责人确认状态"] == "建议" for t in r["tasks"].values())
 
 
+def test_explicit_cancel_with_simulation_reason_and_unaccepted_owner(tmp_path):
+    r = run(tmp_path, "2026-11-06 蓝桥演练例会。T02 经会议明确取消，原因：模拟需求撤回。新增事项：检查演练接口 T03；建议由李工负责，尚未获其接受。", old(tmp_path), check_date="2026-11-07")
+    assert r["tasks"]["T02"]["执行状态"] == "取消"
+    assert r["tasks"]["T02"]["是否逾期"] == "否"
+    assert sum(h["task_id"] == "T02" and h["事件类型"] == "取消" for h in r["history"]) == 1
+    assert not any(q["task_id"] == "T02" and q["待确认字段"] == "执行状态" for q in r["questions"])
+    assert any(q["待确认字段"] == "负责人" for q in r["questions"])
+
+
+@pytest.mark.parametrize("phrase", ["拟取消", "考虑取消", "建议取消", "建议将 T02 取消"])
+def test_cancel_proposal_remains_pending(tmp_path, phrase):
+    r = run(tmp_path, f"T02 会议{phrase}。", old(tmp_path))
+    assert r["tasks"]["T02"]["执行状态"] == "待执行"
+    assert not any(h["task_id"] == "T02" and h["事件类型"] == "取消" for h in r["history"])
+    assert any(q["task_id"] == "T02" and q["待确认字段"] == "执行状态" for q in r["questions"])
+
+
+def test_reopen_proposal_and_simulation_reason(tmp_path):
+    p = old(tmp_path, [{"task_id": "T02", "任务内容": "准备演练培训", "执行状态": "取消"}])
+    proposed = run(tmp_path, "T02 拟重开。", p)
+    assert proposed["tasks"]["T02"]["执行状态"] == "取消"
+    assert any(q["待确认字段"] == "执行状态" for q in proposed["questions"])
+    decided = run(tmp_path, "T02 明确重新开启，原因：模拟演练恢复。", p)
+    assert decided["tasks"]["T02"]["执行状态"] == "待执行"
+
+
 def test_a02_a03_stable_repeat_and_reorder(tmp_path):
     p = notes(tmp_path, "2026-11-06 决定新增：编写演练纪要，由周工确认负责。决定新增：检查演练接口 B。")
     first = tracker.reconcile(p, project_name="蓝桥演练", output_dir=tmp_path)

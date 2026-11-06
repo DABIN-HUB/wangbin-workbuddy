@@ -143,6 +143,12 @@ def statements(lines, filename):
                 yield segment, f"{filename}:行{line}：{segment[:200]}"
 
 
+def proposed_status_change(segment, action):
+    # A proposal must qualify the status action itself. Matching a bare 拟 also
+    # catches unrelated words in the explanation, e.g. 模拟需求撤回.
+    return bool(re.search(r"(?:考虑|建议|拟)\s*(?:将\s*)?(?:[\w-]+\s*)?" + action, segment))
+
+
 def reconcile(meeting_file, previous_tasks=None, supplemental_evidence=None, corrections=None,
               project_name="会议", check_date=None, timezone=None, response_mode="export",
               draft_followup=False, output_dir=None):
@@ -238,12 +244,12 @@ def reconcile(meeting_file, previous_tasks=None, supplemental_evidence=None, cor
         elif re.search(r"已完成|完成了", segment):
             update(tid, "执行状态", "报告完成", "报告完成", source)
         elif re.search(r"重新开启|重开", segment):
-            if explicit and not re.search(r"考虑|建议|拟", segment):
+            if explicit and not proposed_status_change(segment, r"(?:重新开启|重开)"):
                 update(tid, "执行状态", "待执行", "重新开启", source)
             else:
                 ask(tid, "执行状态", segment, "仅为重开提议", source)
         elif re.search(r"取消", segment):
-            if explicit and not re.search(r"考虑|建议|拟", segment):
+            if explicit and not proposed_status_change(segment, r"取消"):
                 update(tid, "执行状态", "取消", "取消", source)
             else:
                 ask(tid, "执行状态", segment, "仅为取消提议", source)

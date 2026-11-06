@@ -12,13 +12,13 @@ import zipfile
 from openpyxl import load_workbook
 
 ROOT = Path(__file__).resolve().parents[1]
-ARCHIVE = ROOT / "dist/wangbin-meeting-action-tracker-0.1.0-skill-candidate.zip"
+ARCHIVE = ROOT / "dist/wangbin-meeting-action-tracker-0.1.1-skill-candidate.zip"
 with tempfile.TemporaryDirectory(prefix="mtg-candidate-", dir=os.environ.get("TMPDIR") or None) as tmp:
     folder = Path(tmp)
     with zipfile.ZipFile(ARCHIVE) as z:
         z.extractall(folder / "extracted")
     notes = folder / "fictional.md"
-    notes.write_text("2026-11-06 蓝桥演练例会。T02 经会议明确取消。新增事项：检查演练接口 T03；建议由李工负责，尚未获其接受。", encoding="utf-8")
+    notes.write_text("2026-11-06 蓝桥演练例会。T02 经会议明确取消，原因：模拟需求撤回。新增事项：检查演练接口 T03；建议由李工负责，尚未获其接受。", encoding="utf-8")
     old = folder / "fictional.csv"
     with old.open("w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=["task_id", "任务内容", "执行状态", "来源"])
@@ -38,6 +38,8 @@ with tempfile.TemporaryDirectory(prefix="mtg-candidate-", dir=os.environ.get("TM
     rows = {row[0]: row for row in list(wb["当前任务"].values)[1:]}
     assert rows["T01"][6] == "进行中" and rows["T01"][11] == "无新增进展"
     assert rows["T02"][6] == "取消"
+    assert any(row[1] == "T02" and row[2] == "取消" for row in list(wb["状态历史"].values)[1:])
+    assert any(row[1] == "负责人" for row in list(wb["待确认事项"].values)[1:])
     assert len(rows) == 3
     assert hashlib.sha256(old.read_bytes()).hexdigest() == original
     assert Path(info["summary_file"]).read_text(encoding="utf-8").strip()
