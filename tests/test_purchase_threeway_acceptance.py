@@ -145,6 +145,31 @@ def test_a07_derived_po_amount(tmp_path):
     _, _, wb, _, _ = checked(tmp_path, pos=[po(po_amount="")])
     assert line(wb)["expected_amount_source"] == "DERIVED" and line(wb)["expected_amount"] == "50.00"
 
+@pytest.mark.parametrize("missing,available", [("ordered_quantity", "po_unit_price"), ("po_unit_price", "ordered_quantity")])
+def test_a07_complete_po_key_with_missing_operand_retains_comparison(tmp_path, missing, available):
+    _, summary, wb, report, _ = checked(tmp_path, pos=[po(**{missing: "", "po_amount": ""})])
+    assert summary["run_status"] == "SUCCEEDED_WITH_EXCEPTIONS"
+    assert summary["totals"] == {"po_keys": 1, "matched": 0, "exceptions": 2}
+    assert summary["exception_code_counts"] == {"MISSING_REQUIRED_FIELD": 1, "NOT_COMPARABLE": 1}
+    result = summary["line_results"][0]
+    assert result["comparison_key"] == json.dumps(["P1", "1", "SKU"])
+    assert result["status"] == "MISSING_REQUIRED_FIELD"
+    assert result["exception_codes"] == "MISSING_REQUIRED_FIELD;NOT_COMPARABLE"
+    assert result["source_file"] == "po0.csv" and result["source_row_number"] == 2
+    assert result["expected_amount"] == result["expected_amount_source"] == "NOT_AVAILABLE"
+    assert result["ordered_quantity" if missing == "ordered_quantity" else "weighted_invoice_unit_price"] == ("NOT_AVAILABLE" if missing == "ordered_quantity" else "5.00")
+    assert result["received_quantity"] == result["invoiced_quantity"] == "10"
+    assert result["receipt_variance"] == result["invoice_variance"] == ("NOT_AVAILABLE" if missing == "ordered_quantity" else "0")
+    assert result["amount_variance"] == "NOT_AVAILABLE"
+    assert len(rows(wb["Match Summary"])) == len(rows(wb["Line Results"])) == 1
+    assert rows(wb["Unmatched Receipts"]) == rows(wb["Unmatched Invoices"]) == []
+    trace = rows(wb["Source Trace"])
+    assert [(r["_kind"], r["source_row_number"]) for r in trace] == [("po", 2), ("receipt", 2), ("invoice", 2)]
+    assert trace[0][missing] is None and trace[0][available] is not None
+    assert {r["_reason"] for r in trace[1:]} == {"INCLUDED"}
+    assert {(r["exception_code"], r["source_row_reference"]) for r in rows(wb["Exceptions"])} == {("MISSING_REQUIRED_FIELD", "po0.csv:2"), ("NOT_COMPARABLE", "po0.csv:2")}
+    assert "NOT_COMPARABLE" in report and "MISSING_REQUIRED_FIELD" in report and "po0.csv:2" in report
+
 
 def test_a08_duplicate_po_key(tmp_path):
     _, s, wb, _, _ = checked(tmp_path, pos=[po(), po()])

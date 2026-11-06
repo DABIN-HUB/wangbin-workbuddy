@@ -146,7 +146,15 @@ def main_match(manifest: dict[str, Any], output: Path, manifest_dir: Path | None
             r["_key"]=key_of(r,key_ci)
             malformed=[f for f in numeric_fields[kind] if text(r.get(f)) and dec(r.get(f)) is None]
             negative=[f for f in numeric_fields[kind] if dec(r.get(f)) is not None and dec(r.get(f)) < 0]
-            if missing: r["_reason"]="MISSING_REQUIRED_FIELD"; r["_invalid_fields"]=missing; invalid.append(r)
+            # A complete PO key still identifies the order when a numeric
+            # operand is blank. Retain it for comparison, but never aggregate
+            # the absent quantity or treat a blank price as zero.
+            po_missing_operand = (kind == "po" and r["_key"] is not None
+                                  and set(missing) <= {"ordered_quantity", "po_unit_price"}
+                                  and not (malformed or negative))
+            if missing:
+                r["_reason"]="MISSING_REQUIRED_FIELD"; r["_invalid_fields"]=missing
+                if not po_missing_operand: invalid.append(r)
             elif malformed or negative:
                 r["_reason"]="INVALID_INPUT"; r["_invalid_fields"]=malformed + negative; invalid.append(r)
             elif r["_key"] is None: r["_reason"]="AMBIGUOUS_KEY"; invalid.append(r)
@@ -154,7 +162,10 @@ def main_match(manifest: dict[str, Any], output: Path, manifest_dir: Path | None
             trace.append(r)
     pos=defaultdict(list); receipts=defaultdict(list); invoices=defaultdict(list)
     for r in groups["po"]:
-        if r.get("_key") is not None and r.get("_reason")=="INCLUDED": pos[r["_key"]].append(r)
+        if r.get("_key") is not None and (r.get("_reason")=="INCLUDED" or
+            (r.get("_reason")=="MISSING_REQUIRED_FIELD" and
+             set(r.get("_invalid_fields", [])) <= {"ordered_quantity", "po_unit_price"})):
+            pos[r["_key"]].append(r)
     for r in groups["receipt"]:
         if r.get("_key") is not None and r.get("_reason")=="INCLUDED": receipts[r["_key"]].append(r)
     for r in groups["invoice"]:
@@ -178,6 +189,7 @@ def main_match(manifest: dict[str, Any], output: Path, manifest_dir: Path | None
                 exceptions.append({"comparison_key":json.dumps(key),"exception_code":"ORPHAN_INVOICE","source_row_reference":r["source_file"]+":"+str(r["source_row_number"])})
             continue
         po=ps[0]; oq=dec(po.get("ordered_quantity")); price=dec(po.get("po_unit_price")); po_amt=dec(po.get("po_amount")); rq_values=[dec(r.get("received_quantity")) for r in rs]; iq_values=[dec(r.get("invoiced_quantity")) for r in ins]; ia_values=[dec(r.get("invoice_amount")) for r in ins]
+        if any(p.get("_reason")=="MISSING_REQUIRED_FIELD" for p in ps): codes.append("MISSING_REQUIRED_FIELD")
         rq=sum(rq_values,Decimal(0)) if rq_values and all(x is not None for x in rq_values) else None
         iq=sum(iq_values,Decimal(0)) if iq_values and all(x is not None for x in iq_values) else None
         # Keep each original currency separate. A partial same-currency subset
