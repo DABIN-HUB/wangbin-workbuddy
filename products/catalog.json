@@ -286,7 +286,7 @@
       ]
     },
     {
-      "active_version": "0.1.0",
+      "active_version": "0.1.1",
       "development": "MVP candidate; local focused matching run verified",
       "id": "wangbin-purchase-threeway-match",
       "maintenance": "UNKNOWN",
@@ -300,15 +300,26 @@
       "test_path": "tests/test_purchase_threeway_match.py",
       "type": "Skill",
       "validation_metrics": "products/metrics.json",
-      "versions": [{
-        "archive_evidence": "UNKNOWN",
-        "candidate": "UNKNOWN",
-        "date": "UNKNOWN",
-        "published_at": "UNKNOWN",
-        "sha256": "UNKNOWN",
-        "source": "packages/skills/wangbin-purchase-threeway-match",
-        "version": "0.1.0"
-      }]
+      "versions": [
+        {
+          "archive_evidence": "dist/wangbin-purchase-threeway-match-0.1.0-skill-candidate.zip",
+          "candidate": "dist/wangbin-purchase-threeway-match-0.1.0-skill-candidate.zip",
+          "date": "UNKNOWN",
+          "published_at": "UNKNOWN",
+          "sha256": "65c046f47c8d9e8d529d9afbd63c85f45e01797257ca7d82822c4d6836f96fff",
+          "source": "packages/skills/wangbin-purchase-threeway-match",
+          "version": "0.1.0"
+        },
+        {
+          "archive_evidence": "dist/wangbin-purchase-threeway-match-0.1.1-skill-candidate.zip",
+          "candidate": "dist/wangbin-purchase-threeway-match-0.1.1-skill-candidate.zip",
+          "date": "UNKNOWN",
+          "published_at": "UNKNOWN",
+          "sha256": "664dcd9f3b30f6be4b40d21c6d14257085ef49dda2dbe049f3d01476a7b200c1",
+          "source": "packages/skills/wangbin-purchase-threeway-match",
+          "version": "0.1.1"
+        }
+      ]
     },
     {
       "active_version": "0.1.3",
