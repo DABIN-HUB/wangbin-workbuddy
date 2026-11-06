@@ -2,24 +2,49 @@
 name: wangbin-tender-analyzer
 display_name: wangbin 招标分析助手
 display_name_en: wangbin Tender Analyzer
-description: 本地分析单个 TXT/MD 招标文本，输出带脱敏摘录证据的待核实清单。
-description_zh: 仅在本地分析单个 UTF-8 TXT/MD 文本，提取资格、评分、技术、日期和响应清单，并绑定限长脱敏摘录。
-description_en: Analyze one local UTF-8 TXT/MD tender file with bounded redacted excerpts and pending verification items.
+description: 对照已授权招标文本、正式补遗和响应稿，检查漏答、附件证据及版本冲突；保留单文件分析。
+description_zh: 对照招标要求、正式补遗和响应材料，检查漏答、附件证据与版本冲突。
+description_en: Check bid responses against tender requirements and formal amendments, identifying omissions, missing evidence, and version conflicts.
 examples_zh:
-  - "在仓库本地分析这份已获授权的招标 TXT，列出资格和关键日期"
-  - "从仓库本地 Markdown 招标文本提取技术要求和评分条款"
-  - "检查本地招标文本中缺失、冲突或有歧义的响应项"
+  - "这是招标文本和拟提交的响应稿，帮我检查漏答、缺证明材料和前后不一致的地方。"
+  - "对照正式补遗重新核查标书，指出哪些响应还沿用了旧要求。"
+  - "根据附件清单检查提交材料，只有名字但没有实际证据的项目单独列出来。"
 examples_en:
-  - "Locally analyze one authorized tender TXT in the repository checkout"
-  - "Extract technical requirements and scoring clauses from a local Markdown tender"
-  - "Flag missing, conflicting, or ambiguous response items in local tender text"
-version: 0.1.0
+  - "Check this tender and draft response for omissions, missing evidence, and inconsistencies."
+  - "Recheck the response against the formal amendments and identify sections that still use superseded requirements."
+  - "Check the submission against the attachment list and separate listed filenames from evidence that is actually available."
+version: 0.2.0
 author: wangbin
 allowed-tools: Read, Bash
 ---
 # wangbin 招标分析助手
 
-本 Skill 是可运行的、文本优先的招标分析 MVP。脚本只在本地进程中分析一个已由用户选择的 UTF-8 `.txt` 或 `.md` 文件；它不会验证用户是否拥有该文件的处理权限，不执行 PDF/OCR/宏/脚本，也不上传远程服务。结果只用于辅助核对，不替代采购文件原件、法律意见、人工评审或 WorkBuddy 平台审核。
+## 0.2.0 自然对话与本地执行合同
+
+用户用自然语言请求核查时，先确认招标 TXT/MD、响应稿 TXT/MD、是否准备模式、正式补遗、附件目录 CSV/XLSX、实际可读文本材料、项目名与输出目录；不要凭用户对话猜本机路径、读取目录或未经授权上传。仅当输入文件已由用户明确选择且确认授权，并且本地 Python + `openpyxl` 可用，才将路径逐一映射到以下真实 CLI。只说“核查”而缺响应时请求提供响应，不假装漏答；只有招标文本时可进入准备模式，并标“响应未核查”。附件目录只代表登记，实际材料必须以 `--evidence-file` 显式给出。请用户确认真实资格/保证金/版本关系及原件，不能声称已认证或已提交。自然语言路由及 WorkBuddy 宿主 Python/cwd/权限**未在平台实测**。
+
+从仓库根目录调用（不是固定的 WorkBuddy 路径）：
+
+```bash
+python packages/skills/wangbin-tender-analyzer/scripts/check_response.py --tender "<已选择招标.txt>" --response "<已选择响应.md>" --mode check --amendment "<正式补遗.txt>" --attachment-catalog "<附件清单.csv或.xlsx>" --evidence-file "<实际材料.txt>" --project "<安全单段项目名>" --output-dir "<已存在的授权输出目录>"
+```
+
+`--tender` 必需；省略 `--response` 为准备模式，`--mode check` 明确核查而缺响应报 `MISSING_RESPONSE`；`--mode prepare` 不接受响应稿；`--amendment` 与 `--evidence-file` 可重复且不扫描目录；清单可选。`--output-dir` 必需且目录须事先存在；`--project` 可省略并标“未提供项目名称”，拒绝越界/覆盖既有产物。只读 UTF-8 `.txt/.md`（每份≤1 MiB），仅目录支持 `.csv/.xlsx`；运行环境需 Python 3 与 `openpyxl`，不在 WorkBuddy 平台假定可用。解压 ZIP 时可将上述脚本路径换成 `<解压目录>/wangbin-tender-analyzer/scripts/check_response.py`，旧 `analyze_tender.py --input` 仍输出原 JSON。
+
+成功时输出五表 `{项目}-投标响应检查.xlsx`（核查概览、要求响应矩阵、附件核对、补遗与版本、待确认事项）及 `{项目}-提交前核对清单.md`。编号精确匹配仍需确认上下文；语义候选不自动确认为回应，强制条件逐项对照文本，材料存在/目录登记/内容支持为不同状态。正式替代仅在补遗原句同时指明旧条款和改为/替换/撤销时生效；冲突补遗并列待确认，非正式说明不更新优先级。错误 `ERROR <CODE> role=<角色>` 返回 exit 2，不回显文件私有绝对路径或原文。脱敏不完备；只核提供范围，不证明证书/签署/保证金真实性，不推定中标率、法律后果、投标截止时间或 PDF/DOCX 解析。具体业务限制与案例见仓库 `docs/products/wangbin-tender-analyzer/`；ZIP 内请依据本段限制解释。
+
+以下六句推荐语是静态引导文本，不是已完成模型对话的证据：
+
+- 这是招标文本和拟提交的响应稿，帮我检查漏答、缺证明材料和前后不一致的地方。
+- 对照正式补遗重新核查标书，指出哪些响应还沿用了旧要求。
+- 根据附件清单检查提交材料，只有名字但没有实际证据的项目单独列出来。
+- Check this tender and draft response for omissions, missing evidence, and inconsistencies.
+- Recheck the response against the formal amendments and identify sections that still use superseded requirements.
+- Check the submission against the attachment list and separate listed filenames from evidence that is actually available.
+
+## 旧版单文件分析（兼容）
+
+本 Skill 的旧单文件入口仍可运行。脚本只在本地进程中分析一个已由用户选择的 UTF-8 `.txt` 或 `.md` 文件；它不会验证用户是否拥有该文件的处理权限，不执行 PDF/OCR/宏/脚本，也不上传远程服务。结果只用于辅助核对，不替代采购文件原件、法律意见、人工评审或 WorkBuddy 平台审核。
 
 ## 输入和安全边界
 
