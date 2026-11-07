@@ -23,8 +23,18 @@ spec.loader.exec_module(legacy)
 SHEETS = ("核查概览", "要求响应矩阵", "附件核对", "补遗与版本", "待确认事项")
 DIMENSIONS = ("响应存在状态", "条件覆盖状态", "附件实际提供状态", "内容支持状态")
 NUMBER = re.compile(r"^\s*(?:第(?:\S+章\s*)?)(\d+[a-zA-Z]?)\s*[.、．:]|^\s*(\d+[a-zA-Z]?)\s*[.、．:]")
-MATERIAL = re.compile(r"[\w\u4e00-\u9fff.-]+\.(?:txt|md)\b", re.I)
-WORD = re.compile(r"[\u4e00-\u9fff]{2,}|[a-zA-Z]{3,}|\d+(?:\.\d+)?")
+MATERIAL = re.compile(r'[\w\u4e00-\u9fff.-]+\.(?:txt|md)\b', re.I)
+WORD = re.compile(r'[\u4e00-\u9fff]{2,}|[a-zA-Z]{3,}|\d+(?:\.\d+)?')
+
+
+def material_names(text: str) -> list[str]:
+    """Extract file basenames without swallowing adjacent Chinese instructions."""
+    names = []
+    for match in MATERIAL.finditer(text):
+        name = re.split(r'必须|提交|提供|参见|见|附|须|应', match.group())[-1]
+        if name and name not in names:
+            names.append(name)
+    return names
 
 
 class InputError(Exception):
@@ -82,7 +92,7 @@ def tokens(text: str) -> set[str]:
 
 DATE = re.compile(r'(?<!\d)(\d{4})[-年/.](\d{1,2})[-月/.](\d{1,2})日?')
 YEAR = re.compile(r'(?<!\d)(\d{4})年')
-DUTY = re.compile(r'营业执照|(?:甲类|乙类|[\w\u4e00-\u9fff]{1,8})?(?:资质证明|资格证明|证书|证明材料)|报价函|承诺函')
+DUTY = re.compile(r'营业执照|(?:甲类|乙类|[\u4e00-\u9fff]{1,8})?(?:资质证明|资格证明|证书|证明材料)|报价函|承诺函')
 NEGATIVE_EVIDENCE = re.compile(r'尚未取得|正在申请|拟申请|仅为目录占位|不含证书|不是证书|未取得')
 
 
@@ -133,26 +143,52 @@ def object_name(text: str) -> str | None:
     return match.group(1) if match else None
 
 
-def polarity(text: str, term: str) -> int | None:
-    # Compare the same action/object, not a negation in an unrelated clause.
-    action = re.search(r'(?:不)?(支持|使用|提供|具备)([\u4e00-\u9fff\w/]+)', term)
+def action_fact(text: str, term: str) -> tuple[int, str] | None:
+    """Bind polarity and current availability to the requested action and object.
+
+    A mention of the object in a design document is not an assertion that the
+    requested *function* works. Evaluate one clause at a time; unrelated clauses
+    cannot donate their positive verb to a negative capability statement.
+    """
+    action = re.search(r'(不)?(支持|使用|提供|具备)([\u4e00-\u9fff\w/]+)', term)
     if not action:
         return None
-    verb, obj = action.groups()
-    obj = re.split(r'[，。；,;\s]', obj)[0]
+    _, verb, obj = action.groups()
     stem = obj[:min(len(obj), 4)]
-    hit = re.search(r'(不|未|无)?' + verb + r'[^，。；,;]{0,12}' + re.escape(stem), text)
-    if not hit:
-        return None
-    return -1 if hit.group(1) else 1
+    clauses = re.split(r'[，。；,;]', text)
+    for index, clause in enumerate(clauses):
+        if stem not in clause:
+            continue
+        if (index + 1 < len(clauses) and re.search(r'(功能|服务|能力).{0,8}(未上线|未投产|未实现|尚未实现|不可用|无法使用)', clauses[index + 1])):
+            return -1, '功能未实现或仅有设计材料'
+        # A document about X is not X itself. Restrict the object to the
+        # requested verb's own phrase rather than searching anywhere nearby.
+        hit = re.search(r'(无法|不能|不可|未能|不|未|无)?' + verb +
+                        r'([^，。；,;]{0,20})', clause)
+        if hit and stem in hit.group(2):
+            return (-1 if hit.group(1) else 1, '明确肯否')
+        if re.search(r'(无法|不能|不可|未能|不|未|无)(?:实际)?' + verb +
+                     r'[^，。；,;]{0,20}' + re.escape(stem), clause):
+            return -1, '明确肯否'
+        # Status/limitations apply to the same object, even if the sentence
+        # only offers a design or promises a future implementation.
+        if re.search(r'未上线|未投产|尚未实现|尚未开发|未实现|无法使用|不能使用|暂不支持|仅(?:提供|有).{0,20}(?:设计|文档|方案)', clause):
+            return -1, '功能未实现或仅有设计材料'
+    return None
+
+
+def polarity(text: str, term: str) -> int | None:
+    fact = action_fact(text, term)
+    return fact[0] if fact else None
 
 
 def response_conflict(condition: str, reply: str) -> str | None:
     target = polarity(condition, condition)
-    actual = polarity(reply, condition)
+    fact = action_fact(reply, condition)
+    actual = fact[0] if fact else None
     if target is not None and actual is not None and target != actual:
-        return '回应肯否与招标义务冲突'
-    if re.search(r'若|只有|才支持|另行购买|拟于|尚未实现|交付后', reply) and re.search(r'必须|须|应', condition):
+        return '回应' + fact[1] + '与招标义务冲突'
+    if re.search(r'若|只有|才支持|方可|另行购买|拟于|尚未实现|交付后|仅提供|只提供|未上线|未投产', reply) and re.search(r'必须|须|应', condition):
         return '回应附带前提或尚未实现，不能证明无条件义务'
     return None
 
@@ -190,8 +226,8 @@ def requirements(sources: list[tuple[str, str]]) -> list[dict]:
             is_amendment = source_index > 1
             rows.append({'id': f'{source_index}:{n}:{num or "无编号"}', 'number': num,
                          'text': quote(line), 'raw': line, 'source': loc(name, n),
-                         'conditions': conditions(line), 'materials': MATERIAL.findall(line),
-                         'duty': DUTY.findall(line) if re.search(r'须|必须|应|附|提供', line) else [],
+                         'conditions': conditions(line), 'materials': material_names(line),
+                         'duty': DUTY.findall(MATERIAL.sub(' ', line)) if re.search(r'须|必须|应|附|提供', line) else [],
                          'version': '待确认（补遗关系未证实）' if is_amendment else '适用', 'candidates': [],
                          'pending': ['补遗与旧条款关系未证实，不能按文件名或上传顺序替换'] if is_amendment else []})
     return rows
@@ -330,7 +366,7 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
     material_owners = {}
     reply_refs = {}
     for _, line, num in replies:
-        for material in MATERIAL.findall(line):
+        for material in material_names(line):
             reply_refs.setdefault(material, set()).add(num)
     for owner in reqs:
         for material in owner['materials']:
@@ -357,9 +393,13 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
         materials = r['materials'][:]
         # A response-only reference is usable only with an unambiguous numbered
         # reply and an explicit material requirement. Never scan arbitrary files.
-        response_only = [name for name in MATERIAL.findall(reply) if name not in materials]
+        response_only = [name for name in material_names(reply) if name not in materials]
         if unique and (r['duty'] or re.search(r'附件|证明|证书|材料|资质', r['raw'])):
             materials += response_only
+        # The tender's exact filename and a uniquely numbered response supply
+        # the attribution even without a catalog; they do not certify its text.
+        if unique and r['materials']:
+            materials += [name for name, _ in evidence if name in r['materials'] and name not in materials]
         listed = [c for c in catalog if c['name'] in materials or
                   (r['number'] and numbered[r['number']] == 1 and c['number'] == r['number'])]
         if r['duty'] and not materials and not listed and len(evidence) == 1 and len(reqs) == 1:
@@ -378,7 +418,7 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
         # Candidate response references and repeated original numbers are not
         # strong enough to attribute a material to one requirement.
         if not unique and not r['materials']:
-            conflicting.update(MATERIAL.findall(' '.join(line for _, line, _ in candidates)))
+            conflicting.update(material_names(' '.join(line for _, line, _ in candidates)))
         present = [(name, txt) for name, txt in evidence if name in names and name not in conflicting]
         assessment_reason = ''
         evidence_loc = []

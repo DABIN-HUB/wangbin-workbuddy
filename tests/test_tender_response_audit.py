@@ -145,6 +145,37 @@ def test_missing_named_material_still_reported_without_catalog(tmp_path):
     assert ('附件实际提供状态', '未提供（限已提供材料）', 1) in summary
 
 
+@pytest.mark.parametrize('reply,covered_expected', [
+    ('1. 本产品无法支持自动备份。', False),
+    ('1. 当前不能支持自动备份。', False),
+    ('1. 我们尚未实现自动备份，仅有设计说明。', False),
+    ('1. 只提供自动备份设计文档，功能未上线。', False),
+    ('1. 已支持自动备份，功能现已上线。', True),
+])
+def test_capability_action_status_and_limitation(tmp_path, reply, covered_expected):
+    rows, _, summary, md = invoke(tmp_path / 'capability', '1. 必须支持自动备份。', reply)
+    row = rows[0]
+    assert row['响应存在状态'] == '已定位'
+    assert row['条件覆盖状态'] == ('已覆盖（文本层面）' if covered_expected else '可能不充分'), row
+    assert bool(row['缺口']) != covered_expected
+    assert ('已覆盖范围（仅文本层面）\n- ' + row['唯一ID'] in md) == covered_expected
+    assert ('条件覆盖状态', row['条件覆盖状态'], 1) in summary
+
+
+def test_explicit_named_evidence_without_catalog_is_not_missing_or_certified(tmp_path):
+    rows, attachment, summary, md = invoke(tmp_path / 'named',
+        '1. 须提供certificate.txt资质证明。', '1. 证书见certificate.txt。',
+        material='certificate.txt：仅为目录占位，不含证书。')
+    row = rows[0]
+    assert row['附件实际提供状态'] == '已提供（可读文本）', row
+    assert row['内容支持状态'] == '不支持（文本层面）', row
+    assert row['条件覆盖状态'] == '可能不充分'
+    assert 'certificate.txt:1' in row['证据位置'] and '未找到实际文件' not in row['缺口']
+    assert attachment[1][3] == 'certificate.txt' and attachment[1][5] == '不支持（文本层面）'
+    assert ('附件实际提供状态', '已提供（可读文本）', 1) in summary
+    assert row['唯一ID'] not in md.split('## 已覆盖范围（仅文本层面）')[-1].split('## 未覆盖范围')[0]
+
+
 def test_unnamed_license_catalog_csv_xlsx_and_real_text(tmp_path):
     tender = '1. 必须提供营业执照。'
     reply = '1. 我方提供营业执照。'
@@ -213,9 +244,9 @@ def test_cross_requirement_incremental_material_does_not_cover_other_duty(tmp_pa
 
 def test_final_zip_clean_extract_formal_cli_and_legacy_json(tmp_path):
     root = SCRIPT.parents[4]
-    archive = root / 'dist/wangbin-tender-analyzer-0.2.5-skill-candidate.zip'
+    archive = root / 'dist/wangbin-tender-analyzer-0.2.6-skill-candidate.zip'
     if not archive.is_file():
-        pytest.skip('package-only test: final 0.2.5 archive not built yet')
+        pytest.skip('package-only test: final 0.2.6 archive not built yet')
     extract = tmp_path / 'clean'
     extract.mkdir()
     with zipfile.ZipFile(archive) as bundle:
