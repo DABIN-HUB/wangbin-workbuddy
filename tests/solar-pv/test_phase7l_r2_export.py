@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import os
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -204,9 +205,68 @@ def test_actual_r2_formula_text_and_summary_do_not_leak_internal_status():
 
 
 @pytest.mark.parametrize("category", ("industrial_rooftop", "utility_scale_ground"))
-def test_delivered_r2_word_workbooks_and_canonical_keep_project_metric_identity(category):
-    folder = _CASES.parent / "phase7l-r2-delivery" / category
+def test_delivered_r3_word_workbooks_and_canonical_keep_project_metric_identity(category):
+    # Verify the versioned R3 export against the independently archived fee-v4 result.
+    folder = _CASES.parent / "phase7l-r3-final-v5" / category
     manifest = json.loads((folder / "manifest.json").read_text(encoding="utf-8"))
+    result = loads((folder / "canonical.json").read_bytes())
+    prior = loads((_CASES.parent / "phase7l-r2-delivery-final-fee-v4" /
+                   category / "canonical.json").read_bytes())
+    assert result["result_hash"] == prior["result_hash"]
+    model = ReportModel.from_result(result, Catalog())
+    assert manifest["identity"] == model.identity
+    assert manifest["report_content_version"] == REPORT_CONTENT_VERSION
+    for key in ("F01", "F03", "F04", "F06"):
+        entry = manifest["files"][key]
+        artifact = folder / entry.get("path", entry.get("file"))
+        assert artifact.is_file()
+        assert hashlib.sha256(artifact.read_bytes()).hexdigest() == entry["sha256"]
+    doc = Document(folder / manifest["files"]["F01"]["path"])
+    text = _all_text(doc)
+    assert "第13年" in text and "GRID_DELIVERABLE" not in text and "pending" not in text.lower()
+    assert "项目净现值" in text and "项目内部收益率" in text
+    for metric_id in ("financial.phase3e.project_npv", "financial.phase3e.project_irr",
+                      "financial.phase3e.static_payback", "financial.phase3e.dynamic_payback"):
+        metric = model.metric(metric_id)
+        assert metric["status"] == "CALCULATED"
+        displayed = _professional_metric_rows(model, (metric_id,))[0][1]
+        assert displayed.split("（", 1)[0] in text
+    book = load_workbook(folder / manifest["files"]["F03"]["path"], read_only=True)
+    source = load_workbook(folder / manifest["files"]["F04"]["file"], read_only=True)
+    try:
+        assert len(book.sheetnames) == 19 and len(source.sheetnames) == 10
+        data = {row[0]: row for row in book.worksheets[15].iter_rows(values_only=True)
+                if row and isinstance(row[0], str)}
+        for metric_id in ("financial.phase3e.project_npv", "financial.phase3e.project_irr"):
+            original = Decimal(data[metric_id][7])
+            assert original == model.metric(metric_id)["value"]
+            if metric_id.endswith("project_irr"):
+                assert data[metric_id][3] == "—"
+                assert abs(Decimal(data[metric_id][2].rstrip("%")) / 100 - original) < Decimal("0.0001")
+            else:
+                assert abs(Decimal(str(data[metric_id][2])) - original) < Decimal("0.000000001")
+        source_identity = {row[0]: row[1] for row in source.worksheets[0].iter_rows(
+            min_row=3, max_row=8, values_only=True) if row and row[0]}
+        assert source_identity["result_hash"] == model.identity["result_hash"]
+    finally:
+        book.close()
+        source.close()
+
+
+@pytest.mark.parametrize("category", ("industrial_rooftop", "utility_scale_ground"))
+def test_delivered_r2_word_workbooks_and_canonical_keep_project_metric_identity(category):
+    # The original R2 artifacts were recovered byte-for-byte; pin the minimal
+    # archived subset in Git so regression runs do not depend on local scratch.
+    folder = Path(__file__).resolve().parents[2] / "tests/fixtures/solar-pv/phase7l-r2-delivery" / category
+    manifest = json.loads((folder / "manifest.json").read_text(encoding="utf-8"))
+    assert hashlib.sha256((folder / "manifest.json").read_bytes()).hexdigest() == {
+        "industrial_rooftop": "cec094082957fb10e1f9f12628e5be58eb75d7dc703423f21edf1a9c0319914f",
+        "utility_scale_ground": "8f05ef9f112bc5c469a43243e5ff3c77cdbc975da2ab7b88f825798c80ca11bc",
+    }[category]
+    for key in ("F01", "F03", "F04", "F06"):
+        entry = manifest["files"][key]
+        artifact = folder / entry.get("path", entry.get("file"))
+        assert hashlib.sha256(artifact.read_bytes()).hexdigest() == entry["sha256"]
     result = loads((folder / "canonical.json").read_bytes())
     model = ReportModel.from_result(result, Catalog())
     assert manifest["identity"] == model.identity

@@ -1,2 +1,4 @@
 # The R3 review manifest and ZIP attest to exact bytes; do not normalize line endings.
 reports/solar-pv/phase7l-r3-final-v5/** -text
+# The recovered R2 regression fixture is byte-hashed against its original manifest.
+tests/fixtures/solar-pv/phase7l-r2-delivery/** -text
