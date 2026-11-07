@@ -111,7 +111,7 @@ def test_sum(tmp_path):
 
 
 def test_completion_rate_change(tmp_path):
-    wb, _ = exercise(tmp_path,['项目','上期完成率','本期完成率'],['记录',0.10,0.12],['完成率由10%提高至12%'])
+    wb, _ = exercise(tmp_path,['项目','上期完成率(%)','本期完成率(%)'],['记录',10,12],['完成率由10%提高至12%'])
     row = matrix(wb,'差异明细')[1]
     assert row[19] == 'MATCH'
     assert '2.00个百分点' in row[22] and '20.0%' in row[22]
@@ -160,7 +160,8 @@ def test_spoofed_input_and_forbidden_output(tmp_path, capsys):
     (inputs / 'report.docx').write_bytes(b'bad')
     args = ['--input-root',str(inputs),'--source-xlsx',str(inputs/'fake.xlsx'),'--report-docx',str(inputs/'report.docx'),'--output-dir',str(inputs)]
     assert checker.main(args) == 2
-    assert 'UNREADABLE_OR_ENCRYPTED' in capsys.readouterr().err
+    # A non-ZIP payload is spoofed; damaged ZIP is tested separately in the fix suite.
+    assert 'UNSUPPORTED_OR_SPOOFED' in capsys.readouterr().err
 
 
 def test_reupload_resolves_issue(tmp_path):

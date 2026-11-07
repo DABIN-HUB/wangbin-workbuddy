@@ -105,10 +105,21 @@ def identity(text, context):
     return result
 
 
-def label(text):
-    for key in ('完成率', '完成量', '目标量', '净额', '占比', '合计', '收入', '成本'):
+def metrics(context):
+    """Confirmed mappings/rules extend, rather than replace, the supported labels."""
+    configured = list(context.get('mappings', {})) + list(context.get('rules', {}))
+    configured = [key.split(':')[-1] for key in configured if isinstance(key, str)]
+    return sorted(set(configured + ['完成率', '完成量', '目标量', '净额', '占比', '合计', '收入', '成本']), key=len, reverse=True)
+
+def label(text, context=None):
+    for key in metrics(context or {}):
         if key in text:
             return key
+    # A lexical candidate is not a financial formula: without a confirmed
+    # source it remains pending, rather than silently dropping the statement.
+    candidate = re.search(r'(?:^|[\s，；;])([\u4e00-\u9fff]{0,8}(?:毛利|利润|收益))\s*(?:为|是)?\s*[+-]?\d', text)
+    if candidate:
+        return candidate.group(1)
     return ''
 
 
@@ -132,20 +143,26 @@ def extract_source(path, context):
                 # A first-column header may name a different metric/currency: never
                 # let its dimensions overwrite this operand's own column header.
                 combined = ' '.join((ws.title, header))
-                metric = label(header) or label(combined)
+                metric = label(header, context) or label(combined, context)
                 value = cached[ws.title][cell.coordinate].value if cell.data_type == 'f' else cell.value
+                format_percent = bool(cell.number_format and '%' in cell.number_format)
+                header_percent = bool(re.search(r'[%％]', combined))
+                # A percent-formatted numeric cell stores a fraction; an ordinary
+                # numeric cell below a (%) header stores percentage points.
+                unit_basis = 'FORMAT_PERCENT' if format_percent else 'HEADER_PERCENT' if header_percent else 'HEADER_UNIT'
                 rows.append(dict(sheet=ws.title, cell=cell.coordinate, header=combined, metric=metric,
                                  value=value, formula=cell.value if cell.data_type == 'f' else '',
                                  cache=value if cell.data_type == 'f' else None,
-                                 identity=identity(combined, context), percent_format=bool(cell.number_format and '%' in cell.number_format),
-                                 unit=('%' if cell.number_format and '%' in cell.number_format else unit_in(combined))))
+                                 identity=identity(combined, context), percent_format=format_percent,
+                                 number_format=cell.number_format, header_unit=unit_in(combined), unit_basis=unit_basis,
+                                 unit=('%' if format_percent else unit_in(combined))))
     return rows
 
 
 def unit_in(text):
-    for unit in ('亿元', '万元', '人民币元', '美元', '元', '%'):
+    for unit in ('亿元', '万元', '人民币元', '美元', '元', '%', '％'):
         if unit in text:
-            return '元' if unit == '美元' else unit
+            return '元' if unit == '美元' else '%' if unit == '％' else unit
     return ''
 
 
@@ -156,20 +173,52 @@ def report_items(path, context):
     for i, p in enumerate(doc.paragraphs, 1):
         blocks.append((f'段落{i}', p.text))
     for t, table in enumerate(doc.tables, 1):
+        headers = [c.text.strip() for c in table.rows[0].cells] if table.rows else []
+        label_column = next((i for i, h in enumerate(headers) if h in ('指标', '项目', '名称')), None)
+        parsed = set()
+        if label_column is not None:
+            for r, row in enumerate(table.rows[1:], 2):
+                cells = row.cells
+                if label_column >= len(cells):
+                    uncovered.append(('DOCX', f'表格{t}!R{r}', '指标列缺失'))
+                    continue
+                metric = label(cells[label_column].text, context)
+                if not metric:
+                    if any(c.text.strip() for c in cells):
+                        uncovered.append(('DOCX', f'表格{t}!R{r}', '指标名称未识别；请确认映射'))
+                    continue
+                for c, cell in enumerate(cells):
+                    if c == label_column:
+                        continue
+                    where = f'表格{t}!R{r}C{label_column+1},表格{t}!R{r}C{c+1}'
+                    header = headers[c] if c < len(headers) else ''
+                    raw = cell.text.strip()
+                    numbers = list(NUMBER.finditer(raw))
+                    unit = (numbers[0].group(2) if numbers else '') or unit_in(raw) or unit_in(header) or unit_in(cells[label_column].text)
+                    claim = ' '.join((cells[label_column].text, header, raw))
+                    item_identity = identity(claim, context)
+                    result.append(dict(where=where, quote=claim, metric=metric,
+                                       value=numbers[0].group(1).replace(',', '') if numbers else '',
+                                       unit=unit, identity=item_identity))
+                    parsed.update((f'表格{t}!R{r}C{label_column+1}', f'表格{t}!R{r}C{c+1}'))
         for r, row in enumerate(table.rows, 1):
             for c, cell in enumerate(row.cells, 1):
-                blocks.append((f'表格{t}!R{r}C{c}', cell.text))
-    if len(blocks) > MAX_PARAGRAPHS:
+                position = f'表格{t}!R{r}C{c}'
+                if position not in parsed and (label_column is None or r == 1):
+                    blocks.append((position, cell.text))
+    if len(blocks) + len(result) > MAX_PARAGRAPHS:
         raise CheckError('RESOURCE_LIMIT', 'report block limit exceeded')
     for where, text in blocks:
         if re.search(r'^\s*第\s*\d+(?:\.\d+)*\s*节', text):
             continue
         for fragment in re.split(r'[，；;]|(?<!\d),(?!\d)', text):
-            metric = label(fragment)
+            metric = label(fragment, context)
             if not metric:
                 continue
             numbers = list(NUMBER.finditer(fragment))
             if not numbers:
+                if re.search(r'\b(?:为|是)\s*$', fragment):
+                    result.append(dict(where=where, quote=text, metric=metric, value='', unit='', identity=identity(text, context)))
                 continue
             # Prefer number after metric; for "完成率由10%提高至12%" keep both.
             after = [n for n in numbers if n.start() >= fragment.index(metric) + len(metric)]
@@ -244,7 +293,7 @@ def source_rule(rule, sources, report_identity=None):
             return None, 'MISSING_OPERAND', addresses, ''
         found.append(hit[0])
     if any(s['formula'] for s in found):
-        return None, 'UNVERIFIED_FORMULA_CACHE', addresses, ''
+        return None, 'UNVERIFIED_FORMULA_CACHE', addresses, 'UNVERIFIED_FORMULA_CACHE'
     values = []
     for source in found:
         v, err = decimal_value(source['value'])
@@ -271,13 +320,19 @@ def compare(item, sources, context, source_path, report_path):
     candidates = [s for s in sources if s['metric'] == metric]
     choice = context.get('mappings', {}).get(f"{item['where']}:{metric}") or context.get('mappings', {}).get(metric)
     if choice:
-        candidates = [s for s in candidates if f"{s['sheet']}!{s['cell']}" == choice]
+        candidates = [s for s in sources if f"{s['sheet']}!{s['cell']}" == choice]
+    elif len(candidates) > 1 and item['identity']['period']:
+        same_period = [s for s in candidates if s['identity']['period'] == item['identity']['period']]
+        if len(same_period) == 1:
+            candidates = same_period
     rule = context.get('rules', {}).get(metric)
     addresses = [f"{s['sheet']}!{s['cell']}" for s in candidates]
     status, explanation, sv, delta, compare_report = '', '', None, None, None
     provenance = ''
     selected = candidates[0] if len(candidates) == 1 else None
-    if rule:
+    if item['value'] == '':
+        status = 'MISSING_OPERAND'
+    elif rule:
         sv, error, addresses, provenance = source_rule(rule, sources, item['identity'])
         status = error
         selected = next((s for s in sources if f"{s['sheet']}!{s['cell']}" == addresses[0]), None)
@@ -291,6 +346,10 @@ def compare(item, sources, context, source_path, report_path):
     else:
         sv, status = decimal_value(selected['value'])
         provenance = 'DIRECT_CELL'
+    if selected and selected['formula'] and rule:
+        provenance += f"; referenced formula={selected['formula']}; cache={selected['cache']}; freshness=UNKNOWN"
+    if selected and not selected['formula'] and not rule:
+        provenance += f"; number_format={selected['number_format']}; header_unit={selected['header_unit']}; unit_basis={selected['unit_basis']}"
     if selected and not status:
         for key in FIELDS:
             a, b = item['identity'][key], selected['identity'][key]
@@ -341,45 +400,66 @@ def compare(item, sources, context, source_path, report_path):
                 source_cell=','.join(addresses), source_raw=str(selected['value']) if selected and selected['value'] is not None else '',
                 source_unit=source_unit, source_value=sv, normalized_report=compare_report, delta=delta,
                 delta_unit='比例' if source_unit == '%' else '元', provenance=provenance,
-                formula=str(selected['formula']) if selected else '', explanation=explanation,
+                formula='; '.join(f"{s['sheet']}!{s['cell']}={s['formula']} (cache={s['cache']}; freshness=UNKNOWN)" for s in sources if f"{s['sheet']}!{s['cell']}" in (addresses + [f"{c['sheet']}!{c['cell']}" for c in candidates]) and s['formula']), explanation=explanation,
                 rule=json.dumps(rule, ensure_ascii=False, sort_keys=True) if rule else ('mapping='+str(choice) if choice else 'direct candidate'))
 
 
 def rate_change(items, sources, source, report):
-    """Only the explicit prior/current completion-rate wording permits change."""
+    """Compare a single report change against explicitly identified rate cells."""
     if len(items) != 2 or any(i['metric'] != '完成率' or i['where'] != items[0]['where'] for i in items):
         return None
-    if not all(x in items[0]['quote'] for x in ('由', '提高至')):
+    quote = items[0]['quote']
+    if not re.search(r'由.+?(?:提高至|升至|下降至|降至|变为)', quote):
         return None
-    candidates = [s for s in sources if ('上期' in s['header'] or '本期' in s['header']) and s['value'] is not None]
-    old = [s for s in candidates if '上期' in s['header']]
-    new = [s for s in candidates if '本期' in s['header']]
+    old = [s for s in sources if s['metric'] == '完成率' and '上期' in s['header']]
+    new = [s for s in sources if s['metric'] == '完成率' and '本期' in s['header']]
     if len(old) != 1 or len(new) != 1:
         return None
-    a, ea = decimal_value(old[0]['value'])
-    b, eb = decimal_value(new[0]['value'])
-    if ea or eb:
-        return None
-    r0, e0 = decimal_value(items[0]['value'])
-    r1, e1 = decimal_value(items[1]['value'])
-    if e0 or e1:
-        return None
-    if old[0]['unit'] == '%' or old[0]['metric'] == '完成率' and old[0]['unit'] == '' and 0 <= a <= 1:
-        a *= Decimal(100)
-    if new[0]['unit'] == '%' or new[0]['metric'] == '完成率' and new[0]['unit'] == '' and 0 <= b <= 1:
-        b *= Decimal(100)
-    pp = b - a
-    relative = (pp / a * 100) if a else None
-    status = 'MATCH' if r0 == a and r1 == b else 'RAW_DIFFERENCE_ROUNDING_PENDING'
+    prior, current = old[0], new[0]
+    addresses = [f"{s['sheet']}!{s['cell']}" for s in (prior, current)]
+    formulas = '; '.join(f"{s['sheet']}!{s['cell']}={s['formula']} (cache={s['cache']}; freshness=UNKNOWN)" for s in (prior, current) if s['formula'])
+    status = ''
+    if formulas:
+        status = 'UNVERIFIED_FORMULA_CACHE'
+    else:
+        compatible = rule_compatibility([prior, current], {'op':'direct', 'unit':'%'}, items[0]['identity'])
+        # Prior/current are distinct roles, not a same-period requirement.
+        if prior['identity']['period'] != current['identity']['period'] and not all(
+            '上期' in prior['header'] and '本期' in current['header'] for _ in (0,)):
+            compatible = 'NOT_COMPARABLE'
+        status = compatible
+    if not status and (prior['unit'] != '%' or current['unit'] != '%'):
+        status = 'PENDING_CONFIRMATION'
+    a = b = r0 = r1 = pp = relative = delta = None
+    if not status:
+        a, ea = decimal_value(prior['value'])
+        b, eb = decimal_value(current['value'])
+        r0, e0 = decimal_value(items[0]['value'])
+        r1, e1 = decimal_value(items[1]['value'])
+        status = ea or eb or e0 or e1
+    if not status:
+        a *= Decimal(100) if prior['percent_format'] else Decimal(1)
+        b *= Decimal(100) if current['percent_format'] else Decimal(1)
+        pp = b - a
+        relative = pp / a * 100 if a else None
+        delta = (r1-r0)-pp
+        direction_bad = bool(re.search(r'提高|升至', quote) and pp < 0 or re.search(r'下降|降至', quote) and pp > 0)
+        status = 'MATCH' if r0 == a and r1 == b and not direction_bad else 'MISMATCH' if direction_bad else 'RAW_DIFFERENCE_ROUNDING_PENDING'
+    explanation = (f'本期−上期={pp.quantize(Decimal("0.01"))}个百分点；相对增幅={relative}% (基数={a}%)' if relative is not None else
+               f'本期−上期={pp.quantize(Decimal("0.01"))}个百分点；上期为零：相对增幅未计算') if pp is not None else {
+                   'UNVERIFIED_FORMULA_CACHE': '公式缓存新鲜度未知，未重算',
+                   'PENDING_CONFIRMATION': '完成率单位缺失或冲突，须确认百分比尺度',
+                   'NOT_COMPARABLE': '完成率主体、实际预算、税或币种不可比'}.get(status, status)
+    if pp is not None and re.search(r'提高|升至', quote) and pp < 0:
+        explanation += '；报告声称提高但来源显示下降'
     first = items[0]
     return dict(metric_id=hashlib.sha256(f'{report.name}|{first["where"]}|完成率变化'.encode()).hexdigest()[:12],
-                metric='完成率变化', where=first['where'], quote=first['quote'], report_value=f'{r0}% → {r1}%',report_unit='pp',
-                identity=first['identity'], candidates=[f'{s["sheet"]}!{s["cell"]}' for s in (old[0],new[0])], status=status,
-                source_file=source.name, source_cell=f'{old[0]["sheet"]}!{old[0]["cell"]},{new[0]["sheet"]}!{new[0]["cell"]}',
-                source_raw=f'{a}% → {b}%',source_unit='%',source_value=pp,normalized_report=r1-r0,delta=(r1-r0)-pp,
-                delta_unit='pp',provenance='DIRECT_CELLS',formula='',
-                explanation=f'本期−上期={pp}个百分点；相对增幅={relative}% (基数={a}%)' if relative is not None else '上期为零：相对增幅未计算',
-                rule='explicit 上期/本期 completion rate')
+                metric='完成率变化', where=first['where'], quote=quote, report_value=f'{items[0]["value"]}% → {items[1]["value"]}%', report_unit='pp',
+                identity=first['identity'], candidates=addresses, status=status, source_file=source.name,
+                source_cell=','.join(addresses), source_raw=' → '.join(str(s['value']) for s in (prior, current)),
+                source_unit='%', source_value=pp, normalized_report=(r1-r0) if pp is not None else None,
+                delta=delta, delta_unit='pp', provenance='UNVERIFIED_FORMULA_CACHE' if formulas else 'DIRECT_CELLS' if not status or pp is not None else '',
+                formula=formulas, explanation=explanation, rule='explicit 上期/本期 completion rate')
 
 
 def write_output(path, results, uncovered, source, report, context, previous):
@@ -391,10 +471,12 @@ def write_output(path, results, uncovered, source, report, context, previous):
     prior = {r['metric_id']: r for r in previous.get('results', [])} if previous else {}
     if previous and previous.get('report_sha256') != digest(report):
         prior = {}
-    conflicts = Counter(r['metric'] for r in results if r['status'] not in ('PENDING_CONFIRMATION', 'AMBIGUOUS_MAPPING'))
-    contradictory = {name for name, n in conflicts.items() if n > 1 and len({r['report_value'] for r in results if r['metric'] == name}) > 1}
+    def group_key(r):
+        return (r['metric'], tuple(r['identity'].get(field, '') for field in FIELDS))
+    grouped = {group_key(r) for r in results if r['status'] not in ('PENDING_CONFIRMATION', 'AMBIGUOUS_MAPPING')}
+    contradictory = {key for key in grouped if len({r['report_value'] for r in results if group_key(r) == key}) > 1}
     for r in results:
-        if r['metric'] in contradictory:
+        if group_key(r) in contradictory:
             r['explanation'] += '；报告同指标多位置数值冲突，请复核'
     for r in results:
         old = prior.get(r['metric_id'])
@@ -414,12 +496,13 @@ def write_output(path, results, uncovered, source, report, context, previous):
     summary.append(['项目', '值'])
     for k, v in [('来源文件', source.name), ('来源SHA256', digest(source)), ('报告文件', report.name),
                  ('报告SHA256', digest(report)), ('覆盖', '正文段落、普通表格；只扫描可定位的指标陈述'),
-                 ('限制', '非完整财务审计；未核实公式缓存；未知口径需确认'), ('未覆盖数量', len(uncovered))]:
+                 ('限制', '非完整财务审计；未核实公式缓存；未知口径需确认'), ('未覆盖数量', len(uncovered)),
+                 ('可核查指标', len(results) if results else '本次未形成可核查指标')]:
         summary.append([k, v])
     for name, count in sorted(Counter(r['status'] for r in results).items()):
         summary.append([name, count])
     for name in sorted(contradictory):
-        summary.append(['报告内部冲突', name])
+        summary.append(['报告内部冲突', str(name)])
     for name, count in sorted(Counter(changes.values()).items()):
         summary.append(['变化:'+name, count])
     mapping = wb[SHEETS[1]]
@@ -432,11 +515,11 @@ def write_output(path, results, uncovered, source, report, context, previous):
     gaps.append(['文件','区域/位置','未覆盖类型','原因与建议'])
     for r in results:
         ident = r['identity']
-        mapping.append([r['metric_id'],r['metric'],ident['subject'],ident['period'],ident['basis'],ident['tax'],ident['currency'],report.name,r['where'],r['quote'],', '.join(r['candidates']),r['rule'],r['status'],changes[r['metric_id']]])
+        mapping.append([r['metric_id'],r['metric'],ident['subject'],ident['period'],ident['basis'],ident['tax'],ident['currency'],report.name,r['where'],r['quote'],', '.join(r['candidates']),r['rule'] + ('; '+r['formula'] if r['formula'] else ''),r['status'],changes[r['metric_id']]])
         if r['status'] not in ('AMBIGUOUS_MAPPING','PENDING_CONFIRMATION','NOT_COMPARABLE','ZERO_DENOMINATOR','MISSING_OPERAND','NON_NUMERIC_OPERAND','UNVERIFIED_FORMULA_CACHE'):
             details.append([r['metric_id'],r['metric'],ident['subject'],ident['period'],r['report_unit'],ident['currency'],ident['basis'],ident['tax'],r['source_file'],r['source_cell'],r['source_raw'],r['source_unit'],str(r['source_value']),r['provenance'],r['where'],r['quote'],r['report_value'],str(r['normalized_report']),r['rule'],r['status'],str(r['delta']),r['delta_unit'],r['explanation']])
         else:
-            pending.append([r['metric_id'],r['metric'],r['where'],r['explanation'],', '.join(r['candidates']),f"请确认{r['metric']}的来源、主体、期间和计算规则",r['status'],None])
+            pending.append([r['metric_id'],r['metric'],r['where'],r['explanation'] + ('；'+r['formula'] if r['formula'] else ''), ', '.join(r['candidates']),f"请确认{r['metric']}的来源、主体、期间和计算规则",r['status'],None])
     for file, area, reason in uncovered:
         gaps.append([file,area,area,reason])
     for sheet in wb:
@@ -479,8 +562,20 @@ def main(argv=None):
             raise CheckError('INVALID_RULE','JSON object required')
         sources = extract_source(source, context)
         items, uncovered = report_items(report, context)
-        change = rate_change(items, sources, source, report)
-        results = [change] if change else [compare(item, sources, context, source, report) for item in items]
+        results = []
+        used = set()
+        for index, item in enumerate(items):
+            if index in used:
+                continue
+            partner = next((j for j in range(index+1, len(items)) if j not in used and
+                            items[j]['where'] == item['where'] and items[j]['metric'] == '完成率' and
+                            items[j]['quote'] == item['quote']), None) if item['metric'] == '完成率' else None
+            change = rate_change([item, items[partner]], sources, source, report) if partner is not None else None
+            if change:
+                results.append(change)
+                used.add(partner)
+            else:
+                results.append(compare(item, sources, context, source, report))
         filename = re.sub(r'[^\w\u4e00-\u9fff-]+', '_', report.stem)[:80] + '-数字一致性检查.xlsx'
         path = output / filename
         snapshot = output / (path.stem + '.json')
