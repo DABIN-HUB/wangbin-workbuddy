@@ -1,0 +1,830 @@
+{
+  "product_id": "wangbin-project-acceptance-check",
+  "task_id": "t_463966ac",
+  "archive_sha256": "271f832f461e371f63ea4aea6e11467382e6a8471ff5d4668403ec19b4d2c8ab",
+  "archive": "dist\\wangbin-project-acceptance-check-0.1.4-skill-candidate.zip",
+  "version": "0.1.4",
+  "members": [
+    {
+      "path": "wangbin-project-acceptance-check/LICENSE",
+      "sha256": "77e14f72b077bbcc88b3dad0d686fe7d30b45e766f5e25c274089aeef527d217",
+      "size": 268
+    },
+    {
+      "path": "wangbin-project-acceptance-check/SKILL.md",
+      "sha256": "2c57f37421137b68bfd2c4a87d1c61eb00c905ec7cc8e921b5d2f59f6d09341d",
+      "size": 3312
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/README.md",
+      "sha256": "97b9830b6d4bc2a02747b28edac3c1534c115c2df2b529ab0bdc756e8cebb88f",
+      "size": 304
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/deploy.md",
+      "sha256": "7a8f1f68d71bbef7a25b20f29ba83b7136c0a5666e8efa328bb969f46512c980",
+      "size": 76
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/interface.md",
+      "sha256": "4dc1984259dad9dcf9713a6ec8989e55776f4356376489366c844fd9c9dbb097",
+      "size": 94
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/scope.md",
+      "sha256": "782bd91ee6a7f8099a0bd82193abcbd659d62a4ddcadb318d7d47d8bc54b38c3",
+      "size": 159
+    },
+    {
+      "path": "wangbin-project-acceptance-check/manifest.json",
+      "sha256": "865ade7feeab3bf18f2ebbcea6476dc53a3f31492b9ce4aaf20796a445498d8b",
+      "size": 567
+    },
+    {
+      "path": "wangbin-project-acceptance-check/references/runtime.md",
+      "sha256": "47d2d35d6839789a2b14d05a76c29cf8e04577e5ed9cae126a78c3726597e8e8",
+      "size": 3684
+    },
+    {
+      "path": "wangbin-project-acceptance-check/scripts/check_acceptance.py",
+      "sha256": "09bbb86f9fc8d6ddf3325edb75536438d5793f83ee1acdd2eb43f525c9326c7c",
+      "size": 42800
+    }
+  ],
+  "python": "3.14.9",
+  "case_count": 14,
+  "cases": [
+    {
+      "id": "denied-and-max",
+      "input_type": ".md",
+      "material": "同一压测场景不支持74人并发登录，最大仅支持72人并发登录。",
+      "expected": "NONCONFORMING",
+      "actual": "NONCONFORMING",
+      "coverage": "0/1",
+      "comparison": [
+        {
+          "evidence_id": "EVD-283dfeaf59b6",
+          "decision": "NONCONFORMING",
+          "reason": "并发登录实际 72 人 不得低于 阈值 73 人：不满足",
+          "source": "material.md/行1"
+        }
+      ],
+      "sources": [
+        "material.md/行1"
+      ],
+      "cmd": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\denied-and-max",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\denied-and-max\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.md"
+      ],
+      "exit": 0,
+      "input_sha256": {
+        "material.md": "4b8a2d29af432220bf36b321f2e7cccc7df9c186491a938a585ee121b4491359",
+        "scope.md": "6aa00e57cfcad37c0f03638af0c7afe49a3fc133a0e4e9bdb81e9d76b64688fb"
+      },
+      "output_sha256": {
+        "虚构项目-核查快照.json": "ec064104b7cde0786afe51a19a4c39493b4dca648eb5b3c02210300394ea8242",
+        "虚构项目-验收准备报告.docx": "02a30683170d6e66f749c95d91c0488b3d0e5b697f456f5f142be3194b1a1fa7",
+        "虚构项目-验收资料核对.xlsx": "5be841c1ebb4c3104fd5e48280ced99dbd6ff4e4344afa178fb1e273ae53dd56"
+      },
+      "xlsx_sheets": [
+        "核查概览",
+        "要求追踪",
+        "证据索引",
+        "缺口与不符合",
+        "冲突与待确认",
+        "本次更新"
+      ],
+      "xlsx_status": "NONCONFORMING",
+      "docx_status": true
+    },
+    {
+      "id": "denied-only",
+      "input_type": ".docx",
+      "material": "同一压测场景无法支持74人并发登录。",
+      "expected": "PENDING_CONFIRMATION",
+      "actual": "PENDING_CONFIRMATION",
+      "coverage": "0/1",
+      "comparison": [
+        {
+          "evidence_id": "EVD-dedd30b0157e",
+          "decision": "PENDING",
+          "reason": "仅声明不支持指定并发人数，未给出可比较的实际容量上限",
+          "source": "material.docx/段1"
+        }
+      ],
+      "sources": [
+        "material.docx/段1"
+      ],
+      "cmd": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\denied-only",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\denied-only\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.docx"
+      ],
+      "exit": 0,
+      "input_sha256": {
+        "material.docx": "c09036c13c8c018f50b73e36aa7e134bf331abb0d28d9e3b6363326efc259b7d",
+        "scope.md": "6aa00e57cfcad37c0f03638af0c7afe49a3fc133a0e4e9bdb81e9d76b64688fb"
+      },
+      "output_sha256": {
+        "虚构项目-核查快照.json": "33f2993ab286ed189dabb60eca4ccb81ee61f84a111405c01e62cfb305a5038f",
+        "虚构项目-验收准备报告.docx": "61cf85b4ddef1f7c5350822572670cec9fc12804059a2968e02f855190dcdf57",
+        "虚构项目-验收资料核对.xlsx": "00d789a2734d83dc69d3a49bd3e22a3f4c5322fdf2873c11e1115d01a6ffe577"
+      },
+      "xlsx_sheets": [
+        "核查概览",
+        "要求追踪",
+        "证据索引",
+        "缺口与不符合",
+        "冲突与待确认",
+        "本次更新"
+      ],
+      "xlsx_status": "PENDING_CONFIRMATION",
+      "docx_status": true
+    },
+    {
+      "id": "denied-max-other-order",
+      "input_type": ".xlsx",
+      "material": "同一压测场景最大只能支持72人并发登录；不能达到74人并发登录。",
+      "expected": "NONCONFORMING",
+      "actual": "NONCONFORMING",
+      "coverage": "0/1",
+      "comparison": [
+        {
+          "evidence_id": "EVD-8eef64323808",
+          "decision": "NONCONFORMING",
+          "reason": "并发登录实际 72 人 不得低于 阈值 73 人：不满足",
+          "source": "material.xlsx/Sheet/行2/列1-2"
+        }
+      ],
+      "sources": [
+        "material.xlsx/Sheet/行2/列1-2"
+      ],
+      "cmd": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\denied-max-other-order",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\denied-max-other-order\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.xlsx"
+      ],
+      "exit": 0,
+      "input_sha256": {
+        "material.xlsx": "b24e85ef67ad286626cfbaa36431603150b4c5b815b6c75d307ef93c6d09ebb9",
+        "scope.md": "6aa00e57cfcad37c0f03638af0c7afe49a3fc133a0e4e9bdb81e9d76b64688fb"
+      },
+      "output_sha256": {
+        "虚构项目-核查快照.json": "a13bd98b24e19323123da1ccd29c092076518876e214c1bd0e4e7c5458b29cb7",
+        "虚构项目-验收准备报告.docx": "e040fa8ecfd81b45454efb0921378121c7b71f46961051e3cee039236a84ccfe",
+        "虚构项目-验收资料核对.xlsx": "9c48dc9de5417c96b4da9d35bbc6a2148202c890e29e963eb03f507c39139183"
+      },
+      "xlsx_sheets": [
+        "核查概览",
+        "要求追踪",
+        "证据索引",
+        "缺口与不符合",
+        "冲突与待确认",
+        "本次更新"
+      ],
+      "xlsx_status": "NONCONFORMING",
+      "docx_status": true
+    },
+    {
+      "id": "denied-but-73-supported",
+      "input_type": ".md",
+      "material": "同一压测场景不支持74人并发登录；实测支持73人并发登录。",
+      "expected": "EVIDENCE_FOUND",
+      "actual": "EVIDENCE_FOUND",
+      "coverage": "1/1",
+      "comparison": [
+        {
+          "evidence_id": "EVD-283dfeaf59b6",
+          "decision": "SUPPORT",
+          "reason": "并发登录实际 73 人 不得低于 阈值 73 人：满足",
+          "source": "material.md/行1"
+        }
+      ],
+      "sources": [
+        "material.md/行1"
+      ],
+      "cmd": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\denied-but-73-supported",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\denied-but-73-supported\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.md"
+      ],
+      "exit": 0,
+      "input_sha256": {
+        "material.md": "820709a5f239db175f07ce491403f805dc846e50761291f8955f9ec8d7cadfc5",
+        "scope.md": "6aa00e57cfcad37c0f03638af0c7afe49a3fc133a0e4e9bdb81e9d76b64688fb"
+      },
+      "output_sha256": {
+        "虚构项目-核查快照.json": "955f35b89b6b3a06dadfef81aa03ff7c8afc4b5c1d6ca7d062630fab1b60aec5",
+        "虚构项目-验收准备报告.docx": "435b165aadcdcd391babd5becc4663ba3648c2f24b643a7e419e3c11c32674e3",
+        "虚构项目-验收资料核对.xlsx": "64c8549c1dff3b535f27bae5bb4675761569d47b36bb45f4bc1ef4bad38c6265"
+      },
+      "xlsx_sheets": [
+        "核查概览",
+        "要求追踪",
+        "证据索引",
+        "缺口与不符合",
+        "冲突与待确认",
+        "本次更新"
+      ],
+      "xlsx_status": "EVIDENCE_FOUND",
+      "docx_status": true
+    },
+    {
+      "id": "conflicting-74",
+      "input_type": ".md",
+      "material": "同一压测场景支持74人并发登录；不支持74人并发登录。",
+      "expected": "PENDING_CONFIRMATION",
+      "actual": "PENDING_CONFIRMATION",
+      "coverage": "0/1",
+      "comparison": [
+        {
+          "evidence_id": "EVD-283dfeaf59b6",
+          "decision": "PENDING",
+          "reason": "同一并发人数存在支持与不支持的矛盾表述",
+          "source": "material.md/行1"
+        }
+      ],
+      "sources": [
+        "material.md/行1"
+      ],
+      "cmd": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\conflicting-74",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\conflicting-74\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.md"
+      ],
+      "exit": 0,
+      "input_sha256": {
+        "material.md": "7f7e96b5fab46d278505c70dbf1f3b0ab30c9d09bc742dfa6f39511c85c393ed",
+        "scope.md": "6aa00e57cfcad37c0f03638af0c7afe49a3fc133a0e4e9bdb81e9d76b64688fb"
+      },
+      "output_sha256": {
+        "虚构项目-核查快照.json": "341c306c9118a8536bc5e9b9a73925b19b12a38d2b4b65be55f6759e13c1eb35",
+        "虚构项目-验收准备报告.docx": "666a5dbffeeaf5ebd19ed49a3a15ed50e3eb134d7b5e716d4b24c69f8bd8bb67",
+        "虚构项目-验收资料核对.xlsx": "1f2dc270f0352ddf9d409a9e7bdb33ae767144af07e52f624a31a05bc6d74c14"
+      },
+      "xlsx_sheets": [
+        "核查概览",
+        "要求追踪",
+        "证据索引",
+        "缺口与不符合",
+        "冲突与待确认",
+        "本次更新"
+      ],
+      "xlsx_status": "PENDING_CONFIRMATION",
+      "docx_status": true
+    },
+    {
+      "id": "72",
+      "input_type": ".md",
+      "material": "同一压测场景最大支持72人并发登录。",
+      "expected": "NONCONFORMING",
+      "actual": "NONCONFORMING",
+      "coverage": "0/1",
+      "comparison": [
+        {
+          "evidence_id": "EVD-283dfeaf59b6",
+          "decision": "NONCONFORMING",
+          "reason": "并发登录实际 72 人 不得低于 阈值 73 人：不满足",
+          "source": "material.md/行1"
+        }
+      ],
+      "sources": [
+        "material.md/行1"
+      ],
+      "cmd": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\72",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\72\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.md"
+      ],
+      "exit": 0,
+      "input_sha256": {
+        "material.md": "d338ec841a56c89d76fe129a0c0a78247a8c4a0d2132c9a624c1df8026d1dbfd",
+        "scope.md": "6aa00e57cfcad37c0f03638af0c7afe49a3fc133a0e4e9bdb81e9d76b64688fb"
+      },
+      "output_sha256": {
+        "虚构项目-核查快照.json": "fead1fd507da99b8b94fa4870ba725446fc52795ecfff4e9c764b207e81e9c99",
+        "虚构项目-验收准备报告.docx": "50c3b8cc682a900153f82573a2af7fea1f28ef2cd84e707631cbf2481b6e8980",
+        "虚构项目-验收资料核对.xlsx": "2f03e62b642186f7d4ae262a41b348312df16c897cf813ee5bb0e1133a193b88"
+      },
+      "xlsx_sheets": [
+        "核查概览",
+        "要求追踪",
+        "证据索引",
+        "缺口与不符合",
+        "冲突与待确认",
+        "本次更新"
+      ],
+      "xlsx_status": "NONCONFORMING",
+      "docx_status": true
+    },
+    {
+      "id": "73",
+      "input_type": ".xlsx",
+      "material": "同一压测场景最大支持73人并发登录。",
+      "expected": "EVIDENCE_FOUND",
+      "actual": "EVIDENCE_FOUND",
+      "coverage": "1/1",
+      "comparison": [
+        {
+          "evidence_id": "EVD-8eef64323808",
+          "decision": "SUPPORT",
+          "reason": "并发登录实际 73 人 不得低于 阈值 73 人：满足",
+          "source": "material.xlsx/Sheet/行2/列1-2"
+        }
+      ],
+      "sources": [
+        "material.xlsx/Sheet/行2/列1-2"
+      ],
+      "cmd": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\73",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\73\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.xlsx"
+      ],
+      "exit": 0,
+      "input_sha256": {
+        "material.xlsx": "d4e71fcdda714c5b0a11aa7a241e3a176299c839207892eca52ac82fca88871f",
+        "scope.md": "6aa00e57cfcad37c0f03638af0c7afe49a3fc133a0e4e9bdb81e9d76b64688fb"
+      },
+      "output_sha256": {
+        "虚构项目-核查快照.json": "8f69262372a425bd23b91604be679205e4255c26e945ebde6671aeca916c1e57",
+        "虚构项目-验收准备报告.docx": "9496ba7e4945803c2270d6a412398cbab1b1aee72a164f46776f4027aa629749",
+        "虚构项目-验收资料核对.xlsx": "10f83982718eb09d7248c6c55d23bc0461bdfd7ba1cfdcd13ed241bc2e46cfef"
+      },
+      "xlsx_sheets": [
+        "核查概览",
+        "要求追踪",
+        "证据索引",
+        "缺口与不符合",
+        "冲突与待确认",
+        "本次更新"
+      ],
+      "xlsx_status": "EVIDENCE_FOUND",
+      "docx_status": true
+    },
+    {
+      "id": "74",
+      "input_type": ".md",
+      "material": "同一压测场景最大支持74人并发登录。",
+      "expected": "EVIDENCE_FOUND",
+      "actual": "EVIDENCE_FOUND",
+      "coverage": "1/1",
+      "comparison": [
+        {
+          "evidence_id": "EVD-283dfeaf59b6",
+          "decision": "SUPPORT",
+          "reason": "并发登录实际 74 人 不得低于 阈值 73 人：满足",
+          "source": "material.md/行1"
+        }
+      ],
+      "sources": [
+        "material.md/行1"
+      ],
+      "cmd": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\74",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\74\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.md"
+      ],
+      "exit": 0,
+      "input_sha256": {
+        "material.md": "5e682b9c2147197e822d912e8683d73a316de9d147ccfa9e91393cc615bd2429",
+        "scope.md": "6aa00e57cfcad37c0f03638af0c7afe49a3fc133a0e4e9bdb81e9d76b64688fb"
+      },
+      "output_sha256": {
+        "虚构项目-核查快照.json": "750e0ce5f1fde71265145fe00cbad40149150769b87ff7a46f915b37e45a96d1",
+        "虚构项目-验收准备报告.docx": "bed4d67eecd2789d6e7a5dab3407853170510a61d547c20d8d31e9a5138d5bc3",
+        "虚构项目-验收资料核对.xlsx": "b6e337b277cdcdb78e027876527696f5c146f7c0f8ca5d136687e8d35dc7c777"
+      },
+      "xlsx_sheets": [
+        "核查概览",
+        "要求追踪",
+        "证据索引",
+        "缺口与不符合",
+        "冲突与待确认",
+        "本次更新"
+      ],
+      "xlsx_status": "EVIDENCE_FOUND",
+      "docx_status": true
+    },
+    {
+      "id": "omitted-login",
+      "input_type": ".docx",
+      "material": "共执行41项登录用例，成功41项，失败0项，但高并发登录用例没有执行。",
+      "expected": "PENDING_CONFIRMATION",
+      "actual": "PENDING_CONFIRMATION",
+      "coverage": "0/1",
+      "comparison": [
+        {
+          "evidence_id": "EVD-dedd30b0157e",
+          "decision": "PENDING",
+          "reason": "执行 41 项均通过，但登录测试子范围明确未执行/覆盖，不能证明全部用例通过",
+          "source": "material.docx/段1"
+        }
+      ],
+      "sources": [
+        "material.docx/段1"
+      ],
+      "cmd": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\omitted-login",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\omitted-login\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.docx"
+      ],
+      "exit": 0,
+      "input_sha256": {
+        "material.docx": "a5d185575386e5c4fb8329990c114331a2b4d04e8e8b390ea6755d56b7bbd12d",
+        "scope.md": "a7fa9b736e697a396fa67e03f65636ea5cb80a0f64498e720f673c484e2f98a2"
+      },
+      "output_sha256": {
+        "虚构项目-核查快照.json": "3d64551ecd68c1caeeeded684fcce79bf3a359361fce280ef48fe73584d10d42",
+        "虚构项目-验收准备报告.docx": "aad87df0e0252acb461d7ca194867a0a270f6524c5810c2b07b6107bfbf2e387",
+        "虚构项目-验收资料核对.xlsx": "0795fd3e459086922294e79dc12ef7198523778a077a1b1a40d0c994fac0d262"
+      },
+      "xlsx_sheets": [
+        "核查概览",
+        "要求追踪",
+        "证据索引",
+        "缺口与不符合",
+        "冲突与待确认",
+        "本次更新"
+      ],
+      "xlsx_status": "PENDING_CONFIRMATION",
+      "docx_status": true
+    },
+    {
+      "id": "omitted-coverage",
+      "input_type": ".xlsx",
+      "material": "共执行41项登录用例，成功41项，失败0项；高并发登录测试尚未覆盖。",
+      "expected": "PENDING_CONFIRMATION",
+      "actual": "PENDING_CONFIRMATION",
+      "coverage": "0/1",
+      "comparison": [
+        {
+          "evidence_id": "EVD-8eef64323808",
+          "decision": "PENDING",
+          "reason": "执行 41 项均通过，但登录测试子范围明确未执行/覆盖，不能证明全部用例通过",
+          "source": "material.xlsx/Sheet/行2/列1-2"
+        }
+      ],
+      "sources": [
+        "material.xlsx/Sheet/行2/列1-2"
+      ],
+      "cmd": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\omitted-coverage",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\omitted-coverage\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.xlsx"
+      ],
+      "exit": 0,
+      "input_sha256": {
+        "material.xlsx": "4708e2be6ea4ebdbac5ce444338e2b1022dd2bfffe4fc132d72044b1235175dc",
+        "scope.md": "a7fa9b736e697a396fa67e03f65636ea5cb80a0f64498e720f673c484e2f98a2"
+      },
+      "output_sha256": {
+        "虚构项目-核查快照.json": "2ec97cbaa4af3ef210e8742e3672e7f9e260ddab7c2bb5353041d60b9fd38f4e",
+        "虚构项目-验收准备报告.docx": "b40f8b85c3e502ebdca5f553375122f4acfb410ebf738760050bf274fbdd7d76",
+        "虚构项目-验收资料核对.xlsx": "f55b4ad9c1c762fa02007fcab9df3b8722a1ed0b261606ef864ee09defb05fdf"
+      },
+      "xlsx_sheets": [
+        "核查概览",
+        "要求追踪",
+        "证据索引",
+        "缺口与不符合",
+        "冲突与待确认",
+        "本次更新"
+      ],
+      "xlsx_status": "PENDING_CONFIRMATION",
+      "docx_status": true
+    },
+    {
+      "id": "complete",
+      "input_type": ".md",
+      "material": "共执行41项登录用例，成功41项，失败0项。",
+      "expected": "EVIDENCE_FOUND",
+      "actual": "EVIDENCE_FOUND",
+      "coverage": "1/1",
+      "comparison": [
+        {
+          "evidence_id": "EVD-283dfeaf59b6",
+          "decision": "SUPPORT",
+          "reason": "相同测试范围执行 41 项，成功 41 项，失败 0 项",
+          "source": "material.md/行1"
+        }
+      ],
+      "sources": [
+        "material.md/行1"
+      ],
+      "cmd": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\complete",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\complete\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.md"
+      ],
+      "exit": 0,
+      "input_sha256": {
+        "material.md": "d62ab6cefc5c76c0d44f1b4f2de81cafc45f213fde3c1ad134f74cfebde92423",
+        "scope.md": "a7fa9b736e697a396fa67e03f65636ea5cb80a0f64498e720f673c484e2f98a2"
+      },
+      "output_sha256": {
+        "虚构项目-核查快照.json": "fe376242c59972bec829ec771c0682f03d79da40aaf6b24e7725e14705e9c231",
+        "虚构项目-验收准备报告.docx": "c58f3de3abc87c198bb890b71c6ae974854dc2095d76e4462076682575f9f0df",
+        "虚构项目-验收资料核对.xlsx": "19139f52dd1e8b1c7b5b29ddb5ce5ae739081693071017c686c44b4738ffaa66"
+      },
+      "xlsx_sheets": [
+        "核查概览",
+        "要求追踪",
+        "证据索引",
+        "缺口与不符合",
+        "冲突与待确认",
+        "本次更新"
+      ],
+      "xlsx_status": "EVIDENCE_FOUND",
+      "docx_status": true
+    },
+    {
+      "id": "failed-one",
+      "input_type": ".docx",
+      "material": "共执行41项登录用例，成功40项，失败1项。",
+      "expected": "NONCONFORMING",
+      "actual": "NONCONFORMING",
+      "coverage": "0/1",
+      "comparison": [
+        {
+          "evidence_id": "EVD-dedd30b0157e",
+          "decision": "NONCONFORMING",
+          "reason": "执行 41 项，成功 40 项，失败 1 项；未全部通过",
+          "source": "material.docx/段1"
+        }
+      ],
+      "sources": [
+        "material.docx/段1"
+      ],
+      "cmd": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\failed-one",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\failed-one\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.docx"
+      ],
+      "exit": 0,
+      "input_sha256": {
+        "material.docx": "3acd3abf2f91958aa3f1ea5741482643be3241baf533e8625e1b8b645c0ef1b5",
+        "scope.md": "a7fa9b736e697a396fa67e03f65636ea5cb80a0f64498e720f673c484e2f98a2"
+      },
+      "output_sha256": {
+        "虚构项目-核查快照.json": "327c6b882150cc35e243631ec6ae05a8360cbe6e4ff60b67ec14047e5edb81cd",
+        "虚构项目-验收准备报告.docx": "2b80552541fbdd72dc00479ec5a468ffbe5a742b42e6f20ec1ab0abd1a666ff8",
+        "虚构项目-验收资料核对.xlsx": "59162dc23249e32b2f6534de2a1a2724fed4fb45bacccb7a3602d790799e7bb5"
+      },
+      "xlsx_sheets": [
+        "核查概览",
+        "要求追踪",
+        "证据索引",
+        "缺口与不符合",
+        "冲突与待确认",
+        "本次更新"
+      ],
+      "xlsx_status": "NONCONFORMING",
+      "docx_status": true
+    },
+    {
+      "id": "os-deploy",
+      "input_type": ".docx",
+      "material": "Debian 13 部署说明：安装服务、配置参数、启动服务、验证健康状态。",
+      "expected": "EVIDENCE_FOUND",
+      "actual": "EVIDENCE_FOUND",
+      "coverage": "1/1",
+      "comparison": [
+        {
+          "evidence_id": "EVD-dedd30b0157e",
+          "decision": "SUPPORT",
+          "reason": "关联材料包含对应条件的可读内容",
+          "source": "material.docx/段1"
+        }
+      ],
+      "sources": [
+        "material.docx/段1"
+      ],
+      "cmd": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\os-deploy",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\os-deploy\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.docx"
+      ],
+      "exit": 0,
+      "input_sha256": {
+        "material.docx": "a3c3abf89b4e041110ccfbd584e0d9e0fa220c144e79ff0310a2e99c322ca3a5",
+        "scope.md": "998e3edf8c4e5b1e04a489b69a66ff363be00dda80c8d92f0fcdbc790f155cdd"
+      },
+      "output_sha256": {
+        "虚构项目-核查快照.json": "3fbd3331a25c7ffbdb3d872fea7d1a3f1f51fc18d86a4d3b30fb987b52434ae8",
+        "虚构项目-验收准备报告.docx": "988580bb1bebdace94eaebf672ae4886847cb4434c06376236d64ec16c5d58d2",
+        "虚构项目-验收资料核对.xlsx": "cda4564565505bb7e19f4f700246e27429ef31150ce30b03f625a63a678f702b"
+      },
+      "xlsx_sheets": [
+        "核查概览",
+        "要求追踪",
+        "证据索引",
+        "缺口与不符合",
+        "冲突与待确认",
+        "本次更新"
+      ],
+      "xlsx_status": "EVIDENCE_FOUND",
+      "docx_status": true
+    },
+    {
+      "id": "compound",
+      "input_type": ".md",
+      "material": "接口文档：端点 /sample。",
+      "expected": "PARTIAL_EVIDENCE",
+      "actual": "PARTIAL_EVIDENCE",
+      "coverage": "1/2",
+      "comparison": [
+        {
+          "evidence_id": "EVD-283dfeaf59b6",
+          "decision": "SUPPORT",
+          "reason": "关联材料包含对应条件的可读内容",
+          "source": "material.md/行1"
+        }
+      ],
+      "sources": [
+        "material.md/行1"
+      ],
+      "cmd": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\compound",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\acc014-preqa-lyw9q08y\\compound\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.md"
+      ],
+      "exit": 0,
+      "input_sha256": {
+        "material.md": "6ad50e50f59fddf37d4867c371200f942ed195575991962e3dcb0a10f05df0e6",
+        "scope.md": "f2064346561be3a891eb06e34c06375819a9a00c2a1ff9cc63a98d9902ca8df5"
+      },
+      "output_sha256": {
+        "虚构项目-核查快照.json": "3d423716c28bc957f2f00c6c6094ba828156f3198b6f1d74f588b54bdff1c6bb",
+        "虚构项目-验收准备报告.docx": "f33d99b0e6b233a5405a904cf9cdb02f15ae9bc7320187ec500fee6add51962d",
+        "虚构项目-验收资料核对.xlsx": "cb2a8db26807748416d7d6cbd11cbfb05cbad4e8e62cfe63fb193c274484b374"
+      },
+      "xlsx_sheets": [
+        "核查概览",
+        "要求追踪",
+        "证据索引",
+        "缺口与不符合",
+        "冲突与待确认",
+        "本次更新"
+      ],
+      "xlsx_status": "PARTIAL_EVIDENCE",
+      "docx_status": true
+    }
+  ],
+  "all_pass": true,
+  "scope": "developer PRE-QA, not independent QA"
+}
