@@ -57,9 +57,11 @@ def main() -> int:
                                                   candidate=args.candidate, sha256=args.sha256, date=args.date,
                                                   published_at=args.published_at, activate=args.activate)
             else:
-                result = {"validate": factory.validate_product, "test": factory.test_product,
-                          "package": factory.package_product, "verify": factory.verify_package,
-                          "release-check": factory.release_check}[args.command](root, args.id)
+                if args.command in {"validate", "package", "verify"}:
+                    result = {"validate": factory.validate_product, "package": factory.package_product,
+                              "verify": factory.verify_package}[args.command](root, args.id, version=args.version)
+                else:
+                    result = {"test": factory.test_product, "release-check": factory.release_check}[args.command](root, args.id)
     except (ValueError, OSError, KeyError) as exc:
         parser.exit(2, f"error: {exc}\n")
     print(json.dumps(result, ensure_ascii=False, indent=2))

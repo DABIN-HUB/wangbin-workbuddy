@@ -104,6 +104,26 @@ def test_non_mapping_skill_frontmatter_reports_failure(tmp_path: Path) -> None:
     assert factory.validate_product(tmp_path, "sample-skill")["status"] == "FAIL"
 
 
+def test_inactive_candidate_version_packages_without_activation(tmp_path: Path) -> None:
+    path = registry(tmp_path)
+    data = factory.load_catalog(tmp_path)
+    data['products'][0]['active_version'] = '0.1.0'
+    (tmp_path / 'products/catalog.json').write_text(json.dumps(data), encoding='utf-8')
+    factory.register_version(tmp_path, 'sample-skill', '0.1.1', activate=False)
+    assert factory.get_product(tmp_path, 'sample-skill')['active_version'] == '0.1.0'
+    skill = path / 'SKILL.md'
+    skill.write_text(skill.read_text(encoding='utf-8').replace('version: 0.1.0', 'version: 0.1.1'), encoding='utf-8')
+    assert factory.validate_product(tmp_path, 'sample-skill', version='0.1.1')['status'] == 'PASS'
+    result = factory.package_product(tmp_path, 'sample-skill', version='0.1.1')
+    assert '0.1.1' in result['zip']
+    assert factory.verify_package(tmp_path, 'sample-skill', version='0.1.1')['status'] == 'PASS'
+    registered = factory.get_product(tmp_path, 'sample-skill')
+    assert registered['active_version'] == '0.1.0'
+    assert registered['versions'][-1]['sha256'] == result['sha256']
+    with pytest.raises(ValueError, match='not registered'):
+        factory.package_product(tmp_path, 'sample-skill', version='0.1.2')
+
+
 def test_package_is_deterministic_and_independent(tmp_path: Path) -> None:
     path = registry(tmp_path)
     (path / "references").mkdir()
@@ -236,7 +256,7 @@ def test_cli_record_and_portfolio_round_trip(tmp_path: Path) -> None:
 def test_cli_lists_registered_products() -> None:
     result = subprocess.run([sys.executable, "-m", "tooling.products", "list", "--root", str(ROOT)], cwd=ROOT, text=True, capture_output=True)
     assert result.returncode == 0, result.stderr
-    assert len(json.loads(result.stdout)["products"]) == 10
+    assert {p['id'] for p in json.loads(result.stdout)['products']} == {p['id'] for p in factory.load_catalog(ROOT)['products']}
 
 
 def test_release_check_reports_local_blocked_in_exit_status_and_platform_separately(tmp_path: Path) -> None:

@@ -1,6 +1,6 @@
-# Data Import Precheck 0.1.2 — local candidate
+# Data Import Precheck 0.1.5 — local pre-QA candidate
 
-Entry: `scripts/precheck.py` (Python >=3.11, `openpyxl>=3.1,<4`; openpyxl is not bundled). Install dependency into an explicitly selected environment before running; the WorkBuddy host Python/runtime and third-party package availability are NOT_TESTED. This ZIP is local only, not a platform installation or publication receipt.
+Entry: `scripts/precheck.py` (Python >=3.11, `openpyxl>=3.1,<4`; openpyxl is not bundled). In a separate extracted working directory create an isolated environment with `python -m venv .venv`; install with `.venv/Scripts/python.exe -m pip install "openpyxl>=3.1,<4"` on Windows or `.venv/bin/python -m pip install "openpyxl>=3.1,<4"` on POSIX. Run the same environment's Python against `scripts/precheck.py --input <absolute CSV/XLSX> --output-dir <existing absolute directory> --rules <absolute confirmed JSON>`; optionally add `--reference <absolute CSV/XLSX>` and, only with user authorization, `--split --authorization <explicit request>`. Read `SKILL.md` and `references/rules.md` for template, target order, transform and rerun semantics. Dependency installation needs an approved software source; WorkBuddy host Python/runtime and package availability are NOT_TESTED. This ZIP is local only, not a platform installation or publication receipt.
 
 Dependency: openpyxl 3.1.5 (MIT) and transitive et_xmlfile 2.0.0 (MIT), as reported by installed Python distribution metadata; neither wheel is bundled. Python standard library: csv, hashlib, json, pathlib, zipfile. No network calls. Source/target data supplied by caller; no bundled customer records. Static SKILL instructions are not proof of real natural-language model orchestration.
 

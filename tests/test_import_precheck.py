@@ -63,8 +63,9 @@ def test_split_and_reference_rerun(tmp_path,xlsx):
     accepted = load_workbook(old['outputs']['candidate']).active
     isolated = load_workbook(old['outputs']['quarantine']).active
     assert accepted.max_row == 2 and isolated.max_row == 4
-    assert accepted['C2'].value == '123'
-    assert {accepted['A2'].value}.isdisjoint({isolated.cell(i,1).value for i in range(2,5)})
+    assert accepted['A2'].value == '123'
+    assert accepted['A1'].value == 'customer_code'
+    assert {old['rows'][2]['row_id']}.isdisjoint({isolated.cell(i,1).value for i in range(2,5)})
     assert Path(old['outputs']['report']).exists()
     with ref.open('a',encoding='utf-8') as stream:
         stream.write('R99\n')
@@ -80,7 +81,7 @@ def test_injection_as_text(tmp_path,prefix):
         csv.writer(stream).writerow(['SAFE',prefix,'R01'])
     result = module.analyze(src,out,RULES,ref,candidate=True,authorization='candidate for all rows')
     ws = load_workbook(result['outputs']['candidate']).active
-    cell = ws.cell(6,4)
+    cell = ws.cell(6,2)
     assert cell.value == prefix and cell.data_type == 's'
 
 def test_missing_ref_and_mapping(tmp_path):
@@ -99,7 +100,7 @@ def test_composite_and_zero(tmp_path):
     rules={'fields':{'country':{'required':True,'unique_group':'pair'},'code':{'unique_group':'pair'}}}
     result=module.analyze(src,out,rules)
     assert result['duplicate_groups']==0 and result['findings']==2
-    assert len([u for u in result['unchecked'] if 'comparison key' in u[1]])==2
+    assert len([u for u in result['unchecked'] if u[1] == 'missing comparison key'])==2
 
 def test_date_precision_multisheet_and_fake(tmp_path):
     src,ref,out=sample(tmp_path,True)
@@ -168,7 +169,7 @@ def test_confirmed_transform_is_audited(tmp_path):
     changes=load_workbook(receipt['outputs']['report'])['变更记录']
     assert changes.max_row==2 and changes['D2'].value=='FOO' and changes['F2'].value
     candidate=load_workbook(receipt['outputs']['candidate']).active
-    assert candidate.cell(candidate.max_row,4).value=='FOO'
+    assert candidate.cell(candidate.max_row,1).value=='FOO'
 
 def test_d2_transform_unique_collision_quarantines_both(tmp_path):
     src=tmp_path/'collision.csv'; src.write_text('code\n A \nA\n',encoding='utf-8')

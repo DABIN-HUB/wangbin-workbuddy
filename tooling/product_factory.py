@@ -76,8 +76,8 @@ def _atomic_bytes(path: Path, payload: bytes) -> None:
         temp.unlink(missing_ok=True)
 
 
-def _version_entry(item: dict) -> dict:
-    active = item.get("active_version")
+def _version_entry(item: dict, candidate_version: str | None = None) -> dict:
+    active = candidate_version or item.get("active_version")
     if active is not None:
         for entry in item["versions"]:
             if entry.get("version") == active:
@@ -178,12 +178,12 @@ def get_product(root: Path, product_id: str) -> dict:
     raise ValueError(f"unregistered product: {product_id}")
 
 
-def _source(root: Path, item: dict) -> Path:
-    return _safe_relative(root, _version_entry(item)["source"], label="source")
+def _source(root: Path, item: dict, candidate_version: str | None = None) -> Path:
+    return _safe_relative(root, _version_entry(item, candidate_version)["source"], label="source")
 
 
-def _version(item: dict) -> str:
-    return _version_entry(item)["version"]
+def _version(item: dict, candidate_version: str | None = None) -> str:
+    return _version_entry(item, candidate_version)["version"]
 
 
 def init_product(root: Path, product_id: str, kind: str | None = None, connector_mode: str | None = None) -> Path:
@@ -293,9 +293,9 @@ def _files(source: Path, kind: str) -> list[Path]:
     return sorted(files, key=lambda p: p.relative_to(source).as_posix())
 
 
-def validate_product(root: Path, product_id: str) -> dict:
+def validate_product(root: Path, product_id: str, *, version: str | None = None) -> dict:
     item = get_product(root, product_id)
-    source = _source(root, item)
+    source = _source(root, item, version)
     if not source.is_dir():
         return {"id": product_id, "status": "BLOCKED", "findings": ["source absent (backlog)"]}
     findings = []
@@ -304,7 +304,7 @@ def validate_product(root: Path, product_id: str) -> dict:
         if not files:
             findings.append("empty source")
         if item["type"] == "Expert":
-            validate_prompt_expert(source, name=product_id, version=_version(item), category=item.get("category", "UNKNOWN"))
+            validate_prompt_expert(source, name=product_id, version=_version(item, version), category=item.get("category", "UNKNOWN"))
         else:
             checks = []
             from .validators import Finding
@@ -312,16 +312,16 @@ def validate_product(root: Path, product_id: str) -> dict:
             if item["type"] == "Skill":
                 validate_skill(source, checks, issues)
                 front = yaml.safe_load((source / "SKILL.md").read_text(encoding="utf-8").split("---", 2)[1])
-                if not isinstance(front, dict) or front.get("name") != product_id or str(front.get("version")) != _version(item):
+                if not isinstance(front, dict) or front.get("name") != product_id or str(front.get("version")) != _version(item, version):
                     findings.append("Skill identity/version mismatch")
                 if (source / "manifest.json").is_file():
                     meta = _json(source / "manifest.json")
-                    if meta.get("id") != product_id or str(meta.get("version")) != _version(item):
+                    if meta.get("id") != product_id or str(meta.get("version")) != _version(item, version):
                         findings.append("Skill manifest identity/version mismatch")
             else:
                 validate_connector(source, checks, issues)
                 meta = _json(source / "connector-meta.json")
-                if meta.get("source") != product_id or meta.get("version") != _version(item):
+                if meta.get("source") != product_id or meta.get("version") != _version(item, version):
                     findings.append("Connector identity/version mismatch")
             findings += [f.code for f in issues]
         findings += [f.code for f in scan_for_secrets(source)]
@@ -354,8 +354,8 @@ def test_product(root: Path, product_id: str) -> dict:
             "output": (run.stdout + run.stderr)[-4000:], "scope": "local product test only; not platform verification"}
 
 
-def _paths(root: Path, item: dict) -> tuple[Path, Path, Path]:
-    filename = f"{item['id']}-{_version(item)}-{item['type'].lower()}-candidate.zip"
+def _paths(root: Path, item: dict, candidate_version: str | None = None) -> tuple[Path, Path, Path]:
+    filename = f"{item['id']}-{_version(item, candidate_version)}-{item['type'].lower()}-candidate.zip"
     archive = _safe_relative(root, f"dist/{filename}", label="candidate")
     return archive, archive.with_name(filename + ".sha256"), archive.with_name(filename + ".manifest.json")
 
@@ -394,13 +394,12 @@ def register_version(root: Path, product_id: str, version: str, *, source: str |
     return {"id": product_id, "active_version": item.get("active_version", _version(item)), "version": entry}
 
 
-def package_product(root: Path, product_id: str) -> dict:
+def package_product(root: Path, product_id: str, *, version: str | None = None) -> dict:
     item = get_product(root, product_id)
-    report = validate_product(root, product_id)
+    report = validate_product(root, product_id, version=version)
     if report["status"] != "PASS":
         raise ValueError(f"product not valid: {report['findings']}")
-    source = _source(root, item)
-    version = _version_entry(item)
+    source = _source(root, item, version)
     # Read the complete payload once. The archive and manifest are both derived
     # from this immutable in-memory snapshot, never from a second source walk.
     content = {f"{product_id}/{p.relative_to(source).as_posix()}": p.read_bytes() for p in _files(source, item["type"])}
@@ -415,11 +414,11 @@ def package_product(root: Path, product_id: str) -> dict:
     with zipfile.ZipFile(io.BytesIO(raw)) as zipped:
         if zipped.testzip() is not None or zipped.namelist() != sorted(content) or any(zipped.read(name) != payload for name, payload in content.items()):
             raise ValueError("candidate archive readback failed")
-    archive, sidecar, manifest = _paths(root, item)
+    archive, sidecar, manifest = _paths(root, item, version)
     digest = _hash(raw)
     members = [{"path": name, "sha256": _hash(payload), "size": len(payload)} for name, payload in sorted(content.items())]
     archive_rel = _relative(root, archive)
-    manifest_data = {"id": product_id, "version": _version(item), "status": "PASS", "archive": archive_rel,
+    manifest_data = {"id": product_id, "version": _version(item, version), "status": "PASS", "archive": archive_rel,
                      "source": _relative(root, source), "sha256": digest, "members": members,
                      "payload_snapshot_sha256": _hash(_dump({"members": members})),
                      "scope": "local archive integrity only", "platform": "BLOCKED"}
@@ -454,28 +453,28 @@ def package_product(root: Path, product_id: str) -> dict:
 
     catalog = load_catalog(root)
     catalog_item = next(entry for entry in catalog["products"] if entry["id"] == product_id)
-    catalog_version = _version_entry(catalog_item)
+    catalog_version = _version_entry(catalog_item, version)
     catalog_version.update(candidate=archive_rel, archive_evidence=archive_rel, sha256=digest)
     _atomic_bytes(root / "products" / "catalog.json", _dump(catalog))
     return result
 
 
-def verify_package(root: Path, product_id: str) -> dict:
+def verify_package(root: Path, product_id: str, *, version: str | None = None) -> dict:
     item = get_product(root, product_id)
-    archive, sidecar, manifest = _paths(root, item)
+    archive, sidecar, manifest = _paths(root, item, version)
     try:
         info = _json(manifest)
         raw = archive.read_bytes()
         digest = _hash(raw)
         expected_archive = _relative(root, archive)
-        version = _version_entry(item)
-        if (info.get("id") != product_id or info.get("version") != _version(item) or info.get("status") != "PASS"
-                or info.get("archive") != expected_archive or info.get("source") != _relative(root, _source(root, item))
-                or info.get("sha256") != digest or version.get("candidate") != expected_archive
-                or version.get("archive_evidence") != expected_archive or version.get("sha256") != digest
+        selected = _version_entry(item, version)
+        if (info.get("id") != product_id or info.get("version") != _version(item, version) or info.get("status") != "PASS"
+                or info.get("archive") != expected_archive or info.get("source") != _relative(root, _source(root, item, version))
+                or info.get("sha256") != digest or selected.get("candidate") != expected_archive
+                or selected.get("archive_evidence") != expected_archive or selected.get("sha256") != digest
                 or sidecar.read_bytes() != f"{digest}  {archive.name}\n".encode("ascii")):
             raise ValueError("manifest or sidecar hash mismatch")
-        source = _source(root, item)
+        source = _source(root, item, version)
         expected = {f"{product_id}/{p.relative_to(source).as_posix()}": p.read_bytes() for p in _files(source, item["type"])}
         with zipfile.ZipFile(io.BytesIO(raw)) as zipped:
             if zipped.testzip() is not None or set(zipped.namelist()) != set(expected) or len(zipped.namelist()) != len(expected):

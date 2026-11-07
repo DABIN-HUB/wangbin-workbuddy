@@ -15,7 +15,7 @@ try:
     from openpyxl import Workbook, load_workbook
     from openpyxl.utils import get_column_letter
 except ImportError:
-    raise SystemExit('DEPENDENCY_MISSING: install openpyxl>=3.1,<4 (BSD-3-Clause)')
+    raise SystemExit('DEPENDENCY_MISSING: install openpyxl>=3.1,<4 (verify distribution license before release)')
 
 MAX_BYTES = 20 * 1024 * 1024
 MAX_ROWS = 50000
@@ -24,7 +24,7 @@ HEADINGS = {
     '检查概览': ['项目', '值'],
     '字段映射': ['原始字段', '目标字段', '映射依据', '确认状态', '转换规则'],
     '问题明细': ['finding_id', 'row_id', '文件', '工作表', '原始行号', '字段/单元格', '原值', '规则编号', '类别', '说明', '建议', '是否阻断候选导入'],
-    '变更记录': ['row_id', '字段', '原值', '新值', '转换规则', '授权依据'],
+    '变更记录': ['row_id', '字段', '原值', '新值', '转换规则', '授权依据', '原值规则状态', '最终规则状态'],
     '未检查项': ['规则编号', '缺少条件', '影响范围', '需补资料'],
 }
 
@@ -189,7 +189,7 @@ def rules_from_template(path, sheet=None):
     meta, _ = read_table(path, sheet)
     return {'fields': {col: {'sources': [col], 'rule_id': 'TEMPLATE:' + col,
                              'rule_source': f"template {meta['file']} sha256:{meta['sha256']}"}
-                       for col in meta['columns']}}
+                       for col in meta['columns']}, 'target_order_source': f"template {meta['file']} sha256:{meta['sha256']}"}
 
 def compare_report(previous_report, source_hash, current, current_reference_hash):
     """Compare explicit immutable prior report by stable source-row evidence, not finding IDs."""
@@ -299,6 +299,22 @@ def analyze(source, output, rules=None, reference=None, *, sheet=None, reference
     for row in records:
         row['id'] = f"{before[:16]}:{meta['sheet'] or 'CSV'}:{row['line']}"
     checked = set()
+    pending = defaultdict(list)
+    for target in set(fields) - set(selected):
+        for row in records:
+            pending[row['id']].append(f'{target}: mapping unresolved')
+    changes = []
+    transformed = {r['id']: {col: c['value'] for col, c in r['cells'].items()} for r in records}
+    for target, action in (transformations or {}).items():
+        if target not in selected or action not in ('strip', 'upper', 'lower'):
+            raise InputError('TRANSFORMATION_NOT_CONFIRMED: strip/upper/lower on uniquely mapped fields only')
+        for row in records:
+            old = transformed[row['id']][selected[target]]
+            if isinstance(old, str):
+                new = getattr(old, action)()
+                if new != old:
+                    transformed[row['id']][selected[target]] = new
+                    changes.append([row['id'], target, old, new, action, authorization])
     for target, rule in fields.items():
         if target not in selected:
             continue
@@ -306,12 +322,12 @@ def analyze(source, output, rules=None, reference=None, *, sheet=None, reference
         rule_id = rule.get('rule_id', target)
         for row in records:
             cell = row['cells'][col]
-            value = cell['value']
+            value = transformed[row['id']][col]
             missing = value is None or value == ''
             if rule.get('required') is True:
                 checked.add(rule_id + ':required')
                 if missing:
-                    finding(row, col, rule_id, 'MISSING_REQUIRED_FIELD', 'required value missing')
+                    finding(row, col, rule_id, 'MISSING_REQUIRED_FIELD', 'required final value missing', value)
             if missing:
                 continue
             dtype = rule.get('data_type')
@@ -330,10 +346,12 @@ def analyze(source, output, rules=None, reference=None, *, sheet=None, reference
                             datetime.strptime(safe_text(value), fmt)
                     except (ValueError, TypeError):
                         finding(row, col, rule_id, 'INVALID_DATE', 'does not match confirmed date format', value)
+                else:
+                    pending[row['id']].append(f'{rule_id}: date format ambiguous')
             if rule.get('max_length') is not None or rule.get('min_length') is not None:
                 checked.add(rule_id + ':length')
                 if not int(rule.get('min_length', 0)) <= len(safe_text(value)) <= int(rule.get('max_length', 32767)):
-                    finding(row, col, rule_id, 'LENGTH_VIOLATION', 'outside confirmed length bounds', value)
+                    finding(row, col, rule_id, 'LENGTH_VIOLATION', 'outside confirmed final length bounds', value)
             if rule.get('allowed_values') is not None:
                 checked.add(rule_id + ':values')
                 if value not in rule['allowed_values']:
@@ -353,9 +371,10 @@ def analyze(source, output, rules=None, reference=None, *, sheet=None, reference
         checked.add(group + ':unique')
         values = defaultdict(list)
         for row in records:
-            key = tuple(row['cells'][selected[t]]['value'] for t in targets)
+            key = tuple(transformed[row['id']][selected[t]] for t in targets)
             if any(v is None or v == '' for v in key):
                 unchecked.append([group, 'missing comparison key', row['id'], 'complete key before checking uniqueness'])
+                pending[row['id']].append(f'{group}: missing comparison key')
                 continue
             values[key].append(row)
         for key, members in values.items():
@@ -363,7 +382,8 @@ def analyze(source, output, rules=None, reference=None, *, sheet=None, reference
                 duplicate_groups += 1
                 for row in members:
                     finding(row, selected[targets[0]], group, 'DUPLICATE_KEY',
-                            'same key at lines ' + ','.join(str(m['line']) for m in members))
+                            'same final key at lines ' + ','.join(str(m['line']) for m in members),
+                            transformed[row['id']][selected[targets[0]]])
     for target, rule in fields.items():
         ref_key = rule.get('reference_key')
         if not ref_key or target not in selected:
@@ -371,9 +391,17 @@ def analyze(source, output, rules=None, reference=None, *, sheet=None, reference
         rule_id = rule.get('rule_id', target)
         if not ref_meta:
             unchecked.append([rule_id, 'reference snapshot missing', target, 'provide reference CSV/XLSX'])
+            for row in records:
+                value = transformed[row['id']][selected[target]]
+                if value is not None and value != '':
+                    pending[row['id']].append(f'{rule_id}: reference snapshot missing')
             continue
         if ref_key not in ref_meta['columns']:
             unchecked.append([rule_id, 'reference key missing', target, 'confirm reference key'])
+            for row in records:
+                value = transformed[row['id']][selected[target]]
+                if value is not None and value != '':
+                    pending[row['id']].append(f'{rule_id}: reference key missing')
             continue
         checked.add(rule_id + ':reference')
         lookup = defaultdict(list)
@@ -385,62 +413,65 @@ def analyze(source, output, rules=None, reference=None, *, sheet=None, reference
                         'duplicate reference key at lines ' + ','.join(str(r['line']) for r in members),
                         key, False, origin=ref_meta, origin_row=members[0])
         for row in records:
-            val = row['cells'][selected[target]]['value']
+            val = transformed[row['id']][selected[target]]
             if val is None or val == '':
                 continue
             if val in lookup and len(lookup[val]) > 1:
                 unchecked.append([rule_id, 'ambiguous reference key: ' + safe_text(val), row['id'], 'deduplicate reference snapshot'])
+                pending[row['id']].append(f'{rule_id}: ambiguous reference key {safe_text(val)}')
             elif val not in lookup:
                 finding(row, selected[target], rule_id, 'NOT_IN_REFERENCE', 'not found in this reference snapshot', val)
-    changes = []
-    transformed = {r['id']: {col: c['value'] for col,c in r['cells'].items()} for r in records}
-    for target, actions in (transformations or {}).items():
-        if target not in selected or actions not in ('strip', 'upper', 'lower'):
-            raise InputError('TRANSFORMATION_NOT_CONFIRMED: strip/upper/lower on uniquely mapped fields only')
-        for row in records:
-            old = transformed[row['id']][selected[target]]
-            if isinstance(old, str):
-                new = getattr(old, actions)()
-                if new != old:
-                    transformed[row['id']][selected[target]] = new
-                    changes.append([row['id'], target, old, new, actions, authorization])
-    # A transformed unique key must be checked as it will actually be exported. Avoid
-    # counting an already-reported source duplicate group twice.
-    for group, targets in sorted(groups.items()):
-        if not transformations or not any(t in transformations for t in targets) or any(t not in selected for t in targets):
-            continue
-        original = defaultdict(list)
-        exported = defaultdict(list)
-        for row in records:
-            old_key = tuple(row['cells'][selected[t]]['value'] for t in targets)
-            new_key = tuple(transformed[row['id']][selected[t]] for t in targets)
-            if not any(v is None or v == '' for v in old_key):
-                original[old_key].append(row)
-            if not any(v is None or v == '' for v in new_key):
-                exported[new_key].append(row)
-        existing = {(group, f['row_id']) for f in findings if f['category'] == 'DUPLICATE_KEY'}
-        for key, members in exported.items():
-            if len(members) > 1:
-                if not any(len(original[tuple(r['cells'][selected[t]]['value'] for t in targets)]) > 1 for r in members):
-                    duplicate_groups += 1
-                for row in members:
-                    if (group, row['id']) not in existing:
-                        finding(row, selected[targets[0]], group, 'DUPLICATE_KEY',
-                                'authorized transformation creates same key at lines ' + ','.join(str(r['line']) for r in members), key[0])
+    def field_issues(rule, value):
+        issues = []
+        if value is None or value == '':
+            return ['MISSING_REQUIRED_FIELD'] if rule.get('required') is True else []
+        if rule.get('min_length') is not None or rule.get('max_length') is not None:
+            if not int(rule.get('min_length', 0)) <= len(safe_text(value)) <= int(rule.get('max_length', 32767)):
+                issues.append('LENGTH_VIOLATION')
+        if rule.get('allowed_values') is not None and value not in rule['allowed_values']:
+            issues.append('INVALID_VALUE')
+        ref_key = rule.get('reference_key')
+        if ref_key:
+            if not ref_meta or ref_key not in ref_meta['columns']:
+                issues.append('PENDING_REFERENCE')
+            else:
+                matches = [r for r in ref_rows if r['cells'][ref_key]['value'] == value]
+                if len(matches) > 1:
+                    issues.append('PENDING_REFERENCE_AMBIGUOUS')
+                elif not matches:
+                    issues.append('NOT_IN_REFERENCE')
+        return issues
+    for change in changes:
+        rule = fields[change[1]]
+        before_issues = field_issues(rule, change[2])
+        after_issues = field_issues(rule, change[3])
+        change.extend([','.join(before_issues) or 'PASS', ','.join(after_issues) or 'PASS'])
     if digest(source) != before:
         raise InputError('SOURCE_CHANGED_DURING_RUN')
     if reference and digest(safe_path(reference)) != ref_meta['sha256']:
         raise InputError('REFERENCE_CHANGED_DURING_RUN')
     if candidate or split:
         if unresolved or not fields or any(t not in selected for t in fields):
-            raise InputError('CANDIDATE_MAPPING_UNRESOLVED')
-    if candidate and not split and any(f['category']=='DUPLICATE_KEY' and 'authorized transformation' in f['description'] for f in findings):
-        raise InputError('TRANSFORMED_UNIQUE_COLLISION: use --split to quarantine conflicting rows')
+            raise InputError('CANDIDATE_MAPPING_UNRESOLVED: confirm each target mapping before exporting')
     affected = {f['row_id'] for f in findings if f['row_id'] and f['blocking']}
+    pending_ids = set(pending)
+    qualified = {r['id'] for r in records} - affected - pending_ids
+    if candidate and not split and transformations:
+        for group, targets in groups.items():
+            if any(t not in selected for t in targets):
+                continue
+            old_keys = Counter(tuple(r['cells'][selected[t]]['value'] for t in targets) for r in records)
+            if any(f['category'] == 'DUPLICATE_KEY' and f['rule'] == group and
+                   old_keys[tuple(row['cells'][selected[t]]['value'] for t in targets)] < 2
+                   for f in findings for row in records if row['id'] == f['row_id']):
+                raise InputError('TRANSFORMED_UNIQUE_COLLISION: use --split to quarantine conflicting rows')
     comparison = compare_report(previous_report, before, findings, ref_meta['sha256'] if ref_meta else 'NOT_PROVIDED') if previous_report else None
     report = next_path(output, source.stem + '-导入预检')
     status = 'PARTIAL' if unchecked else 'COMPLETED'
     overview = [['输入记录数', len(records)], ['完全空白行数', meta['blank_rows']], ['无阻断记录数', len(records)-len(affected)],
+                ['已验证合格记录数', len(qualified)], ['待确认记录数', len(pending_ids)],
+                ['违规记录数', len(affected)], ['目标字段顺序', ','.join(fields)],
+                ['目标顺序依据', rules.get('target_order_source', 'confirmed rules insertion order')],
                 ['有问题记录数', len(affected)], ['问题条数', len(findings)], ['重复组数', duplicate_groups],
                 ['检查模式', '有限数据质量模式' if not fields else '已知规则预检'], ['已检查规则', ','.join(sorted(checked))],
                 ['未检查规则', len(unchecked)], ['执行状态', status], ['源SHA256', before], ['参考SHA256', ref_meta['sha256'] if ref_meta else 'NOT_PROVIDED'],
@@ -457,25 +488,43 @@ def analyze(source, output, rules=None, reference=None, *, sheet=None, reference
     tables['字段映射'] = (HEADINGS['字段映射'], mappings)
     tables['问题明细'] = (HEADINGS['问题明细'], [[f[k] for k in ('finding_id','row_id','file','sheet','line','field','value','rule','category','description','advice','blocking')] for f in findings])
     tables['变更记录'] = (HEADINGS['变更记录'], changes)
-    tables['未检查项'] = (HEADINGS['未检查项'], list(dict.fromkeys(tuple(row) for row in unchecked)))
+    tables['未检查项'] = (HEADINGS['未检查项'], list(dict.fromkeys(tuple(row) for row in unchecked)) +
+                         [[reason.split(':', 1)[0], reason, row_id, 'supply or confirm evidence']
+                          for row_id, reasons in pending.items() for reason in reasons])
     write_book(report, tables)
     outputs = {'report': str(report)}
     if candidate or split:
-        accepted = [r for r in records if r['id'] not in affected] if split else records
-        isolated = [r for r in records if r['id'] in affected] if split else []
-        cols = ['row_id', 'source_line', *meta['columns']]
-        def rows_for(items):
-            return [[r['id'], r['line'], *(transformed[r['id']][col] for col in meta['columns'])] for r in items]
+        accepted = [r for r in records if r['id'] in qualified] if split else records
+        isolated = [r for r in records if r['id'] not in qualified] if split else []
+        target_cols = list(fields)  # Template insertion order or confirmed rules order, never source order.
+        def business_rows(items):
+            return [[transformed[r['id']][selected[t]] for t in target_cols] for r in items]
+        def reasons(row):
+            issues = [f['category'] for f in findings if f['row_id'] == row['id'] and f['blocking']]
+            waits = pending.get(row['id'], [])
+            state = '+'.join(part for part, enabled in (('VIOLATION', bool(issues)),
+                                                        ('PENDING_VERIFICATION', bool(waits))) if enabled) or 'VERIFIED'
+            return state, ','.join(issues + waits)
         p = next_path(output, source.stem + '-候选导入')
-        write_book(p, {'候选数据': (cols, rows_for(accepted))})
+        candidate_tables = {'候选数据': (target_cols, business_rows(accepted))}
+        if not split:
+            candidate_tables['资格追踪_不可直接导入'] = (
+                ['row_id', 'source_line', '状态', '原因'],
+                [[r['id'], r['line'], *reasons(r)] for r in records])
+        write_book(p, candidate_tables)
         outputs['candidate'] = str(p)
         if split:
             p = next_path(output, source.stem + '-隔离记录')
-            write_book(p, {'隔离记录': (cols + ['原因'], [row + [','.join(f['category'] for f in findings if f['row_id'] == row[0])] for row in rows_for(isolated)])})
+            cols = ['row_id', 'source_line', *meta['columns'], '状态', '原因']
+            write_book(p, {'隔离记录': (cols, [[r['id'], r['line'], *(transformed[r['id']][col] for col in meta['columns']),
+                                            *reasons(r)] for r in isolated])})
             outputs['quarantine'] = str(p)
             assert {r['id'] for r in accepted}.isdisjoint({r['id'] for r in isolated})
             assert len(accepted) + len(isolated) == len(records)
     return {'status': status, 'comparison': comparison, 'input_records': len(records), 'findings': len(findings), 'affected_records': len(affected),
+            'verified_records': len(qualified), 'pending_records': len(pending_ids),
+            'candidate_records': len(qualified) if split else len(records) if candidate else None,
+            'quarantine_records': len(records) - len(qualified) if split else None,
             'duplicate_groups': duplicate_groups, 'source_sha256': before, 'reference_sha256': ref_meta['sha256'] if ref_meta else None,
             'unchecked': tables['未检查项'][1], 'checked': sorted(checked), 'outputs': outputs,
             'finding_details': findings, 'rows': [{'row_id':r['id'], 'line':r['line']} for r in records],
@@ -510,10 +559,10 @@ def main():
         print(json.dumps(result, ensure_ascii=False, indent=2, default=str))
         return 0
     except (InputError, OSError, ValueError, KeyError, TypeError) as exc:
-        if isinstance(exc, InputError) and str(exc).startswith(('SHEET_SELECTION_REQUIRED:', 'REFERENCE_SHEET_SELECTION_REQUIRED:')):
-            flag = '--reference-sheet' if str(exc).startswith('REFERENCE_') else '--sheet'
+        if isinstance(exc, InputError) and str(exc).startswith(('SHEET_SELECTION_REQUIRED:', 'REFERENCE_SHEET_SELECTION_REQUIRED:', 'CANDIDATE_MAPPING_UNRESOLVED:')):
+            flag = '--reference-sheet' if str(exc).startswith('REFERENCE_') else '--sheet' if str(exc).startswith('SHEET_') else '--rules'
             print(json.dumps({'status':'NEEDS_INPUT', 'reason': str(exc),
-                              'next_action':f'Select one worksheet explicitly with {flag}; no report was produced.'}, ensure_ascii=False))
+                              'next_action':f'Confirm selection/mapping with {flag}; no report or candidate was produced.'}, ensure_ascii=False))
             return 0
         print(json.dumps({'status': 'REJECTED' if isinstance(exc, InputError) else 'FAILED', 'reason': str(exc)}, ensure_ascii=False), file=sys.stderr)
         return 2
