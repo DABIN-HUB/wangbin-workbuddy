@@ -1,0 +1,188 @@
+{
+  "F01-unknown-operability": {
+    "expected": [
+      [
+        "已定位",
+        "待确认",
+        "不适用",
+        "不适用"
+      ]
+    ],
+    "input_sha": {
+      "response.md": "1d987531afce3d615858dbaf40cb95cf3e5e91c2057a70a41e6c6035ea3096c0",
+      "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea"
+    }
+  },
+  "F02-current-no-service": {
+    "expected": [
+      [
+        "已定位",
+        "可能不充分",
+        "不适用",
+        "不适用"
+      ]
+    ],
+    "input_sha": {
+      "response.md": "fa08721a47db05a32440d269c6021c58f5368583e7fc869d97ced9ac40749fd9",
+      "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea"
+    }
+  },
+  "F03-live-control": {
+    "expected": [
+      [
+        "已定位",
+        "已覆盖（文本层面）",
+        "不适用",
+        "不适用"
+      ]
+    ],
+    "input_sha": {
+      "response.md": "453b47e7832459f50db8454506ceae2df3e81932e6e071a46d6ecd05a7f01da2",
+      "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea"
+    }
+  },
+  "F04-same-object-conflict": {
+    "expected": [
+      [
+        "已定位",
+        "待确认",
+        "不适用",
+        "不适用"
+      ]
+    ],
+    "input_sha": {
+      "response.md": "037c0f84432a190d5d4758e8e9563c65033c01eddc677143cf7144ed459b20af",
+      "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea"
+    }
+  },
+  "F05-two-object-separation": {
+    "expected": [
+      [
+        "已定位",
+        "已覆盖（文本层面）",
+        "不适用",
+        "不适用"
+      ],
+      [
+        "已定位",
+        "可能不充分",
+        "不适用",
+        "不适用"
+      ]
+    ],
+    "input_sha": {
+      "response.md": "a4cd843bfb5475ad5d5454425bcc07d95ddbe74347f148015d8c20c20bd858a5",
+      "tender.txt": "d24f3fc06a09c62aa47d77f45a85b418a1c16a86be9ab43fa615df50a9b431c9"
+    }
+  },
+  "F06-license-no-file": {
+    "expected": [
+      [
+        "已定位",
+        "可能不充分",
+        "未提供（限已提供材料）",
+        "未核验"
+      ]
+    ],
+    "input_sha": {
+      "response.md": "3e46c6db2bb24a72db41847c5f5087d56d8be975e9a8e2727e4a1ae6eeeed898",
+      "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f"
+    }
+  },
+  "F07-title-ambiguity": {
+    "expected": [
+      [
+        "已定位",
+        "待确认",
+        "已提供（可读文本）",
+        "待确认"
+      ]
+    ],
+    "input_sha": {
+      "response.md": "3e46c6db2bb24a72db41847c5f5087d56d8be975e9a8e2727e4a1ae6eeeed898",
+      "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f",
+      "营业执照.txt": "24f8b0135eb70ea18e82851d29de5e48ac893458c925fee0244c20dc0d22416a"
+    }
+  },
+  "F08-explicit-no-body": {
+    "expected": [
+      [
+        "已定位",
+        "可能不充分",
+        "已提供（可读文本）",
+        "不支持（文本层面）"
+      ]
+    ],
+    "input_sha": {
+      "response.md": "3e46c6db2bb24a72db41847c5f5087d56d8be975e9a8e2727e4a1ae6eeeed898",
+      "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f",
+      "营业执照.txt": "3c5ae70d5aa0ad557dac9c614e8a63313380c9d1ed5aa656f51e8e50304dc389"
+    }
+  },
+  "F09-partial-unclear": {
+    "expected": [
+      [
+        "已定位",
+        "待确认",
+        "已提供（可读文本）",
+        "待确认"
+      ]
+    ],
+    "input_sha": {
+      "response.md": "3e46c6db2bb24a72db41847c5f5087d56d8be975e9a8e2727e4a1ae6eeeed898",
+      "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f",
+      "营业执照.txt": "bf671f5e88897548a8ce25f78fbdebed86afbba3517a28371565ef054850262f"
+    }
+  },
+  "F10-substantive-control": {
+    "expected": [
+      [
+        "已定位",
+        "已覆盖（文本层面）",
+        "已提供（可读文本）",
+        "支持（文本层面）"
+      ]
+    ],
+    "input_sha": {
+      "response.md": "3e46c6db2bb24a72db41847c5f5087d56d8be975e9a8e2727e4a1ae6eeeed898",
+      "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f",
+      "营业执照.txt": "a907bc76bb25ccb7568455e1b825801f86b2d6455963edceb39a06e53c5e2905"
+    }
+  },
+  "F11-same-file-contradiction": {
+    "expected": [
+      [
+        "已定位",
+        "待确认",
+        "已提供（可读文本）",
+        "待确认"
+      ]
+    ],
+    "input_sha": {
+      "response.md": "3e46c6db2bb24a72db41847c5f5087d56d8be975e9a8e2727e4a1ae6eeeed898",
+      "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f",
+      "营业执照.txt": "306217170c9ee6418c9d3aa8b829651fc0990216974244b229ae6dbed38a456c"
+    }
+  },
+  "F12-other-material-no-borrow": {
+    "expected": [
+      [
+        "已定位",
+        "可能不充分",
+        "未提供（限已提供材料）",
+        "未核验"
+      ],
+      [
+        "已定位",
+        "已覆盖（文本层面）",
+        "已提供（可读文本）",
+        "支持（文本层面）"
+      ]
+    ],
+    "input_sha": {
+      "response.md": "874ba128515d094c46697b46772fecf82471dcc420c7735f667b95868961f2fb",
+      "tender.txt": "42b4bb00e61589066ff72cd25ba2fb53969b1d846856fc9d3015afc245b1bdf7",
+      "乙类.txt": "8f3f4d73ec57a6c64a11ec05422ad44d2f995a7a5f99a388927c0d1889c2527f"
+    }
+  }
+}
