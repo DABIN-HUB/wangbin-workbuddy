@@ -1,0 +1,4459 @@
+{
+  "product_id": "wangbin-project-acceptance-check",
+  "task_id": "t_8b65f7ea",
+  "zip": "F:\\ideaWorkSpace\\wangbin-workbuddy-project-acceptance-check\\dist\\wangbin-project-acceptance-check-0.1.3-skill-candidate.zip",
+  "sha256": "9b6234744613af39c9d710359c93649044cbc4660aa9805a9bf8e1a8927c797e",
+  "cases": [
+    {
+      "id": "F01-people-72",
+      "inputs": {
+        "scope.md": "同一测试场景下并发登录人数不得低于73人。",
+        "material.xlsx": "同一压测场景最大支持72人并发登录。"
+      },
+      "input_hashes": {
+        "material.xlsx": "a2d1dfb7d1380875b8bddf11654a3798d014b9fab02b216e172aa355445d5a6b",
+        "scope.md": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-people-72",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-people-72\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.xlsx"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-people-72",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-people-72\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-people-72\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-people-72\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NONCONFORMING\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NONCONFORMING",
+      "actual": "NONCONFORMING",
+      "coverage": "0/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "同一测试场景下并发登录人数不得低于73人。",
+          "status": "NONCONFORMING",
+          "support": [],
+          "negative": [
+            "EVD-8eef64323808"
+          ],
+          "pending": [],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-8eef64323808",
+              "decision": "NONCONFORMING",
+              "reason": "并发登录实际 72 人 不得低于 阈值 73 人：不满足",
+              "source": "material.xlsx/Sheet/行2/列1-2"
+            }
+          ],
+          "sources": [
+            "material.xlsx/Sheet/行2/列1-2"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "id": "GAP-bd8680534f34",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "NONCONFORMING",
+          "text": "同一测试场景下并发登录人数不得低于73人。",
+          "sources": [
+            "material.xlsx/Sheet/行2/列1-2"
+          ],
+          "status": "OPEN"
+        },
+        {
+          "id": "GAP-129f537ab8a8",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "MISSING",
+          "text": "同一测试场景下并发登录人数不得低于73人。",
+          "sources": [
+            "scope.md/行1"
+          ],
+          "status": "OPEN"
+        }
+      ],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-2f450b876381",
+          "path": "material.xlsx",
+          "sha256": "a2d1dfb7d1380875b8bddf11654a3798d014b9fab02b216e172aa355445d5a6b",
+          "type": ".xlsx",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "0/1",
+        "tracking_status": "NONCONFORMING",
+        "tracking_sources": "material.xlsx/Sheet/行2/列1-2",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-bd8680534f34",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NONCONFORMING",
+            "同一测试场景下并发登录人数不得低于73人。 | material.xlsx/Sheet/行2/列1-2",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "同一测试场景下并发登录人数不得低于73人。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.xlsx [SRC-2f450b876381]",
+          "主要发现",
+          "R01 NONCONFORMING scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下并发登录人数不得低于73人。 NONCONFORMING",
+              "scope.md/行1",
+              "EVD-8eef64323808 | material.xlsx/Sheet/行2/列1-2 | 并发登录实际 72 人 不得低于 阈值 73 人：不满足"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-bd8680534f34 NONCONFORMING",
+              "同一测试场景下并发登录人数不得低于73人。",
+              "material.xlsx/Sheet/行2/列1-2"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "同一测试场景下并发登录人数不得低于73人。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "2720e6d00e524d669ab42227c90725c732011ec1046bab7ba4440ee97b066137",
+        "QA虚构项目-验收准备报告.docx": "d8f956dfe2e13c337808db55f4e683a331567f6fb06505e36371603e4093e071",
+        "QA虚构项目-验收资料核对.xlsx": "7b0f8f420e2a81caba3477cfa1cf3d9758612a590405f68304b6a0cf63dbc516"
+      },
+      "pass": true
+    },
+    {
+      "id": "F01-people-73",
+      "inputs": {
+        "scope.md": "同一测试场景下并发登录人数不得低于73人。",
+        "material.xlsx": "同一压测场景最大支持73人并发登录。"
+      },
+      "input_hashes": {
+        "material.xlsx": "3864eaf5d52d884edbba4592953c726c63ab49eaf08d081eba9ab95e7671238a",
+        "scope.md": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-people-73",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-people-73\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.xlsx"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-people-73",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-people-73\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-people-73\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-people-73\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "EVIDENCE_FOUND",
+      "actual": "EVIDENCE_FOUND",
+      "coverage": "1/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "同一测试场景下并发登录人数不得低于73人。",
+          "status": "EVIDENCE_FOUND",
+          "support": [
+            "EVD-8eef64323808"
+          ],
+          "negative": [],
+          "pending": [],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-8eef64323808",
+              "decision": "SUPPORT",
+              "reason": "并发登录实际 73 人 不得低于 阈值 73 人：满足",
+              "source": "material.xlsx/Sheet/行2/列1-2"
+            }
+          ],
+          "sources": [
+            "material.xlsx/Sheet/行2/列1-2"
+          ]
+        }
+      ],
+      "findings": [],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-2f450b876381",
+          "path": "material.xlsx",
+          "sha256": "3864eaf5d52d884edbba4592953c726c63ab49eaf08d081eba9ab95e7671238a",
+          "type": ".xlsx",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "1/1",
+        "tracking_status": "EVIDENCE_FOUND",
+        "tracking_sources": "material.xlsx/Sheet/行2/列1-2",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.xlsx [SRC-2f450b876381]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下并发登录人数不得低于73人。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-8eef64323808 | material.xlsx/Sheet/行2/列1-2 | 并发登录实际 73 人 不得低于 阈值 73 人：满足"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "8f3a2090b68ccb6099a44072eee23f8f85c62166cc7610451e7645bc52e8f1f0",
+        "QA虚构项目-验收准备报告.docx": "c27a5f70b9ffeb2d6a2dfa52b6c73eb98dabb6939c5ef601cd3700f27e51ed48",
+        "QA虚构项目-验收资料核对.xlsx": "dd471a963c4069fb7853a75250d68e2b28ebbe3433a88dc53e6a310b5a706247"
+      },
+      "pass": true
+    },
+    {
+      "id": "F01-people-74",
+      "inputs": {
+        "scope.md": "同一测试场景下并发登录人数不得低于73人。",
+        "material.xlsx": "同一压测场景最大支持74人并发登录。"
+      },
+      "input_hashes": {
+        "material.xlsx": "861276f5f4dd8bd688960b7f7c5e3c84f6348459a5b83e00840067b984d3cee8",
+        "scope.md": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-people-74",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-people-74\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.xlsx"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-people-74",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-people-74\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-people-74\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-people-74\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "EVIDENCE_FOUND",
+      "actual": "EVIDENCE_FOUND",
+      "coverage": "1/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "同一测试场景下并发登录人数不得低于73人。",
+          "status": "EVIDENCE_FOUND",
+          "support": [
+            "EVD-8eef64323808"
+          ],
+          "negative": [],
+          "pending": [],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-8eef64323808",
+              "decision": "SUPPORT",
+              "reason": "并发登录实际 74 人 不得低于 阈值 73 人：满足",
+              "source": "material.xlsx/Sheet/行2/列1-2"
+            }
+          ],
+          "sources": [
+            "material.xlsx/Sheet/行2/列1-2"
+          ]
+        }
+      ],
+      "findings": [],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-2f450b876381",
+          "path": "material.xlsx",
+          "sha256": "861276f5f4dd8bd688960b7f7c5e3c84f6348459a5b83e00840067b984d3cee8",
+          "type": ".xlsx",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "1/1",
+        "tracking_status": "EVIDENCE_FOUND",
+        "tracking_sources": "material.xlsx/Sheet/行2/列1-2",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.xlsx [SRC-2f450b876381]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下并发登录人数不得低于73人。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-8eef64323808 | material.xlsx/Sheet/行2/列1-2 | 并发登录实际 74 人 不得低于 阈值 73 人：满足"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "cb4de431acb197b3de8cdc7e6645e7a0df772121158bedfb03f94784ca3185aa",
+        "QA虚构项目-验收准备报告.docx": "05b061667579a601798d77e6a6ece7ba301b9f7e85dbd78cead0ef5958fcd451",
+        "QA虚构项目-验收资料核对.xlsx": "48c23626a36f213f2cc0a8f6555ef7b77a622ab139cc6e62a25013acde995c14"
+      },
+      "pass": true
+    },
+    {
+      "id": "F01-missing-unit",
+      "inputs": {
+        "scope.md": "同一测试场景下并发登录人数不得低于73人。",
+        "material.md": "同一压测场景最大支持74并发登录。"
+      },
+      "input_hashes": {
+        "material.md": "51e416afaac4aed5c6a2f79bf4d41d43af1670e51f109029f7efc61a5a1afa87",
+        "scope.md": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-missing-unit",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-missing-unit\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-missing-unit",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-missing-unit\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-missing-unit\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-missing-unit\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"PENDING_CONFIRMATION\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "PENDING_CONFIRMATION",
+      "actual": "PENDING_CONFIRMATION",
+      "coverage": "0/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "同一测试场景下并发登录人数不得低于73人。",
+          "status": "PENDING_CONFIRMATION",
+          "support": [],
+          "negative": [],
+          "pending": [
+            "EVD-283dfeaf59b6"
+          ],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-283dfeaf59b6",
+              "decision": "PENDING",
+              "reason": "缺可比并发登录人数/数量单位或混用了每日登录次数",
+              "source": "material.md/行1"
+            }
+          ],
+          "sources": [
+            "material.md/行1"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "id": "GAP-129f537ab8a8",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "MISSING",
+          "text": "同一测试场景下并发登录人数不得低于73人。",
+          "sources": [
+            "scope.md/行1"
+          ],
+          "status": "OPEN"
+        }
+      ],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-415788355823",
+          "path": "material.md",
+          "sha256": "51e416afaac4aed5c6a2f79bf4d41d43af1670e51f109029f7efc61a5a1afa87",
+          "type": ".md",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "0/1",
+        "tracking_status": "PENDING_CONFIRMATION",
+        "tracking_sources": "material.md/行1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "同一测试场景下并发登录人数不得低于73人。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.md [SRC-415788355823]",
+          "主要发现",
+          "R01 PENDING_CONFIRMATION scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下并发登录人数不得低于73人。 PENDING_CONFIRMATION",
+              "scope.md/行1",
+              "EVD-283dfeaf59b6 | material.md/行1 | 缺可比并发登录人数/数量单位或混用了每日登录次数"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "同一测试场景下并发登录人数不得低于73人。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "f8598bd1768891fc52651afc5d73125aab1c05aebecb40cb1b3a85bea9b3af35",
+        "QA虚构项目-验收准备报告.docx": "2bc55b6c727ac13fe6c102122b8059e4cb6c3d1d3bdc62e5515413c18922fbf1",
+        "QA虚构项目-验收资料核对.xlsx": "87c963d5241c99dd9fb5e8921c53bad8e02b511ff5b48b28c195764cc6fbf9ed"
+      },
+      "pass": true
+    },
+    {
+      "id": "F01-daily-count",
+      "inputs": {
+        "scope.md": "同一测试场景下并发登录人数不得低于73人。",
+        "material.md": "同一压测场景每日登录74次。"
+      },
+      "input_hashes": {
+        "material.md": "e17873575dd35a0ed1e41bc98b8c5730051c3294c4a41b937c8d7c9f243ffa83",
+        "scope.md": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-daily-count",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-daily-count\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-daily-count",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-daily-count\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-daily-count\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-daily-count\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"PENDING_CONFIRMATION\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "PENDING_CONFIRMATION",
+      "actual": "PENDING_CONFIRMATION",
+      "coverage": "0/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "同一测试场景下并发登录人数不得低于73人。",
+          "status": "PENDING_CONFIRMATION",
+          "support": [],
+          "negative": [],
+          "pending": [
+            "EVD-283dfeaf59b6"
+          ],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-283dfeaf59b6",
+              "decision": "PENDING",
+              "reason": "材料提及登录但缺可比并发人数或单位",
+              "source": "material.md/行1"
+            }
+          ],
+          "sources": [
+            "material.md/行1"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "id": "GAP-129f537ab8a8",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "MISSING",
+          "text": "同一测试场景下并发登录人数不得低于73人。",
+          "sources": [
+            "scope.md/行1"
+          ],
+          "status": "OPEN"
+        }
+      ],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-415788355823",
+          "path": "material.md",
+          "sha256": "e17873575dd35a0ed1e41bc98b8c5730051c3294c4a41b937c8d7c9f243ffa83",
+          "type": ".md",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "0/1",
+        "tracking_status": "PENDING_CONFIRMATION",
+        "tracking_sources": "material.md/行1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "同一测试场景下并发登录人数不得低于73人。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.md [SRC-415788355823]",
+          "主要发现",
+          "R01 PENDING_CONFIRMATION scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下并发登录人数不得低于73人。 PENDING_CONFIRMATION",
+              "scope.md/行1",
+              "EVD-283dfeaf59b6 | material.md/行1 | 材料提及登录但缺可比并发人数或单位"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "同一测试场景下并发登录人数不得低于73人。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "041520186a6551853f30523664c61d744633dca4001362356aea3245cb329e61",
+        "QA虚构项目-验收准备报告.docx": "4bf615b44ef7a1a1a7108b7bc2c6da3dddc282fd391236437cb37c9b7a1c934b",
+        "QA虚构项目-验收资料核对.xlsx": "985015d9507c136399413736d9e089af7c6a2ffd837bef614e7b300b13981822"
+      },
+      "pass": true
+    },
+    {
+      "id": "F01-no-scene",
+      "inputs": {
+        "scope.md": "同一测试场景下并发登录人数不得低于73人。",
+        "material.md": "最大支持74人并发登录。"
+      },
+      "input_hashes": {
+        "material.md": "a24cf230d3e3218a70606f1694a4c74cd3d8968c492f8dcaf313d76be0e3e815",
+        "scope.md": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-no-scene",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-no-scene\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-no-scene",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-no-scene\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-no-scene\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-no-scene\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"PENDING_CONFIRMATION\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "PENDING_CONFIRMATION",
+      "actual": "PENDING_CONFIRMATION",
+      "coverage": "0/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "同一测试场景下并发登录人数不得低于73人。",
+          "status": "PENDING_CONFIRMATION",
+          "support": [],
+          "negative": [],
+          "pending": [
+            "EVD-283dfeaf59b6"
+          ],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-283dfeaf59b6",
+              "decision": "PENDING",
+              "reason": "缺相同测试场景依据",
+              "source": "material.md/行1"
+            }
+          ],
+          "sources": [
+            "material.md/行1"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "id": "GAP-129f537ab8a8",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "MISSING",
+          "text": "同一测试场景下并发登录人数不得低于73人。",
+          "sources": [
+            "scope.md/行1"
+          ],
+          "status": "OPEN"
+        }
+      ],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-415788355823",
+          "path": "material.md",
+          "sha256": "a24cf230d3e3218a70606f1694a4c74cd3d8968c492f8dcaf313d76be0e3e815",
+          "type": ".md",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "0/1",
+        "tracking_status": "PENDING_CONFIRMATION",
+        "tracking_sources": "material.md/行1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "同一测试场景下并发登录人数不得低于73人。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.md [SRC-415788355823]",
+          "主要发现",
+          "R01 PENDING_CONFIRMATION scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下并发登录人数不得低于73人。 PENDING_CONFIRMATION",
+              "scope.md/行1",
+              "EVD-283dfeaf59b6 | material.md/行1 | 缺相同测试场景依据"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "同一测试场景下并发登录人数不得低于73人。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "0a2d8e54053daa67abe80903726a0ac6509d034aaa9c19880a4cb6e4b02e44ed",
+        "QA虚构项目-验收准备报告.docx": "30ee6f0c8350af556a37a876d82db45ca222b6b2da0e382f88bad9645f0e0dc2",
+        "QA虚构项目-验收资料核对.xlsx": "c24ea32d661699aad51b457decf31fb143c2d199b83a1e0b412a239831535ad3"
+      },
+      "pass": true
+    },
+    {
+      "id": "F01-different-object",
+      "inputs": {
+        "scope.md": "同一测试场景下并发登录人数不得低于73人。",
+        "material.md": "同一压测场景最大支持74人并发注册。"
+      },
+      "input_hashes": {
+        "material.md": "597a7a2d7f10ca88b22c7e23f9337973387a044d014d7bdf51bc065191606f5b",
+        "scope.md": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-different-object",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-different-object\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-different-object",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-different-object\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-different-object\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-different-object\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NO_EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NO_EVIDENCE_FOUND",
+      "actual": "NO_EVIDENCE_FOUND",
+      "coverage": "0/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "同一测试场景下并发登录人数不得低于73人。",
+          "status": "NO_EVIDENCE_FOUND",
+          "support": [],
+          "negative": [],
+          "pending": [],
+          "comparisons": [],
+          "sources": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "GAP-129f537ab8a8",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "MISSING",
+          "text": "同一测试场景下并发登录人数不得低于73人。",
+          "sources": [
+            "scope.md/行1"
+          ],
+          "status": "OPEN"
+        }
+      ],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-415788355823",
+          "path": "material.md",
+          "sha256": "597a7a2d7f10ca88b22c7e23f9337973387a044d014d7bdf51bc065191606f5b",
+          "type": ".md",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "0/1",
+        "tracking_status": "NO_EVIDENCE_FOUND",
+        "tracking_sources": null,
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "同一测试场景下并发登录人数不得低于73人。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.md [SRC-415788355823]",
+          "主要发现",
+          "R01 NO_EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下并发登录人数不得低于73人。 NO_EVIDENCE_FOUND",
+              "scope.md/行1",
+              " |  | "
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "同一测试场景下并发登录人数不得低于73人。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "f017f796a21c02ccd1b93e1e1395f0c37a7f64f78e57e488a4aac97c59462b88",
+        "QA虚构项目-验收准备报告.docx": "00dbc81b79894b043e0fb73668de9c3010e2ddeb16129ac46da04ec8347ece5e",
+        "QA虚构项目-验收资料核对.xlsx": "66c80747fe83c5bc1c174053bc7f2d0f82f214959c0cd29c0a0486e0f64253b4"
+      },
+      "pass": true
+    },
+    {
+      "id": "F01-unrelated-number",
+      "inputs": {
+        "scope.md": "同一测试场景下并发登录人数不得低于73人。",
+        "material.md": "R01 数据库备份74人已登记。"
+      },
+      "input_hashes": {
+        "material.md": "aa72150c130f07e44efe71607bde5592d38269186cbe27fbd7b30837876ff2aa",
+        "scope.md": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-unrelated-number",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-unrelated-number\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-unrelated-number",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-unrelated-number\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-unrelated-number\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-unrelated-number\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NO_EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NO_EVIDENCE_FOUND",
+      "actual": "NO_EVIDENCE_FOUND",
+      "coverage": "0/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "同一测试场景下并发登录人数不得低于73人。",
+          "status": "NO_EVIDENCE_FOUND",
+          "support": [],
+          "negative": [],
+          "pending": [],
+          "comparisons": [],
+          "sources": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "GAP-129f537ab8a8",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "MISSING",
+          "text": "同一测试场景下并发登录人数不得低于73人。",
+          "sources": [
+            "scope.md/行1"
+          ],
+          "status": "OPEN"
+        }
+      ],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-415788355823",
+          "path": "material.md",
+          "sha256": "aa72150c130f07e44efe71607bde5592d38269186cbe27fbd7b30837876ff2aa",
+          "type": ".md",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "0/1",
+        "tracking_status": "NO_EVIDENCE_FOUND",
+        "tracking_sources": null,
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "同一测试场景下并发登录人数不得低于73人。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.md [SRC-415788355823]",
+          "主要发现",
+          "R01 NO_EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下并发登录人数不得低于73人。 NO_EVIDENCE_FOUND",
+              "scope.md/行1",
+              " |  | "
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "同一测试场景下并发登录人数不得低于73人。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "16eef129e26170d9191dc8e71c232e0cbb54627784138ba24c0e1f8f835203c6",
+        "QA虚构项目-验收准备报告.docx": "00dbc81b79894b043e0fb73668de9c3010e2ddeb16129ac46da04ec8347ece5e",
+        "QA虚构项目-验收资料核对.xlsx": "987f672dc880ae3b82749118df3ae67a757f1ae2e0227d050e098537ecddb0b3"
+      },
+      "pass": true
+    },
+    {
+      "id": "F01-strict-equality",
+      "inputs": {
+        "scope.md": "同一场景并发登录人数必须超过73人。",
+        "material.md": "同一测试场景最大支持73人并发登录。"
+      },
+      "input_hashes": {
+        "material.md": "e980f56b8b3df5c2639a05e320c904ad587e518d165a5ea60fc621baa0fe451b",
+        "scope.md": "e19936f89ae3457ff68cb4a4fafea14d727a3428a2c5c2ccb6cff5660c99f535"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-strict-equality",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-strict-equality\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-strict-equality",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-strict-equality\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-strict-equality\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-strict-equality\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NONCONFORMING\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NONCONFORMING",
+      "actual": "NONCONFORMING",
+      "coverage": "0/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "同一场景并发登录人数必须超过73人。",
+          "status": "NONCONFORMING",
+          "support": [],
+          "negative": [
+            "EVD-283dfeaf59b6"
+          ],
+          "pending": [],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-283dfeaf59b6",
+              "decision": "NONCONFORMING",
+              "reason": "并发登录实际 73 人 超过 阈值 73 人：不满足",
+              "source": "material.md/行1"
+            }
+          ],
+          "sources": [
+            "material.md/行1"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "id": "GAP-bd8680534f34",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "NONCONFORMING",
+          "text": "同一场景并发登录人数必须超过73人。",
+          "sources": [
+            "material.md/行1"
+          ],
+          "status": "OPEN"
+        },
+        {
+          "id": "GAP-129f537ab8a8",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "MISSING",
+          "text": "同一场景并发登录人数必须超过73人。",
+          "sources": [
+            "scope.md/行1"
+          ],
+          "status": "OPEN"
+        }
+      ],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "e19936f89ae3457ff68cb4a4fafea14d727a3428a2c5c2ccb6cff5660c99f535",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-415788355823",
+          "path": "material.md",
+          "sha256": "e980f56b8b3df5c2639a05e320c904ad587e518d165a5ea60fc621baa0fe451b",
+          "type": ".md",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "0/1",
+        "tracking_status": "NONCONFORMING",
+        "tracking_sources": "material.md/行1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-bd8680534f34",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NONCONFORMING",
+            "同一场景并发登录人数必须超过73人。 | material.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "同一场景并发登录人数必须超过73人。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.md [SRC-415788355823]",
+          "主要发现",
+          "R01 NONCONFORMING scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一场景并发登录人数必须超过73人。 NONCONFORMING",
+              "scope.md/行1",
+              "EVD-283dfeaf59b6 | material.md/行1 | 并发登录实际 73 人 超过 阈值 73 人：不满足"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-bd8680534f34 NONCONFORMING",
+              "同一场景并发登录人数必须超过73人。",
+              "material.md/行1"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "同一场景并发登录人数必须超过73人。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "3cbe150448fa20dad24137b5ef92e56f43ab56b2d643737889a6e16aa9ecf7c2",
+        "QA虚构项目-验收准备报告.docx": "f9a2201d339f2221faf9a7b471d88340ef0010f99020b16c77cfe3a51393f668",
+        "QA虚构项目-验收资料核对.xlsx": "2c1d5c4fafd241a8d2754a723dba7c977f5252780c9781ad0da95c222b20cb33"
+      },
+      "pass": true
+    },
+    {
+      "id": "F02-9",
+      "inputs": {
+        "scope.md": "提供 Debian 13 部署说明。",
+        "material.docx": "Debian 13 部署说明：安装服务、配置参数、启动服务、验证健康状态。"
+      },
+      "input_hashes": {
+        "material.docx": "07a944a23a6b0e9d053451d146658037f5991c8de93f03fbb0ccd5f4e8e8a9e5",
+        "scope.md": "cf01dadab7cf3864a0059858a5c3f9664ad3dd44a9c80c50bd336895c15b5558"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-9",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-9\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--delivery-source",
+        "material.docx"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-9",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-9\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-9\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-9\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "EVIDENCE_FOUND",
+      "actual": "EVIDENCE_FOUND",
+      "coverage": "1/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "提供 Debian 13 部署说明。",
+          "status": "EVIDENCE_FOUND",
+          "support": [
+            "EVD-dedd30b0157e"
+          ],
+          "negative": [],
+          "pending": [],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-dedd30b0157e",
+              "decision": "SUPPORT",
+              "reason": "关联材料包含对应条件的可读内容",
+              "source": "material.docx/段1"
+            }
+          ],
+          "sources": [
+            "material.docx/段1"
+          ]
+        }
+      ],
+      "findings": [],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "cf01dadab7cf3864a0059858a5c3f9664ad3dd44a9c80c50bd336895c15b5558",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-3b3087d1fa62",
+          "path": "material.docx",
+          "sha256": "07a944a23a6b0e9d053451d146658037f5991c8de93f03fbb0ccd5f4e8e8a9e5",
+          "type": ".docx",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "1/1",
+        "tracking_status": "EVIDENCE_FOUND",
+        "tracking_sources": "material.docx/段1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.docx [SRC-3b3087d1fa62]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "提供 Debian 13 部署说明。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-dedd30b0157e | material.docx/段1 | 关联材料包含对应条件的可读内容"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "a74c5bb8283324f2fa2886b39340dd85ce2d9a139c6d030add3b6c1af6443223",
+        "QA虚构项目-验收准备报告.docx": "a2cc765c1e145e9fe0659c17d17af708b12bd6f7b6c2e0b876cdcc03254b3b3e",
+        "QA虚构项目-验收资料核对.xlsx": "95dc7459c1f35057aa1492cde6d5bc8338aeb7cc09bbcb9ec0d0e2e28e601633"
+      },
+      "pass": true
+    },
+    {
+      "id": "F02-10",
+      "inputs": {
+        "scope.md": "提供 Debian 13 部署说明。",
+        "material.docx": "Debian 12 部署说明：安装服务、配置参数、启动服务、验证健康状态。"
+      },
+      "input_hashes": {
+        "material.docx": "df736282aa385ce946f307be5dd07e1d85a00a9d726935fccf26990356283f1c",
+        "scope.md": "cf01dadab7cf3864a0059858a5c3f9664ad3dd44a9c80c50bd336895c15b5558"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-10",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-10\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--delivery-source",
+        "material.docx"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-10",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-10\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-10\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-10\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NO_EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NO_EVIDENCE_FOUND",
+      "actual": "NO_EVIDENCE_FOUND",
+      "coverage": "0/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "提供 Debian 13 部署说明。",
+          "status": "NO_EVIDENCE_FOUND",
+          "support": [],
+          "negative": [],
+          "pending": [],
+          "comparisons": [],
+          "sources": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "GAP-129f537ab8a8",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "MISSING",
+          "text": "提供 Debian 13 部署说明。",
+          "sources": [
+            "scope.md/行1"
+          ],
+          "status": "OPEN"
+        }
+      ],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "cf01dadab7cf3864a0059858a5c3f9664ad3dd44a9c80c50bd336895c15b5558",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-3b3087d1fa62",
+          "path": "material.docx",
+          "sha256": "df736282aa385ce946f307be5dd07e1d85a00a9d726935fccf26990356283f1c",
+          "type": ".docx",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "0/1",
+        "tracking_status": "NO_EVIDENCE_FOUND",
+        "tracking_sources": null,
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "提供 Debian 13 部署说明。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.docx [SRC-3b3087d1fa62]",
+          "主要发现",
+          "R01 NO_EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "提供 Debian 13 部署说明。 NO_EVIDENCE_FOUND",
+              "scope.md/行1",
+              " |  | "
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "提供 Debian 13 部署说明。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "f3cf9ce158164301228a5f0485874752fb75bf0d23f38793724c1bf06d2d95b4",
+        "QA虚构项目-验收准备报告.docx": "538db37980a8f50d0a153094567ac715f0e33c46de171d37d187f0038ee59b44",
+        "QA虚构项目-验收资料核对.xlsx": "9a227a3da3460fcaf3006b4e3f79cad115c6f97c088508ee542eaacf5238e01e"
+      },
+      "pass": true
+    },
+    {
+      "id": "F02-11",
+      "inputs": {
+        "scope.md": "提供 Rocky Linux 9 部署说明。",
+        "material.docx": "Rocky Linux 9 部署说明：安装服务、配置参数、启动服务、验证健康状态。"
+      },
+      "input_hashes": {
+        "material.docx": "3d272dc0a9ce5c2d13f1bf4175fa583347c917f82ed77842638bef977eadf3e6",
+        "scope.md": "a3a0895e918a8f80d06fb8c39b1f70a2066e294fea5b465af771d89e8286300a"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-11",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-11\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--delivery-source",
+        "material.docx"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-11",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-11\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-11\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-11\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "EVIDENCE_FOUND",
+      "actual": "EVIDENCE_FOUND",
+      "coverage": "1/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "提供 Rocky Linux 9 部署说明。",
+          "status": "EVIDENCE_FOUND",
+          "support": [
+            "EVD-dedd30b0157e"
+          ],
+          "negative": [],
+          "pending": [],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-dedd30b0157e",
+              "decision": "SUPPORT",
+              "reason": "关联材料包含对应条件的可读内容",
+              "source": "material.docx/段1"
+            }
+          ],
+          "sources": [
+            "material.docx/段1"
+          ]
+        }
+      ],
+      "findings": [],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "a3a0895e918a8f80d06fb8c39b1f70a2066e294fea5b465af771d89e8286300a",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-3b3087d1fa62",
+          "path": "material.docx",
+          "sha256": "3d272dc0a9ce5c2d13f1bf4175fa583347c917f82ed77842638bef977eadf3e6",
+          "type": ".docx",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "1/1",
+        "tracking_status": "EVIDENCE_FOUND",
+        "tracking_sources": "material.docx/段1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.docx [SRC-3b3087d1fa62]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "提供 Rocky Linux 9 部署说明。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-dedd30b0157e | material.docx/段1 | 关联材料包含对应条件的可读内容"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "895549a08f35dd9ae848f2c06b6221d778bce1b02a1c69df596e834b1383275e",
+        "QA虚构项目-验收准备报告.docx": "35f61bc942c583fb4d1dac19d799a0b506f1ca2718f17f57b17df64985c2827f",
+        "QA虚构项目-验收资料核对.xlsx": "adaa32ecdfa3f557ea0d325d9b1b877b9b6f9fef1d617b4899ff8741814e4717"
+      },
+      "pass": true
+    },
+    {
+      "id": "F02-12",
+      "inputs": {
+        "scope.md": "提供 Windows Server 2028 部署说明。",
+        "material.docx": "仅覆盖 Debian 13 部署，未提供 Windows Server 2028 步骤。"
+      },
+      "input_hashes": {
+        "material.docx": "5ea61315d6f74911de1ab8c6c471e52a929704be00d1f5b0496bea1ac50fbdcd",
+        "scope.md": "950e10a20a56b39736602cee2b01b5ae2bdd62833b57f302f00bf37b4d147cbf"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-12",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-12\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--delivery-source",
+        "material.docx"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-12",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-12\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-12\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-12\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NONCONFORMING\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NONCONFORMING",
+      "actual": "NONCONFORMING",
+      "coverage": "0/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "提供 Windows Server 2028 部署说明。",
+          "status": "NONCONFORMING",
+          "support": [],
+          "negative": [
+            "EVD-dedd30b0157e"
+          ],
+          "pending": [],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-dedd30b0157e",
+              "decision": "NONCONFORMING",
+              "reason": "所交文档明确未提供目标环境部署步骤",
+              "source": "material.docx/段1"
+            }
+          ],
+          "sources": [
+            "material.docx/段1"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "id": "GAP-bd8680534f34",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "NONCONFORMING",
+          "text": "提供 Windows Server 2028 部署说明。",
+          "sources": [
+            "material.docx/段1"
+          ],
+          "status": "OPEN"
+        },
+        {
+          "id": "GAP-129f537ab8a8",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "MISSING",
+          "text": "提供 Windows Server 2028 部署说明。",
+          "sources": [
+            "scope.md/行1"
+          ],
+          "status": "OPEN"
+        }
+      ],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "950e10a20a56b39736602cee2b01b5ae2bdd62833b57f302f00bf37b4d147cbf",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-3b3087d1fa62",
+          "path": "material.docx",
+          "sha256": "5ea61315d6f74911de1ab8c6c471e52a929704be00d1f5b0496bea1ac50fbdcd",
+          "type": ".docx",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "0/1",
+        "tracking_status": "NONCONFORMING",
+        "tracking_sources": "material.docx/段1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-bd8680534f34",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NONCONFORMING",
+            "提供 Windows Server 2028 部署说明。 | material.docx/段1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "提供 Windows Server 2028 部署说明。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.docx [SRC-3b3087d1fa62]",
+          "主要发现",
+          "R01 NONCONFORMING scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "提供 Windows Server 2028 部署说明。 NONCONFORMING",
+              "scope.md/行1",
+              "EVD-dedd30b0157e | material.docx/段1 | 所交文档明确未提供目标环境部署步骤"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-bd8680534f34 NONCONFORMING",
+              "提供 Windows Server 2028 部署说明。",
+              "material.docx/段1"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "提供 Windows Server 2028 部署说明。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "e36fb6c1c57703e9d21c9ecf718440ca38a0818396f2da84a2992cab974aa2c5",
+        "QA虚构项目-验收准备报告.docx": "efb6f8554c5bc6484e5bb0241d1cfa3d63842ead424d0133a2b2794c4fc3f842",
+        "QA虚构项目-验收资料核对.xlsx": "cecd87e6280201e4b35773dd39cb93a1366233b51667a116ab7566387f5d11dc"
+      },
+      "pass": true
+    },
+    {
+      "id": "F02-13",
+      "inputs": {
+        "scope.md": "提供 Windows Server 2028 部署说明。",
+        "material.docx": "Windows Server 2028 部署说明：安装服务、配置参数、启动服务、验证健康状态。"
+      },
+      "input_hashes": {
+        "material.docx": "3d354c2602cbb7e8b36e5ec26b3bdcb21d70dc60f537a55be0281f2ff47a3bfc",
+        "scope.md": "950e10a20a56b39736602cee2b01b5ae2bdd62833b57f302f00bf37b4d147cbf"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-13",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-13\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--delivery-source",
+        "material.docx"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-13",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-13\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-13\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-13\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "EVIDENCE_FOUND",
+      "actual": "EVIDENCE_FOUND",
+      "coverage": "1/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "提供 Windows Server 2028 部署说明。",
+          "status": "EVIDENCE_FOUND",
+          "support": [
+            "EVD-dedd30b0157e"
+          ],
+          "negative": [],
+          "pending": [],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-dedd30b0157e",
+              "decision": "SUPPORT",
+              "reason": "关联材料包含对应条件的可读内容",
+              "source": "material.docx/段1"
+            }
+          ],
+          "sources": [
+            "material.docx/段1"
+          ]
+        }
+      ],
+      "findings": [],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "950e10a20a56b39736602cee2b01b5ae2bdd62833b57f302f00bf37b4d147cbf",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-3b3087d1fa62",
+          "path": "material.docx",
+          "sha256": "3d354c2602cbb7e8b36e5ec26b3bdcb21d70dc60f537a55be0281f2ff47a3bfc",
+          "type": ".docx",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "1/1",
+        "tracking_status": "EVIDENCE_FOUND",
+        "tracking_sources": "material.docx/段1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.docx [SRC-3b3087d1fa62]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "提供 Windows Server 2028 部署说明。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-dedd30b0157e | material.docx/段1 | 关联材料包含对应条件的可读内容"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "7143c15c9bfb24e0cff7fe007c8633c34fe89be4166151adaa2b88d01d81ee0f",
+        "QA虚构项目-验收准备报告.docx": "7509ee38730cc96e3a073b91dd56d167d818cc4ead2a0d10dc6fe93109017e7b",
+        "QA虚构项目-验收资料核对.xlsx": "2e39b1624f70d8a49d113b805c57ce95cbbbed813a2c948953b3ad464b59b2e4"
+      },
+      "pass": true
+    },
+    {
+      "id": "F02-14",
+      "inputs": {
+        "scope.md": "提供 Windows Server 2028 部署说明。",
+        "material.docx": "Windows Server 2028 部署说明：安装服务。"
+      },
+      "input_hashes": {
+        "material.docx": "b17faa9014998b1380062527cc23315cfbfc101169c372687f9245da4cd05059",
+        "scope.md": "950e10a20a56b39736602cee2b01b5ae2bdd62833b57f302f00bf37b4d147cbf"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-14",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-14\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--delivery-source",
+        "material.docx"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F02-14",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-14\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-14\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F02-14\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"PENDING_CONFIRMATION\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "PENDING_CONFIRMATION",
+      "actual": "PENDING_CONFIRMATION",
+      "coverage": "0/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "提供 Windows Server 2028 部署说明。",
+          "status": "PENDING_CONFIRMATION",
+          "support": [],
+          "negative": [],
+          "pending": [
+            "EVD-dedd30b0157e"
+          ],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-dedd30b0157e",
+              "decision": "PENDING",
+              "reason": "目标环境部署说明缺安装/配置/启动/验证步骤",
+              "source": "material.docx/段1"
+            }
+          ],
+          "sources": [
+            "material.docx/段1"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "id": "GAP-129f537ab8a8",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "MISSING",
+          "text": "提供 Windows Server 2028 部署说明。",
+          "sources": [
+            "scope.md/行1"
+          ],
+          "status": "OPEN"
+        }
+      ],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "950e10a20a56b39736602cee2b01b5ae2bdd62833b57f302f00bf37b4d147cbf",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-3b3087d1fa62",
+          "path": "material.docx",
+          "sha256": "b17faa9014998b1380062527cc23315cfbfc101169c372687f9245da4cd05059",
+          "type": ".docx",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "0/1",
+        "tracking_status": "PENDING_CONFIRMATION",
+        "tracking_sources": "material.docx/段1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "提供 Windows Server 2028 部署说明。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.docx [SRC-3b3087d1fa62]",
+          "主要发现",
+          "R01 PENDING_CONFIRMATION scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "提供 Windows Server 2028 部署说明。 PENDING_CONFIRMATION",
+              "scope.md/行1",
+              "EVD-dedd30b0157e | material.docx/段1 | 目标环境部署说明缺安装/配置/启动/验证步骤"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "提供 Windows Server 2028 部署说明。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "a2901a3036723b52b51ee5feab3222124c7a09fed2e57b138aecebd291d3b309",
+        "QA虚构项目-验收准备报告.docx": "d4c2944fe692989382e00c9f7097107bd4a5293e0c23abc2ff2bb04af49ef27b",
+        "QA虚构项目-验收资料核对.xlsx": "c16e194284ce40dbf188482293e21c9c52db6d1f50b13c9af5619826b270fc2b"
+      },
+      "pass": true
+    },
+    {
+      "id": "F03-zero",
+      "inputs": {
+        "scope.md": "全部登录测试用例通过。",
+        "material.docx": "共执行41项登录用例，成功41项，失败0项。"
+      },
+      "input_hashes": {
+        "material.docx": "f0a962e05991332f9a281c10711747e99ac953dac9e3a8f20119dcffda4fc190",
+        "scope.md": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-zero",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-zero\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.docx"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-zero",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-zero\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-zero\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-zero\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "EVIDENCE_FOUND",
+      "actual": "EVIDENCE_FOUND",
+      "coverage": "1/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "全部登录测试用例通过。",
+          "status": "EVIDENCE_FOUND",
+          "support": [
+            "EVD-dedd30b0157e"
+          ],
+          "negative": [],
+          "pending": [],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-dedd30b0157e",
+              "decision": "SUPPORT",
+              "reason": "相同测试范围执行 41 项，成功 41 项，失败 0 项",
+              "source": "material.docx/段1"
+            }
+          ],
+          "sources": [
+            "material.docx/段1"
+          ]
+        }
+      ],
+      "findings": [],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-3b3087d1fa62",
+          "path": "material.docx",
+          "sha256": "f0a962e05991332f9a281c10711747e99ac953dac9e3a8f20119dcffda4fc190",
+          "type": ".docx",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "1/1",
+        "tracking_status": "EVIDENCE_FOUND",
+        "tracking_sources": "material.docx/段1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.docx [SRC-3b3087d1fa62]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "全部登录测试用例通过。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-dedd30b0157e | material.docx/段1 | 相同测试范围执行 41 项，成功 41 项，失败 0 项"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "4df0d2b48944e2a3ea12bdd8a2fbb41b6d5d385c6fd151d6871bb343da3f3727",
+        "QA虚构项目-验收准备报告.docx": "2adb0e576316b66f9dec6d8e555f4faf6a949e7026862ffa90d90e068ff6d478",
+        "QA虚构项目-验收资料核对.xlsx": "a0191589f472a84125cc419abd675b3be64189603a634fefdf527d31142883dd"
+      },
+      "pass": true
+    },
+    {
+      "id": "F03-one",
+      "inputs": {
+        "scope.md": "全部登录测试用例通过。",
+        "material.docx": "共执行41项登录用例，成功40项，失败1项。"
+      },
+      "input_hashes": {
+        "material.docx": "6d42851e799b6cf925052471bb3091cfad135205f4877feefcb0cfbbddef8f68",
+        "scope.md": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-one",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-one\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.docx"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-one",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-one\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-one\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-one\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NONCONFORMING\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NONCONFORMING",
+      "actual": "NONCONFORMING",
+      "coverage": "0/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "全部登录测试用例通过。",
+          "status": "NONCONFORMING",
+          "support": [],
+          "negative": [
+            "EVD-dedd30b0157e"
+          ],
+          "pending": [],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-dedd30b0157e",
+              "decision": "NONCONFORMING",
+              "reason": "执行 41 项，成功 40 项，失败 1 项；未全部通过",
+              "source": "material.docx/段1"
+            }
+          ],
+          "sources": [
+            "material.docx/段1"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "id": "GAP-bd8680534f34",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "NONCONFORMING",
+          "text": "全部登录测试用例通过。",
+          "sources": [
+            "material.docx/段1"
+          ],
+          "status": "OPEN"
+        },
+        {
+          "id": "GAP-129f537ab8a8",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "MISSING",
+          "text": "全部登录测试用例通过。",
+          "sources": [
+            "scope.md/行1"
+          ],
+          "status": "OPEN"
+        }
+      ],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-3b3087d1fa62",
+          "path": "material.docx",
+          "sha256": "6d42851e799b6cf925052471bb3091cfad135205f4877feefcb0cfbbddef8f68",
+          "type": ".docx",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "0/1",
+        "tracking_status": "NONCONFORMING",
+        "tracking_sources": "material.docx/段1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-bd8680534f34",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NONCONFORMING",
+            "全部登录测试用例通过。 | material.docx/段1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "全部登录测试用例通过。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.docx [SRC-3b3087d1fa62]",
+          "主要发现",
+          "R01 NONCONFORMING scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "全部登录测试用例通过。 NONCONFORMING",
+              "scope.md/行1",
+              "EVD-dedd30b0157e | material.docx/段1 | 执行 41 项，成功 40 项，失败 1 项；未全部通过"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-bd8680534f34 NONCONFORMING",
+              "全部登录测试用例通过。",
+              "material.docx/段1"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "全部登录测试用例通过。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "214eb57eb3bf412231c04cf10cea21c585eebefc182a227660b118d7a1c7c9f6",
+        "QA虚构项目-验收准备报告.docx": "5512d630ebaa9707e40c03f8fe9fe1b2b2ac79853e864ff5539f69e96015516d",
+        "QA虚构项目-验收资料核对.xlsx": "f85929f5c9d533eae451e09069a4a77093266a4ec9b85ab228b77dc051267e51"
+      },
+      "pass": true
+    },
+    {
+      "id": "F03-wrong-total",
+      "inputs": {
+        "scope.md": "全部登录测试用例通过。",
+        "material.docx": "共执行41项登录用例，成功40项，失败0项。"
+      },
+      "input_hashes": {
+        "material.docx": "783660344f8dec21ec069ea27045d8d780bb71dba0dda4cebeda6d3305d70548",
+        "scope.md": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-wrong-total",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-wrong-total\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.docx"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-wrong-total",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-wrong-total\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-wrong-total\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-wrong-total\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"PENDING_CONFIRMATION\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "PENDING_CONFIRMATION",
+      "actual": "PENDING_CONFIRMATION",
+      "coverage": "0/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "全部登录测试用例通过。",
+          "status": "PENDING_CONFIRMATION",
+          "support": [],
+          "negative": [],
+          "pending": [
+            "EVD-dedd30b0157e"
+          ],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-dedd30b0157e",
+              "decision": "PENDING",
+              "reason": "执行/成功/失败计数矛盾",
+              "source": "material.docx/段1"
+            }
+          ],
+          "sources": [
+            "material.docx/段1"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "id": "GAP-129f537ab8a8",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "MISSING",
+          "text": "全部登录测试用例通过。",
+          "sources": [
+            "scope.md/行1"
+          ],
+          "status": "OPEN"
+        }
+      ],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-3b3087d1fa62",
+          "path": "material.docx",
+          "sha256": "783660344f8dec21ec069ea27045d8d780bb71dba0dda4cebeda6d3305d70548",
+          "type": ".docx",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "0/1",
+        "tracking_status": "PENDING_CONFIRMATION",
+        "tracking_sources": "material.docx/段1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "全部登录测试用例通过。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.docx [SRC-3b3087d1fa62]",
+          "主要发现",
+          "R01 PENDING_CONFIRMATION scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "全部登录测试用例通过。 PENDING_CONFIRMATION",
+              "scope.md/行1",
+              "EVD-dedd30b0157e | material.docx/段1 | 执行/成功/失败计数矛盾"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "全部登录测试用例通过。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "05da064fa8652f9c426be51c92775f15828695fed19fab714d46b086ecc496a4",
+        "QA虚构项目-验收准备报告.docx": "68f079cf6fd02cfd2b972f7ca90890103251c74a637a9f0a5514ec367500e6ca",
+        "QA虚构项目-验收资料核对.xlsx": "95256425a4e059c8f80f69858fc72499c22617a7ead43bce355c94aeca4040c5"
+      },
+      "pass": true
+    },
+    {
+      "id": "F03-unknown",
+      "inputs": {
+        "scope.md": "全部登录测试用例通过。",
+        "material.docx": "未发现失败。"
+      },
+      "input_hashes": {
+        "material.docx": "2ece8261cd6026daba67470e7c7a4d01d9c289d8f0544f82f0d3b6c83f8e8eb5",
+        "scope.md": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-unknown",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-unknown\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.docx"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-unknown",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-unknown\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-unknown\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-unknown\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"PENDING_CONFIRMATION\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "PENDING_CONFIRMATION",
+      "actual": "PENDING_CONFIRMATION",
+      "coverage": "0/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "全部登录测试用例通过。",
+          "status": "PENDING_CONFIRMATION",
+          "support": [],
+          "negative": [],
+          "pending": [
+            "EVD-dedd30b0157e"
+          ],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-dedd30b0157e",
+              "decision": "PENDING",
+              "reason": "缺登录测试对象/范围",
+              "source": "material.docx/段1"
+            }
+          ],
+          "sources": [
+            "material.docx/段1"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "id": "GAP-129f537ab8a8",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "MISSING",
+          "text": "全部登录测试用例通过。",
+          "sources": [
+            "scope.md/行1"
+          ],
+          "status": "OPEN"
+        }
+      ],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-3b3087d1fa62",
+          "path": "material.docx",
+          "sha256": "2ece8261cd6026daba67470e7c7a4d01d9c289d8f0544f82f0d3b6c83f8e8eb5",
+          "type": ".docx",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "0/1",
+        "tracking_status": "PENDING_CONFIRMATION",
+        "tracking_sources": "material.docx/段1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "全部登录测试用例通过。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.docx [SRC-3b3087d1fa62]",
+          "主要发现",
+          "R01 PENDING_CONFIRMATION scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "全部登录测试用例通过。 PENDING_CONFIRMATION",
+              "scope.md/行1",
+              "EVD-dedd30b0157e | material.docx/段1 | 缺登录测试对象/范围"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "全部登录测试用例通过。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "6876d7dfb265eb7497c0224efee66fe6e377939f9b0341c61394a97b966d836a",
+        "QA虚构项目-验收准备报告.docx": "a39f64ea306bf4133c0cef602289811480ab71cb3c352cbde286fc04d58b7bff",
+        "QA虚构项目-验收资料核对.xlsx": "9d80294ef7841a45d6bcf19450f53e7918c882233eca5217562902541a2a99fb"
+      },
+      "pass": true
+    },
+    {
+      "id": "F03-other-scope",
+      "inputs": {
+        "scope.md": "全部登录测试用例通过。",
+        "material.docx": "共执行41项注册用例，成功41项，失败0项。"
+      },
+      "input_hashes": {
+        "material.docx": "5504428abf3a72baa9ed6bd0b24f129977f35c4f719cc5115d30bbbe58d4aa33",
+        "scope.md": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-other-scope",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-other-scope\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.docx"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-other-scope",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-other-scope\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-other-scope\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-other-scope\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"PENDING_CONFIRMATION\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "PENDING_CONFIRMATION",
+      "actual": "PENDING_CONFIRMATION",
+      "coverage": "0/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "全部登录测试用例通过。",
+          "status": "PENDING_CONFIRMATION",
+          "support": [],
+          "negative": [],
+          "pending": [
+            "EVD-dedd30b0157e"
+          ],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-dedd30b0157e",
+              "decision": "PENDING",
+              "reason": "缺登录测试对象/范围",
+              "source": "material.docx/段1"
+            }
+          ],
+          "sources": [
+            "material.docx/段1"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "id": "GAP-129f537ab8a8",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "MISSING",
+          "text": "全部登录测试用例通过。",
+          "sources": [
+            "scope.md/行1"
+          ],
+          "status": "OPEN"
+        }
+      ],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-3b3087d1fa62",
+          "path": "material.docx",
+          "sha256": "5504428abf3a72baa9ed6bd0b24f129977f35c4f719cc5115d30bbbe58d4aa33",
+          "type": ".docx",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "0/1",
+        "tracking_status": "PENDING_CONFIRMATION",
+        "tracking_sources": "material.docx/段1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "全部登录测试用例通过。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.docx [SRC-3b3087d1fa62]",
+          "主要发现",
+          "R01 PENDING_CONFIRMATION scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "全部登录测试用例通过。 PENDING_CONFIRMATION",
+              "scope.md/行1",
+              "EVD-dedd30b0157e | material.docx/段1 | 缺登录测试对象/范围"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "全部登录测试用例通过。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "5ce574b9d2aa67f983699488dea4c3a6291bc212946a9676b9a9b8f87be1ddb6",
+        "QA虚构项目-验收准备报告.docx": "a39f64ea306bf4133c0cef602289811480ab71cb3c352cbde286fc04d58b7bff",
+        "QA虚构项目-验收资料核对.xlsx": "f8bedfac6e9dd2411f65e7ffea54936f7d57e603fbf0a593577d02bff59a429e"
+      },
+      "pass": true
+    },
+    {
+      "id": "F01-denied-capability",
+      "inputs": {
+        "scope.md": "同一测试场景下并发登录人数不得低于73人。",
+        "material.md": "同一压测场景不支持74人并发登录，最大仅支持72人并发登录。"
+      },
+      "input_hashes": {
+        "material.md": "4b8a2d29af432220bf36b321f2e7cccc7df9c186491a938a585ee121b4491359",
+        "scope.md": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-denied-capability",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-denied-capability\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-denied-capability",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-denied-capability\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-denied-capability\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-denied-capability\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NONCONFORMING",
+      "actual": "EVIDENCE_FOUND",
+      "coverage": "1/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "同一测试场景下并发登录人数不得低于73人。",
+          "status": "EVIDENCE_FOUND",
+          "support": [
+            "EVD-283dfeaf59b6"
+          ],
+          "negative": [],
+          "pending": [],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-283dfeaf59b6",
+              "decision": "SUPPORT",
+              "reason": "并发登录实际 74 人 不得低于 阈值 73 人：满足",
+              "source": "material.md/行1"
+            }
+          ],
+          "sources": [
+            "material.md/行1"
+          ]
+        }
+      ],
+      "findings": [],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-415788355823",
+          "path": "material.md",
+          "sha256": "4b8a2d29af432220bf36b321f2e7cccc7df9c186491a938a585ee121b4491359",
+          "type": ".md",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "1/1",
+        "tracking_status": "EVIDENCE_FOUND",
+        "tracking_sources": "material.md/行1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.md [SRC-415788355823]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下并发登录人数不得低于73人。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-283dfeaf59b6 | material.md/行1 | 并发登录实际 74 人 不得低于 阈值 73 人：满足"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "6fc77151cf9ee342cddcd7ded35cb129ac5ecaf342c45d94590ae995ddff3301",
+        "QA虚构项目-验收准备报告.docx": "003e4809ae25b9a37c979ceb916765a408670980920cd6adf967397b3d40b655",
+        "QA虚构项目-验收资料核对.xlsx": "f02ba0e51d4e78365b2230dcccff4d219a10565bb40cb94bf65166a03502e629"
+      },
+      "pass": false
+    },
+    {
+      "id": "F01-declared-inability",
+      "inputs": {
+        "scope.md": "同一测试场景下并发登录人数不得低于73人。",
+        "material.md": "同一压测场景无法支持74人并发登录。"
+      },
+      "input_hashes": {
+        "material.md": "45bf325633cd1c4f159267a52c27f98f1741afc0d3e5c4c9f91365e09c1013b8",
+        "scope.md": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-declared-inability",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-declared-inability\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F01-declared-inability",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-declared-inability\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-declared-inability\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F01-declared-inability\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NONCONFORMING",
+      "actual": "EVIDENCE_FOUND",
+      "coverage": "1/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "同一测试场景下并发登录人数不得低于73人。",
+          "status": "EVIDENCE_FOUND",
+          "support": [
+            "EVD-283dfeaf59b6"
+          ],
+          "negative": [],
+          "pending": [],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-283dfeaf59b6",
+              "decision": "SUPPORT",
+              "reason": "并发登录实际 74 人 不得低于 阈值 73 人：满足",
+              "source": "material.md/行1"
+            }
+          ],
+          "sources": [
+            "material.md/行1"
+          ]
+        }
+      ],
+      "findings": [],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "8e7471d80afa29af670d30df9849b31fe619d5be1479accfc6d8fdaa185e89ad",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-415788355823",
+          "path": "material.md",
+          "sha256": "45bf325633cd1c4f159267a52c27f98f1741afc0d3e5c4c9f91365e09c1013b8",
+          "type": ".md",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "1/1",
+        "tracking_status": "EVIDENCE_FOUND",
+        "tracking_sources": "material.md/行1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.md [SRC-415788355823]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下并发登录人数不得低于73人。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-283dfeaf59b6 | material.md/行1 | 并发登录实际 74 人 不得低于 阈值 73 人：满足"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "b8f78ac7d00ea2382562688a6bc2bdc6e8f771a85f2fc8972f4220c7bdc31de5",
+        "QA虚构项目-验收准备报告.docx": "003e4809ae25b9a37c979ceb916765a408670980920cd6adf967397b3d40b655",
+        "QA虚构项目-验收资料核对.xlsx": "e669106b693ce27390b8f5b0ffb5550f04a0e2f256c49d1d9324fa6b50bbbe8f"
+      },
+      "pass": false
+    },
+    {
+      "id": "F03-scope-exclusion",
+      "inputs": {
+        "scope.md": "全部登录测试用例通过。",
+        "material.md": "共执行41项登录用例，成功41项，失败0项，但高并发登录用例没有执行。"
+      },
+      "input_hashes": {
+        "material.md": "f62a4c452ade5643cef86a60acc2d15ade3bca37f10a65bf66d31ac79d416cba",
+        "scope.md": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-scope-exclusion",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-scope-exclusion\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F03-scope-exclusion",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-scope-exclusion\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-scope-exclusion\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F03-scope-exclusion\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "PENDING_CONFIRMATION",
+      "actual": "EVIDENCE_FOUND",
+      "coverage": "1/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "全部登录测试用例通过。",
+          "status": "EVIDENCE_FOUND",
+          "support": [
+            "EVD-283dfeaf59b6"
+          ],
+          "negative": [],
+          "pending": [],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-283dfeaf59b6",
+              "decision": "SUPPORT",
+              "reason": "相同测试范围执行 41 项，成功 41 项，失败 0 项",
+              "source": "material.md/行1"
+            }
+          ],
+          "sources": [
+            "material.md/行1"
+          ]
+        }
+      ],
+      "findings": [],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-415788355823",
+          "path": "material.md",
+          "sha256": "f62a4c452ade5643cef86a60acc2d15ade3bca37f10a65bf66d31ac79d416cba",
+          "type": ".md",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "1/1",
+        "tracking_status": "EVIDENCE_FOUND",
+        "tracking_sources": "material.md/行1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.md [SRC-415788355823]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "全部登录测试用例通过。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-283dfeaf59b6 | material.md/行1 | 相同测试范围执行 41 项，成功 41 项，失败 0 项"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "47ce04c7773218e33d3b7718f12462b5731cdb940c4505bf2e540fcfbdbfd0a1",
+        "QA虚构项目-验收准备报告.docx": "e3e822975c5318c26ac129570fa41cd58a25530df0beba3f672baa2765da3a8e",
+        "QA虚构项目-验收资料核对.xlsx": "e328c4c6a97d0772597ee4e35382258a32c80a2350cc945e64d8f53a799718d7"
+      },
+      "pass": false
+    },
+    {
+      "id": "F04-document-only",
+      "inputs": {
+        "scope.md": "提供接口文档和部署说明。",
+        "material.md": "接口文档：端点 /v2、请求参数：id、返回字段：state。"
+      },
+      "input_hashes": {
+        "material.md": "8159d1df63ec9444b8f39646acbddd5972958326933e4ff5995283629013c9e3",
+        "scope.md": "487e113a9b1d86688fcbc0c21f5fa9d1e613decf16e43bbe601e7e8cc6dc2c15"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F04-document-only",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F04-document-only\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--delivery-source",
+        "material.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F04-document-only",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F04-document-only\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F04-document-only\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F04-document-only\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"1/2\", \"requirements\": [{\"number\": \"R01\", \"status\": \"PARTIAL_EVIDENCE\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "PARTIAL_EVIDENCE",
+      "actual": "PARTIAL_EVIDENCE",
+      "coverage": "1/2",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "接口文档",
+          "status": "EVIDENCE_FOUND",
+          "support": [
+            "EVD-283dfeaf59b6"
+          ],
+          "negative": [],
+          "pending": [],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-283dfeaf59b6",
+              "decision": "SUPPORT",
+              "reason": "关联材料包含对应条件的可读内容",
+              "source": "material.md/行1"
+            }
+          ],
+          "sources": [
+            "material.md/行1"
+          ]
+        },
+        {
+          "condition_id": "COND-33f94e8bf64e",
+          "text": "部署说明",
+          "status": "NO_EVIDENCE_FOUND",
+          "support": [],
+          "negative": [],
+          "pending": [],
+          "comparisons": [],
+          "sources": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "GAP-95a03bb9a8ef",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-33f94e8bf64e",
+          "type": "MISSING",
+          "text": "部署说明",
+          "sources": [
+            "scope.md/行1"
+          ],
+          "status": "OPEN"
+        }
+      ],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "487e113a9b1d86688fcbc0c21f5fa9d1e613decf16e43bbe601e7e8cc6dc2c15",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-415788355823",
+          "path": "material.md",
+          "sha256": "8159d1df63ec9444b8f39646acbddd5972958326933e4ff5995283629013c9e3",
+          "type": ".md",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "1/2",
+        "tracking_status": "PARTIAL_EVIDENCE",
+        "tracking_sources": "material.md/行1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-95a03bb9a8ef",
+            "REQ-1568382cb39d/COND-33f94e8bf64e",
+            "MISSING",
+            "部署说明 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：1/2",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.md [SRC-415788355823]",
+          "主要发现",
+          "R01 PARTIAL_EVIDENCE scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "接口文档 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-283dfeaf59b6 | material.md/行1 | 关联材料包含对应条件的可读内容"
+            ],
+            [
+              "REQ-1568382cb39d/COND-33f94e8bf64e",
+              "部署说明 NO_EVIDENCE_FOUND",
+              "scope.md/行1",
+              " |  | "
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-95a03bb9a8ef MISSING",
+              "部署说明",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "1f0cb5a8c669f7cad1dbf2912df86b01770d4cecea2d877fbc1a8d484ee03129",
+        "QA虚构项目-验收准备报告.docx": "5fcf358c31663cc43dd7f2a5803bbf2a94662bcadcf3381e671b632ff3180d22",
+        "QA虚构项目-验收资料核对.xlsx": "a071ed5d27eba40b5809c8518b778eaed92a09a6d587a91706960e83bbb940ed"
+      },
+      "pass": true
+    },
+    {
+      "id": "F04-developer-claim",
+      "inputs": {
+        "scope.md": "提供接口文档。",
+        "material.md": "开发完成。"
+      },
+      "input_hashes": {
+        "material.md": "eb3391f43de354f2a3939e8cbfff1e49ce9e508782c7158f739ef3da181e06c0",
+        "scope.md": "52c8216c55b2fe59846d495b18de487a86c213e3b788c3d5977ee4557a21336b"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F04-developer-claim",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F04-developer-claim\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--delivery-source",
+        "material.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F04-developer-claim",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F04-developer-claim\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F04-developer-claim\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F04-developer-claim\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NO_EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NO_EVIDENCE_FOUND",
+      "actual": "NO_EVIDENCE_FOUND",
+      "coverage": "0/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "提供接口文档。",
+          "status": "NO_EVIDENCE_FOUND",
+          "support": [],
+          "negative": [],
+          "pending": [],
+          "comparisons": [],
+          "sources": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "GAP-129f537ab8a8",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "MISSING",
+          "text": "提供接口文档。",
+          "sources": [
+            "scope.md/行1"
+          ],
+          "status": "OPEN"
+        }
+      ],
+      "conflicts": [],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "52c8216c55b2fe59846d495b18de487a86c213e3b788c3d5977ee4557a21336b",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-415788355823",
+          "path": "material.md",
+          "sha256": "eb3391f43de354f2a3939e8cbfff1e49ce9e508782c7158f739ef3da181e06c0",
+          "type": ".md",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "0/1",
+        "tracking_status": "NO_EVIDENCE_FOUND",
+        "tracking_sources": null,
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "提供接口文档。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.md [SRC-415788355823]",
+          "主要发现",
+          "R01 NO_EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "提供接口文档。 NO_EVIDENCE_FOUND",
+              "scope.md/行1",
+              " |  | "
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "提供接口文档。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "e4689070f358b492821cf35507d45337f5c01697a1930b7765ba8283f7f7676d",
+        "QA虚构项目-验收准备报告.docx": "f8f162d7f687cf450dca75232b02272321ffe308519a5efa2539f759375c2b74",
+        "QA虚构项目-验收资料核对.xlsx": "9db0dc591ad0b4d3ec1b513f3ac1d37e6c51dcaea89bd56a7225efd8ac4b00ea"
+      },
+      "pass": true
+    },
+    {
+      "id": "F04-two-sources-conflict",
+      "inputs": {
+        "scope.md": "全部登录测试用例通过。",
+        "material.md": "共执行41项登录用例，成功41项，失败0项。",
+        "second.md": "共执行41项登录用例，成功40项，失败1项。"
+      },
+      "input_hashes": {
+        "material.md": "d62ab6cefc5c76c0d44f1b4f2de81cafc45f213fde3c1ad134f74cfebde92423",
+        "scope.md": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122",
+        "second.md": "169324c23113c86e0e8e2d0c6ba006f6d3ae92ce531b9869d894d0d088394925"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F04-two-sources-conflict",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F04-two-sources-conflict\\out",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "material.md",
+        "--evidence-source",
+        "second.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\F04-two-sources-conflict",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F04-two-sources-conflict\\\\out\\\\QA虚构项目-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F04-two-sources-conflict\\\\out\\\\QA虚构项目-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-013-independent-s1w2z7i9\\\\F04-two-sources-conflict\\\\out\\\\QA虚构项目-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"CONFLICT\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "CONFLICT",
+      "actual": "CONFLICT",
+      "coverage": "0/1",
+      "conditions": [
+        {
+          "condition_id": "COND-48457c299c47",
+          "text": "全部登录测试用例通过。",
+          "status": "CONFLICT",
+          "support": [
+            "EVD-283dfeaf59b6"
+          ],
+          "negative": [
+            "EVD-fa7b7b6aa5ed"
+          ],
+          "pending": [],
+          "comparisons": [
+            {
+              "evidence_id": "EVD-283dfeaf59b6",
+              "decision": "SUPPORT",
+              "reason": "相同测试范围执行 41 项，成功 41 项，失败 0 项",
+              "source": "material.md/行1"
+            },
+            {
+              "evidence_id": "EVD-fa7b7b6aa5ed",
+              "decision": "NONCONFORMING",
+              "reason": "执行 41 项，成功 40 项，失败 1 项；未全部通过",
+              "source": "second.md/行1"
+            }
+          ],
+          "sources": [
+            "material.md/行1",
+            "second.md/行1"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "id": "GAP-bd8680534f34",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "NONCONFORMING",
+          "text": "全部登录测试用例通过。",
+          "sources": [
+            "second.md/行1"
+          ],
+          "status": "OPEN"
+        },
+        {
+          "id": "GAP-129f537ab8a8",
+          "requirement_id": "REQ-1568382cb39d",
+          "condition_id": "COND-48457c299c47",
+          "type": "MISSING",
+          "text": "全部登录测试用例通过。",
+          "sources": [
+            "scope.md/行1"
+          ],
+          "status": "OPEN"
+        }
+      ],
+      "conflicts": [
+        {
+          "type": "EVIDENCE_CONFLICT",
+          "text": "全部登录测试用例通过。",
+          "sources": [
+            "material.md/行1",
+            "second.md/行1"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-221c68155d0f",
+          "path": "scope.md",
+          "sha256": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-415788355823",
+          "path": "material.md",
+          "sha256": "d62ab6cefc5c76c0d44f1b4f2de81cafc45f213fde3c1ad134f74cfebde92423",
+          "type": ".md",
+          "unsupported_content": false
+        },
+        {
+          "source_id": "SRC-cfa1fe2445f4",
+          "path": "second.md",
+          "sha256": "169324c23113c86e0e8e2d0c6ba006f6d3ae92ce531b9869d894d0d088394925",
+          "type": ".md",
+          "unsupported_content": false
+        }
+      ],
+      "workbook": {
+        "sheets": [
+          "核查概览",
+          "要求追踪",
+          "证据索引",
+          "缺口与不符合",
+          "冲突与待确认",
+          "本次更新"
+        ],
+        "overview": "0/1",
+        "tracking_status": "CONFLICT",
+        "tracking_sources": "material.md/行1; second.md/行1",
+        "gap_rows": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-bd8680534f34",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NONCONFORMING",
+            "全部登录测试用例通过。 | second.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "全部登录测试用例通过。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "QA虚构项目 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "QA虚构项目；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；material.md [SRC-415788355823]；second.md [SRC-cfa1fe2445f4]",
+          "主要发现",
+          "R01 CONFLICT scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "EVIDENCE_CONFLICT 全部登录测试用例通过。 material.md/行1; second.md/行1",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "全部登录测试用例通过。 CONFLICT",
+              "scope.md/行1",
+              "EVD-283dfeaf59b6; EVD-fa7b7b6aa5ed | material.md/行1; second.md/行1 | 相同测试范围执行 41 项，成功 41 项，失败 0 项; 执行 41 项，成功 40 项，失败 1 项；未全部通过"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-bd8680534f34 NONCONFORMING",
+              "全部登录测试用例通过。",
+              "second.md/行1"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "全部登录测试用例通过。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_hashes": {
+        "QA虚构项目-核查快照.json": "c8f58ae64eafbd682514d59731514a28961fe8b674ae053cb04498ec05a6b1d9",
+        "QA虚构项目-验收准备报告.docx": "5e4fee9057f21691cc17a0479a55b483037f09fca20cce817d039ed9b8d889a8",
+        "QA虚构项目-验收资料核对.xlsx": "b22c53aba4d7728711f54641d4645a576d0278a341265175b82ad624be54e930"
+      },
+      "pass": true
+    }
+  ],
+  "checks": [
+    {
+      "id": "manifest-members",
+      "pass": true
+    },
+    {
+      "id": "extracted-script",
+      "pass": true
+    },
+    {
+      "id": "reject-traversal",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\extract\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "QA虚构项目",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\invalid",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-013-independent-s1w2z7i9\\invalid\\out",
+        "--scope-source",
+        "../extract/wangbin-project-acceptance-check/SKILL.md"
+      ],
+      "exit": 2,
+      "stderr": "{\"result\": \"INVALID_INPUT\", \"reason\": \"no readable material\"}",
+      "pass": true
+    }
+  ],
+  "members": [
+    {
+      "path": "wangbin-project-acceptance-check/LICENSE",
+      "sha256": "77e14f72b077bbcc88b3dad0d686fe7d30b45e766f5e25c274089aeef527d217",
+      "size": 268
+    },
+    {
+      "path": "wangbin-project-acceptance-check/SKILL.md",
+      "sha256": "a9ce4eaee96f8040d8e536bcf03eed15ba639e1b5f7457db339ce0e0831c600d",
+      "size": 3312
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/README.md",
+      "sha256": "97b9830b6d4bc2a02747b28edac3c1534c115c2df2b529ab0bdc756e8cebb88f",
+      "size": 304
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/deploy.md",
+      "sha256": "7a8f1f68d71bbef7a25b20f29ba83b7136c0a5666e8efa328bb969f46512c980",
+      "size": 76
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/interface.md",
+      "sha256": "4dc1984259dad9dcf9713a6ec8989e55776f4356376489366c844fd9c9dbb097",
+      "size": 94
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/scope.md",
+      "sha256": "782bd91ee6a7f8099a0bd82193abcbd659d62a4ddcadb318d7d47d8bc54b38c3",
+      "size": 159
+    },
+    {
+      "path": "wangbin-project-acceptance-check/manifest.json",
+      "sha256": "b974d951e0a092e43c34e8e267110ef4e1ef80d98fdcf73d92d6f8aa626f8c32",
+      "size": 567
+    },
+    {
+      "path": "wangbin-project-acceptance-check/references/runtime.md",
+      "sha256": "47d2d35d6839789a2b14d05a76c29cf8e04577e5ed9cae126a78c3726597e8e8",
+      "size": 3684
+    },
+    {
+      "path": "wangbin-project-acceptance-check/scripts/check_acceptance.py",
+      "sha256": "546b58b5e3726bf7cdd9afc3d9491c104bf4590841bae27dd7109ab78555e87c",
+      "size": 40350
+    }
+  ],
+  "case_count": 26,
+  "passed": 23,
+  "failed_cases": [
+    "F01-denied-capability",
+    "F01-declared-inability",
+    "F03-scope-exclusion"
+  ],
+  "check_failures": []
+}
