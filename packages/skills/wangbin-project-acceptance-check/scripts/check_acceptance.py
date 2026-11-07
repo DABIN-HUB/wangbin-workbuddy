@@ -203,7 +203,7 @@ def conditions(text, explicit=''):
         return ['接口文档', '部署说明']
     # Split only recognized, independently checkable delivery obligations.
     # Keep the required deployment environment attached to its own condition.
-    deploy = r'(?:Windows Server 2019\s*)?部署(?:说明|步骤|文档)'
+    deploy = r'(?:(?:Windows\s*Server|Ubuntu|Debian(?:\s+GNU/Linux)?|CentOS|Rocky\s+Linux|RHEL|Red\s+Hat|Linux)\s*[\w.]*\s*)?部署(?:说明|步骤|文档)'
     composite = re.search(rf'({deploy})\s*[和与及]\s*(培训记录)|'
                           rf'(培训记录)\s*[和与及]\s*({deploy})', text)
     if composite:
@@ -211,34 +211,146 @@ def conditions(text, explicit=''):
     return [text]
 
 
+# A reference is a binding candidate, never evidence of satisfying a condition.
+OS_PATTERN = re.compile(r'(?<![\w])(?P<os>Windows\s+Server|Ubuntu|Debian(?:\s+GNU/Linux)?|CentOS|Rocky\s+Linux|Red\s+Hat|RHEL|Linux)\s*(?P<version>\d+(?:\.\d+)*)?', re.I)
+COUNT = r'(\d[\d,]*)'
+
+
+def environment(text):
+    found = OS_PATTERN.search(text)
+    if not found:
+        # Also accept an explicitly named family/version before deployment;
+        # this is not an OS allowlist and never validates the platform itself.
+        other = re.search(r'(?<![A-Za-z])([A-Za-z][A-Za-z /-]{1,35}?)\s+(\d+(?:\.\d+)*)\s*(?:部署|安装|步骤)', text)
+        if not other:
+            return None
+        return other.group(1).lower().replace(' ', '').replace('/', ''), other.group(2)
+    name = found.group('os').lower().replace('gnu/', '').replace(' ', '')
+    if name == 'rhel':
+        name = 'redhat'
+    return name, found.group('version')
+
+
+def concurrent(text):
+    """Extract a concurrency result, not a daily/login transaction count."""
+    if not re.search(r'并发.{0,12}登录|登录.{0,12}并发', text):
+        return None
+    if re.search(r'每[日天秒分钟]|/天|每日|次/日|次每日', text):
+        return None
+    match = re.search(COUNT + r'\s*(个|人|名|位)\s*并发登录', text)
+    if not match:
+        match = re.search(r'并发登录.{0,12}?' + COUNT + r'\s*(个|人|名|位)', text)
+    if not match:
+        match = re.search(r'并发登录的?人数.{0,8}?' + COUNT + r'\s*(人|个|名|位)', text)
+    if not match:
+        match = re.search(COUNT + r'\s*(人|个|名|位)\s*(?:同时)?并发登录', text)
+    return int(match.group(1).replace(',', '')) if match else None
+
+
+def threshold(text):
+    if not re.search(r'并发.{0,12}登录|登录.{0,12}并发', text):
+        return None
+    match = re.search(r'(至少|不低于|不得低于|不少于|高于|超过|大于|不超过|至多|最多|低于|少于|小于|≥|>=|>|≤|<=|<)\s*(?:支持|达到|容纳)?\s*' + COUNT, text)
+    if not match:
+        return None
+    operator = match.group(1)
+    return operator, int(match.group(2).replace(',', ''))
+
+
+def test_counts(text):
+    executed = re.search(r'(?:共执行|执行了?|共计|合计)\s*' + COUNT + r'\s*(?:项|条|个)', text)
+    passed = re.search(r'(?:成功|通过)\s*' + COUNT + r'\s*(?:项|条|个)', text)
+    failed = re.search(r'失败(?:次数)?\s*(?:为|是|共|：|:)?\s*' + COUNT + r'\s*(?:项|条|个|次)?', text)
+    return tuple(int(m.group(1).replace(',', '')) if m else None for m in (executed, passed, failed))
+
+
+def judge(cond, req_text, text, ev):
+    """Return (decision, explanation); unknown is not a negative fact."""
+    required = threshold(cond) or threshold(req_text)
+    if not required and re.search(r'并发.{0,12}登录|登录.{0,12}并发', cond) and re.search(r'\d', cond):
+        return 'PENDING', '需求的并发比较符/数量单位无法确定，不作词面满足判定'
+    if required:
+        if not re.search(r'并发.{0,12}登录|登录.{0,12}并发', text):
+            return ('PENDING', '材料提及登录但缺可比并发人数或单位') if '登录' in text else ('IRRELEVANT', '没有对应的并发登录指标')
+        actual = concurrent(text)
+        if actual is None:
+            return 'PENDING', '缺可比并发登录人数/数量单位或混用了每日登录次数'
+        if ('场景' in req_text and not re.search(r'同一.{0,6}场景|场景相同|同场景|同一压测场景', text)):
+            return 'PENDING', '缺相同测试场景依据'
+        op, value = required
+        ok = (actual >= value if op in ('至少', '不低于', '不得低于', '不少于', '≥', '>=') else
+              actual > value if op in ('高于', '超过', '大于', '>') else
+              actual <= value if op in ('不超过', '至多', '最多', '≤', '<=') else actual < value)
+        return ('SUPPORT' if ok else 'NONCONFORMING'), f'并发登录实际 {actual} 人 {op} 阈值 {value} 人：' + ('满足' if ok else '不满足')
+    if '部署' in cond:
+        if not re.search(r'部署|安装|配置|步骤', text):
+            return 'IRRELEVANT', '不是部署资料'
+        target, actual = environment(cond), environment(text)
+        if target:
+            if actual is None or target[0] != actual[0] or target[1] and target[1] != actual[1]:
+                if re.search(r'仅\s*\w+|只(?:覆盖|支持)|未提供.{0,35}(?:步骤|说明|文档)', text, re.I) and (target[0] in text.lower().replace(' ', '') or '仅' in text):
+                    return 'NONCONFORMING', '所交文档明确未提供目标环境部署步骤'
+                return 'IRRELEVANT', '只找到其他操作系统/版本的部署资料，不能推断软件不支持目标环境'
+            if re.search(r'未提供.{0,35}(?:步骤|说明|文档)|不支持', text):
+                return 'NONCONFORMING', '所交目标环境部署文档明确不完整'
+            if not all(re.search(word, text) for word in ('安装', '配置', '启动', '验证')):
+                return 'PENDING', '目标环境部署说明缺安装/配置/启动/验证步骤'
+        elif not re.search(r'部署说明|部署步骤|部署文档', text):
+            return 'IRRELEVANT', '无部署说明'
+    if '测试' in cond and ('全部' in cond or '所有' in cond) and ('通过' in cond or '成功' in cond):
+        if '测试' not in text and '用例' not in text and not re.search(r'未(?:发现|出现)失败', text):
+            return 'IRRELEVANT', '不是测试记录'
+        if '登录' in cond and '登录' not in text:
+            return 'PENDING', '缺登录测试对象/范围'
+        if '回归' in cond and '回归' not in text:
+            return 'PENDING', '测试范围与要求的回归范围未证实一致'
+        executed, passed, failed = test_counts(text)
+        if executed is None or (passed is None and failed is None):
+            return 'PENDING', '缺完整执行范围/执行总数或结果计数'
+        if passed is not None and failed is not None and passed + failed != executed:
+            return 'PENDING', '执行/成功/失败计数矛盾'
+        if failed is not None and failed > 0 or passed is not None and passed < executed:
+            return 'NONCONFORMING', f'执行 {executed} 项，成功 {passed} 项，失败 {failed} 项；未全部通过'
+        if failed == 0 and passed == executed:
+            return 'SUPPORT', f'相同测试范围执行 {executed} 项，成功 {passed} 项，失败 0 项'
+        return 'PENDING', '缺成功或失败计数，不能确认全量通过'
+    if '培训记录' in cond and '培训记录' not in text:
+        return 'IRRELEVANT', '没有培训记录'
+    if '接口文档' in cond and not re.search(r'接口文档|接口说明', text):
+        return 'IRRELEVANT', '没有接口文档'
+    if any(k in cond for k in ('端点', '请求参数', '返回字段')):
+        if '端点' in cond and not re.search(r'/[\w/-]+', text):
+            return 'IRRELEVANT', '没有端点内容'
+        if '请求参数' in cond and not re.search(r'请求参数\s*[：:]\s*\S+', text):
+            return 'IRRELEVANT', '没有请求参数内容'
+        if '返回字段' in cond and not re.search(r'返回字段\s*[：:]\s*\S+', text):
+            return 'IRRELEVANT', '没有返回字段内容'
+    if re.search(r'未提供|没有|不通过|测试失败', text) or ev.get('result') in ('失败', '不通过', 'FAIL'):
+        return 'NONCONFORMING', '提交材料明确未提供/未通过该项'
+    return 'SUPPORT', '关联材料包含对应条件的可读内容'
+
+
 def evaluate_condition(cond, req, records):
-    """Only literal explicit references or highly constrained document-content matches are bindings."""
+    """Bind by source reference, then check each condition against actual content."""
     matches = []
     for ev in records:
         text = ev['text']
         reference = ev.get('reference', '')
-        explicit = bool(req['number'] and (reference == req['number'] or re.search(r'(?<!\w)' + re.escape(req['number']) + r'(?!\w)', text)))
+        # A material explicitly assigned to another requirement must not be
+        # silently borrowed merely because it shares a document keyword.
+        mentions = bool(req['number'] and re.search(r'(?<!\w)' + re.escape(req['number']) + r'(?!\w)', text))
+        if req['number'] and (reference and reference != req['number'] or ev.get('number') and ev['number'] != req['number'] and not mentions and re.sub(r'\d+$', '', ev['number']) == re.sub(r'\d+$', '', req['number'])):
+            continue
+        explicit = bool(req['number'] and (reference == req['number'] or ev.get('number') == req['number'] or mentions))
         keywords = ('培训记录', '接口文档', '部署说明', '端点', '请求参数', '返回字段')
         deploy_related = '部署' in cond and bool(re.search(r'部署说明|部署步骤|部署文档', text))
         relevant = explicit or (ev['role'] == 'delivery' and
                                 (deploy_related or any(k in cond and k in text for k in keywords)))
-        if not relevant or ('部署说明' in cond and not re.search(r'部署说明|部署步骤|部署文档', text)) or ('接口文档' in cond and not re.search(r'接口文档|接口说明', text)):
+        if not relevant or ev.get('listed_only') or ev.get('claim_only'):
             continue
-        if ev['role'] == 'change' or ev.get('listed_only') or ev.get('claim_only'):
-            continue
-        if '培训记录' in cond and '培训记录' not in text:
-            continue
-        if 'Windows Server 2019' in cond and 'Windows Server 2019' not in text:
-            continue
-        if any(k in cond for k in ('端点', '请求参数', '返回字段')):
-            if '端点' in cond and not re.search(r'/[\w/-]+', text):
-                continue
-            if '请求参数' in cond and not re.search(r'请求参数\s*[：:]\s*\S+', text):
-                continue
-            if '返回字段' in cond and not re.search(r'返回字段\s*[：:]\s*\S+', text):
-                continue
-        negative = bool(re.search(r'未提供|没有|失败|不通过|仅\s*Ubuntu|only Ubuntu', text, re.I) or ev.get('result') in ('失败', '不通过', 'FAIL'))
-        matches.append((ev, 'NONCONFORMING' if negative else 'SUPPORT'))
+        decision, reason = judge(cond, req['text'], text, ev)
+        if decision != 'IRRELEVANT':
+            matches.append((ev, decision, reason))
     return matches
 
 
@@ -328,6 +440,7 @@ def analyze(project, root, groups, previous=None, effective_version_ref=''):
                 pending = True
             positives = [m[0] for m in matches if m[1] == 'SUPPORT']
             negatives = [m[0] for m in matches if m[1] == 'NONCONFORMING']
+            unknowns = [m[0] for m in matches if m[1] == 'PENDING']
             if relevant_version:
                 pending = True
             if not matches and not relevant_version:
@@ -335,20 +448,24 @@ def analyze(project, root, groups, previous=None, effective_version_ref=''):
                 if candidates:
                     pending = True
                     conflicts.append({'type': 'MAPPING_CANDIDATE', 'text': cond, 'sources': [r['source'] for r in candidates] + [req['source']]})
-            status = 'CONFLICT' if positives and negatives else 'NONCONFORMING' if negatives else 'EVIDENCE_FOUND' if positives and not relevant_version else 'PENDING_CONFIRMATION' if pending else 'NO_EVIDENCE_FOUND'
+            status = 'CONFLICT' if positives and negatives else 'NONCONFORMING' if negatives else 'PENDING_CONFIRMATION' if unknowns or pending or relevant_version else 'EVIDENCE_FOUND' if positives else 'NO_EVIDENCE_FOUND'
             results.append({'condition_id': cid, 'text': cond, 'status': status, 'support': [stable('EVD', r['record_id']) for r in positives],
-                            'negative': [stable('EVD', r['record_id']) for r in negatives], 'sources': [r['source'] for r, _ in matches]})
+                            'negative': [stable('EVD', r['record_id']) for r in negatives], 'pending': [stable('EVD', r['record_id']) for r in unknowns],
+                            'comparisons': [{'evidence_id': stable('EVD', r['record_id']), 'decision': decision, 'reason': reason, 'source': r['source']}
+                                            for r, decision, reason in matches],
+                            'sources': [r['source'] for r, _, _ in matches]})
             if positives and negatives:
-                conflicts.append({'type': 'EVIDENCE_CONFLICT', 'text': cond, 'sources': [r['source'] for r, _ in matches]})
+                conflicts.append({'type': 'EVIDENCE_CONFLICT', 'text': cond, 'sources': [r['source'] for r, _, _ in matches]})
             if negatives:
                 findings.append({'id': stable('GAP', cid, 'NONCONFORMING'), 'requirement_id': req['requirement_id'], 'condition_id': cid,
                                  'type': 'NONCONFORMING', 'text': cond, 'sources': [r['source'] for r in negatives], 'status': 'OPEN'})
-            if not positives or negatives:
+            if not positives or negatives or unknowns:
                 findings.append({'id': stable('GAP', cid, 'MISSING'), 'requirement_id': req['requirement_id'], 'condition_id': cid,
                                  'type': 'MISSING', 'text': cond, 'sources': [req['source']], 'status': 'OPEN'})
         statuses = [r['status'] for r in results]
         req['status'] = ('CONFLICT' if 'CONFLICT' in statuses or relevant_version else 'NONCONFORMING' if 'NONCONFORMING' in statuses else
-                         'PENDING_CONFIRMATION' if pending else 'PARTIAL_EVIDENCE' if 'EVIDENCE_FOUND' in statuses and len(set(statuses)) > 1 else
+                         'PENDING_CONFIRMATION' if pending or 'PENDING_CONFIRMATION' in statuses and 'EVIDENCE_FOUND' not in statuses else
+                         'PARTIAL_EVIDENCE' if 'EVIDENCE_FOUND' in statuses and len(set(statuses)) > 1 else
                          'EVIDENCE_FOUND' if statuses and all(s == 'EVIDENCE_FOUND' for s in statuses) else 'NO_EVIDENCE_FOUND')
         req['results'] = results
     old_gaps = {g['id']: g for g in old.get('findings', [])}
@@ -400,12 +517,13 @@ def report(snapshot, dest):
     reqs = snapshot['requirements']
     gaps = snapshot['findings']
     rows(SHEETS[0], ['项目', '覆盖率', '有效版本/依据', '材料数', '状态数量', '限制'], [[project, snapshot['coverage'], snapshot['effective_version_ref'], len(snapshot['sources']), str(dict(Counter(r['status'] for r in reqs))), '; '.join(snapshot['limitations'])]])
-    rows(SHEETS[1], ['requirement_id', '原始编号', '要求原文', '来源', '验收条件', '对应交付物', '证据位置', '核查结论', '已覆盖子条件', '未覆盖子条件', '缺口', '下一步确认事项'],
+    rows(SHEETS[1], ['requirement_id', '原始编号', '要求原文', '来源', '验收条件', '对应交付物', '证据位置', '核查结论', '已覆盖子条件', '未覆盖子条件', '缺口', '下一步确认事项', '逐条件比较依据'],
          [[r['requirement_id'], r['number'] or 'MISSING_ORIGINAL_ID', r['text'], r['source'], '; '.join(r['conditions']),
            ', '.join(e['evidence_id'] for e in snapshot['evidence'] if any(e['evidence_id'] in x['support'] + x['negative'] for x in r['results'])),
            '; '.join(s for x in r['results'] for s in x['sources']), r['status'], '; '.join(x['text'] for x in r['results'] if x['status'] == 'EVIDENCE_FOUND'),
            '; '.join(x['text'] for x in r['results'] if x['status'] != 'EVIDENCE_FOUND'), '; '.join(g['type'] + ': ' + g['text'] for g in gaps if g['requirement_id'] == r['requirement_id']),
-           '确认候选或有效版本' if r['status'] in ('CONFLICT', 'PENDING_CONFIRMATION') else '按缺口补充材料'] for r in reqs])
+           '确认候选或有效版本' if r['status'] in ('CONFLICT', 'PENDING_CONFIRMATION') else '按缺口补充材料',
+           '; '.join(x['text'] + ': ' + c['reason'] + ' [' + c['source'] + ']' for x in r['results'] for c in x.get('comparisons', []))] for r in reqs])
     rows(SHEETS[2], ['evidence_id', '来源位置', '原文', '证明范围', '关联 requirement_id/condition_id', '确认状态'],
          [[e['evidence_id'], e['source'], e['text'], 'LISTED_ONLY' if e['listed_only'] else 'CLAIM_ONLY' if e['claim_only'] else 'CONTENT',
            '; '.join(r['requirement_id'] + '/' + x['condition_id'] for r in reqs for x in r['results'] if e['evidence_id'] in x['support'] + x['negative']), 'NOT_CONFIRMED'] for e in snapshot['evidence']])
@@ -431,7 +549,8 @@ def report(snapshot, dest):
                 for x in r['results']:
                     cells = table.add_row().cells
                     for c, text in zip(cells, [r['requirement_id'] + '/' + x['condition_id'], x['text'] + ' ' + x['status'], r['source'],
-                                                      '; '.join(x['support'] + x['negative']) + ' | ' + '; '.join(x['sources'])]): c.text = text
+                                                      '; '.join(x['support'] + x['negative'] + x.get('pending', [])) + ' | ' + '; '.join(x['sources']) +
+                                                      ' | ' + '; '.join(c['reason'] for c in x.get('comparisons', []))]): c.text = text
         elif title == SECTIONS[4]:
             table = doc.add_table(rows=1, cols=3)
             for c, text in zip(table.rows[0].cells, ['发现 ID/类型', '子条件', '来源']): c.text = text
@@ -486,8 +605,6 @@ def main(argv=None):
             raise ValueError('INVALID_INPUT: invalid root or project name')
         dest = safe_output(root, args.output_dir)
         groups = {'scope': args.scope_source, 'delivery': args.delivery_source, 'evidence': args.evidence_source, 'change': args.change_source}
-        if args.effective_version_ref and args.effective_version_ref not in groups['scope'] + groups['change']:
-            raise ValueError('INVALID_INPUT: effective version reference must be a supplied scope or confirmation source')
         old = None
         if args.previous_snapshot:
             path = source_path(root, args.previous_snapshot)
@@ -496,6 +613,8 @@ def main(argv=None):
             old = json.loads(path.read_text(encoding='utf-8'))
             if old.get('schema_version') != 1 or old.get('project') != args.project_name:
                 raise ValueError('INVALID_INPUT: snapshot project/schema mismatch')
+        if args.effective_version_ref and args.effective_version_ref not in groups['scope'] + groups['change'] and args.effective_version_ref not in [s['path'] for s in (old or {}).get('sources', [])]:
+            raise ValueError('INVALID_INPUT: effective version reference must be a supplied scope, confirmation source, or previous snapshot source')
         if not old and not any(groups.values()):
             raise ValueError('INVALID_INPUT: provide authorized materials or previous snapshot')
         result = analyze(args.project_name, root, groups, old, args.effective_version_ref)

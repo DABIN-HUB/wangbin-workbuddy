@@ -1,0 +1,148 @@
+"""AUDIT-R1: independent expectations on real source files and reopened outputs."""
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+import pytest
+from docx import Document
+from openpyxl import load_workbook
+
+SCRIPT = Path(__file__).resolve().parents[1] / 'packages/skills/wangbin-project-acceptance-check/scripts/check_acceptance.py'
+
+
+def run(tmp_path, requirement, material, *, delivery=False, colon=False, extra=None):
+    tmp_path.mkdir(parents=True, exist_ok=True)
+    (tmp_path / 'scope.md').write_text('R01：' + requirement + '\n' + (extra or ''), encoding='utf-8')
+    (tmp_path / 'material.md').write_text(('R01：' if colon else 'R01 ') + material, encoding='utf-8')
+    out = tmp_path / 'out'
+    out.mkdir()
+    cmd = [sys.executable, str(SCRIPT), '--project-name', '虚构项目', '--authorized-input-root', str(tmp_path),
+           '--output-dir', str(out), '--scope-source', 'scope.md', '--effective-version-ref', 'scope.md',
+           '--delivery-source' if delivery else '--evidence-source', 'material.md']
+    completed = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    assert completed.returncode == 0, completed.stderr
+    snap = json.loads((out / '虚构项目-核查快照.json').read_text(encoding='utf-8'))
+    book = load_workbook(out / '虚构项目-验收资料核对.xlsx', read_only=True)
+    doc = Document(out / '虚构项目-验收准备报告.docx')
+    assert len(book.sheetnames) == 6
+    req = snap['requirements'][0]
+    assert book['要求追踪']['H2'].value == req['status']
+    assert req['status'] in '\n'.join(p.text for p in doc.paragraphs)
+    assert '已验收通过' not in '\n'.join(p.text for p in doc.paragraphs)
+    book.close()
+    return snap
+
+
+@pytest.mark.parametrize('actual,expected', [(10, 'NONCONFORMING'), (9999, 'NONCONFORMING'),
+                                             (10000, 'EVIDENCE_FOUND'), (10001, 'EVIDENCE_FOUND'), (12000, 'EVIDENCE_FOUND')])
+@pytest.mark.parametrize('colon', [False, True])
+def test_concurrent_comparison(tmp_path, actual, expected, colon):
+    snap = run(tmp_path, '同一测试场景下至少支持10000个并发登录。',
+               f'同一测试场景下实测最大支持{actual}个并发登录。', colon=colon)
+    req = snap['requirements'][0]
+    assert req['status'] == expected
+    compared = req['results'][0]['comparisons']
+    assert str(actual) in compared[0]['reason'] and '10000' in compared[0]['reason']
+    assert compared[0]['source'] == 'material.md/行1'
+    assert (req['results'][0]['negative'] if expected == 'NONCONFORMING' else req['results'][0]['support'])
+
+
+@pytest.mark.parametrize('material,expected', [
+    ('数据库备份已完成。', 'NO_EVIDENCE_FOUND'),
+    ('同一测试场景下已测试并发登录。', 'PENDING_CONFIRMATION'),
+    ('同一测试场景下支持12000次每日登录。', 'PENDING_CONFIRMATION'),
+])
+def test_id_not_sufficient(tmp_path, material, expected):
+    snap = run(tmp_path, '同一测试场景下至少支持10000个并发登录。', material)
+    assert snap['requirements'][0]['status'] == expected
+    assert snap['coverage'] == '0/1'
+
+
+@pytest.mark.parametrize('requirement,material,expected', [
+    ('同一压测场景同时并发登录的人数不得低于8000人。', '同一压测场景实测7999人同时并发登录。', 'NONCONFORMING'),
+    ('同一压测场景同时并发登录的人数不得低于8000人。', '同一压测场景实测8000人同时并发登录。', 'EVIDENCE_FOUND'),
+    ('同一压测场景同时并发登录的人数高于8000人。', '同一压测场景实测8000人同时并发登录。', 'NONCONFORMING'),
+    ('同一压测场景同时并发登录的人数高于8000人。', '同一压测场景实测8001人同时并发登录。', 'EVIDENCE_FOUND'),
+])
+def test_comparator_paraphrases(tmp_path, requirement, material, expected):
+    snap = run(tmp_path, requirement, material)
+    assert snap['requirements'][0]['status'] == expected
+
+
+@pytest.mark.parametrize('os_name,other', [('Windows Server 2022', 'Ubuntu 22.04'),
+                                           ('Debian 12', 'Ubuntu 22.04'), ('Debian 13', 'Debian 12')])
+def test_environment_difference_not_product_failure(tmp_path, os_name, other):
+    snap = run(tmp_path, f'提供 {os_name} 部署说明。', f'{other} 部署说明：安装软件、配置端口、启动服务、验证服务。', delivery=True)
+    assert snap['requirements'][0]['status'] == 'NO_EVIDENCE_FOUND'
+    assert not any(g['type'] == 'NONCONFORMING' for g in snap['findings'])
+
+
+@pytest.mark.parametrize('os_name', ['Windows Server 2022', 'Windows Server 2025', 'Debian 12', 'Fedora 40'])
+def test_deployment_support_and_missing_step(tmp_path, os_name):
+    snap = run(tmp_path / 'full', f'提供 {os_name} 部署说明。',
+               f'{os_name} 部署说明：安装软件，配置端口，启动服务，验证健康状态。', delivery=True)
+    assert snap['requirements'][0]['status'] == 'EVIDENCE_FOUND'
+    partial = run(tmp_path / 'partial', f'提供 {os_name} 部署说明。',
+                  f'{os_name} 部署说明：安装软件。', delivery=True)
+    assert partial['requirements'][0]['status'] == 'PENDING_CONFIRMATION'
+
+
+def test_explicit_document_gap(tmp_path):
+    snap = run(tmp_path, '提供 Windows Server 2022 部署说明。',
+               '仅覆盖Ubuntu，未提供Windows Server 2022步骤。', delivery=True)
+    assert snap['requirements'][0]['status'] == 'NONCONFORMING'
+    assert {g['type'] for g in snap['findings']} == {'MISSING', 'NONCONFORMING'}
+
+
+@pytest.mark.parametrize('material,expected', [
+    ('共执行100项登录用例，成功100项，失败次数为0。', 'EVIDENCE_FOUND'),
+    ('共执行100项登录用例，成功99项，失败1项。', 'NONCONFORMING'),
+    ('共执行37项登录用例，成功37项，失败0项。', 'EVIDENCE_FOUND'),
+    ('未发现失败。', 'PENDING_CONFIRMATION'),
+])
+def test_test_counts_and_scope(tmp_path, material, expected):
+    snap = run(tmp_path, '全部登录测试用例通过。', material)
+    assert snap['requirements'][0]['status'] == expected
+
+
+def test_compound_incremental_and_conflict(tmp_path):
+    base = tmp_path / 'base'
+    first = run(base, '提供接口文档和部署说明。', '接口文档：端点 /sample。', delivery=True,
+                extra='R02：提供培训记录。\n')
+    assert [r['status'] for r in first['requirements']] == ['PARTIAL_EVIDENCE', 'NO_EVIDENCE_FOUND']
+    (base / 'old.json').write_text(json.dumps(first, ensure_ascii=False), encoding='utf-8')
+    (base / 'deploy.md').write_text('R01 部署说明：安装、配置、启动、验证。', encoding='utf-8')
+    (base / 'out2').mkdir()
+    cmd = [sys.executable, str(SCRIPT), '--project-name', '虚构项目', '--authorized-input-root', str(base),
+           '--output-dir', str(base / 'out2'), '--previous-snapshot', 'old.json', '--delivery-source', 'deploy.md',
+           '--effective-version-ref', 'scope.md']
+    done = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    assert done.returncode == 0, done.stderr
+    second = json.loads((base / 'out2/虚构项目-核查快照.json').read_text(encoding='utf-8'))
+    assert [r['status'] for r in second['requirements']] == ['EVIDENCE_FOUND', 'NO_EVIDENCE_FOUND']
+    assert second['requirements'][1]['requirement_id'] == first['requirements'][1]['requirement_id']
+    assert any(u['type'] == 'RESOLVED' and u['evidence'] for u in second['updates'])
+    assert any(u['type'] == 'UNCHANGED' for u in second['updates'])
+    book = load_workbook(base / 'out2/虚构项目-验收资料核对.xlsx', read_only=True)
+    assert book['要求追踪']['H2'].value == 'EVIDENCE_FOUND'
+    assert book['要求追踪']['H3'].value == 'NO_EVIDENCE_FOUND'
+    book.close()
+    doc = Document(base / 'out2/虚构项目-验收准备报告.docx')
+    assert 'EVIDENCE_FOUND' in ' '.join(c.text for row in doc.tables[0].rows for c in row.cells)
+
+    conflicting = tmp_path / 'conflicting'
+    conflicting.mkdir()
+    (conflicting / 'scope.md').write_text('R01：全部登录测试用例通过。', encoding='utf-8')
+    (conflicting / 'pass.md').write_text('R01 共执行100项登录用例，成功100项，失败0项。', encoding='utf-8')
+    (conflicting / 'fail.md').write_text('R01 共执行100项登录用例，成功99项，失败1项。', encoding='utf-8')
+    from importlib.util import module_from_spec, spec_from_file_location
+    spec = spec_from_file_location('audit_module', SCRIPT)
+    module = module_from_spec(spec)
+    spec.loader.exec_module(module)
+    snap = module.analyze('虚构项目', conflicting,
+                          {'scope': ['scope.md'], 'evidence': ['pass.md', 'fail.md'], 'delivery': [], 'change': []},
+                          effective_version_ref='scope.md')
+    assert snap['requirements'][0]['status'] == 'CONFLICT'
+    assert snap['requirements'][0]['results'][0]['support'] and snap['requirements'][0]['results'][0]['negative']
+    assert len(snap['requirements'][0]['results'][0]['sources']) == 2

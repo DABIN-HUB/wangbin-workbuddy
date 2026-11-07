@@ -56,10 +56,14 @@ def main() -> int:
                 result = factory.register_version(root, args.id, args.version, source=args.source,
                                                   candidate=args.candidate, sha256=args.sha256, date=args.date,
                                                   published_at=args.published_at, activate=args.activate)
+            elif args.command == "validate":
+                result = factory.validate_product(root, args.id, version=args.version)
+            elif args.command == "package":
+                result = factory.package_product(root, args.id, selected_version=args.version)
+            elif args.command == "verify":
+                result = factory.verify_package(root, args.id, selected_version=args.version)
             else:
-                result = {"validate": factory.validate_product, "test": factory.test_product,
-                          "package": factory.package_product, "verify": factory.verify_package,
-                          "release-check": factory.release_check}[args.command](root, args.id)
+                result = {"test": factory.test_product, "release-check": factory.release_check}[args.command](root, args.id)
     except (ValueError, OSError, KeyError) as exc:
         parser.exit(2, f"error: {exc}\n")
     print(json.dumps(result, ensure_ascii=False, indent=2))

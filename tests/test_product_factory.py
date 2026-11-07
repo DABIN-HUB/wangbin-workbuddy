@@ -236,7 +236,9 @@ def test_cli_record_and_portfolio_round_trip(tmp_path: Path) -> None:
 def test_cli_lists_registered_products() -> None:
     result = subprocess.run([sys.executable, "-m", "tooling.products", "list", "--root", str(ROOT)], cwd=ROOT, text=True, capture_output=True)
     assert result.returncode == 0, result.stderr
-    assert len(json.loads(result.stdout)["products"]) == 10
+    ids = [entry['id'] for entry in json.loads(result.stdout)['products']]
+    assert len(ids) >= 10 and len(ids) == len(set(ids))
+    assert 'wangbin-project-acceptance-check' in ids
 
 
 def test_release_check_reports_local_blocked_in_exit_status_and_platform_separately(tmp_path: Path) -> None:
@@ -287,6 +289,26 @@ def test_package_persists_relative_archive_evidence_and_catalog_hash(tmp_path: P
     assert version["candidate"] == manifest["archive"]
     assert version["archive_evidence"] == manifest["archive"]
     assert version["sha256"] == result["sha256"]
+
+
+def test_package_explicit_version_keeps_existing_active_candidate(tmp_path: Path) -> None:
+    registry(tmp_path)
+    catalog = factory.load_catalog(tmp_path)
+    catalog['products'][0]['active_version'] = '0.1.0'
+    (tmp_path / 'products/catalog.json').write_text(json.dumps(catalog), encoding='utf-8')
+    old = factory.package_product(tmp_path, "sample-skill")
+    old_hash = old["sha256"]
+    factory.register_version(tmp_path, "sample-skill", "0.2.0", activate=False)
+    source = tmp_path / "packages/skills/sample-skill"
+    skill = source / "SKILL.md"
+    skill.write_text(skill.read_text(encoding="utf-8").replace("0.1.0", "0.2.0"), encoding="utf-8")
+    assert factory.validate_product(tmp_path, "sample-skill", version="0.2.0")["status"] == "PASS"
+    newer = factory.package_product(tmp_path, "sample-skill", selected_version="0.2.0")
+    assert factory.verify_package(tmp_path, "sample-skill", selected_version="0.2.0")["status"] == "PASS"
+    item = factory.get_product(tmp_path, "sample-skill")
+    assert item["active_version"] == "0.1.0"
+    assert item["versions"][0]["sha256"] == old_hash
+    assert item["versions"][1]["sha256"] == newer["sha256"]
 
 
 def test_rejects_symlink_ancestors_and_traversing_registered_test(tmp_path: Path) -> None:

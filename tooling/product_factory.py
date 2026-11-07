@@ -293,8 +293,17 @@ def _files(source: Path, kind: str) -> list[Path]:
     return sorted(files, key=lambda p: p.relative_to(source).as_posix())
 
 
-def validate_product(root: Path, product_id: str) -> dict:
+def _selected_product(root: Path, product_id: str, version: str | None = None) -> dict:
     item = get_product(root, product_id)
+    if version is None:
+        return item
+    if version not in {entry['version'] for entry in item['versions']}:
+        raise ValueError(f"unregistered version: {product_id}/{version}")
+    return {**item, 'active_version': version}
+
+
+def validate_product(root: Path, product_id: str, *, version: str | None = None) -> dict:
+    item = _selected_product(root, product_id, version)
     source = _source(root, item)
     if not source.is_dir():
         return {"id": product_id, "status": "BLOCKED", "findings": ["source absent (backlog)"]}
@@ -394,9 +403,9 @@ def register_version(root: Path, product_id: str, version: str, *, source: str |
     return {"id": product_id, "active_version": item.get("active_version", _version(item)), "version": entry}
 
 
-def package_product(root: Path, product_id: str) -> dict:
-    item = get_product(root, product_id)
-    report = validate_product(root, product_id)
+def package_product(root: Path, product_id: str, *, selected_version: str | None = None) -> dict:
+    item = _selected_product(root, product_id, selected_version)
+    report = validate_product(root, product_id, version=selected_version)
     if report["status"] != "PASS":
         raise ValueError(f"product not valid: {report['findings']}")
     source = _source(root, item)
@@ -454,14 +463,14 @@ def package_product(root: Path, product_id: str) -> dict:
 
     catalog = load_catalog(root)
     catalog_item = next(entry for entry in catalog["products"] if entry["id"] == product_id)
-    catalog_version = _version_entry(catalog_item)
+    catalog_version = _version_entry({**catalog_item, 'active_version': _version(item)})
     catalog_version.update(candidate=archive_rel, archive_evidence=archive_rel, sha256=digest)
     _atomic_bytes(root / "products" / "catalog.json", _dump(catalog))
     return result
 
 
-def verify_package(root: Path, product_id: str) -> dict:
-    item = get_product(root, product_id)
+def verify_package(root: Path, product_id: str, *, selected_version: str | None = None) -> dict:
+    item = _selected_product(root, product_id, selected_version)
     archive, sidecar, manifest = _paths(root, item)
     try:
         info = _json(manifest)
