@@ -179,6 +179,8 @@ def action_fact(text: str, term: str) -> tuple[int, str] | None:
             return -1, '当前不具备或尚未启用所需功能'
         if re.search(r'仅(?:处于|在).{0,12}(?:设计|规划|研发)(?:阶段)?|仅(?:提供|有).{0,20}(?:设计|文档|方案)|(?:已纳入|列入|计划|拟于|将在).{0,16}(?:后续|未来|研发|计划|上线|开发)', context):
             return -1, '仅有设计材料或仍在规划'
+        if re.search(re.escape(stem) + r'(?:功能|服务|能力)?(?:目前|当前|暂时)?(?:不|未|无法|不能)' + verb, clause):
+            return -1, '明确肯否'
         # A document about X is not X itself. Restrict the object to the
         # requested verb's own phrase rather than searching anywhere nearby.
         hit = re.search(r'(无法|不能|不可|未能|不|未|无)?' + verb +
@@ -215,7 +217,21 @@ def uncertain_capability(condition: str, reply: str) -> bool:
     """An undecided rollout is neither an operational claim nor a denial."""
     if not re.search(r'支持|使用|具备', condition) or not reply:
         return False
-    return bool(re.search(r'正在评估是否|尚待确定|具体时间待定|预计.{0,12}(?:交付|上线).{0,12}(?:待定|未定)', reply))
+    action = re.search(r'(?:支持|使用|具备)([\u4e00-\u9fff\w/]+)', condition)
+    stem = action.group(1)[:4] if action else ''
+    # Question/uncertainty belongs to the same capability, not an adjacent
+    # numbered item or another object's rollout. A definite denial is handled
+    # by response_conflict before this predicate is used.
+    for clause in re.split(r'[。；;\n]', reply):
+        if stem and stem not in clause:
+            continue
+        if re.search(r'正在评估是否|尚待确定|具体时间待定|预计.{0,12}(?:交付|上线).{0,12}(?:待定|未定)|'
+                     r'(?:是否|能否|可否).{0,24}(?:上线|启用|可用|支持|实现|具备|投产|提供|交付|正式).{0,16}'
+                     r'(?:尚待核实|待核实|有待核实|尚不明确|待确认|尚待确认|未确定|不确定)|'
+                     r'(?:上线|启用|可用|支持|实现|具备|投产|提供|交付).{0,12}'
+                     r'(?:是否|尚待核实|待核实|尚不明确|待确认|未确定|不确定)', clause):
+            return True
+    return False
 
 
 def covered(condition: str, reply: str) -> bool:
@@ -354,6 +370,15 @@ def material_assessment(requirement: dict, present: list[tuple[str, str]]):
     for name, i, line in relevant:
         if NEGATIVE_EVIDENCE.search(line):
             return '不支持（文本层面）', f'材料 {loc(name, i)} 明确否认已具备要求的证件/证明正文：{quote(line)}；可读文件不等于已颁发证件', locations
+    # A named document, an application/registration record, or a question
+    # about whether this *particular* document qualifies cannot establish it.
+    # Inspect the actual linked lines, not the response's attachment claim.
+    for name, i, line in relevant:
+        if re.search(r'(?:是否|能否|可否).{0,24}(?:构成|属于|作为|符合|满足|取得|正式|有效|核发|颁发).{0,24}'
+                     r'(?:尚待核实|待核实|有待核实|待确认|尚不明确|不确定|未确定)|'
+                     r'(?:是否|能否|可否).{0,24}(?:尚待核实|待确认)|'
+                     r'(?:证照|证书|证明|执照).{0,12}(?:真实性|效力|状态).{0,12}(?:待核实|待确认|不明确)', line):
+            return '待确认', f'材料 {loc(name, i)} 对所要求材料的资格尚未核实，不能认作支持', locations
     if target_start or target_end or not target_known:
         if not target_known:
             year_match = YEAR.search(requirement['raw'])
@@ -378,7 +403,9 @@ def material_assessment(requirement: dict, present: list[tuple[str, str]]):
                 return '支持（文本层面）', f'材料 {loc(name, i)} 有效区间 {start} 至 {end} 覆盖目标 {target_start} 至 {target_end}（仅文本）', locations
             uncertain.append(f'{loc(name, i)} 缺有效起止或期限；签发日期不可作为生效日期')
         return '待确认', '；'.join(uncertain), locations
-    if re.search(r'营业执照', requirement['raw']) and any('营业执照' in line for _, _, line in relevant):
+    if re.search(r'营业执照', requirement['raw']) and any(
+            '营业执照' in line and re.search(r'营业执照(?:文本|正文|证照|已(?:取得|核发|颁发))|统一社会信用代码', line)
+            for _, _, line in relevant):
         return '支持（文本层面）', '材料正文包含所要求营业执照文本，不认证真实有效', locations
     if cert_object and any(cert_object in line and re.search(r'证明文本|证明材料|资质证明', line) and '有效' in line for _, _, line in relevant):
         return '支持（文本层面）', f'材料仅包含{cert_object}证明文本及有效声明，不认证真实性或期限', locations
@@ -508,7 +535,8 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
             condition_state = '已覆盖（文本层面）'
         if assessment_reason and support == '待确认' and unique:
             condition_state = '待确认'
-        if unique and any(uncertain_capability(p, reply) for p in cond) and not r['duty']:
+        if unique and any(uncertain_capability(p, reply) and not response_conflict(p, reply)
+                          for p in cond) and not r['duty']:
             condition_state = '待确认'
         gaps = []
         if existence == '未找到（限已提供响应）':
@@ -537,7 +565,8 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
         pending = r['pending'][:]
         if ambiguous:
             pending.append('响应候选歧义或编号改变；逐一核对双向原句')
-        if unique and any(uncertain_capability(p, reply) for p in cond):
+        if unique and any(uncertain_capability(p, reply) and not response_conflict(p, reply)
+                          for p in cond):
             pending.append('功能当前可用性或交付时点尚未确定，须核实该要求与响应原句')
         if conflicting:
             pending.append('材料候选重复、编号冲突或响应配对歧义；逐一核对文件与要求关联')
