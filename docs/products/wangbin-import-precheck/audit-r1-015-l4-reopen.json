@@ -1,0 +1,666 @@
+{
+  "source_sha256": "335d6f0262b37454c755c35fe64e4579a0a5b7405e3dfd19dfb6272e1d6820ed",
+  "reference_new_sha256": "df131b95160c5b7d00b2e4f31f23ae2e8ad57a34b1c1475bf85757746dde232a",
+  "runs": {
+    "first": {
+      "files": {
+        "report": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q01-015-independent-t_c8518a89\\l4-output\\source-导入预检.xlsx",
+          "sha256": "47111e8be14d6fbb5a072f5914db9c0d6c393eb2f7e72d48d5a30ed9bb626f8d"
+        },
+        "candidate": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q01-015-independent-t_c8518a89\\l4-output\\source-候选导入.xlsx",
+          "sha256": "16f19db87636007f458e5916f1b8afdb4dfcdc2938e11acbbd843987ffe2dd54"
+        },
+        "quarantine": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q01-015-independent-t_c8518a89\\l4-output\\source-隔离记录.xlsx",
+          "sha256": "4d01e8974fcff3c20e0e4d24880a736cabda92aba672dde3a7fc6f24ded658dd"
+        }
+      },
+      "tables": {
+        "report": {
+          "检查概览": [
+            [
+              "项目",
+              "值"
+            ],
+            [
+              "输入记录数",
+              "4"
+            ],
+            [
+              "完全空白行数",
+              "0"
+            ],
+            [
+              "无阻断记录数",
+              "1"
+            ],
+            [
+              "已验证合格记录数",
+              "1"
+            ],
+            [
+              "待确认记录数",
+              "0"
+            ],
+            [
+              "违规记录数",
+              "3"
+            ],
+            [
+              "目标字段顺序",
+              "code,name,region"
+            ],
+            [
+              "目标顺序依据",
+              "confirmed rules insertion order"
+            ],
+            [
+              "有问题记录数",
+              "3"
+            ],
+            [
+              "问题条数",
+              "4"
+            ],
+            [
+              "重复组数",
+              "1"
+            ],
+            [
+              "检查模式",
+              "已知规则预检"
+            ],
+            [
+              "已检查规则",
+              "code:required,code:type,code:unique,name:required,region:reference"
+            ],
+            [
+              "未检查规则",
+              "1"
+            ],
+            [
+              "执行状态",
+              "PARTIAL"
+            ],
+            [
+              "源SHA256",
+              "335d6f0262b37454c755c35fe64e4579a0a5b7405e3dfd19dfb6272e1d6820ed"
+            ],
+            [
+              "参考SHA256",
+              "bd326da2ac884b688e541fe7f3a442af5bda86e65e563859477d415dac133830"
+            ],
+            [
+              "源编码/分隔符",
+              "{\"encoding\": \"utf-8\", \"delimiter\": \",\"}"
+            ]
+          ],
+          "字段映射": [
+            [
+              "原始字段",
+              "目标字段",
+              "映射依据",
+              "确认状态",
+              "转换规则"
+            ],
+            [
+              "编码",
+              "code",
+              "user/template",
+              "CONFIRMED",
+              null
+            ],
+            [
+              "名称",
+              "name",
+              "user/template",
+              "CONFIRMED",
+              null
+            ],
+            [
+              "地区",
+              "region",
+              "user/template",
+              "CONFIRMED",
+              null
+            ]
+          ],
+          "问题明细": [
+            [
+              "finding_id",
+              "row_id",
+              "文件",
+              "工作表",
+              "原始行号",
+              "字段/单元格",
+              "原值",
+              "规则编号",
+              "类别",
+              "说明",
+              "建议",
+              "是否阻断候选导入"
+            ],
+            [
+              "F00001",
+              "335d6f0262b37454:CSV:5",
+              "source.csv",
+              null,
+              "5",
+              "名称:line5",
+              null,
+              "name",
+              "MISSING_REQUIRED_FIELD",
+              "required final value missing",
+              "confirm against source/rule",
+              "True"
+            ],
+            [
+              "F00002",
+              "335d6f0262b37454:CSV:2",
+              "source.csv",
+              null,
+              "2",
+              "编码:line2",
+              "00123",
+              "code",
+              "DUPLICATE_KEY",
+              "same final key at lines 2,3",
+              "confirm against source/rule",
+              "True"
+            ],
+            [
+              "F00003",
+              "335d6f0262b37454:CSV:3",
+              "source.csv",
+              null,
+              "3",
+              "编码:line3",
+              "00123",
+              "code",
+              "DUPLICATE_KEY",
+              "same final key at lines 2,3",
+              "confirm against source/rule",
+              "True"
+            ],
+            [
+              "F00004",
+              "335d6f0262b37454:CSV:3",
+              "source.csv",
+              null,
+              "3",
+              "地区:line3",
+              "R99",
+              "region",
+              "NOT_IN_REFERENCE",
+              "not found in this reference snapshot",
+              "confirm against source/rule",
+              "True"
+            ]
+          ],
+          "变更记录": [
+            [
+              "row_id",
+              "字段",
+              "原值",
+              "新值",
+              "转换规则",
+              "授权依据",
+              "原值规则状态",
+              "最终规则状态"
+            ]
+          ],
+          "未检查项": [
+            [
+              "规则编号",
+              "缺少条件",
+              "影响范围",
+              "需补资料"
+            ],
+            [
+              "region",
+              "required unknown",
+              "region",
+              "confirm required"
+            ]
+          ]
+        },
+        "candidate": {
+          "候选数据": [
+            [
+              "code",
+              "name",
+              "region"
+            ],
+            [
+              "123",
+              "丙",
+              "R02"
+            ]
+          ]
+        },
+        "quarantine": {
+          "隔离记录": [
+            [
+              "row_id",
+              "source_line",
+              "编码",
+              "名称",
+              "地区",
+              "状态",
+              "原因"
+            ],
+            [
+              "335d6f0262b37454:CSV:2",
+              "2",
+              "00123",
+              "甲",
+              "R01",
+              "VIOLATION",
+              "DUPLICATE_KEY"
+            ],
+            [
+              "335d6f0262b37454:CSV:3",
+              "3",
+              "00123",
+              "乙",
+              "R99",
+              "VIOLATION",
+              "DUPLICATE_KEY,NOT_IN_REFERENCE"
+            ],
+            [
+              "335d6f0262b37454:CSV:5",
+              "5",
+              "00007",
+              null,
+              "R01",
+              "VIOLATION",
+              "MISSING_REQUIRED_FIELD"
+            ]
+          ]
+        }
+      }
+    },
+    "-run1": {
+      "files": {
+        "report": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q01-015-independent-t_c8518a89\\l4-output\\source-导入预检-run1.xlsx",
+          "sha256": "0099d04979ee179d3392a5bf95020b8e797628f35e2b90c5e2895e99f664edd2"
+        },
+        "candidate": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q01-015-independent-t_c8518a89\\l4-output\\source-候选导入-run1.xlsx",
+          "sha256": "2f22fd2dd3c1de0cd256ce92072e6eedb681211cc90a7b7acb1b03ce19c09f83"
+        },
+        "quarantine": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q01-015-independent-t_c8518a89\\l4-output\\source-隔离记录-run1.xlsx",
+          "sha256": "c9e0a81366c7a9f2fa1cff553e1be0be7ea3757ac572f3413dc103f6712febaa"
+        }
+      },
+      "tables": {
+        "report": {
+          "检查概览": [
+            [
+              "项目",
+              "值"
+            ],
+            [
+              "输入记录数",
+              "4"
+            ],
+            [
+              "完全空白行数",
+              "0"
+            ],
+            [
+              "无阻断记录数",
+              "1"
+            ],
+            [
+              "已验证合格记录数",
+              "1"
+            ],
+            [
+              "待确认记录数",
+              "0"
+            ],
+            [
+              "违规记录数",
+              "3"
+            ],
+            [
+              "目标字段顺序",
+              "code,name,region"
+            ],
+            [
+              "目标顺序依据",
+              "confirmed rules insertion order"
+            ],
+            [
+              "有问题记录数",
+              "3"
+            ],
+            [
+              "问题条数",
+              "3"
+            ],
+            [
+              "重复组数",
+              "1"
+            ],
+            [
+              "检查模式",
+              "已知规则预检"
+            ],
+            [
+              "已检查规则",
+              "code:required,code:type,code:unique,name:required,region:reference"
+            ],
+            [
+              "未检查规则",
+              "1"
+            ],
+            [
+              "执行状态",
+              "PARTIAL"
+            ],
+            [
+              "源SHA256",
+              "335d6f0262b37454c755c35fe64e4579a0a5b7405e3dfd19dfb6272e1d6820ed"
+            ],
+            [
+              "参考SHA256",
+              "df131b95160c5b7d00b2e4f31f23ae2e8ad57a34b1c1475bf85757746dde232a"
+            ],
+            [
+              "源编码/分隔符",
+              "{\"encoding\": \"utf-8\", \"delimiter\": \",\"}"
+            ],
+            [
+              "对照旧报告",
+              "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q01-015-independent-t_c8518a89\\l4-output\\source-导入预检.xlsx"
+            ],
+            [
+              "旧报告SHA256",
+              "47111e8be14d6fbb5a072f5914db9c0d6c393eb2f7e72d48d5a30ed9bb626f8d"
+            ],
+            [
+              "旧参考SHA256",
+              "bd326da2ac884b688e541fe7f3a442af5bda86e65e563859477d415dac133830"
+            ],
+            [
+              "已解决问题数",
+              "1"
+            ],
+            [
+              "持续问题数",
+              "3"
+            ],
+            [
+              "新增问题数",
+              "0"
+            ],
+            [
+              "已解决问题",
+              "{\"row_id\": \"335d6f0262b37454:CSV:3\", \"line\": 3, \"field\": \"地区:line3\", \"category\": \"NOT_IN_REFERENCE\", \"value\": \"R99\"}"
+            ],
+            [
+              "持续问题",
+              "{\"row_id\": \"335d6f0262b37454:CSV:5\", \"line\": 5, \"field\": \"名称:line5\", \"category\": \"MISSING_REQUIRED_FIELD\", \"value\": \"\"}"
+            ],
+            [
+              "持续问题",
+              "{\"row_id\": \"335d6f0262b37454:CSV:2\", \"line\": 2, \"field\": \"编码:line2\", \"category\": \"DUPLICATE_KEY\", \"value\": \"00123\"}"
+            ],
+            [
+              "持续问题",
+              "{\"row_id\": \"335d6f0262b37454:CSV:3\", \"line\": 3, \"field\": \"编码:line3\", \"category\": \"DUPLICATE_KEY\", \"value\": \"00123\"}"
+            ]
+          ],
+          "字段映射": [
+            [
+              "原始字段",
+              "目标字段",
+              "映射依据",
+              "确认状态",
+              "转换规则"
+            ],
+            [
+              "编码",
+              "code",
+              "user/template",
+              "CONFIRMED",
+              null
+            ],
+            [
+              "名称",
+              "name",
+              "user/template",
+              "CONFIRMED",
+              null
+            ],
+            [
+              "地区",
+              "region",
+              "user/template",
+              "CONFIRMED",
+              null
+            ]
+          ],
+          "问题明细": [
+            [
+              "finding_id",
+              "row_id",
+              "文件",
+              "工作表",
+              "原始行号",
+              "字段/单元格",
+              "原值",
+              "规则编号",
+              "类别",
+              "说明",
+              "建议",
+              "是否阻断候选导入"
+            ],
+            [
+              "F00001",
+              "335d6f0262b37454:CSV:5",
+              "source.csv",
+              null,
+              "5",
+              "名称:line5",
+              null,
+              "name",
+              "MISSING_REQUIRED_FIELD",
+              "required final value missing",
+              "confirm against source/rule",
+              "True"
+            ],
+            [
+              "F00002",
+              "335d6f0262b37454:CSV:2",
+              "source.csv",
+              null,
+              "2",
+              "编码:line2",
+              "00123",
+              "code",
+              "DUPLICATE_KEY",
+              "same final key at lines 2,3",
+              "confirm against source/rule",
+              "True"
+            ],
+            [
+              "F00003",
+              "335d6f0262b37454:CSV:3",
+              "source.csv",
+              null,
+              "3",
+              "编码:line3",
+              "00123",
+              "code",
+              "DUPLICATE_KEY",
+              "same final key at lines 2,3",
+              "confirm against source/rule",
+              "True"
+            ]
+          ],
+          "变更记录": [
+            [
+              "row_id",
+              "字段",
+              "原值",
+              "新值",
+              "转换规则",
+              "授权依据",
+              "原值规则状态",
+              "最终规则状态"
+            ]
+          ],
+          "未检查项": [
+            [
+              "规则编号",
+              "缺少条件",
+              "影响范围",
+              "需补资料"
+            ],
+            [
+              "region",
+              "required unknown",
+              "region",
+              "confirm required"
+            ]
+          ]
+        },
+        "candidate": {
+          "候选数据": [
+            [
+              "code",
+              "name",
+              "region"
+            ],
+            [
+              "123",
+              "丙",
+              "R02"
+            ]
+          ]
+        },
+        "quarantine": {
+          "隔离记录": [
+            [
+              "row_id",
+              "source_line",
+              "编码",
+              "名称",
+              "地区",
+              "状态",
+              "原因"
+            ],
+            [
+              "335d6f0262b37454:CSV:2",
+              "2",
+              "00123",
+              "甲",
+              "R01",
+              "VIOLATION",
+              "DUPLICATE_KEY"
+            ],
+            [
+              "335d6f0262b37454:CSV:3",
+              "3",
+              "00123",
+              "乙",
+              "R99",
+              "VIOLATION",
+              "DUPLICATE_KEY"
+            ],
+            [
+              "335d6f0262b37454:CSV:5",
+              "5",
+              "00007",
+              null,
+              "R01",
+              "VIOLATION",
+              "MISSING_REQUIRED_FIELD"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "assertions": [
+    {
+      "check": " report present",
+      "pass": true
+    },
+    {
+      "check": " candidate present",
+      "pass": true
+    },
+    {
+      "check": " quarantine present",
+      "pass": true
+    },
+    {
+      "check": " report source SHA",
+      "pass": true
+    },
+    {
+      "check": " finding count",
+      "pass": true
+    },
+    {
+      "check": " candidate one row",
+      "pass": true
+    },
+    {
+      "check": " quarantine three rows",
+      "pass": true
+    },
+    {
+      "check": " R99 reference finding transition",
+      "pass": true
+    },
+    {
+      "check": "-run1 report present",
+      "pass": true
+    },
+    {
+      "check": "-run1 candidate present",
+      "pass": true
+    },
+    {
+      "check": "-run1 quarantine present",
+      "pass": true
+    },
+    {
+      "check": "-run1 report source SHA",
+      "pass": true
+    },
+    {
+      "check": "-run1 finding count",
+      "pass": true
+    },
+    {
+      "check": "-run1 candidate one row",
+      "pass": true
+    },
+    {
+      "check": "-run1 quarantine three rows",
+      "pass": true
+    },
+    {
+      "check": "-run1 R99 reference finding transition",
+      "pass": true
+    },
+    {
+      "check": "old/new finding comparison",
+      "pass": true
+    },
+    {
+      "check": "old report immutable hash referenced",
+      "pass": true
+    }
+  ]
+}
