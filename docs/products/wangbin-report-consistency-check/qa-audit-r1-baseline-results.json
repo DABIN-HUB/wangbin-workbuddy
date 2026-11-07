@@ -1,0 +1,4052 @@
+{
+  "product_id": "wangbin-report-consistency-check",
+  "archive_sha256": "549111865465d3feb9faf5aaedf69738be6efd48094b1f61dd127e0b29ed9b38",
+  "scratch": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7",
+  "records": [
+    {
+      "id": "F01-formula-cache",
+      "input": {
+        "cols": [
+          [
+            "上期完成率",
+            0.1,
+            "0%",
+            "=1/10"
+          ],
+          [
+            "本期完成率",
+            0.12,
+            "0%",
+            "=12/100"
+          ]
+        ],
+        "paragraphs": [
+          "完成率由10%提高至12%"
+        ]
+      },
+      "expected": "UNVERIFIED_FORMULA_CACHE, formula provenance, no MATCH or DIRECT_CELLS",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp9bUopc\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\package\\wangbin-report-consistency-check\\scripts\\check_report.py",
+        "--input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F01-formula-cache\\in",
+        "--source-xlsx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F01-formula-cache\\in\\source.xlsx",
+        "--report-docx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F01-formula-cache\\in\\report.docx",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F01-formula-cache\\out"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F01-formula-cache",
+      "exit": 0,
+      "stdout": "{\"status\": \"PARTIAL\", \"output\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F01-formula-cache\\\\out\\\\report-数字一致性检查.xlsx\", \"snapshot\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F01-formula-cache\\\\out\\\\report-数字一致性检查.json\", \"counts\": {\"MATCH\": 1}, \"changes\": {\"FIRST_RUN\": 1}, \"uncovered\": 1}\n",
+      "stderr": "",
+      "input_sha256": {
+        "report.docx": "7bc081b5f8039c284d67d77cf891ba8503cfe2b4a8adee5933f31b67e5a157ce",
+        "source.xlsx": "6f3770e7a57f4431e58b24beb6437f5591fe225cdad9d9aee99eadda52f56296"
+      },
+      "input_unchanged": true,
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "值"
+          ],
+          [
+            "来源文件",
+            "source.xlsx"
+          ],
+          [
+            "来源SHA256",
+            "6f3770e7a57f4431e58b24beb6437f5591fe225cdad9d9aee99eadda52f56296"
+          ],
+          [
+            "报告文件",
+            "report.docx"
+          ],
+          [
+            "报告SHA256",
+            "7bc081b5f8039c284d67d77cf891ba8503cfe2b4a8adee5933f31b67e5a157ce"
+          ],
+          [
+            "覆盖",
+            "正文段落、普通表格；只扫描可定位的指标陈述"
+          ],
+          [
+            "限制",
+            "非完整财务审计；未核实公式缓存；未知口径需确认"
+          ],
+          [
+            "未覆盖数量",
+            1
+          ],
+          [
+            "MATCH",
+            1
+          ],
+          [
+            "变化:FIRST_RUN",
+            1
+          ]
+        ],
+        "指标对应": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "实际/预算",
+            "税口径",
+            "币种",
+            "报告文件",
+            "报告位置",
+            "报告原文",
+            "候选来源",
+            "映射/规则证据",
+            "状态",
+            "变化"
+          ],
+          [
+            "fcd02d9af11b",
+            "完成率变化",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "report.docx",
+            "段落1",
+            "完成率由10%提高至12%",
+            "数据!A2, 数据!B2",
+            "explicit 上期/本期 completion rate",
+            "MATCH",
+            "FIRST_RUN"
+          ]
+        ],
+        "差异明细": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "单位",
+            "币种",
+            "实际/预算",
+            "税口径",
+            "来源文件",
+            "来源工作表/单元格",
+            "来源原值",
+            "来源单位",
+            "比较来源值",
+            "来源可信范围",
+            "报告位置",
+            "报告原文",
+            "报告值",
+            "比较报告值",
+            "换算/规则",
+            "状态",
+            "差额(报告-来源)",
+            "差额单位",
+            "解释"
+          ],
+          [
+            "fcd02d9af11b",
+            "完成率变化",
+            null,
+            null,
+            "pp",
+            null,
+            null,
+            null,
+            "source.xlsx",
+            "数据!A2,数据!B2",
+            "10.0% → 12.00%",
+            "%",
+            "2.00",
+            "DIRECT_CELLS",
+            "段落1",
+            "完成率由10%提高至12%",
+            "10% → 12%",
+            "2",
+            "explicit 上期/本期 completion rate",
+            "MATCH",
+            "0.00",
+            "pp",
+            "本期−上期=2.00个百分点；相对增幅=20.0% (基数=10.0%)"
+          ]
+        ],
+        "待确认口径": [
+          [
+            "metric_id",
+            "指标",
+            "报告位置",
+            "待确认事项",
+            "候选来源",
+            "提问",
+            "状态",
+            "差额"
+          ]
+        ],
+        "未覆盖项": [
+          [
+            "文件",
+            "区域/位置",
+            "未覆盖类型",
+            "原因与建议"
+          ],
+          [
+            "DOCX",
+            "页眉页脚/脚注/嵌入对象",
+            "页眉页脚/脚注/嵌入对象",
+            "不解析这些区域；若存在请人工复核"
+          ]
+        ]
+      },
+      "snapshot": {
+        "report_sha256": "7bc081b5f8039c284d67d77cf891ba8503cfe2b4a8adee5933f31b67e5a157ce",
+        "source_sha256": "6f3770e7a57f4431e58b24beb6437f5591fe225cdad9d9aee99eadda52f56296",
+        "results": [
+          {
+            "metric_id": "fcd02d9af11b",
+            "metric": "完成率变化",
+            "where": "段落1",
+            "quote": "完成率由10%提高至12%",
+            "report_value": "10% → 12%",
+            "report_unit": "pp",
+            "identity": {
+              "subject": "",
+              "period": "",
+              "basis": "",
+              "tax": "",
+              "currency": ""
+            },
+            "candidates": [
+              "数据!A2",
+              "数据!B2"
+            ],
+            "status": "MATCH",
+            "source_file": "source.xlsx",
+            "source_cell": "数据!A2,数据!B2",
+            "source_raw": "10.0% → 12.00%",
+            "source_unit": "%",
+            "source_value": "2.00",
+            "normalized_report": "2",
+            "delta": "0.00",
+            "delta_unit": "pp",
+            "provenance": "DIRECT_CELLS",
+            "formula": "",
+            "explanation": "本期−上期=2.00个百分点；相对增幅=20.0% (基数=10.0%)",
+            "rule": "explicit 上期/本期 completion rate"
+          }
+        ],
+        "changes": {
+          "fcd02d9af11b": "FIRST_RUN"
+        }
+      },
+      "output_sha256": {
+        "report-数字一致性检查.xlsx": "25169b3de5ef4542d693a060495bdcb44a04839350b611e3588b8c024ee21571",
+        "report-数字一致性检查.json": "c83018d095afb2a92c9e7d137b1d3daad2862e1d990ffba6866ced0096a93fb0"
+      },
+      "no_output_formula": true,
+      "verdict": "FAIL",
+      "issues": [
+        "statuses expected ['UNVERIFIED_FORMULA_CACHE'], actual ['MATCH']",
+        "formula provenance hidden"
+      ]
+    },
+    {
+      "id": "F01-direct-positive",
+      "input": {
+        "cols": [
+          [
+            "上期完成率",
+            0.1,
+            "0%",
+            null
+          ],
+          [
+            "本期完成率",
+            0.12,
+            "0%",
+            null
+          ]
+        ],
+        "paragraphs": [
+          "完成率由10%提高至12%"
+        ]
+      },
+      "expected": "MATCH, 2pp, 20%",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp9bUopc\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\package\\wangbin-report-consistency-check\\scripts\\check_report.py",
+        "--input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F01-direct-positive\\in",
+        "--source-xlsx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F01-direct-positive\\in\\source.xlsx",
+        "--report-docx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F01-direct-positive\\in\\report.docx",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F01-direct-positive\\out"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F01-direct-positive",
+      "exit": 0,
+      "stdout": "{\"status\": \"PARTIAL\", \"output\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F01-direct-positive\\\\out\\\\report-数字一致性检查.xlsx\", \"snapshot\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F01-direct-positive\\\\out\\\\report-数字一致性检查.json\", \"counts\": {\"MATCH\": 1}, \"changes\": {\"FIRST_RUN\": 1}, \"uncovered\": 1}\n",
+      "stderr": "",
+      "input_sha256": {
+        "report.docx": "7bc081b5f8039c284d67d77cf891ba8503cfe2b4a8adee5933f31b67e5a157ce",
+        "source.xlsx": "01c5c8992eea40384103bc771ed5d1458d8db057ff7cbcb6c90399bc09768757"
+      },
+      "input_unchanged": true,
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "值"
+          ],
+          [
+            "来源文件",
+            "source.xlsx"
+          ],
+          [
+            "来源SHA256",
+            "01c5c8992eea40384103bc771ed5d1458d8db057ff7cbcb6c90399bc09768757"
+          ],
+          [
+            "报告文件",
+            "report.docx"
+          ],
+          [
+            "报告SHA256",
+            "7bc081b5f8039c284d67d77cf891ba8503cfe2b4a8adee5933f31b67e5a157ce"
+          ],
+          [
+            "覆盖",
+            "正文段落、普通表格；只扫描可定位的指标陈述"
+          ],
+          [
+            "限制",
+            "非完整财务审计；未核实公式缓存；未知口径需确认"
+          ],
+          [
+            "未覆盖数量",
+            1
+          ],
+          [
+            "MATCH",
+            1
+          ],
+          [
+            "变化:FIRST_RUN",
+            1
+          ]
+        ],
+        "指标对应": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "实际/预算",
+            "税口径",
+            "币种",
+            "报告文件",
+            "报告位置",
+            "报告原文",
+            "候选来源",
+            "映射/规则证据",
+            "状态",
+            "变化"
+          ],
+          [
+            "fcd02d9af11b",
+            "完成率变化",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "report.docx",
+            "段落1",
+            "完成率由10%提高至12%",
+            "数据!A2, 数据!B2",
+            "explicit 上期/本期 completion rate",
+            "MATCH",
+            "FIRST_RUN"
+          ]
+        ],
+        "差异明细": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "单位",
+            "币种",
+            "实际/预算",
+            "税口径",
+            "来源文件",
+            "来源工作表/单元格",
+            "来源原值",
+            "来源单位",
+            "比较来源值",
+            "来源可信范围",
+            "报告位置",
+            "报告原文",
+            "报告值",
+            "比较报告值",
+            "换算/规则",
+            "状态",
+            "差额(报告-来源)",
+            "差额单位",
+            "解释"
+          ],
+          [
+            "fcd02d9af11b",
+            "完成率变化",
+            null,
+            null,
+            "pp",
+            null,
+            null,
+            null,
+            "source.xlsx",
+            "数据!A2,数据!B2",
+            "10.0% → 12.00%",
+            "%",
+            "2.00",
+            "DIRECT_CELLS",
+            "段落1",
+            "完成率由10%提高至12%",
+            "10% → 12%",
+            "2",
+            "explicit 上期/本期 completion rate",
+            "MATCH",
+            "0.00",
+            "pp",
+            "本期−上期=2.00个百分点；相对增幅=20.0% (基数=10.0%)"
+          ]
+        ],
+        "待确认口径": [
+          [
+            "metric_id",
+            "指标",
+            "报告位置",
+            "待确认事项",
+            "候选来源",
+            "提问",
+            "状态",
+            "差额"
+          ]
+        ],
+        "未覆盖项": [
+          [
+            "文件",
+            "区域/位置",
+            "未覆盖类型",
+            "原因与建议"
+          ],
+          [
+            "DOCX",
+            "页眉页脚/脚注/嵌入对象",
+            "页眉页脚/脚注/嵌入对象",
+            "不解析这些区域；若存在请人工复核"
+          ]
+        ]
+      },
+      "snapshot": {
+        "report_sha256": "7bc081b5f8039c284d67d77cf891ba8503cfe2b4a8adee5933f31b67e5a157ce",
+        "source_sha256": "01c5c8992eea40384103bc771ed5d1458d8db057ff7cbcb6c90399bc09768757",
+        "results": [
+          {
+            "metric_id": "fcd02d9af11b",
+            "metric": "完成率变化",
+            "where": "段落1",
+            "quote": "完成率由10%提高至12%",
+            "report_value": "10% → 12%",
+            "report_unit": "pp",
+            "identity": {
+              "subject": "",
+              "period": "",
+              "basis": "",
+              "tax": "",
+              "currency": ""
+            },
+            "candidates": [
+              "数据!A2",
+              "数据!B2"
+            ],
+            "status": "MATCH",
+            "source_file": "source.xlsx",
+            "source_cell": "数据!A2,数据!B2",
+            "source_raw": "10.0% → 12.00%",
+            "source_unit": "%",
+            "source_value": "2.00",
+            "normalized_report": "2",
+            "delta": "0.00",
+            "delta_unit": "pp",
+            "provenance": "DIRECT_CELLS",
+            "formula": "",
+            "explanation": "本期−上期=2.00个百分点；相对增幅=20.0% (基数=10.0%)",
+            "rule": "explicit 上期/本期 completion rate"
+          }
+        ],
+        "changes": {
+          "fcd02d9af11b": "FIRST_RUN"
+        }
+      },
+      "output_sha256": {
+        "report-数字一致性检查.xlsx": "795bb5371bb9b541ceda63430f1c077e86f0b406c9de71ea1aee9a8dec16df4c",
+        "report-数字一致性检查.json": "d4d6f6ac6839ab3dac97fcc864d7288f40407c27386983b589a1759b2e0abb8e"
+      },
+      "no_output_formula": true,
+      "verdict": "PASS",
+      "issues": []
+    },
+    {
+      "id": "F02-header-percent",
+      "input": {
+        "cols": [
+          [
+            "上期完成率(%)",
+            10,
+            "General",
+            null
+          ],
+          [
+            "本期完成率(%)",
+            12,
+            "General",
+            null
+          ]
+        ],
+        "paragraphs": [
+          "完成率由10%提高至12%"
+        ]
+      },
+      "expected": "MATCH, 10% to 12%, 2pp, 20%",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp9bUopc\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\package\\wangbin-report-consistency-check\\scripts\\check_report.py",
+        "--input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F02-header-percent\\in",
+        "--source-xlsx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F02-header-percent\\in\\source.xlsx",
+        "--report-docx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F02-header-percent\\in\\report.docx",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F02-header-percent\\out"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F02-header-percent",
+      "exit": 0,
+      "stdout": "{\"status\": \"PARTIAL\", \"output\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F02-header-percent\\\\out\\\\report-数字一致性检查.xlsx\", \"snapshot\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F02-header-percent\\\\out\\\\report-数字一致性检查.json\", \"counts\": {\"RAW_DIFFERENCE_ROUNDING_PENDING\": 1}, \"changes\": {\"FIRST_RUN\": 1}, \"uncovered\": 1}\n",
+      "stderr": "",
+      "input_sha256": {
+        "report.docx": "7bc081b5f8039c284d67d77cf891ba8503cfe2b4a8adee5933f31b67e5a157ce",
+        "source.xlsx": "af656b3b305532268279dbe8036900b50245d2de05e2c01e09b3dc4c8e982141"
+      },
+      "input_unchanged": true,
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "值"
+          ],
+          [
+            "来源文件",
+            "source.xlsx"
+          ],
+          [
+            "来源SHA256",
+            "af656b3b305532268279dbe8036900b50245d2de05e2c01e09b3dc4c8e982141"
+          ],
+          [
+            "报告文件",
+            "report.docx"
+          ],
+          [
+            "报告SHA256",
+            "7bc081b5f8039c284d67d77cf891ba8503cfe2b4a8adee5933f31b67e5a157ce"
+          ],
+          [
+            "覆盖",
+            "正文段落、普通表格；只扫描可定位的指标陈述"
+          ],
+          [
+            "限制",
+            "非完整财务审计；未核实公式缓存；未知口径需确认"
+          ],
+          [
+            "未覆盖数量",
+            1
+          ],
+          [
+            "RAW_DIFFERENCE_ROUNDING_PENDING",
+            1
+          ],
+          [
+            "变化:FIRST_RUN",
+            1
+          ]
+        ],
+        "指标对应": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "实际/预算",
+            "税口径",
+            "币种",
+            "报告文件",
+            "报告位置",
+            "报告原文",
+            "候选来源",
+            "映射/规则证据",
+            "状态",
+            "变化"
+          ],
+          [
+            "fcd02d9af11b",
+            "完成率变化",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "report.docx",
+            "段落1",
+            "完成率由10%提高至12%",
+            "数据!A2, 数据!B2",
+            "explicit 上期/本期 completion rate",
+            "RAW_DIFFERENCE_ROUNDING_PENDING",
+            "FIRST_RUN"
+          ]
+        ],
+        "差异明细": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "单位",
+            "币种",
+            "实际/预算",
+            "税口径",
+            "来源文件",
+            "来源工作表/单元格",
+            "来源原值",
+            "来源单位",
+            "比较来源值",
+            "来源可信范围",
+            "报告位置",
+            "报告原文",
+            "报告值",
+            "比较报告值",
+            "换算/规则",
+            "状态",
+            "差额(报告-来源)",
+            "差额单位",
+            "解释"
+          ],
+          [
+            "fcd02d9af11b",
+            "完成率变化",
+            null,
+            null,
+            "pp",
+            null,
+            null,
+            null,
+            "source.xlsx",
+            "数据!A2,数据!B2",
+            "1000% → 1200%",
+            "%",
+            "200",
+            "DIRECT_CELLS",
+            "段落1",
+            "完成率由10%提高至12%",
+            "10% → 12%",
+            "2",
+            "explicit 上期/本期 completion rate",
+            "RAW_DIFFERENCE_ROUNDING_PENDING",
+            "-198",
+            "pp",
+            "本期−上期=200个百分点；相对增幅=20.0% (基数=1000%)"
+          ]
+        ],
+        "待确认口径": [
+          [
+            "metric_id",
+            "指标",
+            "报告位置",
+            "待确认事项",
+            "候选来源",
+            "提问",
+            "状态",
+            "差额"
+          ]
+        ],
+        "未覆盖项": [
+          [
+            "文件",
+            "区域/位置",
+            "未覆盖类型",
+            "原因与建议"
+          ],
+          [
+            "DOCX",
+            "页眉页脚/脚注/嵌入对象",
+            "页眉页脚/脚注/嵌入对象",
+            "不解析这些区域；若存在请人工复核"
+          ]
+        ]
+      },
+      "snapshot": {
+        "report_sha256": "7bc081b5f8039c284d67d77cf891ba8503cfe2b4a8adee5933f31b67e5a157ce",
+        "source_sha256": "af656b3b305532268279dbe8036900b50245d2de05e2c01e09b3dc4c8e982141",
+        "results": [
+          {
+            "metric_id": "fcd02d9af11b",
+            "metric": "完成率变化",
+            "where": "段落1",
+            "quote": "完成率由10%提高至12%",
+            "report_value": "10% → 12%",
+            "report_unit": "pp",
+            "identity": {
+              "subject": "",
+              "period": "",
+              "basis": "",
+              "tax": "",
+              "currency": ""
+            },
+            "candidates": [
+              "数据!A2",
+              "数据!B2"
+            ],
+            "status": "RAW_DIFFERENCE_ROUNDING_PENDING",
+            "source_file": "source.xlsx",
+            "source_cell": "数据!A2,数据!B2",
+            "source_raw": "1000% → 1200%",
+            "source_unit": "%",
+            "source_value": "200",
+            "normalized_report": "2",
+            "delta": "-198",
+            "delta_unit": "pp",
+            "provenance": "DIRECT_CELLS",
+            "formula": "",
+            "explanation": "本期−上期=200个百分点；相对增幅=20.0% (基数=1000%)",
+            "rule": "explicit 上期/本期 completion rate"
+          }
+        ],
+        "changes": {
+          "fcd02d9af11b": "FIRST_RUN"
+        }
+      },
+      "output_sha256": {
+        "report-数字一致性检查.xlsx": "59e5fab8bddc062ecccf76fe39dd7c900bc0ce82cd76f387111d0661684a6014",
+        "report-数字一致性检查.json": "c56a42b67b336b8280fb8da23a6e337ed0596647cac99b6d46a5be3cc16a2489"
+      },
+      "no_output_formula": true,
+      "verdict": "FAIL",
+      "issues": [
+        "statuses expected ['MATCH'], actual ['RAW_DIFFERENCE_ROUNDING_PENDING']",
+        "percentage-point delta expected 2"
+      ]
+    },
+    {
+      "id": "F02-zero-prior",
+      "input": {
+        "cols": [
+          [
+            "上期完成率(%)",
+            0,
+            "General",
+            null
+          ],
+          [
+            "本期完成率(%)",
+            12,
+            "General",
+            null
+          ]
+        ],
+        "paragraphs": [
+          "完成率由0%提高至12%"
+        ]
+      },
+      "expected": "12pp; relative increase undefined, not 0%",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp9bUopc\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\package\\wangbin-report-consistency-check\\scripts\\check_report.py",
+        "--input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F02-zero-prior\\in",
+        "--source-xlsx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F02-zero-prior\\in\\source.xlsx",
+        "--report-docx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F02-zero-prior\\in\\report.docx",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F02-zero-prior\\out"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F02-zero-prior",
+      "exit": 0,
+      "stdout": "{\"status\": \"PARTIAL\", \"output\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F02-zero-prior\\\\out\\\\report-数字一致性检查.xlsx\", \"snapshot\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F02-zero-prior\\\\out\\\\report-数字一致性检查.json\", \"counts\": {\"RAW_DIFFERENCE_ROUNDING_PENDING\": 1}, \"changes\": {\"FIRST_RUN\": 1}, \"uncovered\": 1}\n",
+      "stderr": "",
+      "input_sha256": {
+        "report.docx": "3bdd8c5949fa7c16c06a30d97f2d73adaadd0d3008be7d6cc1737980b7ebf433",
+        "source.xlsx": "fea6a3994a750dd514adc0fb8a5549f63bd31665a9a304f51e52d427b9db0f5e"
+      },
+      "input_unchanged": true,
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "值"
+          ],
+          [
+            "来源文件",
+            "source.xlsx"
+          ],
+          [
+            "来源SHA256",
+            "fea6a3994a750dd514adc0fb8a5549f63bd31665a9a304f51e52d427b9db0f5e"
+          ],
+          [
+            "报告文件",
+            "report.docx"
+          ],
+          [
+            "报告SHA256",
+            "3bdd8c5949fa7c16c06a30d97f2d73adaadd0d3008be7d6cc1737980b7ebf433"
+          ],
+          [
+            "覆盖",
+            "正文段落、普通表格；只扫描可定位的指标陈述"
+          ],
+          [
+            "限制",
+            "非完整财务审计；未核实公式缓存；未知口径需确认"
+          ],
+          [
+            "未覆盖数量",
+            1
+          ],
+          [
+            "RAW_DIFFERENCE_ROUNDING_PENDING",
+            1
+          ],
+          [
+            "变化:FIRST_RUN",
+            1
+          ]
+        ],
+        "指标对应": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "实际/预算",
+            "税口径",
+            "币种",
+            "报告文件",
+            "报告位置",
+            "报告原文",
+            "候选来源",
+            "映射/规则证据",
+            "状态",
+            "变化"
+          ],
+          [
+            "fcd02d9af11b",
+            "完成率变化",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "report.docx",
+            "段落1",
+            "完成率由0%提高至12%",
+            "数据!A2, 数据!B2",
+            "explicit 上期/本期 completion rate",
+            "RAW_DIFFERENCE_ROUNDING_PENDING",
+            "FIRST_RUN"
+          ]
+        ],
+        "差异明细": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "单位",
+            "币种",
+            "实际/预算",
+            "税口径",
+            "来源文件",
+            "来源工作表/单元格",
+            "来源原值",
+            "来源单位",
+            "比较来源值",
+            "来源可信范围",
+            "报告位置",
+            "报告原文",
+            "报告值",
+            "比较报告值",
+            "换算/规则",
+            "状态",
+            "差额(报告-来源)",
+            "差额单位",
+            "解释"
+          ],
+          [
+            "fcd02d9af11b",
+            "完成率变化",
+            null,
+            null,
+            "pp",
+            null,
+            null,
+            null,
+            "source.xlsx",
+            "数据!A2,数据!B2",
+            "0% → 1200%",
+            "%",
+            "1200",
+            "DIRECT_CELLS",
+            "段落1",
+            "完成率由0%提高至12%",
+            "0% → 12%",
+            "12",
+            "explicit 上期/本期 completion rate",
+            "RAW_DIFFERENCE_ROUNDING_PENDING",
+            "-1188",
+            "pp",
+            "上期为零：相对增幅未计算"
+          ]
+        ],
+        "待确认口径": [
+          [
+            "metric_id",
+            "指标",
+            "报告位置",
+            "待确认事项",
+            "候选来源",
+            "提问",
+            "状态",
+            "差额"
+          ]
+        ],
+        "未覆盖项": [
+          [
+            "文件",
+            "区域/位置",
+            "未覆盖类型",
+            "原因与建议"
+          ],
+          [
+            "DOCX",
+            "页眉页脚/脚注/嵌入对象",
+            "页眉页脚/脚注/嵌入对象",
+            "不解析这些区域；若存在请人工复核"
+          ]
+        ]
+      },
+      "snapshot": {
+        "report_sha256": "3bdd8c5949fa7c16c06a30d97f2d73adaadd0d3008be7d6cc1737980b7ebf433",
+        "source_sha256": "fea6a3994a750dd514adc0fb8a5549f63bd31665a9a304f51e52d427b9db0f5e",
+        "results": [
+          {
+            "metric_id": "fcd02d9af11b",
+            "metric": "完成率变化",
+            "where": "段落1",
+            "quote": "完成率由0%提高至12%",
+            "report_value": "0% → 12%",
+            "report_unit": "pp",
+            "identity": {
+              "subject": "",
+              "period": "",
+              "basis": "",
+              "tax": "",
+              "currency": ""
+            },
+            "candidates": [
+              "数据!A2",
+              "数据!B2"
+            ],
+            "status": "RAW_DIFFERENCE_ROUNDING_PENDING",
+            "source_file": "source.xlsx",
+            "source_cell": "数据!A2,数据!B2",
+            "source_raw": "0% → 1200%",
+            "source_unit": "%",
+            "source_value": "1200",
+            "normalized_report": "12",
+            "delta": "-1188",
+            "delta_unit": "pp",
+            "provenance": "DIRECT_CELLS",
+            "formula": "",
+            "explanation": "上期为零：相对增幅未计算",
+            "rule": "explicit 上期/本期 completion rate"
+          }
+        ],
+        "changes": {
+          "fcd02d9af11b": "FIRST_RUN"
+        }
+      },
+      "output_sha256": {
+        "report-数字一致性检查.xlsx": "1cf799b7dc85266fa09d9462d9f8e597e0a8f3880021fbea1e88cb16b49ed541",
+        "report-数字一致性检查.json": "f47a065a3615b53fc0decd770a5a83bf7709d77aeefdad837382a04819106be5"
+      },
+      "no_output_formula": true,
+      "verdict": "FAIL",
+      "issues": [
+        "statuses expected ['MATCH'], actual ['RAW_DIFFERENCE_ROUNDING_PENDING']",
+        "percentage-point delta expected 12"
+      ]
+    },
+    {
+      "id": "F02-unknown-unit",
+      "input": {
+        "cols": [
+          [
+            "上期完成率",
+            0.1,
+            "General",
+            null
+          ],
+          [
+            "本期完成率",
+            0.12,
+            "General",
+            null
+          ]
+        ],
+        "paragraphs": [
+          "完成率由10%提高至12%"
+        ]
+      },
+      "expected": "PENDING_CONFIRMATION; 0.1 alone does not imply 10%",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp9bUopc\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\package\\wangbin-report-consistency-check\\scripts\\check_report.py",
+        "--input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F02-unknown-unit\\in",
+        "--source-xlsx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F02-unknown-unit\\in\\source.xlsx",
+        "--report-docx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F02-unknown-unit\\in\\report.docx",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F02-unknown-unit\\out"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F02-unknown-unit",
+      "exit": 0,
+      "stdout": "{\"status\": \"PARTIAL\", \"output\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F02-unknown-unit\\\\out\\\\report-数字一致性检查.xlsx\", \"snapshot\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F02-unknown-unit\\\\out\\\\report-数字一致性检查.json\", \"counts\": {\"MATCH\": 1}, \"changes\": {\"FIRST_RUN\": 1}, \"uncovered\": 1}\n",
+      "stderr": "",
+      "input_sha256": {
+        "report.docx": "9e2ce70478380956ccbfd4f40ead26a3084ccbd252d171dd59326ab4206c470c",
+        "source.xlsx": "72c271b15395d970443dad67b263c11b3450945a363e88908d047184026c799b"
+      },
+      "input_unchanged": true,
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "值"
+          ],
+          [
+            "来源文件",
+            "source.xlsx"
+          ],
+          [
+            "来源SHA256",
+            "72c271b15395d970443dad67b263c11b3450945a363e88908d047184026c799b"
+          ],
+          [
+            "报告文件",
+            "report.docx"
+          ],
+          [
+            "报告SHA256",
+            "9e2ce70478380956ccbfd4f40ead26a3084ccbd252d171dd59326ab4206c470c"
+          ],
+          [
+            "覆盖",
+            "正文段落、普通表格；只扫描可定位的指标陈述"
+          ],
+          [
+            "限制",
+            "非完整财务审计；未核实公式缓存；未知口径需确认"
+          ],
+          [
+            "未覆盖数量",
+            1
+          ],
+          [
+            "MATCH",
+            1
+          ],
+          [
+            "变化:FIRST_RUN",
+            1
+          ]
+        ],
+        "指标对应": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "实际/预算",
+            "税口径",
+            "币种",
+            "报告文件",
+            "报告位置",
+            "报告原文",
+            "候选来源",
+            "映射/规则证据",
+            "状态",
+            "变化"
+          ],
+          [
+            "fcd02d9af11b",
+            "完成率变化",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "report.docx",
+            "段落1",
+            "完成率由10%提高至12%",
+            "数据!A2, 数据!B2",
+            "explicit 上期/本期 completion rate",
+            "MATCH",
+            "FIRST_RUN"
+          ]
+        ],
+        "差异明细": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "单位",
+            "币种",
+            "实际/预算",
+            "税口径",
+            "来源文件",
+            "来源工作表/单元格",
+            "来源原值",
+            "来源单位",
+            "比较来源值",
+            "来源可信范围",
+            "报告位置",
+            "报告原文",
+            "报告值",
+            "比较报告值",
+            "换算/规则",
+            "状态",
+            "差额(报告-来源)",
+            "差额单位",
+            "解释"
+          ],
+          [
+            "fcd02d9af11b",
+            "完成率变化",
+            null,
+            null,
+            "pp",
+            null,
+            null,
+            null,
+            "source.xlsx",
+            "数据!A2,数据!B2",
+            "10.0% → 12.00%",
+            "%",
+            "2.00",
+            "DIRECT_CELLS",
+            "段落1",
+            "完成率由10%提高至12%",
+            "10% → 12%",
+            "2",
+            "explicit 上期/本期 completion rate",
+            "MATCH",
+            "0.00",
+            "pp",
+            "本期−上期=2.00个百分点；相对增幅=20.0% (基数=10.0%)"
+          ]
+        ],
+        "待确认口径": [
+          [
+            "metric_id",
+            "指标",
+            "报告位置",
+            "待确认事项",
+            "候选来源",
+            "提问",
+            "状态",
+            "差额"
+          ]
+        ],
+        "未覆盖项": [
+          [
+            "文件",
+            "区域/位置",
+            "未覆盖类型",
+            "原因与建议"
+          ],
+          [
+            "DOCX",
+            "页眉页脚/脚注/嵌入对象",
+            "页眉页脚/脚注/嵌入对象",
+            "不解析这些区域；若存在请人工复核"
+          ]
+        ]
+      },
+      "snapshot": {
+        "report_sha256": "9e2ce70478380956ccbfd4f40ead26a3084ccbd252d171dd59326ab4206c470c",
+        "source_sha256": "72c271b15395d970443dad67b263c11b3450945a363e88908d047184026c799b",
+        "results": [
+          {
+            "metric_id": "fcd02d9af11b",
+            "metric": "完成率变化",
+            "where": "段落1",
+            "quote": "完成率由10%提高至12%",
+            "report_value": "10% → 12%",
+            "report_unit": "pp",
+            "identity": {
+              "subject": "",
+              "period": "",
+              "basis": "",
+              "tax": "",
+              "currency": ""
+            },
+            "candidates": [
+              "数据!A2",
+              "数据!B2"
+            ],
+            "status": "MATCH",
+            "source_file": "source.xlsx",
+            "source_cell": "数据!A2,数据!B2",
+            "source_raw": "10.0% → 12.00%",
+            "source_unit": "%",
+            "source_value": "2.00",
+            "normalized_report": "2",
+            "delta": "0.00",
+            "delta_unit": "pp",
+            "provenance": "DIRECT_CELLS",
+            "formula": "",
+            "explanation": "本期−上期=2.00个百分点；相对增幅=20.0% (基数=10.0%)",
+            "rule": "explicit 上期/本期 completion rate"
+          }
+        ],
+        "changes": {
+          "fcd02d9af11b": "FIRST_RUN"
+        }
+      },
+      "output_sha256": {
+        "report-数字一致性检查.xlsx": "cf552f6bb47da4897611d8874c967143ec22c0d0f085ad481c071a0947ebca9b",
+        "report-数字一致性检查.json": "cfcc264184e5c0c15a0c19d365711a561369dda17be157d1bc6b01ac9d6161f0"
+      },
+      "no_output_formula": true,
+      "verdict": "FAIL",
+      "issues": [
+        "statuses expected ['PENDING_CONFIRMATION'], actual ['MATCH']"
+      ]
+    },
+    {
+      "id": "F03-normal-table",
+      "input": {
+        "cols": [
+          [
+            "青禾公司6月实际未税收入/CNY/元",
+            1280000,
+            "General",
+            null
+          ]
+        ],
+        "table": [
+          [
+            "指标",
+            "数值"
+          ],
+          [
+            "收入",
+            "128万元"
+          ]
+        ]
+      },
+      "expected": "one table income indicator MATCH; cell R2C1 and R2C2 traced",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp9bUopc\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\package\\wangbin-report-consistency-check\\scripts\\check_report.py",
+        "--input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F03-normal-table\\in",
+        "--source-xlsx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F03-normal-table\\in\\source.xlsx",
+        "--report-docx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F03-normal-table\\in\\report.docx",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F03-normal-table\\out"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F03-normal-table",
+      "exit": 0,
+      "stdout": "{\"status\": \"PARTIAL\", \"output\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F03-normal-table\\\\out\\\\report-数字一致性检查.xlsx\", \"snapshot\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F03-normal-table\\\\out\\\\report-数字一致性检查.json\", \"counts\": {}, \"changes\": {}, \"uncovered\": 1}\n",
+      "stderr": "",
+      "input_sha256": {
+        "report.docx": "78e452a0812c02eea5c6694d5e6a5cc251cb36ba819d3c126b085fe8336f5edf",
+        "source.xlsx": "af04e881b624274b24dab9041f3174903a67f1b2bf0be6824926c0aa10940e63"
+      },
+      "input_unchanged": true,
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "值"
+          ],
+          [
+            "来源文件",
+            "source.xlsx"
+          ],
+          [
+            "来源SHA256",
+            "af04e881b624274b24dab9041f3174903a67f1b2bf0be6824926c0aa10940e63"
+          ],
+          [
+            "报告文件",
+            "report.docx"
+          ],
+          [
+            "报告SHA256",
+            "78e452a0812c02eea5c6694d5e6a5cc251cb36ba819d3c126b085fe8336f5edf"
+          ],
+          [
+            "覆盖",
+            "正文段落、普通表格；只扫描可定位的指标陈述"
+          ],
+          [
+            "限制",
+            "非完整财务审计；未核实公式缓存；未知口径需确认"
+          ],
+          [
+            "未覆盖数量",
+            1
+          ]
+        ],
+        "指标对应": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "实际/预算",
+            "税口径",
+            "币种",
+            "报告文件",
+            "报告位置",
+            "报告原文",
+            "候选来源",
+            "映射/规则证据",
+            "状态",
+            "变化"
+          ]
+        ],
+        "差异明细": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "单位",
+            "币种",
+            "实际/预算",
+            "税口径",
+            "来源文件",
+            "来源工作表/单元格",
+            "来源原值",
+            "来源单位",
+            "比较来源值",
+            "来源可信范围",
+            "报告位置",
+            "报告原文",
+            "报告值",
+            "比较报告值",
+            "换算/规则",
+            "状态",
+            "差额(报告-来源)",
+            "差额单位",
+            "解释"
+          ]
+        ],
+        "待确认口径": [
+          [
+            "metric_id",
+            "指标",
+            "报告位置",
+            "待确认事项",
+            "候选来源",
+            "提问",
+            "状态",
+            "差额"
+          ]
+        ],
+        "未覆盖项": [
+          [
+            "文件",
+            "区域/位置",
+            "未覆盖类型",
+            "原因与建议"
+          ],
+          [
+            "DOCX",
+            "页眉页脚/脚注/嵌入对象",
+            "页眉页脚/脚注/嵌入对象",
+            "不解析这些区域；若存在请人工复核"
+          ]
+        ]
+      },
+      "snapshot": {
+        "report_sha256": "78e452a0812c02eea5c6694d5e6a5cc251cb36ba819d3c126b085fe8336f5edf",
+        "source_sha256": "af04e881b624274b24dab9041f3174903a67f1b2bf0be6824926c0aa10940e63",
+        "results": [],
+        "changes": {}
+      },
+      "output_sha256": {
+        "report-数字一致性检查.xlsx": "21914fedf5b32516007ad2e097423e84c69526f6d54d774ccc4f5f44d773d392",
+        "report-数字一致性检查.json": "07f7f11351a35c69e27ec2debb452d0d8b0adeb16c2f79111985f8b5b2e7a358"
+      },
+      "no_output_formula": true,
+      "verdict": "FAIL",
+      "issues": [
+        "statuses expected ['MATCH'], actual []"
+      ]
+    },
+    {
+      "id": "F03-zero-table",
+      "input": {
+        "cols": [
+          [
+            "青禾公司6月实际未税收入/CNY/元",
+            0,
+            "General",
+            null
+          ]
+        ],
+        "table": [
+          [
+            "指标",
+            "数值"
+          ],
+          [
+            "收入",
+            "0元"
+          ]
+        ]
+      },
+      "expected": "zero is numeric indicator, not missing",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp9bUopc\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\package\\wangbin-report-consistency-check\\scripts\\check_report.py",
+        "--input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F03-zero-table\\in",
+        "--source-xlsx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F03-zero-table\\in\\source.xlsx",
+        "--report-docx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F03-zero-table\\in\\report.docx",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F03-zero-table\\out"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F03-zero-table",
+      "exit": 0,
+      "stdout": "{\"status\": \"PARTIAL\", \"output\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F03-zero-table\\\\out\\\\report-数字一致性检查.xlsx\", \"snapshot\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F03-zero-table\\\\out\\\\report-数字一致性检查.json\", \"counts\": {}, \"changes\": {}, \"uncovered\": 1}\n",
+      "stderr": "",
+      "input_sha256": {
+        "report.docx": "ffebcbee59a184ef522d24aa1c64b68b2a53ae01ee1fbc2000177e2b132bfb5e",
+        "source.xlsx": "d4ce259d5d84f75d9df5a5015fa840c07bea4698af58314b92f74d373aa33485"
+      },
+      "input_unchanged": true,
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "值"
+          ],
+          [
+            "来源文件",
+            "source.xlsx"
+          ],
+          [
+            "来源SHA256",
+            "d4ce259d5d84f75d9df5a5015fa840c07bea4698af58314b92f74d373aa33485"
+          ],
+          [
+            "报告文件",
+            "report.docx"
+          ],
+          [
+            "报告SHA256",
+            "ffebcbee59a184ef522d24aa1c64b68b2a53ae01ee1fbc2000177e2b132bfb5e"
+          ],
+          [
+            "覆盖",
+            "正文段落、普通表格；只扫描可定位的指标陈述"
+          ],
+          [
+            "限制",
+            "非完整财务审计；未核实公式缓存；未知口径需确认"
+          ],
+          [
+            "未覆盖数量",
+            1
+          ]
+        ],
+        "指标对应": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "实际/预算",
+            "税口径",
+            "币种",
+            "报告文件",
+            "报告位置",
+            "报告原文",
+            "候选来源",
+            "映射/规则证据",
+            "状态",
+            "变化"
+          ]
+        ],
+        "差异明细": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "单位",
+            "币种",
+            "实际/预算",
+            "税口径",
+            "来源文件",
+            "来源工作表/单元格",
+            "来源原值",
+            "来源单位",
+            "比较来源值",
+            "来源可信范围",
+            "报告位置",
+            "报告原文",
+            "报告值",
+            "比较报告值",
+            "换算/规则",
+            "状态",
+            "差额(报告-来源)",
+            "差额单位",
+            "解释"
+          ]
+        ],
+        "待确认口径": [
+          [
+            "metric_id",
+            "指标",
+            "报告位置",
+            "待确认事项",
+            "候选来源",
+            "提问",
+            "状态",
+            "差额"
+          ]
+        ],
+        "未覆盖项": [
+          [
+            "文件",
+            "区域/位置",
+            "未覆盖类型",
+            "原因与建议"
+          ],
+          [
+            "DOCX",
+            "页眉页脚/脚注/嵌入对象",
+            "页眉页脚/脚注/嵌入对象",
+            "不解析这些区域；若存在请人工复核"
+          ]
+        ]
+      },
+      "snapshot": {
+        "report_sha256": "ffebcbee59a184ef522d24aa1c64b68b2a53ae01ee1fbc2000177e2b132bfb5e",
+        "source_sha256": "d4ce259d5d84f75d9df5a5015fa840c07bea4698af58314b92f74d373aa33485",
+        "results": [],
+        "changes": {}
+      },
+      "output_sha256": {
+        "report-数字一致性检查.xlsx": "e715be7107f3e9a62bedc72d7acb4f93296a6c18d6970e606e59f91eee458405",
+        "report-数字一致性检查.json": "9f213c81abe983ebb7c61cd0f9c09fc2252d96ba4fd031f7d056cb330421f8bd"
+      },
+      "no_output_formula": true,
+      "verdict": "FAIL",
+      "issues": [
+        "statuses expected ['MATCH'], actual []"
+      ]
+    },
+    {
+      "id": "F03-empty-table",
+      "input": {
+        "cols": [
+          [
+            "青禾公司6月实际未税收入/CNY/元",
+            0,
+            "General",
+            null
+          ]
+        ],
+        "table": [
+          [
+            "指标",
+            "数值"
+          ],
+          [
+            "收入",
+            ""
+          ]
+        ]
+      },
+      "expected": "missing table value not zero",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp9bUopc\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\package\\wangbin-report-consistency-check\\scripts\\check_report.py",
+        "--input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F03-empty-table\\in",
+        "--source-xlsx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F03-empty-table\\in\\source.xlsx",
+        "--report-docx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F03-empty-table\\in\\report.docx",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F03-empty-table\\out"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F03-empty-table",
+      "exit": 0,
+      "stdout": "{\"status\": \"PARTIAL\", \"output\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F03-empty-table\\\\out\\\\report-数字一致性检查.xlsx\", \"snapshot\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F03-empty-table\\\\out\\\\report-数字一致性检查.json\", \"counts\": {}, \"changes\": {}, \"uncovered\": 1}\n",
+      "stderr": "",
+      "input_sha256": {
+        "report.docx": "31e2ac7e4b438e371df53671c1a69f724deb30f5e304feba4a2f280e895caa31",
+        "source.xlsx": "d4ce259d5d84f75d9df5a5015fa840c07bea4698af58314b92f74d373aa33485"
+      },
+      "input_unchanged": true,
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "值"
+          ],
+          [
+            "来源文件",
+            "source.xlsx"
+          ],
+          [
+            "来源SHA256",
+            "d4ce259d5d84f75d9df5a5015fa840c07bea4698af58314b92f74d373aa33485"
+          ],
+          [
+            "报告文件",
+            "report.docx"
+          ],
+          [
+            "报告SHA256",
+            "31e2ac7e4b438e371df53671c1a69f724deb30f5e304feba4a2f280e895caa31"
+          ],
+          [
+            "覆盖",
+            "正文段落、普通表格；只扫描可定位的指标陈述"
+          ],
+          [
+            "限制",
+            "非完整财务审计；未核实公式缓存；未知口径需确认"
+          ],
+          [
+            "未覆盖数量",
+            1
+          ]
+        ],
+        "指标对应": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "实际/预算",
+            "税口径",
+            "币种",
+            "报告文件",
+            "报告位置",
+            "报告原文",
+            "候选来源",
+            "映射/规则证据",
+            "状态",
+            "变化"
+          ]
+        ],
+        "差异明细": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "单位",
+            "币种",
+            "实际/预算",
+            "税口径",
+            "来源文件",
+            "来源工作表/单元格",
+            "来源原值",
+            "来源单位",
+            "比较来源值",
+            "来源可信范围",
+            "报告位置",
+            "报告原文",
+            "报告值",
+            "比较报告值",
+            "换算/规则",
+            "状态",
+            "差额(报告-来源)",
+            "差额单位",
+            "解释"
+          ]
+        ],
+        "待确认口径": [
+          [
+            "metric_id",
+            "指标",
+            "报告位置",
+            "待确认事项",
+            "候选来源",
+            "提问",
+            "状态",
+            "差额"
+          ]
+        ],
+        "未覆盖项": [
+          [
+            "文件",
+            "区域/位置",
+            "未覆盖类型",
+            "原因与建议"
+          ],
+          [
+            "DOCX",
+            "页眉页脚/脚注/嵌入对象",
+            "页眉页脚/脚注/嵌入对象",
+            "不解析这些区域；若存在请人工复核"
+          ]
+        ]
+      },
+      "snapshot": {
+        "report_sha256": "31e2ac7e4b438e371df53671c1a69f724deb30f5e304feba4a2f280e895caa31",
+        "source_sha256": "d4ce259d5d84f75d9df5a5015fa840c07bea4698af58314b92f74d373aa33485",
+        "results": [],
+        "changes": {}
+      },
+      "output_sha256": {
+        "report-数字一致性检查.xlsx": "0c334c40bd95cb361ea0321b10bce2ff6705e71971d693646edb9c42eff24164",
+        "report-数字一致性检查.json": "a62dd485276e4ac835c96ce91c5867be6de5f3a72d9eaf074b85f26b6d3c8b32"
+      },
+      "no_output_formula": true,
+      "verdict": "FAIL",
+      "issues": [
+        "statuses expected ['MISSING_OPERAND'], actual []"
+      ]
+    },
+    {
+      "id": "F04-mapped-profit",
+      "input": {
+        "cols": [
+          [
+            "青禾公司6月实际未税净利润/CNY/元",
+            1280000,
+            "General",
+            null
+          ]
+        ],
+        "paragraphs": [
+          "青禾公司6月实际未税净利润为128万元"
+        ],
+        "context": {
+          "mappings": {
+            "净利润": "数据!A2"
+          },
+          "exact": true
+        }
+      },
+      "expected": "净利润 indicator MATCH; user-provided mapping accepted",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp9bUopc\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\package\\wangbin-report-consistency-check\\scripts\\check_report.py",
+        "--input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F04-mapped-profit\\in",
+        "--source-xlsx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F04-mapped-profit\\in\\source.xlsx",
+        "--report-docx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F04-mapped-profit\\in\\report.docx",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F04-mapped-profit\\out",
+        "--context",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F04-mapped-profit\\in\\context.json"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F04-mapped-profit",
+      "exit": 0,
+      "stdout": "{\"status\": \"PARTIAL\", \"output\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F04-mapped-profit\\\\out\\\\report-数字一致性检查.xlsx\", \"snapshot\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F04-mapped-profit\\\\out\\\\report-数字一致性检查.json\", \"counts\": {}, \"changes\": {}, \"uncovered\": 1}\n",
+      "stderr": "",
+      "input_sha256": {
+        "context.json": "2d36793121acc9119094ac3482d0af0cb72cf44c75a0af1f992dcde46c27933a",
+        "report.docx": "0fe5dd997df4e1acf6587cb704514efcacbab929c9e1eb20b2480c9f817f4ae2",
+        "source.xlsx": "2f2b2eb6fe6281e2aeecf7a22bf5a9464ec2006ff716a25de35efbcd16e5a9f7"
+      },
+      "input_unchanged": true,
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "值"
+          ],
+          [
+            "来源文件",
+            "source.xlsx"
+          ],
+          [
+            "来源SHA256",
+            "2f2b2eb6fe6281e2aeecf7a22bf5a9464ec2006ff716a25de35efbcd16e5a9f7"
+          ],
+          [
+            "报告文件",
+            "report.docx"
+          ],
+          [
+            "报告SHA256",
+            "0fe5dd997df4e1acf6587cb704514efcacbab929c9e1eb20b2480c9f817f4ae2"
+          ],
+          [
+            "覆盖",
+            "正文段落、普通表格；只扫描可定位的指标陈述"
+          ],
+          [
+            "限制",
+            "非完整财务审计；未核实公式缓存；未知口径需确认"
+          ],
+          [
+            "未覆盖数量",
+            1
+          ]
+        ],
+        "指标对应": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "实际/预算",
+            "税口径",
+            "币种",
+            "报告文件",
+            "报告位置",
+            "报告原文",
+            "候选来源",
+            "映射/规则证据",
+            "状态",
+            "变化"
+          ]
+        ],
+        "差异明细": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "单位",
+            "币种",
+            "实际/预算",
+            "税口径",
+            "来源文件",
+            "来源工作表/单元格",
+            "来源原值",
+            "来源单位",
+            "比较来源值",
+            "来源可信范围",
+            "报告位置",
+            "报告原文",
+            "报告值",
+            "比较报告值",
+            "换算/规则",
+            "状态",
+            "差额(报告-来源)",
+            "差额单位",
+            "解释"
+          ]
+        ],
+        "待确认口径": [
+          [
+            "metric_id",
+            "指标",
+            "报告位置",
+            "待确认事项",
+            "候选来源",
+            "提问",
+            "状态",
+            "差额"
+          ]
+        ],
+        "未覆盖项": [
+          [
+            "文件",
+            "区域/位置",
+            "未覆盖类型",
+            "原因与建议"
+          ],
+          [
+            "DOCX",
+            "页眉页脚/脚注/嵌入对象",
+            "页眉页脚/脚注/嵌入对象",
+            "不解析这些区域；若存在请人工复核"
+          ]
+        ]
+      },
+      "snapshot": {
+        "report_sha256": "0fe5dd997df4e1acf6587cb704514efcacbab929c9e1eb20b2480c9f817f4ae2",
+        "source_sha256": "2f2b2eb6fe6281e2aeecf7a22bf5a9464ec2006ff716a25de35efbcd16e5a9f7",
+        "results": [],
+        "changes": {}
+      },
+      "output_sha256": {
+        "report-数字一致性检查.xlsx": "21cd48372132018ec1f802dc5c55f4c6d8c2406e8f6afe2c82d0ddc80a9ea38a",
+        "report-数字一致性检查.json": "be4599d993ebc8b327c569b8586abf191ea618c58ce93f19834720601b8d364d"
+      },
+      "no_output_formula": true,
+      "verdict": "FAIL",
+      "issues": [
+        "statuses expected ['MATCH'], actual []"
+      ]
+    },
+    {
+      "id": "F05-three-metrics",
+      "input": {
+        "cols": [
+          [
+            "收入/CNY/元",
+            1280000,
+            "General",
+            null
+          ],
+          [
+            "成本/CNY/元",
+            500000,
+            "General",
+            null
+          ],
+          [
+            "上期完成率",
+            "0.1",
+            "0%",
+            null
+          ],
+          [
+            "本期完成率",
+            "0.12",
+            "0%",
+            null
+          ]
+        ],
+        "paragraphs": [
+          "收入128万元",
+          "成本50万元",
+          "完成率由10%提高至12%"
+        ]
+      },
+      "expected": "three indicators independent: revenue MATCH, cost MATCH, rate MATCH",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp9bUopc\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\package\\wangbin-report-consistency-check\\scripts\\check_report.py",
+        "--input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-three-metrics\\in",
+        "--source-xlsx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-three-metrics\\in\\source.xlsx",
+        "--report-docx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-three-metrics\\in\\report.docx",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-three-metrics\\out"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-three-metrics",
+      "exit": 0,
+      "stdout": "{\"status\": \"PARTIAL\", \"output\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F05-three-metrics\\\\out\\\\report-数字一致性检查.xlsx\", \"snapshot\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F05-three-metrics\\\\out\\\\report-数字一致性检查.json\", \"counts\": {\"MATCH\": 2, \"AMBIGUOUS_MAPPING\": 2}, \"changes\": {\"FIRST_RUN\": 4}, \"uncovered\": 1}\n",
+      "stderr": "",
+      "input_sha256": {
+        "report.docx": "3fa6df649f40a4350e8b3b22a5768e46f4ee237c0c198edfcfd59060ba90df19",
+        "source.xlsx": "1c040f6a8f18194a2bd66a1432d366426402bde40fdd5caafbe882a1ad07406b"
+      },
+      "input_unchanged": true,
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "值"
+          ],
+          [
+            "来源文件",
+            "source.xlsx"
+          ],
+          [
+            "来源SHA256",
+            "1c040f6a8f18194a2bd66a1432d366426402bde40fdd5caafbe882a1ad07406b"
+          ],
+          [
+            "报告文件",
+            "report.docx"
+          ],
+          [
+            "报告SHA256",
+            "3fa6df649f40a4350e8b3b22a5768e46f4ee237c0c198edfcfd59060ba90df19"
+          ],
+          [
+            "覆盖",
+            "正文段落、普通表格；只扫描可定位的指标陈述"
+          ],
+          [
+            "限制",
+            "非完整财务审计；未核实公式缓存；未知口径需确认"
+          ],
+          [
+            "未覆盖数量",
+            1
+          ],
+          [
+            "AMBIGUOUS_MAPPING",
+            2
+          ],
+          [
+            "MATCH",
+            2
+          ],
+          [
+            "变化:FIRST_RUN",
+            4
+          ]
+        ],
+        "指标对应": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "实际/预算",
+            "税口径",
+            "币种",
+            "报告文件",
+            "报告位置",
+            "报告原文",
+            "候选来源",
+            "映射/规则证据",
+            "状态",
+            "变化"
+          ],
+          [
+            "30746cab85a6",
+            "收入",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "report.docx",
+            "段落1",
+            "收入128万元",
+            "数据!A2",
+            "direct candidate",
+            "MATCH",
+            "FIRST_RUN"
+          ],
+          [
+            "cd88b1be4e68",
+            "成本",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "report.docx",
+            "段落2",
+            "成本50万元",
+            "数据!B2",
+            "direct candidate",
+            "MATCH",
+            "FIRST_RUN"
+          ],
+          [
+            "a9b57f9c2b31",
+            "完成率",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "report.docx",
+            "段落3",
+            "完成率由10%提高至12%",
+            "数据!C2, 数据!D2",
+            "direct candidate",
+            "AMBIGUOUS_MAPPING",
+            "FIRST_RUN"
+          ],
+          [
+            "db437343e187",
+            "完成率",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "report.docx",
+            "段落3",
+            "完成率由10%提高至12%",
+            "数据!C2, 数据!D2",
+            "direct candidate",
+            "AMBIGUOUS_MAPPING",
+            "FIRST_RUN"
+          ]
+        ],
+        "差异明细": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "单位",
+            "币种",
+            "实际/预算",
+            "税口径",
+            "来源文件",
+            "来源工作表/单元格",
+            "来源原值",
+            "来源单位",
+            "比较来源值",
+            "来源可信范围",
+            "报告位置",
+            "报告原文",
+            "报告值",
+            "比较报告值",
+            "换算/规则",
+            "状态",
+            "差额(报告-来源)",
+            "差额单位",
+            "解释"
+          ],
+          [
+            "30746cab85a6",
+            "收入",
+            null,
+            null,
+            "万元",
+            null,
+            null,
+            null,
+            "source.xlsx",
+            "数据!A2",
+            "1280000",
+            "元",
+            "1280000",
+            "DIRECT_CELL",
+            "段落1",
+            "收入128万元",
+            "128",
+            "1280000",
+            "direct candidate",
+            "MATCH",
+            "0",
+            "元",
+            "比较值一致"
+          ],
+          [
+            "cd88b1be4e68",
+            "成本",
+            null,
+            null,
+            "万元",
+            null,
+            null,
+            null,
+            "source.xlsx",
+            "数据!B2",
+            "500000",
+            "元",
+            "500000",
+            "DIRECT_CELL",
+            "段落2",
+            "成本50万元",
+            "50",
+            "500000",
+            "direct candidate",
+            "MATCH",
+            "0",
+            "元",
+            "比较值一致"
+          ]
+        ],
+        "待确认口径": [
+          [
+            "metric_id",
+            "指标",
+            "报告位置",
+            "待确认事项",
+            "候选来源",
+            "提问",
+            "状态",
+            "差额"
+          ],
+          [
+            "a9b57f9c2b31",
+            "完成率",
+            "段落3",
+            "多个来源候选，需明确指定表和单元格",
+            "数据!C2, 数据!D2",
+            "请确认完成率的来源、主体、期间和计算规则",
+            "AMBIGUOUS_MAPPING",
+            null
+          ],
+          [
+            "db437343e187",
+            "完成率",
+            "段落3",
+            "多个来源候选，需明确指定表和单元格",
+            "数据!C2, 数据!D2",
+            "请确认完成率的来源、主体、期间和计算规则",
+            "AMBIGUOUS_MAPPING",
+            null
+          ]
+        ],
+        "未覆盖项": [
+          [
+            "文件",
+            "区域/位置",
+            "未覆盖类型",
+            "原因与建议"
+          ],
+          [
+            "DOCX",
+            "页眉页脚/脚注/嵌入对象",
+            "页眉页脚/脚注/嵌入对象",
+            "不解析这些区域；若存在请人工复核"
+          ]
+        ]
+      },
+      "snapshot": {
+        "report_sha256": "3fa6df649f40a4350e8b3b22a5768e46f4ee237c0c198edfcfd59060ba90df19",
+        "source_sha256": "1c040f6a8f18194a2bd66a1432d366426402bde40fdd5caafbe882a1ad07406b",
+        "results": [
+          {
+            "metric_id": "30746cab85a6",
+            "metric": "收入",
+            "where": "段落1",
+            "quote": "收入128万元",
+            "report_value": "128",
+            "report_unit": "万元",
+            "identity": {
+              "subject": "",
+              "period": "",
+              "basis": "",
+              "tax": "",
+              "currency": ""
+            },
+            "candidates": [
+              "数据!A2"
+            ],
+            "status": "MATCH",
+            "source_file": "source.xlsx",
+            "source_cell": "数据!A2",
+            "source_raw": "1280000",
+            "source_unit": "元",
+            "source_value": "1280000",
+            "normalized_report": "1280000",
+            "delta": "0",
+            "delta_unit": "元",
+            "provenance": "DIRECT_CELL",
+            "formula": "",
+            "explanation": "比较值一致",
+            "rule": "direct candidate"
+          },
+          {
+            "metric_id": "cd88b1be4e68",
+            "metric": "成本",
+            "where": "段落2",
+            "quote": "成本50万元",
+            "report_value": "50",
+            "report_unit": "万元",
+            "identity": {
+              "subject": "",
+              "period": "",
+              "basis": "",
+              "tax": "",
+              "currency": ""
+            },
+            "candidates": [
+              "数据!B2"
+            ],
+            "status": "MATCH",
+            "source_file": "source.xlsx",
+            "source_cell": "数据!B2",
+            "source_raw": "500000",
+            "source_unit": "元",
+            "source_value": "500000",
+            "normalized_report": "500000",
+            "delta": "0",
+            "delta_unit": "元",
+            "provenance": "DIRECT_CELL",
+            "formula": "",
+            "explanation": "比较值一致",
+            "rule": "direct candidate"
+          },
+          {
+            "metric_id": "a9b57f9c2b31",
+            "metric": "完成率",
+            "where": "段落3",
+            "quote": "完成率由10%提高至12%",
+            "report_value": "10",
+            "report_unit": "%",
+            "identity": {
+              "subject": "",
+              "period": "",
+              "basis": "",
+              "tax": "",
+              "currency": ""
+            },
+            "candidates": [
+              "数据!C2",
+              "数据!D2"
+            ],
+            "status": "AMBIGUOUS_MAPPING",
+            "source_file": "source.xlsx",
+            "source_cell": "数据!C2,数据!D2",
+            "source_raw": "",
+            "source_unit": "",
+            "source_value": null,
+            "normalized_report": null,
+            "delta": null,
+            "delta_unit": "元",
+            "provenance": "",
+            "formula": "",
+            "explanation": "多个来源候选，需明确指定表和单元格",
+            "rule": "direct candidate"
+          },
+          {
+            "metric_id": "db437343e187",
+            "metric": "完成率",
+            "where": "段落3",
+            "quote": "完成率由10%提高至12%",
+            "report_value": "12",
+            "report_unit": "%",
+            "identity": {
+              "subject": "",
+              "period": "",
+              "basis": "",
+              "tax": "",
+              "currency": ""
+            },
+            "candidates": [
+              "数据!C2",
+              "数据!D2"
+            ],
+            "status": "AMBIGUOUS_MAPPING",
+            "source_file": "source.xlsx",
+            "source_cell": "数据!C2,数据!D2",
+            "source_raw": "",
+            "source_unit": "",
+            "source_value": null,
+            "normalized_report": null,
+            "delta": null,
+            "delta_unit": "元",
+            "provenance": "",
+            "formula": "",
+            "explanation": "多个来源候选，需明确指定表和单元格",
+            "rule": "direct candidate"
+          }
+        ],
+        "changes": {
+          "30746cab85a6": "FIRST_RUN",
+          "cd88b1be4e68": "FIRST_RUN",
+          "a9b57f9c2b31": "FIRST_RUN",
+          "db437343e187": "FIRST_RUN"
+        }
+      },
+      "output_sha256": {
+        "report-数字一致性检查.xlsx": "2fcb7e85572b4feb17e423c1dc46cda42513a783eca31c47adb1cb4bc8be7617",
+        "report-数字一致性检查.json": "62302a84808b916fea33c33e8d36695b3d8f466687eaabf67d52da7fbfb561dd"
+      },
+      "no_output_formula": true,
+      "verdict": "FAIL",
+      "issues": [
+        "statuses expected ['MATCH', 'MATCH', 'MATCH'], actual ['MATCH', 'MATCH', 'AMBIGUOUS_MAPPING', 'AMBIGUOUS_MAPPING']",
+        "income/cost/rate not independently verified"
+      ]
+    },
+    {
+      "id": "F05-currency",
+      "input": {
+        "cols": [
+          [
+            "收入/USD/元",
+            1280000,
+            "General",
+            null
+          ]
+        ],
+        "paragraphs": [
+          "收入128万元人民币"
+        ]
+      },
+      "expected": "NOT_COMPARABLE; blank delta",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp9bUopc\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\package\\wangbin-report-consistency-check\\scripts\\check_report.py",
+        "--input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-currency\\in",
+        "--source-xlsx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-currency\\in\\source.xlsx",
+        "--report-docx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-currency\\in\\report.docx",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-currency\\out"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-currency",
+      "exit": 0,
+      "stdout": "{\"status\": \"PARTIAL\", \"output\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F05-currency\\\\out\\\\report-数字一致性检查.xlsx\", \"snapshot\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F05-currency\\\\out\\\\report-数字一致性检查.json\", \"counts\": {\"NOT_COMPARABLE\": 1}, \"changes\": {\"FIRST_RUN\": 1}, \"uncovered\": 1}\n",
+      "stderr": "",
+      "input_sha256": {
+        "report.docx": "710c4ef5ea9828f9b553882613206ade3c45db766932f3d27f55af522e9d8062",
+        "source.xlsx": "6bf64d97198404a3fb7981d72da45cc90de6d7cd86b06aec5b838cfb07633159"
+      },
+      "input_unchanged": true,
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "值"
+          ],
+          [
+            "来源文件",
+            "source.xlsx"
+          ],
+          [
+            "来源SHA256",
+            "6bf64d97198404a3fb7981d72da45cc90de6d7cd86b06aec5b838cfb07633159"
+          ],
+          [
+            "报告文件",
+            "report.docx"
+          ],
+          [
+            "报告SHA256",
+            "710c4ef5ea9828f9b553882613206ade3c45db766932f3d27f55af522e9d8062"
+          ],
+          [
+            "覆盖",
+            "正文段落、普通表格；只扫描可定位的指标陈述"
+          ],
+          [
+            "限制",
+            "非完整财务审计；未核实公式缓存；未知口径需确认"
+          ],
+          [
+            "未覆盖数量",
+            1
+          ],
+          [
+            "NOT_COMPARABLE",
+            1
+          ],
+          [
+            "变化:FIRST_RUN",
+            1
+          ]
+        ],
+        "指标对应": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "实际/预算",
+            "税口径",
+            "币种",
+            "报告文件",
+            "报告位置",
+            "报告原文",
+            "候选来源",
+            "映射/规则证据",
+            "状态",
+            "变化"
+          ],
+          [
+            "30746cab85a6",
+            "收入",
+            null,
+            null,
+            null,
+            null,
+            "CNY",
+            "report.docx",
+            "段落1",
+            "收入128万元人民币",
+            "数据!A2",
+            "direct candidate",
+            "NOT_COMPARABLE",
+            "FIRST_RUN"
+          ]
+        ],
+        "差异明细": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "单位",
+            "币种",
+            "实际/预算",
+            "税口径",
+            "来源文件",
+            "来源工作表/单元格",
+            "来源原值",
+            "来源单位",
+            "比较来源值",
+            "来源可信范围",
+            "报告位置",
+            "报告原文",
+            "报告值",
+            "比较报告值",
+            "换算/规则",
+            "状态",
+            "差额(报告-来源)",
+            "差额单位",
+            "解释"
+          ]
+        ],
+        "待确认口径": [
+          [
+            "metric_id",
+            "指标",
+            "报告位置",
+            "待确认事项",
+            "候选来源",
+            "提问",
+            "状态",
+            "差额"
+          ],
+          [
+            "30746cab85a6",
+            "收入",
+            "段落1",
+            "currency: report=CNY, source=USD",
+            "数据!A2",
+            "请确认收入的来源、主体、期间和计算规则",
+            "NOT_COMPARABLE",
+            null
+          ]
+        ],
+        "未覆盖项": [
+          [
+            "文件",
+            "区域/位置",
+            "未覆盖类型",
+            "原因与建议"
+          ],
+          [
+            "DOCX",
+            "页眉页脚/脚注/嵌入对象",
+            "页眉页脚/脚注/嵌入对象",
+            "不解析这些区域；若存在请人工复核"
+          ]
+        ]
+      },
+      "snapshot": {
+        "report_sha256": "710c4ef5ea9828f9b553882613206ade3c45db766932f3d27f55af522e9d8062",
+        "source_sha256": "6bf64d97198404a3fb7981d72da45cc90de6d7cd86b06aec5b838cfb07633159",
+        "results": [
+          {
+            "metric_id": "30746cab85a6",
+            "metric": "收入",
+            "where": "段落1",
+            "quote": "收入128万元人民币",
+            "report_value": "128",
+            "report_unit": "万元",
+            "identity": {
+              "subject": "",
+              "period": "",
+              "basis": "",
+              "tax": "",
+              "currency": "CNY"
+            },
+            "candidates": [
+              "数据!A2"
+            ],
+            "status": "NOT_COMPARABLE",
+            "source_file": "source.xlsx",
+            "source_cell": "数据!A2",
+            "source_raw": "1280000",
+            "source_unit": "元",
+            "source_value": "1280000",
+            "normalized_report": null,
+            "delta": null,
+            "delta_unit": "元",
+            "provenance": "DIRECT_CELL",
+            "formula": "",
+            "explanation": "currency: report=CNY, source=USD",
+            "rule": "direct candidate"
+          }
+        ],
+        "changes": {
+          "30746cab85a6": "FIRST_RUN"
+        }
+      },
+      "output_sha256": {
+        "report-数字一致性检查.xlsx": "dbaf738b548e0e3274750097bc98f8d0a6a4fc4d9cdee279ebdffc6f969d4d68",
+        "report-数字一致性检查.json": "4b285a9b71f230d5575ab957d2cb0d70bbff925a60cc0db71459d4dbd191888b"
+      },
+      "no_output_formula": true,
+      "verdict": "PASS",
+      "issues": []
+    },
+    {
+      "id": "F05-period",
+      "input": {
+        "cols": [
+          [
+            "青禾6月累计实际收入/CNY/元",
+            1280000,
+            "General",
+            null
+          ]
+        ],
+        "paragraphs": [
+          "青禾6月本月实际收入128万元"
+        ]
+      },
+      "expected": "NOT_COMPARABLE; blank delta",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp9bUopc\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\package\\wangbin-report-consistency-check\\scripts\\check_report.py",
+        "--input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-period\\in",
+        "--source-xlsx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-period\\in\\source.xlsx",
+        "--report-docx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-period\\in\\report.docx",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-period\\out"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-period",
+      "exit": 0,
+      "stdout": "{\"status\": \"PARTIAL\", \"output\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F05-period\\\\out\\\\report-数字一致性检查.xlsx\", \"snapshot\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F05-period\\\\out\\\\report-数字一致性检查.json\", \"counts\": {\"NOT_COMPARABLE\": 1}, \"changes\": {\"FIRST_RUN\": 1}, \"uncovered\": 1}\n",
+      "stderr": "",
+      "input_sha256": {
+        "report.docx": "14a198869ae9c0cc605c466775fc6a7855122229e7b193de7ec9e098259ca025",
+        "source.xlsx": "c4bb7c28e6bd678f9536e2774b1732430232f3fcdebead00f38bcd28a6e627b0"
+      },
+      "input_unchanged": true,
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "值"
+          ],
+          [
+            "来源文件",
+            "source.xlsx"
+          ],
+          [
+            "来源SHA256",
+            "c4bb7c28e6bd678f9536e2774b1732430232f3fcdebead00f38bcd28a6e627b0"
+          ],
+          [
+            "报告文件",
+            "report.docx"
+          ],
+          [
+            "报告SHA256",
+            "14a198869ae9c0cc605c466775fc6a7855122229e7b193de7ec9e098259ca025"
+          ],
+          [
+            "覆盖",
+            "正文段落、普通表格；只扫描可定位的指标陈述"
+          ],
+          [
+            "限制",
+            "非完整财务审计；未核实公式缓存；未知口径需确认"
+          ],
+          [
+            "未覆盖数量",
+            1
+          ],
+          [
+            "NOT_COMPARABLE",
+            1
+          ],
+          [
+            "变化:FIRST_RUN",
+            1
+          ]
+        ],
+        "指标对应": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "实际/预算",
+            "税口径",
+            "币种",
+            "报告文件",
+            "报告位置",
+            "报告原文",
+            "候选来源",
+            "映射/规则证据",
+            "状态",
+            "变化"
+          ],
+          [
+            "30746cab85a6",
+            "收入",
+            "青禾",
+            "本月:6",
+            "实际",
+            null,
+            null,
+            "report.docx",
+            "段落1",
+            "青禾6月本月实际收入128万元",
+            "数据!A2",
+            "direct candidate",
+            "NOT_COMPARABLE",
+            "FIRST_RUN"
+          ]
+        ],
+        "差异明细": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "单位",
+            "币种",
+            "实际/预算",
+            "税口径",
+            "来源文件",
+            "来源工作表/单元格",
+            "来源原值",
+            "来源单位",
+            "比较来源值",
+            "来源可信范围",
+            "报告位置",
+            "报告原文",
+            "报告值",
+            "比较报告值",
+            "换算/规则",
+            "状态",
+            "差额(报告-来源)",
+            "差额单位",
+            "解释"
+          ]
+        ],
+        "待确认口径": [
+          [
+            "metric_id",
+            "指标",
+            "报告位置",
+            "待确认事项",
+            "候选来源",
+            "提问",
+            "状态",
+            "差额"
+          ],
+          [
+            "30746cab85a6",
+            "收入",
+            "段落1",
+            "period: report=本月:6, source=累计:6",
+            "数据!A2",
+            "请确认收入的来源、主体、期间和计算规则",
+            "NOT_COMPARABLE",
+            null
+          ]
+        ],
+        "未覆盖项": [
+          [
+            "文件",
+            "区域/位置",
+            "未覆盖类型",
+            "原因与建议"
+          ],
+          [
+            "DOCX",
+            "页眉页脚/脚注/嵌入对象",
+            "页眉页脚/脚注/嵌入对象",
+            "不解析这些区域；若存在请人工复核"
+          ]
+        ]
+      },
+      "snapshot": {
+        "report_sha256": "14a198869ae9c0cc605c466775fc6a7855122229e7b193de7ec9e098259ca025",
+        "source_sha256": "c4bb7c28e6bd678f9536e2774b1732430232f3fcdebead00f38bcd28a6e627b0",
+        "results": [
+          {
+            "metric_id": "30746cab85a6",
+            "metric": "收入",
+            "where": "段落1",
+            "quote": "青禾6月本月实际收入128万元",
+            "report_value": "128",
+            "report_unit": "万元",
+            "identity": {
+              "subject": "青禾",
+              "period": "本月:6",
+              "basis": "实际",
+              "tax": "",
+              "currency": ""
+            },
+            "candidates": [
+              "数据!A2"
+            ],
+            "status": "NOT_COMPARABLE",
+            "source_file": "source.xlsx",
+            "source_cell": "数据!A2",
+            "source_raw": "1280000",
+            "source_unit": "元",
+            "source_value": "1280000",
+            "normalized_report": null,
+            "delta": null,
+            "delta_unit": "元",
+            "provenance": "DIRECT_CELL",
+            "formula": "",
+            "explanation": "period: report=本月:6, source=累计:6",
+            "rule": "direct candidate"
+          }
+        ],
+        "changes": {
+          "30746cab85a6": "FIRST_RUN"
+        }
+      },
+      "output_sha256": {
+        "report-数字一致性检查.xlsx": "c48d7379582ee5352f919a2a20de14e828b1fb266c4e5f65d3767736a4f923f1",
+        "report-数字一致性检查.json": "54e322708ab2b3dc165037e256d4ec4c6d9efdb11af124e88b2ba8383bf82f0e"
+      },
+      "no_output_formula": true,
+      "verdict": "PASS",
+      "issues": []
+    },
+    {
+      "id": "F05-tax",
+      "input": {
+        "cols": [
+          [
+            "青禾6月含税收入/CNY/元",
+            1280000,
+            "General",
+            null
+          ]
+        ],
+        "paragraphs": [
+          "青禾6月未税收入128万元"
+        ]
+      },
+      "expected": "NOT_COMPARABLE; blank delta",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp9bUopc\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\package\\wangbin-report-consistency-check\\scripts\\check_report.py",
+        "--input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-tax\\in",
+        "--source-xlsx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-tax\\in\\source.xlsx",
+        "--report-docx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-tax\\in\\report.docx",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-tax\\out"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-tax",
+      "exit": 0,
+      "stdout": "{\"status\": \"PARTIAL\", \"output\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F05-tax\\\\out\\\\report-数字一致性检查.xlsx\", \"snapshot\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F05-tax\\\\out\\\\report-数字一致性检查.json\", \"counts\": {\"NOT_COMPARABLE\": 1}, \"changes\": {\"FIRST_RUN\": 1}, \"uncovered\": 1}\n",
+      "stderr": "",
+      "input_sha256": {
+        "report.docx": "a222d1a8132e0093de16f6dca37c865577be696598810b80fd1fa85e28e7cb62",
+        "source.xlsx": "354f0df1ce3e1f2d696396b4a3f7b9421b58dfe5693c0f4467c54c52b08a79ff"
+      },
+      "input_unchanged": true,
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "值"
+          ],
+          [
+            "来源文件",
+            "source.xlsx"
+          ],
+          [
+            "来源SHA256",
+            "354f0df1ce3e1f2d696396b4a3f7b9421b58dfe5693c0f4467c54c52b08a79ff"
+          ],
+          [
+            "报告文件",
+            "report.docx"
+          ],
+          [
+            "报告SHA256",
+            "a222d1a8132e0093de16f6dca37c865577be696598810b80fd1fa85e28e7cb62"
+          ],
+          [
+            "覆盖",
+            "正文段落、普通表格；只扫描可定位的指标陈述"
+          ],
+          [
+            "限制",
+            "非完整财务审计；未核实公式缓存；未知口径需确认"
+          ],
+          [
+            "未覆盖数量",
+            1
+          ],
+          [
+            "NOT_COMPARABLE",
+            1
+          ],
+          [
+            "变化:FIRST_RUN",
+            1
+          ]
+        ],
+        "指标对应": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "实际/预算",
+            "税口径",
+            "币种",
+            "报告文件",
+            "报告位置",
+            "报告原文",
+            "候选来源",
+            "映射/规则证据",
+            "状态",
+            "变化"
+          ],
+          [
+            "30746cab85a6",
+            "收入",
+            "青禾",
+            "本月:6",
+            null,
+            "未税",
+            null,
+            "report.docx",
+            "段落1",
+            "青禾6月未税收入128万元",
+            "数据!A2",
+            "direct candidate",
+            "NOT_COMPARABLE",
+            "FIRST_RUN"
+          ]
+        ],
+        "差异明细": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "单位",
+            "币种",
+            "实际/预算",
+            "税口径",
+            "来源文件",
+            "来源工作表/单元格",
+            "来源原值",
+            "来源单位",
+            "比较来源值",
+            "来源可信范围",
+            "报告位置",
+            "报告原文",
+            "报告值",
+            "比较报告值",
+            "换算/规则",
+            "状态",
+            "差额(报告-来源)",
+            "差额单位",
+            "解释"
+          ]
+        ],
+        "待确认口径": [
+          [
+            "metric_id",
+            "指标",
+            "报告位置",
+            "待确认事项",
+            "候选来源",
+            "提问",
+            "状态",
+            "差额"
+          ],
+          [
+            "30746cab85a6",
+            "收入",
+            "段落1",
+            "tax: report=未税, source=含税",
+            "数据!A2",
+            "请确认收入的来源、主体、期间和计算规则",
+            "NOT_COMPARABLE",
+            null
+          ]
+        ],
+        "未覆盖项": [
+          [
+            "文件",
+            "区域/位置",
+            "未覆盖类型",
+            "原因与建议"
+          ],
+          [
+            "DOCX",
+            "页眉页脚/脚注/嵌入对象",
+            "页眉页脚/脚注/嵌入对象",
+            "不解析这些区域；若存在请人工复核"
+          ]
+        ]
+      },
+      "snapshot": {
+        "report_sha256": "a222d1a8132e0093de16f6dca37c865577be696598810b80fd1fa85e28e7cb62",
+        "source_sha256": "354f0df1ce3e1f2d696396b4a3f7b9421b58dfe5693c0f4467c54c52b08a79ff",
+        "results": [
+          {
+            "metric_id": "30746cab85a6",
+            "metric": "收入",
+            "where": "段落1",
+            "quote": "青禾6月未税收入128万元",
+            "report_value": "128",
+            "report_unit": "万元",
+            "identity": {
+              "subject": "青禾",
+              "period": "本月:6",
+              "basis": "",
+              "tax": "未税",
+              "currency": ""
+            },
+            "candidates": [
+              "数据!A2"
+            ],
+            "status": "NOT_COMPARABLE",
+            "source_file": "source.xlsx",
+            "source_cell": "数据!A2",
+            "source_raw": "1280000",
+            "source_unit": "元",
+            "source_value": "1280000",
+            "normalized_report": null,
+            "delta": null,
+            "delta_unit": "元",
+            "provenance": "DIRECT_CELL",
+            "formula": "",
+            "explanation": "tax: report=未税, source=含税",
+            "rule": "direct candidate"
+          }
+        ],
+        "changes": {
+          "30746cab85a6": "FIRST_RUN"
+        }
+      },
+      "output_sha256": {
+        "report-数字一致性检查.xlsx": "80c0f1337222d1d263398a770e882db3165fa700d44facabc2f5be8257f1be3e",
+        "report-数字一致性检查.json": "a6b6d3fdacfad63e30a8d48d6f905aa575b36fc53a966c830b400dadc0bfd6ac"
+      },
+      "no_output_formula": true,
+      "verdict": "PASS",
+      "issues": []
+    },
+    {
+      "id": "F05-rounding",
+      "input": {
+        "cols": [
+          [
+            "收入/CNY/元",
+            1283500,
+            "General",
+            null
+          ]
+        ],
+        "paragraphs": [
+          "收入128.4万元"
+        ],
+        "context": {
+          "rounding": {
+            "收入": {
+              "mode": "ROUND_HALF_UP",
+              "places": 1
+            }
+          }
+        }
+      },
+      "expected": "MATCH; raw delta +500",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp9bUopc\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\package\\wangbin-report-consistency-check\\scripts\\check_report.py",
+        "--input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-rounding\\in",
+        "--source-xlsx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-rounding\\in\\source.xlsx",
+        "--report-docx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-rounding\\in\\report.docx",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-rounding\\out",
+        "--context",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-rounding\\in\\context.json"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-rounding",
+      "exit": 0,
+      "stdout": "{\"status\": \"PARTIAL\", \"output\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F05-rounding\\\\out\\\\report-数字一致性检查.xlsx\", \"snapshot\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F05-rounding\\\\out\\\\report-数字一致性检查.json\", \"counts\": {\"MATCH\": 1}, \"changes\": {\"FIRST_RUN\": 1}, \"uncovered\": 1}\n",
+      "stderr": "",
+      "input_sha256": {
+        "context.json": "d953d094569e8d4ac87677962c8fcfc1bbf90cc323d38804b35898403d10c888",
+        "report.docx": "913c2c59e00550f12cf82fbb9a7935080f49c9d67d27a188cf955cb0ee02f5b2",
+        "source.xlsx": "68781973f319653fa83a57812c24b03960d6d48bb2f2b373803529e1df3e6848"
+      },
+      "input_unchanged": true,
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "值"
+          ],
+          [
+            "来源文件",
+            "source.xlsx"
+          ],
+          [
+            "来源SHA256",
+            "68781973f319653fa83a57812c24b03960d6d48bb2f2b373803529e1df3e6848"
+          ],
+          [
+            "报告文件",
+            "report.docx"
+          ],
+          [
+            "报告SHA256",
+            "913c2c59e00550f12cf82fbb9a7935080f49c9d67d27a188cf955cb0ee02f5b2"
+          ],
+          [
+            "覆盖",
+            "正文段落、普通表格；只扫描可定位的指标陈述"
+          ],
+          [
+            "限制",
+            "非完整财务审计；未核实公式缓存；未知口径需确认"
+          ],
+          [
+            "未覆盖数量",
+            1
+          ],
+          [
+            "MATCH",
+            1
+          ],
+          [
+            "变化:FIRST_RUN",
+            1
+          ]
+        ],
+        "指标对应": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "实际/预算",
+            "税口径",
+            "币种",
+            "报告文件",
+            "报告位置",
+            "报告原文",
+            "候选来源",
+            "映射/规则证据",
+            "状态",
+            "变化"
+          ],
+          [
+            "035b761ad65f",
+            "收入",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "report.docx",
+            "段落1",
+            "收入128.4万元",
+            "数据!A2",
+            "direct candidate",
+            "MATCH",
+            "FIRST_RUN"
+          ]
+        ],
+        "差异明细": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "单位",
+            "币种",
+            "实际/预算",
+            "税口径",
+            "来源文件",
+            "来源工作表/单元格",
+            "来源原值",
+            "来源单位",
+            "比较来源值",
+            "来源可信范围",
+            "报告位置",
+            "报告原文",
+            "报告值",
+            "比较报告值",
+            "换算/规则",
+            "状态",
+            "差额(报告-来源)",
+            "差额单位",
+            "解释"
+          ],
+          [
+            "035b761ad65f",
+            "收入",
+            null,
+            null,
+            "万元",
+            null,
+            null,
+            null,
+            "source.xlsx",
+            "数据!A2",
+            "1283500",
+            "元",
+            "1283500",
+            "DIRECT_CELL",
+            "段落1",
+            "收入128.4万元",
+            "128.4",
+            "1284000.0",
+            "direct candidate",
+            "MATCH",
+            "500.0",
+            "元",
+            "source raw=1283500; ROUND_HALF_UP to 1 万元=128.4; raw delta=500.0"
+          ]
+        ],
+        "待确认口径": [
+          [
+            "metric_id",
+            "指标",
+            "报告位置",
+            "待确认事项",
+            "候选来源",
+            "提问",
+            "状态",
+            "差额"
+          ]
+        ],
+        "未覆盖项": [
+          [
+            "文件",
+            "区域/位置",
+            "未覆盖类型",
+            "原因与建议"
+          ],
+          [
+            "DOCX",
+            "页眉页脚/脚注/嵌入对象",
+            "页眉页脚/脚注/嵌入对象",
+            "不解析这些区域；若存在请人工复核"
+          ]
+        ]
+      },
+      "snapshot": {
+        "report_sha256": "913c2c59e00550f12cf82fbb9a7935080f49c9d67d27a188cf955cb0ee02f5b2",
+        "source_sha256": "68781973f319653fa83a57812c24b03960d6d48bb2f2b373803529e1df3e6848",
+        "results": [
+          {
+            "metric_id": "035b761ad65f",
+            "metric": "收入",
+            "where": "段落1",
+            "quote": "收入128.4万元",
+            "report_value": "128.4",
+            "report_unit": "万元",
+            "identity": {
+              "subject": "",
+              "period": "",
+              "basis": "",
+              "tax": "",
+              "currency": ""
+            },
+            "candidates": [
+              "数据!A2"
+            ],
+            "status": "MATCH",
+            "source_file": "source.xlsx",
+            "source_cell": "数据!A2",
+            "source_raw": "1283500",
+            "source_unit": "元",
+            "source_value": "1283500",
+            "normalized_report": "1284000.0",
+            "delta": "500.0",
+            "delta_unit": "元",
+            "provenance": "DIRECT_CELL",
+            "formula": "",
+            "explanation": "source raw=1283500; ROUND_HALF_UP to 1 万元=128.4; raw delta=500.0",
+            "rule": "direct candidate"
+          }
+        ],
+        "changes": {
+          "035b761ad65f": "FIRST_RUN"
+        }
+      },
+      "output_sha256": {
+        "report-数字一致性检查.xlsx": "614cf2841f6ff1282cdeeccb9d46f5ba3be3951f781496b7cfdf41646c25441f",
+        "report-数字一致性检查.json": "600c669bde55b3fccd38b4ab3e8119d16fbf820fe3a054b36a9f3734d053af33"
+      },
+      "no_output_formula": true,
+      "verdict": "PASS",
+      "issues": []
+    },
+    {
+      "id": "F05-no-rounding",
+      "input": {
+        "cols": [
+          [
+            "收入/CNY/元",
+            1283500,
+            "General",
+            null
+          ]
+        ],
+        "paragraphs": [
+          "收入128.4万元"
+        ]
+      },
+      "expected": "RAW_DIFFERENCE_ROUNDING_PENDING; raw delta +500",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp9bUopc\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\package\\wangbin-report-consistency-check\\scripts\\check_report.py",
+        "--input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-no-rounding\\in",
+        "--source-xlsx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-no-rounding\\in\\source.xlsx",
+        "--report-docx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-no-rounding\\in\\report.docx",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-no-rounding\\out"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-no-rounding",
+      "exit": 0,
+      "stdout": "{\"status\": \"PARTIAL\", \"output\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F05-no-rounding\\\\out\\\\report-数字一致性检查.xlsx\", \"snapshot\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F05-no-rounding\\\\out\\\\report-数字一致性检查.json\", \"counts\": {\"RAW_DIFFERENCE_ROUNDING_PENDING\": 1}, \"changes\": {\"FIRST_RUN\": 1}, \"uncovered\": 1}\n",
+      "stderr": "",
+      "input_sha256": {
+        "report.docx": "913c2c59e00550f12cf82fbb9a7935080f49c9d67d27a188cf955cb0ee02f5b2",
+        "source.xlsx": "c0866fb79a8b3fe1ee873723cf26b770ee7b51ae854bced5c9b942bd1049b482"
+      },
+      "input_unchanged": true,
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "值"
+          ],
+          [
+            "来源文件",
+            "source.xlsx"
+          ],
+          [
+            "来源SHA256",
+            "c0866fb79a8b3fe1ee873723cf26b770ee7b51ae854bced5c9b942bd1049b482"
+          ],
+          [
+            "报告文件",
+            "report.docx"
+          ],
+          [
+            "报告SHA256",
+            "913c2c59e00550f12cf82fbb9a7935080f49c9d67d27a188cf955cb0ee02f5b2"
+          ],
+          [
+            "覆盖",
+            "正文段落、普通表格；只扫描可定位的指标陈述"
+          ],
+          [
+            "限制",
+            "非完整财务审计；未核实公式缓存；未知口径需确认"
+          ],
+          [
+            "未覆盖数量",
+            1
+          ],
+          [
+            "RAW_DIFFERENCE_ROUNDING_PENDING",
+            1
+          ],
+          [
+            "变化:FIRST_RUN",
+            1
+          ]
+        ],
+        "指标对应": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "实际/预算",
+            "税口径",
+            "币种",
+            "报告文件",
+            "报告位置",
+            "报告原文",
+            "候选来源",
+            "映射/规则证据",
+            "状态",
+            "变化"
+          ],
+          [
+            "035b761ad65f",
+            "收入",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "report.docx",
+            "段落1",
+            "收入128.4万元",
+            "数据!A2",
+            "direct candidate",
+            "RAW_DIFFERENCE_ROUNDING_PENDING",
+            "FIRST_RUN"
+          ]
+        ],
+        "差异明细": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "单位",
+            "币种",
+            "实际/预算",
+            "税口径",
+            "来源文件",
+            "来源工作表/单元格",
+            "来源原值",
+            "来源单位",
+            "比较来源值",
+            "来源可信范围",
+            "报告位置",
+            "报告原文",
+            "报告值",
+            "比较报告值",
+            "换算/规则",
+            "状态",
+            "差额(报告-来源)",
+            "差额单位",
+            "解释"
+          ],
+          [
+            "035b761ad65f",
+            "收入",
+            null,
+            null,
+            "万元",
+            null,
+            null,
+            null,
+            "source.xlsx",
+            "数据!A2",
+            "1283500",
+            "元",
+            "1283500",
+            "DIRECT_CELL",
+            "段落1",
+            "收入128.4万元",
+            "128.4",
+            "1284000.0",
+            "direct candidate",
+            "RAW_DIFFERENCE_ROUNDING_PENDING",
+            "500.0",
+            "元",
+            "舍入口径待确认；仅原始事实差异"
+          ]
+        ],
+        "待确认口径": [
+          [
+            "metric_id",
+            "指标",
+            "报告位置",
+            "待确认事项",
+            "候选来源",
+            "提问",
+            "状态",
+            "差额"
+          ]
+        ],
+        "未覆盖项": [
+          [
+            "文件",
+            "区域/位置",
+            "未覆盖类型",
+            "原因与建议"
+          ],
+          [
+            "DOCX",
+            "页眉页脚/脚注/嵌入对象",
+            "页眉页脚/脚注/嵌入对象",
+            "不解析这些区域；若存在请人工复核"
+          ]
+        ]
+      },
+      "snapshot": {
+        "report_sha256": "913c2c59e00550f12cf82fbb9a7935080f49c9d67d27a188cf955cb0ee02f5b2",
+        "source_sha256": "c0866fb79a8b3fe1ee873723cf26b770ee7b51ae854bced5c9b942bd1049b482",
+        "results": [
+          {
+            "metric_id": "035b761ad65f",
+            "metric": "收入",
+            "where": "段落1",
+            "quote": "收入128.4万元",
+            "report_value": "128.4",
+            "report_unit": "万元",
+            "identity": {
+              "subject": "",
+              "period": "",
+              "basis": "",
+              "tax": "",
+              "currency": ""
+            },
+            "candidates": [
+              "数据!A2"
+            ],
+            "status": "RAW_DIFFERENCE_ROUNDING_PENDING",
+            "source_file": "source.xlsx",
+            "source_cell": "数据!A2",
+            "source_raw": "1283500",
+            "source_unit": "元",
+            "source_value": "1283500",
+            "normalized_report": "1284000.0",
+            "delta": "500.0",
+            "delta_unit": "元",
+            "provenance": "DIRECT_CELL",
+            "formula": "",
+            "explanation": "舍入口径待确认；仅原始事实差异",
+            "rule": "direct candidate"
+          }
+        ],
+        "changes": {
+          "035b761ad65f": "FIRST_RUN"
+        }
+      },
+      "output_sha256": {
+        "report-数字一致性检查.xlsx": "e8518ff62a543e413d2bd8002ba1f53db8d6f2f2d4fb7e7113731a1b6eb83a42",
+        "report-数字一致性检查.json": "1425d1293aab003d5fe35f628b49248a38193cc6a6329358c3796fa8b89d8623"
+      },
+      "no_output_formula": true,
+      "verdict": "PASS",
+      "issues": []
+    },
+    {
+      "id": "F05-missing-denominator",
+      "input": {
+        "cols": [
+          [
+            "完成量",
+            10,
+            "General",
+            null
+          ],
+          [
+            "目标量",
+            null,
+            "General",
+            null
+          ]
+        ],
+        "paragraphs": [
+          "完成率100%"
+        ],
+        "context": {
+          "rules": {
+            "完成率": {
+              "op": "ratio",
+              "cells": [
+                "数据!A2",
+                "数据!B2"
+              ]
+            }
+          }
+        }
+      },
+      "expected": "MISSING_OPERAND; blank delta",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp9bUopc\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\package\\wangbin-report-consistency-check\\scripts\\check_report.py",
+        "--input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-missing-denominator\\in",
+        "--source-xlsx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-missing-denominator\\in\\source.xlsx",
+        "--report-docx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-missing-denominator\\in\\report.docx",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-missing-denominator\\out",
+        "--context",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-missing-denominator\\in\\context.json"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-missing-denominator",
+      "exit": 0,
+      "stdout": "{\"status\": \"PARTIAL\", \"output\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F05-missing-denominator\\\\out\\\\report-数字一致性检查.xlsx\", \"snapshot\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F05-missing-denominator\\\\out\\\\report-数字一致性检查.json\", \"counts\": {\"MISSING_OPERAND\": 1}, \"changes\": {\"FIRST_RUN\": 1}, \"uncovered\": 1}\n",
+      "stderr": "",
+      "input_sha256": {
+        "context.json": "e20c50cba07fcf1f4366368ffbbc10af46c941e37cabc605b52be8b79c36c579",
+        "report.docx": "7a6dd25f3de8568db40682d46051b2306c67e31ca0d5a0db706f70a48ec7fc5b",
+        "source.xlsx": "50552b4c38542d1f1929c30a37278b8a0d73eb7763429e0338827b1ed8bf95dc"
+      },
+      "input_unchanged": true,
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "值"
+          ],
+          [
+            "来源文件",
+            "source.xlsx"
+          ],
+          [
+            "来源SHA256",
+            "50552b4c38542d1f1929c30a37278b8a0d73eb7763429e0338827b1ed8bf95dc"
+          ],
+          [
+            "报告文件",
+            "report.docx"
+          ],
+          [
+            "报告SHA256",
+            "7a6dd25f3de8568db40682d46051b2306c67e31ca0d5a0db706f70a48ec7fc5b"
+          ],
+          [
+            "覆盖",
+            "正文段落、普通表格；只扫描可定位的指标陈述"
+          ],
+          [
+            "限制",
+            "非完整财务审计；未核实公式缓存；未知口径需确认"
+          ],
+          [
+            "未覆盖数量",
+            1
+          ],
+          [
+            "MISSING_OPERAND",
+            1
+          ],
+          [
+            "变化:FIRST_RUN",
+            1
+          ]
+        ],
+        "指标对应": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "实际/预算",
+            "税口径",
+            "币种",
+            "报告文件",
+            "报告位置",
+            "报告原文",
+            "候选来源",
+            "映射/规则证据",
+            "状态",
+            "变化"
+          ],
+          [
+            "e65afc6b7462",
+            "完成率",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "report.docx",
+            "段落1",
+            "完成率100%",
+            "数据!A2, 数据!B2",
+            "{\"cells\": [\"数据!A2\", \"数据!B2\"], \"op\": \"ratio\"}",
+            "MISSING_OPERAND",
+            "FIRST_RUN"
+          ]
+        ],
+        "差异明细": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "单位",
+            "币种",
+            "实际/预算",
+            "税口径",
+            "来源文件",
+            "来源工作表/单元格",
+            "来源原值",
+            "来源单位",
+            "比较来源值",
+            "来源可信范围",
+            "报告位置",
+            "报告原文",
+            "报告值",
+            "比较报告值",
+            "换算/规则",
+            "状态",
+            "差额(报告-来源)",
+            "差额单位",
+            "解释"
+          ]
+        ],
+        "待确认口径": [
+          [
+            "metric_id",
+            "指标",
+            "报告位置",
+            "待确认事项",
+            "候选来源",
+            "提问",
+            "状态",
+            "差额"
+          ],
+          [
+            "e65afc6b7462",
+            "完成率",
+            "段落1",
+            "操作数缺失，未计算",
+            "数据!A2, 数据!B2",
+            "请确认完成率的来源、主体、期间和计算规则",
+            "MISSING_OPERAND",
+            null
+          ]
+        ],
+        "未覆盖项": [
+          [
+            "文件",
+            "区域/位置",
+            "未覆盖类型",
+            "原因与建议"
+          ],
+          [
+            "DOCX",
+            "页眉页脚/脚注/嵌入对象",
+            "页眉页脚/脚注/嵌入对象",
+            "不解析这些区域；若存在请人工复核"
+          ]
+        ]
+      },
+      "snapshot": {
+        "report_sha256": "7a6dd25f3de8568db40682d46051b2306c67e31ca0d5a0db706f70a48ec7fc5b",
+        "source_sha256": "50552b4c38542d1f1929c30a37278b8a0d73eb7763429e0338827b1ed8bf95dc",
+        "results": [
+          {
+            "metric_id": "e65afc6b7462",
+            "metric": "完成率",
+            "where": "段落1",
+            "quote": "完成率100%",
+            "report_value": "100",
+            "report_unit": "%",
+            "identity": {
+              "subject": "",
+              "period": "",
+              "basis": "",
+              "tax": "",
+              "currency": ""
+            },
+            "candidates": [
+              "数据!A2",
+              "数据!B2"
+            ],
+            "status": "MISSING_OPERAND",
+            "source_file": "source.xlsx",
+            "source_cell": "数据!A2,数据!B2",
+            "source_raw": "10",
+            "source_unit": "%",
+            "source_value": null,
+            "normalized_report": null,
+            "delta": null,
+            "delta_unit": "比例",
+            "provenance": "",
+            "formula": "",
+            "explanation": "操作数缺失，未计算",
+            "rule": "{\"cells\": [\"数据!A2\", \"数据!B2\"], \"op\": \"ratio\"}"
+          }
+        ],
+        "changes": {
+          "e65afc6b7462": "FIRST_RUN"
+        }
+      },
+      "output_sha256": {
+        "report-数字一致性检查.xlsx": "2cbea37212f512009d1cdbc47c62dbfb92b98bf375c23fe1132b00f7eaaabed8",
+        "report-数字一致性检查.json": "5ac6aac3a99ba5fb24e8c2248054b2a404ca6d18f5625a77c637fce633d8e56c"
+      },
+      "no_output_formula": true,
+      "verdict": "PASS",
+      "issues": []
+    },
+    {
+      "id": "F05-zero-denominator",
+      "input": {
+        "cols": [
+          [
+            "完成量",
+            10,
+            "General",
+            null
+          ],
+          [
+            "目标量",
+            0,
+            "General",
+            null
+          ]
+        ],
+        "paragraphs": [
+          "完成率100%"
+        ],
+        "context": {
+          "rules": {
+            "完成率": {
+              "op": "ratio",
+              "cells": [
+                "数据!A2",
+                "数据!B2"
+              ]
+            }
+          }
+        }
+      },
+      "expected": "ZERO_DENOMINATOR; blank delta",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp9bUopc\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\package\\wangbin-report-consistency-check\\scripts\\check_report.py",
+        "--input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-zero-denominator\\in",
+        "--source-xlsx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-zero-denominator\\in\\source.xlsx",
+        "--report-docx",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-zero-denominator\\in\\report.docx",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-zero-denominator\\out",
+        "--context",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-zero-denominator\\in\\context.json"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q05-r1-old-ir07w4l7\\F05-zero-denominator",
+      "exit": 0,
+      "stdout": "{\"status\": \"PARTIAL\", \"output\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F05-zero-denominator\\\\out\\\\report-数字一致性检查.xlsx\", \"snapshot\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q05-r1-old-ir07w4l7\\\\F05-zero-denominator\\\\out\\\\report-数字一致性检查.json\", \"counts\": {\"ZERO_DENOMINATOR\": 1}, \"changes\": {\"FIRST_RUN\": 1}, \"uncovered\": 1}\n",
+      "stderr": "",
+      "input_sha256": {
+        "context.json": "e20c50cba07fcf1f4366368ffbbc10af46c941e37cabc605b52be8b79c36c579",
+        "report.docx": "d6254bec2cbc2411317ff30c9b10c192407aae8a5e18409441ea9f6c32d16e97",
+        "source.xlsx": "a976b29145718efdde4cac4c7f46120ea8b9bd81d446a5227978642cf6c50f96"
+      },
+      "input_unchanged": true,
+      "sheets": {
+        "核查概览": [
+          [
+            "项目",
+            "值"
+          ],
+          [
+            "来源文件",
+            "source.xlsx"
+          ],
+          [
+            "来源SHA256",
+            "a976b29145718efdde4cac4c7f46120ea8b9bd81d446a5227978642cf6c50f96"
+          ],
+          [
+            "报告文件",
+            "report.docx"
+          ],
+          [
+            "报告SHA256",
+            "d6254bec2cbc2411317ff30c9b10c192407aae8a5e18409441ea9f6c32d16e97"
+          ],
+          [
+            "覆盖",
+            "正文段落、普通表格；只扫描可定位的指标陈述"
+          ],
+          [
+            "限制",
+            "非完整财务审计；未核实公式缓存；未知口径需确认"
+          ],
+          [
+            "未覆盖数量",
+            1
+          ],
+          [
+            "ZERO_DENOMINATOR",
+            1
+          ],
+          [
+            "变化:FIRST_RUN",
+            1
+          ]
+        ],
+        "指标对应": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "实际/预算",
+            "税口径",
+            "币种",
+            "报告文件",
+            "报告位置",
+            "报告原文",
+            "候选来源",
+            "映射/规则证据",
+            "状态",
+            "变化"
+          ],
+          [
+            "e65afc6b7462",
+            "完成率",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "report.docx",
+            "段落1",
+            "完成率100%",
+            "数据!A2, 数据!B2",
+            "{\"cells\": [\"数据!A2\", \"数据!B2\"], \"op\": \"ratio\"}",
+            "ZERO_DENOMINATOR",
+            "FIRST_RUN"
+          ]
+        ],
+        "差异明细": [
+          [
+            "metric_id",
+            "指标",
+            "主体",
+            "期间",
+            "单位",
+            "币种",
+            "实际/预算",
+            "税口径",
+            "来源文件",
+            "来源工作表/单元格",
+            "来源原值",
+            "来源单位",
+            "比较来源值",
+            "来源可信范围",
+            "报告位置",
+            "报告原文",
+            "报告值",
+            "比较报告值",
+            "换算/规则",
+            "状态",
+            "差额(报告-来源)",
+            "差额单位",
+            "解释"
+          ]
+        ],
+        "待确认口径": [
+          [
+            "metric_id",
+            "指标",
+            "报告位置",
+            "待确认事项",
+            "候选来源",
+            "提问",
+            "状态",
+            "差额"
+          ],
+          [
+            "e65afc6b7462",
+            "完成率",
+            "段落1",
+            "分母为零，未计算",
+            "数据!A2, 数据!B2",
+            "请确认完成率的来源、主体、期间和计算规则",
+            "ZERO_DENOMINATOR",
+            null
+          ]
+        ],
+        "未覆盖项": [
+          [
+            "文件",
+            "区域/位置",
+            "未覆盖类型",
+            "原因与建议"
+          ],
+          [
+            "DOCX",
+            "页眉页脚/脚注/嵌入对象",
+            "页眉页脚/脚注/嵌入对象",
+            "不解析这些区域；若存在请人工复核"
+          ]
+        ]
+      },
+      "snapshot": {
+        "report_sha256": "d6254bec2cbc2411317ff30c9b10c192407aae8a5e18409441ea9f6c32d16e97",
+        "source_sha256": "a976b29145718efdde4cac4c7f46120ea8b9bd81d446a5227978642cf6c50f96",
+        "results": [
+          {
+            "metric_id": "e65afc6b7462",
+            "metric": "完成率",
+            "where": "段落1",
+            "quote": "完成率100%",
+            "report_value": "100",
+            "report_unit": "%",
+            "identity": {
+              "subject": "",
+              "period": "",
+              "basis": "",
+              "tax": "",
+              "currency": ""
+            },
+            "candidates": [
+              "数据!A2",
+              "数据!B2"
+            ],
+            "status": "ZERO_DENOMINATOR",
+            "source_file": "source.xlsx",
+            "source_cell": "数据!A2,数据!B2",
+            "source_raw": "10",
+            "source_unit": "%",
+            "source_value": null,
+            "normalized_report": null,
+            "delta": null,
+            "delta_unit": "比例",
+            "provenance": "",
+            "formula": "",
+            "explanation": "分母为零，未计算",
+            "rule": "{\"cells\": [\"数据!A2\", \"数据!B2\"], \"op\": \"ratio\"}"
+          }
+        ],
+        "changes": {
+          "e65afc6b7462": "FIRST_RUN"
+        }
+      },
+      "output_sha256": {
+        "report-数字一致性检查.xlsx": "99aa950613d088e2a7c04d0789050b6ecba363b9cae76c1dd3c383fffb741d73",
+        "report-数字一致性检查.json": "be1e9233fe0d194618da21a2b2ca0652a4d966f8650837d4f418baa89c2bc6fe"
+      },
+      "no_output_formula": true,
+      "verdict": "PASS",
+      "issues": []
+    }
+  ]
+}
