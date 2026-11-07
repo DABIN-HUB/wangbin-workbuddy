@@ -479,8 +479,15 @@ def material_assessment(requirement: dict, present: list[tuple[str, str]]):
     positives = [(name, i, line) for name, i, line in relevant if not missing_body.search(line) and not NEGATIVE_EVIDENCE.search(line) and
                  (re.search(r'(?:营业执照|证书|证明)(?:文本|正文)[：:]\s*\S{4,}|统一社会信用代码|(?:证明文本|证明材料|资质证明).{0,20}有效', line))]
     if negatives and positives:
-        sources = '、'.join(loc(name, i) for name, i, _ in negatives + positives)
-        return '待确认', '同一材料有正文正反冲突，须核对 ' + sources + '；不能以单句认定证件效力', locations
+        # Show one real assertion from each side, not just two line numbers.
+        # quote() applies the existing bounded redaction before any output format
+        # receives this reason; keep each excerpt attached to its source line.
+        positive_name, positive_line, positive_text = positives[0]
+        negative_name, negative_line, negative_text = negatives[0]
+        reason = (f'同一材料有正文正反冲突：肯定 {loc(positive_name, positive_line)}「{quote(positive_text)}」；'
+                  f'否定 {loc(negative_name, negative_line)}「{quote(negative_text)}」；'
+                  '须回原件核对，不能以单句认定证件效力')
+        return '待确认', reason, locations
     if negatives:
         name, i, line = negatives[0]
         if missing_body.search(line):
