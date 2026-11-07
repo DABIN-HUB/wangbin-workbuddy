@@ -42,3 +42,34 @@ python -m tooling.products similarity-check --id wangbin-tender-analyzer
 ```
 
 开发者应另列出真实新版 CLI 运行命令，分别执行准备/核查/错误用例，重开 XLSX 检查五表、核对 MD 与矩阵；记录每条命令实际 exit code、stdout/stderr 摘要和输出文件 hash（不得伪造）。预期旧测试/旧样例/合法新输入 exit 0；错误新入口非零且无成功产物；`validate` 只能说明结构；`similarity-check` 即使 exit 0 也不能替代人工差异审查或许可证权利核查。历史预检 `similarity-check` 曾 exit 1/REVIEW_REQUIRED；本次没有重跑。发布、平台调用、用户许可、模型自然语言对话/双语六问、人工相似性复核全部 `NOT_TESTED`，须由后续授权角色独立验收。
+
+## AUDIT-R1 BID-F01–F05：新增独立实文件矩阵（新版 NOT_TESTED）
+
+所有下列用例**先由本表确定预期**，不从 actual/当前源码生成；各自建独立临时目录，真实 UTF-8 `tender.txt`、`response.md`，若写出则是对应文件的完整 L1 一行；`attachments.csv` 若列出则 L1 `附件名称,关联要求编号`，L2 为所写行；`.xlsx` 目录变体用表 `Sheet1` 的同两列/同 L1–L2；证据文件 `evidence.txt`/`certificate.txt` 为真实文件且**显式作为 evidence_files 参数提交**，并不凭目录名打开。每个正常用例从**新版最终 ZIP 干净解压**调用包内正式核查脚本，清理工作树 PYTHONPATH，参数由最终 SKILL/CLI 实际定义，输出至该例专用空目录；重新打开 `{项目名称}-投标响应检查.xlsx` 五表与 `{项目名称}-提交前核对清单.md`，按 requirement_id 逐格核对四维、行证据、冲突、确定缺口/人工确认及概览计数。没有目录/材料即不传这些参数；无附件义务时两材料维度应有理由地 `不适用`。所有正反结果仅为**文本层面**，不认证证照真伪。下表“旧实际”只据 `qa-audit-r1-old-023.md` 的**对应** L3 案例；未跑的变体标 NOT_TESTED，不混入历史已复现数。有效期比较对能确认的截止端可先下不满足结论，但正向证明覆盖**必须**起止和对象证据完整。
+
+| ID / 缺陷 | 实际输入文件（各 L1，未注明即无可选输入） | 独立 expected（各维顺序：响应 / 条件 / 附件 / 内容；以及缺口/定位） | 旧 0.2.3 对应证据 / 新候选 |
+|---|---|---|---|
+| R01 F01 过期 | tender `1. 甲类资质须有效覆盖2028-01-01至2028-12-31，附甲类证明 certificate.txt。`；response `1. 甲类有效期覆盖该期，见certificate.txt。`；CSV L2 `certificate.txt,1`；certificate.txt `甲类证明：2027-01-01生效，有效截止2027-12-31。` | `已定位 / 可能不充分 / 已提供（可读文本） / 不支持（文本层面）`；明确截止早于目标止日，证据 certificate.txt:1，缺口及 MD 确定需补不能空。 | `date_expired_2028` L3 FAIL（旧内容待确认、无缺口）；新 NOT_TESTED |
+| R02 F01 起点不足 | 同 R01，certificate.txt 改 `甲类证明：2028-01-02生效，有效截止2029-12-31。` | 条件不能覆盖整个要求区间，附件已提供、内容不支持；指出生效比起日迟一天，而不能只查截止日。 | NOT_TESTED / NOT_TESTED |
+| R03 F01 正向签发/边界 | tender `1. 甲类资质须覆盖2027-01-01至2027-12-31，附certificate.txt。`；response `1. 甲类资质覆盖期间，见certificate.txt。`；CSV L2 `certificate.txt,1`；certificate.txt `甲类证明签发于2026-04-03，2027-01-01生效，2027-12-31失效。` | `已定位 / 已覆盖（文本层面） / 已提供（可读文本） / 支持（文本层面）`（内容与声明对应，双端同日闭区间）；签发2026不是冲突；状态限日期和文本承诺。 | `date_signed_valid` 另有跨期正例 L3 FAIL；本边界 NOT_TESTED / NOT_TESTED |
+| R04 F01 单签发 | 同 R03 的要求/回应/目录，certificate.txt `甲类证明签发于2026-04-03。` | `已定位 / 待确认 / 已提供（可读文本） / 待确认`；注明缺有效起止/期限，不能说过期或覆盖；MD 人工确认而非已覆盖/确定过期。 | `date_issue_only` L3 FAIL（误判不支持）；新 NOT_TESTED |
+| R05 F01 多证书 | 同 R01，certificate.txt L1 `乙类证明有效期2026-01-01至2035-12-31。` L2 `甲类证明有效期2027-01-01至2027-12-31。`；目录仍指文件 | 甲类截止不足→`不支持（文本层面）`、甲类证据 certificate.txt:2；乙类证据不能填甲类缺口，即使文本顺序交换结论不变。 | `date_two_certs` L3 FAIL（旧无解释）；新 NOT_TESTED |
+| R06 F01 年份平移 | 将 R01 所有明确 2028→2033、2027→2032，保持对象/文件/相对区间不变 | 四维及缺口分类与 R01 相同，实际日期与来源变为 2033/2032，不出现固定 2027/2026 文案。 | `date_shift_2032` 不同年组 L3 FAIL；本变体 NOT_TESTED / NOT_TESTED |
+| R07 F01 目标歧义 | tender `1. 甲类资质须覆盖2028年，附certificate.txt。`；response `1. 甲类证明见附件。`；CSV L2 `certificate.txt,1`；certificate.txt `甲类证明签发于2027-02-02；有效期另行确定。` | 已定位、附件已提供；条件和内容待确认（要求“覆盖某年”的起止含义未明确且材料缺有效期），提示确认范围与有效期，不猜日期。 | NOT_TESTED / NOT_TESTED |
+| R08 F02 否定 | tender `1. 必须支持自动备份。`；response `1. 我方不支持自动备份。` | `已定位 / 可能不充分 / 不适用 / 不适用`；明确冲突 response.md:1，缺口非空，MD 不在已覆盖范围。 | `response_negated` L3 FAIL；新 NOT_TESTED |
+| R09 F02 肯定 | 同 R08，response `1. 我方支持自动备份。` | `已定位 / 已覆盖（文本层面） / 不适用 / 不适用`，不得全待确认；MD 已覆盖该文本义务，不凭本例推出实际系统功能。 | `response_positive` L3 PASS（文本维度）；新 NOT_TESTED |
+| R10 F02 双否定 | tender `1. 不使用外部云存储。`；response `1. 本方案不使用外部云存储。` | 与 R09 同四维，对象及否定作用域相同，不当作矛盾。 | `response_double_negative` L3 PASS；新 NOT_TESTED |
+| R11 F02 附条件/未实现 | 同 R08，response `1. 若另行购买模块，我方才支持自动备份。`；再独立变体 `1. 我方拟于交付后支持自动备份，当前尚未实现。` | 均已定位，但无条件“必须支持”不能标已覆盖；前者条件限制保留并列缺口，后者当前尚未实现记冲突；附件两维不适用，MD 不误列已覆盖。 | `response_conditional` L3 FAIL（仅前者类似）；新 NOT_TESTED |
+| R12 F02 否定隔离 | tender L1 `1. 必须支持备份。` L2 `2. 必须支持离线查询。`；response L1 `1. 我方不支持备份。` L2 `2. 我方支持离线查询。` | 两行 ID 独立：1 已定位/可能不充分且冲突；2 已定位/已覆盖；否定不能跨行，也不能把 2 的肯定抵消 1 的缺口。 | NOT_TESTED / NOT_TESTED |
+| R13 F03 无文件名 | tender `1. 必须提供营业执照。`；response `1. 我方提供营业执照。` | `已定位 / 可能不充分 / 未提供（限已提供材料） / 未核验`；材料义务从 tender.txt:1 提取，附件核对有缺口，不适用禁止，未提供只限本次材料。 | `license_missing` L3 FAIL（旧两维不适用）；新 NOT_TESTED |
+| R14 F03 仅目录 | 同 R13；CSV L2 `营业执照.txt,1`，无真实文本；另以同列 XLSX Sheet1 第2行分别重跑 | `已定位 / 可能不充分 / 仅目录登记 / 未核验`；目录来源 CSV:2 或 Sheet1:2 不是实际证据；两格式业务结论等价。 | `license_catalog_csv/xlsx` L3 PASS（仅目录维度）；新 NOT_TESTED |
+| R15 F03 真材料但反证 | 同 R14，加显式实际 `营业执照.txt` L1 `本件是目录占位；营业执照正在申请，尚未取得。` | `已定位 / 可能不充分 / 已提供（可读文本） / 不支持（文本层面）`；正文反证行准确、不能因文件存在升格支持；只说本次文本不支持，不推断企业真实状况。 | `license_actual` 是不同的正例 L3 有限 PASS；本反例 NOT_TESTED / NOT_TESTED |
+| R16 F03 真材料正例/重名 | 同 R14，实际 `营业执照.txt` L1 `营业执照文本：统一社会信用代码为虚构示例编号。`；另独立变体把 CSV L2 和 L3 重复 `营业执照.txt,1` | 单目录项+实际正文→附件已提供、内容只在“提供了营业执照文本”这一**有限声明**上可支持，不能认证真实有效；重复目录须保留待确认并列来源，不能任选一条自动支持。 | `license_actual` 有限文本关联 PASS；`license_duplicate` 待确认 PASS；新 NOT_TESTED |
+| R17 F04 空条件 | tender `1. 须提供certificate.txt资质证明。`；response `1. 证书见certificate.txt。`；CSV L2 `certificate.txt,1`；实际 certificate.txt L1 `certificate.txt：仅为目录占位，不含证书。` | `已定位 / 可能不充分 / 已提供（可读文本） / 不支持（文本层面）`；材料仅文件名+明确否认，不得 `all([])` 支持；冲突/缺口写入矩阵、附件核对、MD。 | `filename_empty_conditions` L3 FAIL（已复现目录锚定 all([])）；新 NOT_TESTED |
+| R18 F04 无目录变体 | 同 R17，不传目录，仍显式提交实际 certificate.txt | 若能凭明确指定和内容唯一关联：已提供且内容不支持；若关联不唯一：附件/内容待确认并保留候选，但**绝不支持**；记录所用关联依据。 | `filename_only` 旧未完整复现 all([])，本变体 NOT_TESTED / NOT_TESTED |
+| R19 F03/F04 跨要求错配及增量 | tender L1 `1. 必须提供甲类资质证明。` L2 `2. 必须提供乙类资质证明。`；response L1 `1. 甲类证明已提交。` L2 `2. 乙类证明已提交。`；首轮仅目录 CSV `甲类.txt,1`、`乙类.txt,2`；次轮显式提供甲类.txt L1 `甲类证明文本：甲类有效。` | 首轮两条仅目录/未核验；次轮甲类可读且**仅对甲类文本声明**能支持，乙类仍仅目录/未核验，2 的 requirement_id/状态不变；不得拿甲类证乙类。 | NOT_TESTED / NOT_TESTED |
+| R20 F05 旧接口/快照 | 从新 ZIP 解压的 `scripts/analyze_tender.py --input examples/fictional-tender.txt`；并运行已有 `tests/test_tender_analyzer.py` | 旧 JSON stdout/exit0/既有语义与**原包已冻结** `examples/fictional-tender.expected.json` 对照；旧非法输入错误码/exit2 保留。新样例 actual 不可重写历史 expected；SKILL 不再指示由 actual 更新 expected，解压路径可执行。 | `legacy_json` 与包内原快照旧 L3 PASS；SKILL:99 L1 FAIL；新 NOT_TESTED |
+
+**每例共同交叉断言**：`要求响应矩阵` 的四维/缺口/来源为基准，`附件核对` 逐证据不将目录当实物，`核查概览` 各维每个状态数由矩阵重新计，`待确认事项` 只列未决且指 ID/来源，`补遗与版本` 无补遗时明确无提供；MD 分类/四维/位置与矩阵一致，R01/R08/R17/R15 不得进已覆盖且其缺口不能空，R03/R09/R10 不得用 blanket pending 躲避。附加回归原 BID-CORE/A02–A14（尤其正式补遗冲突/准备模式/错误输入/安全）不得消失；明确新入口缺响应 `MISSING_RESPONSE`、错误编码 `INVALID_UTF8`、损坏目录 `CATALOG_READ_FAILED` 非零且不得留两份成功文件。R06 将对象名/行顺序再变换一次，QA 在开发后另选未写进生产代码的年份、文件名及等义改写，记录实际 fixture 哈希、调用数组、exit、输出哈希和逐格差异，**不能凭这里固定值硬编码**。
+
+**层级与放行界线**：旧 0.2.3 精确 ZIP SHA `5ebba11d8a750d4807c88e715b5458a3cf449672f9b8dd5d7df3eb37d5c977ce` 的旧 QA L3 机械重开通过但业务已阻断；旧 0.1.0 ZIP 物理原件 `NOT_VERIFIED`。本增量只有规格/独立预期，未执行新版 L1/L2/L3/L4/L5：均 `NOT_TESTED`。新 L3 需最终 ZIP、脱离源码树的实际文件、正式入口、XLSX/MD 回读；L4 需真实宿主模型拿原始资料用三类自然多轮问法执行，不是复制模板或预写 JSON；L5 需 WorkBuddy 实际安装和使用，未经权限不得声称。`validate`/ZIP结构、静态检查不能替代业务 L3；证照真实性、许可和人工相似性门禁分别未验，不可据本合同宣称发布。历史两轮 QA 原始 PASS/FAIL 不删除、不占用新阶段的最多两轮 QA 退回额度；新阶段首次集中修复后才开始计退回。
