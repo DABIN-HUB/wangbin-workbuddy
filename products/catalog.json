@@ -1,7 +1,7 @@
 {
   "products": [
     {
-      "active_version": "0.1.3",
+      "active_version": "0.1.4",
       "development": "Local MVP candidate; WorkBuddy runtime not tested",
       "id": "wangbin-meeting-action-tracker",
       "maintenance": "UNKNOWN",
@@ -52,6 +52,15 @@
           "sha256": "7a336890accd132e69deff91a60b4e4cd30b7d7ce144862f778fa6e5023b2a6d",
           "source": "packages/skills/wangbin-meeting-action-tracker",
           "version": "0.1.3"
+        },
+        {
+          "archive_evidence": "dist/wangbin-meeting-action-tracker-0.1.4-skill-candidate.zip",
+          "candidate": "dist/wangbin-meeting-action-tracker-0.1.4-skill-candidate.zip",
+          "date": "UNKNOWN",
+          "published_at": "UNKNOWN",
+          "sha256": "8b45ac776227db6128f6e6c60e2f345604e63fbb52e693b4bd3dadccb2a45193",
+          "source": "packages/skills/wangbin-meeting-action-tracker",
+          "version": "0.1.4"
         }
       ]
     },

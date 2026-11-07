@@ -169,6 +169,33 @@ def owner_claim(segment):
     return None, False
 
 
+def cancellation_intent(segment):
+    """Classify cancellation of the task, rather than mentions of a cancellation topic.
+
+    The caller first scopes the clause to one task. A final decision overrides an
+    earlier proposal, while a deliberation about cancellation is not a decision.
+    """
+    if not re.search(r"取消", segment):
+        return None
+    if re.search(r"(?:取消|撤销)(?:此前|之前|原先|上次)?取消.*(?:决定|决议)", segment):
+        return None  # reversal of an earlier decision, not task cancellation
+    if re.search(r"(?:不|未|不是|尚未|没有|无需|别|不可|不能|不得|并不|绝不)\s*(?:会|能|要|再|被|已|予以)?\s*取消", segment):
+        return None
+    # A *current* explicit resolution is authoritative even after a prior proposal.
+    if re.search(r"(?:明确|正式|最终|已经|已|经会议|本次会议)?\s*(?:决定|决议|确认|拍板)\s*(?:将|要|予以)?\s*取消", segment):
+        return "decided"
+    unresolved = (r"(?:尚未|还未|未|没有|尚无|暂无|未能)\s*(?:最终|正式|明确)?\s*(?:拍板|决定|形成决议|形成决定|确认|定论)"
+                  r"|(?:仍|还|尚|正在|目前)?\s*(?:在)?\s*(?:讨论|商议|审议|协商|研究|评估)(?:中|阶段)?"
+                  r"|(?:待|有待)\s*(?:讨论|确认|决定|定夺|拍板)"
+                  r"|(?:尚未|还未|未|没有)\s*(?:定下来|敲定)")
+    proposal = r"(?:考虑|建议|提议|计划|打算|拟(?!定))\s*(?:将\s*)?(?:[A-Za-z0-9_-]+\s*)?取消"
+    if re.search(proposal, segment) or re.search(unresolved, segment):
+        return "pending"
+    # Bare '取消事项/方案' identifies a topic, not an enacted transition.
+    if re.search(r"取消(?:事项|方案|议题|建议|提议|决定)", segment):
+        return "pending"
+    return "decided"
+
 def status_claim(segment):
     """Return the action scoped to this task clause, not a keyword from another task."""
     if re.search(r"(?:取消|撤销)(?:此前|之前|原先|上次)?取消.*(?:决定|决议)", segment):
@@ -181,7 +208,7 @@ def status_claim(segment):
         return "进行中" if re.search(r"(?:继续|仍|保持).*进行中", segment) else None
     if re.search(r"(?:已完成|已经完成|完成了)", segment):
         return "报告完成"
-    if re.search(r"取消", segment):
+    if cancellation_intent(segment):
         return "取消"
     if re.search(r"进行中|继续执行", segment):
         return "进行中"
@@ -343,7 +370,7 @@ def reconcile(meeting_file, previous_tasks=None, supplemental_evidence=None, cor
             else:
                 ask(tid, "执行状态", segment, "仅为重开提议", source)
         elif status == "取消":
-            if not proposed_status_change(segment, r"取消"):
+            if cancellation_intent(segment) == "decided":
                 update(tid, "执行状态", "取消", "取消", source)
             else:
                 update(tid, "执行状态", "取消", "取消提议", source, False)
@@ -389,7 +416,7 @@ def reconcile(meeting_file, previous_tasks=None, supplemental_evidence=None, cor
         tid = locate(seg, src)
         if tid:
             status = status_claim(seg)
-            status = status if status in {"取消", "进行中"} and not proposed_status_change(seg, r"取消") else None
+            status = status if status in {"取消", "进行中"} and (status != "取消" or cancellation_intent(seg) == "decided") else None
             if status:
                 claims.setdefault(tid, []).append((status, src, seg))
     conflicted = {tid for tid, entries in claims.items() if len({e[0] for e in entries}) > 1}

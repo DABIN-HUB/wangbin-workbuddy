@@ -189,3 +189,44 @@ def test_distinct_similar_new_actions_repeat_and_reorder(tmp_path):
         assert {h['event_id'] for h in b['history']} == {h['event_id'] for h in a['history']}
         assert {(t['任务内容'], t['负责人'], t['截止时间']) for t in b['tasks'].values()} == {
             ('系统接口检查A', 'Maya', '2027-03-06'), ('系统接口检查B', '陈琳', '2027-03-07')}
+
+@pytest.mark.parametrize('text', [
+    'T01的取消事项仍在讨论，尚无最终决定。',
+    'T01取消方案正在商议，尚未拍板。',
+    '关于取消T01仍在评估，有待确认。',
+    '考虑取消T01，目前没有形成决议。',
+])
+@pytest.mark.parametrize('entry', ['meeting', 'evidence', 'correction'])
+def test_unresolved_cancellation_is_pending_at_every_entry(tmp_path, text, entry):
+    note = text if entry == 'meeting' else '本次例会无其他决定。'
+    extras = {'supplemental_evidence': [text]} if entry == 'evidence' else {'corrections': [text]} if entry == 'correction' else {}
+    r = case(tmp_path, note, OLD, **extras)
+    assert (r['tasks']['T01']['执行状态'], r['tasks']['T02']['执行状态']) == ('进行中', '待执行')
+    assert not any(h['事件类型'] == '取消' for h in r['history'])
+    assert any(q['task_id'] == 'T01' and q['待确认字段'] == '执行状态' for q in r['questions'])
+    assert not any(c['变化类型'] == '取消' and c['确认状态'] == '已确认' for c in r['changes'])
+    assert '确定变化：' not in r['summary']
+
+def test_unresolved_then_explicit_decision_and_two_task_scope(tmp_path):
+    r = case(tmp_path, 'T01的取消事项仍在讨论，尚无最终决定，但T02明确决定取消。', OLD)
+    assert (r['tasks']['T01']['执行状态'], r['tasks']['T02']['执行状态']) == ('进行中', '取消')
+    assert {h['task_id'] for h in r['history'] if h['事件类型'] == '取消'} == {'T02'}
+    assert any(q['task_id'] == 'T01' for q in r['questions'])
+    m = tmp_path / 'meeting.md'
+    m.write_text('T01的取消事项仍在讨论，尚无最终决定。', encoding='utf-8')
+    old = tmp_path / 'previous.csv'
+    with old.open('w', encoding='utf-8-sig', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=list(OLD[0]))
+        writer.writeheader()
+        writer.writerows(OLD)
+    first = tmp_path / 'round1'
+    first.mkdir()
+    a = tracker.reconcile(m, old, output_dir=first)
+    assert a['tasks']['T01']['执行状态'] == '进行中' and a['questions']
+    m.write_text('本次会议正式决定取消T01。', encoding='utf-8')
+    second = tmp_path / 'round2'
+    second.mkdir()
+    b = tracker.reconcile(m, a['xlsx'], output_dir=second)
+    assert b['tasks']['T01']['执行状态'] == '取消' and b['tasks']['T02']['执行状态'] == '待执行'
+    assert [h['事件类型'] for h in b['history']] == ['取消']
+    assert not b['questions'] and '确定变化：' in b['summary']
