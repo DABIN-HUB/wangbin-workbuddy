@@ -141,3 +141,51 @@ def test_report_evidence_three_rounds(tmp_path):
     assert not third['changes']
     assert {h['event_id'] for h in b['history']} == {h['event_id'] for h in third['history']}
     assert b['tasks']['T02'] == third['tasks']['T02']
+
+
+@pytest.mark.parametrize('text,pending', [
+    ('T01不会取消，仍在进行中。', False),
+    ('T01不能取消，仍在进行中。', False),
+    ('T01不得取消，仍在进行中。', False),
+    ('提议取消T01，目前还未拍板。', True),
+    ('计划取消T01，尚未决定。', True),
+])
+@pytest.mark.parametrize('entry', ['meeting', 'evidence', 'correction'])
+def test_no_false_cancellation_across_entries(tmp_path, text, pending, entry):
+    note = text if entry == 'meeting' else '本次例会无其他决定。'
+    extra = {'supplemental_evidence': [text]} if entry == 'evidence' else {'corrections': [text]} if entry == 'correction' else {}
+    r = case(tmp_path, note, OLD, **extra)
+    assert r['tasks']['T01']['执行状态'] == '进行中'
+    assert r['tasks']['T02']['执行状态'] == '待执行'
+    assert not any(h['task_id'] == 'T01' and h['事件类型'] == '取消' for h in r['history'])
+    if pending:
+        assert any(q['task_id'] == 'T01' and q['待确认字段'] == '执行状态' for q in r['questions'])
+
+
+def test_scoped_two_ids_with_negation(tmp_path):
+    r = case(tmp_path, 'T01不会取消，仍在进行中，但T02明确决定取消。', OLD)
+    assert r['tasks']['T01']['执行状态'] == '进行中'
+    assert r['tasks']['T02']['执行状态'] == '取消'
+    assert {h['task_id'] for h in r['history'] if h['事件类型'] == '取消'} == {'T02'}
+
+
+def test_distinct_similar_new_actions_repeat_and_reorder(tmp_path):
+    m = tmp_path / 'meeting.md'
+    first_text = '新增任务：系统接口检查A，由Maya确认负责，截止2027-03-06。\n新增任务：系统接口检查B，由陈琳确认负责，截止2027-03-07。'
+    m.write_text(first_text, encoding='utf-8')
+    out = tmp_path / 'first'
+    out.mkdir()
+    a = tracker.reconcile(m, project_name='虚构演练', output_dir=out)
+    assert {t['任务内容']: (tid, t['负责人'], t['截止时间']) for tid, t in a['tasks'].items()} == {
+        '系统接口检查A': (next(tid for tid, t in a['tasks'].items() if t['任务内容'] == '系统接口检查A'), 'Maya', '2027-03-06'),
+        '系统接口检查B': (next(tid for tid, t in a['tasks'].items() if t['任务内容'] == '系统接口检查B'), '陈琳', '2027-03-07'),
+    }
+    assert len(a['tasks']) == 2 and len({h['task_id'] for h in a['history'] if h['事件类型'] == '新增'}) == 2
+    for text in (first_text, '\n'.join(reversed(first_text.splitlines()))):
+        m.write_text(text, encoding='utf-8')
+        b = tracker.reconcile(m, a['xlsx'], project_name='虚构演练', response_mode='summary')
+        assert set(b['tasks']) == set(a['tasks'])
+        assert not b['changes']
+        assert {h['event_id'] for h in b['history']} == {h['event_id'] for h in a['history']}
+        assert {(t['任务内容'], t['负责人'], t['截止时间']) for t in b['tasks'].values()} == {
+            ('系统接口检查A', 'Maya', '2027-03-06'), ('系统接口检查B', '陈琳', '2027-03-07')}

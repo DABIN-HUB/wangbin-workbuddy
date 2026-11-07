@@ -144,7 +144,8 @@ def statements(lines, filename):
 
 
 def proposed_status_change(segment, action):
-    return bool(re.search(r"(?:考虑|建议|拟(?!定))\s*(?:将\s*)?(?:[A-Za-z0-9_-]+\s*)?" + action, segment))
+    return bool(re.search(r"(?:考虑|建议|提议|计划|打算|拟(?!定))\s*(?:将\s*)?(?:[A-Za-z0-9_-]+\s*)?" + action, segment)
+                or re.search(r"(?:尚未|还未|未|没有)\s*(?:拍板|决定|形成决议|形成决定|确认)", segment))
 
 
 def task_mentions(segment, ids):
@@ -174,7 +175,7 @@ def status_claim(segment):
         return "重新开启" if re.search(r"继续执行|继续进行|恢复|重新开启|重开", segment) else None
     if re.search(r"(?:重新开启|重开|恢复执行)", segment):
         return "重新开启"
-    if re.search(r"(?:不|未|不是|尚未|没有|无需|别)\s*(?:要|再|被|已)?\s*取消", segment):
+    if re.search(r"(?:不|未|不是|尚未|没有|无需|别|不可|不能|不得|并不|绝不)\s*(?:会|能|要|再|被|已|予以)?\s*取消", segment):
         return "进行中" if re.search(r"(?:继续|仍|保持).*进行中", segment) else None
     if re.search(r"(?:不是|未|尚未|没有|并未)\s*(?:已|经)?完成", segment):
         return "进行中" if re.search(r"(?:继续|仍|保持).*进行中", segment) else None
@@ -294,10 +295,15 @@ def reconcile(meeting_file, previous_tasks=None, supplemental_evidence=None, cor
                 for clause in clauses:
                     apply(clause, source, evidence, correction)
                 return
-        tid = locate(segment, source)
-        if tid is None and not evidence and not correction and re.search(r"建议由|由.*确认负责", segment) and len(recent_new) == 1:
+        # Resolve an explicit new action by its own content before fuzzy matching or
+        # carrying forward the previous new task's owner. Similar actions are distinct.
+        description = action_description(segment) if not evidence and not correction else None
+        explicit_new = bool(re.search(r"(?:新增(?:事项|任务)?|决定新增|决议新增)\s*[：:]?", segment))
+        tid = None if explicit_new and description else locate(segment, source)
+        if tid is None and not description and not explicit_new and not evidence and not correction and re.search(r"建议由|由.*确认负责", segment) and len(recent_new) == 1:
             tid = recent_new[0]
-        description = action_description(segment) if tid is None and not evidence and not correction else None
+        if tid is not None:
+            description = None
         if tid is None and description:
             if not description:
                 ask("", "任务内容", segment, "无法抽取新任务", source)
@@ -337,7 +343,7 @@ def reconcile(meeting_file, previous_tasks=None, supplemental_evidence=None, cor
             else:
                 ask(tid, "执行状态", segment, "仅为重开提议", source)
         elif status == "取消":
-            if not proposed_status_change(segment, r"取消") and not re.search(r"尚未形成决定|尚未决定", segment):
+            if not proposed_status_change(segment, r"取消"):
                 update(tid, "执行状态", "取消", "取消", source)
             else:
                 update(tid, "执行状态", "取消", "取消提议", source, False)
@@ -382,7 +388,8 @@ def reconcile(meeting_file, previous_tasks=None, supplemental_evidence=None, cor
     for seg, src in supplements:
         tid = locate(seg, src)
         if tid:
-            status = "取消" if "取消" in seg else "进行中" if "进行中" in seg else None
+            status = status_claim(seg)
+            status = status if status in {"取消", "进行中"} and not proposed_status_change(seg, r"取消") else None
             if status:
                 claims.setdefault(tid, []).append((status, src, seg))
     conflicted = {tid for tid, entries in claims.items() if len({e[0] for e in entries}) > 1}

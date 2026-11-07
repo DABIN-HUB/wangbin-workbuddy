@@ -14,7 +14,7 @@ examples_en:
 - Update the previous action list using these meeting notes. Do not mark unmentioned tasks as completed.
 - Extract new decisions, owners, and deadlines, clearly marking anything not yet confirmed.
 - Use these completion records to update the action list and draft a follow-up message before the next meeting.
-version: 0.1.2
+version: 0.1.3
 author: 星核实验室
 ---
 
