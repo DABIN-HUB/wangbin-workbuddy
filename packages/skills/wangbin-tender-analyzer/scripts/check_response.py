@@ -93,7 +93,7 @@ def tokens(text: str) -> set[str]:
 DATE = re.compile(r'(?<!\d)(\d{4})[-年/.](\d{1,2})[-月/.](\d{1,2})日?')
 YEAR = re.compile(r'(?<!\d)(\d{4})年')
 DUTY = re.compile(r'营业执照|(?:甲类|乙类|[\u4e00-\u9fff]{1,8})?(?:资质证明|资格证明|证书|证明材料)|报价函|承诺函')
-NEGATIVE_EVIDENCE = re.compile(r'尚未取得|正在申请|拟申请|仅为目录占位|不含证书|不是证书|未取得')
+NEGATIVE_EVIDENCE = re.compile(r'尚未取得|正在申请|拟申请|仅为目录占位|(?:示例|样例|模板|测试)(?:用)?占位|并非(?:真正|实际)?(?:的)?(?:资质|证书|证明|执照)|不含(?:证书|证明|执照)|不是(?:真正)?(?:证书|证明|执照)|未取得')
 
 
 def dated(text: str) -> list[tuple[date, int, int]]:
@@ -159,8 +159,21 @@ def action_fact(text: str, term: str) -> tuple[int, str] | None:
     for index, clause in enumerate(clauses):
         if stem not in clause:
             continue
-        if (index + 1 < len(clauses) and re.search(r'(功能|服务|能力).{0,8}(未上线|未投产|未实现|尚未实现|不可用|无法使用)', clauses[index + 1])):
-            return -1, '功能未实现或仅有设计材料'
+        # Status predicates describe the requested object even without a
+        # repeated verb ("自动备份尚未启用", "对自动备份，目前做不到").
+        # Inspect the next clause only if it explicitly refers back to this
+        # capability; a different object's status cannot negate this one.
+        context = clause
+        if index + 1 < len(clauses):
+            following = clauses[index + 1]
+            if (re.search(r'该(?:功能|能力|服务)|此(?:功能|能力)|' + re.escape(stem), following)
+                    or (re.search(r'^(?:我们|我方|目前|当前)', following.strip())
+                        and not re.search(r'[^\s，,。；;]{2,}(?:功能|查询|备份|存储)', following))):
+                context += '，' + following
+        if re.search(r'做不到|(?:无法|不能|不可)(?:实现|交付|做到)|尚?未具备(?:该|此)?(?:项)?能力|不具备(?:该|此)?(?:项)?能力|(?:功能|服务|能力).{0,8}(?:尚?未启用|尚?未上线|未投产|尚?未实现|尚?未开发|不可用|无法使用)|(?:尚?未启用|尚?未上线|未投产|尚?未实现|尚?未开发)', context):
+            return -1, '当前不具备或尚未启用所需功能'
+        if re.search(r'仅(?:处于|在).{0,12}(?:设计|规划|研发)(?:阶段)?|仅(?:提供|有).{0,20}(?:设计|文档|方案)', context):
+            return -1, '仅有设计材料或仍在规划'
         # A document about X is not X itself. Restrict the object to the
         # requested verb's own phrase rather than searching anywhere nearby.
         hit = re.search(r'(无法|不能|不可|未能|不|未|无)?' + verb +
@@ -172,7 +185,7 @@ def action_fact(text: str, term: str) -> tuple[int, str] | None:
             return -1, '明确肯否'
         # Status/limitations apply to the same object, even if the sentence
         # only offers a design or promises a future implementation.
-        if re.search(r'未上线|未投产|尚未实现|尚未开发|未实现|无法使用|不能使用|暂不支持|仅(?:提供|有).{0,20}(?:设计|文档|方案)', clause):
+        if re.search(r'未上线|未投产|尚未实现|尚未开发|未实现|无法使用|不能使用|暂不支持', clause):
             return -1, '功能未实现或仅有设计材料'
     return None
 
@@ -354,6 +367,18 @@ def material_assessment(requirement: dict, present: list[tuple[str, str]]):
     return '待确认', '材料内容未明确关联要求，须人工确认', locations
 
 
+def explicit_material_match(requirement: dict, filename: str, text: str) -> bool:
+    """Bind a submitted unnamed material to its specific duty, never to a peer.
+
+    Only an explicit object in the filename AND corresponding body may anchor
+    a filename-free obligation. Generic documents remain candidates, not proof.
+    """
+    obj = object_name(requirement['raw'])
+    if obj:
+        return filename.startswith(obj + '.') and any(obj in line for line in text.splitlines())
+    return any(duty in filename and duty in text for duty in requirement['duty'])
+
+
 def compare(reqs: list[dict], response: str | None, response_name: str | None,
             catalog: list[dict], evidence: list[tuple[str, str]]) -> list[dict]:
     replies = [(n, line, number(line)) for n, line in enumerate((response or '').splitlines(), 1) if line.strip()]
@@ -402,10 +427,14 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
             materials += [name for name, _ in evidence if name in r['materials'] and name not in materials]
         listed = [c for c in catalog if c['name'] in materials or
                   (r['number'] and numbered[r['number']] == 1 and c['number'] == r['number'])]
-        if r['duty'] and not materials and not listed and len(evidence) == 1 and len(reqs) == 1:
-            # A unique explicit file can be considered as a candidate for a
-            # filename-free duty, but its text must still be assessed.
-            materials.append(evidence[0][0])
+        if r['duty'] and not materials and not listed:
+            anchored = [name for name, text in evidence if explicit_material_match(r, name, text)]
+            if len(anchored) == 1:
+                materials.append(anchored[0])
+            elif len(evidence) == 1 and len(reqs) == 1:
+                # For a sole unnamed duty, inspect the sole explicitly
+                # submitted candidate's text instead of claiming it is absent.
+                materials.append(evidence[0][0])
         names = set(materials) | {c['name'] for c in listed}
         conflicting = {name for name in names if
                        evidence_names[name] > 1 or catalog_names[name] > 1 or
@@ -443,7 +472,13 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
             condition_state = '可能不充分'
         if support == '不支持（文本层面）' and unique:
             condition_state = '可能不充分'
+        required_object = object_name(r['raw'])
+        explicit_submission = (bool(r['duty']) and required_object is not None and
+                               required_object in reply and
+                               bool(re.search(r'已提交|已提供|已附|提交|提供', reply)) and
+                               not target_dates(r['raw'])[0])
         if support == '支持（文本层面）' and unique and (not uncovered or
+                explicit_submission or
                 (target_dates(r['raw'])[0] and '覆盖' in reply and
                  (object_name(r['raw']) is None or (object_name(r['raw']) or '') in reply))):
             uncovered = []

@@ -162,6 +162,67 @@ def test_capability_action_status_and_limitation(tmp_path, reply, covered_expect
     assert ('条件覆盖状态', row['条件覆盖状态'], 1) in summary
 
 
+@pytest.mark.parametrize('reply,covered_expected', [
+    ('1. 对自动备份，我们目前做不到。', False),
+    ('1. 自动备份仅处于方案设计阶段，目前尚不具备该能力。', False),
+    ('1. 自动备份功能尚未启用。', False),
+    ('1. 对自动备份，我们目前无法交付，仍在规划阶段。', False),
+    ('1. 自动备份目前不具备该能力。', False),
+    ('1. 自动备份功能已上线，我方支持自动备份。', True),
+])
+def test_object_current_capability_paraphrases(tmp_path, reply, covered_expected):
+    rows, _, _, md = invoke(tmp_path / 'capability', '1. 必须支持自动备份。', reply)
+    row = rows[0]
+    assert row['响应存在状态'] == '已定位'
+    assert row['条件覆盖状态'] == ('已覆盖（文本层面）' if covered_expected else '可能不充分'), row
+    assert bool(row['缺口']) != covered_expected
+    assert (row['唯一ID'] in md.split('## 已覆盖范围（仅文本层面）')[-1].split('## 未覆盖范围')[0]) == covered_expected
+
+
+def test_negative_capability_does_not_spill_to_next_object(tmp_path):
+    rows, _, summary, md = invoke(tmp_path / 'scoped',
+        '1. 必须支持自动备份。\n2. 必须支持离线查询。',
+        '1. 自动备份功能尚未启用。\n2. 我方支持离线查询。')
+    assert [r['条件覆盖状态'] for r in rows] == ['可能不充分', '已覆盖（文本层面）']
+    assert rows[0]['缺口'] and not rows[1]['缺口']
+    assert ('条件覆盖状态', '可能不充分', 1) in summary
+    assert rows[0]['唯一ID'] not in md.split('## 已覆盖范围（仅文本层面）')[-1].split('## 未覆盖范围')[0]
+
+
+def test_no_catalog_placeholder_is_textual_counterevidence(tmp_path):
+    rows, attachment, _, md = invoke(tmp_path / 'placeholder',
+        '1. 须提供certificate.txt资质证明。', '1. 证书见certificate.txt。',
+        material='certificate.txt：这是示例占位文件，并非真正证书。')
+    row = rows[0]
+    assert row['条件覆盖状态'] == '可能不充分'
+    assert row['附件实际提供状态'] == '已提供（可读文本）'
+    assert row['内容支持状态'] == '不支持（文本层面）'
+    assert 'certificate.txt:1' in str(row['证据位置']) and row['缺口']
+    assert attachment[1][5] == row['内容支持状态'] and row['唯一ID'] in md
+
+
+def test_no_catalog_explicit_object_correspondence(tmp_path):
+    case = tmp_path / 'two_duties'
+    case.mkdir()
+    for name, value in {'tender.txt': '1. 必须提供甲类资质证明。\n2. 必须提供乙类资质证明。',
+                        'response.md': '1. 甲类证明已提交。\n2. 乙类证明已提交。',
+                        '乙类.txt': '乙类证明文本：乙类有效。'}.items():
+        (case / name).write_text(value, encoding='utf-8')
+    command = [sys.executable, str(SCRIPT), '--tender', str(case / 'tender.txt'),
+               '--response', str(case / 'response.md'), '--mode', 'check',
+               '--evidence-file', str(case / '乙类.txt'), '--output-dir', str(case), '--project', 'audit']
+    result = subprocess.run(command, capture_output=True, text=True, encoding='utf-8')
+    assert result.returncode == 0, result.stderr
+    book = load_workbook(case / 'audit-投标响应检查.xlsx', read_only=True)
+    matrix = list(book['要求响应矩阵'].values)
+    first, second = [dict(zip(matrix[0], row)) for row in matrix[1:]]
+    assert (first['附件实际提供状态'], first['内容支持状态']) == ('未提供（限已提供材料）', '未核验')
+    assert (second['附件实际提供状态'], second['内容支持状态']) == ('已提供（可读文本）', '支持（文本层面）')
+    assert second['条件覆盖状态'] == '已覆盖（文本层面）'
+    assert '乙类.txt:1' in str(second['证据位置']) and not first['证据位置']
+    book.close()
+
+
 def test_explicit_named_evidence_without_catalog_is_not_missing_or_certified(tmp_path):
     rows, attachment, summary, md = invoke(tmp_path / 'named',
         '1. 须提供certificate.txt资质证明。', '1. 证书见certificate.txt。',
@@ -244,9 +305,9 @@ def test_cross_requirement_incremental_material_does_not_cover_other_duty(tmp_pa
 
 def test_final_zip_clean_extract_formal_cli_and_legacy_json(tmp_path):
     root = SCRIPT.parents[4]
-    archive = root / 'dist/wangbin-tender-analyzer-0.2.6-skill-candidate.zip'
+    archive = root / 'dist/wangbin-tender-analyzer-0.2.7-skill-candidate.zip'
     if not archive.is_file():
-        pytest.skip('package-only test: final 0.2.6 archive not built yet')
+        pytest.skip('package-only test: final 0.2.7 archive not built yet')
     extract = tmp_path / 'clean'
     extract.mkdir()
     with zipfile.ZipFile(archive) as bundle:
