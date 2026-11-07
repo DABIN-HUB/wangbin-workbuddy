@@ -1,0 +1,169 @@
+[
+  {
+    "id": "missing_response",
+    "argv": [
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+      "--tender",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\tender.txt",
+      "--output-dir",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\missing_response",
+      "--mode",
+      "check"
+    ],
+    "exit": 2,
+    "stdout": "",
+    "stderr": "ERROR MISSING_RESPONSE role=response\n",
+    "output_sha": {},
+    "pass_": true,
+    "input_sha": {
+      "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea",
+      "response.md": "a32fdf3954a764107646239795e2cf49ef49ff73e9350702e064efdb6319d83d",
+      "bad.md": "b3d510ef04275ca8e698e5b3cbb0ece3949ef9252f0cdc839e9ee347409a2209",
+      "bad.xlsx": "8f582b32f030a1cdad7920e8a1069d65895d8bca9a1e170aa2f90e86fe1f8356",
+      "bad.pdf": "7ead0b44cc1a9959917fe0b59d7ecdec3afa4b30b94e77b76f2107c7508afe8b"
+    }
+  },
+  {
+    "id": "invalid_utf8",
+    "argv": [
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+      "--tender",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\tender.txt",
+      "--output-dir",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\invalid_utf8",
+      "--mode",
+      "check",
+      "--response",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\bad.md"
+    ],
+    "exit": 2,
+    "stdout": "",
+    "stderr": "ERROR INVALID_UTF8 role=response\n",
+    "output_sha": {},
+    "pass_": true,
+    "input_sha": {
+      "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea",
+      "response.md": "a32fdf3954a764107646239795e2cf49ef49ff73e9350702e064efdb6319d83d",
+      "bad.md": "b3d510ef04275ca8e698e5b3cbb0ece3949ef9252f0cdc839e9ee347409a2209",
+      "bad.xlsx": "8f582b32f030a1cdad7920e8a1069d65895d8bca9a1e170aa2f90e86fe1f8356",
+      "bad.pdf": "7ead0b44cc1a9959917fe0b59d7ecdec3afa4b30b94e77b76f2107c7508afe8b"
+    }
+  },
+  {
+    "id": "unsupported",
+    "argv": [
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+      "--tender",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\tender.txt",
+      "--output-dir",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\unsupported",
+      "--mode",
+      "check",
+      "--response",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\bad.pdf"
+    ],
+    "exit": 2,
+    "stdout": "",
+    "stderr": "ERROR INPUT_TYPE_UNSUPPORTED role=response\n",
+    "output_sha": {},
+    "pass_": true,
+    "input_sha": {
+      "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea",
+      "response.md": "a32fdf3954a764107646239795e2cf49ef49ff73e9350702e064efdb6319d83d",
+      "bad.md": "b3d510ef04275ca8e698e5b3cbb0ece3949ef9252f0cdc839e9ee347409a2209",
+      "bad.xlsx": "8f582b32f030a1cdad7920e8a1069d65895d8bca9a1e170aa2f90e86fe1f8356",
+      "bad.pdf": "7ead0b44cc1a9959917fe0b59d7ecdec3afa4b30b94e77b76f2107c7508afe8b"
+    }
+  },
+  {
+    "id": "catalog_corrupt",
+    "argv": [
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+      "--tender",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\tender.txt",
+      "--output-dir",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\catalog_corrupt",
+      "--mode",
+      "check",
+      "--response",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\response.md",
+      "--attachment-catalog",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\bad.xlsx"
+    ],
+    "exit": 2,
+    "stdout": "",
+    "stderr": "ERROR CATALOG_READ_FAILED role=attachment_catalog\n",
+    "output_sha": {},
+    "pass_": true,
+    "input_sha": {
+      "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea",
+      "response.md": "a32fdf3954a764107646239795e2cf49ef49ff73e9350702e064efdb6319d83d",
+      "bad.md": "b3d510ef04275ca8e698e5b3cbb0ece3949ef9252f0cdc839e9ee347409a2209",
+      "bad.xlsx": "8f582b32f030a1cdad7920e8a1069d65895d8bca9a1e170aa2f90e86fe1f8356",
+      "bad.pdf": "7ead0b44cc1a9959917fe0b59d7ecdec3afa4b30b94e77b76f2107c7508afe8b"
+    }
+  },
+  {
+    "id": "project_escape",
+    "argv": [
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+      "--tender",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\tender.txt",
+      "--output-dir",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\project_escape",
+      "--mode",
+      "check",
+      "--response",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\response.md",
+      "--project",
+      "../outside"
+    ],
+    "exit": 2,
+    "stdout": "",
+    "stderr": "ERROR OUTPUT_PATH_INVALID role=project\n",
+    "output_sha": {},
+    "pass_": true,
+    "input_sha": {
+      "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea",
+      "response.md": "a32fdf3954a764107646239795e2cf49ef49ff73e9350702e064efdb6319d83d",
+      "bad.md": "b3d510ef04275ca8e698e5b3cbb0ece3949ef9252f0cdc839e9ee347409a2209",
+      "bad.xlsx": "8f582b32f030a1cdad7920e8a1069d65895d8bca9a1e170aa2f90e86fe1f8356",
+      "bad.pdf": "7ead0b44cc1a9959917fe0b59d7ecdec3afa4b30b94e77b76f2107c7508afe8b"
+    }
+  },
+  {
+    "id": "positive",
+    "argv": [
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+      "--tender",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\tender.txt",
+      "--output-dir",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\positive",
+      "--mode",
+      "check",
+      "--response",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_027_rerun1\\errors\\response.md"
+    ],
+    "exit": 0,
+    "stdout": "CREATED 未命名项目-投标响应检查.xlsx 未命名项目-提交前核对清单.md\n",
+    "stderr": "",
+    "output_sha": {
+      "未命名项目-投标响应检查.xlsx": "9f88399ca7de24ee8d86a28f1318a774e9ad8451037e3593c28f0c278fe208f8",
+      "未命名项目-提交前核对清单.md": "9df66ca2ed6295f7ab82ea9971629a8a0cbe7f61a6d38cbfbf2f9571f38777db"
+    },
+    "pass_": true,
+    "input_sha": {
+      "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea",
+      "response.md": "a32fdf3954a764107646239795e2cf49ef49ff73e9350702e064efdb6319d83d",
+      "bad.md": "b3d510ef04275ca8e698e5b3cbb0ece3949ef9252f0cdc839e9ee347409a2209",
+      "bad.xlsx": "8f582b32f030a1cdad7920e8a1069d65895d8bca9a1e170aa2f90e86fe1f8356",
+      "bad.pdf": "7ead0b44cc1a9959917fe0b59d7ecdec3afa4b30b94e77b76f2107c7508afe8b"
+    }
+  }
+]

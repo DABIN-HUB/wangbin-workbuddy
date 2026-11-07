@@ -1,0 +1,47 @@
+{
+  "hashes": {
+    "0.2.3": "5ebba11d8a750d4807c88e715b5458a3cf449672f9b8dd5d7df3eb37d5c977ce",
+    "0.2.5": "69e1a9f2ef0698e40a174faf711e1eb627aecc68fb1106c567a506d063493c06",
+    "0.2.6": "1c18b43f8cb465eb261ae4ccdc950259399f64b9c70477496809e3102dd4753a",
+    "0.2.7": "12b9ebc2f99a20e4a15dd3e783a2b825bd04adba7edef70a3e0be041002faf09"
+  },
+  "members": [
+    "wangbin-tender-analyzer/SKILL.md",
+    "wangbin-tender-analyzer/examples/README.md",
+    "wangbin-tender-analyzer/examples/certificate.txt",
+    "wangbin-tender-analyzer/examples/fictional-attachments.csv",
+    "wangbin-tender-analyzer/examples/fictional-bid-response.txt",
+    "wangbin-tender-analyzer/examples/fictional-bid-tender.txt",
+    "wangbin-tender-analyzer/examples/fictional-tender.expected.json",
+    "wangbin-tender-analyzer/examples/fictional-tender.txt",
+    "wangbin-tender-analyzer/scripts/analyze_tender.py",
+    "wangbin-tender-analyzer/scripts/check_response.py",
+    "wangbin-tender-analyzer/templates/tender-checklist.md"
+  ],
+  "sidecar_match": true,
+  "manifest_match": true,
+  "source_hash_match": true,
+  "yaml": {
+    "name": "wangbin-tender-analyzer",
+    "display_name": "wangbin 招标分析助手",
+    "display_name_en": "wangbin Tender Analyzer",
+    "description": "对照已授权招标文本、正式补遗和响应稿，检查漏答、附件证据及版本冲突；保留单文件分析。",
+    "description_zh": "对照招标要求、正式补遗和响应材料，检查漏答、附件证据与版本冲突。",
+    "description_en": "Check bid responses against tender requirements and formal amendments, identifying omissions, missing evidence, and version conflicts.",
+    "examples_zh": [
+      "这是招标文本和拟提交的响应稿，帮我检查漏答、缺证明材料和前后不一致的地方。",
+      "对照正式补遗重新核查标书，指出哪些响应还沿用了旧要求。",
+      "根据附件清单检查提交材料，只有名字但没有实际证据的项目单独列出来。"
+    ],
+    "examples_en": [
+      "Check this tender and draft response for omissions, missing evidence, and inconsistencies.",
+      "Recheck the response against the formal amendments and identify sections that still use superseded requirements.",
+      "Check the submission against the attachment list and separate listed filenames from evidence that is actually available."
+    ],
+    "version": "0.2.7",
+    "author": "wangbin",
+    "allowed-tools": "Read, Bash"
+  },
+  "catalog_active": "0.2.7",
+  "catalog_candidate": null
+}
