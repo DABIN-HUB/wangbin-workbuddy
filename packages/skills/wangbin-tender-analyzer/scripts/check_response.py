@@ -93,7 +93,12 @@ def tokens(text: str) -> set[str]:
 DATE = re.compile(r'(?<!\d)(\d{4})[-年/.](\d{1,2})[-月/.](\d{1,2})日?')
 YEAR = re.compile(r'(?<!\d)(\d{4})年')
 DUTY = re.compile(r'营业执照|(?:甲类|乙类|[\u4e00-\u9fff]{1,8})?(?:资质证明|资格证明|证书|证明材料)|报价函|承诺函')
-NEGATIVE_EVIDENCE = re.compile(r'尚未取得|正在申请|拟申请|仅为目录占位|(?:示例|样例|模板|测试)(?:用)?占位|并非(?:真正|实际)?(?:的)?(?:资质|证书|证明|执照)|不含(?:证书|证明|执照)|不是(?:真正)?(?:证书|证明|执照)|未取得')
+NEGATIVE_EVIDENCE = re.compile(
+    r'尚?未(?:取得|颁发|签发|核发)|(?:正在|尚在|仍在|拟|待)(?:办理|申请)|'
+    r'仅为目录占位|(?:示例|样例|模板|测试)(?:用)?占位|'
+    r'(?:仅(?:作为|供|为|用于)?(?:示意|展示|演示)|不(?:包含|含|提供)任何?(?:证照|证书|证明|执照)(?:的)?(?:正文|内容)?)|'
+    r'并非(?:真正|实际)?(?:的)?(?:资质|证书|证明|执照)|'
+    r'不含(?:证照|证书|证明|执照)|不是(?:真正)?(?:[甲乙丙丁\w]{0,8})?(?:资质|证书|证明|执照)|未取得')
 
 
 def dated(text: str) -> list[tuple[date, int, int]]:
@@ -170,9 +175,9 @@ def action_fact(text: str, term: str) -> tuple[int, str] | None:
                     or (re.search(r'^(?:我们|我方|目前|当前)', following.strip())
                         and not re.search(r'[^\s，,。；;]{2,}(?:功能|查询|备份|存储)', following))):
                 context += '，' + following
-        if re.search(r'做不到|(?:无法|不能|不可)(?:实现|交付|做到)|尚?未具备(?:该|此)?(?:项)?能力|不具备(?:该|此)?(?:项)?能力|(?:功能|服务|能力).{0,8}(?:尚?未启用|尚?未上线|未投产|尚?未实现|尚?未开发|不可用|无法使用)|(?:尚?未启用|尚?未上线|未投产|尚?未实现|尚?未开发)', context):
+        if re.search(r'做不到|(?:无法|不能|不可)(?:实现|交付|做到|提供|使用)|尚?未具备(?:该|此)?(?:项)?能力|不具备(?:该|此)?(?:项)?能力|(?:功能|服务|能力).{0,8}(?:尚?未启用|尚?未上线|未投产|尚?未实现|尚?未开发|不可用|无法使用)|(?:尚?未启用|尚?未上线|未投产|尚?未实现|尚?未开发|尚?未投入使用|还未投入使用|未投入使用|尚无法提供|尚不能提供)', context):
             return -1, '当前不具备或尚未启用所需功能'
-        if re.search(r'仅(?:处于|在).{0,12}(?:设计|规划|研发)(?:阶段)?|仅(?:提供|有).{0,20}(?:设计|文档|方案)', context):
+        if re.search(r'仅(?:处于|在).{0,12}(?:设计|规划|研发)(?:阶段)?|仅(?:提供|有).{0,20}(?:设计|文档|方案)|(?:已纳入|列入|计划|拟于|将在).{0,16}(?:后续|未来|研发|计划|上线|开发)', context):
             return -1, '仅有设计材料或仍在规划'
         # A document about X is not X itself. Restrict the object to the
         # requested verb's own phrase rather than searching anywhere nearby.
@@ -206,8 +211,15 @@ def response_conflict(condition: str, reply: str) -> str | None:
     return None
 
 
+def uncertain_capability(condition: str, reply: str) -> bool:
+    """An undecided rollout is neither an operational claim nor a denial."""
+    if not re.search(r'支持|使用|具备', condition) or not reply:
+        return False
+    return bool(re.search(r'正在评估是否|尚待确定|具体时间待定|预计.{0,12}(?:交付|上线).{0,12}(?:待定|未定)', reply))
+
+
 def covered(condition: str, reply: str) -> bool:
-    if not reply or response_conflict(condition, reply):
+    if not reply or response_conflict(condition, reply) or uncertain_capability(condition, reply):
         return False
     expected, actual = polarity(condition, condition), polarity(reply, condition)
     if expected is not None and actual == expected:
@@ -341,9 +353,17 @@ def material_assessment(requirement: dict, present: list[tuple[str, str]]):
     locations = [loc(name, i) for name, i, _ in relevant][:12]
     for name, i, line in relevant:
         if NEGATIVE_EVIDENCE.search(line):
-            return '不支持（文本层面）', f'材料 {loc(name, i)} 明确否认已具备/有效证明', locations
+            return '不支持（文本层面）', f'材料 {loc(name, i)} 明确否认已具备要求的证件/证明正文：{quote(line)}；可读文件不等于已颁发证件', locations
     if target_start or target_end or not target_known:
         if not target_known:
+            year_match = YEAR.search(requirement['raw'])
+            if year_match is None:
+                return '待确认', '目标年份边界或要求来源未明确', locations
+            year = int(year_match.group(1))
+            for name, i, line in relevant:
+                _, end = certificate_dates(line)
+                if end and end < date(year, 1, 1):
+                    return '不支持（文本层面）', f'材料 {loc(name, i)} 截止 {end} 早于要求年份 {year}，即使年份边界未明也不能覆盖', locations
             return '待确认', '招标年份未明示全年边界，须确认目标起止日', locations
         # Each line belongs to a single certificate. Never borrow endpoints from
         # another certificate or use issue date as its effective date.
@@ -409,7 +429,10 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
         selected = exacts[0] if len(exacts) == 1 and not duplicate_number else None
         unique = selected is not None
         ambiguous = response is not None and not unique and bool(candidates)
-        positions = [loc(response_name or '', n) for n, _, _ in candidates]
+        # Retain advisory candidates unless their number belongs to another
+        # requirement; a peer's response is not this requirement's provenance.
+        positions = [loc(response_name or '', n) for n, line, _ in candidates
+                     if number(line) == r['number'] or number(line) not in numbered]
         reply = selected[1] if selected else ''
         cond = r['conditions']
         uncovered = [p for p in cond if not covered(p, reply)] if selected else cond
@@ -485,6 +508,8 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
             condition_state = '已覆盖（文本层面）'
         if assessment_reason and support == '待确认' and unique:
             condition_state = '待确认'
+        if unique and any(uncertain_capability(p, reply) for p in cond) and not r['duty']:
+            condition_state = '待确认'
         gaps = []
         if existence == '未找到（限已提供响应）':
             gaps.append('在已提供响应中未找到')
@@ -512,6 +537,8 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
         pending = r['pending'][:]
         if ambiguous:
             pending.append('响应候选歧义或编号改变；逐一核对双向原句')
+        if unique and any(uncertain_capability(p, reply) for p in cond):
+            pending.append('功能当前可用性或交付时点尚未确定，须核实该要求与响应原句')
         if conflicting:
             pending.append('材料候选重复、编号冲突或响应配对歧义；逐一核对文件与要求关联')
         elif attachment == '待确认' and (materials or r['duty']):

@@ -13,13 +13,13 @@ examples_en:
   - "Check this tender and draft response for omissions, missing evidence, and inconsistencies."
   - "Recheck the response against the formal amendments and identify sections that still use superseded requirements."
   - "Check the submission against the attachment list and separate listed filenames from evidence that is actually available."
-version: 0.2.7
+version: 0.2.8
 author: wangbin
 allowed-tools: Read, Bash
 ---
 # wangbin 招标分析助手
 
-## 0.2.7 自然对话与本地执行合同
+## 0.2.8 自然对话与本地执行合同
 
 用户用自然语言请求核查时，先确认招标 TXT/MD、响应稿 TXT/MD、是否准备模式、正式补遗、附件目录 CSV/XLSX、实际可读文本材料、项目名与输出目录；不要凭用户对话猜本机路径、读取目录或未经授权上传。仅当输入文件已由用户明确选择且确认授权，并且本地 Python + `openpyxl` 可用，才将路径逐一映射到以下真实 CLI。只说“核查”而缺响应时请求提供响应，不假装漏答；只有招标文本时可进入准备模式，并标“响应未核查”。附件目录只代表登记，实际材料必须以 `--evidence-file` 显式给出。请用户确认真实资格/保证金/版本关系及原件，不能声称已认证或已提交。自然语言路由及 WorkBuddy 宿主 Python/cwd/权限**未在平台实测**。
 
