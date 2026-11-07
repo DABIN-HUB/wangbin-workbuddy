@@ -1,0 +1,75 @@
+{
+  "schema": "q06-fix6-independent-prefreeze-v1",
+  "case_file": "qa-fix6-prefreeze-cases.json",
+  "case_file_sha256": "1b5163a58173b2382b9020b569d8526c7232814b84c0cba35372ee8707448109",
+  "inputs": {
+    "V01-unknown-alternative": {
+      "tender.txt": "8d9e2dee768655c03dc3f9b466339eebe972fb9f6dc0b685460e6b4d12403042",
+      "response.md": "1990672b7a4f2b3265f0b08fa0d12dc81f56663fc4d6e6a5bd679ed422826f22"
+    },
+    "V02-current-negative-and-plan": {
+      "tender.txt": "8d9e2dee768655c03dc3f9b466339eebe972fb9f6dc0b685460e6b4d12403042",
+      "response.md": "4246b28fe3cc2bca31fdc8aedcda67af7849b3c7e618e000fd83d56ad3dea508"
+    },
+    "V03-future-only-no-current": {
+      "tender.txt": "8d9e2dee768655c03dc3f9b466339eebe972fb9f6dc0b685460e6b4d12403042",
+      "response.md": "9f9459656a3722d7547eda90de976cd0ed08f3662bf6249cdbe7d36763ec4153"
+    },
+    "V04-live-positive-control": {
+      "tender.txt": "8d9e2dee768655c03dc3f9b466339eebe972fb9f6dc0b685460e6b4d12403042",
+      "response.md": "eba965adbea92f483b5585c7d6be6f97c66e7b1b8cc94976acdd76342a20889f"
+    },
+    "V05-conflict-negative-first-renumber": {
+      "tender.txt": "8d9e2dee768655c03dc3f9b466339eebe972fb9f6dc0b685460e6b4d12403042",
+      "response.md": "687a9cf705b251c629975e7139e74a82c660967d3bb424df52f5fd593db13d36"
+    },
+    "V06-conflict-positive-first-renumber": {
+      "tender.txt": "8d9e2dee768655c03dc3f9b466339eebe972fb9f6dc0b685460e6b4d12403042",
+      "response.md": "67b7dafb2f5a203873abf90b699a6a23ba706f9c36c009616e900c2996c954d3"
+    },
+    "V07-cross-object-swapped": {
+      "tender.txt": "91164e98ade7ccce5d9a1f945c78dd8fd91d98cc7e2ea03ab657b11d59e6bf69",
+      "response.md": "43480efb35b20d42bed20becf885e01d603806e769ef5f8fe5d76a892f49db1d"
+    },
+    "V08-number-collision-other-object": {
+      "tender.txt": "91164e98ade7ccce5d9a1f945c78dd8fd91d98cc7e2ea03ab657b11d59e6bf69",
+      "response.md": "4713793864f88500da2a89667caa4f505d0978971706d6aaf955d1fabf7ff18c"
+    },
+    "V09-license-body-not-included": {
+      "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f",
+      "response.md": "41ff0089b4a32ecab1906fb99ad30331e56ba436c7806d0e2ca9c40a3db060a5",
+      "营业执照.txt": "859da57af9c1c24bd8cfb3c4783c5ed797d4703b87b89cc3d4d2ce95ac7a19ce"
+    },
+    "V10-license-inverted-word-order": {
+      "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f",
+      "response.md": "41ff0089b4a32ecab1906fb99ad30331e56ba436c7806d0e2ca9c40a3db060a5",
+      "营业执照.txt": "6bc0857ac07dd8db060126b7ef4ead8dea75a342c0c5881e1a3fb70bb1417ccc"
+    },
+    "V11-title-only-ambiguous": {
+      "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f",
+      "response.md": "3e46c6db2bb24a72db41847c5f5087d56d8be975e9a8e2727e4a1ae6eeeed898",
+      "营业执照.txt": "24f8b0135eb70ea18e82851d29de5e48ac893458c925fee0244c20dc0d22416a"
+    },
+    "V12-partial-extract-ambiguous": {
+      "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f",
+      "response.md": "3e46c6db2bb24a72db41847c5f5087d56d8be975e9a8e2727e4a1ae6eeeed898",
+      "营业执照.txt": "0f17d55eebb7d5f351756b31e7c0326d0e3d8bdd04c911a4f6841008e2d7bbca"
+    },
+    "V13-positive-body-control": {
+      "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f",
+      "response.md": "3e46c6db2bb24a72db41847c5f5087d56d8be975e9a8e2727e4a1ae6eeeed898",
+      "营业执照.txt": "7d6004079baafa56cb6ed7eb7daacf533121a5a003542c971009dff161a151bb"
+    },
+    "V14-positive-negative-body-conflict": {
+      "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f",
+      "response.md": "3e46c6db2bb24a72db41847c5f5087d56d8be975e9a8e2727e4a1ae6eeeed898",
+      "营业执照.txt": "1df352f50ac6bbffd0a26eb7698b0453b63086a926589a5214e38c73f48323b2"
+    },
+    "V15-no-file-not-negative-reality": {
+      "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f",
+      "response.md": "3e46c6db2bb24a72db41847c5f5087d56d8be975e9a8e2727e4a1ae6eeeed898"
+    }
+  },
+  "fixture_count": 36,
+  "no_cli_executed": true
+}

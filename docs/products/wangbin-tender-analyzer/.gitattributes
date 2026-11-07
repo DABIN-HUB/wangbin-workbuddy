@@ -1,0 +1,3 @@
+# Preserve byte-exact FIX-6 predeclared inputs and SHA manifests across Windows checkout.
+qa-fix6-prefreeze-* -text
+qa-fix6-prefreeze-fixtures/** -text
