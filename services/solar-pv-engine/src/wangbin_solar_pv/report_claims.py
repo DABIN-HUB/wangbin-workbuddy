@@ -989,19 +989,30 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
         build, first = ledger[:2]
         start, wc = build.get("capex_cash_paid"), build.get("working_capital_increase")
         receipts, savings = first.get("revenue_cash_receipts"), first.get("self_use_avoided_expenditure")
+        transaction = first.get("transaction_cost_cash_paid")
         opex, tax = first.get("opex_cash_paid"), first.get("cash_tax_total_project")
-        if any(v is None for v in (start, wc, receipts, opex, tax)):
+        if any(v is None for v in (start, wc, receipts, transaction, opex, tax)):
             return "项目现金流虽有结果，但缺少与之配套的投资、营运资金或首年收支账簿，不能作分项解释。"
         benefit = (f"合成的余电预计回款{money(receipts)}与自用节费{money(savings)}"
                    if not ground and savings is not None else f"预计上网回款{money(receipts)}")
+        fee_basis = result.get("boundaries", {}).get("SETTLEMENT", {}).get("fee_treatment")
+        fee_note = (f"另行支付交易费用{money(transaction)}，其所得税影响已在项目现金税费中反映，"
+                    if fee_basis == "SEPARATE_LEDGER" else
+                    "售电价格已含交易费用，不另行重复扣减，" if fee_basis == "ALREADY_IN_PRICE" and not transaction else
+                    "交易费用结算口径尚未闭合，")
         replacements = [r for r in ledger[1:] if r.get("replacement_cash_paid")]
-        renewal = (f"；第{replacements[0]['period'].removeprefix('OPERATING_YEAR_')}年计划更换支出"
-                   f"{money(replacements[0]['replacement_cash_paid'])}"
-                   if replacements and str(replacements[0].get("period", "")).startswith("OPERATING_YEAR_") else "")
+        renewal = ""
+        if replacements and str(replacements[0].get("period", "")).startswith("OPERATING_YEAR_"):
+            replacement = replacements[0]
+            year = int(replacement["period"].removeprefix("OPERATING_YEAR_"))
+            renewal = f"；第{year}年计划更换支出{money(replacement['replacement_cash_paid'])}，已在当年现金流扣除"
+            if year < len(flow) and flow[year] < 0:
+                renewal += (f"；该年项目年度净现金流{money(flow[year])}，应就更换年度单独安排资金计划"
+                            "，年度净流出不能推断具体付款瞬间的资金缺口")
         return (f"项目税后年度现金流建设期为{money(flow[0])}，由建设期计划资本支出{money(start)}"
                 f"和营运资金投入{money(wc)}构成；运营首年{benefit}，"
-                f"扣运维现金{money(opex)}与项目现金税费{money(tax)}后，"
-                f"对应首年净流入{money(flow[1])}{renewal}，已在后续年度扣除而非重复计入初始投资。"
+                f"{fee_note}再扣运维现金{money(opex)}与项目现金税费{money(tax)}后，"
+                f"对应首年净流入{money(flow[1])}{renewal}。"
                 "本项是合成年度项目收支预测，不是实际银行流水、已收回款或投资者分红；"
                 "股东出资及分配事件未闭合，不能由项目净流量替代。")
     if item_id == "CH16.04":

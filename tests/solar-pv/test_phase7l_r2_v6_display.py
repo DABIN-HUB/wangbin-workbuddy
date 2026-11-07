@@ -7,7 +7,7 @@ import pytest
 
 from wangbin_solar_pv.catalog import Catalog
 from wangbin_solar_pv.report_export import (
-    ReportModel, _capex_word_rows, _input_label, _plan_word_rows,
+    ReportModel, _capex_word_rows, _formula_status, _input_label, _plan_word_rows,
     _professional_metric_rows, _project_cash_word_rows, _word_number,
 )
 from wangbin_solar_pv.serialization import loads
@@ -31,6 +31,7 @@ def test_word_capex_and_project_cash_rows_show_entire_existing_periods(category)
     assert any("第13年更换" in row[4] for row in capex)
     assert len(cash) == len(ledger) == len(flow["value"]) == 26
     assert cash[0][0] == "建设期" and cash[1][0] == "第1年"
+    assert cash[0][4] == "不适用（建设期）"
     assert cash[13][4] != "0"
     for index, row in enumerate(cash):
         assert row[1] != "UNKNOWN"
@@ -62,3 +63,6 @@ def test_roof_age_and_zero_service_dscr_keep_distinct_meanings():
     assert dscr[1] == "数学上未定义" and "无债务" in dscr[3] and "不是0倍" in dscr[3]
     assert model.metric("financial.phase3e.project_npv")["status"] == "CALCULATED"
     assert model.metric("npv")["status"] == "NOT_IMPLEMENTED"
+    assert model.metric("npv")["reason"] == "OUTSIDE_PHASE3B"
+    assert "已计算1项、早期阶段留置占位1项" in _formula_status(model, "F-NPV")
+    assert "方法未实现" not in _formula_status(model, "F-NPV")

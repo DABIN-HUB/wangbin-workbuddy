@@ -226,12 +226,18 @@ def _reader_text(text: str) -> str:
     for source, label in (("GRID_DELIVERABLE", "电网可交付电量边界"),
                           ("Concept protection only; engineering review pending", "仅为概念性保护方案，待工程审查"),
                           ("FICTIONAL_NOT_APPROVED_METER_NODE", "仅用于合成测算的未审批计量点"),
+                          ("SYNTHETIC-SAME-NODE-UNMETERED", "合成同节点计量标识，未装实际电表"),
+                          ("SYNTHETIC-MODELED-8760H-LOAD-ONLY", "仅有8760小时合成负荷模型，非实测"),
+                          ("SYNTHETIC-PLANNING-NOTE-NO-FIRE-APPROVAL", "合成规划备注，尚无消防批准"),
+                          ("SYNTHETIC-PLANNING-NOTE-NO-STRUCTURAL-SIGNOFF", "合成规划备注，尚无结构专业签章"),
+                          ("SYNTHETIC-PLANNING-NOTE-NO-GRID-OPINION", "合成规划备注，尚无正式电网接入意见"),
+                          ("SYNTHETIC-PLANNING-NOTE-NO-PERMIT", "合成规划备注，尚无正式许可"),
                           ("AVAILABLE_PRE_CONSUMPTION", "消纳前可用电量口径"),
                           ("NOT_APPLICABLE", "不适用"),
                           ("ZERO_DEBT_SERVICE", "本期无应偿债务本息")):
         text = text.replace(source, label)
     text = re.sub(r"\bOPERATING_YEAR_(\d+)\b", lambda match: f"第{match.group(1)}年", text)
-    return re.sub(r"\bpending\b", "待核验", text, flags=re.IGNORECASE)
+    return "待核验" if text.strip().casefold() == "pending" else text
 
 
 def _word_metric_value(metric: dict[str, Any]) -> str:
@@ -406,22 +412,57 @@ def _chart_axis_labels(spec: dict[str, Any]) -> tuple[str, str, str]:
     return title, ("月份" if monthly else "运营年（第1年起）"), f"发电量（{spec.get('unit') or 'UNKNOWN'}）"
 
 
-def _chart_png(spec: dict[str, Any]) -> BytesIO:
+def _chart_font_candidates() -> tuple[Path, ...]:
+    """Use installed local fonts rather than the default font's tofu boxes."""
+    windows = Path(os.getenv("WINDIR", "C:/Windows")) / "Fonts"
+    return (windows / "msyh.ttc", windows / "simhei.ttf",
+            Path("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"),
+            Path("/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc"),
+            Path("/System/Library/Fonts/PingFang.ttc"))
+
+
+def _chart_fonts(labels: tuple[str, str, str]) -> tuple[dict[str, ImageFont.FreeTypeFont], dict[str, Any]]:
+    """Refuse a chart when any required character renders as a missing glyph."""
+    glyphs = set("".join(labels)) - {" "}
+    for path in _chart_font_candidates():
+        if not path.is_file():
+            continue
+        try:
+            fonts = {name: ImageFont.truetype(str(path), size)
+                     for name, size in (("title", 28), ("label", 20), ("tick", 18))}
+            title_font = fonts["title"]
+            missing = title_font.getmask("\U0010ffff")
+            missing_shape = missing.size, bytes(missing)
+            if any(mask.getbbox() is None or (mask.size, bytes(mask)) == missing_shape
+                   for char in glyphs for mask in (title_font.getmask(char),)):
+                continue
+        except (OSError, ValueError):
+            continue
+        return fonts, {"path": str(path), "family": title_font.getname()[0],
+                       "glyphs_checked": len(glyphs), "title_size_px": 28}
+    raise ContractError("REPORT_CHART_FONT_GLYPHS_MISSING")
+
+
+def _chart_png(spec: dict[str, Any], *, font_metadata: dict[str, Any] | None = None) -> BytesIO:
     """Render one canonical series as a small, dependency-local PNG."""
     width, height = 1200, 500
     image = Image.new("RGB", (width, height), f"#{_D_STYLE['white']}")
     draw = ImageDraw.Draw(image)
-    font = ImageFont.load_default()
     title, x_label, y_label = _chart_axis_labels(spec)
-    draw.text((72, 26), title, fill=f"#{_D_STYLE['ink']}", font=font)
-    draw.text((86, 48), y_label, fill=f"#{_D_STYLE['muted']}", font=font)
-    draw.text((width // 2, height - 30), x_label, fill=f"#{_D_STYLE['muted']}", font=font)
-    left, top, right, bottom = 86, 62, width - 36, height - 68
+    fonts, selected = _chart_fonts((title, x_label, y_label))
+    if font_metadata is not None:
+        font_metadata.update(selected)
+    draw.text((86, 15), title, fill=f"#{_D_STYLE['ink']}", font=fonts["title"])
+    draw.text((86, 52), y_label, fill=f"#{_D_STYLE['muted']}", font=fonts["label"])
+    left, top, right, bottom = 98, 100, width - 36, height - 68
+    label_width = draw.textbbox((0, 0), x_label, font=fonts["label"])[2]
+    draw.text(((left + right - label_width) // 2, height - 30), x_label,
+              fill=f"#{_D_STYLE['muted']}", font=fonts["label"])
     values = spec["values"]
     ticks, y_values = _chart_axis_geometry(values, top=top, bottom=bottom)
     for tick, y in ticks:
         draw.line((left, y, right, y), fill=f"#{_D_STYLE['line']}", width=1)
-        draw.text((8, y - 7), f"{tick:,.0f}", fill=f"#{_D_STYLE['muted']}", font=font)
+        draw.text((8, y - 9), f"{tick:,.0f}", fill=f"#{_D_STYLE['muted']}", font=fonts["tick"])
     draw.line((left, top, left, bottom), fill=f"#{_D_STYLE['ink']}", width=2)
     draw.line((left, bottom, right, bottom), fill=f"#{_D_STYLE['ink']}", width=2)
     step = (right - left) / max(1, len(values) - 1)
@@ -430,7 +471,7 @@ def _chart_png(spec: dict[str, Any]) -> BytesIO:
         x = int(left + index * step)
         points.append((x, y))
         label = str(index + 1).zfill(2)
-        draw.text((x - 5, bottom + 12), label, fill=f"#{_D_STYLE['muted']}", font=font)
+        draw.text((x - 10, bottom + 12), label, fill=f"#{_D_STYLE['muted']}", font=fonts["tick"])
     draw.line(points, fill=f"#{_D_STYLE['accent']}", width=4, joint="curve")
     for x, y in points:
         draw.ellipse((x - 5, y - 5, x + 5, y + 5), fill=f"#{_D_STYLE['accent']}")
@@ -611,9 +652,13 @@ def _formula_status(model: ReportModel, fid: str) -> str:
     blocked = sum(str(m.get("status", "")).startswith("BLOCKED") for m in metrics)
     inapplicable = sum(m.get("status") == "NOT_APPLICABLE" for m in metrics)
     unimplemented = sum(m.get("status") == "NOT_IMPLEMENTED" for m in metrics)
+    historical_placeholder = sum(m.get("reason") == "OUTSIDE_PHASE3B"
+                                 for m in metrics if m.get("status") == "NOT_IMPLEMENTED")
+    unimplemented -= historical_placeholder
     undefined = sum(m.get("status") == "UNDEFINED" for m in metrics)
-    unknown = len(metrics) - calculated - blocked - inapplicable - unimplemented - undefined
+    unknown = len(metrics) - calculated - blocked - inapplicable - unimplemented - historical_placeholder - undefined
     states = (("已计算", calculated), ("阻断", blocked), ("不适用", inapplicable),
+              ("早期阶段留置占位", historical_placeholder),
               ("方法未实现", unimplemented), ("数学未定义", undefined), ("待核对", unknown))
     return "本次引用；" + "、".join(f"{name}{count}项" for name, count in states if count) + "。"
 
@@ -1050,14 +1095,16 @@ def _add_canonical_charts(document: Document, specs: list[dict[str, Any]], sourc
     for spec in specs:
         paragraph = document.add_paragraph()
         paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        paragraph.add_run().add_picture(_chart_png(spec), width=Cm(16.4))
+        font_metadata: dict[str, Any] = {}
+        paragraph.add_run().add_picture(_chart_png(spec, font_metadata=font_metadata), width=Cm(16.4))
         document.add_paragraph(
             f"图示反映{spec.get('title', '本次发电量测算')}。数据来自当前合成测算的已计算序列，"
             f"资料引用 {_word_sources(spec['source_ids'], source_map)}；完整计算绑定见测算模型和资料来源清单。"
         )
         receipts.append({"metric_id": spec["metric_id"], "points": len(spec["values"]),
                          "source": "CANONICAL", "formula_id": spec["formula_id"],
-                         "source_ids": list(spec["source_ids"]), "format": "PNG_EMBEDDED"})
+                         "source_ids": list(spec["source_ids"]), "format": "PNG_EMBEDDED",
+                         "font": font_metadata})
     return receipts
 
 
@@ -1855,7 +1902,8 @@ def _project_cash_word_rows(model: ReportModel) -> list[list[Any]]:
         rows.append(["建设期" if period == "CONSTRUCTION" else _reader_text(period), _word_number(amount),
                      _word_number(ledger["capex_cash_paid"]) if "capex_cash_paid" in ledger else "UNKNOWN",
                      _word_number(ledger["working_capital_increase"]) if "working_capital_increase" in ledger else "UNKNOWN",
-                     _word_number(ledger["replacement_cash_paid"]) if "replacement_cash_paid" in ledger else "UNKNOWN"])
+                     _word_number(ledger["replacement_cash_paid"]) if "replacement_cash_paid" in ledger else
+                     "不适用（建设期）" if period == "CONSTRUCTION" else "UNKNOWN"])
     return rows
 
 
@@ -2095,6 +2143,22 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 _add_table(document, ["期别", "项目税后净现金流（元）", "资本支出付款（元）", "营运资金增加（元）", "其中更换付款（元）"],
                            _project_cash_word_rows(model), "建设期及运营全期项目现金流（已计算值，非资本金现金流）",
                            widths_cm=(2.2, 4.0, 3.6, 3.5, 3.7))
+                annual = model.result.get("evidence", {}).get("financial-ledger", {}).get("annual", ())
+                flow = model.metric("financial.phase3e.project_cash_flow") or {}
+                fields = ("revenue_cash_receipts", "self_use_avoided_expenditure", "transaction_cost_cash_paid",
+                          "opex_cash_paid", "cash_tax_total_project")
+                values = flow.get("value") if flow.get("status") == "CALCULATED" else None
+                if (isinstance(values, list) and isinstance(annual, list) and len(values) == len(annual)
+                        and all(all(row.get(field) is not None for field in fields) for row in annual[1:])):
+                    bridge_rows = [[_reader_text(row["period"]), *(_word_number(row[field]) for field in fields),
+                                    _word_number(values[index])] for index, row in enumerate(annual[1:], 1)]
+                    _add_table(document, ["期别", "上网回款（元）", "自用节费（元）", "另付交易费（元）",
+                                          "运维现金（元）", "项目现金税费（元）", "项目净现金流（元）"],
+                               bridge_rows, "运营全期收支桥（按3D账簿原值列示，不将节费记作银行到账）",
+                               widths_cm=(2.0, 2.75, 2.45, 2.3, 2.4, 2.45, 2.65), font_size=9)
+                else:
+                    document.add_paragraph("交易费用的逐期付现账簿或已计算项目现金流缺失；"
+                                           "本页不能声称已完成全期收支桥，须在计算层重新核验。")
             if item_id == "APP06.02":
                 equity = model.metric("financial.phase3e.equity-investor-cash-flow")
                 if equity and equity.get("status") != "CALCULATED":
@@ -2115,7 +2179,10 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                     if npv_outputs:
                         statuses = {"CALCULATED": "已计算", "NOT_IMPLEMENTED": "本阶段方法未实现"}
                         document.add_paragraph("F-NPV 输出实例分别为：" + "；".join(
-                            f"{metric['metric_id']}：{statuses.get(metric['status'], _reader_text(metric['status']))}"
+                            f"{metric['metric_id']}：" +
+                            ("3B阶段留置占位，非整条NPV方法未实现" if metric.get("reason") == "OUTSIDE_PHASE3B"
+                             and metric["status"] == "NOT_IMPLEMENTED" else
+                             statuses.get(metric["status"], _reader_text(metric["status"])))
                             for metric in npv_outputs) + "。已计算的项目NPV不因其他实例未实现而失效。")
                 elif item_id == "APP11.02":
                     definitions = _formula_definitions(model)

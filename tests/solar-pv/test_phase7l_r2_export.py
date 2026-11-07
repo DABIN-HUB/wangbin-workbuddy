@@ -134,7 +134,9 @@ def test_formula_index_separates_reference_execution_block_and_inapplicability(e
     assert any("已计算" in row[5] for row in formulas)
     assert any("阻断" in row[5] for row in formulas)
     assert any("不适用" in row[5] for row in formulas)
-    assert any("已计算" in row[5] and "方法未实现" in row[5] for row in formulas)
+    npv = next(row for row in formulas if row[0] == "F-NPV")
+    assert "已计算1项、早期阶段留置占位1项" in npv[5]
+    assert "方法未实现" not in npv[5]
 
 
 def test_bilingual_glossary_defines_meaning_and_scope(exported):
@@ -152,6 +154,13 @@ def test_reader_input_summary_shows_professional_name_value_unit_and_source_stat
     assert "并网条件·变压器容量" in body
     assert "kVA" in body and "合成假设已提供；未真实核验" in body
     assert "相关参数" not in body and "GRID_DELIVERABLE" not in body
+
+
+def test_known_synthetic_display_markers_are_chinese_without_translating_unknown_text():
+    from wangbin_solar_pv.report_export import _reader_text
+    assert _reader_text("SYNTHETIC-SAME-NODE-UNMETERED") == "合成同节点计量标识，未装实际电表"
+    assert _reader_text("SYNTHETIC-PLANNING-NOTE-NO-GRID-OPINION") == "合成规划备注，尚无正式电网接入意见"
+    assert _reader_text("unmapped free-text approval pending elsewhere") == "unmapped free-text approval pending elsewhere"
 
 
 def test_toc_contains_editable_outline_without_pretending_to_have_refreshed_pages(exported):

@@ -102,7 +102,10 @@ def _ledger_vectors(annual):
 
     receipts = required(rows, "revenue_cash_receipts")
     avoided = required(rows, "self_use_avoided_expenditure")
-    benefit = None if receipts is None or avoided is None else [Decimal(0)] + [a + b for a, b in zip(receipts, avoided)]
+    transaction_fees = required(rows, "transaction_cost_cash_paid")
+    fee = None if transaction_fees is None else [Decimal(0)] + transaction_fees
+    benefit = None if receipts is None or avoided is None or transaction_fees is None else [Decimal(0)] + [
+        receipt + saving - cost for receipt, saving, cost in zip(receipts, avoided, transaction_fees)]
     opex_rows = required(rows, "opex_cash_paid")
     opex = None if opex_rows is None else [Decimal(0)] + opex_rows
     project_tax_rows = required(rows, "cash_tax_total_project")
@@ -122,7 +125,7 @@ def _ledger_vectors(annual):
     fees = required(annual, "finance_fees_paid")
     debt_service = required(rows, "debt_service_due")
     return {
-        "benefit": benefit, "opex": opex, "project_tax": project_tax,
+        "benefit": benefit, "transaction_cost": fee, "opex": opex, "project_tax": project_tax,
         "equity_tax": equity_tax, "capex": capex, "working_capital": working_capital,
         "debt_drawdown": debt_drawdown, "principal": principal,
         "interest": interest, "fees": fees, "debt_service": debt_service,
@@ -171,7 +174,7 @@ def calculate_phase3e(financial_result, methods, catalog):
     # The explicit Phase 3D ledger contains no sourced terminal asset cash
     # realization.  Keep all formulas that depend on it blocked rather than
     # silently treating residual book values as cash.
-    project_ledger_fields = {"revenue_cash_receipts", "self_use_avoided_expenditure", "opex_cash_paid", "cash_tax_total_project", "capex_cash_paid", "working_capital_increase", "working_capital_release"}
+    project_ledger_fields = {"revenue_cash_receipts", "self_use_avoided_expenditure", "transaction_cost_cash_paid", "opex_cash_paid", "cash_tax_total_project", "capex_cash_paid", "working_capital_increase", "working_capital_release"}
     terminal_missing = {"missing_field_ids": ["finance.project_terminal_cash", *sorted(project_ledger_fields & vectors["missing"].keys())], "policy": "NO_DEFAULT_ZERO"}
     project_values = {
         "finance.project_operating_cash_benefit": vectors["benefit"],

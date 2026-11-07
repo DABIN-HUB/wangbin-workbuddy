@@ -56,15 +56,28 @@ def _capacity(inputs):
     watts=nonnegative(_value(inputs,"system.module_power"),"system.module_power")
     if count==0 or watts==0: raise ContractError("ZERO_DC_CAPACITY")
     return count*watts/Decimal(1000)
-def _annual_revenue(settlement, years):
+def _annual_revenue(settlement, years, fee_treatment, tolerance):
+    upstream_treatment=settlement.get("boundaries",{}).get("SETTLEMENT",{}).get("fee_treatment")
+    if upstream_treatment!=fee_treatment:
+        raise ContractError("UPSTREAM_TRANSACTION_FEE_METHOD_MISMATCH")
     rows=[]
     for y in range(1,years+1):
         metric=next((m for m in settlement["results"]["metrics"] if m["metric_id"]==f"revenue.year.{y}"),None)
         if metric is None or metric["status"]!="CALCULATED": raise ContractError("UPSTREAM_REVENUE_LEDGER_MISSING",y)
         ledger=metric.get("details",{}).get("ledger")
-        keys=("gross_benefit","benefit_after_transaction_cost","export_sales_revenue","self_value")
+        keys=("gross_benefit","benefit_after_transaction_cost","export_sales_revenue","self_value",
+              "transaction_cost","embedded_transaction_cost")
         if not isinstance(ledger,dict) or any(ledger.get(k) is None for k in keys): raise ContractError("UPSTREAM_REVENUE_LEDGER_INCOMPLETE",y)
-        rows.append({k:number(ledger[k],f"revenue.year.{y}.{k}") for k in keys})
+        values={k:number(ledger[k],f"revenue.year.{y}.{k}") for k in keys}
+        if values["transaction_cost"]<0 or values["embedded_transaction_cost"]<0:
+            raise ContractError("UPSTREAM_TRANSACTION_COST_INVALID",y)
+        if (fee_treatment=="SEPARATE_LEDGER" and values["embedded_transaction_cost"]!=0
+                or fee_treatment=="ALREADY_IN_PRICE" and values["transaction_cost"]!=0
+                or fee_treatment not in {"SEPARATE_LEDGER","ALREADY_IN_PRICE"}):
+            raise ContractError("UPSTREAM_TRANSACTION_FEE_METHOD_MISMATCH",y)
+        if abs(values["gross_benefit"]-values["transaction_cost"]-values["benefit_after_transaction_cost"])>tolerance:
+            raise ContractError("UPSTREAM_TRANSACTION_FEE_BRIDGE_MISMATCH",y)
+        rows.append(values)
     return rows
 
 def _check_upstream(inputs, settlement):
@@ -199,14 +212,14 @@ def calculate_financial_ledger(exported, methods, settlement, *, catalog=None, s
     if _method(methods,"time.horizon_basis")!="OPERATING_YEARS": raise ContractError("BLOCKED_METHOD_REVIEW","time.horizon_basis")
     if _method(methods,"cash.method") not in {"DIRECT_CASH","ACCRUAL_WORKING_CAPITAL"}: raise ContractError("BLOCKED_METHOD_REVIEW","cash.method")
     _method(methods,"tax.method"); timing=_method(methods,"tax.asset_depreciation_timing"); tax_self=_method(methods,"tax.self_use_basis"); day_count=_method(methods,"time.day_count")
-    capex=_capex(inputs,currency,commissioning,years); opex=_opex(inputs,years); assets=_assets(inputs,years,commissioning); depreciation=_depreciation(inputs,assets,years,timing); revenues=_annual_revenue(settlement,years); debt=_debt(inputs,methods,capex,periods,years)
+    capex=_capex(inputs,currency,commissioning,years); opex=_opex(inputs,years); assets=_assets(inputs,years,commissioning); depreciation=_depreciation(inputs,assets,years,timing); revenues=_annual_revenue(settlement,years,_method(methods,"settlement.fee_treatment"),nonnegative(_method(methods,"precision.abs_tolerance"),"precision.abs_tolerance")); debt=_debt(inputs,methods,capex,periods,years)
     income_rate=ratio(_value(inputs,"tax.corporate_income_rate"),"tax.corporate_income_rate"); vat_rate=ratio(_value(inputs,"tax.vat_output_rate"),"tax.vat_output_rate"); surcharge_rate=ratio(_value(inputs,"tax.surcharge_rate"),"tax.surcharge_rate"); loss_fraction=ratio(_method(methods,"tax.loss_usage_fraction"),"tax.loss_usage_fraction"); refund_fraction=ratio(_method(methods,"tax.vat_refund_fraction"),"tax.vat_refund_fraction")
     project_loss=nonnegative(_method(methods,"tax.opening_project_losses"),"tax.opening_project_losses"); equity_loss=nonnegative(_method(methods,"tax.opening_equity_losses"),"tax.opening_equity_losses"); project_payable=nonnegative(_method(methods,"tax.opening_income_payable"),"tax.opening_income_payable"); equity_payable=project_payable; prepaid=nonnegative(_method(methods,"tax.opening_income_prepaid"),"tax.opening_income_prepaid"); vat_credit=nonnegative(_method(methods,"tax.opening_vat_credit"),"tax.opening_vat_credit"); debt_balance=debt["opening"]; interest_payable=nonnegative(_method(methods,"debt.opening_interest_payable"),"debt.opening_interest_payable"); ar=nonnegative(_method(methods,"cash.opening_receivables"),"cash.opening_receivables"); advances=nonnegative(_method(methods,"cash.opening_advances"),"cash.opening_advances")
     principal_fraction=_vec(methods,"debt.principal_payment_fractions",len(periods)) if debt["has_debt"] else [Decimal(0)]*len(periods)
     interest_fraction=_vec(methods,"debt.interest_payment_fractions",len(periods)) if debt["has_debt"] else [Decimal(0)]*len(periods)
     capitalization_fraction=_vec(methods,"debt.interest_capitalization_fractions",len(periods)) if debt["has_debt"] else [Decimal(0)]*len(periods)
     fee_fraction=_vec(methods,"debt.fee_payment_fractions",len(periods)) if debt["has_debt"] else [Decimal(0)]*len(periods)
-    annual=[]; total_depr=sum(depreciation["annual"].values(),Decimal(0)); capex_payable=capex["initial_total"]; capex_paid_to_date=Decimal(0)
+    annual=[]; total_depr=sum(depreciation["annual"].values(),Decimal(0)); capex_payable=capex["initial_total"]; capex_paid_to_date=Decimal(0); transaction_payable=Decimal(0)
     construction_pay=capex["initial_total"]*capex_fraction[0]; capex_payable-=construction_pay
     if construction_pay!=capex["payment_by_year"].get(0,Decimal(0)): raise ContractError("CAPEX_DATE_PAYMENT_MISMATCH","CONSTRUCTION")
     capex_paid_to_date += construction_pay
@@ -218,7 +231,11 @@ def calculate_financial_ledger(exported, methods, settlement, *, catalog=None, s
     annual.append(construction_row)
     debt_balance += debt["rows"]["CONSTRUCTION"]["drawdown"]
     for y in range(1,years+1):
-        period=f"OPERATING_YEAR_{y}"; rev=revenues[y-1]; taxable_net=rev["benefit_after_transaction_cost"] if tax_self=="TAXABLE_INCREMENTAL_SAVING" else rev["export_sales_revenue"]
+        period=f"OPERATING_YEAR_{y}"; rev=revenues[y-1]; taxable_net=rev["benefit_after_transaction_cost"] if tax_self=="TAXABLE_INCREMENTAL_SAVING" else rev["export_sales_revenue"]-rev["transaction_cost"]
+        transaction_opening=transaction_payable
+        transaction_accrued=rev["transaction_cost"]
+        transaction_paid=(transaction_opening+transaction_accrued)*opex_fraction[y-1]
+        transaction_payable=transaction_opening+transaction_accrued-transaction_paid
         opex_accrual=opex["annual"][y]; opex_cash=opex_accrual*opex_fraction[y-1]; dep=depreciation["annual"][y]; dr=debt["rows"][period]; rate=debt.get("rate",Decimal(0)); replacement_accrued=capex["replacement_accrued_by_year"][y]; replacement_paid=capex["replacement_paid_by_year"][y]; capex_cash=capex["initial_total"]*capex_fraction[y]+replacement_paid
         if capex_cash!=capex["payment_by_year"].get(y,Decimal(0)): raise ContractError("CAPEX_DATE_PAYMENT_MISMATCH",period)
         capex_paid_to_date+=capex_cash; opening_capex_payable=capex_payable; capex_payable+=replacement_accrued-capex_cash
@@ -252,9 +269,15 @@ def calculate_financial_ledger(exported, methods, settlement, *, catalog=None, s
         if abs(receipt-current_collection-terminal_collection)>nonnegative(_method(methods,"precision.abs_tolerance"),"precision.abs_tolerance"): raise ContractError("RECEIVABLE_CASH_BRIDGE_MISMATCH",period)
         service=ledger_formula("F-DEBT-SERVICE",{"debt.principal_due":dr["principal_due"],"debt.interest_due":interest,"debt.service_fees_due":dr["fees_due"]})["value"]
         row={"period":period,"revenue_after_transaction_cost":rev["benefit_after_transaction_cost"],"invoiced_gross":invoice,"self_use_avoided_expenditure":avoided,"revenue_cash_receipts":receipt,"receivables_opening":ar_opening,"receivables_terminal_collection":terminal_collection,"accounts_receivable_closing":ar,"opex_accrued":opex_accrual,"opex_cash_paid":opex_cash,"depreciation":dep,"asset_book_value_closing":depreciation["book"][y],"capex_accrued":replacement_accrued,"replacement_capex_accrued":replacement_accrued,"replacement_cash_paid":replacement_paid,"capex_cash_paid":capex_cash,"capex_payable_opening":opening_capex_payable,"capex_payable_closing":capex_payable,"capex_payment_residual":capex_residual,"debt_drawdown":dr["drawdown"],"principal_due":dr["principal_due"],"principal_paid":paid_principal,"interest_accrued":interest,"interest_paid":paid_int,"finance_fees_paid":fee_paid,"interest_capitalized":cap_int,"interest_payable_closing":interest_close,"debt_service_due":service,"debt_balance_closing":debt_close,"taxable_income_project":project_base,"taxable_income_equity":equity_base,"tax_loss_closing":loss_close,"tax_loss_project_closing":project_loss_close,"tax_loss_equity_closing":equity_loss_close,"income_tax_accrual":tax_charge,"income_tax_accrual_project":project_charge,"income_tax_accrual_equity":equity_charge,"income_tax_cash_paid":tax_paid,"income_tax_cash_paid_project":project_paid,"income_tax_cash_paid_equity":equity_paid,"income_tax_payable_closing":payable_close,"income_tax_payable_project_closing":project_payable_close,"income_tax_payable_equity_closing":equity_payable_close,"tax_cash_bridge":tax_bridge,"tax_cash_bridge_project":project_bridge,"tax_cash_bridge_equity":equity_bridge,"vat_output":vat_output,"vat_input_eligible":vat_input,"vat_credit_closing":vat_close,"other_cash_taxes":other,"other_cash_taxes_project":project_other,"cash_tax_total":cash_tax,"cash_tax_total_project":project_cash_tax,"cash_tax_total_equity":cash_tax if debt["has_debt"] else project_cash_tax,"working_capital_increase":Decimal(0),"working_capital_release":nonnegative(_value(inputs,"finance.working_capital"),"finance.working_capital") if y==years else Decimal(0),"phase3e_cashflow":None}
+        row.update(transaction_cost_accrued=transaction_accrued,
+                   transaction_cost_cash_paid=transaction_paid,
+                   transaction_cost_payable_opening=transaction_opening,
+                   transaction_cost_payable_closing=transaction_payable)
         annual.append(row); debt_balance=debt_close; interest_payable=interest_close; project_loss=project_loss_close; equity_loss=equity_loss_close; project_payable=project_payable_close; equity_payable=equity_payable_close; vat_credit=vat_close
     if capex_payable != 0:
         raise ContractError("CAPEX_PAYMENT_BALANCE_NOT_CLOSED")
+    if transaction_payable != 0:
+        raise ContractError("TRANSACTION_COST_PAYMENT_BALANCE_NOT_CLOSED")
     identity=calculation_identity(inputs.validated,methods,catalog,scenario={"scenario_id":scenario_id}); snapshot=identity["source_snapshot"]; snapshot["phase3c_settlement"]={"result_hash":upstream_hash,"project_id":inputs.validated.project.project_id}; source_id=digest(snapshot); payload=identity["input_identity_payload"]; payload["source_snapshot_id"]=source_id; payload["upstream_settlement_result_hash"]=upstream_hash; input_hash=digest(payload)
     result=deepcopy(settlement); result.update({"schema_version":RESULT_SCHEMA_VERSION,"model_version":MODEL_VERSION,"run_id":str(uuid4()),"created_at":datetime.now(timezone.utc).isoformat(),"scenario_id":scenario_id,"input_hash":input_hash,"source_snapshot_id":source_id,"source_snapshot":snapshot,"status":"CALCULATED_SYNTHETIC" if methods.data_mode=="SYNTHETIC" else "CALCULATED_CONDITIONAL","inputs":{**result["inputs"],"identity_payload":payload,"normalized":inputs.validated.export["normalized_inputs"],"method_config_hash":methods.hash,"used_fields":sorted(set(result["inputs"].get("used_fields",[]))|set(inputs.used)),"upstream_settlement_result_hash":upstream_hash},"boundaries":{**result["boundaries"],"FINANCIAL_LEDGER":{"phase":"3D","cashflow_assembly":"PHASE3E_NOT_IMPLEMENTED","currency":currency}},"formula_snapshot":{**result["formula_snapshot"],"financial_definitions":{fid:catalog.formulas[fid] for fid in FORMULA_IDS}},"evidence":{**result["evidence"],"financial-ledger":_jsonable({"periods":periods,"annual":annual,"capex":capex,"opex":opex,"depreciation":depreciation,"upstream_settlement_result_hash":upstream_hash,"lifecycle":{"capex_total":capex["total"],"opex_cash":sum((x.get("opex_cash_paid",Decimal(0)) for x in annual),Decimal(0)),"depreciation":total_depr,"ending_debt":debt_balance}}),"deferred-financial-domains":{"project_cash_flow":"PHASE3E_NOT_IMPLEMENTED","equity_cash_flow":"PHASE3E_NOT_IMPLEMENTED","NPV":"PHASE3E_NOT_IMPLEMENTED","IRR":"PHASE3E_NOT_IMPLEMENTED","LCOE":"PHASE3E_NOT_IMPLEMENTED"}}})
     result["results"]["metrics"]=[m for m in result["results"]["metrics"] if not m["metric_id"].startswith("financial.")]

@@ -35,7 +35,8 @@ def _file(path: Path) -> dict:
             "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
 
 
-def deliver(run_dir: Path, output_root: Path, output_name: str, *, fixture_file: Path | None = None) -> dict:
+def deliver(run_dir: Path, output_root: Path, output_name: str, *, fixture_file: Path | None = None,
+            canonical_file: Path | None = None) -> dict:
     if not output_root.is_dir():
         raise ValueError("OUTPUT_ROOT_MUST_EXIST")
     output = output_root / output_name
@@ -44,8 +45,15 @@ def deliver(run_dir: Path, output_root: Path, output_name: str, *, fixture_file:
     catalog = Catalog()
     exported = loads((run_dir / "input.json").read_bytes())
     validated = validate_export(exported, catalog)
-    result = loads((run_dir / "project/canonical.json").read_bytes())
+    result = loads((canonical_file or run_dir / "project/canonical.json").read_bytes())
     validate_result(result, catalog)
+    if canonical_file is not None:
+        baseline = loads((run_dir / "project/canonical.json").read_bytes())
+        validate_result(baseline, catalog)
+        if (result["source_snapshot"].get("datasets") != baseline["source_snapshot"].get("datasets")
+                or result["inputs"].get("upstream_settlement_result_hash") !=
+                baseline["inputs"].get("upstream_settlement_result_hash")):
+            raise ValueError("CANONICAL_OVERRIDE_UPSTREAM_IDENTITY_MISMATCH")
     if validated.project.project_id != result["project_id"] or validated.project.pv_type != result["pv_type"]:
         raise ValueError("PROJECT_IDENTITY_MISMATCH")
     if result["inputs"]["identity_payload"]["phase2_input_hash"] != exported["input_hash"]:
@@ -123,9 +131,11 @@ def main() -> None:
     parser.add_argument("output_root", type=Path)
     parser.add_argument("output_name")
     parser.add_argument("--editorial-fixture", type=Path)
+    parser.add_argument("--canonical", type=Path, help="Recalculated canonical with the same Phase 2/D3/3C source")
     args = parser.parse_args()
     print(json.dumps(deliver(args.run_dir, args.output_root, args.output_name,
-                             fixture_file=args.editorial_fixture), ensure_ascii=False, indent=2))
+                             fixture_file=args.editorial_fixture, canonical_file=args.canonical),
+                     ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
