@@ -32,3 +32,15 @@ task_id: t_3d3bb16e
 
 ## 错误与局部处理状态 [15.3,§32,D]
 `INVALID_INPUT`（无效/不安全参数）、`UNSUPPORTED_FORMAT`（不支持或伪扩展名）、`UNREADABLE_SOURCE`（损坏、加密、坏编码、空文档）、`UNSUPPORTED_CONTENT`（只支持正文/普通表格，记录不可处理部分）、`RESOURCE_LIMIT`（超实现公布上限）、`NO_SCOPE_SOURCE`（可继续整理但不可算覆盖）、`VERSION_CONFLICT`（可继续列冲突但覆盖 N/A）、`OUTPUT_FAILED`（任一输出失败不能报完全成功）、`IDENTITY_REVIEW`（无法安全匹配旧 ID）。错误逐文件标路径、位置/原因和已处理范围；有有效部分可输出 `PARTIAL` 且列表指出未覆盖部分，不能以空成功代替失败；全无可处理内容返回失败且不生成误导性完整报告。进程退出码本冻结建议 `0` 完整、`2` 输入/格式失败、`3` 部分可处理、`4` 输出失败；T02 若入口遵循其他既有规范须显式记录映射并让验收断言实际帮助，**这些数字不是已验证的平台退出码**。源文不修改，诊断不泄露未授权路径/客户正文。
+
+## AUDIT-R1 ACC-F01–F04 事实与判定补充合同（t_4ddc9074）
+此处补充上方 §15 合同，不把原 `ACC-03` 的“编号优先”读成编号即支持，也不把 §15.7 的 Windows Server 2019 样例读成枚举白名单。新一轮具体规则由附件19 §15.2–15.8、审查 §07 驱动；旧包探针 `docs/qa/audit-r1-012-baseline-results.json` 仅提供旧实际，不提供正确预期。新版本尚未测试。
+
+**可执行事实链：**从用户授权的 TXT/MD/DOCX 普通正文/表格、CSV/XLSX 清单中，逐项记 `source_id`、相对路径+行/表格单元格、原文、`requirement_id/condition_id/evidence_id`、显式编号/引用及关系依据；标注证据性质（目录 `LISTED_ONLY`、自述 `CLAIM_ONLY`、实际可读内容/测试记录、是否有客户确认）。数值条件提取 `object, metric, comparator, threshold, quantity_unit, scenario, scope`，结果提取 `object, metric, actual_value, quantity_unit, scenario, scope, polarity`；环境条件提取 `target_os, target_version, required_steps`，证据记录实际 OS/版本和已有步骤；测试条件记录 `test_object, test_scope, executed, passed, failed, negation`。字段取不到记 `UNKNOWN` 与具体缺项/来源，不把 NULL 写 0。解析/模型生成的结构事实须由原文支持并经类型、来源及数值校验，模型猜测不得进支持/不符合结论。
+
+1. 编号只筛候选，之后对每个子条件比较对象、度量、场景、单位和数值。`至少 N` 为 `actual >= N`（含等号），`高于 N` 为 `actual > N`，`不超过 N` 为 `actual <= N`；其它比较词必须能映射到明确运算符，歧义待确认。不以字符串包含数字判断；10000 个**并发登录人数**与 12000 次/日登录不能直接换算；同量纲同口径且有明确换算依据才能换算，缺单位/数量/场景则记录不可比，不宣称满足或明确不符合。可比不足才 `NONCONFORMING`；可比达到才 `EVIDENCE_FOUND`；无关备份证据只留关联候选及无关说明，不能计已覆盖。若语句有其他独立条件，需逐项判断后汇总，不能凭单个数完成整个要求。
+2. 部署文档核的是本次提供内容是否覆盖目标系统/版本和要求的步骤。Ubuntu-only 对 Windows Server 2022 或 Debian 12 目标，仅其他环境存在时标目标证据未找到（`NO_EVIDENCE_FOUND`；若关联/版本不确定则 `PENDING_CONFIRMATION`）且说明不能推断软件不支持；**明确**“仅 Ubuntu、未提供 Windows Server 2022 步骤”的已关联文档构成所交文档的 `NONCONFORMING` 发现。对应目标系统+版本且所需完整安装/配置/启动/验证步骤有来源则 `EVIDENCE_FOUND`；缺步骤按子条件 `PARTIAL_EVIDENCE`/`NO_EVIDENCE_FOUND`，明确声明缺该步骤才记录不符合。替换 OS/版本不改变规则。
+3. 全部测试通过需明确测试对象、范围和执行事实；在确定相同范围 `executed=100, passed=100, failed=0` 支持，无论原文含“失败”二字；`executed=100, passed=99, failed=1` 是可比范围的不符合。互相矛盾的计数或同号多来源相反结论按 `CONFLICT` 并保留双方及独立发现，不能择较晚者；仅“未发现失败”无范围或未给执行总数为覆盖待确认 `PENDING_CONFIRMATION`，**非**确证失败或全量支持。对于 0 与空值/未提及明确区别，不能假设通过数等于总数。
+4. 复合交付项先拆出**原文已有**各子条件，接口文档可读且对应要求、部署说明缺失时 `PARTIAL_EVIDENCE`，两项确证文本支持才 `EVIDENCE_FOUND`；只有“开发完成”不作交付/测试支持。新材料须使用 `previous_snapshot` 引用的受控旧事实+新来源比较，保留未受影响 ID、状态和发现；若旧证据被新证据反驳，保持冲突并显示新旧双方。没有快照不得捏造 RESOLVED。不可比较项保留其候选关联/未知原因，不得统一判 `PENDING` 以隐藏可确定的正反例。
+
+**输出、错误与核验：**沿用原六表、同名 DOCX 与增量快照，逐条件存实测值/阈值/单位/场景/版本/失败数或缺失原因、运算及对应来源，主状态遵循上文 §16 优先级；独立缺口/不符合/冲突不得被主状态覆盖。覆盖分子仅计有依据支持的有效子条件，未知值不算零；同一快照在 XLSX、DOCX、JSON 的要求/条件数、状态、证据 ID/行号与未覆盖数量应一致。`INVALID_INPUT`、`NO_SCOPE_SOURCE`、`UNREADABLE_SOURCE`、`UNSUPPORTED_CONTENT`、`OUTPUT_FAILED` 等原错误合同沿用，部分可读必须标覆盖缺口，不能空成功；明确不符合是**业务结论**，CLI 进程可正常退出，不能只凭 exit=0 判断业务 PASS。严格输入授权和防公式注入；日志不泄露客户正文。供后续角色记录实际 `--help`、依赖/版本、最终 ZIP SHA 和命令退出码；无宿主/平台实测则 L4/L5=NOT_TESTED。

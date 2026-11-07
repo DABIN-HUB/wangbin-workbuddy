@@ -45,3 +45,30 @@ task_id: t_3d3bb16e
 开发者须先核对实际入口帮助、落地每个虚构样例文件、执行 R01–03/ACC-A02..A14/B01..07，记录每案的命令、exit code、输出快照、证据定位以及两个文件读取断言；QA 使用独立预期，不从被测结果生成标准答案。工厂既有命令（产品尚未注册时预期退出 2，不能当测试通过）：`python -m tooling.products --help`；`python -m tooling.products validate --id wangbin-project-acceptance-check`；`python -m tooling.products verify --id wangbin-project-acceptance-check`。实施后以真实 CLI 帮助填入如 `python -m <实际产品模块> --help` 与逐案实际命令；此处不虚构可执行入口。候选包需独立干净解压后再重跑上述核心/错误/三问流程，记录哈希和具体依赖；独立 QA 与平台实测分开。
 
 §33 本地评测草案：独立于 Skill ZIP 的 `cases.jsonl`、`header.json` 和必要 `workspace/` 虚构输入，覆盖正常、边界/错误、六条双语推荐问句、前置回合与增量、证据准确与自然表达；**字段须先用真实官方模板核验**，不把此处表格当可上传 JSONL，不自行臆造平台枚举。平台模型、自然语言执行、多轮、上传、审核、上架、许可证均 `NOT_TESTED`，只有实际产生的逐案日志可以改状态。
+
+## AUDIT-R1 Q02 新增独立 expected/actual 矩阵（t_4ddc9074）
+原上文“均 NOT_TESTED”指 **T01 编写时**；原 0.1.2 的旧 QA 与当前新审查 L3 分开记，原本 PASS/FAIL 均不改写。以下 `old actual` 精确指 SHA `5117bd7202cd6a322c3aae8246dad79edeb4cd9a876cbcae800ee78ad2a9df57` 的 ZIP 从干净目录执行的 `docs/qa/audit-r1-012-baseline-results.json`（t_c08511ed，20 例，所有 CLI exit 0，XLSX/DOCX/JSON 均回读）；`new actual` 全部 **NOT_TESTED**，QA 不能从新版 actual 自动写 expected。每案测试文件须由独立 QA 以虚构项目建在授权输入根，实际 CLI `--help` 为准；公共最小输入：`scope.md` 行 1 要求，`test.md`/`deploy.md` 行 1 材料；指定 `--scope-source scope.md --effective-version-ref scope.md`，测试记录用 `--evidence-source test.md`，交付部署文档用 `--delivery-source deploy.md`（以实际 CLI `--help` 为准），项目名称、授权根和输出目录明确给定。下表只要注明不同之处即可生成真实文件；`R01 ` 在证据正文中保留，另测 `R01：` 编号被读取器剥离的变体，不能把后者未关联的 PENDING 当成比较正确。负面/未知都要验条件发现和来源，不只看主状态。
+
+| 缺陷/独立 case | 文件内替换内容或变体（默认要求 `R01：同一测试场景下至少支持10000个并发登录。`） | 人工 expected（V2 §15 + 审查 §07/§12） | old actual / 结果 | new actual |
+|---|---|---|---|---|
+| F01-N10 | `test.md`: `R01 同一测试场景下实测最大支持10个并发登录。` | 可比 10<10000，`NONCONFORMING`，指出阈值/来源 | `EVIDENCE_FOUND` FAIL (`F01-login-10`) | NOT_TESTED |
+| F01-N9999 | 上句 10→9999 | 9999<10000，`NONCONFORMING` | `EVIDENCE_FOUND` FAIL (`F01-login-9999`) | NOT_TESTED |
+| F01-B10000/P10001/P12000 | 实测分别 10000/10001/12000 个并发登录，同场景 | `EVIDENCE_FOUND`，含等号/大于；不得全部 PENDING | 三案均 `EVIDENCE_FOUND`，**结果子项 PASS；旧机制不能比较** | NOT_TESTED |
+| F01-irrelevant | `test.md`: `R01 数据库备份已完成。` | 同号仅候选，不支持登录；无可比实际值 `NO_EVIDENCE_FOUND` 或若关系确有歧义 `PENDING_CONFIRMATION`，绝非支持 | `EVIDENCE_FOUND` FAIL | NOT_TESTED |
+| F01-missing/unit | `test.md`: `R01 同一测试场景下已测试并发登录。`；另案 `R01 同一测试场景下支持12000次每日登录。` | 不可比，不宣称支持/明确不符合；列缺数量或单位/口径；新版加测等义改写 | 两案均 `EVIDENCE_FOUND` FAIL (`F01-no-quantity`/`F01-unit-mismatch`) | NOT_TESTED |
+| F01-comparator/paraphrase | 另建 `scope.md`: `R01：同一压测场景同时并发登录的人数不得低于8000人。`；证据同指标同场景实测 7999/8000/8001 人；另测“高于8000”下 8000/8001 | ≥ 时不足/等于/超过分别 `NONCONFORMING/EVIDENCE_FOUND/EVIDENCE_FOUND`；> 时等于不符合/超过支持；换数字和改写无特判 | NOT_TESTED（旧探针无此案） | NOT_TESTED |
+| F01-R01-colon | 保持 N10，但证据写 `R01：同一测试场景下实测最大支持10个并发登录。` | 读取器需保留证据自身编号参与候选关联，仍按 10 判不符合；若关联确实无法确认须说明来源，绝非用误剥离冒称通过 | 初次旧探针曾假 `PENDING`，非最终 N10 证据；此**输入形态**未作为最终 20 案断言 | NOT_TESTED |
+| F02-other-OS | `scope.md`: `R01：提供 Windows Server 2022 部署说明。`；`deploy.md`: `R01 Ubuntu 部署说明：安装软件并配置端口。`；另案目标 Debian 12，材料 `R01 Ubuntu 22.04 部署说明：安装服务组件、配置端口、启动服务。` | 只有其他环境，目标无支持，`NO_EVIDENCE_FOUND`/待确认关联；不能说软件绝对不支持该目标 | 两案均 `EVIDENCE_FOUND` FAIL (`F02-ubuntu`/`F02-linux`) | NOT_TESTED |
+| F02-explicit | 上述目标；`deploy.md`: `R01 仅覆盖Ubuntu，未提供Windows Server 2022步骤。` | 所交文档明确不满足该目标，`NONCONFORMING` 与原文/来源；不说软件未开发 | `NO_EVIDENCE_FOUND` 且无准确不符合发现 FAIL | NOT_TESTED |
+| F02-positive | 目标 Windows Server 2022、证据为对应版本安装/配置/启动/验证步骤；再换目标 Windows Server 2025 与匹配证据 | 两案 `EVIDENCE_FOUND`，不依赖固定版本 | 两案 `EVIDENCE_FOUND`，正向结果子项 PASS | NOT_TESTED |
+| F02-version/paraphrase | 目标改 Debian 12，材料 Debian 11 的完整步骤；再改 Debian 12 步骤但仅安装无启动/验证；再改“Debian GNU/Linux 12 安装配置启动验证指南” | 11 不支持 12（仅不同版本未明确排除时不推断产品不支持）；缺步骤不得整体支持；等义 OS/版本且步骤全才支持 | NOT_TESTED | NOT_TESTED |
+| F03-zero | `scope.md`: `R01：全部登录测试用例通过。`；`test.md`: `R01 共执行100项登录用例，成功100项，失败次数为0。` | `EVIDENCE_FOUND`，零不是未知且不因“失败”触发不符合 | `NONCONFORMING` FAIL | NOT_TESTED |
+| F03-one | 同要求，证据执行100项、成功99、失败1 | `NONCONFORMING`，有明确失败，不得全通过 | `NONCONFORMING`，负例结果子项 PASS | NOT_TESTED |
+| F03-unspecified | 同要求，证据仅 `R01 未发现失败。` | 范围/总数缺失，`PENDING_CONFIRMATION`，不能断言全通过或确证失败 | `NONCONFORMING` FAIL | NOT_TESTED |
+| F03-zero-variants | 改 37/37/0 写“失败0项”；37/36/1；“未出现失败”但只说明冒烟用例 5 项，要求全部回归测试 | 完整同范围零失败支持；一失败不符合；范围不一致待确认，缺数字不补零 | NOT_TESTED | NOT_TESTED |
+| F04-compound | `scope.md`: `R01：提供接口文档和部署说明。`；只给有效接口文档 | 两子条件，接口支持+部署缺，主 `PARTIAL_EVIDENCE`，缺口仍在 | `PARTIAL_EVIDENCE` 子项 PASS | NOT_TESTED |
+| F04-claim/conflict/two | 仅 `R01 开发完成`；两份同号测试分别全通过/99 成功失败1；接口和部署两件实际内容各一份 | 自述 `NO_EVIDENCE_FOUND`；冲突 `CONFLICT` 双来源保留；两件对应且内容可读 `EVIDENCE_FOUND` | 三子项分别 PASS，非 F04 全部已证明 | NOT_TESTED |
+| F04-incremental | 先保存复合项仅接口快照及另一 R02 的旧发现，再补部署实际内容并指定旧快照 | 仅 R01 改 `EVIDENCE_FOUND`，显示新证据解决旧缺口；R02 ID、状态/发现不变；无快照不能伪造已解决 | NOT_TESTED（本轮基线未含多轮增量） | NOT_TESTED |
+| F04-cross-output | 以上明确正/负/复合/冲突重开六表 XLSX、DOCX、JSON | 同一要求和条件数、主状态、独立发现、来源行号、缺口数量在三份输出一致；DOCX 可编辑且不写“已验收通过” | 仅所述旧 20 案重开通过**文件可读性**，旧 F01–F03 错误状态也跨输出一致；业务正确性 FAIL | NOT_TESTED |
+
+**执行/记录表模板（独立 QA 逐案填写，不填假结果）：** case_id、V2+本合同规则 ID、输入相对路径及 SHA、实际 CLI 命令与 cwd、退出码、候选 ZIP 版本/哈希、快照要求/条件 status 与 support/negative/missing/conflict、引用源行、六表每表/关键行及 DOCX 章节/表格/来源回读、expected vs actual、L3 PASS/FAIL、风险。多项要求及多来源必须逐子条件查，正向不能全 PENDING。L1 源码、L2 单测可另报；L3 从**最终**不可变 ZIP 干净解压、不继承开发工作树 PYTHONPATH，正式 CLI 用真实文件并回读；L4 用真实宿主模型对原始文件按中英问法首问→追问→补材料/改条件重跑，不以预填 JSON 或模板对话代替；L5 WorkBuddy 安装/多轮实跑需独立权限，未执行写 NOT_TESTED。许可证、依赖隔离安装、解压安全、宏外链/提示注入/公式注入/路径逃逸按原合同和审查 §15–16 逐项验，未运行逐项 NOT_TESTED。新版未验证前不能宣称审查修复 PASS 或发布。
