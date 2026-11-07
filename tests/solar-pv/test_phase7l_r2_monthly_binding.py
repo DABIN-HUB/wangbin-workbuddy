@@ -5,7 +5,8 @@ from copy import deepcopy
 
 import pytest
 
-from wangbin_solar_pv.report_export import ReportModel, _sheet_data
+from wangbin_solar_pv.report_export import ReportModel, _resource_rows, _sheet_data, _word_number
+from wangbin_solar_pv.report_resource_display import prepare_resource_word_rows
 
 
 _FIELDS = {
@@ -218,3 +219,54 @@ def test_valid_local_month_boundaries_are_stated_in_source_note():
     assert "Asia/Shanghai" in _row(model, 1)[-1]
     assert "2025-01-01—2025-01-31" in _row(model, 1)[-1]
     assert "2025-02-01—2025-02-28" in _row(model, 2)[-1]
+
+
+def _display(model):
+    return prepare_resource_word_rows(model.result, _resource_rows(model)[1], _word_number)
+
+
+def test_word_reference_resolves_each_field_atom_without_squashing_months_or_projects():
+    model = _model()
+    model.result.update(project_id="roof-a", source_snapshot_id="snapshot-1")
+    intro, irradiance, weather, mapping = _display(model)
+    assert len(mapping) == 14
+    assert "synthetic-monthly-2025" in intro and _DOCUMENT in intro
+    assert len({row[-1] for row in irradiance}) == 2
+    assert [row[-1] for row in irradiance] == [row[-1] for row in weather]
+    assert weather[0][3] == "90%" and weather[1][3] == "100%"
+    for month, row in enumerate(irradiance, 1):
+        for field in _FIELDS:
+            atom = _record(model, f"m{month:02d}", field)
+            binding = mapping[f"{row[-1]}/{field}"]
+            assert (binding["month"], binding["row_id"], binding["field_instance_id"],
+                    binding["source_id"], binding["unit"], binding["value"]) == (
+                        month, f"m{month:02d}", atom["field_instance_id"], atom["source_id"],
+                        atom["unit"], atom["value"])
+    other = _model()
+    other.result.update(project_id="ground-b", source_snapshot_id="snapshot-1")
+    assert set(_display(other)[3]).isdisjoint(mapping)
+
+
+def test_word_reference_follows_reordered_rows_and_never_masks_wrong_source():
+    model = _model()
+    model.result.update(project_id="roof-a", source_snapshot_id="snapshot-1")
+    model.result["inputs"]["normalized"]["resource.monthly"].reverse()
+    _, irradiance, _, mapping = _display(model)
+    assert [row[0] for row in irradiance] == [1, 2]
+    assert len(mapping) == 14
+    _record(model, "m01", "ghi")["source_id"] = "unrelated-source"
+    _, irradiance, _, mapping = _display(model)
+    assert irradiance[0][1] == "UNKNOWN"
+    assert f"{irradiance[0][-1]}/ghi" not in mapping
+    assert f"{irradiance[0][-1]}/dni" in mapping
+
+
+def test_word_reference_does_not_invent_identity_when_month_row_is_duplicated():
+    model = _model()
+    model.result.update(project_id="roof-a", source_snapshot_id="snapshot-1")
+    parent = model.result["source_snapshot"]["phase2"]["records"][0]
+    parent["value"].append(deepcopy(parent["value"][0]))
+    _, irradiance, _, mapping = _display(model)
+    assert irradiance[0][-1] == "UNKNOWN"
+    assert not any(value["month"] == 1 for value in mapping.values())
+    assert irradiance[1][-1] != "UNKNOWN"

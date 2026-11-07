@@ -1,0 +1,200 @@
+{
+  "version": "phase7l-r2-v6",
+  "calculation_recomputed": false,
+  "cases": {
+    "industrial_rooftop": {
+      "identity": {
+        "model_version": "solar-pv-engine/0.3.0",
+        "run_id": "1ea495b0-b638-4a35-986d-38d9d364586d",
+        "input_hash": "656f694764e2afc1437cb6db603ecc23a9072fa5bea28495c9b036d540624556",
+        "source_snapshot_id": "99d4cf30ec62cb5fa433fb94f91af514b2de7e93c723b4ef87e31f950d392dd9",
+        "result_hash": "398474aff972dee9f0a34bf85380a348bb27f8d4b102d7337ca0478ae0d34fe4"
+      },
+      "status": "DRAFT_PARTIAL",
+      "files": {
+        "DELIVERY.md": {
+          "bytes": 4622,
+          "sha256": "c281e977fbe5676f51beae9c926cb5909e9265ba45d1d6d85900465445db60b6"
+        },
+        "industrial_rooftop/calculation-and-source-evidence.json": {
+          "bytes": 62155,
+          "sha256": "10f4ae7a01159d7d3b4c407788046e40bd35512fabf96d6531d59d0afe624cd6"
+        },
+        "industrial_rooftop/canonical.json": {
+          "bytes": 4773911,
+          "sha256": "b763dec6bd6d37cea78525c777ccfd8a4133a7a18b6c646385f329019671dca3"
+        },
+        "industrial_rooftop/central-claim-review.json": {
+          "bytes": 111784,
+          "sha256": "405cb0c71308621c349a8a541d881623622b4e5471962deb631481d215d574fa"
+        },
+        "industrial_rooftop/content-checklist.json": {
+          "bytes": 371601,
+          "sha256": "7f23b90486cfc9f4c24a58863977d04f5e45b0d53a8a92ccca040b9b8e07506e"
+        },
+        "industrial_rooftop/FICTIONAL_ 165 kWp factory-roof calculation demo (no real site)-光伏预可研报告.docx": {
+          "bytes": 106506,
+          "sha256": "2fb736dd56c9b700ae8c65559309bdc8d7d7e7f60da6102aaf55f73c8a07b74b"
+        },
+        "industrial_rooftop/FICTIONAL_ 165 kWp factory-roof calculation demo (no real site)-测算模型.xlsx": {
+          "bytes": 103735,
+          "sha256": "06a7400385b373edba5f2268066b077741e348df746b5b176a7c1585b2c2339c"
+        },
+        "industrial_rooftop/FICTIONAL_ 165 kWp factory-roof calculation demo (no real site)-资料来源与假设清单.xlsx": {
+          "bytes": 159275,
+          "sha256": "db3d6a0809480a5556a99149714f4c3fb1e0a1af762d7a70510a5c1187e8d383"
+        },
+        "industrial_rooftop/INDEPENDENT-READBACK-v6.json": {
+          "bytes": 1227,
+          "sha256": "73bec103f4ba6712d42b815d538c6137dbc1322e14790d5c9c969e80bdcc3ab9"
+        },
+        "industrial_rooftop/input-coverage-matrix.json": {
+          "bytes": 920330,
+          "sha256": "d5606646683a49e9bc5b66e3240f41b18115c616c5e94ba75f4e0181096b4381"
+        },
+        "industrial_rooftop/manifest.json": {
+          "bytes": 26271,
+          "sha256": "2b07a69c1f935eadc5bb24a91591ee66c368a7f28f9149073e07eea70d1c45a3"
+        },
+        "industrial_rooftop/input-and-source-evidence/bundle-manifest.json": {
+          "bytes": 13365,
+          "sha256": "7a2e753ff42008da55bd04c6e2448589722522f488b65d0de1f22f6bea528e22"
+        },
+        "industrial_rooftop/input-and-source-evidence/formula-execution.json": {
+          "bytes": 40736,
+          "sha256": "1d02891dd8765d46ab15711e9c3edd090e731b33aa27ec4779d2bdf83ae583d3"
+        },
+        "industrial_rooftop/input-and-source-evidence/input.json": {
+          "bytes": 6442865,
+          "sha256": "685766423ec403635231b66595add14b859208f53065e4bed4dc6b4eb9e5ed80"
+        },
+        "industrial_rooftop/input-and-source-evidence/methods.json": {
+          "bytes": 39395,
+          "sha256": "fbc550f16f0450a6064d14f4e839b1716fd19b22099c3e94ebd487d4df525741"
+        },
+        "industrial_rooftop/input-and-source-evidence/project-receipt.json": {
+          "bytes": 1616,
+          "sha256": "1edb6118c94543b02f7fa73e681006fb7fae302536e94de9a65d8ec7eb51b41e"
+        },
+        "industrial_rooftop/input-and-source-evidence/sealed-file-manifest.json": {
+          "bytes": 4147,
+          "sha256": "ca3d23f05d8a71900bb646422153b336b81fe08812e66572f355b684820ded48"
+        },
+        "industrial_rooftop/input-and-source-evidence/sealed-verification.json": {
+          "bytes": 788,
+          "sha256": "8e30ee60bd58973fd12a746ff5f073407c86ed6cdd73515da15d926906419841"
+        },
+        "industrial_rooftop/input-and-source-evidence/source-material.md": {
+          "bytes": 4683,
+          "sha256": "29127128fbcc74341626f93f63bf8b2eb6a6fc3e9f6ea4300b83a8fcebe2c04a"
+        }
+      },
+      "zip": {
+        "filename": "industrial_rooftop-R2-v6-review.zip",
+        "bytes": 813678,
+        "sha256": "ad486da61efbd8d469bb438a62b416cb42bbe7e245753ae84dc65a74af1f6b21"
+      },
+      "readback": "PASS",
+      "pdf_render": "BLOCKED",
+      "toc_refreshed": false,
+      "actual_page_count": null
+    },
+    "utility_scale_ground": {
+      "identity": {
+        "model_version": "solar-pv-engine/0.3.0",
+        "run_id": "7896dc20-58d5-4c46-88aa-06c13659feec",
+        "input_hash": "41ffe63a77738f275dc6fefa3ad9bed6f6ce953098924eb2d27d84d3e1e025d3",
+        "source_snapshot_id": "d9327d4ff6902b69d33fe557a0876403e0ccbc4d8d0922588716e2860d98d1f6",
+        "result_hash": "cd4fca1268dea37283a65680512774053d8e3008cd268375e7dd9f7e9abb2b46"
+      },
+      "status": "DRAFT_PARTIAL",
+      "files": {
+        "DELIVERY.md": {
+          "bytes": 4622,
+          "sha256": "c281e977fbe5676f51beae9c926cb5909e9265ba45d1d6d85900465445db60b6"
+        },
+        "utility_scale_ground/calculation-and-source-evidence.json": {
+          "bytes": 62255,
+          "sha256": "4f351bae70cb0f018275a3fdb15f692aeb5fc389b56287c5b25a5a9224551186"
+        },
+        "utility_scale_ground/canonical.json": {
+          "bytes": 4538055,
+          "sha256": "c83ae242bc864a6566c83a1b6b3851d33587ca4b9b2d3d51447315ebac73080b"
+        },
+        "utility_scale_ground/central-claim-review.json": {
+          "bytes": 111627,
+          "sha256": "4558fff89479f4e36e80edcb3924df97a1ec4551a0bf38094ad272bd80b44a30"
+        },
+        "utility_scale_ground/content-checklist.json": {
+          "bytes": 365964,
+          "sha256": "9ec5f31d9475f38d9fb0626e9972fcf71ce39e9b1352a0f567ea9b4a29dade50"
+        },
+        "utility_scale_ground/FICTIONAL_ 330 kWp ground PV calculation demo (no real site)-光伏预可研报告.docx": {
+          "bytes": 106451,
+          "sha256": "5b251830757c66fb0c5f8a3a7a50c80e3d384a81e2c00db26ee9f4a100694ffa"
+        },
+        "utility_scale_ground/FICTIONAL_ 330 kWp ground PV calculation demo (no real site)-测算模型.xlsx": {
+          "bytes": 99719,
+          "sha256": "143d8c36511598fed3717fc3d061110b0d680a1afcc1f61ac0edc026deebe3c2"
+        },
+        "utility_scale_ground/FICTIONAL_ 330 kWp ground PV calculation demo (no real site)-资料来源与假设清单.xlsx": {
+          "bytes": 153320,
+          "sha256": "3159cf5cc56720c613406286597068e04fd23bc8c70379bd723dc3df0ee7ae6f"
+        },
+        "utility_scale_ground/INDEPENDENT-READBACK-v6.json": {
+          "bytes": 1229,
+          "sha256": "0246dd1f892bf9b9153519936f82e4d869ad67f63b88f5963c902186df33fea7"
+        },
+        "utility_scale_ground/input-coverage-matrix.json": {
+          "bytes": 911622,
+          "sha256": "421e162dbd331d34ac312a00d107eeefca8867cf09c25b482bfd9147b4d57089"
+        },
+        "utility_scale_ground/manifest.json": {
+          "bytes": 26268,
+          "sha256": "0082e8387e8f8475853506d458003dbd8bac595972b3953d8d8d6356f5a5dba2"
+        },
+        "utility_scale_ground/input-and-source-evidence/bundle-manifest.json": {
+          "bytes": 13467,
+          "sha256": "263345e4679e65e8323cff5a9aa342b2aa7f66b9f1cd75584f3880b6160cb119"
+        },
+        "utility_scale_ground/input-and-source-evidence/formula-execution.json": {
+          "bytes": 40863,
+          "sha256": "16143768210ac81ca0555be99049ce6c90cc59f289800186b7d5d5985b362d0e"
+        },
+        "utility_scale_ground/input-and-source-evidence/input.json": {
+          "bytes": 6025516,
+          "sha256": "a9ac8e2a01bd2c26fdb8d97a00db034b8e8223cbf43b4d4379e9e7d5ff7cabff"
+        },
+        "utility_scale_ground/input-and-source-evidence/methods.json": {
+          "bytes": 39483,
+          "sha256": "d4fa6b466a506a239ddb61d393b23b3d5dc889fb5bde7895b4931da6e8b9fa58"
+        },
+        "utility_scale_ground/input-and-source-evidence/project-receipt.json": {
+          "bytes": 1621,
+          "sha256": "062ab3624670316199d7646658361e5c2ce0e81a0c74611cb4fe313397cf0081"
+        },
+        "utility_scale_ground/input-and-source-evidence/sealed-file-manifest.json": {
+          "bytes": 4147,
+          "sha256": "3f138b772fb4e3a600b0ccb6eabc69af6fa04914f7f16484f76b21f7e6be98b1"
+        },
+        "utility_scale_ground/input-and-source-evidence/sealed-verification.json": {
+          "bytes": 792,
+          "sha256": "2e410392f17ba90169faa5438e8bf811506577525cba4f2673c729bb4c8e32f7"
+        },
+        "utility_scale_ground/input-and-source-evidence/source-material.md": {
+          "bytes": 4376,
+          "sha256": "40faeccb5c7471704049d5edc7052b92c7248f7bd48ae2d7bb634313e3912225"
+        }
+      },
+      "zip": {
+        "filename": "utility_scale_ground-R2-v6-review.zip",
+        "bytes": 789412,
+        "sha256": "494cb27eea880b3f8fc0497dec75941c1bc44e157a1d8423f60bbb81e0be2c70"
+      },
+      "readback": "PASS",
+      "pdf_render": "BLOCKED",
+      "toc_refreshed": false,
+      "actual_page_count": null
+    }
+  }
+}

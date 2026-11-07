@@ -1,0 +1,32 @@
+{
+  "case": "utility_scale_ground",
+  "identity": {
+    "model_version": "solar-pv-engine/0.3.0",
+    "run_id": "7896dc20-58d5-4c46-88aa-06c13659feec",
+    "input_hash": "41ffe63a77738f275dc6fefa3ad9bed6f6ce953098924eb2d27d84d3e1e025d3",
+    "source_snapshot_id": "d9327d4ff6902b69d33fe557a0876403e0ccbc4d8d0922588716e2860d98d1f6",
+    "result_hash": "cd4fca1268dea37283a65680512774053d8e3008cd268375e7dd9f7e9abb2b46"
+  },
+  "report_content_version": "phase7l-r2-v6",
+  "readback": {
+    "docx": "PASS",
+    "source_atom_bindings": 84,
+    "resource_months": 12,
+    "schedule_tasks": 5,
+    "capex_items": 5,
+    "project_cash_periods": 26,
+    "referenced_formula_definitions": 42,
+    "model_sheets": 19,
+    "source_sheets": 10,
+    "file_sha256": {
+      "F01": "5b251830757c66fb0c5f8a3a7a50c80e3d384a81e2c00db26ee9f4a100694ffa",
+      "F06": "c83ae242bc864a6566c83a1b6b3851d33587ca4b9b2d3d51447315ebac73080b",
+      "F03": "143d8c36511598fed3717fc3d061110b0d680a1afcc1f61ac0edc026deebe3c2",
+      "F04": "3159cf5cc56720c613406286597068e04fd23bc8c70379bd723dc3df0ee7ae6f"
+    }
+  },
+  "page_count": null,
+  "toc_refreshed": false,
+  "pdf_render": "BLOCKED",
+  "visual_review": "NOT_TESTED"
+}

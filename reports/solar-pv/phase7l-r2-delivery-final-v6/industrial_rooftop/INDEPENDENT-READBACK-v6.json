@@ -1,0 +1,32 @@
+{
+  "case": "industrial_rooftop",
+  "identity": {
+    "model_version": "solar-pv-engine/0.3.0",
+    "run_id": "1ea495b0-b638-4a35-986d-38d9d364586d",
+    "input_hash": "656f694764e2afc1437cb6db603ecc23a9072fa5bea28495c9b036d540624556",
+    "source_snapshot_id": "99d4cf30ec62cb5fa433fb94f91af514b2de7e93c723b4ef87e31f950d392dd9",
+    "result_hash": "398474aff972dee9f0a34bf85380a348bb27f8d4b102d7337ca0478ae0d34fe4"
+  },
+  "report_content_version": "phase7l-r2-v6",
+  "readback": {
+    "docx": "PASS",
+    "source_atom_bindings": 84,
+    "resource_months": 12,
+    "schedule_tasks": 5,
+    "capex_items": 5,
+    "project_cash_periods": 26,
+    "referenced_formula_definitions": 42,
+    "model_sheets": 19,
+    "source_sheets": 10,
+    "file_sha256": {
+      "F01": "2fb736dd56c9b700ae8c65559309bdc8d7d7e7f60da6102aaf55f73c8a07b74b",
+      "F06": "b763dec6bd6d37cea78525c777ccfd8a4133a7a18b6c646385f329019671dca3",
+      "F03": "06a7400385b373edba5f2268066b077741e348df746b5b176a7c1585b2c2339c",
+      "F04": "db3d6a0809480a5556a99149714f4c3fb1e0a1af762d7a70510a5c1187e8d383"
+    }
+  },
+  "page_count": null,
+  "toc_refreshed": false,
+  "pdf_render": "BLOCKED",
+  "visual_review": "NOT_TESTED"
+}

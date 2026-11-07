@@ -43,6 +43,7 @@ from .errors import ContractError
 from .local_files import Workspace
 from .report_narrative import guidance, validate_fixture
 from .report_claims import APPENDIX_RULES, APPENDIX_TITLES, CHAPTER_FIELDS, CHAPTER_METRICS, RESOURCE_MONTHLY_UNITS, build_claim, category_fields, _dataset_rows, _source_value
+from .report_resource_display import prepare_resource_word_rows
 from .serialization import dumps
 from .source_xlsx import create_source_workbook
 
@@ -122,7 +123,7 @@ _D_STYLE = {
     "white": "FFFFFF",
 }
 
-REPORT_CONTENT_VERSION = "phase7l-r2-v5"
+REPORT_CONTENT_VERSION = "phase7l-r2-v6"
 
 
 @dataclass(frozen=True)
@@ -1369,7 +1370,7 @@ def _input_label(field_id: str) -> str:
         "transaction_opinion": "电力交易意见", "upgrade_plan": "增容方案",
         "annual_energy": "年度负荷电量", "meter_boundary": "负荷计量边界",
         "profile_attachment_id": "负荷曲线附件", "work_schedule": "工作时段",
-        "age": "使用年限", "azimuth": "方位角", "design_added_load": "设计附加荷载",
+        "age": "已使用年限", "azimuth": "方位角", "design_added_load": "设计附加荷载",
         "fire_access_reference": "消防通道依据", "material": "屋面材质",
         "slope": "屋面坡度", "structure_type": "屋面结构类型",
         "waterproof_plan": "防水方案",
@@ -1414,6 +1415,10 @@ def _professional_metric_rows(model: ReportModel, metric_ids: tuple[str, ...]) -
             display, note = "方法尚未实现", "所需方法或计算接口未接通；不以缺输入替代说明"
         elif status == "UNDEFINED":
             display, note = "数学上未定义", "当前现金流/评价边界下无有效数值"
+            if metric_id == "financial.phase3e.dscr" and metric.get("reason") == "ZERO_DEBT_SERVICE":
+                note = ("本项目无债务，每期应偿本息为零；DSCR无定义，不是0倍" if
+                        model.result["inputs"].get("normalized", {}).get("finance.debt_ratio") == 0 else
+                        "存在应偿本息为零的期间；该期DSCR无定义，不是0倍")
         else:
             display, note = "状态待核对", "当前结果状态未知；不可当作不适用"
         unit = _metric_unit(metric)
@@ -1777,6 +1782,83 @@ def _appendix_evidence(model: ReportModel, pv_type: str, app_id: str, item_no: i
             "conclusion": claim["decision"]}
 
 
+def _plan_word_rows(model: ReportModel) -> list[list[Any]]:
+    normalized = model.result["inputs"].get("normalized", {})
+    records = model.result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
+    tasks = _source_value(normalized, records, "schedule.tasks")
+    if not isinstance(tasks, list):
+        return [["UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "任务来源尚未闭合"]]
+    labels = {"design": "方案设计及核查", "readiness": "开工前置条件核查",
+              "install": "安装计划", "build": "土建及安装计划", "test": "测试计划",
+              "milestone": "投运里程碑计划"}
+    task_labels = {item.get("row_id"): f"任务{index}" for index, item in enumerate(tasks, 1)}
+    rows = []
+    for index, item in enumerate(tasks, 1):
+        fields = item["fields"]
+        task_id = fields.get("schedule.tasks.task_id")
+        if not isinstance(task_id, str) or task_id != item.get("row_id"):
+            return [["UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "任务身份尚未闭合"]]
+        kind = labels.get(task_id.rsplit("-", 1)[-1], "计划任务（原名见来源清单）")
+        start, finish = fields.get("schedule.tasks.start_date"), fields.get("schedule.tasks.finish_date")
+        try:
+            days = (date.fromisoformat(finish) - date.fromisoformat(start)).days + 1
+            duration = f"{days}自然日（含起止日）" if days > 0 else "UNKNOWN"
+        except (TypeError, ValueError):
+            duration = "UNKNOWN"
+        predecessors = fields.get("schedule.tasks.predecessor_ids")
+        dependency = ("、".join(task_labels.get(predecessor, "未知任务（见来源）") for predecessor in predecessors)
+                      if isinstance(predecessors, list) and predecessors else "无")
+        marker = "关键路径输入标记（未作算法核验）" if fields.get("schedule.tasks.critical_path") is True else "一般计划标记"
+        rows.append([f"任务{index} · {kind}", start or "UNKNOWN", finish or "UNKNOWN",
+                     duration, dependency, marker])
+    return rows
+
+
+def _capex_word_rows(model: ReportModel) -> list[list[Any]]:
+    normalized = model.result["inputs"].get("normalized", {})
+    records = model.result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
+    items = _source_value(normalized, records, "capex.items")
+    if not isinstance(items, list):
+        return [["UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "CAPEX分项来源尚未闭合"]]
+    renewals = {row.get("row_id"): row.get("fields", {}).get("assets.replacements.year")
+                for row in normalized.get("assets.replacements", ()) if isinstance(row, dict)}
+    categories = {"modules": "组件", "inverters": "逆变器", "mounting": "支架及安装材料",
+                  "construction": "工程建设"}
+    rows = []
+    for item in items:
+        fields = item["fields"]
+        row_id = item["row_id"]
+        category = categories.get(fields.get("capex.items.category"), "其他分项（详见来源清单）")
+        quantity = fields.get("capex.items.quantity")
+        quantity_unit = fields.get("capex.items.quantity_unit")
+        amount = fields.get("capex.items.amount")
+        period = (f"运营第{renewals[row_id]}年更换" if row_id in renewals else "建设期分项")
+        rows.append([category, f"{_word_number(quantity)} {'件' if quantity_unit == 'unit' else quantity_unit}" if quantity is not None else "UNKNOWN",
+                     _word_number(amount) if amount is not None else "UNKNOWN",
+                     fields.get("capex.items.payment_date") or "UNKNOWN", period])
+    return rows
+
+
+def _project_cash_word_rows(model: ReportModel) -> list[list[Any]]:
+    metric = model.metric("financial.phase3e.project_cash_flow")
+    annual = model.result.get("evidence", {}).get("financial-ledger", {}).get("annual", ())
+    values = metric.get("value") if metric and metric.get("status") == "CALCULATED" else None
+    if (not isinstance(values, list) or not isinstance(annual, list) or len(values) != len(annual)
+            or not values or any(not isinstance(value, (int, float, Decimal)) or isinstance(value, bool)
+                                 for value in values)):
+        return [["UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN"]]
+    rows = []
+    for ledger, amount in zip(annual, values):
+        period = ledger.get("period")
+        if not isinstance(period, str) or not period:
+            return [["UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN"]]
+        rows.append(["建设期" if period == "CONSTRUCTION" else _reader_text(period), _word_number(amount),
+                     _word_number(ledger["capex_cash_paid"]) if "capex_cash_paid" in ledger else "UNKNOWN",
+                     _word_number(ledger["working_capital_increase"]) if "working_capital_increase" in ledger else "UNKNOWN",
+                     _word_number(ledger["replacement_cash_paid"]) if "replacement_cash_paid" in ledger else "UNKNOWN"])
+    return rows
+
+
 def _add_evidence_table(document: Document, evidence: dict[str, Any], caption: str) -> None:
     rows = [[row["kind"], row["id"], row["value"], row["unit"], row["status"], row["formula_id"], ", ".join(row["source_ids"]) or "UNKNOWN"]
             for row in evidence["rows"][:12]]
@@ -1891,8 +1973,10 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             display = _word_value(value)
             source = input_sources.get(key, {})
             unit = source.get("unit")
+            if key == "grid.curtailment_assumption" and isinstance(value, (int, float, Decimal)):
+                display = f"{_word_number(Decimal(str(value)) * 100)}%（原值 {_word_number(value)}）"
             if isinstance(value, (int, float, Decimal)) and not isinstance(value, bool) and unit not in (None, "", "1"):
-                display += f" {unit}"
+                display += " " + {"year": "年", "CNY": "元"}.get(unit, unit)
             state = "合成假设已提供；未真实核验" if source.get("status") == "ASSUMED" else (
                 "来源已核验" if source.get("status") == "VERIFIED" else "已提供；来源状态待核验")
             input_rows.append([_input_label(key), display, state, "详细字段见来源清单"])
@@ -1914,6 +1998,16 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             evidence = _item_evidence(model, pv_type, chapter_id, item, item_no=number,
                                        editorial_fixture=editorial_fixture)
             _add_professional_narrative(document, evidence)
+            if item_id == "CH13.02":
+                _add_table(document, ["任务", "开始", "结束", "持续时间", "前置任务", "计划性质"],
+                           _plan_word_rows(model), "实施计划（中文任务类型由任务ID受控分类；任务ID及原名见来源清单）",
+                           widths_cm=(4.8, 2.0, 2.0, 2.7, 2.6, 2.9))
+            if item_id == "CH14.04":
+                rate = model.result["inputs"].get("normalized", {}).get("capex.contingency_rate")
+                if isinstance(rate, (int, float, Decimal)) and not isinstance(rate, bool):
+                    document.add_paragraph(f"预备费率{_word_number(Decimal(str(rate)) * 100)}%已登记为输入，"
+                                           "当前汇总与建设期账簿没有另按该费率单列费用；"
+                                           "能否认定分项报价内含预备费仍须核查。完整分项和期间边界见APP04。")
             checklist.append({"id": item_id, "title": item,
                               "content_summary": evidence["summary"][:600], "input_field_ids": evidence["field_ids"],
                               "metric_ids": evidence["metric_ids"], "source_ids": evidence["source_ids"],
@@ -1939,7 +2033,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                  "financial.phase3e.project_cash_flow", "financial.phase3e.project_npv",
                  "financial.phase3e.project_irr", "financial.phase3e.static_payback",
                  "financial.phase3e.dynamic_payback", "financial.phase3e.equity-investor-cash-flow",
-                 "financial.phase3e.cfads", "financial.phase3e.lcoe",
+                 "financial.phase3e.cfads", "financial.phase3e.dscr", "financial.phase3e.lcoe",
                  "financial.phase3e.break-even-price", "financial.phase3e.investment-hurdle-gap")
     index_rows = _professional_metric_rows(model, index_ids)
     _add_table(document, ["专业指标", "本阶段结果", "单位", "说明"], index_rows,
@@ -1970,21 +2064,59 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             for text in evidence["narrative"]:
                 document.add_paragraph(_reader_text(text))
             if item_id == "APP02.01":
-                resource_headers, resource_rows = _resource_rows(model)
-                # Keep the individual month and its source identity together in
-                # the reader-facing appendix; F03 retains every field atom.
-                resource_display = [row[:8] + [str(row[8]).split("；辐照为", 1)[0]]
-                                    for row in resource_rows]
-                _add_table(document, resource_headers, resource_display,
-                           "月度资源与逐行来源（完整字段实例见测算模型 M04）",
-                           widths_cm=(1.0, 1.4, 1.4, 1.4, 1.4, 1.5, 1.5, 1.4, 5.8),
-                           font_size=7)
+                _headers, resource_rows = _resource_rows(model)
+                resource_intro, irradiance, weather, _mapping = prepare_resource_word_rows(
+                    model.result, resource_rows, _word_number)
+                document.add_paragraph(resource_intro)
+                _add_table(document, ["月份", "GHI (kWh/㎡)", "DNI (kWh/㎡)", "DHI (kWh/㎡)",
+                                      "POA (kWh/㎡)", "来源索引"], irradiance,
+                           "月度辐照资源（来源索引须结合变量列读取）",
+                           widths_cm=(1.2, 2.4, 2.4, 2.4, 2.4, 5.8))
+                _add_table(document, ["月份", "气温 (°C)", "风速 (m/s)", "覆盖率（%）", "来源索引"], weather,
+                           "月度气象资源（覆盖率由原始比值乘100展示）",
+                           widths_cm=(1.2, 2.8, 2.8, 2.8, 7.0))
+            if item_id == "APP04.01":
+                _add_table(document, ["投资分项", "数量", "金额（元）", "付款日期", "期间及性质"],
+                           _capex_word_rows(model), "CAPEX分项：建设期与后期更换分开列示；行ID、原金额、税口径与来源见测算模型 M10。",
+                           widths_cm=(5.0, 2.5, 3.0, 2.6, 3.9))
+                rate = model.result["inputs"].get("normalized", {}).get("capex.contingency_rate")
+                if isinstance(rate, (int, float, Decimal)) and not isinstance(rate, bool):
+                    document.add_paragraph(f"预备费率输入为{_word_number(Decimal(str(rate)) * 100)}%；"
+                                           "现有CAPEX分项、汇总与建设期付款均未单列按此费率计算的预备费。"
+                                           "已列报价是否内含预备费无法由该比率证明，本报告不额外叠加；正式估算须确认适用基数与报价边界。")
+            if item_id == "APP04.02":
+                boundary = _capex_boundary_rows(model)
+                labels = {"initial_capex_cash_paid": "建设期资本现金付款", "lifecycle_capex_cash_paid": "全期资本现金付款",
+                          "replacement_cash_paid": "其中：后期更换付款", "working_capital_increase": "建设期营运资金投入"}
+                _add_table(document, ["费用边界", "金额（元）", "核算口径"],
+                           [[labels.get(row[0], row[0]), row[2], row[6]] for row in boundary],
+                           "资本支出、营运资金与后期更换的独立边界", widths_cm=(5.0, 3.5, 8.5))
+            if item_id == "APP06.01":
+                _add_table(document, ["期别", "项目税后净现金流（元）", "资本支出付款（元）", "营运资金增加（元）", "其中更换付款（元）"],
+                           _project_cash_word_rows(model), "建设期及运营全期项目现金流（已计算值，非资本金现金流）",
+                           widths_cm=(2.2, 4.0, 3.6, 3.5, 3.7))
+            if item_id == "APP06.02":
+                equity = model.metric("financial.phase3e.equity-investor-cash-flow")
+                if equity and equity.get("status") != "CALCULATED":
+                    document.add_paragraph("资本金现金流尚未形成可列示的逐期序列；该缺口仅限资本金口径，"
+                                           "不撤销APP06.01已计算的项目全期现金流。具体阻断实例和原因见测算模型 M15。")
+            if item_id == "APP07.02":
+                dscr = model.metric("financial.phase3e.dscr")
+                if dscr and dscr.get("status") == "UNDEFINED" and dscr.get("reason") == "ZERO_DEBT_SERVICE":
+                    document.add_paragraph("本项目债务服务为零，DSCR在原计算契约中为未定义而非0倍；"
+                                           "无债务事实与零分母状态同时成立，不将其改写为已计算或其他口径的不适用。")
             if app_id in {"APP11", "APP12"}:
                 appendix_headers, appendix_rows = _appendix_rows(model, item_id)
                 if item_id == "APP11.01" and appendix_rows:
                     _add_table(document, ["正式编号", "中文名称", "本次引用与执行"],
                                [[row[0], row[1], row[5]] for row in appendix_rows],
                                "公式索引（不等于冻结公式全部执行）", font_size=9)
+                    npv_outputs = [m for m in model.metrics if m.get("formula_id") == "F-NPV"]
+                    if npv_outputs:
+                        statuses = {"CALCULATED": "已计算", "NOT_IMPLEMENTED": "本阶段方法未实现"}
+                        document.add_paragraph("F-NPV 输出实例分别为：" + "；".join(
+                            f"{metric['metric_id']}：{statuses.get(metric['status'], _reader_text(metric['status']))}"
+                            for metric in npv_outputs) + "。已计算的项目NPV不因其他实例未实现而失效。")
                 elif item_id == "APP11.02":
                     definitions = _formula_definitions(model)
                     shared, shared_ids = _formula_shared_contracts(definitions)

@@ -1,0 +1,18 @@
+{
+  "status": "VERIFIED_BY_READ_ONLY_REPLAY",
+  "result": {
+    "category": "industrial_rooftop",
+    "status": "PARTIAL",
+    "project_id": "SYNTHETIC-PHASE7L-R2-ROOF-25Y-165KWP",
+    "phase2_input_hash": "0cc4cfd1a96bf692656676a857d81abe903a436e91b733dfec28454f01f1b29a",
+    "source_snapshot_id": "99d4cf30ec62cb5fa433fb94f91af514b2de7e93c723b4ef87e31f950d392dd9",
+    "d3_content_hash": "9082017aa1a4228fa8a265a450f0aad7cac50acb4e0995da73d1db8d977dad8e",
+    "canonical_result_hash": "398474aff972dee9f0a34bf85380a348bb27f8d4b102d7337ca0478ae0d34fe4",
+    "file_count": 25,
+    "archived_file_count": 191,
+    "catalog_fields": 469,
+    "l2_missing_category_effective_ids": [],
+    "l2_pending_condition_count": 67,
+    "real_project_maturity": "NOT_VERIFIED"
+  }
+}

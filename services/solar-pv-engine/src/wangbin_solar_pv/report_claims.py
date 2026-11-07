@@ -891,18 +891,33 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
                 f"并非获批装机或保底上网电量；{location}。")
     if item_id == "CH08.02":
         months = metric("energy.monthly.year.1")
-        if not isinstance(months, list) or len(months) != 12 or year1 is None:
+        if (not isinstance(months, list) or len(months) != 12 or year1 is None
+                or any(isinstance(x, bool) or not isinstance(x, (int, float, Decimal)) for x in months)):
             return "首年月度与年度发电未同时形成可对账结果，暂不推断季节发电。"
         reconciled = abs(sum(Decimal(str(x)) for x in months) - Decimal(str(year1))) < Decimal("0.01")
         reconciliation = ("与年度发电指标一致" if reconciled else "与年度发电指标不符，需先查清口径")
-        depreciation = inp("system.annual_degradation")
-        tail = (f"后续年份按{pct(depreciation)}年衰减另行重算" if depreciation is not None
+        peak = max(range(12), key=lambda i: months[i])
+        low = min(range(12), key=lambda i: months[i])
+        resource_months = _source_value(n, records, 'resource.monthly')
+        day_note = ''
+        if isinstance(resource_months, list) and len(resource_months) == 12:
+            by_month = {row['fields'].get('resource.monthly.month'): row['fields'].get('resource.monthly.days')
+                        for row in resource_months}
+            if (len(by_month) == 12 and all(type(by_month.get(i)) is int and by_month[i] > 0
+                                             for i in range(1, 13))):
+                daily = [Decimal(str(value)) / by_month[i] for i, value in enumerate(months, 1)]
+                if max(daily) - min(daily) <= max(abs(max(daily)), Decimal(1)) * Decimal('1e-9'):
+                    day_note = ('本合成曲线各月日均预测接近，月合计的差异主要随28/30/31天变化；'
+                                '不将其描述成已证明的季节气象规律。')
+        depreciation = _source_value(n, records, "system.annual_degradation")
+        tail = (f"后续年份按{pct(depreciation)}年衰减假设另行重算" if depreciation is not None
                 else "后续年份衰减假设尚需核对")
-        boundary = "屋顶自用与余电上网" if not ground else "地面集中送出与结算"
-        return (f"首年合成资源计算的12个月发电量中，1月为{format_value(months[0])}kWh、"
-                f"12月为{format_value(months[-1])}kWh；逐月汇总{reconciliation}，对应年度"
-                f"{format_value(year1)}kWh。月份的发电序列不是辐照实测，也不能直接作为{boundary}电量；"
-                f"{tail}，仍需真实资源、损失和计量边界核验。")
+        boundary = "屋顶自用与余电上网" if not ground else "地面集中送出"
+        return (f"首年12个月预测发电中，1月{format_value(months[0])}kWh、"
+                f"12月{format_value(months[-1])}kWh；峰值在{peak + 1}月"
+                f"（{format_value(months[peak])}kWh），谷值在{low + 1}月"
+                f"（{format_value(months[low])}kWh），逐月汇总{reconciliation}，对应年度"
+                f"{format_value(year1)}kWh。{day_note}月发电不是辐照实测或{boundary}结算电量；{tail}。")
     if item_id == "CH09.02":
         transformer, available, export = (inp("grid.transformer_capacity"),
                                          inp("grid.available_capacity"), inp("grid.export_power_limit"))
@@ -1017,6 +1032,99 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
     return ""
 
 
+def _settlement_narrative(model: Any, item_id: str, fmt: Callable[[Any], str]) -> str | None:
+    """Explain the *calculated* settlement ledger without inventing a tariff or payment."""
+    result = model.result
+    n = result['inputs'].get('normalized', {})
+    records = result.get('source_snapshot', {}).get('phase2', {}).get('records', ())
+    revenue = model.metric('revenue.year.1')
+    consumption = model.metric('consumption.year.1')
+    if (not revenue or revenue.get('status') != 'CALCULATED'
+            or not consumption or consumption.get('status') != 'CALCULATED'):
+        return None
+    ledger = revenue.get('details', {}).get('ledger', {})
+    if not isinstance(ledger, dict):
+        return None
+    required = ('export_kwh', 'export_sales_revenue', 'delivered_kwh', 'curtailed_kwh',
+                'self_kwh', 'self_value', 'transaction_cost')
+    if any(isinstance(ledger.get(key), bool) or not isinstance(ledger.get(key), (int, float, Decimal))
+           for key in required):
+        return None
+    money = lambda key: f'{fmt(ledger[key])}元'
+    energy = lambda key: f'{fmt(ledger[key])}kWh'
+    ground = result.get('pv_type') == 'utility_scale_ground'
+    datasets = _dataset_rows(result)
+    if ground:
+        price = datasets.get('tariff.market_series')
+        lineage = result.get('evidence', {}).get('settlement-input-lineage', {}).get('tariff.market_series', {})
+        price_bound = (price and price['header'].get('source_id') == lineage.get('source_id')
+                       and lineage.get('status') in {'ASSUMED', 'VERIFIED'})
+        path = (f"结算采用已登记的{price['row_count']}条市场价格时序，"
+                "不是分时表中的单一售电价" if price_bound else
+                "市场价格时序未能与结算血缘对应，不推断实际采用的价格路径")
+        if item_id == 'CH10.02':
+            assumption = _source_value(n, records, 'grid.curtailment_assumption')
+            limit = (f"申报限发比例{(Decimal(str(assumption)) * 100).normalize():g}%" if isinstance(assumption, (int, float, Decimal))
+                     and not isinstance(assumption, bool) else "限发参数尚未绑定")
+            generation = model.metric('energy.year.1')
+            losses = generation.get('details', {}).get('losses_kwh', {}) if generation and generation.get('status') == 'CALCULATED' else {}
+            curtailment = losses.get('curtailment')
+            physical = (f"发电计算中的限发损失为{fmt(curtailment)}kWh" if isinstance(curtailment, (int, float, Decimal))
+                        else "发电链的限发损失尚未核对")
+            return (f"集中式项目{limit}，{physical}；结算账簿另列首年截弃{energy('curtailed_kwh')}、"
+                    f"交付{energy('delivered_kwh')}、上网{energy('export_kwh')}。"
+                    "发电链损失与结算账簿截弃口径不同，不可相加或称实际上网；" + path + '。')
+        if item_id in {'CH10.04', 'CH10.05'}:
+            if not price_bound:
+                return "市场价格时序未能绑定结算血缘；虽有收入指标，不能解释采用的售电价路径或代写结算金额。"
+            if item_id == 'CH10.04':
+                return (f"按已绑定的逐时市场价格结算路径，集中式上网{energy('export_kwh')}对应预测销售收入"
+                        f"{money('export_sales_revenue')}，交易费用{money('transaction_cost')}另列；"
+                        "交易主体、合同价、结算周期与实收款仍须依据签署合同和计量记录核验。")
+            return (f"{path}；该时序参与首年预测上网销售收入"
+                    f"{money('export_sales_revenue')}的结算。固定分时表情景价不能冒充实际采用的逐时市场价格，"
+                    "其他收益未得到独立执行依据时不追加。")
+        return None
+    load = datasets.get('load.series')
+    load_lineage = result.get('evidence', {}).get('settlement-input-lineage', {}).get('load.series', {})
+    load_bound = (load and load['header'].get('source_id') == load_lineage.get('source_id')
+                  and load_lineage.get('status') in {'ASSUMED', 'VERIFIED'})
+    if item_id in {'CH10.01', 'CH10.02', 'CH10.03', 'CH10.04'} and not load_bound:
+        return "负荷时序未能与结算血缘对应，不能核实逐时自用比例或自用—余电结算边界。"
+    if item_id == 'CH10.01':
+        return (f"首年负荷与发电按同一时区的{load['row_count']}条负荷时序配对，"
+                f"模型自用{energy('self_kwh')}、余电上网{energy('export_kwh')}。"
+                "月账单不替代逐时匹配，亦非实际计量结算。")
+    if item_id == 'CH10.02':
+        if not load_bound:
+            return "负荷时序未能与结算血缘对应，不能核实自用与上网分界。"
+        self_ratio = model.metric('consumption.self_ratio.year.1')
+        load_coverage = model.metric('consumption.load_coverage.year.1')
+        ratios = ((self_ratio, '逐时配对形成的自用比例'), (load_coverage, '同口径负荷覆盖率'))
+        ratio_note = '；'.join(
+            f'{label}{fmt(Decimal(str(item["value"])) * 100)}%'
+            for item, label in ratios if item and item.get('status') == 'CALCULATED'
+            and isinstance(item.get('value'), (int, float, Decimal)) and not isinstance(item['value'], bool))
+        driver = ('当前价值主要来自自用节费' if ledger['self_value'] > ledger['export_sales_revenue'] else
+                  '当前价值主要来自余电销售' if ledger['self_value'] < ledger['export_sales_revenue'] else
+                  '两类价值在当前假设下相当')
+        return (f"同边界负荷配对后，首年自用{energy('self_kwh')}形成节费"
+                f"{money('self_value')}；余电上网{energy('export_kwh')}形成售电收入"
+                f"{money('export_sales_revenue')}；交付总量{energy('delivered_kwh')}，"
+                f"另有截弃{energy('curtailed_kwh')}。{ratio_note + '；' if ratio_note else ''}{driver}，节费不是电网回款；"
+                "生产班次及分时负荷的真实匹配需在同一时区和计量边界下复核，"
+                "上网销售收入也不是全部发电量的零售价格。")
+    if item_id == 'CH10.03':
+        return (f"自用对应的可避免费用预测为{money('self_value')}，"
+                "只按适用分时可避免费用计，不把固定或需量等不可避免费用一并抵扣；"
+                "仍须核对生效合同和计量时段。")
+    if item_id == 'CH10.04':
+        return (f"预测余电上网销售收入{money('export_sales_revenue')}，交易费用"
+                f"{money('transaction_cost')}；自用节费{money('self_value')}另列，"
+                "合同价及收款主体尚不能由计划价格推定为已签约。")
+    return None
+
+
 def _project_narrative(model: Any, item_id: str, judgment: str,
                        fields: tuple[str, ...], metrics: tuple[str, ...],
                        fmt: Callable[[Any], str], label_metric: Callable[[str], str]) -> str:
@@ -1032,6 +1140,24 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
     calculated = lambda mid: (row.get('value') if (row := model.metric(mid))
                               and row.get('status') == 'CALCULATED' else None)
     ground = result.get('pv_type') == 'utility_scale_ground'
+    if item_id == 'CH06.03':
+        dc, ac = calculated('dc_capacity'), calculated('ac_capacity')
+        ratio = calculated('dc_ac_ratio')
+        if all(isinstance(x, (int, float, Decimal)) and not isinstance(x, bool)
+               for x in (dc, ac, ratio)):
+            return (f'当前直流装机{fmt(dc)}kWp对应交流额定{fmt(ac)}kW，'
+                    f'容配比计算为{fmt(ratio)}；这是铭牌配置关系，'
+                    '不等于变压器余量、核准接入容量或并网许可。')
+    if item_id.startswith('CH10.'):
+        settlement = _settlement_narrative(model, item_id, fmt)
+        if settlement is not None:
+            return settlement
+        if ground and item_id in {'CH10.04', 'CH10.05'}:
+            price = _dataset_rows(result).get('tariff.market_series')
+            lineage = result.get('evidence', {}).get('settlement-input-lineage', {}).get('tariff.market_series', {})
+            if price and price['header'].get('source_id') == lineage.get('source_id'):
+                return (f"市场价格时序已登记{price['row_count']}条，但首年收入指标未形成有效计算值；"
+                        "不能由固定分时价格或时序登记数量代填结算收入。")
     facts = []
     for fid in fields:
         if fid not in FIELD_LABELS:
@@ -1039,7 +1165,7 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
         value = get(fid)
         rendered = _text_value(fid, value, fmt)
         if rendered is not None:
-            facts.append(f'{FIELD_LABELS[fid]}按合成输入为{rendered}')
+            facts.append(f'{FIELD_LABELS[fid]}：{rendered}')
     for mid in metrics:
         if item_id in {'CH18.01', 'CH17.03'} or (item_id == 'CH08.03' and mid.startswith('energy.year.')) or (item_id == 'CH01.05' and mid == 'financial.phase3e.project_npv'):
             continue
@@ -1057,7 +1183,7 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
             value, unit = Decimal(str(value)) * 100, '%'
         if unit == 'CNY':
             unit = '元'
-        facts.append(f'{label_metric(mid)}计算为{fmt(value)}{unit}')
+        facts.append(f'{label_metric(mid)}：{fmt(value)}{unit}')
     # Different arrays carry different physical meanings; never stringify the
     # normalized list or use an arbitrary count as a resource finding.
     if item_id.startswith('CH05.'):
@@ -1104,28 +1230,61 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
         annual = calculated('energy.annual_array')
         changes = get('assets.replacements')
         if isinstance(annual, list) and len(annual) > 1:
-            facts.insert(0, f'首年预测{fmt(annual[0])}kWh、末年预测{fmt(annual[-1])}kWh')
+            facts.insert(0, f'年度曲线首年{fmt(annual[0])}kWh、末年{fmt(annual[-1])}kWh')
             if isinstance(changes, list):
                 for row in changes[:2]:
                     atom = row.get('fields', {})
                     year = atom.get('assets.replacements.year')
-                    if isinstance(year, int) and 1 < year <= len(annual):
-                        facts.append(f'第{year}年逆变器更换计划对应预测{fmt(annual[year - 1])}kWh，'
-                                     f'上年为{fmt(annual[year - 2])}kWh')
+                    if type(year) is int and 1 < year < len(annual):
                         metric = model.metric(f'energy.year.{year}')
                         performance = metric.get('details', {}).get('performance', {}) if metric and metric.get('status') == 'CALCULATED' else {}
                         event = performance.get('event') or {}
-                        if (event.get('asset_id') == atom.get('assets.replacements.asset_id')
-                                and event.get('downtime_days') == atom.get('assets.replacements.downtime_days')):
-                            facts.append(f"本次模型计入更换停机{fmt(event['downtime_days'])}天" +
-                                         ('且无性能恢复增益' if performance.get('replacement_uplift') == 0 else
-                                          '；性能恢复幅度须按事件记录核查'))
+                        if (event.get('asset_id') != atom.get('assets.replacements.asset_id')
+                                or event.get('downtime_days') != atom.get('assets.replacements.downtime_days')):
+                            facts.append(f'第{year}年更换计划尚未与发电事件对齐，不推断更换效果')
+                            continue
+                        facts.append(f'第{year - 1}年{fmt(annual[year - 2])}kWh、'
+                                     f'第{year}年{fmt(annual[year - 1])}kWh、'
+                                     f'第{year + 1}年{fmt(annual[year])}kWh；'
+                                     f'更换年计入{event["downtime_days"]}天停机，'
+                                     + ('无性能恢复增益' if performance.get('replacement_uplift') == 0 else
+                                        '性能恢复须以事件记录核对'))
+            if facts:
+                return '；'.join(facts[:3]) + '。更换年电量变化同时包含衰减与停机，不将次年反弹归因于未记录的组件性能恢复。'
     if item_id.startswith('CH13.'):
         tasks = get('schedule.tasks')
         if isinstance(tasks, list) and tasks:
             names = {r.get('fields', {}).get('schedule.tasks.task_id'):
                      _task_display_name(r.get('fields', {}).get('schedule.tasks.name', ''))
                      for r in tasks if r.get('fields', {}).get('schedule.tasks.task_id')}
+            if item_id == 'CH13.03':
+                edges = []
+                critical = []
+                for row in tasks:
+                    task = row.get('fields', {})
+                    current = names.get(task.get('schedule.tasks.task_id'))
+                    if not current:
+                        continue
+                    for predecessor in task.get('schedule.tasks.predecessor_ids') or []:
+                        if predecessor in names:
+                            edges.append(f'{names[predecessor]}→{current}')
+                    if task.get('schedule.tasks.critical_path') is True:
+                        critical.append(current)
+                if edges:
+                    return (f'计划前置依赖链共{len(edges)}条，由前置任务逐项进入后续任务；其中'
+                            + '；'.join(edges[:2]) + ('等' if len(edges) > 2 else '')
+                            + f'；{len(critical)}项标记为计划关键路径。'
+                            '该标记是输入的计划属性，不是依据审批时长重新求得的实际关键路径；'
+                            '前置审批未批准时不能承诺投运日期。')
+                return '任务已提供，但缺少可追溯的前置边，不能推断关键路径。'
+            if item_id == 'CH13.02':
+                starts = [row['fields'].get('schedule.tasks.start_date') for row in tasks]
+                finishes = [row['fields'].get('schedule.tasks.finish_date') for row in tasks]
+                if all(isinstance(value, str) and value for value in starts + finishes):
+                    return (f'本项目已登记{len(tasks)}项来源绑定的合成任务，'
+                            f'计划窗口为{min(starts)}至{max(finishes)}；'
+                            '各项持续自然日、前置任务和计划标记在下表逐项列明。'
+                            '开工、并网及投运须以各前置条件实际批准和验收为准，计划标记不是已验证关键路径。')
             task_facts = []
             for row in tasks:
                 task = row.get('fields', {})
@@ -1137,19 +1296,14 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                 previous = ('；前置任务：' + '、'.join(names.get(pid, '未核实任务') for pid in predecessors)
                             if predecessors else '；前置任务：无')
                 path = '，列为计划关键路径' if task.get('schedule.tasks.critical_path') is True else ''
-                duration = (date.fromisoformat(str(finish)) - date.fromisoformat(str(start))).days + 1
-                if duration <= 0:
+                try:
+                    duration = (date.fromisoformat(str(finish)) - date.fromisoformat(str(start))).days + 1
+                except ValueError:
                     continue
-                if item_id == 'CH13.03':
-                    task_facts.append(f'{_task_display_name(name)}{previous}{path}')
-                else:
-                    task_facts.append(f'合成任务“{_task_display_name(name)}”安排{start}至{finish}，'
+                if duration > 0:
+                    task_facts.append(f'任务“{_task_display_name(name)}”安排{start}至{finish}，'
                                       f'{duration}个日历日{previous}{path}')
-            if item_id in {'CH13.02', 'CH13.03'} and task_facts:
-                prefix = ('合成任务及持续时间按输入顺序安排：' if item_id == 'CH13.02'
-                          else '本次合成任务的前置依赖链为：')
-                return (prefix + '；'.join(task_facts) + '。'
-                        '前置关系仅表示计划依赖，不代表任何外部审批已通过；' + judgment)
+
             if item_id == 'CH13.05':
                 milestones = [row for row in tasks if 'milestone' in
                               str(row.get('fields', {}).get('schedule.tasks.task_id', '')).lower()]
@@ -1312,6 +1466,8 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
                        'financial.phase3e.project_cash_flow')
     if item_id == 'CH17.03':
         metric_ids += ('financial.phase3e.project_npv', 'financial.phase3e.project_irr')
+    if item_id in {'CH10.04', 'CH10.05'}:
+        metric_ids += ('revenue.year.1', 'consumption.year.1')
     if item_id == 'CH08.03':
         replacement_rows = _source_value(normalized, records, 'assets.replacements')
         if isinstance(replacement_rows, list):
@@ -1320,6 +1476,31 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
                 if isinstance(year, int) and year > 1:
                     metric_ids += (f'energy.year.{year}',)
     datasets = _dataset_rows(model.result)
+    # Optional corroboration is not a missing prerequisite when the ordinary
+    # producer already consumed a bound time series / annual result. Keep these
+    # fields in the outline above, but do not turn them into false project gaps.
+    consumed = model.result.get('evidence', {}).get('settlement-input-lineage', {})
+    def bound_series(fid: str) -> bool:
+        row = datasets.get(fid)
+        lineage = consumed.get(fid, {})
+        return bool(row and row['header'].get('source_id') == lineage.get('source_id')
+                    and lineage.get('status') in {'ASSUMED', 'VERIFIED'})
+    revenue_row = model.metric('revenue.year.1') or {}
+    revenue_ledger = revenue_row.get('details', {}).get('ledger', {}) or {}
+    conditional_optional: set[str] = set()
+    if (item_id == 'CH10.01' and bound_series('load.series')
+            and (model.metric('consumption.year.1') or {}).get('status') == 'CALCULATED'):
+        conditional_optional.add('load.monthly_bills')
+    if pv_type == 'utility_scale_ground' and bound_series('tariff.market_series'):
+        if item_id == 'CH10.04':
+            conditional_optional.update(('tariff.ppa_price', 'tariff.revenue_share'))
+        if (item_id == 'CH10.05' and revenue_row.get('status') == 'CALCULATED'
+                and isinstance(revenue_ledger.get('other_benefit'), (int, float, Decimal))):
+            conditional_optional.add('revenue.other_items')
+    if (item_id == 'CH08.03' and (model.metric('energy.annual_array') or {}).get('status') == 'CALCULATED'
+            and _source_value(normalized, records, 'system.annual_degradation') is not None):
+        conditional_optional.add('system.degradation_segments')
+    field_ids = tuple(fid for fid in field_ids if fid not in conditional_optional)
     input_records = {fid: [record for record in records
                             if record.get("field_id") == _parent_field(fid)
                             and record.get('source_id')]
@@ -1474,8 +1655,10 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
                         str(blocked_metric.get("reason") if blocked_metric else "结果不存在") + "）")
         if not sources:
             gaps.append("无直接来源绑定")
-        gaps.append("合成或未验证资料不构成真实项目第三方证明")
-        unresolved = "；".join(gaps) + "。"
+        unresolved = ("；".join(gaps) + "。" if gaps else
+                      "真实项目资料与专业审批尚未核验；本项仅在当前输入及计算版本内成立。" if
+                      model.result.get("maturity", {}).get("real_project") != "VERIFIED" else
+                      "本项依赖当前输入与版本；关键条件变化时须重新核对。")
         next_action = reasoning_rule.rstrip("。") + "。"
     if not_applicable:
         reasoning_rule = reason + "；只有适用前提改变才应重新计算。"

@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from wangbin_solar_pv.report_claims import CHAPTER_FIELDS, CHAPTER_METRICS, build_claim, category_fields
-from wangbin_solar_pv.report_export import ReportModel, _word_value, _metric_label
+from wangbin_solar_pv.report_export import ReportModel, _word_value, _metric_label, _plan_word_rows
 from wangbin_solar_pv.serialization import loads
 
 CASES = Path(__file__).resolve().parents[2] / "reports/solar-pv/phase7l-r1-full-cases"
@@ -145,8 +145,10 @@ def test_actual_r2_schedule_is_sourced_and_rejected_when_nested_source_changes(c
     metrics = tuple(result["results"]["metrics"])
     m = ReportModel(result, metrics, {row["metric_id"]: row for row in metrics})
     text = claim(m, "CH13.02")["central_claim"]
-    assert text.count("合成任务“") == 5 and "前置任务" in text
-    assert "个日历日" in text and "2027-01-01" in text
+    assert "5项来源绑定的合成任务" in text and "前置任务" in text
+    assert "计划窗口" in text and "2027-01-01" in text
+    assert "任务“" not in text and len(_plan_word_rows(m)) == 5
+    assert all("自然日" in row[3] for row in _plan_word_rows(m))
     assert "施工任务、持续时间与前置依赖尚未提供" not in text
     assert "SYNTHETIC-" not in text
     assert "前置依赖链" in claim(m, "CH13.03")["central_claim"]
