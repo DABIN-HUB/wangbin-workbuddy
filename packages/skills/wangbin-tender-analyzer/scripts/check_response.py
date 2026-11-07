@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import csv
 import importlib.util
+from datetime import date
 import re
 import stat
 import sys
@@ -79,7 +80,89 @@ def tokens(text: str) -> set[str]:
     return {piece for token in found for piece in ([token[i:i+2] for i in range(len(token)-1)] if re.fullmatch(r'[\u4e00-\u9fff]+', token) else [token])}
 
 
+DATE = re.compile(r'(?<!\d)(\d{4})[-年/.](\d{1,2})[-月/.](\d{1,2})日?')
+YEAR = re.compile(r'(?<!\d)(\d{4})年')
+DUTY = re.compile(r'营业执照|(?:甲类|乙类|[\w\u4e00-\u9fff]{1,8})?(?:资质证明|资格证明|证书|证明材料)|报价函|承诺函')
+NEGATIVE_EVIDENCE = re.compile(r'尚未取得|正在申请|拟申请|仅为目录占位|不含证书|不是证书|未取得')
+
+
+def dated(text: str) -> list[tuple[date, int, int]]:
+    found = []
+    for match in DATE.finditer(text):
+        try:
+            found.append((date(*map(int, match.groups())), match.start(), match.end()))
+        except ValueError:
+            continue
+    return found
+
+
+def target_dates(text: str):
+    dates = dated(text)
+    if len(dates) >= 2 and re.search(r'覆盖|有效期|有效覆盖', text):
+        return dates[0][0], dates[1][0], True
+    if len(dates) == 1 and re.search(r'覆盖|有效期', text):
+        return dates[0][0], dates[0][0], True
+    if re.search(r'覆盖|有效期', text) and YEAR.search(text):
+        # An unqualified year does not define whether the entire calendar year is intended.
+        return None, None, False
+    return None, None, True
+
+
+def certificate_dates(text: str):
+    dates = dated(text)
+    effective = expiry = None
+    for value, start, end in dates:
+        before = text[max(0, start-5):start]
+        after = text[end:end+5]
+        if re.search(r'签发|颁发', before):
+            continue
+        if re.search(r'截止|失效|到期|至|期满', before) or re.search(r'失效|到期|截止', after):
+            expiry = value
+        elif re.search(r'生效|起始|起止|自|从', before) or re.search(r'起|生效', after):
+            effective = value
+    if len(dates) >= 2 and re.search(r'有效期', text) and re.search(r'至|到|—|~', text):
+        nonissue = [d[0] for d in dates if not re.search(r'签发|颁发', text[max(0, d[1]-8):d[1]])]
+        if len(nonissue) >= 2:
+            effective = effective or nonissue[0]
+            expiry = expiry or nonissue[-1]
+    return effective, expiry
+
+
+def object_name(text: str) -> str | None:
+    match = re.search(r'([甲乙丙丁戊己庚辛壬癸ABC]类)(?=资质|证明|证书)', text)
+    return match.group(1) if match else None
+
+
+def polarity(text: str, term: str) -> int | None:
+    # Compare the same action/object, not a negation in an unrelated clause.
+    action = re.search(r'(?:不)?(支持|使用|提供|具备)([\u4e00-\u9fff\w/]+)', term)
+    if not action:
+        return None
+    verb, obj = action.groups()
+    obj = re.split(r'[，。；,;\s]', obj)[0]
+    stem = obj[:min(len(obj), 4)]
+    hit = re.search(r'(不|未|无)?' + verb + r'[^，。；,;]{0,12}' + re.escape(stem), text)
+    if not hit:
+        return None
+    return -1 if hit.group(1) else 1
+
+
+def response_conflict(condition: str, reply: str) -> str | None:
+    target = polarity(condition, condition)
+    actual = polarity(reply, condition)
+    if target is not None and actual is not None and target != actual:
+        return '回应肯否与招标义务冲突'
+    if re.search(r'若|只有|才支持|另行购买|拟于|尚未实现|交付后', reply) and re.search(r'必须|须|应', condition):
+        return '回应附带前提或尚未实现，不能证明无条件义务'
+    return None
+
+
 def covered(condition: str, reply: str) -> bool:
+    if not reply or response_conflict(condition, reply):
+        return False
+    expected, actual = polarity(condition, condition), polarity(reply, condition)
+    if expected is not None and actual == expected:
+        return True
     terms = tokens(condition)
     if not terms:
         return False
@@ -108,6 +191,7 @@ def requirements(sources: list[tuple[str, str]]) -> list[dict]:
             rows.append({'id': f'{source_index}:{n}:{num or "无编号"}', 'number': num,
                          'text': quote(line), 'raw': line, 'source': loc(name, n),
                          'conditions': conditions(line), 'materials': MATERIAL.findall(line),
+                         'duty': DUTY.findall(line) if re.search(r'须|必须|应|附|提供', line) else [],
                          'version': '待确认（补遗关系未证实）' if is_amendment else '适用', 'candidates': [],
                          'pending': ['补遗与旧条款关系未证实，不能按文件名或上传顺序替换'] if is_amendment else []})
     return rows
@@ -192,6 +276,48 @@ def relation_rows(reqs: list[dict], amendments: list[tuple[str, str]]) -> list[d
     return edges
 
 
+def material_assessment(requirement: dict, present: list[tuple[str, str]]):
+    target_start, target_end, target_known = target_dates(requirement['raw'])
+    cert_object = object_name(requirement['raw'])
+    evidence_lines = [(name, i, line) for name, text in present
+                      for i, line in enumerate(text.splitlines(), 1) if line.strip()]
+    if cert_object:
+        relevant = [(name, i, line) for name, i, line in evidence_lines if cert_object in line]
+        if not relevant:
+            return '待确认', '材料未明确对应' + cert_object + '，不得借其他对象的期限判断', []
+    else:
+        relevant = evidence_lines
+    if not relevant:
+        return '待确认', '实际材料无可读正文，须人工确认', []
+    locations = [loc(name, i) for name, i, _ in relevant][:12]
+    for name, i, line in relevant:
+        if NEGATIVE_EVIDENCE.search(line):
+            return '不支持（文本层面）', f'材料 {loc(name, i)} 明确否认已具备/有效证明', locations
+    if target_start or target_end or not target_known:
+        if not target_known:
+            return '待确认', '招标年份未明示全年边界，须确认目标起止日', locations
+        # Each line belongs to a single certificate. Never borrow endpoints from
+        # another certificate or use issue date as its effective date.
+        uncertain = []
+        for name, i, line in relevant:
+            start, end = certificate_dates(line)
+            if end and target_end and end < target_end:
+                return '不支持（文本层面）', f'材料 {loc(name, i)} 有效截止 {end} 早于要求 {target_end}', locations
+            if start and target_start and start > target_start:
+                return '不支持（文本层面）', f'材料 {loc(name, i)} 生效 {start} 晚于要求 {target_start}', locations
+            if start and end and target_start and target_end and start <= target_start <= target_end <= end:
+                return '支持（文本层面）', f'材料 {loc(name, i)} 有效区间 {start} 至 {end} 覆盖目标 {target_start} 至 {target_end}（仅文本）', locations
+            uncertain.append(f'{loc(name, i)} 缺有效起止或期限；签发日期不可作为生效日期')
+        return '待确认', '；'.join(uncertain), locations
+    if re.search(r'营业执照', requirement['raw']) and any('营业执照' in line for _, _, line in relevant):
+        return '支持（文本层面）', '材料正文包含所要求营业执照文本，不认证真实有效', locations
+    if cert_object and any(cert_object in line and re.search(r'证明文本|证明材料|资质证明', line) and '有效' in line for _, _, line in relevant):
+        return '支持（文本层面）', f'材料仅包含{cert_object}证明文本及有效声明，不认证真实性或期限', locations
+    if any(any(t in line for t in tokens(requirement['raw'])) for _, _, line in relevant):
+        return '待确认', '材料提及相近对象，但缺完整可核对声明', locations
+    return '待确认', '材料内容未明确关联要求，须人工确认', locations
+
+
 def compare(reqs: list[dict], response: str | None, response_name: str | None,
             catalog: list[dict], evidence: list[tuple[str, str]]) -> list[dict]:
     replies = [(n, line, number(line)) for n, line in enumerate((response or '').splitlines(), 1) if line.strip()]
@@ -232,10 +358,14 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
         # A response-only reference is usable only with an unambiguous numbered
         # reply and an explicit material requirement. Never scan arbitrary files.
         response_only = [name for name in MATERIAL.findall(reply) if name not in materials]
-        if unique and re.search(r'附件|证明|证书|材料|资质', r['raw']):
+        if unique and (r['duty'] or re.search(r'附件|证明|证书|材料|资质', r['raw'])):
             materials += response_only
         listed = [c for c in catalog if c['name'] in materials or
                   (r['number'] and numbered[r['number']] == 1 and c['number'] == r['number'])]
+        if r['duty'] and not materials and not listed and len(evidence) == 1 and len(reqs) == 1:
+            # A unique explicit file can be considered as a candidate for a
+            # filename-free duty, but its text must still be assessed.
+            materials.append(evidence[0][0])
         names = set(materials) | {c['name'] for c in listed}
         conflicting = {name for name in names if
                        evidence_names[name] > 1 or catalog_names[name] > 1 or
@@ -250,33 +380,49 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
         if not unique and not r['materials']:
             conflicting.update(MATERIAL.findall(' '.join(line for _, line, _ in candidates)))
         present = [(name, txt) for name, txt in evidence if name in names and name not in conflicting]
+        assessment_reason = ''
+        evidence_loc = []
         if conflicting:
             attachment, support = '待确认', '待确认'
-        elif not names:
+        elif not names and not r['duty']:
             attachment, support = '不适用', '不适用'
         elif present:
             attachment = '已提供（可读文本）'
-            relevant = [loc(name, i) for name, txt in present for i, line in enumerate(txt.splitlines(), 1) if any(t in line for t in tokens(r['raw']))]
-            contradictory = any(('尚未取得' in txt or '拟申请' in txt or ('2027' in r['raw'] and '2026' in txt)) for _, txt in present)
-            supported = any(all(covered(p, line) for p in r['conditions'] if not MATERIAL.search(p))
-                            for _, txt in present for line in txt.splitlines() if line.strip()) and bool(relevant)
-            support = '不支持（文本层面）' if contradictory else '支持（文本层面）' if supported else '待确认'
+            support, assessment_reason, evidence_loc = material_assessment(r, present)
         elif listed:
             attachment, support = '仅目录登记', '未核验'
-        elif catalog:
+        elif r['duty'] or materials:
             attachment, support = '未提供（限已提供材料）', '未核验'
         else:
             attachment, support = '待确认', '未核验'
-        evidence_loc = [loc(name, i) for name, txt in present for i, line in enumerate(txt.splitlines(), 1) if line.strip()][:12]
+        if not evidence_loc and present:
+            evidence_loc = [loc(name, i) for name, txt in present for i, line in enumerate(txt.splitlines(), 1) if line.strip()][:12]
+        # A duty to submit evidence is separate from a claim to possess it.
+        # Without actual material, the submission condition cannot be covered.
+        if r['duty'] and attachment in ('未提供（限已提供材料）', '仅目录登记') and unique:
+            condition_state = '可能不充分'
+        if support == '不支持（文本层面）' and unique:
+            condition_state = '可能不充分'
+        if support == '支持（文本层面）' and unique and (not uncovered or
+                (target_dates(r['raw'])[0] and '覆盖' in reply and
+                 (object_name(r['raw']) is None or (object_name(r['raw']) or '') in reply))):
+            uncovered = []
+            condition_state = '已覆盖（文本层面）'
+        if assessment_reason and support == '待确认' and unique:
+            condition_state = '待确认'
         gaps = []
         if existence == '未找到（限已提供响应）':
             gaps.append('在已提供响应中未找到')
         if condition_state == '可能不充分':
-            gaps.append('明确条件未获得完整文本支持：' + '、'.join(quote(p) for p in uncovered))
+            conflicts = [response_conflict(p, reply) for p in cond if reply]
+            explanation = '；'.join(x for x in conflicts if x)
+            gaps.append('明确条件未获得完整文本支持：' + ('、'.join(quote(p) for p in uncovered) or quote(r['raw'])) + (f'；{explanation}' if explanation else ''))
+        if attachment == '未提供（限已提供材料）':
+            gaps.append('要求 ' + '、'.join(map(quote, r['duty'] or materials)) + '；在已提供材料中未找到实际文件，需补交或明确关联')
         if attachment == '仅目录登记':
             gaps.append('附件仅目录登记，需补实际材料并核内容')
         if support == '不支持（文本层面）':
-            gaps.append('实际材料内容与声明矛盾或未支持；需人工核验')
+            gaps.append(assessment_reason + '；需补正或人工核验')
         revised = r.get('revised_value')
         obsolete = [(n, line) for n, line, num in replies if num == r.get('supersedes') and revised and revised not in line]
         if r['version'] == '适用（正式补遗）' and obsolete:
@@ -293,14 +439,17 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
             pending.append('响应候选歧义或编号改变；逐一核对双向原句')
         if conflicting:
             pending.append('材料候选重复、编号冲突或响应配对歧义；逐一核对文件与要求关联')
-        elif attachment == '待确认' and materials:
-            pending.append('未提供完整附件集合/目录，无法判定实际缺失')
-        if support == '待确认' and not conflicting:
+        elif attachment == '待确认' and (materials or r['duty']):
+            pending.append('材料关联冲突或给定材料范围不完整，需核对要求 ' + '、'.join(r['duty'] or materials))
+        if assessment_reason and support == '待确认':
+            pending.append(assessment_reason)
+        elif support == '待确认' and not conflicting:
             pending.append('材料文本关联不足或真实性需人工确认')
         results.append({**r, 'locations': positions, 'response': quote(reply) if reply else '',
                         'existence': existence, 'coverage': condition_state, 'attachment': attachment,
                         'support': support, 'listed': listed, 'present': present, 'conflicting': sorted(conflicting),
-                        'evidence_locations': evidence_loc, 'gaps': gaps, 'pending': pending})
+                        'evidence_locations': evidence_loc, 'gaps': gaps, 'pending': pending,
+                        'assessment_reason': assessment_reason})
     return results
 
 
@@ -336,7 +485,7 @@ def write_outputs(rows: list[dict], catalog: list[dict], edges: list[dict], args
     matrix.append(['唯一ID', '要求编号', '要求原文', '来源', '明确条件', '响应位置', '响应内容', '支持材料', '证据位置', *DIMENSIONS, '缺口', '建议', '适用版本', '候选及理由'])
     for r in rows:
         matrix.append([r['id'], r['number'], r['text'], r['source'], '；'.join(map(quote, r['conditions'])),
-                       '；'.join(r['locations']), r['response'], '；'.join(r['materials']), '；'.join(r['evidence_locations']),
+                       '；'.join(r['locations']), r['response'], '；'.join(r['materials'] or r['duty']), '；'.join(r['evidence_locations']),
                        r['existence'], r['coverage'], r['attachment'], r['support'], '；'.join(r['gaps']),
                        '；'.join(r['pending'] or ['按源文件行核对，不能推断投标结果']), r['version'],
                        '；'.join(r['locations']) + ('；编号变化/文本近似仅候选，需人工确认' if r['existence'] == '候选待确认' else '')])
@@ -347,6 +496,9 @@ def write_outputs(rows: list[dict], catalog: list[dict], edges: list[dict], args
         if r['present'] and not r['listed']:
             for name, _ in r['present']:
                 attachments.append([r['id'], '', '', name, r['attachment'], r['support'], '；'.join(r['evidence_locations']), '文本支持不认证真伪'])
+        if r['duty'] and not r['listed'] and not r['present'] and not r['conflicting']:
+            attachments.append([r['id'], '；'.join(r['duty']), '', '', r['attachment'], r['support'], '',
+                                '要求 ' + r['source'] + '；仅限已提供材料，正文未核验'])
         for name in r['conflicting']:
             if not any(item['name'] == name for item in r['listed']):
                 attachments.append([r['id'], '', '', name, '待确认', '待确认', '', '文件与要求关联歧义，不能确认为已提供'])
@@ -369,7 +521,7 @@ def write_outputs(rows: list[dict], catalog: list[dict], edges: list[dict], args
                     cell.font = Font(bold=True)
     md_lines = [f'# {quote(project)} · 提交前核对清单', '', mode, '', '仅核对已提供范围；文本证据不认证资质真伪、保证金到账、结果或法律效力。', '摘录已限长脱敏，脱敏非完备；回原件核查。', '']
     for heading, selector in [('确定需要补资料（已提供范围）', lambda r: r['gaps']), ('需要人工确认', lambda r: r['pending']),
-                              ('已覆盖范围（仅文本层面）', lambda r: [r['existence']] if r['coverage'] == '已覆盖（文本层面）' else []),
+                              ('已覆盖范围（仅文本层面）', lambda r: [r['existence']] if r['existence'] == '已定位' and r['coverage'] == '已覆盖（文本层面）' and not r['gaps'] and r['attachment'] in ('不适用', '已提供（可读文本）') and r['support'] in ('不适用', '支持（文本层面）') else []),
                               ('未覆盖范围（仅已提供材料）', lambda r: [r['coverage']] if r['coverage'] == '可能不充分' else [])]:
         md_lines += ['## ' + heading]
         for r in rows:

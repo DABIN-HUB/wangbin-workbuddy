@@ -13,13 +13,13 @@ examples_en:
   - "Check this tender and draft response for omissions, missing evidence, and inconsistencies."
   - "Recheck the response against the formal amendments and identify sections that still use superseded requirements."
   - "Check the submission against the attachment list and separate listed filenames from evidence that is actually available."
-version: 0.2.3
+version: 0.2.5
 author: wangbin
 allowed-tools: Read, Bash
 ---
 # wangbin 招标分析助手
 
-## 0.2.3 自然对话与本地执行合同
+## 0.2.5 自然对话与本地执行合同
 
 用户用自然语言请求核查时，先确认招标 TXT/MD、响应稿 TXT/MD、是否准备模式、正式补遗、附件目录 CSV/XLSX、实际可读文本材料、项目名与输出目录；不要凭用户对话猜本机路径、读取目录或未经授权上传。仅当输入文件已由用户明确选择且确认授权，并且本地 Python + `openpyxl` 可用，才将路径逐一映射到以下真实 CLI。只说“核查”而缺响应时请求提供响应，不假装漏答；只有招标文本时可进入准备模式，并标“响应未核查”。附件目录只代表登记，实际材料必须以 `--evidence-file` 显式给出。请用户确认真实资格/保证金/版本关系及原件，不能声称已认证或已提交。自然语言路由及 WorkBuddy 宿主 Python/cwd/权限**未在平台实测**。
 
@@ -28,6 +28,8 @@ allowed-tools: Read, Bash
 ```bash
 python packages/skills/wangbin-tender-analyzer/scripts/check_response.py --tender "<已选择招标.txt>" --response "<已选择响应.md>" --mode check --amendment "<正式补遗.txt>" --attachment-catalog "<附件清单.csv或.xlsx>" --evidence-file "<实际材料.txt>" --project "<安全单段项目名>" --output-dir "<已存在的授权输出目录>"
 ```
+
+运行前安装 Python 3.11+ 与 `openpyxl>=3.1,<4`（例如 `python -m pip install 'openpyxl>=3.1,<4'`，仅在经用户允许的本地环境）；若未安装先告知依赖缺失而非假定 WorkBuddy 提供。期限对照须区分证书签发日、生效日和有效截止日，只有同对象且双端来源明确才可证明整段覆盖；明确截止端不足或生效日晚于要求起日可据实列缺口，年份和对象不硬编码。肯否、双否定和“购买后才支持”等前提按相同义务比较；提交营业执照等无具体文件名的义务仍核查附件，目录不是文件，文件不等于内容支持；若目标或材料无法唯一对应则记录待确认而不伪造通过或冲突。四维状态分别说明依据；MD 已覆盖项不得包含确定缺口。仅输出文本层面结论，不认证证件真实性。
 
 `--tender` 必需；省略 `--response` 为准备模式，`--mode check` 明确核查而缺响应报 `MISSING_RESPONSE`；`--mode prepare` 不接受响应稿；`--amendment` 与 `--evidence-file` 可重复且不扫描目录；清单可选。`--output-dir` 必需且目录须事先存在；`--project` 可省略并标“未提供项目名称”，拒绝越界/覆盖既有产物。只读 UTF-8 `.txt/.md`（每份≤1 MiB），仅目录支持 `.csv/.xlsx`；运行环境需 Python 3 与 `openpyxl`，不在 WorkBuddy 平台假定可用。解压 ZIP 时可将上述脚本路径换成 `<解压目录>/wangbin-tender-analyzer/scripts/check_response.py`，旧 `analyze_tender.py --input` 仍输出原 JSON。
 
@@ -96,4 +98,4 @@ Windows 路径使用双引号。命令只接受一个显式 `--input` 文件，�
 python packages/skills/wangbin-tender-analyzer/scripts/analyze_tender.py --input packages/skills/wangbin-tender-analyzer/examples/fictional-tender.txt
 ```
 
-将标准输出与 `examples/fictional-tender.expected.json` 比较；预期 JSON 必须由上述命令的实际输出更新，不得手写虚构结果。样例不代表真实采购条件、得分、权限、平台安装/调用或合规意见。
+将标准输出解析成 JSON 并与仓库中原始 `examples/fictional-tender.expected.json` 做**只读对照**；预期快照由独立冻结需求和已审查历史版本提供，禁止用当次 actual 重写 expected、禁止为了通过而改写历史预期。若不一致，保留差异和来源，交由独立审查；仅经另行审批和独立证据才可更新快照。样例不代表真实采购条件、得分、权限、平台安装/调用或合规意见。
