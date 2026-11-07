@@ -148,6 +148,55 @@ def object_name(text: str) -> str | None:
     return match.group(1) if match else None
 
 
+CURRENT_UNKNOWN = re.compile(
+    r'(?:是否|能否|可否|与否|状态|情况|时点|时间|实际投用|实际使用|实际运行).{0,18}'
+    r'(?:无法确认|不能确认|尚待核实|待核实|待确认|未确定|不确定|尚不明确|有待确认)|'
+    r'(?:无法确认|不能确认|尚待核实|待核实|待确认|未确定|不确定|尚不明确).{0,18}'
+    r'(?:是否|能否|可否|上线|启用|投用|运行|可用|使用|支持|状态|情况)')
+CURRENT_NEGATIVE = re.compile(
+    r'尚?未(?:启用|上线|投产|实现|开发|投入使用|投入运行)|还未投入使用|'
+    r'(?:当前|目前|现阶段|暂时)?(?:无法|不能|不可)(?:按要求)?(?:实现|交付|做到|提供|使用|运行|支持)|'
+    r'(?:当前|目前|现阶段|暂时)?(?:尚)?不具备(?:此|该)?(?:项)?能力|'
+    r'(?:当前|目前|现阶段|暂时)?(?:不支持|不可用|做不到)|未实现|未上线|未投产')
+CURRENT_POSITIVE = re.compile(
+    r'(?:已|已经|现已|目前已|当前已)(?:部署|启用|上线|投产|投入运行|投入使用|实现|提供|具备)|'
+    r'(?:现|现在|当前|目前)?(?:可以|可正常|能够)(?:正常)?(?:使用|运行|执行|提供)|'
+    r'(?<!不)(?<!无)(?:支持|具备|提供|使用)[\u4e00-\u9fff\w/]*')
+FUTURE_ONLY = re.compile(r'仅(?:处于|在).{0,12}(?:设计|规划|研发)|仅(?:提供|有).{0,20}(?:设计|文档|方案)|(?:计划|拟于|将在|准备在|列入|后续|未来).{0,18}(?:上线|开发|交付|实现|计划)|(?:购买后|交付后|满足条件后|另行购买|只有.{0,12}才)')
+
+def scoped_facts(text: str, term: str) -> list[tuple[str, str]]:
+    """Collect same-object assertions with their clause provenance and time scope."""
+    action = re.search(r'(?:支持|使用|提供|具备)([\u4e00-\u9fff\w/]+)', term)
+    if not action:
+        return []
+    stem = action.group(1)[:4]
+    result = []
+    clauses = re.split(r'[，。；,;\n]', text)
+    for index, clause in enumerate(clauses):
+        if stem not in clause:
+            continue
+        context = clause
+        if index + 1 < len(clauses):
+            following = clauses[index + 1].strip()
+            if stem in following or re.search(r'^(?:该|此)(?:项|功能|能力|服务)', following):
+                context += '，' + following
+        unknown = bool(CURRENT_UNKNOWN.search(context))
+        negative = bool(CURRENT_NEGATIVE.search(context)) and not (unknown and not re.search(r'尚?未启用|尚?未上线|不具备|不支持|未实现', context))
+        future = bool(FUTURE_ONLY.search(context))
+        positive = bool(CURRENT_POSITIVE.search(context)) and not unknown and not future
+        if negative:
+            result.append(('CONFIRMED_UNAVAILABLE', context))
+        if unknown and not negative:
+            result.append(('UNKNOWN', context))
+        if future:
+            result.append(('CONDITIONAL_OR_FUTURE', context))
+        if positive and not (negative and not re.search(r'已启用|已部署|已经正常|现已投入|现在可以|当前已', context)):
+            result.append(('CONFIRMED_AVAILABLE', context))
+    states = {state for state, _ in result}
+    if 'CONFIRMED_AVAILABLE' in states and 'CONFIRMED_UNAVAILABLE' in states:
+        result.append(('CONFLICT', '同一对象的当前肯定与否定并存'))
+    return result
+
 def action_fact(text: str, term: str) -> tuple[int, str] | None:
     """Bind polarity and current availability to the requested action and object.
 
@@ -158,6 +207,13 @@ def action_fact(text: str, term: str) -> tuple[int, str] | None:
     action = re.search(r'(不)?(支持|使用|提供|具备)([\u4e00-\u9fff\w/]+)', term)
     if not action:
         return None
+    states = {status for status, _ in scoped_facts(text, term)}
+    if 'CONFLICT' in states or 'UNKNOWN' in states or states == {'CONDITIONAL_OR_FUTURE'}:
+        return None
+    if 'CONFIRMED_UNAVAILABLE' in states:
+        return -1, '同对象当前不可用'
+    if 'CONFIRMED_AVAILABLE' in states:
+        return 1, '同对象当前可用'
     _, verb, obj = action.groups()
     stem = obj[:min(len(obj), 4)]
     clauses = re.split(r'[，。；,;]', text)
@@ -203,6 +259,13 @@ def polarity(text: str, term: str) -> int | None:
 
 
 def response_conflict(condition: str, reply: str) -> str | None:
+    states = {s for s, _ in scoped_facts(reply, condition)}
+    if 'CONFLICT' in states:
+        return '同对象当前肯否冲突，须核对两侧来源'
+    if 'UNKNOWN' in states and 'CONFIRMED_UNAVAILABLE' not in states:
+        return None
+    if states == {'CONDITIONAL_OR_FUTURE'}:
+        return None
     target = polarity(condition, condition)
     fact = action_fact(reply, condition)
     actual = fact[0] if fact else None
@@ -217,6 +280,9 @@ def uncertain_capability(condition: str, reply: str) -> bool:
     """An undecided rollout is neither an operational claim nor a denial."""
     if not re.search(r'支持|使用|具备', condition) or not reply:
         return False
+    states = {s for s, _ in scoped_facts(reply, condition)}
+    if 'CONFLICT' in states or ('UNKNOWN' in states and 'CONFIRMED_UNAVAILABLE' not in states):
+        return True
     action = re.search(r'(?:支持|使用|具备)([\u4e00-\u9fff\w/]+)', condition)
     stem = action.group(1)[:4] if action else ''
     # Question/uncertainty belongs to the same capability, not an adjacent
@@ -236,6 +302,9 @@ def uncertain_capability(condition: str, reply: str) -> bool:
 
 def covered(condition: str, reply: str) -> bool:
     if not reply or response_conflict(condition, reply) or uncertain_capability(condition, reply):
+        return False
+    facts = scoped_facts(reply, condition)
+    if facts and not any(s == 'CONFIRMED_AVAILABLE' for s, _ in facts):
         return False
     expected, actual = polarity(condition, condition), polarity(reply, condition)
     if expected is not None and actual == expected:
@@ -367,9 +436,18 @@ def material_assessment(requirement: dict, present: list[tuple[str, str]]):
     if not relevant:
         return '待确认', '实际材料无可读正文，须人工确认', []
     locations = [loc(name, i) for name, i, _ in relevant][:12]
-    for name, i, line in relevant:
-        if NEGATIVE_EVIDENCE.search(line):
-            return '不支持（文本层面）', f'材料 {loc(name, i)} 明确否认已具备要求的证件/证明正文：{quote(line)}；可读文件不等于已颁发证件', locations
+    missing_body = re.compile(r'(?:没有|缺少|缺失|未附|未提供|不含|不包含|无)(?:任何)?(?:证照|执照|证书|证明|登记)?(?:的)?(?:正文|登记内容|实质内容)|(?:仅有|只有|只剩)(?:标题|封面|目录)(?:[，,；;。]|$)|(?:仅|只有).{0,8}(?:封面|标题).{0,8}(?:没有|缺少|未附|无)(?:证照|执照|证明)?正文')
+    negatives = [(name, i, line) for name, i, line in relevant if NEGATIVE_EVIDENCE.search(line) or missing_body.search(line)]
+    positives = [(name, i, line) for name, i, line in relevant if not missing_body.search(line) and not NEGATIVE_EVIDENCE.search(line) and
+                 (re.search(r'(?:营业执照|证书|证明)(?:文本|正文)[：:]\s*\S{4,}|统一社会信用代码|(?:证明文本|证明材料|资质证明).{0,20}有效', line))]
+    if negatives and positives:
+        sources = '、'.join(loc(name, i) for name, i, _ in negatives + positives)
+        return '待确认', '同一材料有正文正反冲突，须核对 ' + sources + '；不能以单句认定证件效力', locations
+    if negatives:
+        name, i, line = negatives[0]
+        if missing_body.search(line):
+            return '不支持（文本层面）', f'材料 {loc(name, i)} 明示此文件缺证照正文/登记内容：{quote(line)}；仅此文件文本不支持，不能推断企业未持证', locations
+        return '不支持（文本层面）', f'材料 {loc(name, i)} 明确否认已具备要求的证件/证明正文：{quote(line)}；可读文件不等于已颁发证件', locations
     # A named document, an application/registration record, or a question
     # about whether this *particular* document qualifies cannot establish it.
     # Inspect the actual linked lines, not the response's attachment claim.
@@ -462,6 +540,8 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
                      if number(line) == r['number'] or number(line) not in numbered]
         reply = selected[1] if selected else ''
         cond = r['conditions']
+        facts = [(p, scoped_facts(reply, p)) for p in cond] if selected else []
+        fact_conflict = any(any(s == 'CONFLICT' for s, _ in assertions) for _, assertions in facts)
         uncovered = [p for p in cond if not covered(p, reply)] if selected else cond
         existence = '未核查' if response is None else '已定位' if unique else '候选待确认' if ambiguous else '未找到（限已提供响应）'
         condition_state = '未核查' if response is None else '待确认' if ambiguous else '可能不充分' if not unique or uncovered else '已覆盖（文本层面）'
@@ -538,6 +618,8 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
         if unique and any(uncertain_capability(p, reply) and not response_conflict(p, reply)
                           for p in cond) and not r['duty']:
             condition_state = '待确认'
+        if fact_conflict:
+            condition_state = '待确认'
         gaps = []
         if existence == '未找到（限已提供响应）':
             gaps.append('在已提供响应中未找到')
@@ -565,6 +647,8 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
         pending = r['pending'][:]
         if ambiguous:
             pending.append('响应候选歧义或编号改变；逐一核对双向原句')
+        if fact_conflict:
+            pending.append('同对象当前肯否冲突；回应 ' + '、'.join(positions) + ' 两侧原句须核对，不可按顺序裁决')
         if unique and any(uncertain_capability(p, reply) and not response_conflict(p, reply)
                           for p in cond):
             pending.append('功能当前可用性或交付时点尚未确定，须核实该要求与响应原句')
@@ -623,10 +707,10 @@ def write_outputs(rows: list[dict], catalog: list[dict], edges: list[dict], args
     attachments.append(['唯一ID', '附件名称', '目录位置', '实际文件', '是否实际提供', '内容支持状态', '材料行证据', '未核验理由'])
     for r in rows:
         for item in r['listed']:
-            attachments.append([r['id'], item['name'], item['source'], '；'.join(name for name, _ in r['present']), r['attachment'], r['support'], '；'.join(r['evidence_locations']), '仅目录不证明文件存在' if not r['present'] else '文本支持不认证真伪'])
+            attachments.append([r['id'], item['name'], item['source'], '；'.join(name for name, _ in r['present']), r['attachment'], r['support'], '；'.join(r['evidence_locations']), '仅目录不证明文件存在' if not r['present'] else (r['assessment_reason'] or '文本支持不认证真伪')])
         if r['present'] and not r['listed']:
             for name, _ in r['present']:
-                attachments.append([r['id'], '', '', name, r['attachment'], r['support'], '；'.join(r['evidence_locations']), '文本支持不认证真伪'])
+                attachments.append([r['id'], '', '', name, r['attachment'], r['support'], '；'.join(r['evidence_locations']), r['assessment_reason'] or '文本支持不认证真伪'])
         if r['duty'] and not r['listed'] and not r['present'] and not r['conflicting']:
             attachments.append([r['id'], '；'.join(r['duty']), '', '', r['attachment'], r['support'], '',
                                 '要求 ' + r['source'] + '；仅限已提供材料，正文未核验'])
