@@ -412,7 +412,7 @@
       ]
     },
     {
-      "active_version": "0.1.3",
+      "active_version": "0.1.4",
       "development": "Local XLSX-DOCX consistency candidate; independent QA pending",
       "id": "wangbin-report-consistency-check",
       "maintenance": "UNKNOWN",
@@ -462,6 +462,15 @@
           "sha256": "549111865465d3feb9faf5aaedf69738be6efd48094b1f61dd127e0b29ed9b38",
           "source": "packages/skills/wangbin-report-consistency-check",
           "version": "0.1.3"
+        },
+        {
+          "archive_evidence": "dist/wangbin-report-consistency-check-0.1.4-skill-candidate.zip",
+          "candidate": "dist/wangbin-report-consistency-check-0.1.4-skill-candidate.zip",
+          "date": "2026-11-07",
+          "published_at": "UNKNOWN",
+          "sha256": "f1df883c3fd5f8eab84a27b09a931e5e2bdf152fdeebad889caf4c24b0f53a8e",
+          "source": "packages/skills/wangbin-report-consistency-check",
+          "version": "0.1.4"
         }
       ]
     }
