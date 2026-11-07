@@ -1,0 +1,4760 @@
+{
+  "archive": "F:\\ideaWorkSpace\\wangbin-workbuddy-project-acceptance-check\\dist\\wangbin-project-acceptance-check-0.1.2-skill-candidate.zip",
+  "sha256": "5117bd7202cd6a322c3aae8246dad79edeb4cd9a876cbcae800ee78ad2a9df57",
+  "cases": [
+    {
+      "id": "F01-login-10",
+      "input": {
+        "scope.md": "R01：同一测试场景下至少支持10000个并发登录。",
+        "test.md": "R01 同一测试场景下实测最大支持10个并发登录。"
+      },
+      "input_sha256": {
+        "scope.md": "a893206144d1cb6043ad27ade29e77960eda5530b3903dbef0da983085011f8f",
+        "test.md": "3ac25cb48273b51a4c849359d195c54b3320e347a79f68b73b76f7312fbec033"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-login-10",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-login-10\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "test.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-login-10",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-login-10\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-login-10\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-login-10\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NONCONFORMING",
+      "actual": {
+        "coverage": "1/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "同一测试场景下至少支持10000个并发登录。",
+            "status": "EVIDENCE_FOUND",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "同一测试场景下至少支持10000个并发登录。",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-78c058449524"
+                ],
+                "negative": [],
+                "sources": [
+                  "test.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "findings": [],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-78c058449524",
+            "source_id": "SRC-6aea4492e95a",
+            "source": "test.md/行1",
+            "text": "R01 同一测试场景下实测最大支持10个并发登录。",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "1/1",
+            "scope.md",
+            "2",
+            "{'EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "同一测试场景下至少支持10000个并发登录。",
+            "scope.md/行1",
+            "同一测试场景下至少支持10000个并发登录。",
+            "EVD-78c058449524",
+            "test.md/行1",
+            "EVIDENCE_FOUND",
+            "同一测试场景下至少支持10000个并发登录。",
+            null,
+            null,
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-78c058449524",
+            "test.md/行1",
+            "R01 同一测试场景下实测最大支持10个并发登录。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；test.md [SRC-6aea4492e95a]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下至少支持10000个并发登录。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-78c058449524 | test.md/行1"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "7f0a0caf2b015fd6b2d5d07d359c577addb03a9f05681cb484b598dae0c6ba95",
+        "星桥演示平台-验收准备报告.docx": "8ff683993ba87a0225a7d40a4930fc6539ac40b1b914d3c6ba596829bcd95706",
+        "星桥演示平台-验收资料核对.xlsx": "c0a062fd40558956aaa40f7f8305ba4178cce2165927926bfe9aac753dbb0df9"
+      },
+      "actual_status": "EVIDENCE_FOUND"
+    },
+    {
+      "id": "F01-login-12000",
+      "input": {
+        "scope.md": "R01：同一测试场景下至少支持10000个并发登录。",
+        "test.md": "R01 同一测试场景下实测最大支持12000个并发登录。"
+      },
+      "input_sha256": {
+        "scope.md": "a893206144d1cb6043ad27ade29e77960eda5530b3903dbef0da983085011f8f",
+        "test.md": "57440999d6327cefc4b01ca9a492f1f32a01aa064b57ced9b796511fe810797c"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-login-12000",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-login-12000\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "test.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-login-12000",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-login-12000\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-login-12000\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-login-12000\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "EVIDENCE_FOUND",
+      "actual": {
+        "coverage": "1/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "同一测试场景下至少支持10000个并发登录。",
+            "status": "EVIDENCE_FOUND",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "同一测试场景下至少支持10000个并发登录。",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-78c058449524"
+                ],
+                "negative": [],
+                "sources": [
+                  "test.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "findings": [],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-78c058449524",
+            "source_id": "SRC-6aea4492e95a",
+            "source": "test.md/行1",
+            "text": "R01 同一测试场景下实测最大支持12000个并发登录。",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "1/1",
+            "scope.md",
+            "2",
+            "{'EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "同一测试场景下至少支持10000个并发登录。",
+            "scope.md/行1",
+            "同一测试场景下至少支持10000个并发登录。",
+            "EVD-78c058449524",
+            "test.md/行1",
+            "EVIDENCE_FOUND",
+            "同一测试场景下至少支持10000个并发登录。",
+            null,
+            null,
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-78c058449524",
+            "test.md/行1",
+            "R01 同一测试场景下实测最大支持12000个并发登录。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；test.md [SRC-6aea4492e95a]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下至少支持10000个并发登录。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-78c058449524 | test.md/行1"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "b8a1daaecdc04bdcb8061fef36812432cd82acc7c227d3ac161da9f03631d679",
+        "星桥演示平台-验收准备报告.docx": "8ff683993ba87a0225a7d40a4930fc6539ac40b1b914d3c6ba596829bcd95706",
+        "星桥演示平台-验收资料核对.xlsx": "069c0c7119c8a1bd8bc31f24f719ddc84a9a2e4ab1fd14f646c200c0f3661608"
+      },
+      "actual_status": "EVIDENCE_FOUND"
+    },
+    {
+      "id": "F01-login-9999",
+      "input": {
+        "scope.md": "R01：同一测试场景下至少支持10000个并发登录。",
+        "test.md": "R01 同一测试场景下实测最大支持9999个并发登录。"
+      },
+      "input_sha256": {
+        "scope.md": "a893206144d1cb6043ad27ade29e77960eda5530b3903dbef0da983085011f8f",
+        "test.md": "1c3c06e52fe171de54967998b2312ec3ddac18a4a23133fe34ac52dcf895e95f"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-login-9999",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-login-9999\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "test.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-login-9999",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-login-9999\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-login-9999\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-login-9999\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NONCONFORMING",
+      "actual": {
+        "coverage": "1/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "同一测试场景下至少支持10000个并发登录。",
+            "status": "EVIDENCE_FOUND",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "同一测试场景下至少支持10000个并发登录。",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-78c058449524"
+                ],
+                "negative": [],
+                "sources": [
+                  "test.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "findings": [],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-78c058449524",
+            "source_id": "SRC-6aea4492e95a",
+            "source": "test.md/行1",
+            "text": "R01 同一测试场景下实测最大支持9999个并发登录。",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "1/1",
+            "scope.md",
+            "2",
+            "{'EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "同一测试场景下至少支持10000个并发登录。",
+            "scope.md/行1",
+            "同一测试场景下至少支持10000个并发登录。",
+            "EVD-78c058449524",
+            "test.md/行1",
+            "EVIDENCE_FOUND",
+            "同一测试场景下至少支持10000个并发登录。",
+            null,
+            null,
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-78c058449524",
+            "test.md/行1",
+            "R01 同一测试场景下实测最大支持9999个并发登录。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；test.md [SRC-6aea4492e95a]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下至少支持10000个并发登录。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-78c058449524 | test.md/行1"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "5042f3156f2f066b28fdb63452695931176ad1b502f51f687e5442399e4ec661",
+        "星桥演示平台-验收准备报告.docx": "3700b98bf212d967ace298de7db31bfc4f7b92083ee75613af963b6ce2734bee",
+        "星桥演示平台-验收资料核对.xlsx": "17d2953b821040704ac587357a4f1dcd654939ae7e86bdcf47c9e5b334c78311"
+      },
+      "actual_status": "EVIDENCE_FOUND"
+    },
+    {
+      "id": "F01-login-10000",
+      "input": {
+        "scope.md": "R01：同一测试场景下至少支持10000个并发登录。",
+        "test.md": "R01 同一测试场景下实测最大支持10000个并发登录。"
+      },
+      "input_sha256": {
+        "scope.md": "a893206144d1cb6043ad27ade29e77960eda5530b3903dbef0da983085011f8f",
+        "test.md": "ebd99e6e026de843d902db6426ede6e8ec26adef337ce42fb4cbd1f53a48089f"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-login-10000",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-login-10000\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "test.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-login-10000",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-login-10000\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-login-10000\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-login-10000\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "EVIDENCE_FOUND",
+      "actual": {
+        "coverage": "1/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "同一测试场景下至少支持10000个并发登录。",
+            "status": "EVIDENCE_FOUND",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "同一测试场景下至少支持10000个并发登录。",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-78c058449524"
+                ],
+                "negative": [],
+                "sources": [
+                  "test.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "findings": [],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-78c058449524",
+            "source_id": "SRC-6aea4492e95a",
+            "source": "test.md/行1",
+            "text": "R01 同一测试场景下实测最大支持10000个并发登录。",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "1/1",
+            "scope.md",
+            "2",
+            "{'EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "同一测试场景下至少支持10000个并发登录。",
+            "scope.md/行1",
+            "同一测试场景下至少支持10000个并发登录。",
+            "EVD-78c058449524",
+            "test.md/行1",
+            "EVIDENCE_FOUND",
+            "同一测试场景下至少支持10000个并发登录。",
+            null,
+            null,
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-78c058449524",
+            "test.md/行1",
+            "R01 同一测试场景下实测最大支持10000个并发登录。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；test.md [SRC-6aea4492e95a]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下至少支持10000个并发登录。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-78c058449524 | test.md/行1"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "ee618b75b725bd88be5d180557d5b5826f8ce6c5f5a12e0ca6ddaf07f5fa769e",
+        "星桥演示平台-验收准备报告.docx": "3700b98bf212d967ace298de7db31bfc4f7b92083ee75613af963b6ce2734bee",
+        "星桥演示平台-验收资料核对.xlsx": "346b0ccca467f78e6faf2a1cb3782f1b19e72229fb95f41666e6956bf595e8e6"
+      },
+      "actual_status": "EVIDENCE_FOUND"
+    },
+    {
+      "id": "F01-login-10001",
+      "input": {
+        "scope.md": "R01：同一测试场景下至少支持10000个并发登录。",
+        "test.md": "R01 同一测试场景下实测最大支持10001个并发登录。"
+      },
+      "input_sha256": {
+        "scope.md": "a893206144d1cb6043ad27ade29e77960eda5530b3903dbef0da983085011f8f",
+        "test.md": "a08f46337d1a45eeae10eb905a630a985d1acc049f923d06413f779f669ecb67"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-login-10001",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-login-10001\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "test.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-login-10001",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-login-10001\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-login-10001\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-login-10001\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "EVIDENCE_FOUND",
+      "actual": {
+        "coverage": "1/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "同一测试场景下至少支持10000个并发登录。",
+            "status": "EVIDENCE_FOUND",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "同一测试场景下至少支持10000个并发登录。",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-78c058449524"
+                ],
+                "negative": [],
+                "sources": [
+                  "test.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "findings": [],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-78c058449524",
+            "source_id": "SRC-6aea4492e95a",
+            "source": "test.md/行1",
+            "text": "R01 同一测试场景下实测最大支持10001个并发登录。",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "1/1",
+            "scope.md",
+            "2",
+            "{'EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "同一测试场景下至少支持10000个并发登录。",
+            "scope.md/行1",
+            "同一测试场景下至少支持10000个并发登录。",
+            "EVD-78c058449524",
+            "test.md/行1",
+            "EVIDENCE_FOUND",
+            "同一测试场景下至少支持10000个并发登录。",
+            null,
+            null,
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-78c058449524",
+            "test.md/行1",
+            "R01 同一测试场景下实测最大支持10001个并发登录。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；test.md [SRC-6aea4492e95a]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下至少支持10000个并发登录。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-78c058449524 | test.md/行1"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "3503cbbe55890050695c0eeb1ed39df4341933987fd3fa669459ef805e4c4f28",
+        "星桥演示平台-验收准备报告.docx": "3700b98bf212d967ace298de7db31bfc4f7b92083ee75613af963b6ce2734bee",
+        "星桥演示平台-验收资料核对.xlsx": "deccb74fbd789f2f58ec13bd579daa1dfea5430057ecb265bf683d82619884f2"
+      },
+      "actual_status": "EVIDENCE_FOUND"
+    },
+    {
+      "id": "F01-unrelated",
+      "input": {
+        "scope.md": "R01：同一测试场景下至少支持10000个并发登录。",
+        "backup.md": "R01 数据库备份操作完成，恢复成功。"
+      },
+      "input_sha256": {
+        "scope.md": "a893206144d1cb6043ad27ade29e77960eda5530b3903dbef0da983085011f8f",
+        "backup.md": "5bb63a5f78d4c2b84e9611a84574449516d48906893b3de1b65ed1464b59ee83"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-unrelated",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-unrelated\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "backup.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-unrelated",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-unrelated\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-unrelated\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-unrelated\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NO_EVIDENCE_FOUND",
+      "actual": {
+        "coverage": "1/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "同一测试场景下至少支持10000个并发登录。",
+            "status": "EVIDENCE_FOUND",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "同一测试场景下至少支持10000个并发登录。",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-3c64291dc885"
+                ],
+                "negative": [],
+                "sources": [
+                  "backup.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "findings": [],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-3c64291dc885",
+            "source_id": "SRC-54da3e5db91f",
+            "source": "backup.md/行1",
+            "text": "R01 数据库备份操作完成，恢复成功。",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "1/1",
+            "scope.md",
+            "2",
+            "{'EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "同一测试场景下至少支持10000个并发登录。",
+            "scope.md/行1",
+            "同一测试场景下至少支持10000个并发登录。",
+            "EVD-3c64291dc885",
+            "backup.md/行1",
+            "EVIDENCE_FOUND",
+            "同一测试场景下至少支持10000个并发登录。",
+            null,
+            null,
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-3c64291dc885",
+            "backup.md/行1",
+            "R01 数据库备份操作完成，恢复成功。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；backup.md [SRC-54da3e5db91f]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下至少支持10000个并发登录。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-3c64291dc885 | backup.md/行1"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "e7e4bd2bebbe7d0180dc8c43165c360d4b647b3e0eb5f8a409eaf16e8c6b8337",
+        "星桥演示平台-验收准备报告.docx": "20fbb9b0d40d847772e817d4907d96d1964839f799c64d44bd3d434d7e6e2b03",
+        "星桥演示平台-验收资料核对.xlsx": "dbb6f520b712dc0ff85c6c57fba0f6519172c66752a106dd35d3dc7d8f9f01b0"
+      },
+      "actual_status": "EVIDENCE_FOUND"
+    },
+    {
+      "id": "F01-no-quantity",
+      "input": {
+        "scope.md": "R01：同一测试场景下至少支持10000个并发登录。",
+        "test.md": "R01 同一测试场景下已测试并发登录。"
+      },
+      "input_sha256": {
+        "scope.md": "a893206144d1cb6043ad27ade29e77960eda5530b3903dbef0da983085011f8f",
+        "test.md": "a79dc5d7b7d7fc761b8f3faaa0d45cd4be6ab4af0e82d7a99af104550c0b1bb4"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-no-quantity",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-no-quantity\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "test.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-no-quantity",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-no-quantity\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-no-quantity\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-no-quantity\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "PENDING_CONFIRMATION (quantity missing)",
+      "actual": {
+        "coverage": "1/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "同一测试场景下至少支持10000个并发登录。",
+            "status": "EVIDENCE_FOUND",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "同一测试场景下至少支持10000个并发登录。",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-78c058449524"
+                ],
+                "negative": [],
+                "sources": [
+                  "test.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "findings": [],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-78c058449524",
+            "source_id": "SRC-6aea4492e95a",
+            "source": "test.md/行1",
+            "text": "R01 同一测试场景下已测试并发登录。",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "1/1",
+            "scope.md",
+            "2",
+            "{'EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "同一测试场景下至少支持10000个并发登录。",
+            "scope.md/行1",
+            "同一测试场景下至少支持10000个并发登录。",
+            "EVD-78c058449524",
+            "test.md/行1",
+            "EVIDENCE_FOUND",
+            "同一测试场景下至少支持10000个并发登录。",
+            null,
+            null,
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-78c058449524",
+            "test.md/行1",
+            "R01 同一测试场景下已测试并发登录。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；test.md [SRC-6aea4492e95a]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下至少支持10000个并发登录。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-78c058449524 | test.md/行1"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "69daa2953742aa70210c2d0fc66c16e77dc20398ee271d05f4bc13ebab271456",
+        "星桥演示平台-验收准备报告.docx": "d72d263aa6a5fc85dd55409d4e9f75ecc5c1081a3e099e714c8d8a126534f87b",
+        "星桥演示平台-验收资料核对.xlsx": "f4c1651140b1434de575eef3f8a7b1e8f27a8c8c6cb22cdeb28976e1e26c3f3c"
+      },
+      "actual_status": "EVIDENCE_FOUND"
+    },
+    {
+      "id": "F01-unit-mismatch",
+      "input": {
+        "scope.md": "R01：同一测试场景下至少支持10000个并发登录。",
+        "test.md": "R01 同一测试场景下支持12000次每日登录。"
+      },
+      "input_sha256": {
+        "scope.md": "a893206144d1cb6043ad27ade29e77960eda5530b3903dbef0da983085011f8f",
+        "test.md": "d09d6a2324d266f00d999ec3b31fa4ac0ed1406f8bd1398b5f8feebe20c16d6c"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-unit-mismatch",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-unit-mismatch\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "test.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F01-unit-mismatch",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-unit-mismatch\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-unit-mismatch\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F01-unit-mismatch\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "PENDING_CONFIRMATION (different unit)",
+      "actual": {
+        "coverage": "1/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "同一测试场景下至少支持10000个并发登录。",
+            "status": "EVIDENCE_FOUND",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "同一测试场景下至少支持10000个并发登录。",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-78c058449524"
+                ],
+                "negative": [],
+                "sources": [
+                  "test.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "findings": [],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-78c058449524",
+            "source_id": "SRC-6aea4492e95a",
+            "source": "test.md/行1",
+            "text": "R01 同一测试场景下支持12000次每日登录。",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "1/1",
+            "scope.md",
+            "2",
+            "{'EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "同一测试场景下至少支持10000个并发登录。",
+            "scope.md/行1",
+            "同一测试场景下至少支持10000个并发登录。",
+            "EVD-78c058449524",
+            "test.md/行1",
+            "EVIDENCE_FOUND",
+            "同一测试场景下至少支持10000个并发登录。",
+            null,
+            null,
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-78c058449524",
+            "test.md/行1",
+            "R01 同一测试场景下支持12000次每日登录。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；test.md [SRC-6aea4492e95a]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "同一测试场景下至少支持10000个并发登录。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-78c058449524 | test.md/行1"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "90c2f22928b3dc1a3a641e65b5a011b3ef13e031986a24036bb1c814a53ab8f0",
+        "星桥演示平台-验收准备报告.docx": "d72d263aa6a5fc85dd55409d4e9f75ecc5c1081a3e099e714c8d8a126534f87b",
+        "星桥演示平台-验收资料核对.xlsx": "4662a5a29a948755051fecebbfdf75988933b2b94c50fce1369c2b20e6dbd548"
+      },
+      "actual_status": "EVIDENCE_FOUND"
+    },
+    {
+      "id": "F02-ubuntu",
+      "input": {
+        "scope.md": "R01：提供 Windows Server 2022 部署说明。",
+        "deploy.md": "R01 Ubuntu 部署说明：安装软件并配置端口。"
+      },
+      "input_sha256": {
+        "scope.md": "4d9fb33b26a23175a8ab018149bea89f911c9a1701559d680b4de7f4abf682ec",
+        "deploy.md": "9ad60f353d8a6ae3449479c96df0c6b292ed8bfd5c8025b2ffaf386f4f2874c0"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F02-ubuntu",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F02-ubuntu\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--delivery-source",
+        "deploy.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F02-ubuntu",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F02-ubuntu\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F02-ubuntu\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F02-ubuntu\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NO_EVIDENCE_FOUND (target OS not evidenced)",
+      "actual": {
+        "coverage": "1/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "提供 Windows Server 2022 部署说明。",
+            "status": "EVIDENCE_FOUND",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "提供 Windows Server 2022 部署说明。",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-43f6809b08a6"
+                ],
+                "negative": [],
+                "sources": [
+                  "deploy.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "findings": [],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-43f6809b08a6",
+            "source_id": "SRC-8e764ec57cb2",
+            "source": "deploy.md/行1",
+            "text": "R01 Ubuntu 部署说明：安装软件并配置端口。",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "1/1",
+            "scope.md",
+            "2",
+            "{'EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供 Windows Server 2022 部署说明。",
+            "scope.md/行1",
+            "提供 Windows Server 2022 部署说明。",
+            "EVD-43f6809b08a6",
+            "deploy.md/行1",
+            "EVIDENCE_FOUND",
+            "提供 Windows Server 2022 部署说明。",
+            null,
+            null,
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-43f6809b08a6",
+            "deploy.md/行1",
+            "R01 Ubuntu 部署说明：安装软件并配置端口。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；deploy.md [SRC-8e764ec57cb2]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "提供 Windows Server 2022 部署说明。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-43f6809b08a6 | deploy.md/行1"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "b3a7a87bfdd1791a9035f8efa13c6baf0c2d0f55f07469fe9ebcf885fc44bacc",
+        "星桥演示平台-验收准备报告.docx": "6795e0620c3fcaff99842bca9220dd34ae1f188a90e0026709d0ba78ee39b3a0",
+        "星桥演示平台-验收资料核对.xlsx": "525306e12aca3524555c3903bf57eb106d43e38c173be28b397a7de15b7b7943"
+      },
+      "actual_status": "EVIDENCE_FOUND"
+    },
+    {
+      "id": "F02-only-ubuntu",
+      "input": {
+        "scope.md": "R01：提供 Windows Server 2022 部署说明。",
+        "deploy.md": "R01 仅覆盖 Ubuntu 部署，未提供 Windows Server 2022 步骤。"
+      },
+      "input_sha256": {
+        "scope.md": "4d9fb33b26a23175a8ab018149bea89f911c9a1701559d680b4de7f4abf682ec",
+        "deploy.md": "30e63f1a23f682484f5e5b93ecd1c8d16066fa5884af84e526c99823491097b4"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F02-only-ubuntu",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F02-only-ubuntu\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--delivery-source",
+        "deploy.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F02-only-ubuntu",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F02-only-ubuntu\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F02-only-ubuntu\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F02-only-ubuntu\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NO_EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NONCONFORMING (submitted deliverable excludes target)",
+      "actual": {
+        "coverage": "0/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "提供 Windows Server 2022 部署说明。",
+            "status": "NO_EVIDENCE_FOUND",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "提供 Windows Server 2022 部署说明。",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          }
+        ],
+        "findings": [
+          {
+            "id": "GAP-129f537ab8a8",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "MISSING",
+            "text": "提供 Windows Server 2022 部署说明。",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-43f6809b08a6",
+            "source_id": "SRC-8e764ec57cb2",
+            "source": "deploy.md/行1",
+            "text": "R01 仅覆盖 Ubuntu 部署，未提供 Windows Server 2022 步骤。",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "0/1",
+            "scope.md",
+            "2",
+            "{'NO_EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供 Windows Server 2022 部署说明。",
+            "scope.md/行1",
+            "提供 Windows Server 2022 部署说明。",
+            null,
+            null,
+            "NO_EVIDENCE_FOUND",
+            null,
+            "提供 Windows Server 2022 部署说明。",
+            "MISSING: 提供 Windows Server 2022 部署说明。",
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-43f6809b08a6",
+            "deploy.md/行1",
+            "R01 仅覆盖 Ubuntu 部署，未提供 Windows Server 2022 步骤。",
+            "CONTENT",
+            null,
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "提供 Windows Server 2022 部署说明。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-129f537ab8a8",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；deploy.md [SRC-8e764ec57cb2]",
+          "主要发现",
+          "R01 NO_EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "提供 Windows Server 2022 部署说明。 NO_EVIDENCE_FOUND",
+              "scope.md/行1",
+              " | "
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "提供 Windows Server 2022 部署说明。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "894d3f885c536d33d8314597ae70dbc1e48606807c3ff73f25de2528311706cc",
+        "星桥演示平台-验收准备报告.docx": "668a697cd6883e43d7fe0d8cb7299a08e9ef51cedd80757fdf2b39037060c289",
+        "星桥演示平台-验收资料核对.xlsx": "b8ac12b77e8b37524fe671212f87387b9073a3ac31b9e74c4e817c6004374da2"
+      },
+      "actual_status": "NO_EVIDENCE_FOUND"
+    },
+    {
+      "id": "F02-win-full",
+      "input": {
+        "scope.md": "R01：提供 Windows Server 2022 部署说明。",
+        "deploy.md": "R01 Windows Server 2022 部署说明：先安装服务组件、配置端口、启动服务，随后检查健康接口。"
+      },
+      "input_sha256": {
+        "scope.md": "4d9fb33b26a23175a8ab018149bea89f911c9a1701559d680b4de7f4abf682ec",
+        "deploy.md": "d2426d08ee7ea674621ac0798fec88cac55a5287548dc1ec3c2a16d58b990373"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F02-win-full",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F02-win-full\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--delivery-source",
+        "deploy.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F02-win-full",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F02-win-full\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F02-win-full\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F02-win-full\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "EVIDENCE_FOUND",
+      "actual": {
+        "coverage": "1/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "提供 Windows Server 2022 部署说明。",
+            "status": "EVIDENCE_FOUND",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "提供 Windows Server 2022 部署说明。",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-43f6809b08a6"
+                ],
+                "negative": [],
+                "sources": [
+                  "deploy.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "findings": [],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-43f6809b08a6",
+            "source_id": "SRC-8e764ec57cb2",
+            "source": "deploy.md/行1",
+            "text": "R01 Windows Server 2022 部署说明：先安装服务组件、配置端口、启动服务，随后检查健康接口。",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "1/1",
+            "scope.md",
+            "2",
+            "{'EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供 Windows Server 2022 部署说明。",
+            "scope.md/行1",
+            "提供 Windows Server 2022 部署说明。",
+            "EVD-43f6809b08a6",
+            "deploy.md/行1",
+            "EVIDENCE_FOUND",
+            "提供 Windows Server 2022 部署说明。",
+            null,
+            null,
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-43f6809b08a6",
+            "deploy.md/行1",
+            "R01 Windows Server 2022 部署说明：先安装服务组件、配置端口、启动服务，随后检查健康接口。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；deploy.md [SRC-8e764ec57cb2]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "提供 Windows Server 2022 部署说明。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-43f6809b08a6 | deploy.md/行1"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "89559c1c0ed51772fbca1fe600a8cde75b9bcb13356adcd22ead6ca2d0f8a843",
+        "星桥演示平台-验收准备报告.docx": "9065ff6e4b4a927364f669da3c349a211427c535b8bb76f443e780be7b05411a",
+        "星桥演示平台-验收资料核对.xlsx": "0d2786458573778007a1eff4ecaedfce0ef12251415e19b6e0c01d46c6cb51dc"
+      },
+      "actual_status": "EVIDENCE_FOUND"
+    },
+    {
+      "id": "F02-win-2025",
+      "input": {
+        "scope.md": "R01：提供 Windows Server 2025 部署说明。",
+        "deploy.md": "R01 Windows Server 2025 部署说明：安装服务组件、配置端口、启动服务并验收健康接口。"
+      },
+      "input_sha256": {
+        "scope.md": "8de24752d75f50668a1c5ba085be12c7081b9b5cfbe6ab101d25e13ca4f108a1",
+        "deploy.md": "5db21a84484c3d7e26813caaab2df787ffbc0879b4bdac3016eddc8e1eb56b12"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F02-win-2025",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F02-win-2025\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--delivery-source",
+        "deploy.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F02-win-2025",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F02-win-2025\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F02-win-2025\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F02-win-2025\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "EVIDENCE_FOUND",
+      "actual": {
+        "coverage": "1/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "提供 Windows Server 2025 部署说明。",
+            "status": "EVIDENCE_FOUND",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "提供 Windows Server 2025 部署说明。",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-43f6809b08a6"
+                ],
+                "negative": [],
+                "sources": [
+                  "deploy.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "findings": [],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-43f6809b08a6",
+            "source_id": "SRC-8e764ec57cb2",
+            "source": "deploy.md/行1",
+            "text": "R01 Windows Server 2025 部署说明：安装服务组件、配置端口、启动服务并验收健康接口。",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "1/1",
+            "scope.md",
+            "2",
+            "{'EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供 Windows Server 2025 部署说明。",
+            "scope.md/行1",
+            "提供 Windows Server 2025 部署说明。",
+            "EVD-43f6809b08a6",
+            "deploy.md/行1",
+            "EVIDENCE_FOUND",
+            "提供 Windows Server 2025 部署说明。",
+            null,
+            null,
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-43f6809b08a6",
+            "deploy.md/行1",
+            "R01 Windows Server 2025 部署说明：安装服务组件、配置端口、启动服务并验收健康接口。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；deploy.md [SRC-8e764ec57cb2]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "提供 Windows Server 2025 部署说明。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-43f6809b08a6 | deploy.md/行1"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "a7602d90435ea89315a412c9211ce532aef974812f0be237606ce106d73bdfd0",
+        "星桥演示平台-验收准备报告.docx": "06b7e546dd48c26bb1a3fc6d18c3ace79aedcc7ec95f24e7ad57d85ae630d5eb",
+        "星桥演示平台-验收资料核对.xlsx": "18953faf63496d8bf412c9669291ecce027a0cc8a99c5423a92ad04e1ab24fb6"
+      },
+      "actual_status": "EVIDENCE_FOUND"
+    },
+    {
+      "id": "F02-linux",
+      "input": {
+        "scope.md": "R01：提供 Debian 12 部署说明。",
+        "deploy.md": "R01 Ubuntu 22.04 部署说明：安装服务组件、配置端口、启动服务。"
+      },
+      "input_sha256": {
+        "scope.md": "ee3332d612932dc734e7a259e6a65bf92dce7d72af5a3511708a3c2bbfdfbcd8",
+        "deploy.md": "60b136fedb76b9c93f4a373bcc54dc817a9fef9d6d6ac9d58e4959597722abc4"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F02-linux",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F02-linux\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--delivery-source",
+        "deploy.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F02-linux",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F02-linux\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F02-linux\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F02-linux\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"1/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NO_EVIDENCE_FOUND (target OS not evidenced)",
+      "actual": {
+        "coverage": "1/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "提供 Debian 12 部署说明。",
+            "status": "EVIDENCE_FOUND",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "提供 Debian 12 部署说明。",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-43f6809b08a6"
+                ],
+                "negative": [],
+                "sources": [
+                  "deploy.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "findings": [],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-43f6809b08a6",
+            "source_id": "SRC-8e764ec57cb2",
+            "source": "deploy.md/行1",
+            "text": "R01 Ubuntu 22.04 部署说明：安装服务组件、配置端口、启动服务。",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "1/1",
+            "scope.md",
+            "2",
+            "{'EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供 Debian 12 部署说明。",
+            "scope.md/行1",
+            "提供 Debian 12 部署说明。",
+            "EVD-43f6809b08a6",
+            "deploy.md/行1",
+            "EVIDENCE_FOUND",
+            "提供 Debian 12 部署说明。",
+            null,
+            null,
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-43f6809b08a6",
+            "deploy.md/行1",
+            "R01 Ubuntu 22.04 部署说明：安装服务组件、配置端口、启动服务。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：1/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；deploy.md [SRC-8e764ec57cb2]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "提供 Debian 12 部署说明。 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-43f6809b08a6 | deploy.md/行1"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "d721bb0190f17c7e36f7386fdf984074dd03edddce82aa38d0698c2e984694db",
+        "星桥演示平台-验收准备报告.docx": "2a1dda0ce5adc6f08e734a9a61eeeb464d959b38324c38e781c508860e58c3d3",
+        "星桥演示平台-验收资料核对.xlsx": "eba5077eba0eb2f460e8d5646bd2e93f9092eca601facc6a9e0d0d0ed15c44fd"
+      },
+      "actual_status": "EVIDENCE_FOUND"
+    },
+    {
+      "id": "F03-zero",
+      "input": {
+        "scope.md": "R01：全部登录测试用例通过。",
+        "test.md": "R01 全部登录测试共执行100项，成功100项，失败次数为0。"
+      },
+      "input_sha256": {
+        "scope.md": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122",
+        "test.md": "f8c4eac930804b2cac877f1f344d192be46b4d68de7fae64c3fa790d58d3b47a"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F03-zero",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F03-zero\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "test.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F03-zero",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F03-zero\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F03-zero\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F03-zero\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NONCONFORMING\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "EVIDENCE_FOUND",
+      "actual": {
+        "coverage": "0/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "全部登录测试用例通过。",
+            "status": "NONCONFORMING",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "全部登录测试用例通过。",
+                "status": "NONCONFORMING",
+                "support": [],
+                "negative": [
+                  "EVD-78c058449524"
+                ],
+                "sources": [
+                  "test.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "findings": [
+          {
+            "id": "GAP-bd8680534f34",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "NONCONFORMING",
+            "text": "全部登录测试用例通过。",
+            "sources": [
+              "test.md/行1"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-129f537ab8a8",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "MISSING",
+            "text": "全部登录测试用例通过。",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-78c058449524",
+            "source_id": "SRC-6aea4492e95a",
+            "source": "test.md/行1",
+            "text": "R01 全部登录测试共执行100项，成功100项，失败次数为0。",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "0/1",
+            "scope.md",
+            "2",
+            "{'NONCONFORMING': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "全部登录测试用例通过。",
+            "scope.md/行1",
+            "全部登录测试用例通过。",
+            "EVD-78c058449524",
+            "test.md/行1",
+            "NONCONFORMING",
+            null,
+            "全部登录测试用例通过。",
+            "NONCONFORMING: 全部登录测试用例通过。; MISSING: 全部登录测试用例通过。",
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-78c058449524",
+            "test.md/行1",
+            "R01 全部登录测试共执行100项，成功100项，失败次数为0。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-bd8680534f34",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NONCONFORMING",
+            "全部登录测试用例通过。 | test.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "全部登录测试用例通过。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-bd8680534f34",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-129f537ab8a8",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；test.md [SRC-6aea4492e95a]",
+          "主要发现",
+          "R01 NONCONFORMING scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "全部登录测试用例通过。 NONCONFORMING",
+              "scope.md/行1",
+              "EVD-78c058449524 | test.md/行1"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-bd8680534f34 NONCONFORMING",
+              "全部登录测试用例通过。",
+              "test.md/行1"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "全部登录测试用例通过。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "8ab3de1bfac431b7f2a09a4352971e78ee8abdce9e01c1709ab78c93b0e66146",
+        "星桥演示平台-验收准备报告.docx": "2550e8532d0170ace9debe95cf3446caad68a4f6991b9fc358659068596aa4f1",
+        "星桥演示平台-验收资料核对.xlsx": "380e4d6485022d39392de3b3190913d8c8db8383eb0885068e353054243ecd03"
+      },
+      "actual_status": "NONCONFORMING"
+    },
+    {
+      "id": "F03-one",
+      "input": {
+        "scope.md": "R01：全部登录测试用例通过。",
+        "test.md": "R01 全部登录测试共执行100项，成功99项，失败1项。"
+      },
+      "input_sha256": {
+        "scope.md": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122",
+        "test.md": "b619d2a732e4d41d76af0c8263c8025406999f9357161db68b27b592c067b147"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F03-one",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F03-one\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "test.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F03-one",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F03-one\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F03-one\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F03-one\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NONCONFORMING\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NONCONFORMING",
+      "actual": {
+        "coverage": "0/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "全部登录测试用例通过。",
+            "status": "NONCONFORMING",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "全部登录测试用例通过。",
+                "status": "NONCONFORMING",
+                "support": [],
+                "negative": [
+                  "EVD-78c058449524"
+                ],
+                "sources": [
+                  "test.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "findings": [
+          {
+            "id": "GAP-bd8680534f34",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "NONCONFORMING",
+            "text": "全部登录测试用例通过。",
+            "sources": [
+              "test.md/行1"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-129f537ab8a8",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "MISSING",
+            "text": "全部登录测试用例通过。",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-78c058449524",
+            "source_id": "SRC-6aea4492e95a",
+            "source": "test.md/行1",
+            "text": "R01 全部登录测试共执行100项，成功99项，失败1项。",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "0/1",
+            "scope.md",
+            "2",
+            "{'NONCONFORMING': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "全部登录测试用例通过。",
+            "scope.md/行1",
+            "全部登录测试用例通过。",
+            "EVD-78c058449524",
+            "test.md/行1",
+            "NONCONFORMING",
+            null,
+            "全部登录测试用例通过。",
+            "NONCONFORMING: 全部登录测试用例通过。; MISSING: 全部登录测试用例通过。",
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-78c058449524",
+            "test.md/行1",
+            "R01 全部登录测试共执行100项，成功99项，失败1项。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-bd8680534f34",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NONCONFORMING",
+            "全部登录测试用例通过。 | test.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "全部登录测试用例通过。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-bd8680534f34",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-129f537ab8a8",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；test.md [SRC-6aea4492e95a]",
+          "主要发现",
+          "R01 NONCONFORMING scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "全部登录测试用例通过。 NONCONFORMING",
+              "scope.md/行1",
+              "EVD-78c058449524 | test.md/行1"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-bd8680534f34 NONCONFORMING",
+              "全部登录测试用例通过。",
+              "test.md/行1"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "全部登录测试用例通过。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "fceae5bc4669443f15d33dc733fa786306406469c6061d30daf8d8776f50085f",
+        "星桥演示平台-验收准备报告.docx": "2550e8532d0170ace9debe95cf3446caad68a4f6991b9fc358659068596aa4f1",
+        "星桥演示平台-验收资料核对.xlsx": "174119bb6d075b0eb5fb8df71d0472811549b0e3a286c0c3c302df42dcebab38"
+      },
+      "actual_status": "NONCONFORMING"
+    },
+    {
+      "id": "F03-unspecified",
+      "input": {
+        "scope.md": "R01：全部登录测试用例通过。",
+        "test.md": "R01 未发现失败。"
+      },
+      "input_sha256": {
+        "scope.md": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122",
+        "test.md": "f042c343b7483b4e5af66fa7e94c8ae7046b685607872144876dc12632f01e67"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F03-unspecified",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F03-unspecified\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "test.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F03-unspecified",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F03-unspecified\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F03-unspecified\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F03-unspecified\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NONCONFORMING\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "PENDING_CONFIRMATION (test scope unspecified)",
+      "actual": {
+        "coverage": "0/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "全部登录测试用例通过。",
+            "status": "NONCONFORMING",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "全部登录测试用例通过。",
+                "status": "NONCONFORMING",
+                "support": [],
+                "negative": [
+                  "EVD-78c058449524"
+                ],
+                "sources": [
+                  "test.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "findings": [
+          {
+            "id": "GAP-bd8680534f34",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "NONCONFORMING",
+            "text": "全部登录测试用例通过。",
+            "sources": [
+              "test.md/行1"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-129f537ab8a8",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "MISSING",
+            "text": "全部登录测试用例通过。",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-78c058449524",
+            "source_id": "SRC-6aea4492e95a",
+            "source": "test.md/行1",
+            "text": "R01 未发现失败。",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "0/1",
+            "scope.md",
+            "2",
+            "{'NONCONFORMING': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "全部登录测试用例通过。",
+            "scope.md/行1",
+            "全部登录测试用例通过。",
+            "EVD-78c058449524",
+            "test.md/行1",
+            "NONCONFORMING",
+            null,
+            "全部登录测试用例通过。",
+            "NONCONFORMING: 全部登录测试用例通过。; MISSING: 全部登录测试用例通过。",
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-78c058449524",
+            "test.md/行1",
+            "R01 未发现失败。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-bd8680534f34",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NONCONFORMING",
+            "全部登录测试用例通过。 | test.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "全部登录测试用例通过。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-bd8680534f34",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-129f537ab8a8",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；test.md [SRC-6aea4492e95a]",
+          "主要发现",
+          "R01 NONCONFORMING scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "全部登录测试用例通过。 NONCONFORMING",
+              "scope.md/行1",
+              "EVD-78c058449524 | test.md/行1"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-bd8680534f34 NONCONFORMING",
+              "全部登录测试用例通过。",
+              "test.md/行1"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "全部登录测试用例通过。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "f63bd7877cb44202c5627198ff3f730927c27b8f367e32d8d6ef8c885aa7ee9b",
+        "星桥演示平台-验收准备报告.docx": "d91cacfbedd8d9c121bb6987f4159f34bd09c98f2d2dd5816fe7722b5a03b0e5",
+        "星桥演示平台-验收资料核对.xlsx": "eb995ab73317db31ebb3232eaeb71197d27aaf10d202a0086fd634491e9ab4c1"
+      },
+      "actual_status": "NONCONFORMING"
+    },
+    {
+      "id": "F04-compound",
+      "input": {
+        "scope.md": "R01：提供接口文档和部署说明。",
+        "interface.md": "R01 接口文档：端点 /demo、请求参数：id、返回字段：name。"
+      },
+      "input_sha256": {
+        "scope.md": "487e113a9b1d86688fcbc0c21f5fa9d1e613decf16e43bbe601e7e8cc6dc2c15",
+        "interface.md": "753fa3bdbacbd1cd60bc7256af4c80bbf74e964e9d99d45f5370702767e73632"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F04-compound",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F04-compound\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--delivery-source",
+        "interface.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F04-compound",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F04-compound\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F04-compound\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F04-compound\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"1/2\", \"requirements\": [{\"number\": \"R01\", \"status\": \"PARTIAL_EVIDENCE\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "PARTIAL_EVIDENCE (deployment missing)",
+      "actual": {
+        "coverage": "1/2",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "提供接口文档和部署说明。",
+            "status": "PARTIAL_EVIDENCE",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "接口文档",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-2f1b0d19a6db"
+                ],
+                "negative": [],
+                "sources": [
+                  "interface.md/行1"
+                ]
+              },
+              {
+                "condition_id": "COND-33f94e8bf64e",
+                "text": "部署说明",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          }
+        ],
+        "findings": [
+          {
+            "id": "GAP-95a03bb9a8ef",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-33f94e8bf64e",
+            "type": "MISSING",
+            "text": "部署说明",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-2f1b0d19a6db",
+            "source_id": "SRC-d4ac8e6fd53e",
+            "source": "interface.md/行1",
+            "text": "R01 接口文档：端点 /demo、请求参数：id、返回字段：name。",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "1/2",
+            "scope.md",
+            "2",
+            "{'PARTIAL_EVIDENCE': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供接口文档和部署说明。",
+            "scope.md/行1",
+            "接口文档; 部署说明",
+            "EVD-2f1b0d19a6db",
+            "interface.md/行1",
+            "PARTIAL_EVIDENCE",
+            "接口文档",
+            "部署说明",
+            "MISSING: 部署说明",
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-2f1b0d19a6db",
+            "interface.md/行1",
+            "R01 接口文档：端点 /demo、请求参数：id、返回字段：name。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-95a03bb9a8ef",
+            "REQ-1568382cb39d/COND-33f94e8bf64e",
+            "MISSING",
+            "部署说明 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-95a03bb9a8ef",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：1/2",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；interface.md [SRC-d4ac8e6fd53e]",
+          "主要发现",
+          "R01 PARTIAL_EVIDENCE scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "接口文档 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-2f1b0d19a6db | interface.md/行1"
+            ],
+            [
+              "REQ-1568382cb39d/COND-33f94e8bf64e",
+              "部署说明 NO_EVIDENCE_FOUND",
+              "scope.md/行1",
+              " | "
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-95a03bb9a8ef MISSING",
+              "部署说明",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "290630558c71bb886f0dd0b73ef8b38993ccc7d4012266b443aeafd8494c8f06",
+        "星桥演示平台-验收准备报告.docx": "d5f0d1099b5189681978406f16f19e76a5ae38a6b4947f5dcf726c1095da1c2f",
+        "星桥演示平台-验收资料核对.xlsx": "471889636d791feddc180b86eec79580f5489f5686905429e7c63ec9676e84fb"
+      },
+      "actual_status": "PARTIAL_EVIDENCE"
+    },
+    {
+      "id": "F04-claim",
+      "input": {
+        "scope.md": "R01：提供接口文档。",
+        "claim.md": "R01 开发完成。"
+      },
+      "input_sha256": {
+        "scope.md": "52c8216c55b2fe59846d495b18de487a86c213e3b788c3d5977ee4557a21336b",
+        "claim.md": "eb3391f43de354f2a3939e8cbfff1e49ce9e508782c7158f739ef3da181e06c0"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F04-claim",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F04-claim\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--delivery-source",
+        "claim.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F04-claim",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F04-claim\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F04-claim\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F04-claim\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"NO_EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "NO_EVIDENCE_FOUND (claim alone)",
+      "actual": {
+        "coverage": "0/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "提供接口文档。",
+            "status": "NO_EVIDENCE_FOUND",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "提供接口文档。",
+                "status": "NO_EVIDENCE_FOUND",
+                "support": [],
+                "negative": [],
+                "sources": []
+              }
+            ]
+          }
+        ],
+        "findings": [
+          {
+            "id": "GAP-129f537ab8a8",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "MISSING",
+            "text": "提供接口文档。",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-7cd841e536fe",
+            "source_id": "SRC-4168a3f19ba2",
+            "source": "claim.md/行1",
+            "text": "R01 开发完成。",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": true
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "0/1",
+            "scope.md",
+            "2",
+            "{'NO_EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供接口文档。",
+            "scope.md/行1",
+            "提供接口文档。",
+            null,
+            null,
+            "NO_EVIDENCE_FOUND",
+            null,
+            "提供接口文档。",
+            "MISSING: 提供接口文档。",
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-7cd841e536fe",
+            "claim.md/行1",
+            "R01 开发完成。",
+            "CLAIM_ONLY",
+            null,
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "提供接口文档。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-129f537ab8a8",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；claim.md [SRC-4168a3f19ba2]",
+          "主要发现",
+          "R01 NO_EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "提供接口文档。 NO_EVIDENCE_FOUND",
+              "scope.md/行1",
+              " | "
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "提供接口文档。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "bd459ad8f32841d4a10bb8184ac6859797744fb9af1c539e1907c199491e258a",
+        "星桥演示平台-验收准备报告.docx": "96bae97b0183780a2229b1b089d710c4f31b6ca421e779a85a85c324c7a4d13e",
+        "星桥演示平台-验收资料核对.xlsx": "758403747361ef0197fe654f088794c7284d09b8990afcf83b6369a223f23ccb"
+      },
+      "actual_status": "NO_EVIDENCE_FOUND"
+    },
+    {
+      "id": "F04-conflict",
+      "input": {
+        "scope.md": "R01：全部登录测试用例通过。",
+        "pass.md": "R01 全部登录测试共100项，全部通过。",
+        "fail.md": "R01 全部登录测试共100项，成功99项，失败1项。"
+      },
+      "input_sha256": {
+        "scope.md": "d5ece27598d638005038f946698900eae39bfd2c59ef24a04e8ed693b3a48122",
+        "pass.md": "9cd340ab243882cad088c6a43d14d87c7c68b2a693e4758a29168b7abffff775",
+        "fail.md": "b8ee7d605fd108b7335285282d46624175819365901b2a98cd61322a2084a42a"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F04-conflict",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F04-conflict\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--evidence-source",
+        "pass.md",
+        "--evidence-source",
+        "fail.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F04-conflict",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F04-conflict\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F04-conflict\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F04-conflict\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"0/1\", \"requirements\": [{\"number\": \"R01\", \"status\": \"CONFLICT\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "CONFLICT (retain both sources)",
+      "actual": {
+        "coverage": "0/1",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "全部登录测试用例通过。",
+            "status": "CONFLICT",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "全部登录测试用例通过。",
+                "status": "CONFLICT",
+                "support": [
+                  "EVD-c1dee521b0cf"
+                ],
+                "negative": [
+                  "EVD-efdc077901ee"
+                ],
+                "sources": [
+                  "pass.md/行1",
+                  "fail.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "findings": [
+          {
+            "id": "GAP-bd8680534f34",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "NONCONFORMING",
+            "text": "全部登录测试用例通过。",
+            "sources": [
+              "fail.md/行1"
+            ],
+            "status": "OPEN"
+          },
+          {
+            "id": "GAP-129f537ab8a8",
+            "requirement_id": "REQ-1568382cb39d",
+            "condition_id": "COND-48457c299c47",
+            "type": "MISSING",
+            "text": "全部登录测试用例通过。",
+            "sources": [
+              "scope.md/行1"
+            ],
+            "status": "OPEN"
+          }
+        ],
+        "conflicts": [
+          {
+            "type": "EVIDENCE_CONFLICT",
+            "text": "全部登录测试用例通过。",
+            "sources": [
+              "pass.md/行1",
+              "fail.md/行1"
+            ]
+          }
+        ],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-c1dee521b0cf",
+            "source_id": "SRC-749ddeabcdb4",
+            "source": "pass.md/行1",
+            "text": "R01 全部登录测试共100项，全部通过。",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "evidence_id": "EVD-efdc077901ee",
+            "source_id": "SRC-608da23341da",
+            "source": "fail.md/行1",
+            "text": "R01 全部登录测试共100项，成功99项，失败1项。",
+            "role": "evidence",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "0/1",
+            "scope.md",
+            "3",
+            "{'CONFLICT': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "全部登录测试用例通过。",
+            "scope.md/行1",
+            "全部登录测试用例通过。",
+            "EVD-c1dee521b0cf, EVD-efdc077901ee",
+            "pass.md/行1; fail.md/行1",
+            "CONFLICT",
+            null,
+            "全部登录测试用例通过。",
+            "NONCONFORMING: 全部登录测试用例通过。; MISSING: 全部登录测试用例通过。",
+            "确认候选或有效版本"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-c1dee521b0cf",
+            "pass.md/行1",
+            "R01 全部登录测试共100项，全部通过。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ],
+          [
+            "EVD-efdc077901ee",
+            "fail.md/行1",
+            "R01 全部登录测试共100项，成功99项，失败1项。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ],
+          [
+            "GAP-bd8680534f34",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NONCONFORMING",
+            "全部登录测试用例通过。 | fail.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ],
+          [
+            "GAP-129f537ab8a8",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "MISSING",
+            "全部登录测试用例通过。 | scope.md/行1",
+            "OPEN",
+            "补充或确认可追溯证据"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ],
+          [
+            "EVIDENCE_CONFLICT",
+            "全部登录测试用例通过。",
+            "pass.md/行1; fail.md/行1",
+            "提供可追溯确认依据"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ],
+          [
+            null,
+            "GAP-bd8680534f34",
+            "NEW",
+            null
+          ],
+          [
+            null,
+            "GAP-129f537ab8a8",
+            "NEW",
+            null
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：0/1",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；pass.md [SRC-749ddeabcdb4]；fail.md [SRC-608da23341da]",
+          "主要发现",
+          "R01 CONFLICT scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "EVIDENCE_CONFLICT 全部登录测试用例通过。 pass.md/行1; fail.md/行1",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "全部登录测试用例通过。 CONFLICT",
+              "scope.md/行1",
+              "EVD-c1dee521b0cf; EVD-efdc077901ee | pass.md/行1; fail.md/行1"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ],
+            [
+              "GAP-bd8680534f34 NONCONFORMING",
+              "全部登录测试用例通过。",
+              "fail.md/行1"
+            ],
+            [
+              "GAP-129f537ab8a8 MISSING",
+              "全部登录测试用例通过。",
+              "scope.md/行1"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "6fe19fddcefaedbd889c79b952896ea7978811c7ea459a4c6deb7ef86c6062e8",
+        "星桥演示平台-验收准备报告.docx": "8f2b153509a5147972bd131dda3fb5046ecd7b7bb11dd227c6b385de9df01346",
+        "星桥演示平台-验收资料核对.xlsx": "b67a9f2c19c33d012cd63c680d54037832485b7ace8cf4a254dc794d0e07eda3"
+      },
+      "actual_status": "CONFLICT"
+    },
+    {
+      "id": "F04-two-docs",
+      "input": {
+        "scope.md": "R01：提供接口文档和部署说明。",
+        "interface.md": "R01 接口文档：端点 /demo、请求参数：id、返回字段：name。",
+        "deploy.md": "R01 Windows Server 2022 部署说明：安装组件、配置端口、启动并验证服务。"
+      },
+      "input_sha256": {
+        "scope.md": "487e113a9b1d86688fcbc0c21f5fa9d1e613decf16e43bbe601e7e8cc6dc2c15",
+        "interface.md": "753fa3bdbacbd1cd60bc7256af4c80bbf74e964e9d99d45f5370702767e73632",
+        "deploy.md": "06df0555809f4d0edfd69daafc5025d886743eefb9f6b721ff57764e4fde01ae"
+      },
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+        "--project-name",
+        "星桥演示平台",
+        "--authorized-input-root",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F04-two-docs",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F04-two-docs\\output",
+        "--scope-source",
+        "scope.md",
+        "--effective-version-ref",
+        "scope.md",
+        "--delivery-source",
+        "interface.md",
+        "--delivery-source",
+        "deploy.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\F04-two-docs",
+      "exit": 0,
+      "stdout": "{\"result\": \"OK\", \"outputs\": [\"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F04-two-docs\\\\output\\\\星桥演示平台-验收资料核对.xlsx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F04-two-docs\\\\output\\\\星桥演示平台-验收准备报告.docx\", \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\acc-r1-baseline-_wz14mev\\\\F04-two-docs\\\\output\\\\星桥演示平台-核查快照.json\"], \"coverage\": \"2/2\", \"requirements\": [{\"number\": \"R01\", \"status\": \"EVIDENCE_FOUND\"}], \"limitations\": []}",
+      "stderr": "",
+      "expected": "EVIDENCE_FOUND (both)",
+      "actual": {
+        "coverage": "2/2",
+        "requirements": [
+          {
+            "number": "R01",
+            "text": "提供接口文档和部署说明。",
+            "status": "EVIDENCE_FOUND",
+            "source": "scope.md/行1",
+            "conditions": [
+              {
+                "condition_id": "COND-48457c299c47",
+                "text": "接口文档",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-2f1b0d19a6db"
+                ],
+                "negative": [],
+                "sources": [
+                  "interface.md/行1"
+                ]
+              },
+              {
+                "condition_id": "COND-33f94e8bf64e",
+                "text": "部署说明",
+                "status": "EVIDENCE_FOUND",
+                "support": [
+                  "EVD-43f6809b08a6"
+                ],
+                "negative": [],
+                "sources": [
+                  "deploy.md/行1"
+                ]
+              }
+            ]
+          }
+        ],
+        "findings": [],
+        "conflicts": [],
+        "limitations": [],
+        "evidence": [
+          {
+            "evidence_id": "EVD-2f1b0d19a6db",
+            "source_id": "SRC-d4ac8e6fd53e",
+            "source": "interface.md/行1",
+            "text": "R01 接口文档：端点 /demo、请求参数：id、返回字段：name。",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          },
+          {
+            "evidence_id": "EVD-43f6809b08a6",
+            "source_id": "SRC-8e764ec57cb2",
+            "source": "deploy.md/行1",
+            "text": "R01 Windows Server 2022 部署说明：安装组件、配置端口、启动并验证服务。",
+            "role": "delivery",
+            "listed_only": false,
+            "claim_only": false
+          }
+        ]
+      },
+      "xlsx": {
+        "核查概览": [
+          [
+            "项目",
+            "覆盖率",
+            "有效版本/依据",
+            "材料数",
+            "状态数量",
+            "限制"
+          ],
+          [
+            "星桥演示平台",
+            "2/2",
+            "scope.md",
+            "3",
+            "{'EVIDENCE_FOUND': 1}",
+            null
+          ]
+        ],
+        "要求追踪": [
+          [
+            "requirement_id",
+            "原始编号",
+            "要求原文",
+            "来源",
+            "验收条件",
+            "对应交付物",
+            "证据位置",
+            "核查结论",
+            "已覆盖子条件",
+            "未覆盖子条件",
+            "缺口",
+            "下一步确认事项"
+          ],
+          [
+            "REQ-1568382cb39d",
+            "R01",
+            "提供接口文档和部署说明。",
+            "scope.md/行1",
+            "接口文档; 部署说明",
+            "EVD-2f1b0d19a6db, EVD-43f6809b08a6",
+            "interface.md/行1; deploy.md/行1",
+            "EVIDENCE_FOUND",
+            "接口文档; 部署说明",
+            null,
+            null,
+            "按缺口补充材料"
+          ]
+        ],
+        "证据索引": [
+          [
+            "evidence_id",
+            "来源位置",
+            "原文",
+            "证明范围",
+            "关联 requirement_id/condition_id",
+            "确认状态"
+          ],
+          [
+            "EVD-2f1b0d19a6db",
+            "interface.md/行1",
+            "R01 接口文档：端点 /demo、请求参数：id、返回字段：name。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-48457c299c47",
+            "NOT_CONFIRMED"
+          ],
+          [
+            "EVD-43f6809b08a6",
+            "deploy.md/行1",
+            "R01 Windows Server 2022 部署说明：安装组件、配置端口、启动并验证服务。",
+            "CONTENT",
+            "REQ-1568382cb39d/COND-33f94e8bf64e",
+            "NOT_CONFIRMED"
+          ]
+        ],
+        "缺口与不符合": [
+          [
+            "发现 ID",
+            "要求/子条件",
+            "类型",
+            "原文及来源",
+            "是否解决",
+            "下一步"
+          ]
+        ],
+        "冲突与待确认": [
+          [
+            "类型",
+            "候选/原文",
+            "来源",
+            "所需确认"
+          ]
+        ],
+        "本次更新": [
+          [
+            "旧发现 ID",
+            "新发现 ID",
+            "变化",
+            "解决证据 ID"
+          ]
+        ]
+      },
+      "docx": {
+        "paragraphs": [
+          "星桥演示平台 — 验收准备报告／草稿",
+          "本报告仅描述本次资料的证据追踪，不构成正式验收结论或签字。",
+          "项目及核查范围",
+          "星桥演示平台；有效范围依据：scope.md；覆盖：2/2",
+          "本次资料与有效版本",
+          "scope.md [SRC-221c68155d0f]；interface.md [SRC-d4ac8e6fd53e]；deploy.md [SRC-8e764ec57cb2]",
+          "主要发现",
+          "R01 EVIDENCE_FOUND scope.md/行1",
+          "要求与证据概况",
+          "资料缺口和明确不符合",
+          "冲突及未确认变更",
+          "本次未识别到冲突",
+          "验收准备建议",
+          "仅就本次材料核查，逐项补齐缺口并由有权人员确认版本/候选关系。不得把缺少材料推定为软件未开发。",
+          "来源和限制",
+          "仅支持用户授权的可读内容；不判定正式验收。"
+        ],
+        "tables": [
+          [
+            [
+              "要求 ID",
+              "条件/状态",
+              "来源",
+              "证据来源"
+            ],
+            [
+              "REQ-1568382cb39d/COND-48457c299c47",
+              "接口文档 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-2f1b0d19a6db | interface.md/行1"
+            ],
+            [
+              "REQ-1568382cb39d/COND-33f94e8bf64e",
+              "部署说明 EVIDENCE_FOUND",
+              "scope.md/行1",
+              "EVD-43f6809b08a6 | deploy.md/行1"
+            ]
+          ],
+          [
+            [
+              "发现 ID/类型",
+              "子条件",
+              "来源"
+            ]
+          ]
+        ]
+      },
+      "output_sha256": {
+        "星桥演示平台-核查快照.json": "0ad8e2d7db1e245bc094f20bd68539b1a1e91c1fa20796ba42abfd5be2505c50",
+        "星桥演示平台-验收准备报告.docx": "7cf45afe03bbd48836c713f8a3fa3663067e4d9e6faec8708775d55964feb6ee",
+        "星桥演示平台-验收资料核对.xlsx": "4c2270711ea51b5ac886cdc032173a792be3f78a54015b3ac1893fb2be77c1ff"
+      },
+      "actual_status": "EVIDENCE_FOUND"
+    }
+  ],
+  "layers": {
+    "L1": "ZIP static inspection",
+    "L2": "NOT_TESTED (no mock/isolated function tests)",
+    "L3": "real extracted ZIP CLI, XLSX/DOCX/JSON reopened",
+    "L4": "NOT_TESTED",
+    "L5": "NOT_TESTED"
+  },
+  "members": [
+    {
+      "path": "wangbin-project-acceptance-check/LICENSE",
+      "sha256": "77e14f72b077bbcc88b3dad0d686fe7d30b45e766f5e25c274089aeef527d217"
+    },
+    {
+      "path": "wangbin-project-acceptance-check/SKILL.md",
+      "sha256": "f7d8fa0b94c952ea5e981e819e19b7a738c101d278179d18d1544fbe1a36ed33"
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/README.md",
+      "sha256": "97b9830b6d4bc2a02747b28edac3c1534c115c2df2b529ab0bdc756e8cebb88f"
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/deploy.md",
+      "sha256": "7a8f1f68d71bbef7a25b20f29ba83b7136c0a5666e8efa328bb969f46512c980"
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/interface.md",
+      "sha256": "4dc1984259dad9dcf9713a6ec8989e55776f4356376489366c844fd9c9dbb097"
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/scope.md",
+      "sha256": "782bd91ee6a7f8099a0bd82193abcbd659d62a4ddcadb318d7d47d8bc54b38c3"
+    },
+    {
+      "path": "wangbin-project-acceptance-check/manifest.json",
+      "sha256": "e01df5145e2d6b81a0d7b9bf2412f343ed69d38cab4412e13635b0423cbc76be"
+    },
+    {
+      "path": "wangbin-project-acceptance-check/references/runtime.md",
+      "sha256": "24fdfab821e705bcb7cb9a4a79a5e4162e38ca51a81d90e17efad8662597bdf7"
+    },
+    {
+      "path": "wangbin-project-acceptance-check/scripts/check_acceptance.py",
+      "sha256": "4a42f48f3beec46c9e5ad8e3115f4e859ff21720382fbe9f100a89809bcba389"
+    }
+  ],
+  "static": {
+    "script": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\acc-r1-baseline-_wz14mev\\extracted\\wangbin-project-acceptance-check\\scripts\\check_acceptance.py",
+    "observations": [
+      "conditions(): composite deployment regex fixes Windows Server 2019",
+      "evaluate_condition(): explicit R01 reference can become SUPPORT without semantic threshold comparison",
+      "evaluate_condition(): negative regex includes literal 失败, without count/scope"
+    ]
+  }
+}
