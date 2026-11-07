@@ -453,6 +453,15 @@
           "sha256": "5117bd7202cd6a322c3aae8246dad79edeb4cd9a876cbcae800ee78ad2a9df57",
           "source": "packages/skills/wangbin-project-acceptance-check",
           "version": "0.1.2"
+        },
+        {
+          "archive_evidence": "dist/wangbin-project-acceptance-check-0.1.3-skill-candidate.zip",
+          "candidate": "dist/wangbin-project-acceptance-check-0.1.3-skill-candidate.zip",
+          "date": "UNKNOWN",
+          "published_at": "UNKNOWN",
+          "sha256": "9b6234744613af39c9d710359c93649044cbc4660aa9805a9bf8e1a8927c797e",
+          "source": "packages/skills/wangbin-project-acceptance-check",
+          "version": "0.1.3"
         }
       ]
     }

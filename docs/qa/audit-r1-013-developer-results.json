@@ -1,0 +1,124 @@
+{
+  "archive_sha256": "9b6234744613af39c9d710359c93649044cbc4660aa9805a9bf8e1a8927c797e",
+  "python": "3.11.15",
+  "case_count": 7,
+  "cases": [
+    {
+      "case": "low-colon",
+      "exit": 0,
+      "expected": "NONCONFORMING",
+      "actual": "NONCONFORMING",
+      "coverage": "0/1",
+      "source": [
+        "material.md/行1"
+      ],
+      "comparison": [
+        {
+          "evidence_id": "EVD-283dfeaf59b6",
+          "decision": "NONCONFORMING",
+          "reason": "并发登录实际 10 人 至少 阈值 10000 人：不满足",
+          "source": "material.md/行1"
+        }
+      ]
+    },
+    {
+      "case": "high-space",
+      "exit": 0,
+      "expected": "EVIDENCE_FOUND",
+      "actual": "EVIDENCE_FOUND",
+      "coverage": "1/1",
+      "source": [
+        "material.md/行1"
+      ],
+      "comparison": [
+        {
+          "evidence_id": "EVD-283dfeaf59b6",
+          "decision": "SUPPORT",
+          "reason": "并发登录实际 12000 人 至少 阈值 10000 人：满足",
+          "source": "material.md/行1"
+        }
+      ]
+    },
+    {
+      "case": "other-os",
+      "exit": 0,
+      "expected": "NO_EVIDENCE_FOUND",
+      "actual": "NO_EVIDENCE_FOUND",
+      "coverage": "0/1",
+      "source": [],
+      "comparison": []
+    },
+    {
+      "case": "right-os",
+      "exit": 0,
+      "expected": "EVIDENCE_FOUND",
+      "actual": "EVIDENCE_FOUND",
+      "coverage": "1/1",
+      "source": [
+        "material.md/行1"
+      ],
+      "comparison": [
+        {
+          "evidence_id": "EVD-283dfeaf59b6",
+          "decision": "SUPPORT",
+          "reason": "关联材料包含对应条件的可读内容",
+          "source": "material.md/行1"
+        }
+      ]
+    },
+    {
+      "case": "zero-failed",
+      "exit": 0,
+      "expected": "EVIDENCE_FOUND",
+      "actual": "EVIDENCE_FOUND",
+      "coverage": "1/1",
+      "source": [
+        "material.md/行1"
+      ],
+      "comparison": [
+        {
+          "evidence_id": "EVD-283dfeaf59b6",
+          "decision": "SUPPORT",
+          "reason": "相同测试范围执行 37 项，成功 37 项，失败 0 项",
+          "source": "material.md/行1"
+        }
+      ]
+    },
+    {
+      "case": "one-failed",
+      "exit": 0,
+      "expected": "NONCONFORMING",
+      "actual": "NONCONFORMING",
+      "coverage": "0/1",
+      "source": [
+        "material.md/行1"
+      ],
+      "comparison": [
+        {
+          "evidence_id": "EVD-283dfeaf59b6",
+          "decision": "NONCONFORMING",
+          "reason": "执行 37 项，成功 36 项，失败 1 项；未全部通过",
+          "source": "material.md/行1"
+        }
+      ]
+    },
+    {
+      "case": "scope-unknown",
+      "exit": 0,
+      "expected": "PENDING_CONFIRMATION",
+      "actual": "PENDING_CONFIRMATION",
+      "coverage": "0/1",
+      "source": [
+        "material.md/行1"
+      ],
+      "comparison": [
+        {
+          "evidence_id": "EVD-283dfeaf59b6",
+          "decision": "PENDING",
+          "reason": "缺登录测试对象/范围",
+          "source": "material.md/行1"
+        }
+      ]
+    }
+  ]
+}
