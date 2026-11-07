@@ -1,0 +1,1837 @@
+{
+  "zip_sha256": "536763a9c5d64d5b5b53364f5e6e7be93c13457351624b544a0b722b07955d3c",
+  "python": "3.11.15 (main, Aug  7 2026, 02:24:19) [MSC v.1944 64 bit (AMD64)]",
+  "script": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\clean-014\\wangbin-import-precheck\\scripts\\precheck.py",
+  "cases": {
+    "F01-map": {
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmpo7LStQ\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\clean-014\\wangbin-import-precheck\\scripts\\precheck.py",
+        "--input",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-map\\source.csv",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-map\\output",
+        "--authorization",
+        "独立基线探针：仅在隔离目录生成分流副本",
+        "--split",
+        "--rules",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-map\\rules.json"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\clean-014",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"COMPLETED\",\n  \"comparison\": null,\n  \"input_records\": 1,\n  \"findings\": 0,\n  \"affected_records\": 0,\n  \"duplicate_groups\": 0,\n  \"source_sha256\": \"221d83c6233634936abf300489cec081830b84b0ba55a36d5b823ca3fa9bb942\",\n  \"reference_sha256\": null,\n  \"unchecked\": [],\n  \"checked\": [\n    \"CODE:required\",\n    \"CODE:type\",\n    \"NAME:required\"\n  ],\n  \"outputs\": {\n    \"report\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F01-map\\\\output\\\\source-导入预检-run2.xlsx\",\n    \"candidate\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F01-map\\\\output\\\\source-候选导入-run2.xlsx\",\n    \"quarantine\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F01-map\\\\output\\\\source-隔离记录-run2.xlsx\"\n  },\n  \"finding_details\": [],\n  \"rows\": [\n    {\n      \"row_id\": \"221d83c623363493:CSV:2\",\n      \"line\": 2\n    }\n  ],\n  \"warning\": \"Local snapshot precheck; unknown rules may still block import. Original untouched.\"\n}\n",
+      "stderr": "",
+      "input_sha256": "221d83c6233634936abf300489cec081830b84b0ba55a36d5b823ca3fa9bb942",
+      "input": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-map\\source.csv",
+      "rules": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-map\\rules.json",
+      "reference": null,
+      "receipt": {
+        "status": "COMPLETED",
+        "comparison": null,
+        "input_records": 1,
+        "findings": 0,
+        "affected_records": 0,
+        "duplicate_groups": 0,
+        "source_sha256": "221d83c6233634936abf300489cec081830b84b0ba55a36d5b823ca3fa9bb942",
+        "reference_sha256": null,
+        "unchecked": [],
+        "checked": [
+          "CODE:required",
+          "CODE:type",
+          "NAME:required"
+        ],
+        "outputs": {
+          "report": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-map\\output\\source-导入预检-run2.xlsx",
+          "candidate": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-map\\output\\source-候选导入-run2.xlsx",
+          "quarantine": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-map\\output\\source-隔离记录-run2.xlsx"
+        },
+        "finding_details": [],
+        "rows": [
+          {
+            "row_id": "221d83c623363493:CSV:2",
+            "line": 2
+          }
+        ],
+        "warning": "Local snapshot precheck; unknown rules may still block import. Original untouched."
+      },
+      "workbooks": {
+        "report": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-map\\output\\source-导入预检-run2.xlsx",
+          "sheets": {
+            "检查概览": [
+              [
+                "项目",
+                "值"
+              ],
+              [
+                "输入记录数",
+                "1"
+              ],
+              [
+                "完全空白行数",
+                "0"
+              ],
+              [
+                "无阻断记录数",
+                "1"
+              ],
+              [
+                "有问题记录数",
+                "0"
+              ],
+              [
+                "问题条数",
+                "0"
+              ],
+              [
+                "重复组数",
+                "0"
+              ],
+              [
+                "检查模式",
+                "已知规则预检"
+              ],
+              [
+                "已检查规则",
+                "CODE:required,CODE:type,NAME:required"
+              ],
+              [
+                "未检查规则",
+                "0"
+              ],
+              [
+                "执行状态",
+                "COMPLETED"
+              ],
+              [
+                "源SHA256",
+                "221d83c6233634936abf300489cec081830b84b0ba55a36d5b823ca3fa9bb942"
+              ],
+              [
+                "参考SHA256",
+                "NOT_PROVIDED"
+              ],
+              [
+                "源编码/分隔符",
+                "{\"encoding\": \"utf-8\", \"delimiter\": \",\"}"
+              ]
+            ],
+            "字段映射": [
+              [
+                "原始字段",
+                "目标字段",
+                "映射依据",
+                "确认状态",
+                "转换规则"
+              ],
+              [
+                "编码",
+                "customer_code",
+                "user/template",
+                "CONFIRMED",
+                null
+              ],
+              [
+                "名称",
+                "customer_name",
+                "user/template",
+                "CONFIRMED",
+                null
+              ]
+            ],
+            "问题明细": [
+              [
+                "finding_id",
+                "row_id",
+                "文件",
+                "工作表",
+                "原始行号",
+                "字段/单元格",
+                "原值",
+                "规则编号",
+                "类别",
+                "说明",
+                "建议",
+                "是否阻断候选导入"
+              ]
+            ],
+            "变更记录": [
+              [
+                "row_id",
+                "字段",
+                "原值",
+                "新值",
+                "转换规则",
+                "授权依据"
+              ]
+            ],
+            "未检查项": [
+              [
+                "规则编号",
+                "缺少条件",
+                "影响范围",
+                "需补资料"
+              ]
+            ]
+          }
+        },
+        "candidate": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-map\\output\\source-候选导入-run2.xlsx",
+          "sheets": {
+            "候选数据": [
+              [
+                "row_id",
+                "source_line",
+                "编码",
+                "名称"
+              ],
+              [
+                "221d83c623363493:CSV:2",
+                "2",
+                "00123",
+                "甲客户"
+              ]
+            ]
+          }
+        },
+        "quarantine": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-map\\output\\source-隔离记录-run2.xlsx",
+          "sheets": {
+            "隔离记录": [
+              [
+                "row_id",
+                "source_line",
+                "编码",
+                "名称",
+                "原因"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    "F02-strip": {
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmpo7LStQ\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\clean-014\\wangbin-import-precheck\\scripts\\precheck.py",
+        "--input",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-strip\\source.csv",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-strip\\output",
+        "--authorization",
+        "独立基线探针：仅在隔离目录生成分流副本",
+        "--split",
+        "--rules",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-strip\\rules.json",
+        "--transforms",
+        "{\"customer_name\": \"strip\"}"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\clean-014",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"COMPLETED\",\n  \"comparison\": null,\n  \"input_records\": 1,\n  \"findings\": 0,\n  \"affected_records\": 0,\n  \"duplicate_groups\": 0,\n  \"source_sha256\": \"cff14faa585c121022956b7909c53848ec14e2de2757758103cda7d448f993f7\",\n  \"reference_sha256\": null,\n  \"unchecked\": [],\n  \"checked\": [\n    \"NAME:required\"\n  ],\n  \"outputs\": {\n    \"report\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F02-strip\\\\output\\\\source-导入预检-run2.xlsx\",\n    \"candidate\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F02-strip\\\\output\\\\source-候选导入-run2.xlsx\",\n    \"quarantine\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F02-strip\\\\output\\\\source-隔离记录-run2.xlsx\"\n  },\n  \"finding_details\": [],\n  \"rows\": [\n    {\n      \"row_id\": \"cff14faa585c1210:CSV:2\",\n      \"line\": 2\n    }\n  ],\n  \"warning\": \"Local snapshot precheck; unknown rules may still block import. Original untouched.\"\n}\n",
+      "stderr": "",
+      "input_sha256": "cff14faa585c121022956b7909c53848ec14e2de2757758103cda7d448f993f7",
+      "input": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-strip\\source.csv",
+      "rules": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-strip\\rules.json",
+      "reference": null,
+      "receipt": {
+        "status": "COMPLETED",
+        "comparison": null,
+        "input_records": 1,
+        "findings": 0,
+        "affected_records": 0,
+        "duplicate_groups": 0,
+        "source_sha256": "cff14faa585c121022956b7909c53848ec14e2de2757758103cda7d448f993f7",
+        "reference_sha256": null,
+        "unchecked": [],
+        "checked": [
+          "NAME:required"
+        ],
+        "outputs": {
+          "report": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-strip\\output\\source-导入预检-run2.xlsx",
+          "candidate": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-strip\\output\\source-候选导入-run2.xlsx",
+          "quarantine": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-strip\\output\\source-隔离记录-run2.xlsx"
+        },
+        "finding_details": [],
+        "rows": [
+          {
+            "row_id": "cff14faa585c1210:CSV:2",
+            "line": 2
+          }
+        ],
+        "warning": "Local snapshot precheck; unknown rules may still block import. Original untouched."
+      },
+      "workbooks": {
+        "report": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-strip\\output\\source-导入预检-run2.xlsx",
+          "sheets": {
+            "检查概览": [
+              [
+                "项目",
+                "值"
+              ],
+              [
+                "输入记录数",
+                "1"
+              ],
+              [
+                "完全空白行数",
+                "0"
+              ],
+              [
+                "无阻断记录数",
+                "1"
+              ],
+              [
+                "有问题记录数",
+                "0"
+              ],
+              [
+                "问题条数",
+                "0"
+              ],
+              [
+                "重复组数",
+                "0"
+              ],
+              [
+                "检查模式",
+                "已知规则预检"
+              ],
+              [
+                "已检查规则",
+                "NAME:required"
+              ],
+              [
+                "未检查规则",
+                "0"
+              ],
+              [
+                "执行状态",
+                "COMPLETED"
+              ],
+              [
+                "源SHA256",
+                "cff14faa585c121022956b7909c53848ec14e2de2757758103cda7d448f993f7"
+              ],
+              [
+                "参考SHA256",
+                "NOT_PROVIDED"
+              ],
+              [
+                "源编码/分隔符",
+                "{\"encoding\": \"utf-8\", \"delimiter\": \",\"}"
+              ]
+            ],
+            "字段映射": [
+              [
+                "原始字段",
+                "目标字段",
+                "映射依据",
+                "确认状态",
+                "转换规则"
+              ],
+              [
+                "名称",
+                "customer_name",
+                "user/template",
+                "CONFIRMED",
+                null
+              ]
+            ],
+            "问题明细": [
+              [
+                "finding_id",
+                "row_id",
+                "文件",
+                "工作表",
+                "原始行号",
+                "字段/单元格",
+                "原值",
+                "规则编号",
+                "类别",
+                "说明",
+                "建议",
+                "是否阻断候选导入"
+              ]
+            ],
+            "变更记录": [
+              [
+                "row_id",
+                "字段",
+                "原值",
+                "新值",
+                "转换规则",
+                "授权依据"
+              ],
+              [
+                "cff14faa585c1210:CSV:2",
+                "customer_name",
+                "   ",
+                null,
+                "strip",
+                "独立基线探针：仅在隔离目录生成分流副本"
+              ]
+            ],
+            "未检查项": [
+              [
+                "规则编号",
+                "缺少条件",
+                "影响范围",
+                "需补资料"
+              ]
+            ]
+          }
+        },
+        "candidate": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-strip\\output\\source-候选导入-run2.xlsx",
+          "sheets": {
+            "候选数据": [
+              [
+                "row_id",
+                "source_line",
+                "名称"
+              ],
+              [
+                "cff14faa585c1210:CSV:2",
+                "2",
+                null
+              ]
+            ]
+          }
+        },
+        "quarantine": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-strip\\output\\source-隔离记录-run2.xlsx",
+          "sheets": {
+            "隔离记录": [
+              [
+                "row_id",
+                "source_line",
+                "名称",
+                "原因"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    "F02-lower": {
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmpo7LStQ\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\clean-014\\wangbin-import-precheck\\scripts\\precheck.py",
+        "--input",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-lower\\source.csv",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-lower\\output",
+        "--authorization",
+        "独立基线探针：仅在隔离目录生成分流副本",
+        "--split",
+        "--rules",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-lower\\rules.json",
+        "--reference",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-lower\\reference.csv",
+        "--transforms",
+        "{\"region\": \"lower\"}"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\clean-014",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"COMPLETED\",\n  \"comparison\": null,\n  \"input_records\": 1,\n  \"findings\": 0,\n  \"affected_records\": 0,\n  \"duplicate_groups\": 0,\n  \"source_sha256\": \"ecd1346983e7bd9ab05258a4b09565345e61397850e9fec06643bbdc95b73638\",\n  \"reference_sha256\": \"667c9fbb22f57c22ae38c86e136c6d14dd67b671ba647ec86d2f3ecb5fbadc1e\",\n  \"unchecked\": [],\n  \"checked\": [\n    \"REGION:reference\",\n    \"REGION:required\",\n    \"REGION:values\"\n  ],\n  \"outputs\": {\n    \"report\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F02-lower\\\\output\\\\source-导入预检-run2.xlsx\",\n    \"candidate\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F02-lower\\\\output\\\\source-候选导入-run2.xlsx\",\n    \"quarantine\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F02-lower\\\\output\\\\source-隔离记录-run2.xlsx\"\n  },\n  \"finding_details\": [],\n  \"rows\": [\n    {\n      \"row_id\": \"ecd1346983e7bd9a:CSV:2\",\n      \"line\": 2\n    }\n  ],\n  \"warning\": \"Local snapshot precheck; unknown rules may still block import. Original untouched.\"\n}\n",
+      "stderr": "",
+      "input_sha256": "ecd1346983e7bd9ab05258a4b09565345e61397850e9fec06643bbdc95b73638",
+      "input": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-lower\\source.csv",
+      "rules": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-lower\\rules.json",
+      "reference": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-lower\\reference.csv",
+      "receipt": {
+        "status": "COMPLETED",
+        "comparison": null,
+        "input_records": 1,
+        "findings": 0,
+        "affected_records": 0,
+        "duplicate_groups": 0,
+        "source_sha256": "ecd1346983e7bd9ab05258a4b09565345e61397850e9fec06643bbdc95b73638",
+        "reference_sha256": "667c9fbb22f57c22ae38c86e136c6d14dd67b671ba647ec86d2f3ecb5fbadc1e",
+        "unchecked": [],
+        "checked": [
+          "REGION:reference",
+          "REGION:required",
+          "REGION:values"
+        ],
+        "outputs": {
+          "report": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-lower\\output\\source-导入预检-run2.xlsx",
+          "candidate": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-lower\\output\\source-候选导入-run2.xlsx",
+          "quarantine": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-lower\\output\\source-隔离记录-run2.xlsx"
+        },
+        "finding_details": [],
+        "rows": [
+          {
+            "row_id": "ecd1346983e7bd9a:CSV:2",
+            "line": 2
+          }
+        ],
+        "warning": "Local snapshot precheck; unknown rules may still block import. Original untouched."
+      },
+      "workbooks": {
+        "report": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-lower\\output\\source-导入预检-run2.xlsx",
+          "sheets": {
+            "检查概览": [
+              [
+                "项目",
+                "值"
+              ],
+              [
+                "输入记录数",
+                "1"
+              ],
+              [
+                "完全空白行数",
+                "0"
+              ],
+              [
+                "无阻断记录数",
+                "1"
+              ],
+              [
+                "有问题记录数",
+                "0"
+              ],
+              [
+                "问题条数",
+                "0"
+              ],
+              [
+                "重复组数",
+                "0"
+              ],
+              [
+                "检查模式",
+                "已知规则预检"
+              ],
+              [
+                "已检查规则",
+                "REGION:reference,REGION:required,REGION:values"
+              ],
+              [
+                "未检查规则",
+                "0"
+              ],
+              [
+                "执行状态",
+                "COMPLETED"
+              ],
+              [
+                "源SHA256",
+                "ecd1346983e7bd9ab05258a4b09565345e61397850e9fec06643bbdc95b73638"
+              ],
+              [
+                "参考SHA256",
+                "667c9fbb22f57c22ae38c86e136c6d14dd67b671ba647ec86d2f3ecb5fbadc1e"
+              ],
+              [
+                "源编码/分隔符",
+                "{\"encoding\": \"utf-8\", \"delimiter\": \",\"}"
+              ]
+            ],
+            "字段映射": [
+              [
+                "原始字段",
+                "目标字段",
+                "映射依据",
+                "确认状态",
+                "转换规则"
+              ],
+              [
+                "地区",
+                "region",
+                "user/template",
+                "CONFIRMED",
+                null
+              ]
+            ],
+            "问题明细": [
+              [
+                "finding_id",
+                "row_id",
+                "文件",
+                "工作表",
+                "原始行号",
+                "字段/单元格",
+                "原值",
+                "规则编号",
+                "类别",
+                "说明",
+                "建议",
+                "是否阻断候选导入"
+              ]
+            ],
+            "变更记录": [
+              [
+                "row_id",
+                "字段",
+                "原值",
+                "新值",
+                "转换规则",
+                "授权依据"
+              ],
+              [
+                "ecd1346983e7bd9a:CSV:2",
+                "region",
+                "R01",
+                "r01",
+                "lower",
+                "独立基线探针：仅在隔离目录生成分流副本"
+              ]
+            ],
+            "未检查项": [
+              [
+                "规则编号",
+                "缺少条件",
+                "影响范围",
+                "需补资料"
+              ]
+            ]
+          }
+        },
+        "candidate": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-lower\\output\\source-候选导入-run2.xlsx",
+          "sheets": {
+            "候选数据": [
+              [
+                "row_id",
+                "source_line",
+                "地区"
+              ],
+              [
+                "ecd1346983e7bd9a:CSV:2",
+                "2",
+                "r01"
+              ]
+            ]
+          }
+        },
+        "quarantine": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-lower\\output\\source-隔离记录-run2.xlsx",
+          "sheets": {
+            "隔离记录": [
+              [
+                "row_id",
+                "source_line",
+                "地区",
+                "原因"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    "F02-upper-resolve": {
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmpo7LStQ\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\clean-014\\wangbin-import-precheck\\scripts\\precheck.py",
+        "--input",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-resolve\\source.csv",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-resolve\\output",
+        "--authorization",
+        "独立基线探针：仅在隔离目录生成分流副本",
+        "--split",
+        "--rules",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-resolve\\rules.json",
+        "--reference",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-resolve\\reference.csv",
+        "--transforms",
+        "{\"region\": \"upper\"}"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\clean-014",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"COMPLETED\",\n  \"comparison\": null,\n  \"input_records\": 1,\n  \"findings\": 2,\n  \"affected_records\": 1,\n  \"duplicate_groups\": 0,\n  \"source_sha256\": \"d532d6e45e9c63a3f2ed1bdbadf42eeced4431f3add5065038c644bda597c983\",\n  \"reference_sha256\": \"667c9fbb22f57c22ae38c86e136c6d14dd67b671ba647ec86d2f3ecb5fbadc1e\",\n  \"unchecked\": [],\n  \"checked\": [\n    \"REGION:reference\",\n    \"REGION:required\",\n    \"REGION:values\"\n  ],\n  \"outputs\": {\n    \"report\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F02-upper-resolve\\\\output\\\\source-导入预检-run2.xlsx\",\n    \"candidate\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F02-upper-resolve\\\\output\\\\source-候选导入-run2.xlsx\",\n    \"quarantine\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F02-upper-resolve\\\\output\\\\source-隔离记录-run2.xlsx\"\n  },\n  \"finding_details\": [\n    {\n      \"finding_id\": \"F00001\",\n      \"row_id\": \"d532d6e45e9c63a3:CSV:2\",\n      \"file\": \"source.csv\",\n      \"sheet\": \"\",\n      \"line\": 2,\n      \"field\": \"地区:line2\",\n      \"value\": \"r01\",\n      \"rule\": \"REGION\",\n      \"category\": \"INVALID_VALUE\",\n      \"description\": \"not in allowed values\",\n      \"advice\": \"confirm against source/rule\",\n      \"blocking\": true\n    },\n    {\n      \"finding_id\": \"F00002\",\n      \"row_id\": \"d532d6e45e9c63a3:CSV:2\",\n      \"file\": \"source.csv\",\n      \"sheet\": \"\",\n      \"line\": 2,\n      \"field\": \"地区:line2\",\n      \"value\": \"r01\",\n      \"rule\": \"REGION\",\n      \"category\": \"NOT_IN_REFERENCE\",\n      \"description\": \"not found in this reference snapshot\",\n      \"advice\": \"confirm against source/rule\",\n      \"blocking\": true\n    }\n  ],\n  \"rows\": [\n    {\n      \"row_id\": \"d532d6e45e9c63a3:CSV:2\",\n      \"line\": 2\n    }\n  ],\n  \"warning\": \"Local snapshot precheck; unknown rules may still block import. Original untouched.\"\n}\n",
+      "stderr": "",
+      "input_sha256": "d532d6e45e9c63a3f2ed1bdbadf42eeced4431f3add5065038c644bda597c983",
+      "input": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-resolve\\source.csv",
+      "rules": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-resolve\\rules.json",
+      "reference": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-resolve\\reference.csv",
+      "receipt": {
+        "status": "COMPLETED",
+        "comparison": null,
+        "input_records": 1,
+        "findings": 2,
+        "affected_records": 1,
+        "duplicate_groups": 0,
+        "source_sha256": "d532d6e45e9c63a3f2ed1bdbadf42eeced4431f3add5065038c644bda597c983",
+        "reference_sha256": "667c9fbb22f57c22ae38c86e136c6d14dd67b671ba647ec86d2f3ecb5fbadc1e",
+        "unchecked": [],
+        "checked": [
+          "REGION:reference",
+          "REGION:required",
+          "REGION:values"
+        ],
+        "outputs": {
+          "report": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-resolve\\output\\source-导入预检-run2.xlsx",
+          "candidate": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-resolve\\output\\source-候选导入-run2.xlsx",
+          "quarantine": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-resolve\\output\\source-隔离记录-run2.xlsx"
+        },
+        "finding_details": [
+          {
+            "finding_id": "F00001",
+            "row_id": "d532d6e45e9c63a3:CSV:2",
+            "file": "source.csv",
+            "sheet": "",
+            "line": 2,
+            "field": "地区:line2",
+            "value": "r01",
+            "rule": "REGION",
+            "category": "INVALID_VALUE",
+            "description": "not in allowed values",
+            "advice": "confirm against source/rule",
+            "blocking": true
+          },
+          {
+            "finding_id": "F00002",
+            "row_id": "d532d6e45e9c63a3:CSV:2",
+            "file": "source.csv",
+            "sheet": "",
+            "line": 2,
+            "field": "地区:line2",
+            "value": "r01",
+            "rule": "REGION",
+            "category": "NOT_IN_REFERENCE",
+            "description": "not found in this reference snapshot",
+            "advice": "confirm against source/rule",
+            "blocking": true
+          }
+        ],
+        "rows": [
+          {
+            "row_id": "d532d6e45e9c63a3:CSV:2",
+            "line": 2
+          }
+        ],
+        "warning": "Local snapshot precheck; unknown rules may still block import. Original untouched."
+      },
+      "workbooks": {
+        "report": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-resolve\\output\\source-导入预检-run2.xlsx",
+          "sheets": {
+            "检查概览": [
+              [
+                "项目",
+                "值"
+              ],
+              [
+                "输入记录数",
+                "1"
+              ],
+              [
+                "完全空白行数",
+                "0"
+              ],
+              [
+                "无阻断记录数",
+                "0"
+              ],
+              [
+                "有问题记录数",
+                "1"
+              ],
+              [
+                "问题条数",
+                "2"
+              ],
+              [
+                "重复组数",
+                "0"
+              ],
+              [
+                "检查模式",
+                "已知规则预检"
+              ],
+              [
+                "已检查规则",
+                "REGION:reference,REGION:required,REGION:values"
+              ],
+              [
+                "未检查规则",
+                "0"
+              ],
+              [
+                "执行状态",
+                "COMPLETED"
+              ],
+              [
+                "源SHA256",
+                "d532d6e45e9c63a3f2ed1bdbadf42eeced4431f3add5065038c644bda597c983"
+              ],
+              [
+                "参考SHA256",
+                "667c9fbb22f57c22ae38c86e136c6d14dd67b671ba647ec86d2f3ecb5fbadc1e"
+              ],
+              [
+                "源编码/分隔符",
+                "{\"encoding\": \"utf-8\", \"delimiter\": \",\"}"
+              ]
+            ],
+            "字段映射": [
+              [
+                "原始字段",
+                "目标字段",
+                "映射依据",
+                "确认状态",
+                "转换规则"
+              ],
+              [
+                "地区",
+                "region",
+                "user/template",
+                "CONFIRMED",
+                null
+              ]
+            ],
+            "问题明细": [
+              [
+                "finding_id",
+                "row_id",
+                "文件",
+                "工作表",
+                "原始行号",
+                "字段/单元格",
+                "原值",
+                "规则编号",
+                "类别",
+                "说明",
+                "建议",
+                "是否阻断候选导入"
+              ],
+              [
+                "F00001",
+                "d532d6e45e9c63a3:CSV:2",
+                "source.csv",
+                null,
+                "2",
+                "地区:line2",
+                "r01",
+                "REGION",
+                "INVALID_VALUE",
+                "not in allowed values",
+                "confirm against source/rule",
+                "True"
+              ],
+              [
+                "F00002",
+                "d532d6e45e9c63a3:CSV:2",
+                "source.csv",
+                null,
+                "2",
+                "地区:line2",
+                "r01",
+                "REGION",
+                "NOT_IN_REFERENCE",
+                "not found in this reference snapshot",
+                "confirm against source/rule",
+                "True"
+              ]
+            ],
+            "变更记录": [
+              [
+                "row_id",
+                "字段",
+                "原值",
+                "新值",
+                "转换规则",
+                "授权依据"
+              ],
+              [
+                "d532d6e45e9c63a3:CSV:2",
+                "region",
+                "r01",
+                "R01",
+                "upper",
+                "独立基线探针：仅在隔离目录生成分流副本"
+              ]
+            ],
+            "未检查项": [
+              [
+                "规则编号",
+                "缺少条件",
+                "影响范围",
+                "需补资料"
+              ]
+            ]
+          }
+        },
+        "candidate": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-resolve\\output\\source-候选导入-run2.xlsx",
+          "sheets": {
+            "候选数据": [
+              [
+                "row_id",
+                "source_line",
+                "地区"
+              ]
+            ]
+          }
+        },
+        "quarantine": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-resolve\\output\\source-隔离记录-run2.xlsx",
+          "sheets": {
+            "隔离记录": [
+              [
+                "row_id",
+                "source_line",
+                "地区",
+                "原因"
+              ],
+              [
+                "d532d6e45e9c63a3:CSV:2",
+                "2",
+                "R01",
+                "INVALID_VALUE,NOT_IN_REFERENCE"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    "F02-upper-collision": {
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmpo7LStQ\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\clean-014\\wangbin-import-precheck\\scripts\\precheck.py",
+        "--input",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-collision\\source.csv",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-collision\\output",
+        "--authorization",
+        "独立基线探针：仅在隔离目录生成分流副本",
+        "--split",
+        "--rules",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-collision\\rules.json",
+        "--transforms",
+        "{\"customer_code\": \"upper\"}"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\clean-014",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"COMPLETED\",\n  \"comparison\": null,\n  \"input_records\": 2,\n  \"findings\": 2,\n  \"affected_records\": 2,\n  \"duplicate_groups\": 1,\n  \"source_sha256\": \"7724944aac1c9dd1156b78ce3049506c0b09742661868fe7abaac2703e2ad45c\",\n  \"reference_sha256\": null,\n  \"unchecked\": [],\n  \"checked\": [\n    \"CODE:required\",\n    \"code:unique\"\n  ],\n  \"outputs\": {\n    \"report\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F02-upper-collision\\\\output\\\\source-导入预检-run2.xlsx\",\n    \"candidate\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F02-upper-collision\\\\output\\\\source-候选导入-run2.xlsx\",\n    \"quarantine\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F02-upper-collision\\\\output\\\\source-隔离记录-run2.xlsx\"\n  },\n  \"finding_details\": [\n    {\n      \"finding_id\": \"F00001\",\n      \"row_id\": \"7724944aac1c9dd1:CSV:2\",\n      \"file\": \"source.csv\",\n      \"sheet\": \"\",\n      \"line\": 2,\n      \"field\": \"编码:line2\",\n      \"value\": \"ABC\",\n      \"rule\": \"code\",\n      \"category\": \"DUPLICATE_KEY\",\n      \"description\": \"authorized transformation creates same key at lines 2,3\",\n      \"advice\": \"confirm against source/rule\",\n      \"blocking\": true\n    },\n    {\n      \"finding_id\": \"F00002\",\n      \"row_id\": \"7724944aac1c9dd1:CSV:3\",\n      \"file\": \"source.csv\",\n      \"sheet\": \"\",\n      \"line\": 3,\n      \"field\": \"编码:line3\",\n      \"value\": \"ABC\",\n      \"rule\": \"code\",\n      \"category\": \"DUPLICATE_KEY\",\n      \"description\": \"authorized transformation creates same key at lines 2,3\",\n      \"advice\": \"confirm against source/rule\",\n      \"blocking\": true\n    }\n  ],\n  \"rows\": [\n    {\n      \"row_id\": \"7724944aac1c9dd1:CSV:2\",\n      \"line\": 2\n    },\n    {\n      \"row_id\": \"7724944aac1c9dd1:CSV:3\",\n      \"line\": 3\n    }\n  ],\n  \"warning\": \"Local snapshot precheck; unknown rules may still block import. Original untouched.\"\n}\n",
+      "stderr": "",
+      "input_sha256": "7724944aac1c9dd1156b78ce3049506c0b09742661868fe7abaac2703e2ad45c",
+      "input": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-collision\\source.csv",
+      "rules": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-collision\\rules.json",
+      "reference": null,
+      "receipt": {
+        "status": "COMPLETED",
+        "comparison": null,
+        "input_records": 2,
+        "findings": 2,
+        "affected_records": 2,
+        "duplicate_groups": 1,
+        "source_sha256": "7724944aac1c9dd1156b78ce3049506c0b09742661868fe7abaac2703e2ad45c",
+        "reference_sha256": null,
+        "unchecked": [],
+        "checked": [
+          "CODE:required",
+          "code:unique"
+        ],
+        "outputs": {
+          "report": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-collision\\output\\source-导入预检-run2.xlsx",
+          "candidate": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-collision\\output\\source-候选导入-run2.xlsx",
+          "quarantine": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-collision\\output\\source-隔离记录-run2.xlsx"
+        },
+        "finding_details": [
+          {
+            "finding_id": "F00001",
+            "row_id": "7724944aac1c9dd1:CSV:2",
+            "file": "source.csv",
+            "sheet": "",
+            "line": 2,
+            "field": "编码:line2",
+            "value": "ABC",
+            "rule": "code",
+            "category": "DUPLICATE_KEY",
+            "description": "authorized transformation creates same key at lines 2,3",
+            "advice": "confirm against source/rule",
+            "blocking": true
+          },
+          {
+            "finding_id": "F00002",
+            "row_id": "7724944aac1c9dd1:CSV:3",
+            "file": "source.csv",
+            "sheet": "",
+            "line": 3,
+            "field": "编码:line3",
+            "value": "ABC",
+            "rule": "code",
+            "category": "DUPLICATE_KEY",
+            "description": "authorized transformation creates same key at lines 2,3",
+            "advice": "confirm against source/rule",
+            "blocking": true
+          }
+        ],
+        "rows": [
+          {
+            "row_id": "7724944aac1c9dd1:CSV:2",
+            "line": 2
+          },
+          {
+            "row_id": "7724944aac1c9dd1:CSV:3",
+            "line": 3
+          }
+        ],
+        "warning": "Local snapshot precheck; unknown rules may still block import. Original untouched."
+      },
+      "workbooks": {
+        "report": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-collision\\output\\source-导入预检-run2.xlsx",
+          "sheets": {
+            "检查概览": [
+              [
+                "项目",
+                "值"
+              ],
+              [
+                "输入记录数",
+                "2"
+              ],
+              [
+                "完全空白行数",
+                "0"
+              ],
+              [
+                "无阻断记录数",
+                "0"
+              ],
+              [
+                "有问题记录数",
+                "2"
+              ],
+              [
+                "问题条数",
+                "2"
+              ],
+              [
+                "重复组数",
+                "1"
+              ],
+              [
+                "检查模式",
+                "已知规则预检"
+              ],
+              [
+                "已检查规则",
+                "CODE:required,code:unique"
+              ],
+              [
+                "未检查规则",
+                "0"
+              ],
+              [
+                "执行状态",
+                "COMPLETED"
+              ],
+              [
+                "源SHA256",
+                "7724944aac1c9dd1156b78ce3049506c0b09742661868fe7abaac2703e2ad45c"
+              ],
+              [
+                "参考SHA256",
+                "NOT_PROVIDED"
+              ],
+              [
+                "源编码/分隔符",
+                "{\"encoding\": \"utf-8\", \"delimiter\": \",\"}"
+              ]
+            ],
+            "字段映射": [
+              [
+                "原始字段",
+                "目标字段",
+                "映射依据",
+                "确认状态",
+                "转换规则"
+              ],
+              [
+                "编码",
+                "customer_code",
+                "user/template",
+                "CONFIRMED",
+                null
+              ]
+            ],
+            "问题明细": [
+              [
+                "finding_id",
+                "row_id",
+                "文件",
+                "工作表",
+                "原始行号",
+                "字段/单元格",
+                "原值",
+                "规则编号",
+                "类别",
+                "说明",
+                "建议",
+                "是否阻断候选导入"
+              ],
+              [
+                "F00001",
+                "7724944aac1c9dd1:CSV:2",
+                "source.csv",
+                null,
+                "2",
+                "编码:line2",
+                "ABC",
+                "code",
+                "DUPLICATE_KEY",
+                "authorized transformation creates same key at lines 2,3",
+                "confirm against source/rule",
+                "True"
+              ],
+              [
+                "F00002",
+                "7724944aac1c9dd1:CSV:3",
+                "source.csv",
+                null,
+                "3",
+                "编码:line3",
+                "ABC",
+                "code",
+                "DUPLICATE_KEY",
+                "authorized transformation creates same key at lines 2,3",
+                "confirm against source/rule",
+                "True"
+              ]
+            ],
+            "变更记录": [
+              [
+                "row_id",
+                "字段",
+                "原值",
+                "新值",
+                "转换规则",
+                "授权依据"
+              ],
+              [
+                "7724944aac1c9dd1:CSV:2",
+                "customer_code",
+                "abc",
+                "ABC",
+                "upper",
+                "独立基线探针：仅在隔离目录生成分流副本"
+              ]
+            ],
+            "未检查项": [
+              [
+                "规则编号",
+                "缺少条件",
+                "影响范围",
+                "需补资料"
+              ]
+            ]
+          }
+        },
+        "candidate": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-collision\\output\\source-候选导入-run2.xlsx",
+          "sheets": {
+            "候选数据": [
+              [
+                "row_id",
+                "source_line",
+                "编码"
+              ]
+            ]
+          }
+        },
+        "quarantine": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F02-upper-collision\\output\\source-隔离记录-run2.xlsx",
+          "sheets": {
+            "隔离记录": [
+              [
+                "row_id",
+                "source_line",
+                "编码",
+                "原因"
+              ],
+              [
+                "7724944aac1c9dd1:CSV:2",
+                "2",
+                "ABC",
+                "DUPLICATE_KEY"
+              ],
+              [
+                "7724944aac1c9dd1:CSV:3",
+                "3",
+                "ABC",
+                "DUPLICATE_KEY"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    "F03-reference-missing": {
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmpo7LStQ\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\clean-014\\wangbin-import-precheck\\scripts\\precheck.py",
+        "--input",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F03-reference-missing\\source.csv",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F03-reference-missing\\output",
+        "--authorization",
+        "独立基线探针：仅在隔离目录生成分流副本",
+        "--split",
+        "--rules",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F03-reference-missing\\rules.json"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\clean-014",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"PARTIAL\",\n  \"comparison\": null,\n  \"input_records\": 1,\n  \"findings\": 0,\n  \"affected_records\": 0,\n  \"duplicate_groups\": 0,\n  \"source_sha256\": \"ecd1346983e7bd9ab05258a4b09565345e61397850e9fec06643bbdc95b73638\",\n  \"reference_sha256\": null,\n  \"unchecked\": [\n    [\n      \"REGION\",\n      \"reference snapshot missing\",\n      \"region\",\n      \"provide reference CSV/XLSX\"\n    ]\n  ],\n  \"checked\": [\n    \"REGION:required\"\n  ],\n  \"outputs\": {\n    \"report\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F03-reference-missing\\\\output\\\\source-导入预检-run2.xlsx\",\n    \"candidate\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F03-reference-missing\\\\output\\\\source-候选导入-run2.xlsx\",\n    \"quarantine\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F03-reference-missing\\\\output\\\\source-隔离记录-run2.xlsx\"\n  },\n  \"finding_details\": [],\n  \"rows\": [\n    {\n      \"row_id\": \"ecd1346983e7bd9a:CSV:2\",\n      \"line\": 2\n    }\n  ],\n  \"warning\": \"Local snapshot precheck; unknown rules may still block import. Original untouched.\"\n}\n",
+      "stderr": "",
+      "input_sha256": "ecd1346983e7bd9ab05258a4b09565345e61397850e9fec06643bbdc95b73638",
+      "input": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F03-reference-missing\\source.csv",
+      "rules": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F03-reference-missing\\rules.json",
+      "reference": null,
+      "receipt": {
+        "status": "PARTIAL",
+        "comparison": null,
+        "input_records": 1,
+        "findings": 0,
+        "affected_records": 0,
+        "duplicate_groups": 0,
+        "source_sha256": "ecd1346983e7bd9ab05258a4b09565345e61397850e9fec06643bbdc95b73638",
+        "reference_sha256": null,
+        "unchecked": [
+          [
+            "REGION",
+            "reference snapshot missing",
+            "region",
+            "provide reference CSV/XLSX"
+          ]
+        ],
+        "checked": [
+          "REGION:required"
+        ],
+        "outputs": {
+          "report": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F03-reference-missing\\output\\source-导入预检-run2.xlsx",
+          "candidate": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F03-reference-missing\\output\\source-候选导入-run2.xlsx",
+          "quarantine": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F03-reference-missing\\output\\source-隔离记录-run2.xlsx"
+        },
+        "finding_details": [],
+        "rows": [
+          {
+            "row_id": "ecd1346983e7bd9a:CSV:2",
+            "line": 2
+          }
+        ],
+        "warning": "Local snapshot precheck; unknown rules may still block import. Original untouched."
+      },
+      "workbooks": {
+        "report": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F03-reference-missing\\output\\source-导入预检-run2.xlsx",
+          "sheets": {
+            "检查概览": [
+              [
+                "项目",
+                "值"
+              ],
+              [
+                "输入记录数",
+                "1"
+              ],
+              [
+                "完全空白行数",
+                "0"
+              ],
+              [
+                "无阻断记录数",
+                "1"
+              ],
+              [
+                "有问题记录数",
+                "0"
+              ],
+              [
+                "问题条数",
+                "0"
+              ],
+              [
+                "重复组数",
+                "0"
+              ],
+              [
+                "检查模式",
+                "已知规则预检"
+              ],
+              [
+                "已检查规则",
+                "REGION:required"
+              ],
+              [
+                "未检查规则",
+                "1"
+              ],
+              [
+                "执行状态",
+                "PARTIAL"
+              ],
+              [
+                "源SHA256",
+                "ecd1346983e7bd9ab05258a4b09565345e61397850e9fec06643bbdc95b73638"
+              ],
+              [
+                "参考SHA256",
+                "NOT_PROVIDED"
+              ],
+              [
+                "源编码/分隔符",
+                "{\"encoding\": \"utf-8\", \"delimiter\": \",\"}"
+              ]
+            ],
+            "字段映射": [
+              [
+                "原始字段",
+                "目标字段",
+                "映射依据",
+                "确认状态",
+                "转换规则"
+              ],
+              [
+                "地区",
+                "region",
+                "user/template",
+                "CONFIRMED",
+                null
+              ]
+            ],
+            "问题明细": [
+              [
+                "finding_id",
+                "row_id",
+                "文件",
+                "工作表",
+                "原始行号",
+                "字段/单元格",
+                "原值",
+                "规则编号",
+                "类别",
+                "说明",
+                "建议",
+                "是否阻断候选导入"
+              ]
+            ],
+            "变更记录": [
+              [
+                "row_id",
+                "字段",
+                "原值",
+                "新值",
+                "转换规则",
+                "授权依据"
+              ]
+            ],
+            "未检查项": [
+              [
+                "规则编号",
+                "缺少条件",
+                "影响范围",
+                "需补资料"
+              ],
+              [
+                "REGION",
+                "reference snapshot missing",
+                "region",
+                "provide reference CSV/XLSX"
+              ]
+            ]
+          }
+        },
+        "candidate": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F03-reference-missing\\output\\source-候选导入-run2.xlsx",
+          "sheets": {
+            "候选数据": [
+              [
+                "row_id",
+                "source_line",
+                "地区"
+              ],
+              [
+                "ecd1346983e7bd9a:CSV:2",
+                "2",
+                "R01"
+              ]
+            ]
+          }
+        },
+        "quarantine": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F03-reference-missing\\output\\source-隔离记录-run2.xlsx",
+          "sheets": {
+            "隔离记录": [
+              [
+                "row_id",
+                "source_line",
+                "地区",
+                "原因"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    "F01-rule-order": {
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmpo7LStQ\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\clean-014\\wangbin-import-precheck\\scripts\\precheck.py",
+        "--input",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-rule-order\\source.csv",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-rule-order\\output",
+        "--authorization",
+        "独立基线探针：仅在隔离目录生成分流副本",
+        "--split",
+        "--rules",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-rule-order\\rules.json"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\clean-014",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"COMPLETED\",\n  \"comparison\": null,\n  \"input_records\": 1,\n  \"findings\": 0,\n  \"affected_records\": 0,\n  \"duplicate_groups\": 0,\n  \"source_sha256\": \"070e754ca626992f3dc8d8fdc5afa92f9892c5b45a5e44073716e2c653383e1c\",\n  \"reference_sha256\": null,\n  \"unchecked\": [],\n  \"checked\": [\n    \"CODE:required\",\n    \"CODE:type\",\n    \"NAME:required\"\n  ],\n  \"outputs\": {\n    \"report\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F01-rule-order\\\\output\\\\source-导入预检.xlsx\",\n    \"candidate\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F01-rule-order\\\\output\\\\source-候选导入.xlsx\",\n    \"quarantine\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F01-rule-order\\\\output\\\\source-隔离记录.xlsx\"\n  },\n  \"finding_details\": [],\n  \"rows\": [\n    {\n      \"row_id\": \"070e754ca626992f:CSV:2\",\n      \"line\": 2\n    }\n  ],\n  \"warning\": \"Local snapshot precheck; unknown rules may still block import. Original untouched.\"\n}\n",
+      "stderr": "",
+      "input_sha256": "070e754ca626992f3dc8d8fdc5afa92f9892c5b45a5e44073716e2c653383e1c",
+      "input": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-rule-order\\source.csv",
+      "rules": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-rule-order\\rules.json",
+      "reference": null,
+      "receipt": {
+        "status": "COMPLETED",
+        "comparison": null,
+        "input_records": 1,
+        "findings": 0,
+        "affected_records": 0,
+        "duplicate_groups": 0,
+        "source_sha256": "070e754ca626992f3dc8d8fdc5afa92f9892c5b45a5e44073716e2c653383e1c",
+        "reference_sha256": null,
+        "unchecked": [],
+        "checked": [
+          "CODE:required",
+          "CODE:type",
+          "NAME:required"
+        ],
+        "outputs": {
+          "report": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-rule-order\\output\\source-导入预检.xlsx",
+          "candidate": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-rule-order\\output\\source-候选导入.xlsx",
+          "quarantine": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-rule-order\\output\\source-隔离记录.xlsx"
+        },
+        "finding_details": [],
+        "rows": [
+          {
+            "row_id": "070e754ca626992f:CSV:2",
+            "line": 2
+          }
+        ],
+        "warning": "Local snapshot precheck; unknown rules may still block import. Original untouched."
+      },
+      "workbooks": {
+        "report": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-rule-order\\output\\source-导入预检.xlsx",
+          "sheets": {
+            "检查概览": [
+              [
+                "项目",
+                "值"
+              ],
+              [
+                "输入记录数",
+                "1"
+              ],
+              [
+                "完全空白行数",
+                "0"
+              ],
+              [
+                "无阻断记录数",
+                "1"
+              ],
+              [
+                "有问题记录数",
+                "0"
+              ],
+              [
+                "问题条数",
+                "0"
+              ],
+              [
+                "重复组数",
+                "0"
+              ],
+              [
+                "检查模式",
+                "已知规则预检"
+              ],
+              [
+                "已检查规则",
+                "CODE:required,CODE:type,NAME:required"
+              ],
+              [
+                "未检查规则",
+                "0"
+              ],
+              [
+                "执行状态",
+                "COMPLETED"
+              ],
+              [
+                "源SHA256",
+                "070e754ca626992f3dc8d8fdc5afa92f9892c5b45a5e44073716e2c653383e1c"
+              ],
+              [
+                "参考SHA256",
+                "NOT_PROVIDED"
+              ],
+              [
+                "源编码/分隔符",
+                "{\"encoding\": \"utf-8\", \"delimiter\": \",\"}"
+              ]
+            ],
+            "字段映射": [
+              [
+                "原始字段",
+                "目标字段",
+                "映射依据",
+                "确认状态",
+                "转换规则"
+              ],
+              [
+                "编码",
+                "customer_code",
+                "user/template",
+                "CONFIRMED",
+                null
+              ],
+              [
+                "名称",
+                "customer_name",
+                "user/template",
+                "CONFIRMED",
+                null
+              ],
+              [
+                "备注",
+                null,
+                "source header only",
+                "UNMAPPED",
+                null
+              ]
+            ],
+            "问题明细": [
+              [
+                "finding_id",
+                "row_id",
+                "文件",
+                "工作表",
+                "原始行号",
+                "字段/单元格",
+                "原值",
+                "规则编号",
+                "类别",
+                "说明",
+                "建议",
+                "是否阻断候选导入"
+              ]
+            ],
+            "变更记录": [
+              [
+                "row_id",
+                "字段",
+                "原值",
+                "新值",
+                "转换规则",
+                "授权依据"
+              ]
+            ],
+            "未检查项": [
+              [
+                "规则编号",
+                "缺少条件",
+                "影响范围",
+                "需补资料"
+              ]
+            ]
+          }
+        },
+        "candidate": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-rule-order\\output\\source-候选导入.xlsx",
+          "sheets": {
+            "候选数据": [
+              [
+                "row_id",
+                "source_line",
+                "名称",
+                "编码",
+                "备注"
+              ],
+              [
+                "070e754ca626992f:CSV:2",
+                "2",
+                "甲客户",
+                "00007",
+                "不应夹带"
+              ]
+            ]
+          }
+        },
+        "quarantine": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-rule-order\\output\\source-隔离记录.xlsx",
+          "sheets": {
+            "隔离记录": [
+              [
+                "row_id",
+                "source_line",
+                "名称",
+                "编码",
+                "备注",
+                "原因"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    "F01-template-order": {
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmpo7LStQ\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\clean-014\\wangbin-import-precheck\\scripts\\precheck.py",
+        "--input",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-template-order\\source.csv",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-template-order\\output",
+        "--authorization",
+        "独立基线探针：仅在隔离目录生成分流副本",
+        "--split",
+        "--template",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-template-order\\template.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\clean-014",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"PARTIAL\",\n  \"comparison\": null,\n  \"input_records\": 1,\n  \"findings\": 0,\n  \"affected_records\": 0,\n  \"duplicate_groups\": 0,\n  \"source_sha256\": \"43173be8a353bc13587ed6e550c05af56765e2f640fa759c23814c0ab2fe8ffd\",\n  \"reference_sha256\": null,\n  \"unchecked\": [\n    [\n      \"TEMPLATE:customer_code\",\n      \"required unknown\",\n      \"customer_code\",\n      \"confirm required\"\n    ],\n    [\n      \"TEMPLATE:customer_name\",\n      \"required unknown\",\n      \"customer_name\",\n      \"confirm required\"\n    ]\n  ],\n  \"checked\": [],\n  \"outputs\": {\n    \"report\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F01-template-order\\\\output\\\\source-导入预检-run2.xlsx\",\n    \"candidate\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F01-template-order\\\\output\\\\source-候选导入-run2.xlsx\",\n    \"quarantine\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\audit-r1-q01-baseline-t_0eaab29a\\\\F01-template-order\\\\output\\\\source-隔离记录-run2.xlsx\"\n  },\n  \"finding_details\": [],\n  \"rows\": [\n    {\n      \"row_id\": \"43173be8a353bc13:CSV:2\",\n      \"line\": 2\n    }\n  ],\n  \"warning\": \"Local snapshot precheck; unknown rules may still block import. Original untouched.\"\n}\n",
+      "stderr": "",
+      "input_sha256": "43173be8a353bc13587ed6e550c05af56765e2f640fa759c23814c0ab2fe8ffd",
+      "input": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-template-order\\source.csv",
+      "rules": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-template-order\\rules.json",
+      "reference": null,
+      "receipt": {
+        "status": "PARTIAL",
+        "comparison": null,
+        "input_records": 1,
+        "findings": 0,
+        "affected_records": 0,
+        "duplicate_groups": 0,
+        "source_sha256": "43173be8a353bc13587ed6e550c05af56765e2f640fa759c23814c0ab2fe8ffd",
+        "reference_sha256": null,
+        "unchecked": [
+          [
+            "TEMPLATE:customer_code",
+            "required unknown",
+            "customer_code",
+            "confirm required"
+          ],
+          [
+            "TEMPLATE:customer_name",
+            "required unknown",
+            "customer_name",
+            "confirm required"
+          ]
+        ],
+        "checked": [],
+        "outputs": {
+          "report": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-template-order\\output\\source-导入预检-run2.xlsx",
+          "candidate": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-template-order\\output\\source-候选导入-run2.xlsx",
+          "quarantine": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-template-order\\output\\source-隔离记录-run2.xlsx"
+        },
+        "finding_details": [],
+        "rows": [
+          {
+            "row_id": "43173be8a353bc13:CSV:2",
+            "line": 2
+          }
+        ],
+        "warning": "Local snapshot precheck; unknown rules may still block import. Original untouched."
+      },
+      "workbooks": {
+        "report": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-template-order\\output\\source-导入预检-run2.xlsx",
+          "sheets": {
+            "检查概览": [
+              [
+                "项目",
+                "值"
+              ],
+              [
+                "输入记录数",
+                "1"
+              ],
+              [
+                "完全空白行数",
+                "0"
+              ],
+              [
+                "无阻断记录数",
+                "1"
+              ],
+              [
+                "有问题记录数",
+                "0"
+              ],
+              [
+                "问题条数",
+                "0"
+              ],
+              [
+                "重复组数",
+                "0"
+              ],
+              [
+                "检查模式",
+                "已知规则预检"
+              ],
+              [
+                "已检查规则",
+                null
+              ],
+              [
+                "未检查规则",
+                "2"
+              ],
+              [
+                "执行状态",
+                "PARTIAL"
+              ],
+              [
+                "源SHA256",
+                "43173be8a353bc13587ed6e550c05af56765e2f640fa759c23814c0ab2fe8ffd"
+              ],
+              [
+                "参考SHA256",
+                "NOT_PROVIDED"
+              ],
+              [
+                "源编码/分隔符",
+                "{\"encoding\": \"utf-8\", \"delimiter\": \",\"}"
+              ]
+            ],
+            "字段映射": [
+              [
+                "原始字段",
+                "目标字段",
+                "映射依据",
+                "确认状态",
+                "转换规则"
+              ],
+              [
+                "customer_code",
+                "customer_code",
+                "template template.csv sha256:3f071f382f1bc036745fb65fbc68fd86d5513eae623f818a17947f70e81a8f5c",
+                "CONFIRMED",
+                null
+              ],
+              [
+                "customer_name",
+                "customer_name",
+                "template template.csv sha256:3f071f382f1bc036745fb65fbc68fd86d5513eae623f818a17947f70e81a8f5c",
+                "CONFIRMED",
+                null
+              ],
+              [
+                "extra",
+                null,
+                "source header only",
+                "UNMAPPED",
+                null
+              ]
+            ],
+            "问题明细": [
+              [
+                "finding_id",
+                "row_id",
+                "文件",
+                "工作表",
+                "原始行号",
+                "字段/单元格",
+                "原值",
+                "规则编号",
+                "类别",
+                "说明",
+                "建议",
+                "是否阻断候选导入"
+              ]
+            ],
+            "变更记录": [
+              [
+                "row_id",
+                "字段",
+                "原值",
+                "新值",
+                "转换规则",
+                "授权依据"
+              ]
+            ],
+            "未检查项": [
+              [
+                "规则编号",
+                "缺少条件",
+                "影响范围",
+                "需补资料"
+              ],
+              [
+                "TEMPLATE:customer_code",
+                "required unknown",
+                "customer_code",
+                "confirm required"
+              ],
+              [
+                "TEMPLATE:customer_name",
+                "required unknown",
+                "customer_name",
+                "confirm required"
+              ]
+            ]
+          }
+        },
+        "candidate": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-template-order\\output\\source-候选导入-run2.xlsx",
+          "sheets": {
+            "候选数据": [
+              [
+                "row_id",
+                "source_line",
+                "customer_name",
+                "customer_code",
+                "extra"
+              ],
+              [
+                "43173be8a353bc13:CSV:2",
+                "2",
+                "乙客户",
+                "00008",
+                "不应夹带"
+              ]
+            ]
+          }
+        },
+        "quarantine": {
+          "path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\audit-r1-q01-baseline-t_0eaab29a\\F01-template-order\\output\\source-隔离记录-run2.xlsx",
+          "sheets": {
+            "隔离记录": [
+              [
+                "row_id",
+                "source_line",
+                "customer_name",
+                "customer_code",
+                "extra",
+                "原因"
+              ]
+            ]
+          }
+        }
+      }
+    }
+  },
+  "F04": {
+    "readme_first_line": "# Data Import Precheck 0.1.2 — local candidate",
+    "skill_version_line": "version: 0.1.4",
+    "readme_sha256": "5c667b7c766ab532257542f805abe44bab0a6827783f8a21df76b5c6f9e27ec8"
+  }
+}

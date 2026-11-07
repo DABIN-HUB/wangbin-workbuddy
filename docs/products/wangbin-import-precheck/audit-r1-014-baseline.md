@@ -1,0 +1,22 @@
+# AUDIT-R1 Q01 B：0.1.4 旧包独立基线（FAIL，不是新版 QA）
+
+- `product_id=wangbin-import-precheck`；`task_id=t_0eaab29a`；工作树 `F:/ideaWorkSpace/wangbin-workbuddy-import-precheck`；分支 `skill/import-precheck`；开始前 `git status --short --branch` 仅显示分支及 upstream、无变更；`base_commit=a1d598c3a14ba7201c3109251b8955db8b5d0169`。
+- 权威口径：原 V2 附件19 §14.3–14.8（IMP-01/02/03/04/05/06/07/08，特别 §14.6、A05/A11/A12）以及本轮授权 §06 IMP-F01–F04、§13/18；历史 `qa-independent-v2-r101.md` 的当时测试 PASS **不删除、也不冒充当前用例通过**。
+- 冻结原件 `dist/wangbin-import-precheck-0.1.4-skill-candidate.zip`：实际 SHA-256 `536763a9c5d64d5b5b53364f5e6e7be93c13457351624b544a0b722b07955d3c`；`python -m zipfile -t` exit 0；四成员 `README.md`、`SKILL.md`、`references/rules.md`、`scripts/precheck.py`，仅在 QA scratch 干净解压、从解压脚本正式 CLI 执行。旧 ZIP 未改。
+- 复现入口：在产品工作树执行 `uv run --no-project --with 'openpyxl>=3.1,<4' python docs/products/wangbin-import-precheck/audit-r1-baseline-probe.py`，本次 exit **0（探针完成，不代表业务 PASS）**；程序为每案在 `C:/Users/wangbin/AppData/Local/hermes/profiles/wb-quality/cache/scratch/audit-r1-q01-baseline-t_0eaab29a/<case>/` 新建真实 UTF-8 CSV、规则 JSON、参考 CSV/模板 CSV、`output/`，真实运行 `--split --authorization ...`，重开报告/候选/隔离 XLSX。精确逐案 `command` 数组、cwd、子进程退出码、stdout/stderr、源文件 SHA、输入/输出绝对路径、五表和候选逐格实值：`audit-r1-baseline-results.json`（同目录的持久证据文件；再次执行会覆盖**本轮**结果，旧 QA/ZIP 不动）。探针第一次因测试工具错误使用 openpyxl workbook context manager exit 1，已修探针并重跑；没有把工具失败当作产品结论。
+
+|缺陷与原 V2|真实文件输入/确认规则（详见探针显式生成定义）|独立正确预期|从 0.1.4 ZIP 正式 CLI + XLSX 回读的实际结果|复现层级、根因、状态|
+|---|---|---|---|---|
+|IMP-F01 / IMP-02、06、08：`F01-map`|`source.csv` 表头 `编码,名称`，第2行 `00123,甲客户`；规则 target `customer_code←编码`, `customer_name←名称`，文本必填|候选**只有** `customer_code,customer_name`，值 `00123,甲客户`，编码保持文本，无追踪列|exit 0/COMPLETED；`候选数据` 表头 `row_id,source_line,编码,名称`，行值保留 `00123,甲客户`，但列错误；隔离仅表头|L3 FAIL；`analyze` 候选导出用 `['row_id','source_line',*meta['columns']]`，与映射未接通。前导零这一子项实际保留，不误报损失。|
+|IMP-F01 / §14.6 模板顺序：`F01-template-order`|源表 `customer_name,customer_code,extra`；第2行 `乙客户,00008,不应夹带`；目标模板 `customer_code,customer_name`|候选仅模板两列且按模板顺序，`00008,乙客户`；模板没有定义必填时可保留 UNKNOWN 但不能夹带 extra|exit 0/PARTIAL、required unknown 已列未检查；**候选仍是** `row_id,source_line,customer_name,customer_code,extra`；`00008` 保留|L3 FAIL，未映射源列夹带。仅模板精确同名映射，本案不声称测试了非同名模板自动映射。|
+|IMP-F01 / §14.3 仅规则顺序：`F01-rule-order`|源 `名称,编码,备注`；规则键目标顺序 `customer_code,customer_name`，备注未映射|目标顺序记录为 code、name；不夹带备注|exit 0/COMPLETED；候选 `row_id,source_line,名称,编码,备注`，`00007` 保留|L3 FAIL。|
+|IMP-F02 A / IMP-03、08：`F02-strip`|源 `名称` 第2行三个空格；目标 `customer_name` 必填，明确 `--transforms '{"customer_name":"strip"}'`|转换后空不得合格；报告显示最终必填缺失，候选0、隔离1|exit 0/COMPLETED；变更 `"   "→""`（XLSX 空字符串回读 None），**findings 0、候选1、隔离0**|L3 FAIL；原值先查必填（空格不算空），仅转换后重算唯一键，未重查 required。|
+|IMP-F02 B / IMP-03、05：`F02-lower`|源地区 `R01`；允许值 `['R01']`、参考 CSV 唯一 `R01`；明确 lower|最终 `r01` 违反允许值和参考值，不能进入合格候选|exit 0/COMPLETED；变更 `R01→r01`，**findings 0、候选1、隔离0**|L3 FAIL；转换后未复查 allowed/reference。|
+|IMP-F02 C / IMP-03、05：`F02-upper-resolve`|源 `r01`；允许/参考仅 `R01`；授权 upper|最终 `R01` 应满足这两条，候选1、隔离0；原值问题与修复另行可追踪，不将已解决旧错误当最终阻断|exit 0/COMPLETED；变更 `r01→R01`，但原值 `INVALID_VALUE`、`NOT_IN_REFERENCE` 各一；**候选0、隔离1**，隔离值虽为 R01 却仍有旧错误|L3 FAIL；分流以转换前 findings 判资格；已解决问题未正确更新。|
+|IMP-F02 D / IMP-04、A11：`F02-upper-collision`|源 `编码` 第2/3行 `abc`、`ABC`；唯一组 `code`；授权 upper|最终相同键 `ABC`，两行受影响；候选0、隔离2，重复组1、finding2，记录守恒|exit 0/COMPLETED，2 条 `DUPLICATE_KEY`，候选0、隔离2；报告 `duplicate_groups=1`；第2行变更有记录|**L3 PASS（仅此子项）**：已有转换后唯一键重算有效。不能把 F02 整体判通过。|
+|IMP-F03 / IMP-05、08、A05/A11：`F03-reference-missing`|源 `地区=R01`；规则明确 `reference_key=region`，未提供参考文件；授权 split|未核验 ≠ 无效/已合格；合格候选0、隔离或待确认1，报告未检查原因；原业务行有去向|exit 0/PARTIAL，`未检查项` 为 `reference snapshot missing`（这一子项正确），但 `无阻断记录数=1`、**候选1、隔离0** 且隔离没有待确认原因|L3 FAIL；`unchecked` 未影响 `affected` 集合，split 只依赖阻断 findings。|
+|IMP-F04 / 本轮 §06、15–16|原 ZIP README 与 SKILL|README/SKILL/manifest/catalog/包名版本须一致；原 ZIP 保留，**只在新版本修复**|解压 `README.md` 首行 `# Data Import Precheck 0.1.2 — local candidate`，`SKILL.md` `version: 0.1.4`，ZIP 名 0.1.4；exit 不适用（文件回读）|L1 包内容确认 FAIL；本项不是 CLI 故不冒充 L3。|
+
+**复现边界与后续门禁**：所有上述实际失败均为历史精确 ZIP 的本地 L3（F04 为 L1）；修复位置建议 `scripts/precheck.py` 的映射导出、最终值全规则校验、分流资格状态，文档 `README.md`，但 QA **没有修改业务代码**。新版本/新 ZIP/新版独立 QA `NOT_TESTED`；L4 真实宿主自然语言多轮、L5 WorkBuddy 安装/运行、许可证/发行权与发布 `NOT_TESTED/BLOCKED`。不能用旧 QA 的 PASS 抵消这里的新增 FAIL。下一独立 QA 应在新 ZIP 上同时测规则只读、完整候选 vs split、模板换序、源未映射列、前导零与长编码、转换前后全适用规则、缺表与歧义参考键隔离、已解决旧错误、行数守恒和正反/边界/等义变体。旧候选不是可无保留放行版本。
+
+整改矩阵本阶段字段：缺陷 ID/对应 V2/基线版本/输入/实际/预期/层级/根因见上表；`修复位置` 为建议而非已实施；`新版本`、`独立用例实际新版输出`、`最终状态` 均 `NOT_TESTED/OPEN`，待开发/独立新版 QA 补证，不预填 PASS。
