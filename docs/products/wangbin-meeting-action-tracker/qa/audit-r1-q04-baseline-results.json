@@ -1,0 +1,2842 @@
+{
+  "product_id": "wangbin-meeting-action-tracker",
+  "task_id": "t_5a7e06e6",
+  "baseline_sha256": "5f5f0bc86ca469c89d758010194d8768e27badc96584791495e4b71c8ef745ae",
+  "zip_members": [
+    "wangbin-meeting-action-tracker/SKILL.md",
+    "wangbin-meeting-action-tracker/manifest.json",
+    "wangbin-meeting-action-tracker/scripts/track.py"
+  ],
+  "archive_testzip": null,
+  "script_sha256": "95a253c224fd2c16c41c452ec2053d6223572cf6ff8c2a5737f703c1a1f16a7d",
+  "python": "3.14.9 (main, Oct 21 2026, 17:48:58) [MSC v.1944 64 bit (AMD64)]",
+  "openpyxl": "3.1.5",
+  "scratch_root": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x",
+  "fixture_previous_csv": "task_id,任务内容,负责人,负责人确认状态,截止时间,截止时间确认状态,执行状态,来源\nT01,接口联调,王工,已确认,2026-11-05,已确认,进行中,old:1\nT02,准备演练培训,李工,已确认,,,待执行,old:2\n",
+  "fixture_previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+  "input_unchanged": true,
+  "cases": [
+    {
+      "id": "f01_not_cancel",
+      "meeting_text": "T01不取消，继续进行中。",
+      "meeting_sha256": "4a6e7da17fc8df5afc28331beb459dddda6bb5f0c7c3e69418a6780a1594bfcf",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_not_cancel\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_not_cancel\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_not_cancel",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：任务关联（无法唯一定位旧任务）。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_not_cancel\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_not_cancel\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_not_cancel\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "6b5047fbb194dc56b9fc4e787ea058c3316164c8f32309c921dbe3b3bfce1568",
+      "summary_sha256": "f7d329de7bc532179b10d2a7fa07c719a2af417ac1c10a4477ba982e3a6b5d42",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": null,
+            "待确认字段": "任务关联",
+            "候选值或问题": "T01不取消，继续进行中",
+            "原因": "无法唯一定位旧任务",
+            "候选来源": "meeting.txt:行1：T01不取消，继续进行中",
+            "建议用户确认内容": "请确认 该事项 的任务关联及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "no_cancel"
+      },
+      "pass": false
+    },
+    {
+      "id": "f01_not_cancel_spaced",
+      "meeting_text": "T01 不取消，继续进行中。",
+      "meeting_sha256": "692f14309d126004d055e68e493d6bfdb431f0e105ec7639478884f5d604fa23",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_not_cancel_spaced\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_not_cancel_spaced\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_not_cancel_spaced",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录1项新增或变化；0处待确认。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_not_cancel_spaced\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_not_cancel_spaced\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_not_cancel_spaced\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "d1a16fcd214d9e2f76605a00e0a88df0fecccf55b44017849af8128e2cde8659",
+      "summary_sha256": "3497d9f2619eda3224737640ad194183352bfb48334f95119441ab1e36348010",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "取消",
+            "完成证据": null,
+            "是否逾期": "否",
+            "逾期判断依据": "任务已取消或证据确认完成，不列入逾期未完成",
+            "来源": "meeting.txt:行1：T01 不取消，继续进行中",
+            "最近变更": "取消"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [
+          {
+            "task_id": "T01",
+            "关联原任务": "T01",
+            "变化类型": "取消",
+            "原值": "进行中",
+            "新值": "取消",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：T01 不取消，继续进行中",
+            "event_id": "EV-f5e760182c5417b2d5ef"
+          }
+        ],
+        "待确认事项": [],
+        "状态历史": [
+          {
+            "event_id": "EV-f5e760182c5417b2d5ef",
+            "task_id": "T01",
+            "事件类型": "取消",
+            "原值": "进行中",
+            "新值": "取消",
+            "来源": "meeting.txt:行1：T01 不取消，继续进行中",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          }
+        ]
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "no_cancel"
+      },
+      "pass": false
+    },
+    {
+      "id": "f01_not_completed_spaced",
+      "meeting_text": "T01 不是已完成，仍在进行中。",
+      "meeting_sha256": "699678ea95806f9db1f21cd44e51cef55d6fcc09cf809f57749ff6da7bda7889",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_not_completed_spaced\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_not_completed_spaced\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_not_completed_spaced",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录1项新增或变化；0处待确认。 有任务仅报告完成，未提供可核验的验收凭据。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_not_completed_spaced\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_not_completed_spaced\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_not_completed_spaced\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "76c38edc6020ab769b7b7c68f9b7b9bf99afb682b510a1ed8e7ebe16f87d867c",
+      "summary_sha256": "e54338a8d96fb7203d27b506caa5e757f84db0b442db195f132e2981a2fbed9e",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "报告完成",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "报告完成尚无验收证据",
+            "来源": "meeting.txt:行1：T01 不是已完成，仍在进行中",
+            "最近变更": "报告完成"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [
+          {
+            "task_id": "T01",
+            "关联原任务": "T01",
+            "变化类型": "报告完成",
+            "原值": "进行中",
+            "新值": "报告完成",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：T01 不是已完成，仍在进行中",
+            "event_id": "EV-a1797e762cf3b2eeaf94"
+          }
+        ],
+        "待确认事项": [],
+        "状态历史": [
+          {
+            "event_id": "EV-a1797e762cf3b2eeaf94",
+            "task_id": "T01",
+            "事件类型": "报告完成",
+            "原值": "进行中",
+            "新值": "报告完成",
+            "来源": "meeting.txt:行1：T01 不是已完成，仍在进行中",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          }
+        ]
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "no_complete"
+      },
+      "pass": false
+    },
+    {
+      "id": "f01_suggest_spaced",
+      "meeting_text": "建议取消 T01，尚未形成决定。",
+      "meeting_sha256": "453b31843e07506e4d1cc1772a131926c82b031cf53174702aca09e4d56c6566",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_suggest_spaced\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_suggest_spaced\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_suggest_spaced",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：执行状态（仅为取消提议）。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_suggest_spaced\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_suggest_spaced\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_suggest_spaced\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "aadb5d76ec910ed24c439e6cd7ac2e1f96a4445e8c08287cdc07dad8918d6188",
+      "summary_sha256": "c727a0abb51d24305ae2ba646e596f7df8c1c1fe8b3a27630a662ed3496b9858",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": "T01",
+            "待确认字段": "执行状态",
+            "候选值或问题": "建议取消 T01，尚未形成决定",
+            "原因": "仅为取消提议",
+            "候选来源": "meeting.txt:行1：建议取消 T01，尚未形成决定",
+            "建议用户确认内容": "请确认 T01 的执行状态及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "proposal"
+      },
+      "pass": true
+    },
+    {
+      "id": "f01_decide_spaced",
+      "meeting_text": "明确决定取消 T01。",
+      "meeting_sha256": "a1ea0ba094db46e5c43c50a8bb6f034d96df066fd90e64fa9007e17ad9f6c813",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_decide_spaced\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_decide_spaced\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_decide_spaced",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录1项新增或变化；0处待确认。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_decide_spaced\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_decide_spaced\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_decide_spaced\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "f1581134869972d8cfb3cfe7ef19e89f8f48c758bece10365def67cb5d98afb0",
+      "summary_sha256": "3497d9f2619eda3224737640ad194183352bfb48334f95119441ab1e36348010",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "取消",
+            "完成证据": null,
+            "是否逾期": "否",
+            "逾期判断依据": "任务已取消或证据确认完成，不列入逾期未完成",
+            "来源": "meeting.txt:行1：明确决定取消 T01",
+            "最近变更": "取消"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [
+          {
+            "task_id": "T01",
+            "关联原任务": "T01",
+            "变化类型": "取消",
+            "原值": "进行中",
+            "新值": "取消",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：明确决定取消 T01",
+            "event_id": "EV-f5e760182c5417b2d5ef"
+          }
+        ],
+        "待确认事项": [],
+        "状态历史": [
+          {
+            "event_id": "EV-f5e760182c5417b2d5ef",
+            "task_id": "T01",
+            "事件类型": "取消",
+            "原值": "进行中",
+            "新值": "取消",
+            "来源": "meeting.txt:行1：明确决定取消 T01",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          }
+        ]
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "取消",
+        "rule": "cancel"
+      },
+      "pass": true
+    },
+    {
+      "id": "f01_prior_spaced",
+      "meeting_text": "取消此前取消 T01 的决定，T01 继续执行。",
+      "meeting_sha256": "13920bab6674c99ce9c5eb617c90bd1f14c3136e49f542548ed7b839eb9ab335",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_prior_spaced\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_prior_spaced\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_prior_spaced",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录1项新增或变化；0处待确认。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_prior_spaced\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_prior_spaced\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_prior_spaced\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "cc36cc8d909720f6b66c1fa0509a44f1058af63587d48a2f11d06013a5d65f77",
+      "summary_sha256": "3497d9f2619eda3224737640ad194183352bfb48334f95119441ab1e36348010",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "取消",
+            "完成证据": null,
+            "是否逾期": "否",
+            "逾期判断依据": "任务已取消或证据确认完成，不列入逾期未完成",
+            "来源": "meeting.txt:行1：取消此前取消 T01 的决定，T01 继续执行",
+            "最近变更": "取消"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [
+          {
+            "task_id": "T01",
+            "关联原任务": "T01",
+            "变化类型": "取消",
+            "原值": "进行中",
+            "新值": "取消",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：取消此前取消 T01 的决定，T01 继续执行",
+            "event_id": "EV-f5e760182c5417b2d5ef"
+          }
+        ],
+        "待确认事项": [],
+        "状态历史": [
+          {
+            "event_id": "EV-f5e760182c5417b2d5ef",
+            "task_id": "T01",
+            "事件类型": "取消",
+            "原值": "进行中",
+            "新值": "取消",
+            "来源": "meeting.txt:行1：取消此前取消 T01 的决定，T01 继续执行",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          }
+        ]
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "no_cancel"
+      },
+      "pass": false
+    },
+    {
+      "id": "f01_scoped_spaced",
+      "meeting_text": "T01 未完成，但 T02 已经完成。",
+      "meeting_sha256": "f448803706dea260cbbb966d0db9ad542d4766c53289a96d55eedd3b0ad71c65",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_scoped_spaced\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_scoped_spaced\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_scoped_spaced",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：任务关联（多个任务 ID）。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_scoped_spaced\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_scoped_spaced\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_scoped_spaced\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "c1c412c4834ca3e647cdea86ff65569d6bba1e80400828f754c05d105cf1f808",
+      "summary_sha256": "affeeb2d877b31cf208cf555a156760b63fe0c2053402abed11e98dab84eec04",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": null,
+            "待确认字段": "任务关联",
+            "候选值或问题": "T01 未完成，但 T02 已经完成",
+            "原因": "多个任务 ID",
+            "候选来源": "meeting.txt:行1：T01 未完成，但 T02 已经完成",
+            "建议用户确认内容": "请确认 该事项 的任务关联及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "scoped"
+      },
+      "pass": false
+    },
+    {
+      "id": "f01_not_completed",
+      "meeting_text": "T01不是已完成，仍在进行中。",
+      "meeting_sha256": "5d228346e4ccd644199e9002befbf66bb7d009969a5c5bcd171dc13e4de0c2fd",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_not_completed\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_not_completed\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_not_completed",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：任务关联（无法唯一定位旧任务）。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_not_completed\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_not_completed\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_not_completed\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "a5a75520ed9232dcf55dd57c4b7eb66e3b82daf2feb7a045038f4a43c7f7e06b",
+      "summary_sha256": "f7d329de7bc532179b10d2a7fa07c719a2af417ac1c10a4477ba982e3a6b5d42",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": null,
+            "待确认字段": "任务关联",
+            "候选值或问题": "T01不是已完成，仍在进行中",
+            "原因": "无法唯一定位旧任务",
+            "候选来源": "meeting.txt:行1：T01不是已完成，仍在进行中",
+            "建议用户确认内容": "请确认 该事项 的任务关联及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "no_complete"
+      },
+      "pass": false
+    },
+    {
+      "id": "f01_suggest",
+      "meeting_text": "建议取消T01，尚未形成决定。",
+      "meeting_sha256": "4ea4aa722a3495a15e5934e56ee005e74e8e5a65e9b02c8ef90a82708f5cfa91",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_suggest\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_suggest\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_suggest",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：任务关联（无法唯一定位旧任务）。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_suggest\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_suggest\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_suggest\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "4fad4d27c2a5070c50b107b6bc54f775caf938bcec54323ede7ef66193e2256a",
+      "summary_sha256": "f7d329de7bc532179b10d2a7fa07c719a2af417ac1c10a4477ba982e3a6b5d42",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": null,
+            "待确认字段": "任务关联",
+            "候选值或问题": "建议取消T01，尚未形成决定",
+            "原因": "无法唯一定位旧任务",
+            "候选来源": "meeting.txt:行1：建议取消T01，尚未形成决定",
+            "建议用户确认内容": "请确认 该事项 的任务关联及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "proposal"
+      },
+      "pass": false
+    },
+    {
+      "id": "f01_decide",
+      "meeting_text": "明确决定取消T01。",
+      "meeting_sha256": "1ec89396e12989d5c8cdf06a3d47c779f1f7212870349dcd32ea95a132daf71b",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_decide\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_decide\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_decide",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：任务关联（无法唯一定位旧任务）。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_decide\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_decide\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_decide\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "3674a22539f6d6f43845b2a1b47f95b6f5c6fa9cb9ca396d8f29f562ecc57685",
+      "summary_sha256": "f7d329de7bc532179b10d2a7fa07c719a2af417ac1c10a4477ba982e3a6b5d42",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": null,
+            "待确认字段": "任务关联",
+            "候选值或问题": "明确决定取消T01",
+            "原因": "无法唯一定位旧任务",
+            "候选来源": "meeting.txt:行1：明确决定取消T01",
+            "建议用户确认内容": "请确认 该事项 的任务关联及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "取消",
+        "rule": "cancel"
+      },
+      "pass": false
+    },
+    {
+      "id": "f01_cancel_prior",
+      "meeting_text": "取消此前取消T01的决定，T01继续执行。",
+      "meeting_sha256": "82e9158487b17a37b6b9559943d7387edca432c78f37f39fdb3d3acc9571359d",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_cancel_prior\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_cancel_prior\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_cancel_prior",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：任务关联（无法唯一定位旧任务）。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_cancel_prior\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_cancel_prior\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_cancel_prior\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "8d248c3579695ed8aa7d0f96f84d92d894f54a546a716138e1ed2014d18adfae",
+      "summary_sha256": "f7d329de7bc532179b10d2a7fa07c719a2af417ac1c10a4477ba982e3a6b5d42",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": null,
+            "待确认字段": "任务关联",
+            "候选值或问题": "取消此前取消T01的决定，T01继续执行",
+            "原因": "无法唯一定位旧任务",
+            "候选来源": "meeting.txt:行1：取消此前取消T01的决定，T01继续执行",
+            "建议用户确认内容": "请确认 该事项 的任务关联及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "no_cancel"
+      },
+      "pass": false
+    },
+    {
+      "id": "f01_scoped",
+      "meeting_text": "T01未完成，但T02已经完成。",
+      "meeting_sha256": "f14d3cafc40a1dc60800d6ee08203ffe5a71737f4fdaf7205bd73a3ef89aa936",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_scoped\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_scoped\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_scoped",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；0处待确认。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_scoped\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_scoped\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_scoped\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "f34468669e54a3fe64818651d61f7f9787ed937e67557ffb7647b690d27ac115",
+      "summary_sha256": "7170e9719c35cf0340b81cf432ad3253c3037fc9e58b924dead4d670943bd30e",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "scoped"
+      },
+      "pass": false
+    },
+    {
+      "id": "f01_positive_complete",
+      "meeting_text": "T01已经完成。",
+      "meeting_sha256": "5ffa2ff7e2061b33ce84c08b47305d5e5ccdb7a9d44e322b6eafcaeab57bef3a",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_positive_complete\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_positive_complete\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_positive_complete",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；0处待确认。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_positive_complete\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f01_positive_complete\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f01_positive_complete\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "f34468669e54a3fe64818651d61f7f9787ed937e67557ffb7647b690d27ac115",
+      "summary_sha256": "7170e9719c35cf0340b81cf432ad3253c3037fc9e58b924dead4d670943bd30e",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "报告完成",
+        "rule": "complete"
+      },
+      "pass": false
+    },
+    {
+      "id": "f02_zhang",
+      "meeting_text": "新增任务：接口测试，由张三确认负责，截止2026-11-10。",
+      "meeting_sha256": "7592ae77f56a8a04b131196b57a00547b8b44e4c99550726338c5ecc250f921e",
+      "previous_sha256": null,
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_zhang\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_zhang\\output"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_zhang",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录2项新增或变化；0处待确认。 未提供旧任务表，本次为首版。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f02_zhang\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f02_zhang\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_zhang\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "05cd81d0eeac6cea3dd30f00471b9063ea3a6add16ba1cca171cfb775201dc09",
+      "summary_sha256": "9750740717c2e1a74529a76ec30a3cdc04dfa776bf8e5c613fc923ea0cbcdad4",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "任务内容": "接口测试",
+            "负责人": null,
+            "负责人确认状态": null,
+            "截止时间": "2026-11-10",
+            "截止时间确认状态": "已确认",
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由张三确认负责，截止2026-11-10",
+            "最近变更": "期限变更"
+          }
+        ],
+        "本次新增与变化": [
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "关联原任务": "MTG-64CA99BD7581295E",
+            "变化类型": "新增",
+            "原值": null,
+            "新值": "接口测试",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由张三确认负责，截止2026-11-10",
+            "event_id": "EV-76dd668dcc971b5665f7"
+          },
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "关联原任务": "MTG-64CA99BD7581295E",
+            "变化类型": "期限变更",
+            "原值": null,
+            "新值": "2026-11-10",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由张三确认负责，截止2026-11-10",
+            "event_id": "EV-d1a77cfa095e84622d9e"
+          }
+        ],
+        "待确认事项": [],
+        "状态历史": [
+          {
+            "event_id": "EV-76dd668dcc971b5665f7",
+            "task_id": "MTG-64CA99BD7581295E",
+            "事件类型": "新增",
+            "原值": null,
+            "新值": "接口测试",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由张三确认负责，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          },
+          {
+            "event_id": "EV-d1a77cfa095e84622d9e",
+            "task_id": "MTG-64CA99BD7581295E",
+            "事件类型": "期限变更",
+            "原值": null,
+            "新值": "2026-11-10",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由张三确认负责，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          }
+        ]
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": null,
+        "status": "待执行",
+        "rule": "owner_张三"
+      },
+      "pass": false
+    },
+    {
+      "id": "f02_li",
+      "meeting_text": "新增任务：接口测试，由李工确认负责，截止2026-11-10。",
+      "meeting_sha256": "1d300a14bae1438eb2593b72aea2a4c20b5df23473361112d1ba370a9cbaa916",
+      "previous_sha256": null,
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_li\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_li\\output"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_li",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录3项新增或变化；0处待确认。 未提供旧任务表，本次为首版。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f02_li\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f02_li\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_li\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "44a3c59872e3eca67620cf99f057a0c3863391910c3a5fc120b08b578614b983",
+      "summary_sha256": "c6c209e99eaab8046d4c45082213ebe7934450ae357ed1eda5abb68caa593c9e",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "任务内容": "接口测试",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-10",
+            "截止时间确认状态": "已确认",
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由李工确认负责，截止2026-11-10",
+            "最近变更": "期限变更"
+          }
+        ],
+        "本次新增与变化": [
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "关联原任务": "MTG-64CA99BD7581295E",
+            "变化类型": "新增",
+            "原值": null,
+            "新值": "接口测试",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由李工确认负责，截止2026-11-10",
+            "event_id": "EV-76dd668dcc971b5665f7"
+          },
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "关联原任务": "MTG-64CA99BD7581295E",
+            "变化类型": "负责人变更",
+            "原值": null,
+            "新值": "李工",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由李工确认负责，截止2026-11-10",
+            "event_id": "EV-8b8ad115b69d0953cd84"
+          },
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "关联原任务": "MTG-64CA99BD7581295E",
+            "变化类型": "期限变更",
+            "原值": null,
+            "新值": "2026-11-10",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由李工确认负责，截止2026-11-10",
+            "event_id": "EV-d1a77cfa095e84622d9e"
+          }
+        ],
+        "待确认事项": [],
+        "状态历史": [
+          {
+            "event_id": "EV-76dd668dcc971b5665f7",
+            "task_id": "MTG-64CA99BD7581295E",
+            "事件类型": "新增",
+            "原值": null,
+            "新值": "接口测试",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由李工确认负责，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          },
+          {
+            "event_id": "EV-8b8ad115b69d0953cd84",
+            "task_id": "MTG-64CA99BD7581295E",
+            "事件类型": "负责人变更",
+            "原值": null,
+            "新值": "李工",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由李工确认负责，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          },
+          {
+            "event_id": "EV-d1a77cfa095e84622d9e",
+            "task_id": "MTG-64CA99BD7581295E",
+            "事件类型": "期限变更",
+            "原值": null,
+            "新值": "2026-11-10",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由李工确认负责，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          }
+        ]
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": null,
+        "status": "待执行",
+        "rule": "owner_李工"
+      },
+      "pass": true
+    },
+    {
+      "id": "f02_zhao",
+      "meeting_text": "新增任务：接口测试，由赵敏确认负责，截止2026-11-10。",
+      "meeting_sha256": "bbf72f39696e9e7e83669e596259e21a7504e90d26286d533a2e38da7b5f9208",
+      "previous_sha256": null,
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_zhao\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_zhao\\output"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_zhao",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录2项新增或变化；0处待确认。 未提供旧任务表，本次为首版。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f02_zhao\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f02_zhao\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_zhao\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "4f6c59d07640ff736f5d97dbcf2127a5b8350aa07f4afb6710b6993e997daa26",
+      "summary_sha256": "9750740717c2e1a74529a76ec30a3cdc04dfa776bf8e5c613fc923ea0cbcdad4",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "任务内容": "接口测试",
+            "负责人": null,
+            "负责人确认状态": null,
+            "截止时间": "2026-11-10",
+            "截止时间确认状态": "已确认",
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由赵敏确认负责，截止2026-11-10",
+            "最近变更": "期限变更"
+          }
+        ],
+        "本次新增与变化": [
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "关联原任务": "MTG-64CA99BD7581295E",
+            "变化类型": "新增",
+            "原值": null,
+            "新值": "接口测试",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由赵敏确认负责，截止2026-11-10",
+            "event_id": "EV-76dd668dcc971b5665f7"
+          },
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "关联原任务": "MTG-64CA99BD7581295E",
+            "变化类型": "期限变更",
+            "原值": null,
+            "新值": "2026-11-10",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由赵敏确认负责，截止2026-11-10",
+            "event_id": "EV-d1a77cfa095e84622d9e"
+          }
+        ],
+        "待确认事项": [],
+        "状态历史": [
+          {
+            "event_id": "EV-76dd668dcc971b5665f7",
+            "task_id": "MTG-64CA99BD7581295E",
+            "事件类型": "新增",
+            "原值": null,
+            "新值": "接口测试",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由赵敏确认负责，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          },
+          {
+            "event_id": "EV-d1a77cfa095e84622d9e",
+            "task_id": "MTG-64CA99BD7581295E",
+            "事件类型": "期限变更",
+            "原值": null,
+            "新值": "2026-11-10",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由赵敏确认负责，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          }
+        ]
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": null,
+        "status": "待执行",
+        "rule": "owner_赵敏"
+      },
+      "pass": false
+    },
+    {
+      "id": "f02_xiao",
+      "meeting_text": "新增任务：接口测试，由小王确认负责，截止2026-11-10。",
+      "meeting_sha256": "2d05c42160b8250a518e7d9c58f6fcde45fe7d95ea70d84df736ab3124ff5d53",
+      "previous_sha256": null,
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_xiao\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_xiao\\output"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_xiao",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录2项新增或变化；0处待确认。 未提供旧任务表，本次为首版。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f02_xiao\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f02_xiao\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_xiao\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "b29ea12b6c043cb4d8a9d776c9111e9498e68b65cf4667117846a163ab5749e9",
+      "summary_sha256": "9750740717c2e1a74529a76ec30a3cdc04dfa776bf8e5c613fc923ea0cbcdad4",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "任务内容": "接口测试",
+            "负责人": null,
+            "负责人确认状态": null,
+            "截止时间": "2026-11-10",
+            "截止时间确认状态": "已确认",
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由小王确认负责，截止2026-11-10",
+            "最近变更": "期限变更"
+          }
+        ],
+        "本次新增与变化": [
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "关联原任务": "MTG-64CA99BD7581295E",
+            "变化类型": "新增",
+            "原值": null,
+            "新值": "接口测试",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由小王确认负责，截止2026-11-10",
+            "event_id": "EV-76dd668dcc971b5665f7"
+          },
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "关联原任务": "MTG-64CA99BD7581295E",
+            "变化类型": "期限变更",
+            "原值": null,
+            "新值": "2026-11-10",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由小王确认负责，截止2026-11-10",
+            "event_id": "EV-d1a77cfa095e84622d9e"
+          }
+        ],
+        "待确认事项": [],
+        "状态历史": [
+          {
+            "event_id": "EV-76dd668dcc971b5665f7",
+            "task_id": "MTG-64CA99BD7581295E",
+            "事件类型": "新增",
+            "原值": null,
+            "新值": "接口测试",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由小王确认负责，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          },
+          {
+            "event_id": "EV-d1a77cfa095e84622d9e",
+            "task_id": "MTG-64CA99BD7581295E",
+            "事件类型": "期限变更",
+            "原值": null,
+            "新值": "2026-11-10",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由小王确认负责，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          }
+        ]
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": null,
+        "status": "待执行",
+        "rule": "owner_小王"
+      },
+      "pass": false
+    },
+    {
+      "id": "f02_alex",
+      "meeting_text": "新增任务：接口测试，由Alex确认负责，截止2026-11-10。",
+      "meeting_sha256": "4553232521db8351a3e4eb2383fd9d3000f326e5373272a859d601e003afc30f",
+      "previous_sha256": null,
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_alex\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_alex\\output"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_alex",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录2项新增或变化；0处待确认。 未提供旧任务表，本次为首版。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f02_alex\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f02_alex\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_alex\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "f9625e13a3f8cf19e40753ce57837155e8a78aac4f0fbe9ee7bee74914b724b2",
+      "summary_sha256": "9750740717c2e1a74529a76ec30a3cdc04dfa776bf8e5c613fc923ea0cbcdad4",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "任务内容": "接口测试",
+            "负责人": null,
+            "负责人确认状态": null,
+            "截止时间": "2026-11-10",
+            "截止时间确认状态": "已确认",
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由Alex确认负责，截止2026-11-10",
+            "最近变更": "期限变更"
+          }
+        ],
+        "本次新增与变化": [
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "关联原任务": "MTG-64CA99BD7581295E",
+            "变化类型": "新增",
+            "原值": null,
+            "新值": "接口测试",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由Alex确认负责，截止2026-11-10",
+            "event_id": "EV-76dd668dcc971b5665f7"
+          },
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "关联原任务": "MTG-64CA99BD7581295E",
+            "变化类型": "期限变更",
+            "原值": null,
+            "新值": "2026-11-10",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由Alex确认负责，截止2026-11-10",
+            "event_id": "EV-d1a77cfa095e84622d9e"
+          }
+        ],
+        "待确认事项": [],
+        "状态历史": [
+          {
+            "event_id": "EV-76dd668dcc971b5665f7",
+            "task_id": "MTG-64CA99BD7581295E",
+            "事件类型": "新增",
+            "原值": null,
+            "新值": "接口测试",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由Alex确认负责，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          },
+          {
+            "event_id": "EV-d1a77cfa095e84622d9e",
+            "task_id": "MTG-64CA99BD7581295E",
+            "事件类型": "期限变更",
+            "原值": null,
+            "新值": "2026-11-10",
+            "来源": "meeting.txt:行1：新增任务：接口测试，由Alex确认负责，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          }
+        ]
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": null,
+        "status": "待执行",
+        "rule": "owner_Alex"
+      },
+      "pass": false
+    },
+    {
+      "id": "f02_tentative",
+      "meeting_text": "新增任务：接口测试，建议由张三负责，尚未确认，截止2026-11-10。",
+      "meeting_sha256": "3b39343efe06debc5d92aacd72365f0ca8af78c306b97245d40f802db14fe891",
+      "previous_sha256": null,
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_tentative\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_tentative\\output"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_tentative",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录2项新增或变化；0处待确认。 未提供旧任务表，本次为首版。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f02_tentative\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f02_tentative\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f02_tentative\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "37e8d68ed6d86438020d0383bbe504049607d69f3e81debcaaa1184b5e48ed86",
+      "summary_sha256": "9750740717c2e1a74529a76ec30a3cdc04dfa776bf8e5c613fc923ea0cbcdad4",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "任务内容": "接口测试",
+            "负责人": null,
+            "负责人确认状态": null,
+            "截止时间": "2026-11-10",
+            "截止时间确认状态": "已确认",
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "meeting.txt:行1：新增任务：接口测试，建议由张三负责，尚未确认，截止2026-11-10",
+            "最近变更": "期限变更"
+          }
+        ],
+        "本次新增与变化": [
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "关联原任务": "MTG-64CA99BD7581295E",
+            "变化类型": "新增",
+            "原值": null,
+            "新值": "接口测试",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：新增任务：接口测试，建议由张三负责，尚未确认，截止2026-11-10",
+            "event_id": "EV-76dd668dcc971b5665f7"
+          },
+          {
+            "task_id": "MTG-64CA99BD7581295E",
+            "关联原任务": "MTG-64CA99BD7581295E",
+            "变化类型": "期限变更",
+            "原值": null,
+            "新值": "2026-11-10",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：新增任务：接口测试，建议由张三负责，尚未确认，截止2026-11-10",
+            "event_id": "EV-d1a77cfa095e84622d9e"
+          }
+        ],
+        "待确认事项": [],
+        "状态历史": [
+          {
+            "event_id": "EV-76dd668dcc971b5665f7",
+            "task_id": "MTG-64CA99BD7581295E",
+            "事件类型": "新增",
+            "原值": null,
+            "新值": "接口测试",
+            "来源": "meeting.txt:行1：新增任务：接口测试，建议由张三负责，尚未确认，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          },
+          {
+            "event_id": "EV-d1a77cfa095e84622d9e",
+            "task_id": "MTG-64CA99BD7581295E",
+            "事件类型": "期限变更",
+            "原值": null,
+            "新值": "2026-11-10",
+            "来源": "meeting.txt:行1：新增任务：接口测试，建议由张三负责，尚未确认，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          }
+        ]
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": null,
+        "status": "待执行",
+        "rule": "tentative"
+      },
+      "pass": false
+    },
+    {
+      "id": "f03_label",
+      "meeting_text": "会议日期：2026-11-06。T01截止明天。",
+      "meeting_sha256": "85ccfab92dec9836478478c52929581143a7556c9332aaaf9b258cd8a1cc3dc5",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_label\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_label\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_label",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：任务关联（无法唯一定位旧任务）。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f03_label\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f03_label\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_label\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "17856bd552b01c1c405638fb63038ca127d741cc2af66f4834ae46a57ca9b49c",
+      "summary_sha256": "f7d329de7bc532179b10d2a7fa07c719a2af417ac1c10a4477ba982e3a6b5d42",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": null,
+            "待确认字段": "任务关联",
+            "候选值或问题": "T01截止明天",
+            "原因": "无法唯一定位旧任务",
+            "候选来源": "meeting.txt:行1：T01截止明天",
+            "建议用户确认内容": "请确认 该事项 的任务关联及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "due_2026-11-07"
+      },
+      "pass": false
+    },
+    {
+      "id": "f03_label_spaced",
+      "meeting_text": "会议日期：2026-11-06。T01 截止明天。",
+      "meeting_sha256": "ccb73994d8728c6a29cc2ffb590686212b8895a74dd2171e0dbc0b6b13bdc903",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_label_spaced\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_label_spaced\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_label_spaced",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：截止时间（缺会议日或相对期限不唯一）。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f03_label_spaced\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f03_label_spaced\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_label_spaced\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "840fc40a695065fbdfee253f71e5c587b08a87ee252f9d834621dba06b604460",
+      "summary_sha256": "d524ef43ab4a7a795651eb7897595193e5a0023786f33290fab881ddf2d7bedb",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "待确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": "T01",
+            "待确认字段": "截止时间",
+            "候选值或问题": "T01 截止明天",
+            "原因": "缺会议日或相对期限不唯一",
+            "候选来源": "meeting.txt:行1：T01 截止明天",
+            "建议用户确认内容": "请确认 T01 的截止时间及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "due_2026-11-07"
+      },
+      "pass": false
+    },
+    {
+      "id": "f03_prefix_spaced",
+      "meeting_text": "2026-11-06项目例会。T01 截止明天。",
+      "meeting_sha256": "29f1ae17c3150fabcefad9b88b576db6be89526b922be5e0bfd7062a49becb29",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_prefix_spaced\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_prefix_spaced\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_prefix_spaced",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：截止时间（缺会议日或相对期限不唯一）。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f03_prefix_spaced\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f03_prefix_spaced\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_prefix_spaced\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "a2bb49b86067fbb2fdb4d6a195270dd7999703b1175827b0d06d88a652ca390d",
+      "summary_sha256": "d524ef43ab4a7a795651eb7897595193e5a0023786f33290fab881ddf2d7bedb",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "待确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": "T01",
+            "待确认字段": "截止时间",
+            "候选值或问题": "T01 截止明天",
+            "原因": "缺会议日或相对期限不唯一",
+            "候选来源": "meeting.txt:行1：T01 截止明天",
+            "建议用户确认内容": "请确认 T01 的截止时间及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "due_2026-11-07"
+      },
+      "pass": false
+    },
+    {
+      "id": "f03_missing_spaced",
+      "meeting_text": "项目例会。T01 截止明天。",
+      "meeting_sha256": "97c497c72c2ec939f92062e106ae80d57c83ce317ad313d5c539a934e8800a92",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_missing_spaced\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_missing_spaced\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_missing_spaced",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：截止时间（缺会议日或相对期限不唯一）。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f03_missing_spaced\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f03_missing_spaced\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_missing_spaced\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "a2bb49b86067fbb2fdb4d6a195270dd7999703b1175827b0d06d88a652ca390d",
+      "summary_sha256": "d524ef43ab4a7a795651eb7897595193e5a0023786f33290fab881ddf2d7bedb",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "待确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": "T01",
+            "待确认字段": "截止时间",
+            "候选值或问题": "T01 截止明天",
+            "原因": "缺会议日或相对期限不唯一",
+            "候选来源": "meeting.txt:行1：T01 截止明天",
+            "建议用户确认内容": "请确认 T01 的截止时间及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "due_missing"
+      },
+      "pass": false
+    },
+    {
+      "id": "f03_conflict_spaced",
+      "meeting_text": "会议日期：2026-11-06。会议日期：2026-11-08。T01 截止明天。",
+      "meeting_sha256": "040182888e434048d664104e6ff204667abfbe329a24096576ff542fc9694ab0",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_conflict_spaced\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_conflict_spaced\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_conflict_spaced",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：截止时间（缺会议日或相对期限不唯一）。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f03_conflict_spaced\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f03_conflict_spaced\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_conflict_spaced\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "2b8ea5396a906c4565f7abd254d2d1f06708734ba36293133699d55e4bd10208",
+      "summary_sha256": "d524ef43ab4a7a795651eb7897595193e5a0023786f33290fab881ddf2d7bedb",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "待确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": "T01",
+            "待确认字段": "截止时间",
+            "候选值或问题": "T01 截止明天",
+            "原因": "缺会议日或相对期限不唯一",
+            "候选来源": "meeting.txt:行1：T01 截止明天",
+            "建议用户确认内容": "请确认 T01 的截止时间及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "due_missing"
+      },
+      "pass": false
+    },
+    {
+      "id": "f03_prefix",
+      "meeting_text": "2026-11-06项目例会。T01截止明天。",
+      "meeting_sha256": "f0f964e7eee855b95d1c4c227b5122af17f6757b13c715ac044480584aacbfa3",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_prefix\\meeting.md",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_prefix\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_prefix",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：任务关联（无法唯一定位旧任务）。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f03_prefix\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f03_prefix\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_prefix\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "0fe60572f71575ba425e38edd24bc78425d463ba6bd1ecc3a78a27b71e0a5a1d",
+      "summary_sha256": "f7d329de7bc532179b10d2a7fa07c719a2af417ac1c10a4477ba982e3a6b5d42",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": null,
+            "待确认字段": "任务关联",
+            "候选值或问题": "T01截止明天",
+            "原因": "无法唯一定位旧任务",
+            "候选来源": "meeting.md:行1：T01截止明天",
+            "建议用户确认内容": "请确认 该事项 的任务关联及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "due_2026-11-07"
+      },
+      "pass": false
+    },
+    {
+      "id": "f03_missing",
+      "meeting_text": "项目例会。T01截止明天。",
+      "meeting_sha256": "b6094f46e740cd8c6b36f275917bde7a1f69437b8a6cec5147939445dbd71555",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_missing\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_missing\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_missing",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：任务关联（无法唯一定位旧任务）。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f03_missing\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f03_missing\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_missing\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "99d495687401231ff0fe8a740f5efeb630a745c9fbf9be7f541b8851180c2aa0",
+      "summary_sha256": "f7d329de7bc532179b10d2a7fa07c719a2af417ac1c10a4477ba982e3a6b5d42",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": null,
+            "待确认字段": "任务关联",
+            "候选值或问题": "T01截止明天",
+            "原因": "无法唯一定位旧任务",
+            "候选来源": "meeting.txt:行1：T01截止明天",
+            "建议用户确认内容": "请确认 该事项 的任务关联及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "due_missing"
+      },
+      "pass": false
+    },
+    {
+      "id": "f03_conflict",
+      "meeting_text": "会议日期：2026-11-06。会议日期：2026-11-08。T01截止明天。",
+      "meeting_sha256": "2706e3f040dfb99bc9797bfb6e238677a8f6a20527e0f814a58a185cdbc425cd",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_conflict\\meeting.md",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_conflict\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_conflict",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：任务关联（无法唯一定位旧任务）。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f03_conflict\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f03_conflict\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f03_conflict\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "56331e5b94a5e130dd463044f987a16ef4e6b2e13da02a03d62b6a07efcf9172",
+      "summary_sha256": "f7d329de7bc532179b10d2a7fa07c719a2af417ac1c10a4477ba982e3a6b5d42",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": null,
+            "待确认字段": "任务关联",
+            "候选值或问题": "T01截止明天",
+            "原因": "无法唯一定位旧任务",
+            "候选来源": "meeting.md:行1：T01截止明天",
+            "建议用户确认内容": "请确认 该事项 的任务关联及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "due_missing"
+      },
+      "pass": false
+    },
+    {
+      "id": "f04_direct",
+      "meeting_text": "张三负责接口测试，截止2026-11-10。",
+      "meeting_sha256": "a54f923e4aad40e76de39a1f927f89101a711dfc87a247240866a5d160defb11",
+      "previous_sha256": null,
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f04_direct\\meeting.md",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f04_direct\\output"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f04_direct",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：任务关联（无法唯一定位旧任务）。 未提供旧任务表，本次为首版。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f04_direct\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f04_direct\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f04_direct\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "b7c6cafca61103a0452dee9429f6484095cdf8fae0ad4a6d5e5aea03b0c216a2",
+      "summary_sha256": "120c9fbad64bd1b7a9e38d5c52b8b132526bccbc588a6d104982ddc1d6c2d158",
+      "sheets": {
+        "当前任务": [],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": null,
+            "待确认字段": "任务关联",
+            "候选值或问题": "张三负责接口测试，截止2026-11-10",
+            "原因": "无法唯一定位旧任务",
+            "候选来源": "meeting.md:行1：张三负责接口测试，截止2026-11-10",
+            "建议用户确认内容": "请确认 该事项 的任务关联及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": null,
+        "status": "待执行",
+        "rule": "direct"
+      },
+      "pass": false
+    },
+    {
+      "id": "f04_discussion",
+      "meeting_text": "讨论接口测试，尚未决定由谁负责。",
+      "meeting_sha256": "7df73233a678d2d5d83b2a6dfc9e5c47f910f69a258c57e68131e046ebf75ec3",
+      "previous_sha256": null,
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f04_discussion\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f04_discussion\\output"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f04_discussion",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：任务关联（无法唯一定位旧任务）。 未提供旧任务表，本次为首版。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f04_discussion\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f04_discussion\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f04_discussion\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "e0a04b7057172abd9224f24b5e92e21095edfe08d508d1ad6dd4838e578019fe",
+      "summary_sha256": "120c9fbad64bd1b7a9e38d5c52b8b132526bccbc588a6d104982ddc1d6c2d158",
+      "sheets": {
+        "当前任务": [],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": null,
+            "待确认字段": "任务关联",
+            "候选值或问题": "讨论接口测试，尚未决定由谁负责",
+            "原因": "无法唯一定位旧任务",
+            "候选来源": "meeting.txt:行1：讨论接口测试，尚未决定由谁负责",
+            "建议用户确认内容": "请确认 该事项 的任务关联及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": null,
+        "status": null,
+        "rule": "discussion"
+      },
+      "pass": true
+    },
+    {
+      "id": "f05_untouched",
+      "meeting_text": "T01继续进行中。",
+      "meeting_sha256": "5edc381dcd7cbaa7c79d17e9110a6ce45244b7de57c331d60007a60b5ea610f9",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f05_untouched\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f05_untouched\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f05_untouched",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；1处待确认。 待确认事项包括：任务关联（无法唯一定位旧任务）。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f05_untouched\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f05_untouched\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f05_untouched\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "d9607a4b9d3cd4bbd1893b29fff29cadf7f14233aad17cf42418849f99dcf93a",
+      "summary_sha256": "f7d329de7bc532179b10d2a7fa07c719a2af417ac1c10a4477ba982e3a6b5d42",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": null,
+            "待确认字段": "任务关联",
+            "候选值或问题": "T01继续进行中",
+            "原因": "无法唯一定位旧任务",
+            "候选来源": "meeting.txt:行1：T01继续进行中",
+            "建议用户确认内容": "请确认 该事项 的任务关联及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": {
+        "task_id": "T01",
+        "status": "进行中",
+        "rule": "untouched"
+      },
+      "pass": true
+    },
+    {
+      "id": "f05_first",
+      "meeting_text": "2026-11-06项目例会。新增任务：编写演练纪要，由李工确认负责，截止2026-11-10。",
+      "meeting_sha256": "e1dad8203e0cda3ead207d0e9fba77369ae2cc6cc4723770981ea2276294656b",
+      "previous_sha256": null,
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f05_first\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f05_first\\output"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f05_first",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录3项新增或变化；0处待确认。 未提供旧任务表，本次为首版。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f05_first\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f05_first\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f05_first\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "13a71ceb6e53019b827957a2fdc5bb503f9e6622e036f17a7b3000844f450843",
+      "summary_sha256": "c6c209e99eaab8046d4c45082213ebe7934450ae357ed1eda5abb68caa593c9e",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "MTG-209CEA2D90B5F182",
+            "任务内容": "编写演练纪要",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-10",
+            "截止时间确认状态": "已确认",
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "meeting.txt:行1：新增任务：编写演练纪要，由李工确认负责，截止2026-11-10",
+            "最近变更": "期限变更"
+          }
+        ],
+        "本次新增与变化": [
+          {
+            "task_id": "MTG-209CEA2D90B5F182",
+            "关联原任务": "MTG-209CEA2D90B5F182",
+            "变化类型": "新增",
+            "原值": null,
+            "新值": "编写演练纪要",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：新增任务：编写演练纪要，由李工确认负责，截止2026-11-10",
+            "event_id": "EV-40ec8c5a816b88289792"
+          },
+          {
+            "task_id": "MTG-209CEA2D90B5F182",
+            "关联原任务": "MTG-209CEA2D90B5F182",
+            "变化类型": "负责人变更",
+            "原值": null,
+            "新值": "李工",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：新增任务：编写演练纪要，由李工确认负责，截止2026-11-10",
+            "event_id": "EV-b27c63bb5f35d2a4ead2"
+          },
+          {
+            "task_id": "MTG-209CEA2D90B5F182",
+            "关联原任务": "MTG-209CEA2D90B5F182",
+            "变化类型": "期限变更",
+            "原值": null,
+            "新值": "2026-11-10",
+            "确认状态": "已确认",
+            "来源": "meeting.txt:行1：新增任务：编写演练纪要，由李工确认负责，截止2026-11-10",
+            "event_id": "EV-e16da131e2543259a727"
+          }
+        ],
+        "待确认事项": [],
+        "状态历史": [
+          {
+            "event_id": "EV-40ec8c5a816b88289792",
+            "task_id": "MTG-209CEA2D90B5F182",
+            "事件类型": "新增",
+            "原值": null,
+            "新值": "编写演练纪要",
+            "来源": "meeting.txt:行1：新增任务：编写演练纪要，由李工确认负责，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          },
+          {
+            "event_id": "EV-b27c63bb5f35d2a4ead2",
+            "task_id": "MTG-209CEA2D90B5F182",
+            "事件类型": "负责人变更",
+            "原值": null,
+            "新值": "李工",
+            "来源": "meeting.txt:行1：新增任务：编写演练纪要，由李工确认负责，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          },
+          {
+            "event_id": "EV-e16da131e2543259a727",
+            "task_id": "MTG-209CEA2D90B5F182",
+            "事件类型": "期限变更",
+            "原值": null,
+            "新值": "2026-11-10",
+            "来源": "meeting.txt:行1：新增任务：编写演练纪要，由李工确认负责，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          }
+        ]
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": "one new task and its assignment/due date",
+      "pass": true
+    },
+    {
+      "id": "f05_repeat",
+      "meeting_text": "2026-11-06项目例会。新增任务：编写演练纪要，由李工确认负责，截止2026-11-10。",
+      "meeting_sha256": "e1dad8203e0cda3ead207d0e9fba77369ae2cc6cc4723770981ea2276294656b",
+      "previous_sha256": "13a71ceb6e53019b827957a2fdc5bb503f9e6622e036f17a7b3000844f450843",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f05_repeat\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f05_repeat\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f05_first\\output\\蓝桥演练-任务跟踪.xlsx"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f05_repeat",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；0处待确认。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f05_repeat\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f05_repeat\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f05_repeat\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "482824710b361db7c689724899a04172e8cad08f8c5b33844e2cbc4532fc8bc3",
+      "summary_sha256": "7170e9719c35cf0340b81cf432ad3253c3037fc9e58b924dead4d670943bd30e",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "MTG-209CEA2D90B5F182",
+            "任务内容": "编写演练纪要",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-10",
+            "截止时间确认状态": "已确认",
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "meeting.txt:行1：新增任务：编写演练纪要，由李工确认负责，截止2026-11-10",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [],
+        "状态历史": [
+          {
+            "event_id": "EV-40ec8c5a816b88289792",
+            "task_id": "MTG-209CEA2D90B5F182",
+            "事件类型": "新增",
+            "原值": null,
+            "新值": "编写演练纪要",
+            "来源": "meeting.txt:行1：新增任务：编写演练纪要，由李工确认负责，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          },
+          {
+            "event_id": "EV-b27c63bb5f35d2a4ead2",
+            "task_id": "MTG-209CEA2D90B5F182",
+            "事件类型": "负责人变更",
+            "原值": null,
+            "新值": "李工",
+            "来源": "meeting.txt:行1：新增任务：编写演练纪要，由李工确认负责，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          },
+          {
+            "event_id": "EV-e16da131e2543259a727",
+            "task_id": "MTG-209CEA2D90B5F182",
+            "事件类型": "期限变更",
+            "原值": null,
+            "新值": "2026-11-10",
+            "来源": "meeting.txt:行1：新增任务：编写演练纪要，由李工确认负责，截止2026-11-10",
+            "会议或用户确认时间": null,
+            "是否存在冲突": "否"
+          }
+        ]
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": "repeat same task_id and event_id sets; no new change rows",
+      "pass": true
+    },
+    {
+      "id": "f05_correction",
+      "meeting_text": "项目例会：T01进行中。",
+      "meeting_sha256": "831743936581220f170742f6e3295264dd19c2eaaa390db2a7c72f3b370ee77e",
+      "previous_sha256": "c2efb49b221ef6b11370770a464a6cb3334e0d701bada9fbaa644d7088965146",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\clean\\wangbin-meeting-action-tracker\\scripts\\track.py",
+        "--meeting-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f05_correction\\meeting.txt",
+        "--project-name",
+        "蓝桥演练",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f05_correction\\output",
+        "--previous-tasks",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\fixtures\\previous.csv",
+        "--correction",
+        "将T01截止日更正为2026-11-10",
+        "--correction",
+        "T01明确改由赵敏确认负责"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f05_correction",
+      "exit": 0,
+      "stdout": "{\"summary\": \"本次对照会议记录，记录0项新增或变化；3处待确认。 待确认事项包括：任务关联（无法唯一定位旧任务）；任务关联（无法唯一定位旧任务）；任务关联（无法唯一定位旧任务）。\", \"xlsx\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f05_correction\\\\output\\\\蓝桥演练-任务跟踪.xlsx\", \"summary_file\": \"C:\\\\Users\\\\wangbin\\\\AppData\\\\Local\\\\hermes\\\\profiles\\\\wb-quality\\\\cache\\\\scratch\\\\q04-baseline-ohv9gd7x\\\\f05_correction\\\\output\\\\蓝桥演练-会议决议摘要.md\"}",
+      "stderr": "",
+      "xlsx": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q04-baseline-ohv9gd7x\\f05_correction\\output\\蓝桥演练-任务跟踪.xlsx",
+      "xlsx_sha256": "b58a74ad0c22bc6aef362bee5ac52407f8f015dea9c677f35f0cceeaaf7c85a8",
+      "summary_sha256": "6012253f3cbad251864e40178552bb1fd4b145fb5a4338bff7958cc91aef4321",
+      "sheets": {
+        "当前任务": [
+          {
+            "task_id": "T01",
+            "任务内容": "接口联调",
+            "负责人": "王工",
+            "负责人确认状态": "已确认",
+            "截止时间": "2026-11-05",
+            "截止时间确认状态": "已确认",
+            "执行状态": "进行中",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:1",
+            "最近变更": "无新增进展"
+          },
+          {
+            "task_id": "T02",
+            "任务内容": "准备演练培训",
+            "负责人": "李工",
+            "负责人确认状态": "已确认",
+            "截止时间": null,
+            "截止时间确认状态": null,
+            "执行状态": "待执行",
+            "完成证据": null,
+            "是否逾期": "无法判断",
+            "逾期判断依据": "缺核查日或已确认截止日",
+            "来源": "old:2",
+            "最近变更": "无新增进展"
+          }
+        ],
+        "本次新增与变化": [],
+        "待确认事项": [
+          {
+            "task_id": null,
+            "待确认字段": "任务关联",
+            "候选值或问题": "项目例会：T01进行中",
+            "原因": "无法唯一定位旧任务",
+            "候选来源": "meeting.txt:行1：项目例会：T01进行中",
+            "建议用户确认内容": "请确认 该事项 的任务关联及依据"
+          },
+          {
+            "task_id": null,
+            "待确认字段": "任务关联",
+            "候选值或问题": "将T01截止日更正为2026-11-10",
+            "原因": "无法唯一定位旧任务",
+            "候选来源": "用户更正:行1：将T01截止日更正为2026-11-10",
+            "建议用户确认内容": "请确认 该事项 的任务关联及依据"
+          },
+          {
+            "task_id": null,
+            "待确认字段": "任务关联",
+            "候选值或问题": "T01明确改由赵敏确认负责",
+            "原因": "无法唯一定位旧任务",
+            "候选来源": "用户更正:行1：T01明确改由赵敏确认负责",
+            "建议用户确认内容": "请确认 该事项 的任务关联及依据"
+          }
+        ],
+        "状态历史": []
+      },
+      "sheet_names": [
+        "当前任务",
+        "本次新增与变化",
+        "待确认事项",
+        "状态历史"
+      ],
+      "expected": "T01 date 2026-11-10 owner 赵敏; T02 retained; history original/new/source; four sheets",
+      "pass": false
+    }
+  ],
+  "pass_count": 7,
+  "total_count": 33
+}
