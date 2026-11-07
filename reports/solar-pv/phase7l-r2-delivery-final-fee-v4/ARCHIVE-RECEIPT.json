@@ -1,0 +1,15 @@
+{
+  "schema_version": "solar-pv-trading-fee-archive-receipt/1.0.0",
+  "archive": {
+    "path": "F:/ideaWorkSpace/wangbin-workbuddy/reports/solar-pv/phase7l-r2-delivery-final-fee-v4/trading-fee-payment-synthetic-v1.zip",
+    "bytes": 3487926,
+    "sha256": "f13f89c2a951de1a7d4eec78092fb969cdcc29c87d30d2774319576985f3c611"
+  },
+  "manifest": {
+    "path": "F:/ideaWorkSpace/wangbin-workbuddy/reports/solar-pv/phase7l-r2-delivery-final-fee-v4/PACKAGE-MANIFEST.json",
+    "bytes": 9193,
+    "sha256": "32643679a4468ad7b5acc537f6be239c0f7079ed7da1413204cce69beec8814b"
+  },
+  "members": 34,
+  "status": "LOCAL_HASH_VERIFIED_NOT_PLATFORM_ACCEPTED"
+}

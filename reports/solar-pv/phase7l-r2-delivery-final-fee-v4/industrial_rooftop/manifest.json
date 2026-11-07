@@ -1,0 +1,693 @@
+{
+  "status": "DRAFT_PARTIAL",
+  "phase": "PHASE5_INDUSTRIAL_ROOFTOP_REPORT_EXPORT",
+  "report_content_version": "phase7l-r2-v7-fee-source-v1",
+  "project_id": "SYNTHETIC-PHASE7L-R2-ROOF-25Y-165KWP",
+  "pv_type": "industrial_rooftop",
+  "display_name": "FICTIONAL_ 165 kWp factory-roof calculation demo (no real site)",
+  "name_mapping": "FICTIONAL: 165 kWp factory-roof calculation demo (no real site)",
+  "identity": {
+    "model_version": "solar-pv-engine/0.3.0",
+    "run_id": "8841f3ba-684b-468e-abb5-c51be4681c40",
+    "input_hash": "830e9f5edcc3b1aff1fe1cb758dbb99d19b78cecffc7a9c66fcd3f5278d17d73",
+    "source_snapshot_id": "27e8f594654940fb0eca40d750269b9daf2929bc7604f1dc8148a1d78a1a81f4",
+    "result_hash": "ca4bdff3f5e89e6770d43f4dad3b4efd57d965aba6c9ba0f1b4299f99295a43f"
+  },
+  "files": {
+    "F01": {
+      "path": "FICTIONAL_ 165 kWp factory-roof calculation demo (no real site)-光伏预可研报告.docx",
+      "size": 139836,
+      "sha256": "57b8fbedaa66d5b6de93ae73188b2c71aec5a326391a8bf86fa88b94fb7b2471",
+      "report_content_version": "phase7l-r2-v7-fee-source-v1",
+      "chapters": 18,
+      "chapter_items": 100,
+      "appendices": 13,
+      "appendix_items": 26,
+      "charts": [
+        {
+          "metric_id": "energy.monthly.year.1",
+          "points": 12,
+          "source": "CANONICAL",
+          "formula_id": "F-ENERGY-AGGREGATION",
+          "source_ids": [
+            "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+          ],
+          "format": "PNG_EMBEDDED",
+          "font": {
+            "path": "C:\\WINDOWS\\Fonts\\msyh.ttc",
+            "family": "Microsoft YaHei",
+            "glyphs_checked": 15,
+            "title_size_px": 28
+          }
+        },
+        {
+          "metric_id": "energy.annual_array",
+          "points": 25,
+          "source": "CANONICAL",
+          "formula_id": "F-ENERGY-AGGREGATION",
+          "source_ids": [
+            "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+          ],
+          "format": "PNG_EMBEDDED",
+          "font": {
+            "path": "C:\\WINDOWS\\Fonts\\msyh.ttc",
+            "family": "Microsoft YaHei",
+            "glyphs_checked": 20,
+            "title_size_px": 28
+          }
+        }
+      ],
+      "duplicate_scan": {
+        "paragraph_count_scanned": 293,
+        "exact_duplicate_count": 6,
+        "approximate_template_count": 2,
+        "exact_duplicates": [
+          {
+            "paragraph_indexes": [
+              402,
+              410,
+              448,
+              456,
+              464,
+              472,
+              480,
+              488,
+              512,
+              528,
+              560,
+              568,
+              576,
+              624,
+              648,
+              664,
+              672
+            ],
+            "count": 17,
+            "text": "本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。",
+            "headings": [
+              "F-ANNUAL-OPEX 年度现金运营费用计划",
+              "F-ASSET-BOOK-VALUE 资产净值滚动",
+              "F-CAPEX-TOTAL 分类投资估算总额",
+              "F-CASH-FUNDING-BALANCE 融资与现金账户平衡",
+              "F-CASH-TAX-TOTAL 同口径现金税费总额",
+              "F-CFADS 可用于偿债的现金流",
+              "F-CUMULATIVE-CASH-FLOW 静态累计现金流",
+              "F-DATED-NPV 非整年时点净现值",
+              "F-DEBT-BALANCE 债务本金余额滚动",
+              "F-DISCOUNTED-CUMULATIVE-CASH 动态累计现金流",
+              "F-ENERGY-REVENUE 自持项目电量经济收益",
+              "F-EQUITY-AVAILABLE-CASH-FLOW 股权可分配增量现金流",
+              "F-EQUITY-INVESTOR-CASH-FLOW 股东实际投入分配现金流",
+              "F-LIFECYCLE-COST 无杠杆生命周期净成本",
+              "F-NPV 同口径净现值",
+              "F-PROJECT-CASH-FLOW 项目投资无杠杆净现金流",
+              "F-PROJECT-PRETAX-CASH-FLOW 项目所得税前现金流"
+            ]
+          },
+          {
+            "paragraph_indexes": [
+              418,
+              680
+            ],
+            "count": 2,
+            "text": "本式量纲校核：输出单位为 kWh/时段；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。",
+            "headings": [
+              "F-AVAILABLE-ENERGY 计量点限发前可用电量",
+              "F-SELF-CONSUMPTION 时段自用电量"
+            ]
+          },
+          {
+            "paragraph_indexes": [
+              440,
+              496,
+              536,
+              632,
+              656,
+              688
+            ],
+            "count": 6,
+            "text": "本式量纲校核：输出单位为 1；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。",
+            "headings": [
+              "F-CAPACITY-FACTOR 容量因子",
+              "F-DC-AC-RATIO 直交流容配比",
+              "F-DSCR 偿债备付率",
+              "F-LOAD-COVERAGE-RATIO 负荷侧自给率",
+              "F-PR-OBSERVED 同边界性能比校核",
+              "F-SELF-CONSUMPTION-RATIO 发电侧自用率"
+            ]
+          },
+          {
+            "paragraph_indexes": [
+              520,
+              552
+            ],
+            "count": 2,
+            "text": "本式量纲校核：输出单位为 kWh；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。",
+            "headings": [
+              "F-DELIVERED-ENERGY 可利用交付电量",
+              "F-ENERGY-AGGREGATION 月年度电量汇总"
+            ]
+          },
+          {
+            "paragraph_indexes": [
+              544,
+              696
+            ],
+            "count": 2,
+            "text": "本式量纲校核：输出单位为 年；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。",
+            "headings": [
+              "F-DYNAMIC-PAYBACK 动态首次回收期",
+              "F-STATIC-PAYBACK 静态首次回收期"
+            ]
+          },
+          {
+            "paragraph_indexes": [
+              600,
+              608
+            ],
+            "count": 2,
+            "text": "本式量纲校核：输出单位为 集合（元素为每年比例）；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。",
+            "headings": [
+              "F-IRR-EQUITY 资本金内部收益率根集",
+              "F-IRR-PROJECT 项目投资内部收益率根集"
+            ]
+          }
+        ],
+        "approximate_templates": [
+          {
+            "paragraph_indexes": [
+              402,
+              410,
+              448,
+              456,
+              464,
+              472,
+              480,
+              488,
+              512,
+              528,
+              560,
+              568,
+              576,
+              624,
+              648,
+              664,
+              672
+            ],
+            "count": 17,
+            "signature": "本式量纲校核：输出单位为元；每个输入的单位见本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。",
+            "headings": [
+              "F-ANNUAL-OPEX 年度现金运营费用计划",
+              "F-ASSET-BOOK-VALUE 资产净值滚动",
+              "F-CAPEX-TOTAL 分类投资估算总额",
+              "F-CASH-FUNDING-BALANCE 融资与现金账户平衡",
+              "F-CASH-TAX-TOTAL 同口径现金税费总额",
+              "F-CFADS 可用于偿债的现金流",
+              "F-CUMULATIVE-CASH-FLOW 静态累计现金流",
+              "F-DATED-NPV 非整年时点净现值",
+              "F-DEBT-BALANCE 债务本金余额滚动",
+              "F-DISCOUNTED-CUMULATIVE-CASH 动态累计现金流",
+              "F-ENERGY-REVENUE 自持项目电量经济收益",
+              "F-EQUITY-AVAILABLE-CASH-FLOW 股权可分配增量现金流",
+              "F-EQUITY-INVESTOR-CASH-FLOW 股东实际投入分配现金流",
+              "F-LIFECYCLE-COST 无杠杆生命周期净成本",
+              "F-NPV 同口径净现值",
+              "F-PROJECT-CASH-FLOW 项目投资无杠杆净现金流",
+              "F-PROJECT-PRETAX-CASH-FLOW 项目所得税前现金流"
+            ]
+          },
+          {
+            "paragraph_indexes": [
+              440,
+              496,
+              536,
+              632,
+              656,
+              688
+            ],
+            "count": 6,
+            "signature": "本式量纲校核：输出单位为数值；每个输入的单位见本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。",
+            "headings": [
+              "F-CAPACITY-FACTOR 容量因子",
+              "F-DC-AC-RATIO 直交流容配比",
+              "F-DSCR 偿债备付率",
+              "F-LOAD-COVERAGE-RATIO 负荷侧自给率",
+              "F-PR-OBSERVED 同边界性能比校核",
+              "F-SELF-CONSUMPTION-RATIO 发电侧自用率"
+            ]
+          }
+        ],
+        "status": "REVIEW_REQUIRED"
+      },
+      "language_scan": {
+        "body_paragraphs": 729,
+        "legacy_template_counts": {
+          "分析重点标签": 0,
+          "已知证据标签": 0,
+          "判定标签": 0,
+          "状态依据标签": 0,
+          "canonical执行说明": 0,
+          "本项围绕模板": 0,
+          "模板化缺口": 0
+        },
+        "programming_language_counts": {
+          "运行状态标识": 0,
+          "内部字段标识": 0
+        },
+        "professional_marker_count": 68,
+        "category_specific": "STATIC_MARKER_PRESENT",
+        "evidence_grounded": "CONTENT_REVIEW_REQUIRED",
+        "professional_narrative": "CONTENT_REVIEW_REQUIRED",
+        "no_generic_template_abuse": "CONTENT_REVIEW_REQUIRED",
+        "no_programming_language_in_body": "STATIC_SCAN_CLEAR"
+      },
+      "toc_status": "FIELD_REQUIRES_RENDER_REFRESH",
+      "page_size": "A4",
+      "table_policy": "COMPACT_SUMMARY_AND_XLSX_TRACEABILITY",
+      "generation_seconds": 3.578146,
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "8841f3ba-684b-468e-abb5-c51be4681c40",
+      "input_hash": "830e9f5edcc3b1aff1fe1cb758dbb99d19b78cecffc7a9c66fcd3f5278d17d73",
+      "source_snapshot_id": "27e8f594654940fb0eca40d750269b9daf2929bc7604f1dc8148a1d78a1a81f4",
+      "result_hash": "ca4bdff3f5e89e6770d43f4dad3b4efd57d965aba6c9ba0f1b4299f99295a43f"
+    },
+    "F05": {
+      "path": "content-checklist.json",
+      "size": 374164,
+      "sha256": "d1efd3e7a6793cc03cd7fcca8c627347596348d94ba484107a1b5880cd9d8f8c",
+      "records": 126,
+      "structure_status": "GENERATED",
+      "visual_layout_status": "NOT_TESTED",
+      "duplicate_scan": {
+        "paragraph_count_scanned": 293,
+        "exact_duplicate_count": 6,
+        "approximate_template_count": 2,
+        "exact_duplicates": [
+          {
+            "paragraph_indexes": [
+              402,
+              410,
+              448,
+              456,
+              464,
+              472,
+              480,
+              488,
+              512,
+              528,
+              560,
+              568,
+              576,
+              624,
+              648,
+              664,
+              672
+            ],
+            "count": 17,
+            "text": "本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。",
+            "headings": [
+              "F-ANNUAL-OPEX 年度现金运营费用计划",
+              "F-ASSET-BOOK-VALUE 资产净值滚动",
+              "F-CAPEX-TOTAL 分类投资估算总额",
+              "F-CASH-FUNDING-BALANCE 融资与现金账户平衡",
+              "F-CASH-TAX-TOTAL 同口径现金税费总额",
+              "F-CFADS 可用于偿债的现金流",
+              "F-CUMULATIVE-CASH-FLOW 静态累计现金流",
+              "F-DATED-NPV 非整年时点净现值",
+              "F-DEBT-BALANCE 债务本金余额滚动",
+              "F-DISCOUNTED-CUMULATIVE-CASH 动态累计现金流",
+              "F-ENERGY-REVENUE 自持项目电量经济收益",
+              "F-EQUITY-AVAILABLE-CASH-FLOW 股权可分配增量现金流",
+              "F-EQUITY-INVESTOR-CASH-FLOW 股东实际投入分配现金流",
+              "F-LIFECYCLE-COST 无杠杆生命周期净成本",
+              "F-NPV 同口径净现值",
+              "F-PROJECT-CASH-FLOW 项目投资无杠杆净现金流",
+              "F-PROJECT-PRETAX-CASH-FLOW 项目所得税前现金流"
+            ]
+          },
+          {
+            "paragraph_indexes": [
+              418,
+              680
+            ],
+            "count": 2,
+            "text": "本式量纲校核：输出单位为 kWh/时段；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。",
+            "headings": [
+              "F-AVAILABLE-ENERGY 计量点限发前可用电量",
+              "F-SELF-CONSUMPTION 时段自用电量"
+            ]
+          },
+          {
+            "paragraph_indexes": [
+              440,
+              496,
+              536,
+              632,
+              656,
+              688
+            ],
+            "count": 6,
+            "text": "本式量纲校核：输出单位为 1；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。",
+            "headings": [
+              "F-CAPACITY-FACTOR 容量因子",
+              "F-DC-AC-RATIO 直交流容配比",
+              "F-DSCR 偿债备付率",
+              "F-LOAD-COVERAGE-RATIO 负荷侧自给率",
+              "F-PR-OBSERVED 同边界性能比校核",
+              "F-SELF-CONSUMPTION-RATIO 发电侧自用率"
+            ]
+          },
+          {
+            "paragraph_indexes": [
+              520,
+              552
+            ],
+            "count": 2,
+            "text": "本式量纲校核：输出单位为 kWh；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。",
+            "headings": [
+              "F-DELIVERED-ENERGY 可利用交付电量",
+              "F-ENERGY-AGGREGATION 月年度电量汇总"
+            ]
+          },
+          {
+            "paragraph_indexes": [
+              544,
+              696
+            ],
+            "count": 2,
+            "text": "本式量纲校核：输出单位为 年；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。",
+            "headings": [
+              "F-DYNAMIC-PAYBACK 动态首次回收期",
+              "F-STATIC-PAYBACK 静态首次回收期"
+            ]
+          },
+          {
+            "paragraph_indexes": [
+              600,
+              608
+            ],
+            "count": 2,
+            "text": "本式量纲校核：输出单位为 集合（元素为每年比例）；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。",
+            "headings": [
+              "F-IRR-EQUITY 资本金内部收益率根集",
+              "F-IRR-PROJECT 项目投资内部收益率根集"
+            ]
+          }
+        ],
+        "approximate_templates": [
+          {
+            "paragraph_indexes": [
+              402,
+              410,
+              448,
+              456,
+              464,
+              472,
+              480,
+              488,
+              512,
+              528,
+              560,
+              568,
+              576,
+              624,
+              648,
+              664,
+              672
+            ],
+            "count": 17,
+            "signature": "本式量纲校核：输出单位为元；每个输入的单位见本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。",
+            "headings": [
+              "F-ANNUAL-OPEX 年度现金运营费用计划",
+              "F-ASSET-BOOK-VALUE 资产净值滚动",
+              "F-CAPEX-TOTAL 分类投资估算总额",
+              "F-CASH-FUNDING-BALANCE 融资与现金账户平衡",
+              "F-CASH-TAX-TOTAL 同口径现金税费总额",
+              "F-CFADS 可用于偿债的现金流",
+              "F-CUMULATIVE-CASH-FLOW 静态累计现金流",
+              "F-DATED-NPV 非整年时点净现值",
+              "F-DEBT-BALANCE 债务本金余额滚动",
+              "F-DISCOUNTED-CUMULATIVE-CASH 动态累计现金流",
+              "F-ENERGY-REVENUE 自持项目电量经济收益",
+              "F-EQUITY-AVAILABLE-CASH-FLOW 股权可分配增量现金流",
+              "F-EQUITY-INVESTOR-CASH-FLOW 股东实际投入分配现金流",
+              "F-LIFECYCLE-COST 无杠杆生命周期净成本",
+              "F-NPV 同口径净现值",
+              "F-PROJECT-CASH-FLOW 项目投资无杠杆净现金流",
+              "F-PROJECT-PRETAX-CASH-FLOW 项目所得税前现金流"
+            ]
+          },
+          {
+            "paragraph_indexes": [
+              440,
+              496,
+              536,
+              632,
+              656,
+              688
+            ],
+            "count": 6,
+            "signature": "本式量纲校核：输出单位为数值；每个输入的单位见本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。",
+            "headings": [
+              "F-CAPACITY-FACTOR 容量因子",
+              "F-DC-AC-RATIO 直交流容配比",
+              "F-DSCR 偿债备付率",
+              "F-LOAD-COVERAGE-RATIO 负荷侧自给率",
+              "F-PR-OBSERVED 同边界性能比校核",
+              "F-SELF-CONSUMPTION-RATIO 发电侧自用率"
+            ]
+          }
+        ],
+        "status": "REVIEW_REQUIRED"
+      },
+      "language_scan": {
+        "body_paragraphs": 729,
+        "legacy_template_counts": {
+          "分析重点标签": 0,
+          "已知证据标签": 0,
+          "判定标签": 0,
+          "状态依据标签": 0,
+          "canonical执行说明": 0,
+          "本项围绕模板": 0,
+          "模板化缺口": 0
+        },
+        "programming_language_counts": {
+          "运行状态标识": 0,
+          "内部字段标识": 0
+        },
+        "professional_marker_count": 68,
+        "category_specific": "STATIC_MARKER_PRESENT",
+        "evidence_grounded": "CONTENT_REVIEW_REQUIRED",
+        "professional_narrative": "CONTENT_REVIEW_REQUIRED",
+        "no_generic_template_abuse": "CONTENT_REVIEW_REQUIRED",
+        "no_programming_language_in_body": "STATIC_SCAN_CLEAR"
+      },
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "8841f3ba-684b-468e-abb5-c51be4681c40",
+      "input_hash": "830e9f5edcc3b1aff1fe1cb758dbb99d19b78cecffc7a9c66fcd3f5278d17d73",
+      "source_snapshot_id": "27e8f594654940fb0eca40d750269b9daf2929bc7604f1dc8148a1d78a1a81f4",
+      "result_hash": "ca4bdff3f5e89e6770d43f4dad3b4efd57d965aba6c9ba0f1b4299f99295a43f"
+    },
+    "F06": {
+      "path": "canonical.json",
+      "size": 4806891,
+      "sha256": "d7eb2efac6a083a16c1e24ff38db289e46c3ddd481bfc5506a155ee31ddcc09d",
+      "status": "GENERATED",
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "8841f3ba-684b-468e-abb5-c51be4681c40",
+      "input_hash": "830e9f5edcc3b1aff1fe1cb758dbb99d19b78cecffc7a9c66fcd3f5278d17d73",
+      "source_snapshot_id": "27e8f594654940fb0eca40d750269b9daf2929bc7604f1dc8148a1d78a1a81f4",
+      "result_hash": "ca4bdff3f5e89e6770d43f4dad3b4efd57d965aba6c9ba0f1b4299f99295a43f"
+    },
+    "F03": {
+      "path": "FICTIONAL_ 165 kWp factory-roof calculation demo (no real site)-测算模型.xlsx",
+      "size": 109212,
+      "sha256": "98613c37edf8455aba2d6824e163e60e3185356f65ecd20a26fc4d0b9ae05419",
+      "sheets": [
+        "项目参数",
+        "术语和公式说明",
+        "数据质量",
+        "资源月度",
+        "系统容量与损耗",
+        "发电预测-月度",
+        "逐年衰减",
+        "负荷与消纳",
+        "电价与收入",
+        "CAPEX",
+        "OPEX",
+        "折旧与税费",
+        "融资与偿债",
+        "项目现金流",
+        "资本金现金流",
+        "财务指标",
+        "敏感性",
+        "方案比较",
+        "一致性校验"
+      ],
+      "mode": "STATIC_SNAPSHOT",
+      "charts": [
+        {
+          "metric_id": "energy.monthly.year.1",
+          "points": 12,
+          "sheet": "发电预测-月度",
+          "source": "CANONICAL",
+          "formula_id": "F-ENERGY-AGGREGATION",
+          "source_ids": [
+            "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+          ]
+        },
+        {
+          "metric_id": "energy.annual_array",
+          "points": 25,
+          "sheet": "逐年衰减",
+          "source": "CANONICAL",
+          "formula_id": "F-ENERGY-AGGREGATION",
+          "source_ids": [
+            "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+          ]
+        }
+      ],
+      "generation_seconds": 0.744906,
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "8841f3ba-684b-468e-abb5-c51be4681c40",
+      "input_hash": "830e9f5edcc3b1aff1fe1cb758dbb99d19b78cecffc7a9c66fcd3f5278d17d73",
+      "source_snapshot_id": "27e8f594654940fb0eca40d750269b9daf2929bc7604f1dc8148a1d78a1a81f4",
+      "result_hash": "ca4bdff3f5e89e6770d43f4dad3b4efd57d965aba6c9ba0f1b4299f99295a43f"
+    },
+    "F04": {
+      "status": "DRAFT_PARTIAL",
+      "file": "FICTIONAL_ 165 kWp factory-roof calculation demo (no real site)-资料来源与假设清单.xlsx",
+      "project_id": "SYNTHETIC-PHASE7L-R2-ROOF-25Y-165KWP",
+      "scenario_id": "BASE",
+      "input_hash": "830e9f5edcc3b1aff1fe1cb758dbb99d19b78cecffc7a9c66fcd3f5278d17d73",
+      "source_snapshot_id": "27e8f594654940fb0eca40d750269b9daf2929bc7604f1dc8148a1d78a1a81f4",
+      "result_hash": "ca4bdff3f5e89e6770d43f4dad3b4efd57d965aba6c9ba0f1b4299f99295a43f",
+      "sha256": "7955e6cbfe2159c7bcc00ac43dda7b3cf1ad4593bd3bc42c9c9149ecbeeb7964",
+      "sheets": [
+        "输入台账",
+        "气象与地理来源",
+        "政策适用性",
+        "设备与成本来源",
+        "案例对标",
+        "假设清单",
+        "冲突与缺口",
+        "变更与复核记录",
+        "变量-术语词典",
+        "资料授权说明"
+      ],
+      "generation_seconds": 4.602676,
+      "model_version": "solar-pv-engine/0.3.0",
+      "run_id": "8841f3ba-684b-468e-abb5-c51be4681c40"
+    },
+    "F02": {
+      "status": "BLOCKED",
+      "reason": "PDF_RENDERER_UNAVAILABLE",
+      "renderer": null,
+      "generation_seconds": 0.157164
+    }
+  },
+  "charts": {
+    "docx": [
+      {
+        "metric_id": "energy.monthly.year.1",
+        "points": 12,
+        "source": "CANONICAL",
+        "formula_id": "F-ENERGY-AGGREGATION",
+        "source_ids": [
+          "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+        ],
+        "format": "PNG_EMBEDDED",
+        "font": {
+          "path": "C:\\WINDOWS\\Fonts\\msyh.ttc",
+          "family": "Microsoft YaHei",
+          "glyphs_checked": 15,
+          "title_size_px": 28
+        }
+      },
+      {
+        "metric_id": "energy.annual_array",
+        "points": 25,
+        "source": "CANONICAL",
+        "formula_id": "F-ENERGY-AGGREGATION",
+        "source_ids": [
+          "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+        ],
+        "format": "PNG_EMBEDDED",
+        "font": {
+          "path": "C:\\WINDOWS\\Fonts\\msyh.ttc",
+          "family": "Microsoft YaHei",
+          "glyphs_checked": 20,
+          "title_size_px": 28
+        }
+      }
+    ],
+    "xlsx": [
+      {
+        "metric_id": "energy.monthly.year.1",
+        "points": 12,
+        "sheet": "发电预测-月度",
+        "source": "CANONICAL",
+        "formula_id": "F-ENERGY-AGGREGATION",
+        "source_ids": [
+          "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+        ]
+      },
+      {
+        "metric_id": "energy.annual_array",
+        "points": 25,
+        "sheet": "逐年衰减",
+        "source": "CANONICAL",
+        "formula_id": "F-ENERGY-AGGREGATION",
+        "source_ids": [
+          "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+        ]
+      }
+    ]
+  },
+  "coverage": {
+    "chapters": 18,
+    "chapter_items": 100,
+    "appendices": 13,
+    "appendix_items": 26,
+    "model_sheets": 19,
+    "source_sheets": 10
+  },
+  "pdf_status": "BLOCKED",
+  "quality_gates": {
+    "PAGE_SIZE_A4": "A4",
+    "COVER_STYLE_D": "GENERATED",
+    "TOC_VALID": "FIELD_REQUIRES_RENDER_REFRESH",
+    "TABLE_LAYOUT": "COMPACT_SUMMARY_AND_XLSX_TRACEABILITY",
+    "CONTENT_READABILITY": "NOT_TESTED_RENDER",
+    "NO_OVERFLOW": "NOT_TESTED_RENDER",
+    "NO_DUPLICATE_TEMPLATE_ABUSE": "CONTENT_REVIEW_REQUIRED",
+    "EXACT_DUPLICATE_SCAN": "REVIEW_REQUIRED",
+    "PROFESSIONAL_NARRATIVE": "CONTENT_REVIEW_REQUIRED",
+    "NO_PROGRAMMING_LANGUAGE_IN_BODY": "STATIC_SCAN_CLEAR",
+    "NO_GENERIC_TEMPLATE_ABUSE": "CONTENT_REVIEW_REQUIRED",
+    "CHAPTER_SEMANTIC_ALIGNMENT": "CONTENT_REVIEW_REQUIRED",
+    "EVIDENCE_GROUNDED_CLAIMS": "CONTENT_REVIEW_REQUIRED",
+    "CENTRAL_CLAIM_CONTRACT": "PASS",
+    "CENTRAL_CLAIM_CONTRACT_SCOPE": "STRUCTURAL_FIELDS_AND_BINDINGS_ONLY",
+    "CATEGORY_SPECIFIC_NARRATIVE": "CONTENT_REVIEW_REQUIRED",
+    "EDITORIAL_FIXTURE_IDENTITY": "NOT_SELECTED",
+    "GOLDEN_SAMPLE_COVERAGE": "NOT_SELECTED",
+    "DOCUMENT_CONTENT_REVIEW": "NOT_REVIEWED",
+    "CHAPTER_COVERAGE": "PASS",
+    "CHART_DATA_CONSISTENCY": "STATIC_CANONICAL_BINDING",
+    "CANONICAL_IDENTITY": "PASS",
+    "CANONICAL_DATA_CONSISTENCY": "STATIC_BINDING_CHECK",
+    "D_BUSINESS_STYLE_REGRESSION": "NOT_TESTED_RENDER",
+    "XLSX_CONTENT": "STATIC_STRUCTURE_CHECK",
+    "PDF_RENDER": "BLOCKED",
+    "VISUAL_REVIEW": "NOT_TESTED",
+    "FOUR_FILE_GATE": "BLOCKED"
+  },
+  "calculation_status": "PARTIAL",
+  "four_file_gate": "BLOCKED",
+  "editorial_mode": "SYNTHETIC_CALCULATION_PARTIAL",
+  "editorial_fixture": null,
+  "elapsed_seconds": 9.679357,
+  "not_decision_ready": true,
+  "sensitive_raw_attachments_included": false
+}

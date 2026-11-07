@@ -1,0 +1,17 @@
+{
+  "schema_version": "solar-pv-trading-fee-case-archives/1.0.0",
+  "status": "LOCAL_HASH_VERIFIED_NOT_PLATFORM_ACCEPTED",
+  "archives": {
+    "industrial_rooftop": {
+      "path": "industrial_rooftop-review-v1.zip",
+      "bytes": 894573,
+      "sha256": "a4574b39fca639f95cbbe23236d45c652ca24b8947b241cf9ba83f394c53cc21"
+    },
+    "utility_scale_ground": {
+      "path": "utility_scale_ground-review-v1.zip",
+      "bytes": 874524,
+      "sha256": "0932140b7f0e68540533958632f8972e1d081b2228d6f9ab0aaaebe9219209d5"
+    }
+  },
+  "contents": "Each case ZIP contains that case's DOCX, model XLSX, source/assumption XLSX, canonical, manifests, trading-fee source, three-way reconciliation, execution receipt and focused regression evidence."
+}
