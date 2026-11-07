@@ -1,0 +1,127 @@
+[
+  {
+    "name": "missing_response",
+    "command": [
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+      "--tender",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\tender.txt",
+      "--output-dir",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\missing_response",
+      "--mode",
+      "check"
+    ],
+    "exit": 2,
+    "stderr": "ERROR MISSING_RESPONSE role=response\n",
+    "stdout": "",
+    "outputs": [],
+    "pass": true
+  },
+  {
+    "name": "invalid_utf8",
+    "command": [
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+      "--tender",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\tender.txt",
+      "--output-dir",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\invalid_utf8",
+      "--mode",
+      "check",
+      "--response",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\bad.md"
+    ],
+    "exit": 2,
+    "stderr": "ERROR INVALID_UTF8 role=response\n",
+    "stdout": "",
+    "outputs": [],
+    "pass": true
+  },
+  {
+    "name": "unsupported",
+    "command": [
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+      "--tender",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\tender.txt",
+      "--output-dir",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\unsupported",
+      "--mode",
+      "check",
+      "--response",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\bad.pdf"
+    ],
+    "exit": 2,
+    "stderr": "ERROR INPUT_TYPE_UNSUPPORTED role=response\n",
+    "stdout": "",
+    "outputs": [],
+    "pass": true
+  },
+  {
+    "name": "catalog_corrupt",
+    "command": [
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+      "--tender",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\tender.txt",
+      "--output-dir",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\catalog_corrupt",
+      "--mode",
+      "check",
+      "--response",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\response.md",
+      "--attachment-catalog",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\bad.xlsx"
+    ],
+    "exit": 2,
+    "stderr": "ERROR CATALOG_READ_FAILED role=attachment_catalog\n",
+    "stdout": "",
+    "outputs": [],
+    "pass": true
+  },
+  {
+    "name": "project_escape",
+    "command": [
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+      "--tender",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\tender.txt",
+      "--output-dir",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\project_escape",
+      "--mode",
+      "check",
+      "--response",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\response.md",
+      "--project",
+      "../outside"
+    ],
+    "exit": 2,
+    "stderr": "ERROR OUTPUT_PATH_INVALID role=project\n",
+    "stdout": "",
+    "outputs": [],
+    "pass": true
+  },
+  {
+    "name": "positive",
+    "command": [
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+      "--tender",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\tender.txt",
+      "--output-dir",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\positive",
+      "--mode",
+      "check",
+      "--response",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_rerun\\errors\\response.md"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "stdout": "CREATED 未命名项目-投标响应检查.xlsx 未命名项目-提交前核对清单.md\n",
+    "outputs": [
+      "未命名项目-投标响应检查.xlsx",
+      "未命名项目-提交前核对清单.md"
+    ],
+    "pass": true
+  }
+]

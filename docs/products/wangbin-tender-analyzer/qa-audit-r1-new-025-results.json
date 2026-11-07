@@ -1,0 +1,2817 @@
+{
+  "zip_sha": "69e1a9f2ef0698e40a174faf711e1eb627aecc68fb1106c567a506d063493c06",
+  "manifest": {
+    "archive": "dist/wangbin-tender-analyzer-0.2.5-skill-candidate.zip",
+    "id": "wangbin-tender-analyzer",
+    "members": [
+      {
+        "path": "wangbin-tender-analyzer/SKILL.md",
+        "sha256": "b932632e8ee351eeabee44fac87faf023f9f873a888bfe7b5499046d6ffc8903",
+        "size": 12230
+      },
+      {
+        "path": "wangbin-tender-analyzer/examples/README.md",
+        "sha256": "88d3bd4535cba3191aa09c85e2a5d5ad1b46b4c72b055d7e1632dae4f9c38fef",
+        "size": 339
+      },
+      {
+        "path": "wangbin-tender-analyzer/examples/certificate.txt",
+        "sha256": "37a1ef3d5577c7f75c37f5e07123983c3d786098d8fc5131a10b83a27f946e6b",
+        "size": 42
+      },
+      {
+        "path": "wangbin-tender-analyzer/examples/fictional-attachments.csv",
+        "sha256": "f8a1c3540be8c77053af5b0ad53e275003ca3c23cdf884ea6357a4585385c77d",
+        "size": 70
+      },
+      {
+        "path": "wangbin-tender-analyzer/examples/fictional-bid-response.txt",
+        "sha256": "e7b3033db2f1bec60a376f9504db8b4fb7e86d05ef41b84f102f39588027e76c",
+        "size": 125
+      },
+      {
+        "path": "wangbin-tender-analyzer/examples/fictional-bid-tender.txt",
+        "sha256": "389b270c4b02fd3ada4c6a32757ff54899e52a3e685ec003bda14e0e248d52a7",
+        "size": 243
+      },
+      {
+        "path": "wangbin-tender-analyzer/examples/fictional-tender.expected.json",
+        "sha256": "a1b4de633f5256b4962a4f15a9656fa483db8d35fee8c3d12ef14c2d4adac9d0",
+        "size": 11634
+      },
+      {
+        "path": "wangbin-tender-analyzer/examples/fictional-tender.txt",
+        "sha256": "ca2c907ce99d67b872c2b27e02b2a05e0e72b7e7b8811e38b8adfe48f712dce3",
+        "size": 461
+      },
+      {
+        "path": "wangbin-tender-analyzer/scripts/analyze_tender.py",
+        "sha256": "ffee9fed4c0f403e2688c1296da415d47031d9900962c651865fb54cf564becb",
+        "size": 15480
+      },
+      {
+        "path": "wangbin-tender-analyzer/scripts/check_response.py",
+        "sha256": "60c1372ad713b6fd57d40160294e7017b701456e8c73027d6bdf60cd07cf4be7",
+        "size": 34199
+      },
+      {
+        "path": "wangbin-tender-analyzer/templates/tender-checklist.md",
+        "sha256": "ea03d979c21c3699ef19b57694da50709eaf3dee5dada6cb5340619c8a328375",
+        "size": 1265
+      }
+    ],
+    "payload_snapshot_sha256": "1c2948dcbd27cd5d8880c520490c5c99744281f9a36822e5016363bf377c80ba",
+    "platform": "BLOCKED",
+    "scope": "local archive integrity only",
+    "sha256": "69e1a9f2ef0698e40a174faf711e1eb627aecc68fb1106c567a506d063493c06",
+    "source": "packages/skills/wangbin-tender-analyzer",
+    "status": "PASS",
+    "version": "0.2.5"
+  },
+  "cases": [
+    {
+      "id": "R01-expiry",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R01-expiry\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R01-expiry\\out",
+        "--project",
+        "虚构核验R01-expiry",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R01-expiry\\response.md",
+        "--evidence-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R01-expiry\\certificate.txt",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R01-expiry\\catalog.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R01-expiry",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R01-expiry-投标响应检查.xlsx 虚构核验R01-expiry-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.csv": "c9cdc08af8a80221b7bd36274f83773434c011a9189ab6a6c078cd3cea4b7e13",
+        "certificate.txt": "a643c09c5c02e3dd5248c236bd0595aeb2dcba7bd3d3f5b02ff7059388a11657",
+        "response.md": "be00b6823a8acfbcc9cafab7748ea56ffab78d5e83800f61ed7bff756f6a1ec7",
+        "tender.txt": "5187b702b5ce1d13069b0606e279230e67fb9b5bc6e3891c28432e1fbdc267b3"
+      },
+      "output_sha": {
+        "虚构核验R01-expiry-投标响应检查.xlsx": "06d04c11f7401423352630d7ad002d094c94190a080a76e716e9530996d1e9ca",
+        "虚构核验R01-expiry-提交前核对清单.md": "446b16b61b08818f3668d7391c42e41fe884a8d846d3521867eee24429b82871"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": "certificate.txt:1",
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "已提供（可读文本）",
+          "内容支持状态": "不支持（文本层面）",
+          "缺口": "明确条件未获得完整文本支持：甲类资质须有效覆盖2028-01-01至2028-12-31、附甲类证明 certificate.txt；材料 certificate.txt:1 有效截止 2027-12-31 早于要求 2028-12-31；需补正或人工核验",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "可能不充分",
+        "已提供（可读文本）",
+        "不支持（文本层面）"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 613,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "certificate.txt",
+          "catalog.csv:2",
+          "certificate.txt",
+          "已提供（可读文本）",
+          "不支持（文本层面）",
+          "certificate.txt:1",
+          "文本支持不认证真伪"
+        ]
+      ],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R02-start",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R02-start\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R02-start\\out",
+        "--project",
+        "虚构核验R02-start",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R02-start\\response.md",
+        "--evidence-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R02-start\\certificate.txt",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R02-start\\catalog.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R02-start",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R02-start-投标响应检查.xlsx 虚构核验R02-start-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.csv": "c9cdc08af8a80221b7bd36274f83773434c011a9189ab6a6c078cd3cea4b7e13",
+        "certificate.txt": "7ca89773c317abfbaacafc343e64240eb85c467bfdfec2b5f93a5f86990769c8",
+        "response.md": "ac2a844ff1b0c443b1cced563fd30541a077154e407d6693bc23aa8c4e3a9e1c",
+        "tender.txt": "d19757b141be2c2c7ef3d3742e26e9fd9dda68408a239b44ec6bebc517a5a650"
+      },
+      "output_sha": {
+        "虚构核验R02-start-投标响应检查.xlsx": "64c83495033aaf65f7f646c99f28af017a0d9cc3e41f44ffeddd900e09765670",
+        "虚构核验R02-start-提交前核对清单.md": "d96ebe5ad212d41780093d823475e086211c3198d224c1b420883f73cc9307f6"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": "certificate.txt:1",
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "已提供（可读文本）",
+          "内容支持状态": "不支持（文本层面）",
+          "缺口": "明确条件未获得完整文本支持：甲类资质须覆盖2028-01-01至2028-12-31；材料 certificate.txt:1 生效 2028-01-02 晚于要求 2028-01-01；需补正或人工核验",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "可能不充分",
+        "已提供（可读文本）",
+        "不支持（文本层面）"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 586,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "certificate.txt",
+          "catalog.csv:2",
+          "certificate.txt",
+          "已提供（可读文本）",
+          "不支持（文本层面）",
+          "certificate.txt:1",
+          "文本支持不认证真伪"
+        ]
+      ],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R03-edge-positive",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R03-edge-positive\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R03-edge-positive\\out",
+        "--project",
+        "虚构核验R03-edge-positive",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R03-edge-positive\\response.md",
+        "--evidence-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R03-edge-positive\\certificate.txt",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R03-edge-positive\\catalog.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R03-edge-positive",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R03-edge-positive-投标响应检查.xlsx 虚构核验R03-edge-positive-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.csv": "c9cdc08af8a80221b7bd36274f83773434c011a9189ab6a6c078cd3cea4b7e13",
+        "certificate.txt": "51e308849e1e71f8e137a82af279c5e5e51f67f2d4e0bd70e28eb1e22ba0f5d1",
+        "response.md": "ac2a844ff1b0c443b1cced563fd30541a077154e407d6693bc23aa8c4e3a9e1c",
+        "tender.txt": "49913e9e9f8db067137928908f9f0df6acda15a1662fd678970aaefcdab06c26"
+      },
+      "output_sha": {
+        "虚构核验R03-edge-positive-投标响应检查.xlsx": "14a203143f5074bde0e33bc95f8248e6ae2318bb2b8ffb39056502c41197c657",
+        "虚构核验R03-edge-positive-提交前核对清单.md": "c3f3cc78740baacf7e3916896c17fd0d043891abf550c8453e2212623b4ca250"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": "certificate.txt:1",
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "已覆盖（文本层面）",
+          "附件实际提供状态": "已提供（可读文本）",
+          "内容支持状态": "支持（文本层面）",
+          "缺口": null,
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "已覆盖（文本层面）",
+        "已提供（可读文本）",
+        "支持（文本层面）"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 278,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "certificate.txt",
+          "catalog.csv:2",
+          "certificate.txt",
+          "已提供（可读文本）",
+          "支持（文本层面）",
+          "certificate.txt:1",
+          "文本支持不认证真伪"
+        ]
+      ],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R04-issued-only",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R04-issued-only\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R04-issued-only\\out",
+        "--project",
+        "虚构核验R04-issued-only",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R04-issued-only\\response.md",
+        "--evidence-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R04-issued-only\\certificate.txt",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R04-issued-only\\catalog.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R04-issued-only",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R04-issued-only-投标响应检查.xlsx 虚构核验R04-issued-only-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.csv": "c9cdc08af8a80221b7bd36274f83773434c011a9189ab6a6c078cd3cea4b7e13",
+        "certificate.txt": "58832173a34343e75ea0026ad6e6aea33fb05737d3a987c6278570fae7e824aa",
+        "response.md": "ac2a844ff1b0c443b1cced563fd30541a077154e407d6693bc23aa8c4e3a9e1c",
+        "tender.txt": "49913e9e9f8db067137928908f9f0df6acda15a1662fd678970aaefcdab06c26"
+      },
+      "output_sha": {
+        "虚构核验R04-issued-only-投标响应检查.xlsx": "1b50433d3ecb18c8d19a1284c76e1f489c95453558f0572e48859690551d2e87",
+        "虚构核验R04-issued-only-提交前核对清单.md": "7f6fd00914cf39a3caa7aabfedb8471b2673c1a17aaec8c8508a9554ead5c246"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": "certificate.txt:1",
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "待确认",
+          "附件实际提供状态": "已提供（可读文本）",
+          "内容支持状态": "待确认",
+          "缺口": null,
+          "建议": "certificate.txt:1 缺有效起止或期限；签发日期不可作为生效日期"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "待确认",
+        "已提供（可读文本）",
+        "待确认"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 301,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "certificate.txt",
+          "catalog.csv:2",
+          "certificate.txt",
+          "已提供（可读文本）",
+          "待确认",
+          "certificate.txt:1",
+          "文本支持不认证真伪"
+        ]
+      ],
+      "pending_rows": [
+        [
+          "1:1:1",
+          "certificate.txt:1 缺有效起止或期限；签发日期不可作为生效日期",
+          "tender.txt:1",
+          "回源文件及材料原件确认",
+          "条件/附件/内容/版本"
+        ]
+      ],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R05-two-certificates",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R05-two-certificates\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R05-two-certificates\\out",
+        "--project",
+        "虚构核验R05-two-certificates",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R05-two-certificates\\response.md",
+        "--evidence-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R05-two-certificates\\certificate.txt",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R05-two-certificates\\catalog.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R05-two-certificates",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R05-two-certificates-投标响应检查.xlsx 虚构核验R05-two-certificates-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.csv": "c9cdc08af8a80221b7bd36274f83773434c011a9189ab6a6c078cd3cea4b7e13",
+        "certificate.txt": "fb243ecbc54893f02c468ae646d84483f5b58ea7e6be30835d60e32cc6a93aa0",
+        "response.md": "be00b6823a8acfbcc9cafab7748ea56ffab78d5e83800f61ed7bff756f6a1ec7",
+        "tender.txt": "5187b702b5ce1d13069b0606e279230e67fb9b5bc6e3891c28432e1fbdc267b3"
+      },
+      "output_sha": {
+        "虚构核验R05-two-certificates-投标响应检查.xlsx": "b531b24d91c2a63b8e5f4c76c619cf5b354cda8dbb63b05cf9baf788c944a720",
+        "虚构核验R05-two-certificates-提交前核对清单.md": "d600a35021f2a9dd70cf48153de119e7b9b8cdd9c33bcf75f845606b3dc34e92"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": "certificate.txt:2",
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "已提供（可读文本）",
+          "内容支持状态": "不支持（文本层面）",
+          "缺口": "明确条件未获得完整文本支持：甲类资质须有效覆盖2028-01-01至2028-12-31、附甲类证明 certificate.txt；材料 certificate.txt:2 有效截止 2027-12-31 早于要求 2028-12-31；需补正或人工核验",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "可能不充分",
+        "已提供（可读文本）",
+        "不支持（文本层面）"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 623,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "certificate.txt",
+          "catalog.csv:2",
+          "certificate.txt",
+          "已提供（可读文本）",
+          "不支持（文本层面）",
+          "certificate.txt:2",
+          "文本支持不认证真伪"
+        ]
+      ],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R06-shift",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R06-shift\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R06-shift\\out",
+        "--project",
+        "虚构核验R06-shift",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R06-shift\\response.md",
+        "--evidence-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R06-shift\\certificate.txt",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R06-shift\\catalog.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R06-shift",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R06-shift-投标响应检查.xlsx 虚构核验R06-shift-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.csv": "c9cdc08af8a80221b7bd36274f83773434c011a9189ab6a6c078cd3cea4b7e13",
+        "certificate.txt": "74710a704a9403f46218ed9baba41ab79f0dac08b7eaa322726671fa0d80707a",
+        "response.md": "be00b6823a8acfbcc9cafab7748ea56ffab78d5e83800f61ed7bff756f6a1ec7",
+        "tender.txt": "da0ba9fcf46e2ad9c2bedc15a05ccf57df772085c95b3688e6741161404e0ce0"
+      },
+      "output_sha": {
+        "虚构核验R06-shift-投标响应检查.xlsx": "f7655017a9651aca8bc3a3b1c5f77cc99e2cc9e7df0eb7455e2943f63cf041a1",
+        "虚构核验R06-shift-提交前核对清单.md": "dacedf04a4af1abe12a7d2ae11a85ce03e523e31abc84ea3e0e9fc1b0ee6764f"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": "certificate.txt:1",
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "已提供（可读文本）",
+          "内容支持状态": "不支持（文本层面）",
+          "缺口": "明确条件未获得完整文本支持：甲类资质须有效覆盖2033-01-01至2033-12-31、附甲类证明 certificate.txt；材料 certificate.txt:1 有效截止 2032-12-31 早于要求 2033-12-31；需补正或人工核验",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "可能不充分",
+        "已提供（可读文本）",
+        "不支持（文本层面）"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 612,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "certificate.txt",
+          "catalog.csv:2",
+          "certificate.txt",
+          "已提供（可读文本）",
+          "不支持（文本层面）",
+          "certificate.txt:1",
+          "文本支持不认证真伪"
+        ]
+      ],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R07-ambiguous-year",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R07-ambiguous-year\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R07-ambiguous-year\\out",
+        "--project",
+        "虚构核验R07-ambiguous-year",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R07-ambiguous-year\\response.md",
+        "--evidence-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R07-ambiguous-year\\certificate.txt",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R07-ambiguous-year\\catalog.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R07-ambiguous-year",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R07-ambiguous-year-投标响应检查.xlsx 虚构核验R07-ambiguous-year-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.csv": "c9cdc08af8a80221b7bd36274f83773434c011a9189ab6a6c078cd3cea4b7e13",
+        "certificate.txt": "7400ee1acf640915649cf3360f3bccc5f6fb825bba5a61ed4997e9a9ce8ac76f",
+        "response.md": "c34d20793cac03f9bf76c0ccd9c9e87a31ce5e04a054c85da2717a2c62ee0e03",
+        "tender.txt": "c99855d51406b79089e91213e4156fe828144ba680f7b5bcfcf663e8ec71243c"
+      },
+      "output_sha": {
+        "虚构核验R07-ambiguous-year-投标响应检查.xlsx": "71e85c1d3bcee4fdc9ee2b7435eec87a86dbe2033cd5ee0309bfdb28477f4b8d",
+        "虚构核验R07-ambiguous-year-提交前核对清单.md": "bc62e1c84442e6aea20af15e828e449ea1cf6e46c750facc32380e7892b25c60"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": "certificate.txt:1",
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "待确认",
+          "附件实际提供状态": "已提供（可读文本）",
+          "内容支持状态": "待确认",
+          "缺口": null,
+          "建议": "招标年份未明示全年边界，须确认目标起止日"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "待确认",
+        "已提供（可读文本）",
+        "待确认"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 285,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "certificate.txt",
+          "catalog.csv:2",
+          "certificate.txt",
+          "已提供（可读文本）",
+          "待确认",
+          "certificate.txt:1",
+          "文本支持不认证真伪"
+        ]
+      ],
+      "pending_rows": [
+        [
+          "1:1:1",
+          "招标年份未明示全年边界，须确认目标起止日",
+          "tender.txt:1",
+          "回源文件及材料原件确认",
+          "条件/附件/内容/版本"
+        ]
+      ],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R08-no-backup",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R08-no-backup\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R08-no-backup\\out",
+        "--project",
+        "虚构核验R08-no-backup",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R08-no-backup\\response.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R08-no-backup",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R08-no-backup-投标响应检查.xlsx 虚构核验R08-no-backup-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "response.md": "9a7e9115a688f7ed609e62f5883b8d820a8fae8d001c94490bec6af3d7754be0",
+        "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea"
+      },
+      "output_sha": {
+        "虚构核验R08-no-backup-投标响应检查.xlsx": "07e259389f31139abfda2a7c20601b1f6686255f7270ef93b4fd4c0a426dccfb",
+        "虚构核验R08-no-backup-提交前核对清单.md": "bd59576b1ae89e7ef727c31829906f704fe87aac53b3954823f401ecee71cf43"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "不适用",
+          "内容支持状态": "不适用",
+          "缺口": "明确条件未获得完整文本支持：必须支持自动备份；回应肯否与招标义务冲突",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "可能不充分",
+        "不适用",
+        "不适用"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 349,
+      "attachment_rows": [],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R09-yes-backup",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R09-yes-backup\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R09-yes-backup\\out",
+        "--project",
+        "虚构核验R09-yes-backup",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R09-yes-backup\\response.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R09-yes-backup",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R09-yes-backup-投标响应检查.xlsx 虚构核验R09-yes-backup-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "response.md": "a32fdf3954a764107646239795e2cf49ef49ff73e9350702e064efdb6319d83d",
+        "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea"
+      },
+      "output_sha": {
+        "虚构核验R09-yes-backup-投标响应检查.xlsx": "aafd51d4b7572045c86f9841acc3aa15cb7e92a7c46e1e8e2cff076e60e5b156",
+        "虚构核验R09-yes-backup-提交前核对清单.md": "0404fd5429e864007b2c5ce250cab4cb4e85b4f942524513ec9d87b548f55868"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "已覆盖（文本层面）",
+          "附件实际提供状态": "不适用",
+          "内容支持状态": "不适用",
+          "缺口": null,
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "已覆盖（文本层面）",
+        "不适用",
+        "不适用"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 243,
+      "attachment_rows": [],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R10-neg-neg",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R10-neg-neg\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R10-neg-neg\\out",
+        "--project",
+        "虚构核验R10-neg-neg",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R10-neg-neg\\response.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R10-neg-neg",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R10-neg-neg-投标响应检查.xlsx 虚构核验R10-neg-neg-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "response.md": "aeb9227cb9c6f4f98379fa568a34b6d5ee6795b25a0f19add2dc070123bacbdb",
+        "tender.txt": "f7eb0caeda12f38928dc66db2e5a5265b2c81dfbc9b93f12a7cc111d46f0c445"
+      },
+      "output_sha": {
+        "虚构核验R10-neg-neg-投标响应检查.xlsx": "85230e3f0196822fa394392958b8e28e08078e780f502c806976a770e9275a7c",
+        "虚构核验R10-neg-neg-提交前核对清单.md": "c0c7fbc1e90636087dcb230e8df27cfd0f41439d3e698747d79b3ae91984a83b"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "已覆盖（文本层面）",
+          "附件实际提供状态": "不适用",
+          "内容支持状态": "不适用",
+          "缺口": null,
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "已覆盖（文本层面）",
+        "不适用",
+        "不适用"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 240,
+      "attachment_rows": [],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R11-conditional",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R11-conditional\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R11-conditional\\out",
+        "--project",
+        "虚构核验R11-conditional",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R11-conditional\\response.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R11-conditional",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R11-conditional-投标响应检查.xlsx 虚构核验R11-conditional-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "response.md": "bbf1f32f26159f0187f60e19cc041d0b8632fa583d14dfcc8fdef66d6547c54f",
+        "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea"
+      },
+      "output_sha": {
+        "虚构核验R11-conditional-投标响应检查.xlsx": "f2cce54c2031a7007c4494282c1cad192f689f35a5c530b337c6c7c7496da497",
+        "虚构核验R11-conditional-提交前核对清单.md": "830c2ad56de28a963b4b90911f506c44001e395b5ac2ef7b3a5562d87a9bcf6b"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "不适用",
+          "内容支持状态": "不适用",
+          "缺口": "明确条件未获得完整文本支持：必须支持自动备份；回应附带前提或尚未实现，不能证明无条件义务",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "可能不充分",
+        "不适用",
+        "不适用"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 361,
+      "attachment_rows": [],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R11-not-implemented",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R11-not-implemented\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R11-not-implemented\\out",
+        "--project",
+        "虚构核验R11-not-implemented",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R11-not-implemented\\response.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R11-not-implemented",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R11-not-implemented-投标响应检查.xlsx 虚构核验R11-not-implemented-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "response.md": "b222a8305ca8981d773466a7b948f17fdae1d7c362a63661de2e252269c1252c",
+        "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea"
+      },
+      "output_sha": {
+        "虚构核验R11-not-implemented-投标响应检查.xlsx": "968fc3ff56cf405b77487fac5cf173b5c5a6d7853a183212042cb97e1242ed7b",
+        "虚构核验R11-not-implemented-提交前核对清单.md": "595738c340d2e04c2b10f6f401ed411b1e42caf30cfbb1461c3def0c2b2174a6"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "不适用",
+          "内容支持状态": "不适用",
+          "缺口": "明确条件未获得完整文本支持：必须支持自动备份；回应附带前提或尚未实现，不能证明无条件义务",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "可能不充分",
+        "不适用",
+        "不适用"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 365,
+      "attachment_rows": [],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R12-scope",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R12-scope\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R12-scope\\out",
+        "--project",
+        "虚构核验R12-scope",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R12-scope\\response.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R12-scope",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R12-scope-投标响应检查.xlsx 虚构核验R12-scope-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "response.md": "81502171258e54792d2b420892ec3341b6fa63510fc97ca3130e9bdd7bcdbd85",
+        "tender.txt": "24b4aebd34a606dcb39767c31d64480e85f91708fc3e683f22c6c9322cf59cc1"
+      },
+      "output_sha": {
+        "虚构核验R12-scope-投标响应检查.xlsx": "d9f2aab7cce88e89f7e1ca2183b34907a02e540012f35192951837d095e8959d",
+        "虚构核验R12-scope-提交前核对清单.md": "949b446e9c7dcbaf5f30885d5fb9cd711f26e8e8ed3d6109ed4753291f7c5f5b"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "不适用",
+          "内容支持状态": "不适用",
+          "缺口": "明确条件未获得完整文本支持：必须支持备份；回应肯否与招标义务冲突",
+          "建议": "按源文件行核对，不能推断投标结果"
+        },
+        {
+          "唯一ID": "1:2:2",
+          "来源": "tender.txt:2",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "已覆盖（文本层面）",
+          "附件实际提供状态": "不适用",
+          "内容支持状态": "不适用",
+          "缺口": null,
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        [
+          "已定位",
+          "可能不充分",
+          "不适用",
+          "不适用"
+        ],
+        [
+          "已定位",
+          "已覆盖（文本层面）",
+          "不适用",
+          "不适用"
+        ]
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 425,
+      "attachment_rows": [],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R13-license-missing",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R13-license-missing\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R13-license-missing\\out",
+        "--project",
+        "虚构核验R13-license-missing",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R13-license-missing\\response.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R13-license-missing",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R13-license-missing-投标响应检查.xlsx 虚构核验R13-license-missing-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "response.md": "c53ac4d9b7d646034e7568f0c02431a293bff2d550063d9311bc410d62aad7ea",
+        "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f"
+      },
+      "output_sha": {
+        "虚构核验R13-license-missing-投标响应检查.xlsx": "84197a1fb556d4a2b0b8c171c6bca221972a7143dec23a7773a62531e976a3e3",
+        "虚构核验R13-license-missing-提交前核对清单.md": "0829ffb8ddb33b0a29221c66449feb67d9cfabc9a132cf977c6f02d16d45884e"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "未提供（限已提供材料）",
+          "内容支持状态": "未核验",
+          "缺口": "明确条件未获得完整文本支持：1. 必须提供营业执照。；要求 营业执照；在已提供材料中未找到实际文件，需补交或明确关联",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "可能不充分",
+        "未提供（限已提供材料）",
+        "未核验"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 477,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "营业执照",
+          null,
+          null,
+          "未提供（限已提供材料）",
+          "未核验",
+          null,
+          "要求 tender.txt:1；仅限已提供材料，正文未核验"
+        ]
+      ],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R14-catalog-csv",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R14-catalog-csv\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R14-catalog-csv\\out",
+        "--project",
+        "虚构核验R14-catalog-csv",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R14-catalog-csv\\response.md",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R14-catalog-csv\\catalog.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R14-catalog-csv",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R14-catalog-csv-投标响应检查.xlsx 虚构核验R14-catalog-csv-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.csv": "120aa8a0f797dffe21c55cb8b6d70d732fb37e5e2fc3c8de02660f6513deaca5",
+        "response.md": "c53ac4d9b7d646034e7568f0c02431a293bff2d550063d9311bc410d62aad7ea",
+        "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f"
+      },
+      "output_sha": {
+        "虚构核验R14-catalog-csv-投标响应检查.xlsx": "61fbb97c8d9d3fcb4df9d5fb7c9b00ffa0549340093b17b2adfd3ec48d4cb847",
+        "虚构核验R14-catalog-csv-提交前核对清单.md": "c718f1bd3df7c10b9dcd1a3871a6840233bda48124e876c57a317b82ec60387f"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "仅目录登记",
+          "内容支持状态": "未核验",
+          "缺口": "明确条件未获得完整文本支持：1. 必须提供营业执照。；附件仅目录登记，需补实际材料并核内容",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "可能不充分",
+        "仅目录登记",
+        "未核验"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 442,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "营业执照.txt",
+          "catalog.csv:2",
+          null,
+          "仅目录登记",
+          "未核验",
+          null,
+          "仅目录不证明文件存在"
+        ]
+      ],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R14-catalog-xlsx",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R14-catalog-xlsx\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R14-catalog-xlsx\\out",
+        "--project",
+        "虚构核验R14-catalog-xlsx",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R14-catalog-xlsx\\response.md",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R14-catalog-xlsx\\catalog.xlsx"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R14-catalog-xlsx",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R14-catalog-xlsx-投标响应检查.xlsx 虚构核验R14-catalog-xlsx-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.xlsx": "5ebdd9768eb9a51b28036bc538754aa719e646d91300bbdcad2dbf895a48ec2e",
+        "response.md": "c53ac4d9b7d646034e7568f0c02431a293bff2d550063d9311bc410d62aad7ea",
+        "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f"
+      },
+      "output_sha": {
+        "虚构核验R14-catalog-xlsx-投标响应检查.xlsx": "e4dc8a1fdd9085e1d905c046f451bac161f6890a1845ea0982de184c5aa2ea57",
+        "虚构核验R14-catalog-xlsx-提交前核对清单.md": "dd61b104c61c0d62f299b5d7f5b060fb3beeccceaed57ff4aabfb08c0b240565"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "仅目录登记",
+          "内容支持状态": "未核验",
+          "缺口": "明确条件未获得完整文本支持：1. 必须提供营业执照。；附件仅目录登记，需补实际材料并核内容",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "可能不充分",
+        "仅目录登记",
+        "未核验"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 443,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "营业执照.txt",
+          "catalog.xlsx/Sheet:2",
+          null,
+          "仅目录登记",
+          "未核验",
+          null,
+          "仅目录不证明文件存在"
+        ]
+      ],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R15-license-negative",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R15-license-negative\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R15-license-negative\\out",
+        "--project",
+        "虚构核验R15-license-negative",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R15-license-negative\\response.md",
+        "--evidence-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R15-license-negative\\营业执照.txt",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R15-license-negative\\catalog.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R15-license-negative",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R15-license-negative-投标响应检查.xlsx 虚构核验R15-license-negative-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.csv": "120aa8a0f797dffe21c55cb8b6d70d732fb37e5e2fc3c8de02660f6513deaca5",
+        "response.md": "c53ac4d9b7d646034e7568f0c02431a293bff2d550063d9311bc410d62aad7ea",
+        "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f",
+        "营业执照.txt": "dcd4f3ae2113dadd499e4a58c480ef678a732b50ca1080dd7e2c5b397a912379"
+      },
+      "output_sha": {
+        "虚构核验R15-license-negative-投标响应检查.xlsx": "d76e1d1846f23b12388e7e401f9407c41d7bdb4d3f4c0c86c3b6a7ba5cbda7d4",
+        "虚构核验R15-license-negative-提交前核对清单.md": "2168f11edd34313c548f8ac1e639bf671d6d384b84e1af06778f6f5582a0b5ff"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": "营业执照.txt:1",
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "已提供（可读文本）",
+          "内容支持状态": "不支持（文本层面）",
+          "缺口": "明确条件未获得完整文本支持：1. 必须提供营业执照。；材料 营业执照.txt:1 明确否认已具备/有效证明；需补正或人工核验",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "可能不充分",
+        "已提供（可读文本）",
+        "不支持（文本层面）"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 536,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "营业执照.txt",
+          "catalog.csv:2",
+          "营业执照.txt",
+          "已提供（可读文本）",
+          "不支持（文本层面）",
+          "营业执照.txt:1",
+          "文本支持不认证真伪"
+        ]
+      ],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R16-license-positive",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R16-license-positive\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R16-license-positive\\out",
+        "--project",
+        "虚构核验R16-license-positive",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R16-license-positive\\response.md",
+        "--evidence-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R16-license-positive\\营业执照.txt",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R16-license-positive\\catalog.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R16-license-positive",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R16-license-positive-投标响应检查.xlsx 虚构核验R16-license-positive-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.csv": "120aa8a0f797dffe21c55cb8b6d70d732fb37e5e2fc3c8de02660f6513deaca5",
+        "response.md": "c53ac4d9b7d646034e7568f0c02431a293bff2d550063d9311bc410d62aad7ea",
+        "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f",
+        "营业执照.txt": "a4f1631bf7dcbe2e2121aa841ab9fddc9f2d21aeedba067f1ec806fad8349cb2"
+      },
+      "output_sha": {
+        "虚构核验R16-license-positive-投标响应检查.xlsx": "d7d9d6d6185140522788507987bdd48ba0360cba621aab99a35e160d2713819d",
+        "虚构核验R16-license-positive-提交前核对清单.md": "c63abd69dbdcca547a7bef51f7d45bd5ea4df3a75f46a5e088d0204af250a275"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": "营业执照.txt:1",
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "已覆盖（文本层面）",
+          "附件实际提供状态": "已提供（可读文本）",
+          "内容支持状态": "支持（文本层面）",
+          "缺口": null,
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "已覆盖（文本层面）",
+        "已提供（可读文本）",
+        "支持（文本层面）"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 274,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "营业执照.txt",
+          "catalog.csv:2",
+          "营业执照.txt",
+          "已提供（可读文本）",
+          "支持（文本层面）",
+          "营业执照.txt:1",
+          "文本支持不认证真伪"
+        ]
+      ],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R16-duplicate",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R16-duplicate\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R16-duplicate\\out",
+        "--project",
+        "虚构核验R16-duplicate",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R16-duplicate\\response.md",
+        "--evidence-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R16-duplicate\\营业执照.txt",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R16-duplicate\\catalog.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R16-duplicate",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R16-duplicate-投标响应检查.xlsx 虚构核验R16-duplicate-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.csv": "8bd2edfee31b62d50e96e060c4a3e612274ecd3c2cd82779acdb7e4fd9e4ef85",
+        "response.md": "c53ac4d9b7d646034e7568f0c02431a293bff2d550063d9311bc410d62aad7ea",
+        "tender.txt": "e15882d7f3447a02d456f4f078005fc5a4146b83cfbbdba4ca9077455bb1a00f",
+        "营业执照.txt": "990e7521ada2e80d29c244e9ede50ccf17d47e3ea1481cdabe36a8dc2d6a597a"
+      },
+      "output_sha": {
+        "虚构核验R16-duplicate-投标响应检查.xlsx": "558cc47421986e381f16ad29c55d4f6eeb785068a1fe0bce2b6bf0b0bf0783fd",
+        "虚构核验R16-duplicate-提交前核对清单.md": "5afcc06f51f91781b98380b2f71a8866f4c6a680b3d19e29ef04397051458202"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "已覆盖（文本层面）",
+          "附件实际提供状态": "待确认",
+          "内容支持状态": "待确认",
+          "缺口": null,
+          "建议": "材料候选重复、编号冲突或响应配对歧义；逐一核对文件与要求关联"
+        }
+      ],
+      "expected": [
+        "已定位",
+        null,
+        "待确认",
+        "待确认"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 269,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "营业执照.txt",
+          "catalog.csv:2",
+          null,
+          "待确认",
+          "待确认",
+          null,
+          "仅目录不证明文件存在"
+        ],
+        [
+          "1:1:1",
+          "营业执照.txt",
+          "catalog.csv:3",
+          null,
+          "待确认",
+          "待确认",
+          null,
+          "仅目录不证明文件存在"
+        ]
+      ],
+      "pending_rows": [
+        [
+          "1:1:1",
+          "材料候选重复、编号冲突或响应配对歧义；逐一核对文件与要求关联",
+          "tender.txt:1",
+          "回源文件及材料原件确认",
+          "条件/附件/内容/版本"
+        ]
+      ],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R17-empty-conditions",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R17-empty-conditions\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R17-empty-conditions\\out",
+        "--project",
+        "虚构核验R17-empty-conditions",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R17-empty-conditions\\response.md",
+        "--evidence-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R17-empty-conditions\\certificate.txt",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R17-empty-conditions\\catalog.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R17-empty-conditions",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R17-empty-conditions-投标响应检查.xlsx 虚构核验R17-empty-conditions-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.csv": "c9cdc08af8a80221b7bd36274f83773434c011a9189ab6a6c078cd3cea4b7e13",
+        "certificate.txt": "9dd5e8073034b93fd2e099a5f61ff42adeaaeacdc982894a630ab8e2bdc8e29b",
+        "response.md": "4b49aef3305aa23e23550cb6e9bb597fb7b34ce30e76f61911bfab0b32d8a1d2",
+        "tender.txt": "e9b4e631e301ed1f617fee9dbd97fdb10842ecffa09b2a90a29f06e51cef544e"
+      },
+      "output_sha": {
+        "虚构核验R17-empty-conditions-投标响应检查.xlsx": "cf4a8e1f2e04eeacf23b865285498eb1ddcf5f974b5c5a1ba48f5b441a168c33",
+        "虚构核验R17-empty-conditions-提交前核对清单.md": "0770dfc8b1b2e84c92592fea37240d0f189a97213ed61a69376ae746efa0d31f"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": "certificate.txt:1",
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "已提供（可读文本）",
+          "内容支持状态": "不支持（文本层面）",
+          "缺口": "明确条件未获得完整文本支持：须提供certificate.txt资质证明；材料 certificate.txt:1 明确否认已具备/有效证明；需补正或人工核验",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "可能不充分",
+        "已提供（可读文本）",
+        "不支持（文本层面）"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 574,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "certificate.txt",
+          "catalog.csv:2",
+          "certificate.txt",
+          "已提供（可读文本）",
+          "不支持（文本层面）",
+          "certificate.txt:1",
+          "文本支持不认证真伪"
+        ]
+      ],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R18-no-catalog",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R18-no-catalog\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R18-no-catalog\\out",
+        "--project",
+        "虚构核验R18-no-catalog",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R18-no-catalog\\response.md",
+        "--evidence-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R18-no-catalog\\certificate.txt"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R18-no-catalog",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R18-no-catalog-投标响应检查.xlsx 虚构核验R18-no-catalog-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "certificate.txt": "9dd5e8073034b93fd2e099a5f61ff42adeaaeacdc982894a630ab8e2bdc8e29b",
+        "response.md": "4b49aef3305aa23e23550cb6e9bb597fb7b34ce30e76f61911bfab0b32d8a1d2",
+        "tender.txt": "e9b4e631e301ed1f617fee9dbd97fdb10842ecffa09b2a90a29f06e51cef544e"
+      },
+      "output_sha": {
+        "虚构核验R18-no-catalog-投标响应检查.xlsx": "3590d861419b046b9e4ecee6a437de89e7b1ba946f9d4fb9d3cf1448ee6f56cf",
+        "虚构核验R18-no-catalog-提交前核对清单.md": "26b1c66247ec82c144f807ce8e723a05f5aafb233092549303c117f2e4ae32e2"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "未提供（限已提供材料）",
+          "内容支持状态": "未核验",
+          "缺口": "明确条件未获得完整文本支持：须提供certificate.txt资质证明；要求 txt资质证明；在已提供材料中未找到实际文件，需补交或明确关联",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        null,
+        null,
+        null
+      ],
+      "issues": [
+        "explicit uniquely named evidence submitted but falsely reported not provided"
+      ],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 485,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "txt资质证明",
+          null,
+          null,
+          "未提供（限已提供材料）",
+          "未核验",
+          null,
+          "要求 tender.txt:1；仅限已提供材料，正文未核验"
+        ]
+      ],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R19-before",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R19-before\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R19-before\\out",
+        "--project",
+        "虚构核验R19-before",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R19-before\\response.md",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R19-before\\catalog.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R19-before",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R19-before-投标响应检查.xlsx 虚构核验R19-before-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.csv": "17db97e18bcf7fcc64a639d94a311e4528e3e053903291a8240abb09b26ee214",
+        "response.md": "874ba128515d094c46697b46772fecf82471dcc420c7735f667b95868961f2fb",
+        "tender.txt": "42b4bb00e61589066ff72cd25ba2fb53969b1d846856fc9d3015afc245b1bdf7"
+      },
+      "output_sha": {
+        "虚构核验R19-before-投标响应检查.xlsx": "91b178660e1a0cf34dde59616bd79550d5c9739d094668515923337a60de2deb",
+        "虚构核验R19-before-提交前核对清单.md": "55af5f3ce6c3b66110879b41c3e9c07ab2c425933c4b4d22edbeba7bf9c66ce5"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "仅目录登记",
+          "内容支持状态": "未核验",
+          "缺口": "明确条件未获得完整文本支持：必须提供甲类资质证明；附件仅目录登记，需补实际材料并核内容",
+          "建议": "按源文件行核对，不能推断投标结果"
+        },
+        {
+          "唯一ID": "1:2:2",
+          "来源": "tender.txt:2",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "仅目录登记",
+          "内容支持状态": "未核验",
+          "缺口": "明确条件未获得完整文本支持：必须提供乙类资质证明；附件仅目录登记，需补实际材料并核内容",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        [
+          "已定位",
+          "可能不充分",
+          "仅目录登记",
+          "未核验"
+        ],
+        [
+          "已定位",
+          "可能不充分",
+          "仅目录登记",
+          "未核验"
+        ]
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 803,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "甲类.txt",
+          "catalog.csv:2",
+          null,
+          "仅目录登记",
+          "未核验",
+          null,
+          "仅目录不证明文件存在"
+        ],
+        [
+          "1:2:2",
+          "乙类.txt",
+          "catalog.csv:3",
+          null,
+          "仅目录登记",
+          "未核验",
+          null,
+          "仅目录不证明文件存在"
+        ]
+      ],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "R19-after",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R19-after\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R19-after\\out",
+        "--project",
+        "虚构核验R19-after",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R19-after\\response.md",
+        "--evidence-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R19-after\\甲类.txt",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R19-after\\catalog.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\R19-after",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验R19-after-投标响应检查.xlsx 虚构核验R19-after-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.csv": "17db97e18bcf7fcc64a639d94a311e4528e3e053903291a8240abb09b26ee214",
+        "response.md": "874ba128515d094c46697b46772fecf82471dcc420c7735f667b95868961f2fb",
+        "tender.txt": "42b4bb00e61589066ff72cd25ba2fb53969b1d846856fc9d3015afc245b1bdf7",
+        "甲类.txt": "2d3c35d35b48b98e5a44159080a2cd3a7479d37559f60323e788c8902ae9ace9"
+      },
+      "output_sha": {
+        "虚构核验R19-after-投标响应检查.xlsx": "97334e8b7504c0a94ed7377aaaac63e8b3637726fd9f8e5a90b1c6c04a448384",
+        "虚构核验R19-after-提交前核对清单.md": "89625f163fd8b9fe3eef6709408b5843734c69c1b2037b3a5355935badf92e6d"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": "甲类.txt:1",
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "已提供（可读文本）",
+          "内容支持状态": "支持（文本层面）",
+          "缺口": "明确条件未获得完整文本支持：必须提供甲类资质证明",
+          "建议": "按源文件行核对，不能推断投标结果"
+        },
+        {
+          "唯一ID": "1:2:2",
+          "来源": "tender.txt:2",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "仅目录登记",
+          "内容支持状态": "未核验",
+          "缺口": "明确条件未获得完整文本支持：必须提供乙类资质证明；附件仅目录登记，需补实际材料并核内容",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        [
+          null,
+          null,
+          "已提供（可读文本）",
+          "支持（文本层面）"
+        ],
+        [
+          "已定位",
+          "可能不充分",
+          "仅目录登记",
+          "未核验"
+        ]
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 734,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "甲类.txt",
+          "catalog.csv:2",
+          "甲类.txt",
+          "已提供（可读文本）",
+          "支持（文本层面）",
+          "甲类.txt:1",
+          "文本支持不认证真伪"
+        ],
+        [
+          "1:2:2",
+          "乙类.txt",
+          "catalog.csv:3",
+          null,
+          "仅目录登记",
+          "未核验",
+          null,
+          "仅目录不证明文件存在"
+        ]
+      ],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "V01-shift-object",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V01-shift-object\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V01-shift-object\\out",
+        "--project",
+        "虚构核验V01-shift-object",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V01-shift-object\\response.md",
+        "--evidence-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V01-shift-object\\license-note.txt",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V01-shift-object\\catalog.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V01-shift-object",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验V01-shift-object-投标响应检查.xlsx 虚构核验V01-shift-object-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.csv": "94783aeb25ec24220e5f4236ce3e0873ce7aeb529020698f9b3e72026555316e",
+        "license-note.txt": "4085195bd17f0b0103ca96ef73465148c3bcee7edd053701b49fd95e1de4befb",
+        "response.md": "91f19b3e75cc2cca21507099d285cf9077f3202ac3f0b1fe9771374030a3806f",
+        "tender.txt": "061bbb6728cbcf21d78cceff77d467ddd4ea11f1b6c609116f1896d592ad28cf"
+      },
+      "output_sha": {
+        "虚构核验V01-shift-object-投标响应检查.xlsx": "119e94811b9bf1f2bdeb12e3164d656134715ad9d181cdf3d601caba5220a55c",
+        "虚构核验V01-shift-object-提交前核对清单.md": "4f7c602f9858251599fd896a94b888c9b1764a1db7421ea745799794302eeb3b"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": "license-note.txt:1",
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "已提供（可读文本）",
+          "内容支持状态": "不支持（文本层面）",
+          "缺口": "明确条件未获得完整文本支持：丙类资质应覆盖2041-05-17至2042-05-16、附丙类证明 license-note.txt；材料 license-note.txt:1 有效截止 2042-05-15 早于要求 2042-05-16；需补正或人工核验",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "可能不充分",
+        "已提供（可读文本）",
+        "不支持（文本层面）"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 622,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "license-note.txt",
+          "catalog.csv:2",
+          "license-note.txt",
+          "已提供（可读文本）",
+          "不支持（文本层面）",
+          "license-note.txt:1",
+          "文本支持不认证真伪"
+        ]
+      ],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "V02-shift-boundary",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V02-shift-boundary\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V02-shift-boundary\\out",
+        "--project",
+        "虚构核验V02-shift-boundary",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V02-shift-boundary\\response.md",
+        "--evidence-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V02-shift-boundary\\license-note.txt",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V02-shift-boundary\\catalog.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V02-shift-boundary",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验V02-shift-boundary-投标响应检查.xlsx 虚构核验V02-shift-boundary-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.csv": "94783aeb25ec24220e5f4236ce3e0873ce7aeb529020698f9b3e72026555316e",
+        "license-note.txt": "c0b508b3493c1675c5f1ef898988f5a04cd6940988956416645bcd3c8477b0f4",
+        "response.md": "91f19b3e75cc2cca21507099d285cf9077f3202ac3f0b1fe9771374030a3806f",
+        "tender.txt": "061bbb6728cbcf21d78cceff77d467ddd4ea11f1b6c609116f1896d592ad28cf"
+      },
+      "output_sha": {
+        "虚构核验V02-shift-boundary-投标响应检查.xlsx": "d814ce0559b10b919ee87d17154c988e585c3592cc01b1f20c460594216af08c",
+        "虚构核验V02-shift-boundary-提交前核对清单.md": "dd1b3f123e0cf2cb11d5a3e60a1da3fae0f358e630428788c5959b03e0aafe6d"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": "license-note.txt:1",
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "已覆盖（文本层面）",
+          "附件实际提供状态": "已提供（可读文本）",
+          "内容支持状态": "支持（文本层面）",
+          "缺口": null,
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "已覆盖（文本层面）",
+        "已提供（可读文本）",
+        "支持（文本层面）"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 280,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "license-note.txt",
+          "catalog.csv:2",
+          "license-note.txt",
+          "已提供（可读文本）",
+          "支持（文本层面）",
+          "license-note.txt:1",
+          "文本支持不认证真伪"
+        ]
+      ],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "V03-cross-negation",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V03-cross-negation\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V03-cross-negation\\out",
+        "--project",
+        "虚构核验V03-cross-negation",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V03-cross-negation\\response.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V03-cross-negation",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验V03-cross-negation-投标响应检查.xlsx 虚构核验V03-cross-negation-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "response.md": "1d011efff379f498991ed0891493e545380dc0e2dd9afbbde7eb1c075c9f45f8",
+        "tender.txt": "f7eb0caeda12f38928dc66db2e5a5265b2c81dfbc9b93f12a7cc111d46f0c445"
+      },
+      "output_sha": {
+        "虚构核验V03-cross-negation-投标响应检查.xlsx": "8b7b1180abb321a7d12ee7701f11e3c53852121cb7fc8bc1503ce6f092262ecd",
+        "虚构核验V03-cross-negation-提交前核对清单.md": "041d6152ceebacaca3a72c1a4bb24dec3855a1e0caf12b6f513010f0f2b5d0c0"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "不适用",
+          "内容支持状态": "不适用",
+          "缺口": "明确条件未获得完整文本支持：不使用外部云存储；回应肯否与招标义务冲突",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "可能不充分",
+        "不适用",
+        "不适用"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 354,
+      "attachment_rows": [],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "V04-rephrase-no",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V04-rephrase-no\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V04-rephrase-no\\out",
+        "--project",
+        "虚构核验V04-rephrase-no",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V04-rephrase-no\\response.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V04-rephrase-no",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验V04-rephrase-no-投标响应检查.xlsx 虚构核验V04-rephrase-no-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "response.md": "57891c377466562b972c303285f1b1bc3fa0b7def0e64c92075b92692125fc40",
+        "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea"
+      },
+      "output_sha": {
+        "虚构核验V04-rephrase-no-投标响应检查.xlsx": "6045ec9305c31b96d6c3e0a7bf5c56f5f34306c64354d0036b47e4c341db0011",
+        "虚构核验V04-rephrase-no-提交前核对清单.md": "3ad0fc71db2a27567f62d4f7a921bba8206e7c4507cfad8482b8aebb1882352d"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "已覆盖（文本层面）",
+          "附件实际提供状态": "不适用",
+          "内容支持状态": "不适用",
+          "缺口": null,
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "可能不充分",
+        "不适用",
+        "不适用"
+      ],
+      "issues": [
+        "1:1:1 条件覆盖状态 expected 可能不充分 actual 已覆盖（文本层面）"
+      ],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 244,
+      "attachment_rows": [],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "V05-rephrase-promise",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V05-rephrase-promise\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V05-rephrase-promise\\out",
+        "--project",
+        "虚构核验V05-rephrase-promise",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V05-rephrase-promise\\response.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V05-rephrase-promise",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验V05-rephrase-promise-投标响应检查.xlsx 虚构核验V05-rephrase-promise-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "response.md": "6f42f0510dc9ca899ab50b6bb5b6485ce9a33b9d54eaa8b5f6470d128fe8271b",
+        "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea"
+      },
+      "output_sha": {
+        "虚构核验V05-rephrase-promise-投标响应检查.xlsx": "f145c71f32064185b13f4ecf10353403a20635697b595eb28ec80674abb7cb11",
+        "虚构核验V05-rephrase-promise-提交前核对清单.md": "3e8388f28ea8b23b707e97220136cf0fbcbc04324c828b48a434533e8d73016e"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "不适用",
+          "内容支持状态": "不适用",
+          "缺口": "明确条件未获得完整文本支持：必须支持自动备份；回应附带前提或尚未实现，不能证明无条件义务",
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "可能不充分",
+        "不适用",
+        "不适用"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 366,
+      "attachment_rows": [],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "V06-irrelevant",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V06-irrelevant\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V06-irrelevant\\out",
+        "--project",
+        "虚构核验V06-irrelevant",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V06-irrelevant\\response.md"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V06-irrelevant",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验V06-irrelevant-投标响应检查.xlsx 虚构核验V06-irrelevant-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "response.md": "9c9153c2e4bdc9158124b8924b46e684cfc056c9e852f07574ed8a10482c9df8",
+        "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea"
+      },
+      "output_sha": {
+        "虚构核验V06-irrelevant-投标响应检查.xlsx": "bfef5422be63134d46f57c57eb59df197b997ca5129048592cc9b62e3d773e35",
+        "虚构核验V06-irrelevant-提交前核对清单.md": "6a4a6d6cf1441aca1ef3493085decb9d521748bb71b142edcd65951bc1abcd2e"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "已覆盖（文本层面）",
+          "附件实际提供状态": "不适用",
+          "内容支持状态": "不适用",
+          "缺口": null,
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "可能不充分",
+        "不适用",
+        "不适用"
+      ],
+      "issues": [
+        "1:1:1 条件覆盖状态 expected 可能不充分 actual 已覆盖（文本层面）"
+      ],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 243,
+      "attachment_rows": [],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "V07-irrelevant-evidence",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V07-irrelevant-evidence\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V07-irrelevant-evidence\\out",
+        "--project",
+        "虚构核验V07-irrelevant-evidence",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V07-irrelevant-evidence\\response.md",
+        "--evidence-file",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V07-irrelevant-evidence\\certificate.txt",
+        "--attachment-catalog",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V07-irrelevant-evidence\\catalog.csv"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V07-irrelevant-evidence",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验V07-irrelevant-evidence-投标响应检查.xlsx 虚构核验V07-irrelevant-evidence-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "catalog.csv": "c9cdc08af8a80221b7bd36274f83773434c011a9189ab6a6c078cd3cea4b7e13",
+        "certificate.txt": "e2f24f45c023a529123f06b1ca065c5c5ceacdc43a0deffd97f6f3961e6a32bb",
+        "response.md": "ac2a844ff1b0c443b1cced563fd30541a077154e407d6693bc23aa8c4e3a9e1c",
+        "tender.txt": "cf6571333b3d139210f151fc5cc3fffecd7ae651bb10c9d32d9aece714fe889a"
+      },
+      "output_sha": {
+        "虚构核验V07-irrelevant-evidence-投标响应检查.xlsx": "ed531e5f3e3ae16e6de1c4ca78aa5a91be63067c1e2542645d65282ddc06d1cd",
+        "虚构核验V07-irrelevant-evidence-提交前核对清单.md": "50924988f6eb3f463c06cf96acf3ac1c3c8a8c33cd5421eda708caf5559ce452"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": "certificate.txt:1",
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "待确认",
+          "附件实际提供状态": "已提供（可读文本）",
+          "内容支持状态": "待确认",
+          "缺口": null,
+          "建议": "certificate.txt:1 缺有效起止或期限；签发日期不可作为生效日期"
+        }
+      ],
+      "expected": [
+        "已定位",
+        "待确认",
+        "已提供（可读文本）",
+        "待确认"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 309,
+      "attachment_rows": [
+        [
+          "1:1:1",
+          "certificate.txt",
+          "catalog.csv:2",
+          "certificate.txt",
+          "已提供（可读文本）",
+          "待确认",
+          "certificate.txt:1",
+          "文本支持不认证真伪"
+        ]
+      ],
+      "pending_rows": [
+        [
+          "1:1:1",
+          "certificate.txt:1 缺有效起止或期限；签发日期不可作为生效日期",
+          "tender.txt:1",
+          "回源文件及材料原件确认",
+          "条件/附件/内容/版本"
+        ]
+      ],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "V08-prepare",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V08-prepare\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V08-prepare\\out",
+        "--project",
+        "虚构核验V08-prepare"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V08-prepare",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验V08-prepare-投标响应检查.xlsx 虚构核验V08-prepare-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "tender.txt": "cbf4dd72c1e1f9f768a4e4c5d56ad909491a2e6ab2a1cf0975be27dedaa7f9ea"
+      },
+      "output_sha": {
+        "虚构核验V08-prepare-投标响应检查.xlsx": "3e32670b24b14e65b98dfe8568ea9747fe3d67d2b6a8652f11ea0a8f0aa2cb63",
+        "虚构核验V08-prepare-提交前核对清单.md": "501cb9a01fbd4cea6b40ad6c6640827932924ae32a2a2b1d1e0e840264ccade1"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:1",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "未核查",
+          "条件覆盖状态": "未核查",
+          "附件实际提供状态": "不适用",
+          "内容支持状态": "不适用",
+          "缺口": null,
+          "建议": "按源文件行核对，不能推断投标结果"
+        }
+      ],
+      "expected": [
+        "未核查",
+        "未核查",
+        "不适用",
+        "不适用"
+      ],
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 164,
+      "attachment_rows": [],
+      "pending_rows": [],
+      "amendment_rows": [
+        [
+          "无已证明正式替换关系",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "未提供或依据不足"
+        ]
+      ]
+    },
+    {
+      "id": "V09-amendment",
+      "argv": [
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\check_response.py",
+        "--tender",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V09-amendment\\tender.txt",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V09-amendment\\out",
+        "--project",
+        "虚构核验V09-amendment",
+        "--mode",
+        "check",
+        "--response",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V09-amendment\\response.md",
+        "--amendment",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V09-amendment\\amendment0.txt"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\cases\\V09-amendment",
+      "exit": 0,
+      "stdout": "CREATED 虚构核验V09-amendment-投标响应检查.xlsx 虚构核验V09-amendment-提交前核对清单.md\n",
+      "stderr": "",
+      "input_sha": {
+        "amendment0.txt": "790c2bf1a54ef1bf51e8e84038f4c572f0813c1ff5a8cf9804c11deb9bc82448",
+        "response.md": "63e93c13b7353e6b002090f8b9a0ef4451ea52c03801726e7a07dcb135c0c79c",
+        "tender.txt": "f04223dfd5a35ec152098232c0a5a30a71dc44302c48c3587d978cc24d818bcd"
+      },
+      "output_sha": {
+        "虚构核验V09-amendment-投标响应检查.xlsx": "0f8d0a47a8ef126939bfb14585c4f5b121d1f76208bd5a3609ace65f31b2eb38",
+        "虚构核验V09-amendment-提交前核对清单.md": "2a4d81236a22aed3a660b62494005dd7b6008d2df6499e50ec2ccf74463bea81"
+      },
+      "actual": [
+        {
+          "唯一ID": "1:1:5",
+          "来源": "tender.txt:1",
+          "证据位置": null,
+          "响应存在状态": "已定位",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "不适用",
+          "内容支持状态": "不适用",
+          "缺口": "明确条件未获得完整文本支持：交付期为30日",
+          "建议": "按源文件行核对，不能推断投标结果"
+        },
+        {
+          "唯一ID": "2:1:无编号",
+          "来源": "amendment0.txt:1",
+          "证据位置": null,
+          "响应存在状态": "候选待确认",
+          "条件覆盖状态": "可能不充分",
+          "附件实际提供状态": "不适用",
+          "内容支持状态": "不适用",
+          "缺口": "版本冲突：响应仍沿用旧要求，正式补遗新值 45日；响应 response.md:1",
+          "建议": "响应候选歧义或编号改变；逐一核对双向原句"
+        }
+      ],
+      "expected": null,
+      "issues": [],
+      "sheets": [
+        "核查概览",
+        "要求响应矩阵",
+        "附件核对",
+        "补遗与版本",
+        "待确认事项"
+      ],
+      "md_length": 651,
+      "attachment_rows": [],
+      "pending_rows": [
+        [
+          "2:1:无编号",
+          "响应候选歧义或编号改变；逐一核对双向原句",
+          "amendment0.txt:1",
+          "回源文件及材料原件确认",
+          "条件/附件/内容/版本"
+        ]
+      ],
+      "amendment_rows": [
+        [
+          "1:1:5",
+          "2:1:无编号",
+          "替换",
+          "tender.txt:1",
+          "amendment0.txt:1",
+          "amendment0.txt:1",
+          "正式补遗第1号：原第5条交付期30日替换为45日。",
+          "已替换/撤销（不适用）"
+        ]
+      ]
+    }
+  ],
+  "legacy": {
+    "argv": [
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\scripts\\analyze_tender.py",
+      "--input",
+      "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-quality\\cache\\scratch\\q06_independent_025_adjudicated\\extract\\wangbin-tender-analyzer\\examples\\fictional-tender.txt"
+    ],
+    "exit": 0,
+    "stdout_sha": "4c4a178f6e5151071ba894fd10de1e5c756cec13f9a30304f4a839037612b028",
+    "stderr": "",
+    "original_expected_sha": "50dbfa0ad68f249a9414b5e547a0161efe8f10c0fb434dfc2c7214f315338260",
+    "match": true
+  }
+}
