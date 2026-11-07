@@ -7,7 +7,7 @@ assemble Phase 3E project/equity cash flow or calculate return metrics.
 from __future__ import annotations
 from copy import deepcopy
 from datetime import date, datetime, timezone
-from decimal import Decimal
+from decimal import Decimal, localcontext
 from pathlib import Path
 from uuid import uuid4
 
@@ -24,6 +24,7 @@ from .energy_yield import _metric
 from .input_contract import calculation_identity
 from .method_config import MethodConfig
 from .result_contract import seal_result, validate_result
+from .trading_fee_payment import validate_trading_fee_payment
 
 FORMULA_IDS = (
     "F-TAX-EXCLUSIVE-AMOUNT", "F-CAPEX-ITEM-AMOUNT", "F-CAPEX-TOTAL", "F-UNIT-INVESTMENT",
@@ -203,7 +204,7 @@ def _income_tax_schedule(base, loss, payable, prepaid, income_rate, loss_fractio
     bridge=cost_formula("F-TAX-CASH-BRIDGE",{"tax.income_charge":charge,"tax.income_payable_opening":payable,"tax.income_payable_closing":payable_close,"tax.income_prepaid_closing":prepaid,"tax.income_prepaid_opening":prepaid,"finance.tax_basis":tax_basis})["value"]
     return charge,loss_close,paid,payable_close,bridge
 
-def calculate_financial_ledger(exported, methods, settlement, *, catalog=None, scenario_id="BASE"):
+def calculate_financial_ledger(exported, methods, settlement, *, catalog=None, scenario_id="BASE", trading_fee_source_bytes=None):
     catalog=catalog or Catalog(); methods=methods if isinstance(methods,MethodConfig) else MethodConfig.from_dict(methods); inputs=EnergyInputs(exported,methods,catalog)
     if isinstance(settlement,(str,Path)): settlement=loads(Path(settlement).read_bytes())
     validate_result(settlement,catalog); upstream_hash=_check_upstream(inputs,settlement)
@@ -219,13 +220,24 @@ def calculate_financial_ledger(exported, methods, settlement, *, catalog=None, s
     interest_fraction=_vec(methods,"debt.interest_payment_fractions",len(periods)) if debt["has_debt"] else [Decimal(0)]*len(periods)
     capitalization_fraction=_vec(methods,"debt.interest_capitalization_fractions",len(periods)) if debt["has_debt"] else [Decimal(0)]*len(periods)
     fee_fraction=_vec(methods,"debt.fee_payment_fractions",len(periods)) if debt["has_debt"] else [Decimal(0)]*len(periods)
-    annual=[]; total_depr=sum(depreciation["annual"].values(),Decimal(0)); capex_payable=capex["initial_total"]; capex_paid_to_date=Decimal(0); transaction_payable=Decimal(0)
+    # Only a separately supplied, byte-bound fee source can make this cash
+    # expense known. OPEX payment fractions never stand in for that source.
+    fee_source=(validate_trading_fee_payment(trading_fee_source_bytes, exported=inputs.validated.export,
+                                            methods=methods, settlement=settlement, scenario_id=scenario_id)
+                if trading_fee_source_bytes is not None else None)
+    fee_payment_unsourced=any(rev["transaction_cost"]>0 for rev in revenues) and fee_source is None
+    fee_status=("BLOCKED_MISSING_INPUT" if fee_payment_unsourced else
+                "SYNTHETIC_ASSUMED_SAME_YEAR" if fee_source else "NO_SEPARATE_FEE")
+    annual=[]; total_depr=sum(depreciation["annual"].values(),Decimal(0)); capex_payable=capex["initial_total"]; capex_paid_to_date=Decimal(0); transaction_payable=None if fee_payment_unsourced else (Decimal(fee_source.contract["payment"]["opening_payable"]) if fee_source else Decimal(0))
     construction_pay=capex["initial_total"]*capex_fraction[0]; capex_payable-=construction_pay
     if construction_pay!=capex["payment_by_year"].get(0,Decimal(0)): raise ContractError("CAPEX_DATE_PAYMENT_MISMATCH","CONSTRUCTION")
     capex_paid_to_date += construction_pay
     construction_residual=ledger_formula("F-CAPEX-PAYMENT-BALANCE",{"capex.scope_cash_payments":{"CONSTRUCTION":construction_pay},"capex.payable_net_closing":capex_payable,"capex.payable_net_opening":Decimal(0),"capex.scope_accrued_amount":capex["initial_total"],"capex.scope_year_ids":["CONSTRUCTION"]})["value"]
     construction_debt=debt["rows"]["CONSTRUCTION"]
     construction_row={"period":"CONSTRUCTION","capex_accrued":capex["initial_total"],"capex_cash_paid":construction_pay,"capex_payable_closing":capex_payable,"capex_payment_residual":construction_residual,"debt_drawdown":construction_debt["drawdown"],"principal_paid":construction_debt["principal_due"]*principal_fraction[0],"finance_fees_paid":construction_debt["fees_due"]*fee_fraction[0],"working_capital_increase":nonnegative(_value(inputs,"finance.working_capital"),"finance.working_capital"),"phase3e_cashflow":None}
+    construction_row.update(transaction_cost_payable_opening=transaction_payable,
+                            transaction_cost_payable_closing=transaction_payable,
+                            transaction_cost_payment_status=fee_status)
     if interest_fraction[0]==0 or interest_payable==0:
         construction_row["interest_paid"]=Decimal(0)
     annual.append(construction_row)
@@ -234,8 +246,17 @@ def calculate_financial_ledger(exported, methods, settlement, *, catalog=None, s
         period=f"OPERATING_YEAR_{y}"; rev=revenues[y-1]; taxable_net=rev["benefit_after_transaction_cost"] if tax_self=="TAXABLE_INCREMENTAL_SAVING" else rev["export_sales_revenue"]-rev["transaction_cost"]
         transaction_opening=transaction_payable
         transaction_accrued=rev["transaction_cost"]
-        transaction_paid=(transaction_opening+transaction_accrued)*opex_fraction[y-1]
-        transaction_payable=transaction_opening+transaction_accrued-transaction_paid
+        transaction_paid=None if fee_payment_unsourced else Decimal(0)
+        if fee_source:
+            # Preserve the full 3C fee precision; Decimal's ambient default
+            # context would round even a multiplication by exactly one.
+            with localcontext() as payment_context:
+                payment_context.prec=max(34, len(transaction_accrued.as_tuple().digits)
+                                         + len(transaction_opening.as_tuple().digits) + 8)
+                transaction_paid=transaction_accrued*fee_source.payment_fractions[period]
+                transaction_payable=transaction_opening+transaction_accrued-transaction_paid
+        elif not fee_payment_unsourced:
+            transaction_payable=transaction_opening+transaction_accrued-transaction_paid
         opex_accrual=opex["annual"][y]; opex_cash=opex_accrual*opex_fraction[y-1]; dep=depreciation["annual"][y]; dr=debt["rows"][period]; rate=debt.get("rate",Decimal(0)); replacement_accrued=capex["replacement_accrued_by_year"][y]; replacement_paid=capex["replacement_paid_by_year"][y]; capex_cash=capex["initial_total"]*capex_fraction[y]+replacement_paid
         if capex_cash!=capex["payment_by_year"].get(y,Decimal(0)): raise ContractError("CAPEX_DATE_PAYMENT_MISMATCH",period)
         capex_paid_to_date+=capex_cash; opening_capex_payable=capex_payable; capex_payable+=replacement_accrued-capex_cash
@@ -272,14 +293,35 @@ def calculate_financial_ledger(exported, methods, settlement, *, catalog=None, s
         row.update(transaction_cost_accrued=transaction_accrued,
                    transaction_cost_cash_paid=transaction_paid,
                    transaction_cost_payable_opening=transaction_opening,
-                   transaction_cost_payable_closing=transaction_payable)
+                   transaction_cost_payable_closing=transaction_payable,
+                   transaction_cost_payment_status=fee_status,
+                   transaction_cost_source_id=fee_source.contract["source"]["source_id"] if fee_source else None,
+                   transaction_cost_source_sha256=fee_source.source_sha256 if fee_source else None)
         annual.append(row); debt_balance=debt_close; interest_payable=interest_close; project_loss=project_loss_close; equity_loss=equity_loss_close; project_payable=project_payable_close; equity_payable=equity_payable_close; vat_credit=vat_close
     if capex_payable != 0:
         raise ContractError("CAPEX_PAYMENT_BALANCE_NOT_CLOSED")
-    if transaction_payable != 0:
+    if transaction_payable is not None and transaction_payable != 0:
         raise ContractError("TRANSACTION_COST_PAYMENT_BALANCE_NOT_CLOSED")
-    identity=calculation_identity(inputs.validated,methods,catalog,scenario={"scenario_id":scenario_id}); snapshot=identity["source_snapshot"]; snapshot["phase3c_settlement"]={"result_hash":upstream_hash,"project_id":inputs.validated.project.project_id}; source_id=digest(snapshot); payload=identity["input_identity_payload"]; payload["source_snapshot_id"]=source_id; payload["upstream_settlement_result_hash"]=upstream_hash; input_hash=digest(payload)
-    result=deepcopy(settlement); result.update({"schema_version":RESULT_SCHEMA_VERSION,"model_version":MODEL_VERSION,"run_id":str(uuid4()),"created_at":datetime.now(timezone.utc).isoformat(),"scenario_id":scenario_id,"input_hash":input_hash,"source_snapshot_id":source_id,"source_snapshot":snapshot,"status":"CALCULATED_SYNTHETIC" if methods.data_mode=="SYNTHETIC" else "CALCULATED_CONDITIONAL","inputs":{**result["inputs"],"identity_payload":payload,"normalized":inputs.validated.export["normalized_inputs"],"method_config_hash":methods.hash,"used_fields":sorted(set(result["inputs"].get("used_fields",[]))|set(inputs.used)),"upstream_settlement_result_hash":upstream_hash},"boundaries":{**result["boundaries"],"FINANCIAL_LEDGER":{"phase":"3D","cashflow_assembly":"PHASE3E_NOT_IMPLEMENTED","currency":currency}},"formula_snapshot":{**result["formula_snapshot"],"financial_definitions":{fid:catalog.formulas[fid] for fid in FORMULA_IDS}},"evidence":{**result["evidence"],"financial-ledger":_jsonable({"periods":periods,"annual":annual,"capex":capex,"opex":opex,"depreciation":depreciation,"upstream_settlement_result_hash":upstream_hash,"lifecycle":{"capex_total":capex["total"],"opex_cash":sum((x.get("opex_cash_paid",Decimal(0)) for x in annual),Decimal(0)),"depreciation":total_depr,"ending_debt":debt_balance}}),"deferred-financial-domains":{"project_cash_flow":"PHASE3E_NOT_IMPLEMENTED","equity_cash_flow":"PHASE3E_NOT_IMPLEMENTED","NPV":"PHASE3E_NOT_IMPLEMENTED","IRR":"PHASE3E_NOT_IMPLEMENTED","LCOE":"PHASE3E_NOT_IMPLEMENTED"}}})
+    identity=calculation_identity(inputs.validated,methods,catalog,scenario={"scenario_id":scenario_id}); snapshot=identity["source_snapshot"]; snapshot["phase3c_settlement"]={"result_hash":upstream_hash,"project_id":inputs.validated.project.project_id}
+    if fee_source:
+        snapshot["trading_fee_payment"]={"contract":fee_source.contract,"raw_sha256":fee_source.source_sha256,"contract_hash":fee_source.contract_hash}
+    source_id=digest(snapshot); payload=identity["input_identity_payload"]; payload["source_snapshot_id"]=source_id; payload["upstream_settlement_result_hash"]=upstream_hash
+    if fee_source:
+        payload["trading_fee_payment"]={"raw_sha256":fee_source.source_sha256,"contract_hash":fee_source.contract_hash,"binding":fee_source.contract["binding"]}
+    input_hash=digest(payload)
+    result=deepcopy(settlement); result.update({"schema_version":RESULT_SCHEMA_VERSION,"model_version":MODEL_VERSION,"run_id":str(uuid4()),"created_at":datetime.now(timezone.utc).isoformat(),"scenario_id":scenario_id,"input_hash":input_hash,"source_snapshot_id":source_id,"source_snapshot":snapshot,"status":"PARTIAL" if fee_payment_unsourced else ("CALCULATED_SYNTHETIC" if methods.data_mode=="SYNTHETIC" else "CALCULATED_CONDITIONAL"),"inputs":{**result["inputs"],"identity_payload":payload,"normalized":inputs.validated.export["normalized_inputs"],"method_config_hash":methods.hash,"used_fields":sorted(set(result["inputs"].get("used_fields",[]))|set(inputs.used)),"upstream_settlement_result_hash":upstream_hash},"boundaries":{**result["boundaries"],"FINANCIAL_LEDGER":{"phase":"3D","cashflow_assembly":"PHASE3E_NOT_IMPLEMENTED","currency":currency,"transaction_fee_payment":"BLOCKED_MISSING_INPUT" if fee_payment_unsourced else "NO_SEPARATE_FEE"}},"formula_snapshot":{**result["formula_snapshot"],"financial_definitions":{fid:catalog.formulas[fid] for fid in FORMULA_IDS}},"evidence":{**result["evidence"],"financial-ledger":_jsonable({"periods":periods,"annual":annual,"capex":capex,"opex":opex,"depreciation":depreciation,"upstream_settlement_result_hash":upstream_hash,"lifecycle":{"capex_total":capex["total"],"opex_cash":sum((x.get("opex_cash_paid",Decimal(0)) for x in annual),Decimal(0)),"depreciation":total_depr,"ending_debt":debt_balance}}),"deferred-financial-domains":{"project_cash_flow":"PHASE3E_NOT_IMPLEMENTED","equity_cash_flow":"PHASE3E_NOT_IMPLEMENTED","NPV":"PHASE3E_NOT_IMPLEMENTED","IRR":"PHASE3E_NOT_IMPLEMENTED","LCOE":"PHASE3E_NOT_IMPLEMENTED"}}})
+    result["boundaries"]["FINANCIAL_LEDGER"]["transaction_fee_payment"]=fee_status
+    if fee_source:
+        result["evidence"]["financial-ledger"]["trading_fee_payment"]={
+            "schema_version":fee_source.contract["schema_version"],
+            "source_id":fee_source.contract["source"]["source_id"],
+            "raw_sha256":fee_source.source_sha256,
+            "contract_hash":fee_source.contract_hash,
+            "binding":fee_source.contract["binding"],
+            "payment_base":fee_source.contract["payment"]["payment_base"],
+            "payment_rule":fee_source.contract["payment"]["payment_rule"],
+            "evidence_status":"SYNTHETIC_ASSUMED_NOT_ACTUAL_PAYMENT",
+        }
     result["results"]["metrics"]=[m for m in result["results"]["metrics"] if not m["metric_id"].startswith("financial.")]
     for metric in result["results"]["metrics"]:
         metric["scenario_id"] = scenario_id
@@ -290,8 +332,18 @@ def calculate_financial_ledger(exported, methods, settlement, *, catalog=None, s
     _metric(result,catalog,"financial.debt.ending_balance",debt_balance,currency,"F-DEBT-BALANCE","FINANCIAL_LEDGER","LIFECYCLE")
     _metric(result,catalog,"financial.tax.cash_lifecycle",sum((x.get("cash_tax_total",Decimal(0)) for x in annual),Decimal(0)),currency,"F-CASH-TAX-TOTAL","FINANCIAL_LEDGER","LIFECYCLE")
     _metric(result,catalog,"financial.asset.ending_book_value",depreciation["book"][years],currency,"F-ASSET-BOOK-VALUE","FINANCIAL_LEDGER","LIFECYCLE")
+    # The upstream 3C result can be reloaded from JSON or freshly computed.
+    # Evidence IDs form an unordered reference set; insertion order must not
+    # change the identity of otherwise identical financial results.
+    for metric in result["results"]["metrics"]:
+        if metric["metric_id"].startswith("financial."):
+            metric["evidence_ids"] = sorted(set(metric["evidence_ids"]))
     result["findings"]=[f for f in result.get("findings",[]) if f.get("code")!="FINANCE_TAX_CASHFLOW_AND_FINANCIAL_RETURNS_NOT_IMPLEMENTED"]; result["findings"].append({"code":"PHASE3E_CASHFLOW_AND_FINANCIAL_RETURNS_NOT_IMPLEMENTED","status":"NOT_IMPLEMENTED"})
-    result["maturity"]["calculation"]="CALCULATED_SYNTHETIC" if methods.data_mode=="SYNTHETIC" else "CALCULATED_CONDITIONAL"
+    if fee_payment_unsourced:
+        result["findings"].append({"code":"TRANSACTION_FEE_PAYMENT_SOURCE_REQUIRED","status":"BLOCKED_MISSING_INPUT","missing_field_ids":["transaction_fee.payment_rule","transaction_fee.opening_payable"]})
+    elif fee_source:
+        result["findings"].append({"code":"TRANSACTION_FEE_PAYMENT_SYNTHETIC_ASSUMPTION","status":"ASSUMED","source_id":fee_source.contract["source"]["source_id"]})
+    result["maturity"]["calculation"]="PARTIAL" if fee_payment_unsourced else ("CALCULATED_SYNTHETIC" if methods.data_mode=="SYNTHETIC" else "CALCULATED_CONDITIONAL")
     result["results"]["domains"]["financial_ledger"]=[m["metric_id"] for m in result["results"]["metrics"] if m["metric_id"].startswith("financial.")]
     return seal_result(result)
 

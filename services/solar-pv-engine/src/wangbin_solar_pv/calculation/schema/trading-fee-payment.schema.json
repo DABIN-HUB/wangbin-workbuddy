@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "solar-pv-trading-fee-payment/1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "carrier_type", "source_nature", "source_status", "intended_use", "payment_evidence", "binding", "payment", "source"],
+  "properties": {
+    "schema_version": {"const": "solar-pv-trading-fee-payment/1.0.0"},
+    "carrier_type": {"const": "TRADING_FEE_PAYMENT_SOURCE"},
+    "source_nature": {"const": "SYNTHETIC"},
+    "source_status": {"const": "ASSUMED"},
+    "intended_use": {"const": "SYNTHETIC_ANNUAL_FORECAST_ONLY"},
+    "payment_evidence": {"const": false},
+    "binding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["project_id", "pv_type", "currency", "scenario_id", "evaluation_years", "phase2_input_hash", "phase2_source_snapshot_id", "method_config_hash", "d3_content_hash", "phase3c_result_hash", "fee_treatment", "fee_category", "fee_metric_path"],
+      "properties": {
+        "project_id": {"type": "string", "minLength": 1, "maxLength": 96},
+        "pv_type": {"enum": ["industrial_rooftop", "utility_scale_ground"]},
+        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "scenario_id": {"type": "string", "minLength": 1, "maxLength": 96},
+        "evaluation_years": {"type": "integer", "minimum": 1, "maximum": 100},
+        "phase2_input_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "phase2_source_snapshot_id": {"type": "string", "pattern": "^sources-[0-9a-f]{64}$"},
+        "method_config_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "d3_content_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "phase3c_result_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "fee_treatment": {"const": "SEPARATE_LEDGER"},
+        "fee_category": {"const": "SETTLEMENT_TRANSACTION_COST"},
+        "fee_metric_path": {"const": "revenue.year.{year}.details.ledger.transaction_cost"}
+      }
+    },
+    "payment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["opening_payable", "construction_fee", "historical_arrears", "prepayments", "refunds", "other_offsets", "payment_rule", "payment_base", "annual"],
+      "properties": {
+        "opening_payable": {"type": "number", "const": 0},
+        "construction_fee": {"type": "number", "const": 0},
+        "historical_arrears": {"type": "number", "const": 0},
+        "prepayments": {"type": "number", "const": 0},
+        "refunds": {"type": "number", "const": 0},
+        "other_offsets": {"type": "number", "const": 0},
+        "payment_rule": {"const": "CURRENT_YEAR_FULL_PAYMENT"},
+        "payment_base": {"const": "CURRENT_YEAR_ACCRUED_TRANSACTION_COST"},
+        "annual": {
+          "type": "array", "minItems": 1, "maxItems": 100, "uniqueItems": true,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["period", "payment_fraction"],
+            "properties": {
+              "period": {"type": "string", "pattern": "^OPERATING_YEAR_[1-9][0-9]{0,2}$"},
+              "payment_fraction": {"type": "number", "const": 1}
+            }
+          }
+        }
+      }
+    },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_id", "source_reference", "source_location", "purpose", "disclaimer", "license_status"],
+      "properties": {
+        "source_id": {"type": "string", "minLength": 1, "maxLength": 96},
+        "source_reference": {"type": "string", "minLength": 1, "maxLength": 4000},
+        "source_location": {"type": "string", "minLength": 1, "maxLength": 4000},
+        "purpose": {"type": "string", "minLength": 1, "maxLength": 4000},
+        "disclaimer": {"const": "SYNTHETIC_ASSUMPTION_NOT_CONTRACT_OR_PAYMENT_RECORD"},
+        "license_status": {"const": "AUTHORIZED"}
+      }
+    }
+  }
+}

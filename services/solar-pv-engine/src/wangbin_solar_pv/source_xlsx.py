@@ -82,6 +82,19 @@ def _rows(result, catalog, formula_map):
                 record["status"], record["license_status"],
                 _display(record.get("missing_reason")), ",".join(record.get("candidate_ids") or []),
                 "待人工补充/审核", "UNKNOWN"])
+    fee_source = result["source_snapshot"].get("trading_fee_payment")
+    if fee_source:
+        contract = fee_source["contract"]
+        provenance = contract["source"]
+        rows_by_sheet["假设清单"].append([
+            "CONTRACT:TRADING_FEE_PAYMENT_SOURCE", "OPERATING_YEAR_1.." + str(contract["binding"]["evaluation_years"]),
+            "本年计提交易费×100%；期初应付0元", "1 / CNY", provenance["source_id"], "ASSUMED",
+            provenance["purpose"], contract["payment"]["payment_rule"],
+            "SYNTHETIC_ONLY; SHA-256=" + fee_source["raw_sha256"]])
+        rows_by_sheet["资料授权说明"].append([
+            provenance["source_id"], provenance["license_status"], "SYNTHETIC_ASSUMPTION", "NOT_ACTUAL_PAYMENT",
+            "ASSUMED", "NOT_AUTHORIZED_FOR_UPLOAD",
+            provenance["source_reference"] + "；原始字节SHA-256=" + fee_source["raw_sha256"]])
     for metric in result["results"]["metrics"]:
         if metric["status"].startswith("BLOCKED_"):
             rows_by_sheet["冲突与缺口"].append([metric["formula_id"], metric["metric_id"],

@@ -991,12 +991,14 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
         receipts, savings = first.get("revenue_cash_receipts"), first.get("self_use_avoided_expenditure")
         transaction = first.get("transaction_cost_cash_paid")
         opex, tax = first.get("opex_cash_paid"), first.get("cash_tax_total_project")
-        if any(v is None for v in (start, wc, receipts, transaction, opex, tax)):
+        if any(v is None for v in (start, wc, receipts, opex, tax)):
             return "项目现金流虽有结果，但缺少与之配套的投资、营运资金或首年收支账簿，不能作分项解释。"
         benefit = (f"合成的余电预计回款{money(receipts)}与自用节费{money(savings)}"
                    if not ground and savings is not None else f"预计上网回款{money(receipts)}")
         fee_basis = result.get("boundaries", {}).get("SETTLEMENT", {}).get("fee_treatment")
-        fee_note = (f"另行支付交易费用{money(transaction)}，其所得税影响已在项目现金税费中反映，"
+        fee_note = ("历史封存账簿未单列交易费预计支付，当前财务结论须以新版来源闭合结果为准，"
+                    if transaction is None else
+                    f"预计另行支付交易费用{money(transaction)}，其所得税影响已在项目现金税费中反映，"
                     if fee_basis == "SEPARATE_LEDGER" else
                     "售电价格已含交易费用，不另行重复扣减，" if fee_basis == "ALREADY_IN_PRICE" and not transaction else
                     "交易费用结算口径尚未闭合，")
@@ -1638,6 +1640,21 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
                  else _project_narrative(model, item_id, judgment, field_ids, metric_ids,
                                          format_value, label_metric) if item_id.startswith('CH')
                  else judgment + ("本次证据：" + "；".join(facts) + "。" if facts else ""))
+        fee_evidence = model.result.get('evidence', {}).get('financial-ledger', {}).get('trading_fee_payment')
+        if fee_evidence and item_id in {'CH01.05', 'CH10.04', 'CH15.01', 'CH16.02',
+                                        'CH18.01', 'APP05.01', 'APP06.01'}:
+            sources = sorted(set(sources) | {fee_evidence['source_id']})
+            fee_notes = {
+                'CH01.05': '本合成测算按交易费当年发生、当年全额预计支付处理，期初无交易费欠款；'
+                           '该安排用于年度预测测试，不代表真实合同或实际付款记录。',
+                'CH10.04': '3C单列交易费的付款期间另由已绑定的合成年度支付假设确定，销售回款仍按毛额列示。',
+                'CH15.01': '运维费现金与交易费预计付款分别列账，后者不继承运维付现比例。',
+                'CH16.02': '交易费为合成来源约定的预计支付，不是已付款凭证；税基扣费不等于现金付款。',
+                'CH18.01': '上述回报含有独立的交易费同年支付假设，仅对合成年度项目边界成立。',
+                'APP05.01': '交易费预计付款另列，不作为运维费第二次扣减。',
+                'APP06.01': '交易费计提、预计付款和应付余额须与本附录逐期收支桥相互核对。',
+            }
+            claim += fee_notes[item_id]
         if blocked_metrics:
             bound = f"{label_metric(blocked_metrics[0])}未形成可引用结果"
         elif absent_fields:

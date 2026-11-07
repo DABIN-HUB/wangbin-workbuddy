@@ -25,17 +25,20 @@ _BOUNDARY = "PHASE3E_FINANCIAL_EVALUATION"
 
 def _metric(result, catalog, metric_id, formula_id, value, unit, period, *, status="CALCULATED", reason=None, details=None):
     unit = catalog.formulas[formula_id].get("unit", unit)
+    trading_fee = result["source_snapshot"].get("trading_fee_payment", {})
+    trading_fee_source_ids = ({trading_fee["contract"]["source"]["source_id"]}
+                              if trading_fee else set())
     result["results"]["metrics"].append({
         "metric_id": metric_id, "value": value, "unit": unit, "status": status,
         "reason": reason, "boundary_id": _BOUNDARY, "period": period,
         "scenario_id": result["scenario_id"],
         "input_field_ids": list(result["inputs"].get("used_fields", [])),
-        "source_ids": sorted(set(result["inputs"].get("used_sources", [])) | {
+        "source_ids": sorted(set(result["inputs"].get("used_sources", [])) | trading_fee_source_ids | {
             p["source_id"] for p in result["source_snapshot"].get("methods", {}).get("parameters", {}).values()
         }),
         "formula_id": formula_id,
         "formula_version": catalog.definition_version,
-        "evidence_ids": list(result["evidence"]), "report_locations": catalog.formulas[formula_id]["report_chapter_ids"],
+        "evidence_ids": sorted(result["evidence"]), "report_locations": catalog.formulas[formula_id]["report_chapter_ids"],
         "workbook_locations": [], "rounding_rule": "DECLARED_DECIMAL_NO_DISPLAY_ROUNDING",
         "method_parameter_ids": sorted(result["source_snapshot"].get("methods", {}).get("parameters", {})),
         "upstream_metric_ids": [], "details": details or {},
@@ -94,7 +97,8 @@ def _ledger_vectors(annual):
     missing = {}
 
     def required(rows_, key):
-        absent = [row.get("period", str(index)) for index, row in enumerate(rows_) if key not in row]
+        absent = [row.get("period", str(index)) for index, row in enumerate(rows_)
+                  if row.get(key) is None]
         if absent:
             missing[key] = absent
             return None
@@ -254,10 +258,11 @@ def calculate_phase3e(financial_result, methods, catalog):
 
 def calculate_sourced_project_npv(carrier, source_documents, exported, methods, bundle,
                                  generation, settlement, financial, catalog, *, basis_control=None,
-                                 original_export=None, original_bundle=None):
+                                 original_export=None, original_bundle=None, trading_fee_source_bytes=None):
     """Calculate only sourced, year-end unlevered project metrics; other gates stay blocked."""
     bound = bind_terminal_candidate(carrier, source_documents, exported, methods, bundle,
-                                    generation, settlement, financial, catalog)
+                                    generation, settlement, financial, catalog,
+                                    trading_fee_source_bytes=trading_fee_source_bytes)
     bridge = reconcile_terminal_cash(bound, financial, exported, methods, source_documents)
     values = exported["project"]["values"]
     chosen = bound.binding["basis"]

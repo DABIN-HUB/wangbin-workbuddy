@@ -74,6 +74,7 @@ def _parser():
     project.add_argument("--scenarios", help="可选BASE/PESSIMISTIC/OPTIMISTIC三场景显式控制JSON")
     project.add_argument("--terminal-source", help="可选已授权终期来源事实JSON；须同时提供原始来源字节")
     project.add_argument("--terminal-document", help="终期无处置来源原文字节；仅支持单一NO_DISPOSITION来源")
+    project.add_argument("--trading-fee-payment-source", help="可选交易费支付来源JSON；原始字节上限64 KiB")
     project.add_argument("--output", required=True, help="单层新建私有项目目录，不覆盖")
     source_xlsx = commands.add_parser("source-xlsx", help="Phase4 F04资料来源与假设清单；只生成DRAFT_PARTIAL私有XLSX")
     source_xlsx.add_argument("--result", required=True, help="已验证canonical JSON")
@@ -203,6 +204,13 @@ def main(argv=None):
                 if document.stat().st_size > 1024 * 1024:
                     raise ContractError("TERMINAL_SOURCE_BYTES_REQUIRED")
                 source_documents = {source_id: document.read_bytes()}
+            trading_fee_source_bytes = None
+            if args.trading_fee_payment_source:
+                source_path = workspace.path(args.trading_fee_payment_source)
+                with source_path.open("rb") as source_stream:
+                    trading_fee_source_bytes = source_stream.read(64 * 1024 + 1)
+                if len(trading_fee_source_bytes) > 64 * 1024:
+                    raise ContractError("TRADING_FEE_SOURCE_SIZE_LIMIT")
             receipt = run_project(workspace.read(args.input)[0], workspace.read(args.methods)[0],
                                   bundle_dir=workspace.path(args.bundle, json_only=False),
                                   catalog=catalog, budget=BundleBudget(**budget_data),
@@ -210,7 +218,8 @@ def main(argv=None):
                                   generation_dir=workspace.path(args.generation, json_only=False) if args.generation else None,
                                   generation_result_hash=args.generation_hash,
                                   scenario_controls=workspace.read(args.scenarios)[0] if args.scenarios else None,
-                                  terminal_source=terminal_source, source_documents=source_documents)
+                                  terminal_source=terminal_source, source_documents=source_documents,
+                                  trading_fee_source_bytes=trading_fee_source_bytes)
             print(dumps({"status": receipt["status"],
                          "canonical_result_hash": receipt["canonical_result_hash"],
                          "receipt_hash": receipt["receipt_hash"],

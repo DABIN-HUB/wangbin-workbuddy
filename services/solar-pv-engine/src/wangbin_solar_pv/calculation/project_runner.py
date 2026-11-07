@@ -54,7 +54,7 @@ def _prepare_cases(controls, original, methods, catalog):
 
 def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, run_id,
                 generation_dir=None, generation_result_hash=None, scenario_controls=None,
-                terminal_source=None, source_documents=None):
+                terminal_source=None, source_documents=None, trading_fee_source_bytes=None):
     """Run and publish a single, source-bound BASE project calculation.
 
     An externally pinned 3B trace is read-only; the real 3C consumer verifies
@@ -75,6 +75,8 @@ def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, ru
     if pv_type not in config.to_dict()["pv_types"]:
         raise ContractError("METHOD_CONFIG_CATEGORY")
     prepared, blocked = _prepare_cases(scenario_controls, original, config, catalog)
+    if trading_fee_source_bytes is not None and any(item.scenario_id != "BASE" for item in prepared):
+        raise ContractError("TRADING_FEE_SOURCE_SCENARIO_UNSUPPORTED")
     root = workspace.path(run_id, json_only=False)
     if root.exists():
         raise ContractError("PROJECT_OUTPUT_EXISTS")
@@ -118,17 +120,26 @@ def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, ru
             stages["3C"] = {"result_hash": settlement["result_hash"], "reuse": False}
             timing["phase3c_seconds"] = perf_counter() - stage_started
             stage_started = perf_counter()
-            financial = calculate_financial_ledger(original, config, settlement, catalog=catalog)
+            financial = calculate_financial_ledger(original, config, settlement, catalog=catalog,
+                                                   trading_fee_source_bytes=trading_fee_source_bytes)
             validate_result(financial, catalog)
             write_financial_bundle(financial, root / "3d")
             stages["3D"] = {"result_hash": financial["result_hash"], "reuse": False}
             timing["phase3d_seconds"] = perf_counter() - stage_started
             stage_started = perf_counter()
-            if terminal_source is None:
+            # A terminal asset source cannot supply a missing trading-fee
+            # payment rule. Preserve the independent 3B/3C/3D output and
+            # explicitly block the dependent 3E returns instead of publishing
+            # a cash flow built from an OPEX or zero-payment assumption.
+            fee_payment_missing = any(
+                row.get("transaction_cost_cash_paid") is None
+                for row in financial["evidence"]["financial-ledger"]["annual"][1:]
+            )
+            if terminal_source is not None and not isinstance(terminal_source, dict):
+                raise ContractError("PROJECT_TERMINAL_SOURCE_INVALID")
+            if terminal_source is None or fee_payment_missing:
                 result = calculate_phase3e(financial, config, catalog)
             else:
-                if not isinstance(terminal_source, dict):
-                    raise ContractError("PROJECT_TERMINAL_SOURCE_INVALID")
                 values = original["project"]["values"]
                 basis = values.get("project.cashflow_tax_basis", {}).get("value")
                 if basis not in {"pre_tax", "post_tax"}:
@@ -147,7 +158,8 @@ def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, ru
                                "basis": "项目税前" if basis == "pre_tax" else "项目税后",
                            }}
                 result = calculate_sourced_project_npv(carrier, source_documents, original, config,
-                                                       bundle, generation, settlement, financial, catalog)
+                                                       bundle, generation, settlement, financial, catalog,
+                                                       trading_fee_source_bytes=trading_fee_source_bytes)
             validate_result(result, catalog)
             write_phase3e_bundle(result, root / "3e")
             stages["3E"] = {"result_hash": result["result_hash"], "reuse": False}
@@ -213,6 +225,10 @@ def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, ru
                        "status": result["status"], "stages": stages,
                        "scenarios": scenarios,
                        "timings_seconds": {key: str(value) for key, value in timing.items()}}
+            if trading_fee_source_bytes is not None:
+                fee_evidence = financial["evidence"]["financial-ledger"]["trading_fee_payment"]
+                receipt["trading_fee_payment"] = {key: fee_evidence[key] for key in
+                                                  ("schema_version", "source_id", "raw_sha256", "contract_hash")}
             receipt["receipt_hash"] = digest(receipt)
             receipt["elapsed_seconds"] = str(perf_counter() - started)
             Workspace(root).create("receipt.json", receipt)

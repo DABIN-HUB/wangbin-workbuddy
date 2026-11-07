@@ -190,6 +190,9 @@ def _project_report(args: argparse.Namespace) -> dict[str, Any]:
     if args.terminal_source:
         project_args.extend(["--terminal-source", _safe_relative(args.terminal_source, "terminal-source").as_posix(),
                              "--terminal-document", _safe_relative(args.terminal_document, "terminal-document").as_posix()])
+    if args.trading_fee_payment_source:
+        project_args.extend(["--trading-fee-payment-source",
+                             _safe_relative(args.trading_fee_payment_source, "trading-fee-payment-source").as_posix()])
     calculation = _engine_command(engine_root, src, baseline, workspace, "project", project_args)
     if calculation.get("status") not in {"PASS", "PARTIAL"}:
         return {"status": calculation.get("status", "BLOCKED"), "project_type": args.project_type,
@@ -231,6 +234,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--scenarios")
     parser.add_argument("--terminal-source")
     parser.add_argument("--terminal-document")
+    parser.add_argument("--trading-fee-payment-source")
     return parser
 
 

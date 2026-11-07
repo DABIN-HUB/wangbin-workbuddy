@@ -68,7 +68,7 @@ def _asset_scope(ledger, normalized):
 
 
 def bind_terminal_candidate(carrier, source_documents, exported, methods, bundle,
-                            generation, settlement, financial, catalog):
+                            generation, settlement, financial, catalog, *, trading_fee_source_bytes=None):
     """Reject self-asserted result hashes and cross-scenario source reuse."""
     validated = validate_export(exported, catalog)
     method = MethodConfig.from_dict(methods.to_dict() if isinstance(methods, MethodConfig) else methods)
@@ -109,9 +109,12 @@ def bind_terminal_candidate(carrier, source_documents, exported, methods, bundle
             or settlement["scenario_id"] != financial["scenario_id"]):
         raise ContractError("TERMINAL_SETTLEMENT_IDENTITY_MISMATCH")
     _check_financial(financial, settlement_hash, validated.export, method, catalog)
+    if financial["source_snapshot"].get("trading_fee_payment") is not None and trading_fee_source_bytes is None:
+        raise ContractError("TRADING_FEE_SOURCE_BYTES_REQUIRED")
     # Canonical hashes alone do not prove nested ledger rows came from 3D.
     # Compare to the actual approved producer, never to caller-supplied rows.
-    recomputed = calculate_financial_ledger(validated.export, method, settlement, catalog=catalog)
+    recomputed = calculate_financial_ledger(validated.export, method, settlement, catalog=catalog,
+                                            trading_fee_source_bytes=trading_fee_source_bytes)
     if _recomputed_content(financial) != _recomputed_content(recomputed):
         raise ContractError("TERMINAL_FINANCIAL_LEDGER_NOT_RECOMPUTED")
 

@@ -123,7 +123,7 @@ _D_STYLE = {
     "white": "FFFFFF",
 }
 
-REPORT_CONTENT_VERSION = "phase7l-r2-v6"
+REPORT_CONTENT_VERSION = "phase7l-r2-v7-fee-source-v1"
 
 
 @dataclass(frozen=True)
@@ -470,8 +470,9 @@ def _chart_png(spec: dict[str, Any], *, font_metadata: dict[str, Any] | None = N
     for index, y in enumerate(y_values):
         x = int(left + index * step)
         points.append((x, y))
-        label = str(index + 1).zfill(2)
-        draw.text((x - 10, bottom + 12), label, fill=f"#{_D_STYLE['muted']}", font=fonts["tick"])
+        if len(values) <= 12 or index == 0 or (index + 1) % 5 == 0 or index == len(values) - 1:
+            label = str(index + 1).zfill(2)
+            draw.text((x - 10, bottom + 12), label, fill=f"#{_D_STYLE['muted']}", font=fonts["tick"])
     draw.line(points, fill=f"#{_D_STYLE['accent']}", width=4, joint="curve")
     for x, y in points:
         draw.ellipse((x - 5, y - 5, x + 5, y + 5), fill=f"#{_D_STYLE['accent']}")
@@ -941,6 +942,17 @@ def _sheet_data(model: ReportModel, sheet_id: str, title: str, pv_type: str) -> 
     elif sheet_id == "M14":
         rows = _metric_rows(model, prefixes=("financial.phase3e.project_cash_flow", "financial.phase3e.project_pretax_cash_flow",
                                              "financial.phase3e.cumulative_cash_flow", "financial.phase3e.discounted_cumulative_cash"))
+        fee_source = model.result.get("evidence", {}).get("financial-ledger", {}).get("trading_fee_payment")
+        if fee_source:
+            for entry in model.result["evidence"]["financial-ledger"]["annual"][1:]:
+                for key, label in (("transaction_cost_accrued", "3C交易费本期计提"),
+                                   ("transaction_cost_payable_opening", "交易费期初应付"),
+                                   ("transaction_cost_cash_paid", "交易费预计支付"),
+                                   ("transaction_cost_payable_closing", "交易费期末应付")):
+                    value = entry[key]
+                    rows.append([entry["period"] + "." + key, "ASSUMED", value, "CNY",
+                                 "TRADING_FEE_PAYMENT_SOURCE/1.0", fee_source["source_id"],
+                                 label + "；合成年度预测，非真实付款", _raw_value(value)])
         headers = ["metric_id", "状态", "值/阻断原因", "单位", "公式", "来源", "原因", "canonical_raw"]
     elif sheet_id == "M15":
         rows = _metric_rows(model, prefixes=("financial.phase3e.equity-investor-cash-flow",
@@ -1181,6 +1193,14 @@ def _claim_binding_error(model: ReportModel, record: dict[str, Any]) -> bool:
     known_sources = ({row["source_id"] for row in provenance if row.get("source_id")}
                      | {row["header"]["source_id"] for row in datasets.values()
                         if row.get("header", {}).get("source_id")})
+    fee_snapshot = model.result.get("source_snapshot", {}).get("trading_fee_payment")
+    fee_evidence = model.result.get("evidence", {}).get("financial-ledger", {}).get("trading_fee_payment")
+    if fee_snapshot and fee_evidence:
+        fee_source_id = fee_snapshot["contract"]["source"]["source_id"]
+        if (fee_evidence.get("source_id") != fee_source_id or
+                fee_evidence.get("raw_sha256") != fee_snapshot.get("raw_sha256")):
+            return True
+        known_sources.add(fee_source_id)
     known_instances = ({row.get("field_instance_id") for row in provenance}
                        | {row["header"].get("field_instance_id") for row in datasets.values()})
     metric_ids = set(record["metric_ids"])
@@ -2139,7 +2159,25 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 _add_table(document, ["费用边界", "金额（元）", "核算口径"],
                            [[labels.get(row[0], row[0]), row[2], row[6]] for row in boundary],
                            "资本支出、营运资金与后期更换的独立边界", widths_cm=(5.0, 3.5, 8.5))
+            if item_id == "APP05.01":
+                ledger = model.result.get("evidence", {}).get("financial-ledger", {})
+                fee_source = ledger.get("trading_fee_payment")
+                if fee_source and len(ledger.get("annual", ())) > 1:
+                    first = ledger["annual"][1]
+                    _add_table(document, ["首年费用项目", "本期计提（元）", "预计支付（元）", "期初／期末应付（元）", "来源与边界"],
+                               [["单列交易费用", _word_number(first["transaction_cost_accrued"]),
+                                 _word_number(first["transaction_cost_cash_paid"]),
+                                 _word_number(first["transaction_cost_payable_opening"]) + "／" +
+                                 _word_number(first["transaction_cost_payable_closing"]),
+                                 fee_source["source_id"] + "；合成年度预测，非实付"]],
+                               "交易费不并入运维费；全期计提、预计付款和应付逐期核对见测算模型 M14。",
+                               widths_cm=(2.7, 2.75, 2.75, 3.4, 5.4))
             if item_id == "APP06.01":
+                fee_source = model.result.get("evidence", {}).get("financial-ledger", {}).get("trading_fee_payment")
+                if fee_source:
+                    document.add_paragraph("本合成测算按交易费当年发生、当年全额预计支付处理，期初无交易费欠款；"
+                                           "该安排仅用于年度预测测试，不代表真实合同或实际付款记录。"
+                                           f"来源编号：{fee_source['source_id']}。")
                 _add_table(document, ["期别", "项目税后净现金流（元）", "资本支出付款（元）", "营运资金增加（元）", "其中更换付款（元）"],
                            _project_cash_word_rows(model), "建设期及运营全期项目现金流（已计算值，非资本金现金流）",
                            widths_cm=(2.2, 4.0, 3.6, 3.5, 3.7))
@@ -2152,7 +2190,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                         and all(all(row.get(field) is not None for field in fields) for row in annual[1:])):
                     bridge_rows = [[_reader_text(row["period"]), *(_word_number(row[field]) for field in fields),
                                     _word_number(values[index])] for index, row in enumerate(annual[1:], 1)]
-                    _add_table(document, ["期别", "上网回款（元）", "自用节费（元）", "另付交易费（元）",
+                    _add_table(document, ["期别", "上网回款（元）", "自用节费（元）", "预计另付交易费（元）",
                                           "运维现金（元）", "项目现金税费（元）", "项目净现金流（元）"],
                                bridge_rows, "运营全期收支桥（按3D账簿原值列示，不将节费记作银行到账）",
                                widths_cm=(2.0, 2.75, 2.45, 2.3, 2.4, 2.45, 2.65), font_size=9)

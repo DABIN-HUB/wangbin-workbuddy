@@ -7,7 +7,7 @@ import pytest
 
 from wangbin_solar_pv.catalog import Catalog
 from wangbin_solar_pv.calculation.financial_ledger import _annual_revenue, calculate_financial_ledger
-from wangbin_solar_pv.calculation.phase3e import _ledger_vectors
+from wangbin_solar_pv.calculation.phase3e import _ledger_vectors, calculate_phase3e
 from wangbin_solar_pv.calculation.result_contract import seal_result
 from wangbin_solar_pv.errors import ContractError
 from wangbin_solar_pv.serialization import loads
@@ -29,12 +29,18 @@ def _financial(case):
     return calculate_financial_ledger(exported, methods, settlement, catalog=Catalog())
 
 
-def test_gross_receipt_and_separate_fee_are_counted_once_in_all_25_cash_periods(case):
+def test_gross_receipt_and_separate_fee_accrual_do_not_invent_cash_payment(case):
     _, _, settlement = case
     result = _financial(case)
     years = result["evidence"]["financial-ledger"]["annual"]
     vectors = _ledger_vectors(years)
-    assert len(years) == 26 and vectors["missing"] == {}
+    assert len(years) == 26
+    assert vectors["missing"]["transaction_cost_cash_paid"] == [
+        f"OPERATING_YEAR_{index}" for index in range(1, 26)]
+    assert vectors["benefit"] is None
+    assert result["status"] == "PARTIAL"
+    assert any(finding["code"] == "TRANSACTION_FEE_PAYMENT_SOURCE_REQUIRED"
+               for finding in result["findings"])
     assert years[0]["period"] == "CONSTRUCTION"
     for index, row in enumerate(years[1:], 1):
         source = next(metric for metric in settlement["results"]["metrics"]
@@ -42,15 +48,22 @@ def test_gross_receipt_and_separate_fee_are_counted_once_in_all_25_cash_periods(
         fee = source["transaction_cost"]
         assert fee > 0
         assert row["transaction_cost_accrued"] == fee
-        assert abs(row["transaction_cost_cash_paid"] - fee) < Decimal("0.000000000000000001")
-        assert row["transaction_cost_payable_closing"] == 0
+        assert row["transaction_cost_cash_paid"] is None
+        assert row["transaction_cost_payable_opening"] is None
+        assert row["transaction_cost_payable_closing"] is None
         assert abs(row["invoiced_gross"] - source["export_sales_revenue"]) < Decimal("0.000000000000000001")
-        assert vectors["benefit"][index] == row["revenue_cash_receipts"] + row["self_use_avoided_expenditure"] - row["transaction_cost_cash_paid"]
+        assert row["transaction_cost_payment_status"] == "BLOCKED_MISSING_INPUT"
         assert vectors["opex"][index] == row["opex_cash_paid"]
         assert row["taxable_income_project"] is not None  # Tax is a separate deduction, not fee payment.
-    assert abs(sum(vectors["transaction_cost"][1:], Decimal(0)) - sum(
-        metric["details"]["ledger"]["transaction_cost"] for metric in settlement["results"]["metrics"]
-        if metric["metric_id"].startswith("revenue.year."))) < Decimal("0.000000000000000001")
+    assert vectors["transaction_cost"] is None
+    partial = calculate_phase3e(result, case[1], Catalog())
+    assert partial["status"] == "PARTIAL"
+    for metric_id in ("financial.phase3e.project_cash_flow", "financial.phase3e.project_npv",
+                      "financial.phase3e.project_irr", "financial.phase3e.static_payback"):
+        metric = next(metric for metric in partial["results"]["metrics"] if metric["metric_id"] == metric_id)
+        assert metric["status"] == "BLOCKED_MISSING_INPUT"
+    assert next(metric for metric in partial["results"]["metrics"]
+                if metric["metric_id"] == "revenue.year.1")["status"] == "CALCULATED"
 
 
 def test_zero_fee_is_not_an_invented_expense(case):
@@ -69,7 +82,7 @@ def test_zero_fee_is_not_an_invented_expense(case):
                for index, row in enumerate(rows[1:], 1))
 
 
-def test_fee_payment_may_differ_from_collection_period_without_being_lost(case):
+def test_opex_and_collection_fractions_do_not_source_fee_payment(case):
     exported, methods, settlement = case
     changed = deepcopy(methods)
     changed["parameters"]["cash.opex_payment_fractions"]["value"][0] = Decimal(0)
@@ -79,11 +92,24 @@ def test_fee_payment_may_differ_from_collection_period_without_being_lost(case):
                      if metric["metric_id"] == "revenue.year.1")["details"]["ledger"]["transaction_cost"]
     second_fee = next(metric for metric in settlement["results"]["metrics"]
                       if metric["metric_id"] == "revenue.year.2")["details"]["ledger"]["transaction_cost"]
-    assert rows[1]["revenue_cash_receipts"] == rows[1]["transaction_cost_cash_paid"] == 0
-    assert abs(rows[1]["transaction_cost_payable_closing"] - first_fee) < Decimal("0.000000000000000001")
-    assert abs(rows[2]["transaction_cost_cash_paid"] - (first_fee + second_fee)) < Decimal("0.000000000000000001")
-    assert rows[2]["transaction_cost_payable_closing"] == 0
-    assert rows[-1]["transaction_cost_payable_closing"] == 0
+    assert rows[1]["revenue_cash_receipts"] == 0
+    assert first_fee > 0 and second_fee > 0
+    assert rows[1]["transaction_cost_cash_paid"] is None
+    assert rows[2]["transaction_cost_cash_paid"] is None
+    assert rows[2]["transaction_cost_payable_closing"] is None
+    assert rows[-1]["transaction_cost_payable_closing"] is None
+
+
+def test_changing_opex_fraction_cannot_change_transaction_fee_payment(case):
+    exported, methods, settlement = case
+    altered = deepcopy(methods)
+    altered["parameters"]["cash.opex_payment_fractions"]["value"][0] = Decimal(0)
+    original = _financial(case)["evidence"]["financial-ledger"]["annual"][1]
+    revised = calculate_financial_ledger(exported, altered, settlement)[
+        "evidence"]["financial-ledger"]["annual"][1]
+    assert revised["opex_cash_paid"] != original["opex_cash_paid"]
+    assert original["transaction_cost_cash_paid"] is revised["transaction_cost_cash_paid"] is None
+    assert revised["transaction_cost_accrued"] == original["transaction_cost_accrued"]
 
 
 def test_missing_settlement_fee_source_is_not_silently_treated_as_zero(case):
@@ -95,7 +121,16 @@ def test_missing_settlement_fee_source_is_not_silently_treated_as_zero(case):
         calculate_financial_ledger(exported, methods, seal_result(incomplete))
 
 
-def test_changed_settlement_fee_reaches_tax_basis_and_phase3e_benefit(case):
+def test_forged_fee_payment_parameter_cannot_bypass_frozen_method_contract(case):
+    exported, methods, settlement = case
+    invalid = deepcopy(methods)
+    invalid["parameters"]["cash.transaction_fee_payment_fractions"] = deepcopy(
+        invalid["parameters"]["cash.opex_payment_fractions"])
+    with pytest.raises(ContractError, match="METHOD_CONFIG_SCHEMA"):
+        calculate_financial_ledger(exported, invalid, settlement)
+
+
+def test_changed_settlement_fee_reaches_tax_basis_but_not_unbacked_cash(case):
     exported, methods, settlement = case
     original = _financial(case)["evidence"]["financial-ledger"]["annual"]
     revised = deepcopy(settlement)
@@ -107,11 +142,12 @@ def test_changed_settlement_fee_reaches_tax_basis_and_phase3e_benefit(case):
         "evidence"]["financial-ledger"]["annual"]
     before, after = _ledger_vectors(original), _ledger_vectors(changed)
     assert changed[1]["revenue_cash_receipts"] == original[1]["revenue_cash_receipts"]
-    assert changed[1]["transaction_cost_cash_paid"] - original[1]["transaction_cost_cash_paid"] == 1
+    assert abs(changed[1]["transaction_cost_accrued"] - original[1]["transaction_cost_accrued"] - 1) < Decimal("0.000000000000000001")
+    assert changed[1]["transaction_cost_cash_paid"] is original[1]["transaction_cost_cash_paid"] is None
     assert changed[1]["taxable_income_project"] < original[1]["taxable_income_project"]
     assert changed[1]["cash_tax_total_project"] < original[1]["cash_tax_total_project"]
-    assert after["benefit"][1] - before["benefit"][1] == -1
-    assert changed[2]["transaction_cost_cash_paid"] == original[2]["transaction_cost_cash_paid"]
+    assert after["benefit"] is before["benefit"] is None
+    assert changed[2]["transaction_cost_cash_paid"] is original[2]["transaction_cost_cash_paid"] is None
 
 
 def test_net_price_has_no_second_cash_deduction():

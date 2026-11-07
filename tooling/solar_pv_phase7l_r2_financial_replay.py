@@ -20,11 +20,13 @@ from wangbin_solar_pv.calculation.method_config import MethodConfig
 from wangbin_solar_pv.calculation.phase3e import calculate_sourced_project_npv
 from wangbin_solar_pv.calculation.result_contract import validate_result
 from wangbin_solar_pv.calculation.terminal_disposition import VERSION as TERMINAL_VERSION
+from wangbin_solar_pv.calculation.trading_fee_payment import MAX_SOURCE_BYTES
+from wangbin_solar_pv.errors import ContractError
 from wangbin_solar_pv.serialization import digest, dumps, loads
 from wangbin_solar_pv.timeseries_bundle import BundleBudget, read_bundle
 
 
-def replay(case_dir: Path, output_dir: Path, scratch_dir: Path) -> dict:
+def replay(case_dir: Path, output_dir: Path, scratch_dir: Path, *, trading_fee_source_path: Path | None = None) -> dict:
     case_dir, output_dir, scratch_dir = case_dir.resolve(), output_dir.resolve(), scratch_dir.resolve()
     if output_dir.exists() or not scratch_dir.is_dir():
         raise ValueError("FRESH_OUTPUT_AND_EXISTING_SCRATCH_REQUIRED")
@@ -41,6 +43,9 @@ def replay(case_dir: Path, output_dir: Path, scratch_dir: Path) -> dict:
     source = loads((case_dir / "terminal.json").read_bytes())
     provenance = source["no_disposition"]["source"]
     documents = {provenance["source_id"]: (case_dir / "terminal.txt").read_bytes()}
+    if trading_fee_source_path is not None and trading_fee_source_path.stat().st_size > MAX_SOURCE_BYTES:
+        raise ContractError("TRADING_FEE_SOURCE_BYTES_REQUIRED")
+    fee_source_bytes = trading_fee_source_path.read_bytes() if trading_fee_source_path is not None else None
     with ExitStack() as stack:
         restored = Path(stack.enter_context(TemporaryDirectory(prefix="pv-v7-bundle-", dir=scratch_dir))) / "bundle"
         restored.mkdir()
@@ -57,8 +62,11 @@ def replay(case_dir: Path, output_dir: Path, scratch_dir: Path) -> dict:
         bundle = stack.enter_context(read_bundle(restored, catalog=catalog, budget=BundleBudget()))
         if bundle.base_export != exported:
             raise ValueError("D3_INPUT_IDENTITY_MISMATCH")
-        financial = calculate_financial_ledger(exported, methods, settlement, catalog=catalog)
+        financial = calculate_financial_ledger(exported, methods, settlement, catalog=catalog,
+                                               trading_fee_source_bytes=fee_source_bytes)
         validate_result(financial, catalog)
+        if financial["boundaries"]["FINANCIAL_LEDGER"]["transaction_fee_payment"] == "BLOCKED_MISSING_INPUT":
+            raise ContractError("TRANSACTION_FEE_PAYMENT_SOURCE_REQUIRED")
         binding = {"project_id": exported["project"]["project_id"],
                    "pv_type": exported["project"]["pv_type"],
                    "evaluation_date": exported["project"]["values"]["project.evaluation_date"]["value"],
@@ -75,7 +83,8 @@ def replay(case_dir: Path, output_dir: Path, scratch_dir: Path) -> dict:
         carrier = {"schema_version": TERMINAL_VERSION, "source": source,
                    "source_content_hash": digest(source), "binding": binding}
         canonical = calculate_sourced_project_npv(carrier, documents, exported, methods, bundle,
-                                                  generation, settlement, financial, catalog)
+                                                  generation, settlement, financial, catalog,
+                                                  trading_fee_source_bytes=fee_source_bytes)
         validate_result(canonical, catalog)
         if (canonical["result_hash"] == original["result_hash"] or
                 canonical["inputs"]["upstream_settlement_result_hash"] != settlement["result_hash"] or
@@ -112,7 +121,8 @@ def replay(case_dir: Path, output_dir: Path, scratch_dir: Path) -> dict:
                "phase3d_result_hash": financial["result_hash"],
                "canonical_result_hash": canonical["result_hash"],
                "fee_treatment": settlement["boundaries"]["SETTLEMENT"]["fee_treatment"],
-               "fee_payment_method": "cash.opex_payment_fractions (forecast assumption)",
+               "fee_payment_status": financial["boundaries"]["FINANCIAL_LEDGER"]["transaction_fee_payment"],
+               "trading_fee_source_sha256": financial["evidence"]["financial-ledger"].get("trading_fee_payment",{}).get("raw_sha256"),
                "impact": impact, "operating_periods": stages}
     output_dir.mkdir(parents=True)
     try:
@@ -138,8 +148,11 @@ def main() -> None:
     parser.add_argument("case_dir", type=Path)
     parser.add_argument("output_dir", type=Path)
     parser.add_argument("--scratch", type=Path, required=True)
+    parser.add_argument("--trading-fee-payment-source", type=Path, help="Explicit synthetic trading-fee assumption JSON")
     args = parser.parse_args()
-    print(json.dumps(replay(args.case_dir, args.output_dir, args.scratch), ensure_ascii=False, default=str, indent=2))
+    print(json.dumps(replay(args.case_dir, args.output_dir, args.scratch,
+                            trading_fee_source_path=args.trading_fee_payment_source),
+                     ensure_ascii=False, default=str, indent=2))
 
 
 if __name__ == "__main__":
