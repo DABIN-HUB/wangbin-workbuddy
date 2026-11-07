@@ -1,0 +1,2963 @@
+{
+  "schema_version": "solar-pv-phase7l-r3-independent-content-readback/1.0.0",
+  "docx_sha256": "3690b52f0689b74d0dd446bfe988b6e767743fda21447a4c6da5e197cdd22eb1",
+  "canonical_result_hash": "ca4bdff3f5e89e6770d43f4dad3b4efd57d965aba6c9ba0f1b4299f99295a43f",
+  "status": "STRUCTURAL_READBACK_COMPLETE_PROFESSIONAL_REVIEW_REQUIRED",
+  "rendered_page_status": "NOT_VERIFIED_BY_THIS_AUDIT",
+  "counts": {
+    "chapters": 100,
+    "appendices": 26,
+    "formula_groups": 42,
+    "items_flagged": 64
+  },
+  "formula_review": [
+    {
+      "formula_id": "F-AC-CAPACITY",
+      "actual_word_body": "公式：P_AC = Σ(j∈J) P_inv,j（结果单位：kWac）\n适用边界：逆变器交流端；变压器 kVA、并网点 kW 和无功约束不能直接等同该值。\n本项目状态：本次引用；已计算1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 kWac；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nP_AC | 全部逆变器额定有功交流容量之和 | kWac\nP_inv,j | 第 j 台逆变器额定交流有功功率 | kWac\nj | 逆变器序号 | 1\nJ | 本方案安装的逆变器有限集合 | 集合\n下标、索引、集合与求和范围：j∈J：j 遍历本方案所有逆变器且只计一次；Σ 全集合求和；inv=逆变器；AC=交流。；逐个下标词素：AC=交流侧额定容量/功率；inv=逆变器设备/转换环节；j=逆变器逐台索引",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-AC-INVERTER-POWER",
+      "actual_word_body": "公式：P_AC,t = min(P_AC, max(0, η_inv,t × P_DC,t))（结果单位：kW）\n适用边界：每台/同质组先转换限幅再相加；不同设备不得只用总容量掩盖单机限幅。\n本项目状态：本次引用；已计算25项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 kW；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nP_AC,t | 逆变器交流输出平均功率 | kW\nP_AC | 同一逆变器聚合组额定交流有功容量 | kWac\nη_inv,t | 工况相关转换效率 | 1\nP_DC,t | 该组时段直流输入功率 | kW\n下标、索引、集合与求和范围：t：时段；inv=逆变器，AC=交流，DC=直流。；逐个下标词素：AC=交流侧额定容量/功率；t=同一时间粒度的时段索引；inv=逆变器设备/转换环节；DC=直流侧组件额定容量/功率",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-ANNUAL-OPEX",
+      "actual_word_body": "公式：O_y = Σ(k∈𝒪_y) O_k,y（结果单位：元）\n适用边界：折旧非现金；所得税、增值税、债务本息、资本化更换不在此重复；费用化维修与资本化替换需互斥。\n本项目状态：本次引用；已计算1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nO_y | 当年现金运营费用合计 | 元\nO_k,y | 当年分类现金费用，维修、清洗、保险、运维、租金等 | 元\nk | 费用分类索引 | 1\ny | 财务年 | 1\n𝒪_y | 本年费用分类集合，用符号 O_y 的花体集合形式区分金额 | 集合\n下标、索引、集合与求和范围：k∈𝒪_y：Σ 对本年已登记运营费用分类求和；𝒪_y 与金额 O_y 不同；k=费用类别。；逐个下标词素：y=财务或运营年度索引，必须按本条时间定义区分；k=损失/费用类别或现金事件索引，见本条集合",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-ASSET-BOOK-VALUE",
+      "actual_word_body": "公式：BV_a,y = BV_a,y−1 + ADD_a,y − D_a,y − DISP_a,y（结果单位：元）\n适用边界：资产处置收入另进入现金流，处置损益另入税基；账面和税务滚动不混用。\n本项目状态：本次引用；已计算1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nBV_a,y | 财务年末资产账面/计税净值，账簿类型明确 | 元\nBV_a,y−1 | 该年期初同一账簿资产净值 | 元\nADD_a,y | 本年转入该账簿的资产新增原值 | 元\nD_a,y | 本年该账簿折旧额 | 元\nDISP_a,y | 报废/处置转出的资产净值，不是现金收入 | 元\na | 资产或资产类别 | 1\ny | 财务年索引 | 1\n下标、索引、集合与求和范围：a：资产标识；y−1=上一财务年末；ADD=新增，DISP=处置净值，BV=净值。；时间偏移：y−1/n−1 表示该财务年/索引前一年度期末，即本年期初；−1 是索引偏移而非新符号。；逐个下标词素：a=资产/资产类别索引；递增连乘中为年度索引；y=财务或运营年度索引，必须按本条时间定义区分；1=首运营年或扰动后情景 1，具体按完整符号区分",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-AVAILABLE-ENERGY",
+      "actual_word_body": "公式：E_available,t = max(0, (P_AC,t × K_AC,t × K_tr,t × K_line,t − P_aux,t) × Δt_t × A_t)（结果单位：kWh/时段）\n适用边界：逆变器→交流线→变压器→送出线→明确计量点，限发另由消纳平衡扣；屋顶若计量点不同需禁用不适用段。\n本项目状态：本次引用；已计算25项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 kWh/时段；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nE_available,t | 同一计量点时段内限发前可用交流电量 | kWh/时段\nP_AC,t | 逆变器端交流功率 | kW\nK_AC,t | 交流线损剩余比例 | 1\nK_tr,t | 变压器损失剩余比例 | 1\nK_line,t | 送出线路损失剩余比例 | 1\nP_aux,t | 尚未扣除的站用功率 | kW\nΔt_t | 时段持续小时数 | h\nA_t | 未在功率输出中模拟的设备可用状态或等效可用比例 | 1\n下标、索引、集合与求和范围：t：时段；AC=交流，tr=变压器，line=送出线，aux=站用，available=限发前。；逐个下标词素：available=限发前可用电量；t=同一时间粒度的时段索引；AC=交流侧额定容量/功率；tr=变压器环节；line=送出线路损失；aux=站内辅助用电",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-AVERAGE-ANNUAL-ENERGY",
+      "actual_word_body": "公式：E_mean = sum_(y=1..N)(E_y) / N（结果单位：kWh/年）\n适用边界：完整运营年算术均值；含不足年采用时长加权并另注册方法，不以建设年补0混淆。\n本项目状态：本次引用；已计算1项。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nE_mean | 评价范围同边界年均电量 | kWh/年\nE_y | 第y运营年交流电量 | kWh\nN | 明确的完整运营年数量 | 年\ny | 从1至N的运营年索引 | 1\n下标、索引、集合与求和范围：t：按同一时区排序且无重漏的时段索引；t+1为相邻时段末/下一时段初；y：评价期运营年，从1开始；构建年时间另登记；标签：PV光伏，grid电网，self自用，exp外送，curt限发，ch充电，dis放电，aux辅机，use可用，nom铭牌，min/max上下界；仅本式出现者生效，不是相乘字母；范围：t∈T；T为实际覆盖、时长/时区一致的有限时段集合。y=1..N，N为project.evaluation_years；本式未出现的集合不参与计算。；上标说明：上标如出现仅表示指数/边界标签；本条无未定义上标",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-BREAK-EVEN-PRICE",
+      "actual_word_body": "公式：P_star = {p∈P : NPV_b(CF_b(p), r_b) = 0}（结果单位：集合（元素元/kWh））\n适用边界：冻结“使 NPV=0”的定义，不混称会计利润盈亏平衡；分时电价可对指定倍率求根但需新输出字段。\n本项目状态：本次引用；阻断1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 集合（元素元/kWh）；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nP_star | 满足 NPV=0 的电价根集合 | 集合\np | 待求结算电价，只调整预先指定的电价项 | 元/kWh\nP | 有业务依据且事前声明的允许电价域，可含合法负价 | 集合\nNPV_b | 同一税/融资口径的净现值函数 | 元\nCF_b(p) | 固定其他外生输入、电价为 p 时完整重算的现金流向量 | 元/期\nr_b | 同一口径折现率 | 1（每年度有效比例，非连续时间倒数单位）\nb | 项目或股权的唯一口径 | 枚举\n下标、索引、集合与求和范围：p∈P：域内全部使 NPV=0 的电价构成集合。；逐个下标词素：star=盈亏平衡根集合标签，相当于上标 *，不是乘方；b=互斥的项目/股权及税前后完整口径索引；p=待求结算电价，只调整事前指定电价项，在允许价格域P内求全部有效根；上标*：盈亏平衡候选根集合标签，不是乘方。",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-CAPACITY-FACTOR",
+      "actual_word_body": "公式：CF_cap,y = E_y / (P_ref × H_y)（结果单位：1）\n适用边界：完整普通年、闰年、首尾不完整运营年分别用实际时段覆盖；不能一律硬编码小时数。\n本项目状态：本次引用；已计算25项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 1；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nCF_cap,y | 指定年度和容量口径的容量因子，不是现金流 | 1\nE_y | 选定边界年度交流电量 | kWh\nP_ref | 标签明确的 DC/AC 参考容量 | kW\nH_y | 该评价年度的实际覆盖小时数 | h\n下标、索引、集合与求和范围：cap：容量指标标签；y=运营年；ref=参考装机。；逐个下标词素：cap=容量因子，避免与现金流 CF 混淆；y=财务或运营年度索引，必须按本条时间定义区分；ref=DC 或 AC 已明确的参考容量",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-CAPEX-TOTAL",
+      "actual_word_body": "公式：CAPEX = Σ(i∈I) C_i（结果单位：元）\n适用边界：组件、逆变器、支架、电缆、变配电、送出、土建、屋顶加固、施工、运输、设计、开发、管理、预备费、建设期利息逐项纳入/剔除及理由；储能/土地同样显式标识。\n本项目状态：本次引用；已计算2项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nCAPEX | 投资估算总额，边界由清单标识 | 元\nC_i | 第 i 类可追溯投资金额 | 元\ni | 成本类别索引 | 1\nI | 互斥且完整的分类清单 | 集合\n下标、索引、集合与求和范围：i∈I：Σ 对方案成本清单所有互斥分类求和；I 的成员须记录税价与建期利息标志。；逐个下标词素：i=投资成本类别索引",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-CASH-FUNDING-BALANCE",
+      "actual_word_body": "公式：CLOSE_y = OPEN_y + CF_E,avail,y + EQ_y − DIV_y（结果单位：元）\n适用边界：本条验证主体现金账户；独立第三方支付的股权转让 EXIT 不经过主体账户；终期资产处置已在 CF_E,avail 中。\n本项目状态：本次引用；阻断1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nCLOSE_y | 项目主体期末非受限现金余额 | 元\nOPEN_y | 项目主体期初非受限现金余额 | 元\nCF_E,avail,y | 已计经营、税、资本支出、提款、本息及融资费用的股权可用余缺 | 元\nEQ_y | 股东实际出资及追加 | 元\nDIV_y | 主体支付的股东分配，终期清算支付也应归入对应账户用途 | 元\n下标、索引、集合与求和范围：y：所有建设/运营财务时点；OPEN/CLOSE=期初/末现金；E,avail=可供股权余缺。；逐个下标词素：y=财务或运营年度索引，必须按本条时间定义区分；E=股权/融资主体口径，ε_E 则标能量残差；avail=可供股权分配的现金余缺",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-CASH-TAX-TOTAL",
+      "actual_word_body": "公式：T_b,y = T_inc,cash,b,y + T_other,b,y + VP_b,y − VR_b,y + ADJ_vat,b,y（结果单位：元）\n适用边界：含税收付时净缴退税直接入流；不含税收付时必须显式记录 VAT 桥，不能既除税又全扣净缴税漏掉税收付。输出按 b 投影到 tax.project_cash_total 或 tax.equity_cash_total。\n本项目状态：本次引用；已计算26项。\n本式共通契约：运算符第1组；记法与歧义第2组；单位约定第1组\n本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nT_b,y | 选定项目/主体口径现金税净额 | 元\nT_inc,cash,b,y | 同口径现金所得税 | 元\nT_other,b,y | 未在经营费用/资产中重复的其他现金税费 | 元\nVP_b,y | 本期增值税实际缴纳额 | 元\nVR_b,y | 本期增值税实际退税额 | 元\nADJ_vat,b,y | 如收付采用不含税口径，用于补回销项/进项收付的桥接净额；含税全现金口径时为零 | 元\nb | P 无杠杆项目或 E 融资主体 | 枚举\ny | 财务年 | 1\n下标、索引、集合与求和范围：b：项目/融资主体互斥口径；y=财务年；vat=增值税；ADJ=税价桥调整。；逐个下标词素：b=互斥的项目/股权及税前后完整口径索引；y=财务或运营年度索引，必须按本条时间定义区分；inc=所得税而非其他现金税费；cash=实际或预测现金收付而非权责计提；other=未在其他项目计入的其他收益/税费；vat=增值税现金桥",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-CFADS",
+      "actual_word_body": "公式：CFADS_y = B_op,y − O_y − T_E,y − ΔW_ds,y − K_mand,y + A_ds,y（结果单位：元）\n适用边界：债务服务前现金；不得在分子再扣同笔利息本金，也不把提款、股东出资当经营偿债能力。\n本项目状态：本次引用；阻断1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nCFADS_y | 按融资协议可用于偿债的当期现金流 | 元\nB_op,y | 经营现金利益，不含融资 | 元\nO_y | 协议口径现金运营支出 | 元\nT_E,y | 协议口径实际现金税，不重复税价桥 | 元\nΔW_ds,y | 协议要求的未重计营运资金或储备净增 | 元\nK_mand,y | 协议要求在偿债前扣除的维护性资本开支 | 元\nA_ds,y | 有合同依据的其他 CFADS 调整，可正可负 | 元\n下标、索引、集合与求和范围：y：与债务应付服务完全同周期；ds=偿债协议调整；mand=强制维护资本支出。；逐个下标词素：y=财务或运营年度索引，必须按本条时间定义区分；op=运营经营利益；E=股权/融资主体口径，ε_E 则标能量残差；ds=融资协议偿债现金口径；mand=协议要求优先扣除的维护性资本支出",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-CUMULATIVE-CASH-FLOW",
+      "actual_word_body": "公式：A_b,n = Σ(y=0…n) CF_b,y（结果单位：元）\n适用边界：从首次纳入评价的建设出资基期起算，不从投产时重置亏损；如使用运营回收期必须另标起点。\n本项目状态：本次引用；已计算1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nA_b,n | 截至时点 n 的未折现累计净现金流 | 元\nCF_b,y | 同一口径各期净现金流 | 元\ny | 自基期起财务年度时点 | 1\nn | 被评估的累计终点，0…N | 1\nb | 项目/股权及税前后唯一口径 | 枚举\n下标、索引、集合与求和范围：Σ y=0…n：含基期至累计终点 n；A 为累计值标签。；逐个下标词素：b=互斥的项目/股权及税前后完整口径索引；n=累计终点或首次回收年度索引；y=财务或运营年度索引，必须按本条时间定义区分",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-DATED-NPV",
+      "actual_word_body": "公式：NPV_b = Σ(k∈C) CF_b,k / (1 + r_b)^τ_k（结果单位：元）\n适用边界：建设跨年、分期出资优先采用；日计数采用的年分数规则须写入方法版本，不默认日历除数。\n本项目状态：本次引用；阻断1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nNPV_b | 按实际支付时点折现的净现值 | 元\nCF_b,k | 第 k 个实际现金事件的金额 | 元\nr_b | 同口径年化折现率 | 1（每年度有效比例，非连续时间倒数单位）\nτ_k | 事件日至基准日的合同年分数，可为非整数 | 年/年\nk | 现金事件索引 | 1\nC | 完整评价现金事件集合，含基期和终期 | 集合\nb | 唯一现金流口径 | 枚举\n下标、索引、集合与求和范围：k∈C：Σ 遍历所有现金事件，不漏基期；τ_k 为按明确日计数规则计算的无量纲年分数。；逐个下标词素：b=互斥的项目/股权及税前后完整口径索引；k=损失/费用类别或现金事件索引，见本条集合；上标τ_k：年化折现指数；具体日计数与日历基准为输入方法参数。",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-DC-AC-RATIO",
+      "actual_word_body": "公式：R_DC_AC = P_DC / P_AC（结果单位：1）\n适用边界：比较额定功率数值，保留 DC/AC 标签；不是实时效率，也不是并网容量比。\n本项目状态：本次引用；已计算1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 1；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nR_DC_AC | 直流额定容量除以逆变器交流额定容量 | 1\nP_DC | 标准测试条件组件峰值容量，数值以 kW 表示 | kWp\nP_AC | 逆变器额定交流有功容量 | kWac\n下标、索引、集合与求和范围：说明：下标仅是变量名称中给出的物理/会计边界标签；具体含义见本条每一完整符号定义，不是乘法。无迭代索引。；逐个下标词素：DC=直流侧组件额定容量/功率；AC=交流侧额定容量/功率",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-DC-CAPACITY",
+      "actual_word_body": "公式：P_DC = N_mod × P_mod（结果单位：kWp）\n适用边界：组件铭牌端，不是逆变器交流输出或并网许可容量。混用组件规格须逐类求和。\n本项目状态：本次引用；已计算1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 kWp；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nP_DC | 组件阵列在标准测试条件下的额定直流容量 | kWp\nN_mod | 同一规格组件的整数块数 | 块\nP_mod | 该规格单块组件额定峰值功率 | kWp/块\n下标、索引、集合与求和范围：说明：下标仅是变量名称中给出的物理/会计边界标签；具体含义见本条每一完整符号定义，不是乘法。无迭代索引。；逐个下标词素：DC=直流侧组件额定容量/功率；mod=光伏组件",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-DEBT-BALANCE",
+      "actual_word_body": "公式：B_D,y = B_D,y−1 + DD_y + IC_y + FC_y − PRN_y − WO_y（结果单位：元）\n适用边界：逐贷款、逐币种、逐合同先算再汇总；本金与应付未资本化利息分账。\n本项目状态：本次引用；已计算1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nB_D,y | 期末贷款本金余额 | 元\nB_D,y−1 | 期初贷款本金余额 | 元\nDD_y | 实际现金提款 | 元\nIC_y | 按合同资本化转本金但未付现的利息 | 元\nFC_y | 按合同转为本金但未付现的融资费用 | 元\nPRN_y | 本期实际归还本金 | 元\nWO_y | 有法律凭据的本金豁免/其他非现金核销，默认不假设存在 | 元\n下标、索引、集合与求和范围：D：债务标签；y−1=期初；IC/FC=转本金的未付现利息/费用，WO=合法核销。；时间偏移：y−1/n−1 表示该财务年/索引前一年度期末，即本年期初；−1 是索引偏移而非新符号。；逐个下标词素：D=债务本金口径；y=财务或运营年度索引，必须按本条时间定义区分；1=首运营年或扰动后情景 1，具体按完整符号区分",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-DELIVERED-ENERGY",
+      "actual_word_body": "公式：E_delivered,y = Σ(t∈T_y) (E_self,t + E_export,t)（结果单位：kWh）\n适用边界：用于 LCOE 的可利用边界；剔除弃光，不得用理论直流电量替代。\n本项目状态：本次引用；已计算25项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 kWh；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nE_delivered,y | 第 y 年同项目边界可利用交付电量 | kWh\nE_self,t | 合法计量边界内的自用电量 | kWh/时段\nE_export,t | 同边界实际上网电量 | kWh/时段\nt | 时段索引 | 1\ny | 运营年索引 | 1\nT_y | 第 y 个运营年的完整时段集合 | 集合\n下标、索引、集合与求和范围：t∈T_y：Σ 遍历年 y 的所有时段；delivered=交付，不含弃光。；逐个下标词素：delivered=同计量点可利用交付量，不含弃光；y=财务或运营年度索引，必须按本条时间定义区分；self=同边界时段自用电量；t=同一时间粒度的时段索引；export=上网/送出计量边界",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-DISCOUNTED-CUMULATIVE-CASH",
+      "actual_word_body": "公式：A_disc,b,n = Σ(y=0…n) CF_b,y / (1+r_b)^y（结果单位：元）\n适用边界：与 NPV 同基准日、同年末假设；不能静态累计配动态年度流。\n本项目状态：本次引用；已计算1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nA_disc,b,n | 截至 n 的折现累计净现金流 | 元\nCF_b,y | 同口径财务净现金流 | 元\nr_b | 同口径年度折现率 | 1（每年度有效比例，非连续时间倒数单位）\ny | 财务年度时点 | 1\nn | 累计终点索引 | 1\nb | 唯一现金流口径 | 枚举\n下标、索引、集合与求和范围：Σ y=0…n：从基期到累计终点全部年度流求和。；逐个下标词素：disc=已经折现的累计值；b=互斥的项目/股权及税前后完整口径索引；n=累计终点或首次回收年度索引；y=财务或运营年度索引，必须按本条时间定义区分；上标d：仅是 discounted 折现标签，不是幂。；上标y：(1+r_b) 的年度折现幂。",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-DSCR",
+      "actual_word_body": "公式：DSCR_y = CFADS_y / DS_y（结果单位：1）\n适用边界：无融资返回 不适用；存在债务但宽限期服务为零返回 本期无应偿债务本息 不输出无限或伪造数值。\n本项目状态：本次引用；数学未定义1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 1；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nDSCR_y | 当期可供偿债现金除以合同债务服务 | 1\nCFADS_y | 同周期协议口径可用于偿债现金 | 元\nDS_y | 同周期合同应付本金、利息及协议费用合计 | 元\n下标、索引、集合与求和范围：y：与服务完全相同周期；DS=应付债务服务；DSCR=比值。；逐个下标词素：y=财务或运营年度索引，必须按本条时间定义区分",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-DYNAMIC-PAYBACK",
+      "actual_word_body": "公式：PB_dynamic,b = n − 1 + (−A_disc,b,n−1)/(CF_b,n/(1+r_b)^n)（结果单位：年）\n适用边界：与静态回收期同起点；线性插值基于年度折现值，只是近似，不代表精确日历回收日。\n本项目状态：本次引用；已计算1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 年；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nPB_dynamic,b | 自基期起动态首次回收期 | 年\nn | 折现累计首次负转非负的年度终点 | 1\nA_disc,b,n−1 | 前一年末负折现累计净流 | 元\nCF_b,n | 回收年度未折现净现金流 | 元\nr_b | 同口径年折现率 | 1（每年度有效比例，非连续时间倒数单位）\nb | 唯一现金流口径 | 枚举\nN | 评价期最后一个财务年度时点，限制首次交叉搜索范围 | 1\n下标、索引、集合与求和范围：n：范围 1…N 中折现累计首次负转非负最小索引；N 为已定义的评价末期。；时间偏移：y−1/n−1 表示该财务年/索引前一年度期末，即本年期初；−1 是索引偏移而非新符号。；逐个下标词素：dynamic=折现回收期；b=互斥的项目/股权及税前后完整口径索引；disc=已经折现的累计值；n=累计终点或首次回收年度索引；1=首运营年或扰动后情景 1，具体按完整符号区分；上标d：折现标签，非乘方。；上标n：对本年度净流的折现幂。",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-ENERGY-AGGREGATION",
+      "actual_word_body": "公式：E_b,p = Σ(t∈T_p) E_b,t（结果单位：kWh）\n适用边界：不混合限发前/后和 DC/AC 边界；账期与自然年不能静默合并。\n本项目状态：本次引用；已计算52项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 kWh；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nE_b,p | 边界 b、汇总期 p 的电量 | kWh\nE_b,t | 边界 b 的时段电量 | kWh/时段\nb | 已登记的可用、自用、上网、限发或交付边界标签 | 标签\np | 月、资源年或运营年的汇总期 | 期间\nT_p | 归属该期的完整时段有限集合 | 集合\nt | 时段索引 | 1\n下标、索引、集合与求和范围：t∈T_p：Σ 对汇总期全部时段求和；b=同一物理边界；p=选定月或年。；逐个下标词素：b=同一物理能量边界（已登记的可用、自用、上网、限发或交付边界）；p=月/年汇总期间索引；t=同一时间粒度的时段索引",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-ENERGY-REVENUE",
+      "actual_word_body": "公式：R_y = Σ(t∈T_y)(E_self,t×p_avoid,t + E_export,t×p_sell,t) + R_other,y（结果单位：元）\n适用边界：自持自用节省属于项目经济收益但不是另一笔到账销售现金；进现金流时用避免支出法或增量收益法二选一。\n本项目状态：本次引用；已计算26项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nR_y | 自持项目年度经济收益，按同一税价口径 | 元\nE_self,t | 自用电量 | kWh/时段\np_avoid,t | 确实可避免的边际购电单价，不含不可减少固定费 | 元/kWh\nE_export,t | 可结算上网电量 | kWh/时段\np_sell,t | 合同/交易规则的售电结算单价，可在有依据时为负 | 元/kWh\nR_other,y | 有来源且未重计的其他年度收益 | 元\nt | 结算时段索引 | 1\nT_y | 该运营年合法结算时段集合 | 集合\ny | 运营年 | 1\n下标、索引、集合与求和范围：t∈T_y：Σ 对年 y 结算时段求和；avoid=可避免购电，sell=售电，other=其他。；逐个下标词素：y=财务或运营年度索引，必须按本条时间定义区分；self=同边界时段自用电量；t=同一时间粒度的时段索引；avoid=实际可避免的购电成本；export=上网/送出计量边界；sell=售电结算价；other=未在其他项目计入的其他收益/税费",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-EQUITY-AVAILABLE-CASH-FLOW",
+      "actual_word_body": "公式：CF_E,avail,y = B_op,y − O_y − T_E,y − K_E,y − ΔW_E,y + S_E,y + DD_y − PRN_y − INT_y − FF_y（结果单位：元）\n适用边界：明确包含融资并使用融资后税负；项目流不能原样加融资后忽略利息税盾。\n本项目状态：本次引用；阻断1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nCF_E,avail,y | 融资后可供股权的现金余缺，负值表示需股东追加资金 | 元\nB_op,y | 经营现金利益，不含融资 | 元\nO_y | 现金运营支出 | 元\nT_E,y | 考虑合法利息税盾的实际主体现金税总额，税价桥口径与项目流一致 | 元\nK_E,y | 实际资产付款及更换，融资利息和融资费用已单列 INT/FF 因此不在此扣 | 元\nΔW_E,y | 未在其他现金项扣过的经营营运资金和约定受限储备净增 | 元\nS_E,y | 处置及未在 ΔW 中回收的终期现金 | 元\nDD_y | 债务现金提款，非资本化利息记账增加 | 元\nPRN_y | 本期实际付现归还本金 | 元\nINT_y | 本期实际付现债务利息，含建设期支付部分 | 元\nFF_y | 付现融资费用，未在资产付款/利息中重复计入 | 元\n下标、索引、集合与求和范围：E：股权口径；avail=可分配余缺；DD=提款，PRN=本金，INT=利息，FF=融资费；y=完整财务时点。；逐个下标词素：E=股权/融资主体口径，ε_E 则标能量残差；avail=可供股权分配的现金余缺；y=财务或运营年度索引，必须按本条时间定义区分；op=运营经营利益",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-EQUITY-INVESTOR-CASH-FLOW",
+      "actual_word_body": "公式：CF_E,y = DIV_y + EXIT_y − EQ_y（结果单位：元）\n适用边界：分红限制、储备账户、资金滞留需反映实际收付；CF_E,avail 只有立即全额弥补/分配且无滞留时才与此相等。\n本项目状态：本次引用；阻断1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nCF_E,y | 投资者视角净现金流，用于实际资本金 IRR | 元\nDIV_y | 当期实际或计划可合法支付的股东分配 | 元\nEXIT_y | 未含在分配中的投资者退出或终期清算回款 | 元\nEQ_y | 本期股东实际出资及追加资金 | 元\n下标、索引、集合与求和范围：E：股东投资者；DIV=分配，EXIT=退出，EQ=实缴出资；y=财务时点。；逐个下标词素：E=股权/融资主体口径，ε_E 则标能量残差；y=财务或运营年度索引，必须按本条时间定义区分",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-EQUIVALENT-HOURS",
+      "actual_word_body": "公式：h_eq,y = E_y / P_ref（结果单位：h）\n适用边界：必须同时输出 reference_capacity_basis=DC/AC 和计量点，不能跨口径对标。\n本项目状态：本次引用；已计算25项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 h；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nh_eq,y | 年度等效满功率小时 | h\nE_y | 选定计量点年度交流电量 | kWh\nP_ref | 与指标标签一致的 DC 或 AC 参考容量 | kW\n下标、索引、集合与求和范围：eq：等效标签；y=指定运营年；ref=明确 DC/AC 参考容量。；逐个下标词素：eq=等效满发小时；y=财务或运营年度索引，必须按本条时间定义区分；ref=DC 或 AC 已明确的参考容量",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-INVESTMENT-HURDLE-GAP",
+      "actual_word_body": "公式：G_M = M_calc − M_target（结果单位：与 M 同单位）\n适用边界：IRR 下限差距≥0 倾向满足；回收期上限差距≤0 才满足，方向由指标定义而非本式自动推断。\n本项目状态：本次引用；阻断1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 与 M 同单位；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nG_M | 测算值减用户门槛的原始差距 | 与 M 同单位\nM_calc | 有效的确定性测算指标，不得倒改输入迎合目标 | 原指标单位\nM_target | 用户目标，如 IRR 下限或回收期上限 | 原指标单位\n下标、索引、集合与求和范围：M：被比较指标；calc=测算，target=用户目标。；逐个下标词素：M=所考察财务/技术指标；calc=确定性测算结果；target=用户目标阈值而非实际测算输入",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-IRR-EQUITY",
+      "actual_word_body": "公式：R_E = {r∈D : Σ(y=0…N) CF_E,y/(1+r)^y = 0}（结果单位：集合（元素为每年比例））\n适用边界：必须计融资及分红限制，不能用项目现金流或单纯会计利润代替；日期不齐改 dated-NPV。\n本项目状态：本次引用；阻断1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 集合（元素为每年比例）；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nR_E | 投资者资本金 IRR 实根集合 | 集合\nr | 待求年化股权收益率 | 1（每年度有效比例，非连续时间倒数单位）\nD | 事前声明并记录的 r>−1 实数搜索域 | 集合\nCF_E,y | 真实股东出资为负、分配和退出为正的投资者现金流 | 元\ny | 财务时点 | 1\nN | 终期评价时点 | 1\n下标、索引、集合与求和范围：r∈D：域内全部满足 NPV=0 的实率构成集合。；Σ y=0…N：股东全部真实/计划收付时点；E=股东口径。；逐个下标词素：E=股权/融资主体口径，ε_E 则标能量残差；y=财务或运营年度索引，必须按本条时间定义区分；上标−y：折现负幂。",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-IRR-PROJECT",
+      "actual_word_body": "公式：R_P = {r∈D : Σ(y=0…N) CF_P,y/(1+r)^y = 0}（结果单位：集合（元素为每年比例））\n适用边界：无债务流；税前与税后分别调用并分别输出，不以同字段覆盖；非整年时点改用同口径 dated-NPV 求根版本。\n本项目状态：本次引用；已计算1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 集合（元素为每年比例）；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nR_P | 项目投资 IRR 的全部可识别实根集合，不是任意单根百分比 | 集合\nr | 待求每年收益率 | 1（每年度有效比例，非连续时间倒数单位）\nD | 事前声明的实数搜索域，必须位于 r>−1；域外根不声称不存在 | 集合\nCF_P,y | 同口径项目投资无杠杆现金流，明确税前或税后，不含融资 | 元\ny | 财务年度时点 | 1\nN | 最后评价时点 | 1\n下标、索引、集合与求和范围：r∈D：集合构造：所有使 NPV 为零的域内实率；集合可能为空/单根/多根/连续。；Σ y=0…N：对基期到终期项目流求和；P=无杠杆项目。；逐个下标词素：P=项目无杠杆口径；y=财务或运营年度索引，必须按本条时间定义区分；上标−y：年末折现的负幂；r>−1 保持实数折现意义。",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-LCOE",
+      "actual_word_body": "公式：LCOE = Σ(y=0…N) Cost_P,y/(1+r_L)^y / Σ(y=0…N) E_delivered,y/(1+r_L)^y（结果单位：元/kWh）\n适用边界：分子/分母同年、同期间、同项目边界；弃光不算交付；按售电量计则成本必须切换为同售电边界。\n本项目状态：本次引用；阻断1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元/kWh；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nLCOE | 声明成本与交付边界的平准化度电成本 | 元/kWh\nCost_P,y | 本条选定无杠杆税前所得税生命周期净成本 | 元\nE_delivered,y | 同项目计量点可利用交付电量，建设无发电期显式为零 | kWh\nr_L | 与成本币种/名义实际口径相容的 LCOE 年折现率 | 1（每年度有效比例，非连续时间倒数单位）\ny | 建设基期至退出的财务年度时点 | 1\nN | 末期评价年度 | 1\n下标、索引、集合与求和范围：Σ y=0…N：分子分母分别对全部财务年求和；L=度电成本折现率标签。；逐个下标词素：P=项目无杠杆口径；y=财务或运营年度索引，必须按本条时间定义区分；delivered=同计量点可利用交付量，不含弃光；L=度电成本折现口径；上标y：距基期年度步数。",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-LIFECYCLE-COST",
+      "actual_word_body": "公式：Cost_P,y = K_P,y + O_y + T_cost,P,y + ΔW_P,y − S_P,y − SUB_P,y（结果单位：元）\n适用边界：默认方法冻结为项目无杠杆税前所得税 LCOE，保留适用其他税；融资本息不混入再用含融资成本折现率双计；补贴抵成本/收益二选一。\n本项目状态：本次引用；阻断1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nCost_P,y | 选定税费/补贴边界的项目生命周期净成本 | 元\nK_P,y | 无杠杆工程及资本更换现金支出 | 元\nO_y | 现金运营支出，不含折旧 | 元\nT_cost,P,y | 选定成本税费，税前 LCOE 不含所得税；税后模型需独立收入税基 | 元\nΔW_P,y | 未重计的营运资金净增 | 元\nS_P,y | 净残值回收及未在 ΔW 中回收的营运资金 | 元\nSUB_P,y | 明确选择为成本抵减且未计收入的有依据补贴 | 元\n下标、索引、集合与求和范围：P：无杠杆项目；y=建设至退出时点；cost=成本税费，SUB=补贴抵减。；逐个下标词素：P=项目无杠杆口径；y=财务或运营年度索引，必须按本条时间定义区分；cost=LCOE 成本范围",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-LOAD-COVERAGE-RATIO",
+      "actual_word_body": "公式：A_y = Σ(t∈T_y) E_self,t / Σ(t∈T_y) L_t（结果单位：1）\n适用边界：同一负荷表边界；不与发电侧自用率混用。\n本项目状态：本次引用；已计算25项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 1；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nA_y | 被光伏自用覆盖的总负荷比例 | 1\nE_self,t | 时段自用电量 | kWh/时段\nL_t | 时段负荷 | kWh/时段\nt | 时段索引 | 1\nT_y | 运营年 y 同一覆盖时段集合 | 集合\ny | 运营年 | 1\n下标、索引、集合与求和范围：t∈T_y：分子分母均对同年全部时段求和；A=负荷覆盖标签，非可用率 A_t。；逐个下标词素：y=财务或运营年度索引，必须按本条时间定义区分；self=同边界时段自用电量；t=同一时间粒度的时段索引",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-NOMINAL-REAL-RATE",
+      "actual_word_body": "公式：r_nom = (1 + r_real) × (1 + π) − 1（结果单位：1）\n适用边界：仅作同一税/风险/币种口径下的通胀转换；不能拿资产特定电价变化替代一般通胀。\n本项目状态：本次引用；阻断1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出为无量纲年度有效比例（单位1）；年度步长与复利口径保持不变，1+r_nom=(1+r_real)(1+π)各项均无量纲，不是连续时间1/年；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nr_nom | 名义年折现率 | 1（每年度有效比例，非连续时间倒数单位）\nr_real | 不含一般通胀的实际年折现率 | 1（每年度有效比例，非连续时间倒数单位）\nπ | 与币种和评价期对应的一般年通胀率假设 | 1（每年度有效比例，非连续时间倒数单位）\n下标、索引、集合与求和范围：nom：名义；real=实际；π 为同年度步长通胀。；逐个下标词素：nom=名义币值/名义折现率；real=实际购买力价格/折现率",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-NPV",
+      "actual_word_body": "公式：NPV_b = Σ(y=0…N) CF_b,y / (1 + r_b)^y（结果单位：元）\n适用边界：同币种、同基准日、同税口径和名义/实际价格；多建设年均保留现金流，不把全部投资挤到首运营年。\n本项目状态：本次引用；已计算1项、早期阶段留置占位1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nNPV_b | 口径 b 的年末现金流净现值 | 元\nCF_b,y | 已选项目税前/税后或股东实际现金流，口径不混合 | 元\nr_b | 与口径 b 匹配的每年折现率 | 1（每年度有效比例，非连续时间倒数单位）\nb | 项目税前、项目税后、股东实际收付中的一个完整口径标签 | 枚举\ny | 从基期 0 起的财务年度整数时点 | 1\nN | 最后一个财务年度时点，含建设及终期 | 1\n下标、索引、集合与求和范围：Σ y=0…N：有限求和含基期与末期；b=唯一口径；y=0 为评价基准日。；逐个下标词素：b=互斥的项目/股权及税前后完整口径索引；y=财务或运营年度索引，必须按本条时间定义区分；上标y：距基期的年度步数，用作折现幂指数。",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-PR-OBSERVED",
+      "actual_word_body": "公式：PR_y = (E_y/P_DC) / (H_POA,y/G_STC)（结果单位：1）\n适用边界：性能比不是逆变器效率；限发/停机含否需标签；不与 PR 假设法形成循环输入。\n本项目状态：本次引用；已计算25项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 1；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nPR_y | 同年同容量同计量点的性能比 | 1\nE_y | 选定计量点年度交流电量 | kWh\nP_DC | 同期可比直流额定容量 | kWp\nH_POA,y | 同年阵列面累计辐照量 | kWh/m²\nG_STC | 标准参考辐照度 | kW/m²\n下标、索引、集合与求和范围：y：同一运营年；POA=阵列平面；STC=标准测试；DC=直流。；逐个下标词素：y=财务或运营年度索引，必须按本条时间定义区分；DC=直流侧组件额定容量/功率；POA=组件阵列平面；STC=标准测试条件基准",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-PROJECT-CASH-FLOW",
+      "actual_word_body": "公式：CF_P,y = B_op,y − O_y − T_P,y − K_P,y − ΔW_P,y + S_P,y（结果单位：元）\n适用边界：建设期、运营期、替换和退出全时点；绝不含贷款提款、本息、融资费或股东出入资。\n本项目状态：本次引用；已计算1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nCF_P,y | 项目投资视角税后无杠杆增量净现金流 | 元\nB_op,y | 增量经营现金利益：到账经营收入加确认的自用避免支出，不含融资 | 元\nO_y | 现金经营支出，不含折旧、已在自用避免支出扣除项和单列税 | 元\nT_P,y | 无杠杆现金税负：项目所得税、其他税费和适配税价桥后的增值税净缴退 | 元\nK_P,y | 当年工程资本付款及资本化更新替换，不含融资资金流和资本化借款利息 | 元\nΔW_P,y | 经营营运资金净增加，不含已按现金收入/支出桥扣过部分和单列税务资产负债 | 元\nS_P,y | 期末处置净现金和未在 ΔW 中回收的残余资金，税务影响进 T | 元\n下标、索引、集合与求和范围：P：无杠杆项目；y 为财务时点索引，0 为基期，含所有建设/运营/退出期；op=经营，Δ=期末减期初，W=营运资金。；逐个下标词素：P=项目无杠杆口径；y=财务或运营年度索引，必须按本条时间定义区分；op=运营经营利益",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-PROJECT-PRETAX-CASH-FLOW",
+      "actual_word_body": "公式：CF_P,pre,y = CF_P,y + T_inc,cash,P,y（结果单位：元）\n适用边界：所得税前不等于不含增值税/全部免税；保留合法其他现金税费和税价桥。\n本项目状态：本次引用；已计算1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nCF_P,pre,y | 仅加回项目所得税的税前无杠杆现金流 | 元\nCF_P,y | 所得税后无杠杆项目现金流 | 元\nT_inc,cash,P,y | 同一项目口径实际/模拟所得税现金缴纳净额 | 元\n下标、索引、集合与求和范围：P：项目；pre=所得税前；inc,cash=现金所得税；y=财务时点。；逐个下标词素：P=项目无杠杆口径；pre=初始衰减前或所得税前，按完整符号区分；y=财务或运营年度索引，必须按本条时间定义区分；inc=所得税而非其他现金税费；cash=实际或预测现金收付而非权责计提",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-SELF-CONSUMPTION",
+      "actual_word_body": "公式：E_self,t = min(E_available,t, L_t)（结果单位：kWh/时段）\n适用边界：非负、同区间 kWh；E_available 是同计量边界限发前电量，L 是同点可抵减负荷；本公式不充分描述含储能/跨区间净计量/不同电表边界。\n本项目状态：本次引用；已计算26项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 kWh/时段；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nE_self,t | 该时段物理匹配的自用电量 | kWh/时段\nE_available,t | 同计量点限发前可用电量 | kWh/时段\nL_t | 同计量点可由光伏供给的负荷电量 | kWh/时段\n下标、索引、集合与求和范围：t：相同时区、时间戳和时长的区间；self=自用，available=限发前。；逐个下标词素：self=同边界时段自用电量；t=同一时间粒度的时段索引；available=限发前可用电量",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-SELF-CONSUMPTION-RATIO",
+      "actual_word_body": "公式：S_y = Σ(t∈T_y) E_self,t / E_delivered,y（结果单位：1）\n适用边界：明确分母为交付电量；另需限发前自用比例时须新 ID，不能混称；不是负荷自给率。\n本项目状态：本次引用；已计算25项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 1；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nS_y | 以实际交付电量为分母的自用比例 | 1\nE_self,t | 时段自用电量 | kWh/时段\nE_delivered,y | 同年自用加上网电量，不含弃光 | kWh\nt | 时段索引 | 1\nT_y | 运营年 y 的时段集合 | 集合\ny | 运营年 | 1\n下标、索引、集合与求和范围：t∈T_y：Σ 遍历年 y；S=发电侧自用率。；逐个下标词素：y=财务或运营年度索引，必须按本条时间定义区分；self=同边界时段自用电量；t=同一时间粒度的时段索引；delivered=同计量点可利用交付量，不含弃光",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-STATIC-PAYBACK",
+      "actual_word_body": "公式：PB_static,b = n − 1 + (−A_b,n−1) / CF_b,n（结果单位：年）\n适用边界：仅当 n≥1、A_(n−1)<0、A_n≥0、CF_n>0；区间内线性流入是假设而非真实日期。\n本项目状态：本次引用；已计算1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 年；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nPB_static,b | 自评价基期起静态首次回收的年数 | 年\nn | 第一个使累计净流由负转非负的年度终点 | 1\nA_b,n−1 | 此前一年末负累计净现金流 | 元\nCF_b,n | 首次回收年度的正净现金流 | 元\nb | 项目/股权唯一口径 | 枚举\nN | 评价期最后一个财务年度时点，限制首次交叉搜索范围 | 1\n下标、索引、集合与求和范围：n：在 {1,…,N} 内满足首次负转非负的最小年度索引；static=未折现。；时间偏移：y−1/n−1 表示该财务年/索引前一年度期末，即本年期初；−1 是索引偏移而非新符号。；范围：N 是评价末期，查找过程必须涵盖全部现金流，N 见时间字段 time.financial_end_year。；逐个下标词素：static=未折现回收期；b=互斥的项目/股权及税前后完整口径索引；n=累计终点或首次回收年度索引；1=首运营年或扰动后情景 1，具体按完整符号区分",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-UNIT-INVESTMENT",
+      "actual_word_body": "公式：c_DC = CAPEX / P_DC（结果单位：元/kWp）\n适用边界：不可将元/kWp 标作元/Wp；对标必须说明地区、时间和范围。\n本项目状态：本次引用；已计算1项。\n本式共通契约：运算符第2组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 元/kWp；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nc_DC | 按直流容量计的单位投资 | 元/kWp\nCAPEX | 已说明含税、土地、储能和融资边界的投资估算 | 元\nP_DC | 直流峰值装机容量 | kWp\n下标、索引、集合与求和范围：DC：直流容量口径。；逐个下标词素：DC=直流侧组件额定容量/功率",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    },
+    {
+      "formula_id": "F-WORST-CASH-YEAR",
+      "actual_word_body": "公式：Y_worst,b = argmin(y∈Y) CF_b,y（结果单位：集合（年份标签））\n适用边界：必须同时列最小现金额和比较范围；含建设期与运营最差年各自输出，不能借大建设负数掩盖运营缺口。\n本项目状态：本次引用；方法未实现1项。\n本式共通契约：运算符第1组；记法与歧义第1组；单位约定第1组\n本式量纲校核：输出单位为 集合（年份标签）；每个输入的单位见 本式完整符号表，同量纲才能相加；比率以小数存储，百分号仅展示。\n完整符号（仅属于本公式）\n完整符号 | 中文定义 | 单位\nY_worst,b | 达到最小净现金流的全部年份，允许并列 | 集合\nCF_b,y | 选定口径当年净现金流 | 元\nY | 被比较的有效年份集合，需明确仅运营期或含建设期 | 集合\ny | 年份索引 | 1\nb | 项目/股权及税前后口径 | 枚举\n下标、索引、集合与求和范围：argmin y∈Y：在声明范围内寻找全部最小值年份；不武断取第一个。；逐个下标词素：worst=给定年份集合中最差净现金流的全部位置；b=互斥的项目/股权及税前后完整口径索引；y=财务或运营年度索引，必须按本条时间定义区分",
+      "review_status": "SYMBOL_AND_APPLICABILITY_REVIEW_REQUIRED"
+    }
+  ],
+  "records": [
+    {
+      "id": "CH01.01",
+      "title": "项目识别及方案版本",
+      "actual_word_body": "项目名称：工商业屋面合成测算方案（无真实场址）；项目类别：工商业屋面。项目身份只界定合成测算对象，不能确认真实业主或获批方案。",
+      "actual_text_characters": 63,
+      "input_field_ids": [
+        "project.name",
+        "project.pv_type",
+        "site.address"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH01.02",
+      "title": "DC/AC及发电指标",
+      "actual_word_body": "本次方案按165kWp直流组件和150kW交流逆变器配置，以25年作为测算期；首年合成资源下预测发电245,313.45kWh。这只是设备铭牌与模型发电边界，并非获批装机或保底上网电量；厂房屋面剩余年限按30年假设，仍需权属、结构荷载、防水和消防通道复核。",
+      "actual_text_characters": 128,
+      "input_field_ids": [
+        "system.dc_capacity",
+        "system.ac_capacity",
+        "project.evaluation_years",
+        "roof.remaining_life",
+        "site.rights_status",
+        "site.land_classification"
+      ],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio",
+        "energy.year.1",
+        "energy.mean_annual"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-AC-CAPACITY",
+        "F-AVERAGE-ANNUAL-ENERGY",
+        "F-DC-AC-RATIO",
+        "F-DC-CAPACITY",
+        "F-ENERGY-AGGREGATION"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH01.03",
+      "title": "投资及财务指标",
+      "actual_word_body": "项目折现率：7.5%；股权折现率：9%；评价期资本支出估算（含更换，须按账簿复核）：539,000元；评价期CAPEX单位直流投资：3,266.67元/kWp；项目IRR在声明搜索域-90.0%至500%内唯一已认证根为22.8723%。工程投资汇总与投资回报不是同一结论；现金事件不完整时不能由造价推出收益。",
+      "actual_text_characters": 155,
+      "input_field_ids": [
+        "capex.items",
+        "finance.project_discount_rate",
+        "finance.equity_discount_rate"
+      ],
+      "metric_ids": [
+        "financial.capex.total",
+        "financial.unit_investment",
+        "financial.phase3e.project_irr",
+        "financial.phase3e.project_npv",
+        "financial.phase3e.lcoe"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [
+        "F-CAPEX-TOTAL",
+        "F-IRR-PROJECT",
+        "F-NPV",
+        "F-UNIT-INVESTMENT"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH01.04",
+      "title": "消纳售电与资料成熟度",
+      "actual_word_body": "屋面项目首年交付预测245,313.45kWh，其中逐时自用160,600kWh形成节费122,056元，余电上网84,713.45kWh形成预测售电收入35,579.65元；节费不是售电回款，负荷及结算边界待实测复核。",
+      "actual_text_characters": 110,
+      "input_field_ids": [
+        "project.sales_mode",
+        "load.series",
+        "tariff.periods"
+      ],
+      "metric_ids": [
+        "consumption.year.1",
+        "revenue.year.1",
+        "energy.delivered.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-DELIVERED-ENERGY",
+        "F-ENERGY-REVENUE",
+        "F-SELF-CONSUMPTION"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH01.05",
+      "title": "阻断风险和四态建议",
+      "actual_word_body": "权属核验：待取得正式核验；正式接网意见：待取得正式核验；项目年度NPV已按合成假设计算为670,443.03元。项目现金流已形成，并不解除权属、接网、真实来源和投资者现金流的独立决策门槛。本合成测算按交易费当年发生、当年全额预计支付处理，期初无交易费欠款；该安排用于年度预测测试，不代表真实合同或实际付款记录。",
+      "actual_text_characters": 155,
+      "input_field_ids": [
+        "risk.items",
+        "targets.project_irr",
+        "targets.payback_years",
+        "site.rights_status",
+        "grid.opinion_status"
+      ],
+      "metric_ids": [
+        "financial.phase3e.project_cash_flow",
+        "financial.phase3e.project_npv"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [
+        "F-NPV",
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH02.01",
+      "title": "项目背景与目的",
+      "actual_word_body": "建设主体：合成演示主体：Demo Factory Roof Owner（未核实注册）；开发主体：同一合成演示主体。项目名称或开发主体输入不能证明建设需求和主体授权。",
+      "actual_text_characters": 82,
+      "input_field_ids": [
+        "project.owner",
+        "project.developer"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH02.02",
+      "title": "评价范围与价格现金流口径",
+      "actual_word_body": "评价基准日：2026-12-31；评价期：25年；价格口径：名义价格；税口径：税后。年度项目评价使用预测的期末现金流，不要求逐笔银行流水；带日期指标和投资者出资分红另有事件边界。",
+      "actual_text_characters": 89,
+      "input_field_ids": [
+        "project.evaluation_date",
+        "project.evaluation_years",
+        "project.currency",
+        "project.price_basis",
+        "project.cashflow_tax_basis"
+      ],
+      "metric_ids": [
+        "financial.phase3e.project_cash_flow",
+        "financial.phase3e.equity-investor-cash-flow"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH02.03",
+      "title": "标准与政策适用",
+      "actual_word_body": "政策须按地区、生效期和条款核验；登记条目不是批准文件。",
+      "actual_text_characters": 27,
+      "input_field_ids": [
+        "policy.applicability"
+      ],
+      "metric_ids": [],
+      "source_ids": [],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH02.04",
+      "title": "资料目录与数据年份",
+      "actual_word_body": "资源起始日期：2025-01-01；资源截止日期：2025-12-31；已登记1项合成附件；登记数量不代表原件或授权已核验。资料登记只提供出处线索，不能证明原件、覆盖年份或授权已核实。",
+      "actual_text_characters": 92,
+      "input_field_ids": [
+        "attachments.register",
+        "resource.period_start",
+        "resource.period_end"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH02.05",
+      "title": "假设、版本及免责",
+      "actual_word_body": "合成参数是研究假设，不是现场或合同事实；变更应重算。",
+      "actual_text_characters": 26,
+      "input_field_ids": [
+        "scenarios.options",
+        "risk.items"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH03.01",
+      "title": "业主与投资运营主体",
+      "actual_word_body": "本次合成方案把建设和投资责任均赋予合成演示主体：Demo Factory Roof Owner（未核实注册），运营主体记为同一合成演示主体。这一安排便于将投资与运维责任置于同一模型边界，但不是法人授权或已签署运营委托。",
+      "actual_text_characters": 109,
+      "input_field_ids": [
+        "project.owner",
+        "project.investor",
+        "project.operator"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH03.02",
+      "title": "站址及工程分类",
+      "actual_word_body": "本项目拟按厂房屋面自用及余电上网研究；项目类别：工商业屋面。分类决定屋顶自用或地面集中送出的研究路径，坐标仍需测绘定位。",
+      "actual_text_characters": 60,
+      "input_field_ids": [
+        "project.pv_type",
+        "site.address",
+        "site.latitude",
+        "site.longitude"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH03.03",
+      "title": "建设及权属模式",
+      "actual_word_body": "模型评价期自2026-12-31延至2051-12-31，录入的屋面使用权期限为2052-12-31，晚于模型终点；这只核对日期假设，不证明权属有效。须查验权利人、证载用途及可转让或续期条件。",
+      "actual_text_characters": 96,
+      "input_field_ids": [
+        "project.ownership_mode",
+        "site.rights_holder",
+        "site.rights_document_id",
+        "site.rights_expiry",
+        "project.evaluation_date",
+        "project.evaluation_years"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH03.04",
+      "title": "用能及售电模式",
+      "actual_word_body": "售电方式：自发自用、余电上网；首年消纳电量：160,600kWh；首年收入：157,635.65元。售电模式只是结算计算边界，不是已签署的购售电承诺。",
+      "actual_text_characters": 75,
+      "input_field_ids": [
+        "project.sales_mode",
+        "load.monthly_bills",
+        "tariff.contract_id"
+      ],
+      "metric_ids": [
+        "consumption.year.1",
+        "revenue.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ENERGY-REVENUE",
+        "F-SELF-CONSUMPTION"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH03.05",
+      "title": "规模目标与建设必要性",
+      "actual_word_body": "直流装机：165kWp；直流侧装机容量：165kWp。规模目标只描述拟议任务，不能单独证明真实需求和建设必要性。",
+      "actual_text_characters": 56,
+      "input_field_ids": [
+        "system.dc_capacity",
+        "targets.budget_ceiling",
+        "targets.project_irr"
+      ],
+      "metric_ids": [
+        "dc_capacity"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-DC-CAPACITY"
+      ],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH04.01",
+      "title": "位置坐标与边界",
+      "actual_word_body": "项目名称及面积输入不能定位场址红线；坐标、坐标系和边界尚无可核验的测绘依据。须核对拟议场址的原件和适用性。",
+      "actual_text_characters": 53,
+      "input_field_ids": [
+        "site.address",
+        "site.latitude",
+        "site.longitude",
+        "site.crs",
+        "site.boundary_vertices"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH04.02",
+      "title": "地形海拔与面积核算",
+      "actual_word_body": "选址可用范围：录入总面积3,500㎡扣除排除区500㎡后，可用面积为3,000㎡，在合成面积账上相符；这是面积算术核对而非测绘定界。女儿墙、天窗与防火检修通道须在实测红线内落位，不能据此确认屋顶组件排布可建。",
+      "actual_text_characters": 104,
+      "input_field_ids": [
+        "site.elevation",
+        "site.terrain_slope",
+        "site.total_area",
+        "site.usable_area",
+        "site.exclusion_area"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH04.03",
+      "title": "土地屋顶权属与期限",
+      "actual_word_body": "权属核验：待取得正式核验；权利期限：2052-12-31。土地或屋面权利期限须覆盖运营期；分类标识不证明合法使用。",
+      "actual_text_characters": 57,
+      "input_field_ids": [
+        "site.rights_holder",
+        "site.land_classification",
+        "site.rights_status",
+        "site.rights_expiry"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH04.04",
+      "title": "遮挡与结构安全",
+      "actual_word_body": "屋面设计附加荷载输入0.12kN/㎡，未高于允许附加荷载假设0.2kN/㎡；该比较只校核录入假设，不能证明原结构安全。须连同结构鉴定、锚固、防水和消防通道取得具名复核。",
+      "actual_text_characters": 84,
+      "input_field_ids": [
+        "site.shading_fraction",
+        "roof.allowable_additional_load",
+        "roof.design_added_load",
+        "roof.remaining_life"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH04.05",
+      "title": "交通生态灾害限制",
+      "actual_word_body": "运输条件：仅为概念方案；道路及吊装条件未经勘察。运输、生态及灾害暴露未经调查时，施工可达性仍未确定。",
+      "actual_text_characters": 50,
+      "input_field_ids": [
+        "site.transport_access",
+        "site.ecology_reference",
+        "site.disaster_reference",
+        "site.local_restrictions"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH04.06",
+      "title": "专项建设条件与缺口",
+      "actual_word_body": "地勘及防洪尚无正式结论时，不应锁定基础和场址工程方案。",
+      "actual_text_characters": 27,
+      "input_field_ids": [
+        "site.geotechnical_reference",
+        "site.flood_reference",
+        "risk.items"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH05.01",
+      "title": "数据集元信息与授权",
+      "actual_word_body": "合成资源时段为2025-01-01至2025-12-31。资源数据标识不等于获授权的长期气象记录，覆盖期和质量须核验。",
+      "actual_text_characters": 59,
+      "input_field_ids": [
+        "resource.dataset_id",
+        "resource.version",
+        "resource.provider",
+        "resource.license_id",
+        "resource.timeseries"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH05.02",
+      "title": "辐照分量与单位",
+      "actual_word_body": "水平面总辐照按12个月输入求和为1,387kWh/㎡；直接辐照按12个月输入求和为1,022kWh/㎡；散射辐照按12个月输入求和为365kWh/㎡；阵列面辐照按12个月输入求和为1,766.6kWh/㎡。这是合成月值的算术汇总，不是多年实测资源或已核定发电量；水平面与阵列面辐照不同；发电结果不能倒推缺失的辐照分量。",
+      "actual_text_characters": 159,
+      "input_field_ids": [
+        "resource.monthly.ghi",
+        "resource.monthly.dni",
+        "resource.monthly.dhi",
+        "resource.monthly.poa",
+        "resource.timeseries"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH05.03",
+      "title": "温度风速与12个月",
+      "actual_word_body": "月均气温输入范围24—24℃、月均风速输入范围1.5—1.5m/s；月均值无法给出极端温度或设计风速，气温和风速分别影响温度损失及抗风设计，月份序列不能证明极端工况。",
+      "actual_text_characters": 83,
+      "input_field_ids": [
+        "resource.monthly.ambient_temperature",
+        "resource.monthly.wind_speed",
+        "resource.monthly.month",
+        "resource.timeseries"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH05.04",
+      "title": "逐年差异与典型气象年",
+      "actual_word_body": "典型气象年来源：否。单一合成年或典型年设定不能证明多年资源代表性。",
+      "actual_text_characters": 33,
+      "input_field_ids": [
+        "resource.annual_comparison",
+        "resource.is_tmy",
+        "resource.tmy_method",
+        "resource.timeseries"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH05.05",
+      "title": "平面转置与气象适配",
+      "actual_word_body": "阵列倾角：18°；阵列方位角：180°。倾角、方位角和转置方法影响阵列面资源，未经原始辐照核验不评资源等级。",
+      "actual_text_characters": 54,
+      "input_field_ids": [
+        "resource.model_method",
+        "resource.poa_boundary",
+        "layout.tilt",
+        "layout.azimuth",
+        "resource.timeseries"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH05.06",
+      "title": "误差与交叉验证降级",
+      "actual_word_body": "资源不确定性输入：15%。缺少独立交叉验证时，预测不确定性不能转化为保证发电区间。",
+      "actual_text_characters": 41,
+      "input_field_ids": [
+        "resource.uncertainty_fraction",
+        "resource.uncertainty_basis",
+        "resource.timeseries"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH06.01",
+      "title": "任务与可利用面积",
+      "actual_word_body": "阵列建设任务：录入总面积3,500㎡扣除排除区500㎡后，可用面积为3,000㎡，在合成面积账上相符；这是面积算术核对而非测绘定界。女儿墙、天窗与防火检修通道须在实测红线内落位，不能据此确认屋顶组件排布可建。",
+      "actual_text_characters": 104,
+      "input_field_ids": [
+        "site.usable_area",
+        "layout.fire_setback",
+        "layout.ground_coverage_ratio"
+      ],
+      "metric_ids": [
+        "dc_capacity"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-DC-CAPACITY"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH06.02",
+      "title": "组件排列与数量",
+      "actual_word_body": "拟布置300块组件，行距输入3.5m、消防退让2m；屋面天窗、检修和消防通道须从可用面扣除，仅凭组件数及间距不能证明现场排布，须提交实测总平面与遮挡复核。",
+      "actual_text_characters": 77,
+      "input_field_ids": [
+        "system.module_count",
+        "system.module_length",
+        "system.module_width",
+        "layout.row_pitch"
+      ],
+      "metric_ids": [
+        "dc_capacity"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-DC-CAPACITY"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH06.03",
+      "title": "DC/AC规模与比例",
+      "actual_word_body": "当前直流装机165kWp对应交流额定150kW，容配比计算为1.1；这是铭牌配置关系，不等于变压器余量、核准接入容量或并网许可。",
+      "actual_text_characters": 64,
+      "input_field_ids": [
+        "system.dc_capacity",
+        "system.ac_capacity",
+        "system.dc_ac_ratio"
+      ],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity",
+        "dc_ac_ratio"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-AC-CAPACITY",
+        "F-DC-AC-RATIO",
+        "F-DC-CAPACITY"
+      ],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH06.04",
+      "title": "基准与可行替代方案",
+      "actual_word_body": "只有基准输入而无同边界备选方案，不构成技术经济比选。",
+      "actual_text_characters": 26,
+      "input_field_ids": [
+        "scenarios.options"
+      ],
+      "metric_ids": [],
+      "source_ids": [],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH06.05",
+      "title": "比选口径与选择理由",
+      "actual_word_body": "申报可接入容量：110kWac。预算、接入容量和场址约束需并列比较；无备选结果不排序推荐。",
+      "actual_text_characters": 45,
+      "input_field_ids": [
+        "targets.budget_ceiling",
+        "grid.available_capacity",
+        "risk.items"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH06.06",
+      "title": "分类专项方案",
+      "actual_word_body": "分类专项须取得屋面结构消防或地面用地地勘送出依据，不跨类型套用。",
+      "actual_text_characters": 32,
+      "input_field_ids": [
+        "roof.structure_report_id",
+        "roof.fire_access_reference"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH07.01",
+      "title": "组件与逆变器选择",
+      "actual_word_body": "单块组件功率：550Wp；组件效率：21.5%；单台逆变器额定功率：50kWac；直流侧装机容量：165kWp；交流侧额定容量：150kWac。额定参数可构成初步容量组合，型号认证仍须设备数据表证明。",
+      "actual_text_characters": 100,
+      "input_field_ids": [
+        "system.module_model",
+        "system.module_power",
+        "system.module_efficiency",
+        "system.inverter_model",
+        "system.inverter_unit_ac"
+      ],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-AC-CAPACITY",
+        "F-DC-CAPACITY"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH07.02",
+      "title": "支架及几何参数",
+      "actual_word_body": "支架形式：固定支架；阵列方位角：180°；阵列倾角：18°；阵列行距：3.5m。倾角和行距受遮挡与支架受力双重约束，不能只按发电效率优化。",
+      "actual_text_characters": 69,
+      "input_field_ids": [
+        "system.mounting_type",
+        "layout.azimuth",
+        "layout.tilt",
+        "layout.row_pitch"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH07.03",
+      "title": "串并联与电压电流校核",
+      "actual_word_body": "每串15块、组件标称开路电压50V形成标称串电压750V，对照逆变器直流上限1,100V；低温Voc上浮、MPPT工作电压和各路输入电流仍须依据实际设备数据表与场址极值逐项验算，本次标称对照不证明电气安全。",
+      "actual_text_characters": 103,
+      "input_field_ids": [
+        "system.modules_per_string",
+        "system.parallel_strings",
+        "system.module_voc",
+        "system.inverter_max_dc_voltage",
+        "system.inverter_max_input_current"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH07.04",
+      "title": "损失分项与物理顺序",
+      "actual_word_body": "遮挡损失假设2.5%；积灰损失假设1.8%；失配损失假设1.2%。遮挡、温度、线路及逆变损失须按物理顺序和已含边界去重。",
+      "actual_text_characters": 60,
+      "input_field_ids": [
+        "system.losses"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH07.05",
+      "title": "系统结构及接口",
+      "actual_word_body": "电气拓扑：固定支架组串式逆变器。拓扑必须落实汇流、保护及计量交接点才能形成可审查接口。",
+      "actual_text_characters": 43,
+      "input_field_ids": [
+        "system.topology",
+        "system.capacity_boundary",
+        "grid.connection_point"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH07.06",
+      "title": "储能或分类专项设计",
+      "actual_word_body": "未配置储能不意味着屋面结构、防水和消防专项设计已审查；这些边界仍需独立核实。",
+      "actual_text_characters": 38,
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH08.01",
+      "title": "预测方法及能量边界",
+      "actual_word_body": "首年发电量：245,313.45kWh。阵列面资源、容量、损失和退化共同限定预测，单一资源值不能解释总电量。",
+      "actual_text_characters": 54,
+      "input_field_ids": [
+        "resource.model_method",
+        "resource.poa_boundary",
+        "system.capacity_boundary"
+      ],
+      "metric_ids": [
+        "energy.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ENERGY-AGGREGATION"
+      ],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH08.02",
+      "title": "月度与首年电量",
+      "actual_word_body": "首年12个月预测发电中，1月20,834.84kWh、12月20,834.84kWh；峰值在1月（20,834.84kWh），谷值在2月（18,818.57kWh），逐月汇总与年度发电指标一致，对应年度245,313.45kWh。本合成曲线各月日均预测接近，月合计的差异主要随28/30/31天变化；不将其描述成已证明的季节气象规律。月发电不是辐照实测或屋顶自用与余电上网结算电量；后续年份按0.8%年衰减假设另行重算。",
+      "actual_text_characters": 210,
+      "input_field_ids": [
+        "resource.monthly",
+        "system.losses",
+        "system.first_year_degradation",
+        "system.annual_degradation"
+      ],
+      "metric_ids": [
+        "energy.monthly.year.1",
+        "energy.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ENERGY-AGGREGATION"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH08.03",
+      "title": "逐年衰减和更换",
+      "actual_word_body": "年度曲线首年245,313.45kWh、末年201,259.36kWh；后续年衰减：0.8%；第12年224,065.81kWh、第13年218,572.65kWh、第14年220,400.27kWh；更换年计入6天停机，无性能恢复增益。更换年电量变化同时包含衰减与停机，不将次年反弹归因于未记录的组件性能恢复。",
+      "actual_text_characters": 156,
+      "input_field_ids": [
+        "system.degradation_segments",
+        "system.annual_degradation",
+        "assets.replacements"
+      ],
+      "metric_ids": [
+        "energy.annual_array",
+        "energy.year.13"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ENERGY-AGGREGATION"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH08.04",
+      "title": "PR、等效小时和容量因子",
+      "actual_word_body": "直流装机：165kWp；交流装机：150kWac；系统性能比：84.1587%；等效利用小时数：1,486.75h；容量因数：16.972%。性能比、等效小时和容量因数分母不同，不能互证现场效率。",
+      "actual_text_characters": 98,
+      "input_field_ids": [
+        "system.dc_capacity",
+        "system.ac_capacity",
+        "system.losses"
+      ],
+      "metric_ids": [
+        "pr_observed.year.1",
+        "equivalent_hours.year.1",
+        "capacity_factor.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-CAPACITY-FACTOR",
+        "F-EQUIVALENT-HOURS",
+        "F-PR-OBSERVED"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH08.05",
+      "title": "不可利用与限发校核",
+      "actual_word_body": "不可用比例：1.2%；首年可利用发电量：245,313.45kWh；首年可交付电量：245,313.45kWh。可利用量与交付量受不可用和限发约束，交付预测不是结算电量。",
+      "actual_text_characters": 85,
+      "input_field_ids": [
+        "system.unavailability",
+        "grid.curtailment_assumption"
+      ],
+      "metric_ids": [
+        "available_kwh.year.1",
+        "energy.delivered.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-AVAILABLE-ENERGY",
+        "F-DELIVERED-ENERGY"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH08.06",
+      "title": "不确定性与结果限制",
+      "actual_word_body": "资源不确定性输入：15%。长期电量可信度仍取决于资源代表性，不由首年结果外推保证。",
+      "actual_text_characters": 41,
+      "input_field_ids": [
+        "resource.uncertainty_basis",
+        "risk.items",
+        "resource.uncertainty_fraction"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH09.01",
+      "title": "接入点与电压",
+      "actual_word_body": "接入电压：0.4kV。接入点与电压输入仅供初设定位，不能代表电网批准。",
+      "actual_text_characters": 35,
+      "input_field_ids": [
+        "grid.connection_point",
+        "grid.connection_voltage",
+        "grid.metering_boundary"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH09.02",
+      "title": "变压器线路与容量约束",
+      "actual_word_body": "250kVA变压器是设备视在容量，不能直接与kWac有功容量比较；本次功率因数0.95仍是合成假设。本次填报可用接入余量110kWac，可用接入余量低于150kWac交流铭牌，不能以变压器额定容量直接认定可全额送出；送出限值假设另为100kW。屋顶自用后的余电还受保护、线路与计量边界约束；正式接网意见待取得，仅属合成条件，正式电网接入与送出限值待批复，不视为已获接入许可。",
+      "actual_text_characters": 187,
+      "input_field_ids": [
+        "grid.transformer_capacity",
+        "grid.power_factor",
+        "grid.available_capacity",
+        "grid.line_length",
+        "grid.export_power_limit",
+        "grid.opinion_status"
+      ],
+      "metric_ids": [
+        "ac_capacity"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-AC-CAPACITY"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH09.03",
+      "title": "升压保护及送出工程",
+      "actual_word_body": "合成输入仅声明电网改造费用敞口尚未核量、保护方案停留在概念阶段；屋面余电送出接入须根据接入点、线路与整定审查确定工程量，并反馈至专项造价。",
+      "actual_text_characters": 69,
+      "input_field_ids": [
+        "grid.upgrade_plan",
+        "grid.protection_plan",
+        "capex.items"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH09.04",
+      "title": "并网与交易核验",
+      "actual_word_body": "正式接网意见：待取得正式核验。并网技术意见与交易准入须分别取得，模型状态不能替代具名外部意见。",
+      "actual_text_characters": 47,
+      "input_field_ids": [
+        "grid.opinion_status",
+        "grid.opinion_attachment_id",
+        "grid.opinion_valid_until",
+        "grid.transaction_opinion"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH09.05",
+      "title": "限发与尚待电网确认",
+      "actual_word_body": "本次送出有功上限输入100kW，只是模型约束；厂内自用后的余电仍需在交接计量点核对，正式电网意见仍待取得，不能将计划限值写成批准容量。",
+      "actual_text_characters": 67,
+      "input_field_ids": [
+        "grid.export_power_limit",
+        "grid.curtailment_basis",
+        "risk.items"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH10.01",
+      "title": "负荷资料与同粒度匹配",
+      "actual_word_body": "首年负荷与发电按同一时区的8760条负荷时序配对，模型自用160,600kWh、余电上网84,713.45kWh。月账单不替代逐时匹配，亦非实际计量结算。",
+      "actual_text_characters": 77,
+      "input_field_ids": [
+        "load.monthly_bills",
+        "load.series",
+        "load.timezone"
+      ],
+      "metric_ids": [
+        "consumption.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-SELF-CONSUMPTION"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH10.02",
+      "title": "自用、上网与限发平衡",
+      "actual_word_body": "同边界负荷配对后，首年自用160,600kWh形成节费122,056元；余电上网84,713.45kWh形成售电收入35,579.65元；交付总量245,313.45kWh，另有截弃0kWh。逐时配对形成的自用比例65.4673%；同口径负荷覆盖率54.7264%；当前价值主要来自自用节费，节费不是电网回款；生产班次及分时负荷的真实匹配需在同一时区和计量边界下复核，上网销售收入也不是全部发电量的零售价格。",
+      "actual_text_characters": 204,
+      "input_field_ids": [
+        "project.sales_mode",
+        "grid.export_power_limit",
+        "load.series"
+      ],
+      "metric_ids": [
+        "consumption.year.1",
+        "energy.delivered.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-DELIVERED-ENERGY",
+        "F-SELF-CONSUMPTION"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH10.03",
+      "title": "分时电价与可避免费用",
+      "actual_word_body": "自用对应的可避免费用预测为122,056元，只按适用分时可避免费用计，不把固定或需量等不可避免费用一并抵扣；仍须核对生效合同和计量时段。",
+      "actual_text_characters": 68,
+      "input_field_ids": [
+        "tariff.periods",
+        "tariff.non_avoidable_charges"
+      ],
+      "metric_ids": [
+        "revenue.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ENERGY-REVENUE"
+      ],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH10.04",
+      "title": "合同与交易结算模式",
+      "actual_word_body": "预测余电上网销售收入35,579.65元，交易费用1,016.56元；自用节费122,056元另列，合同价及收款主体尚不能由计划价格推定为已签约。3C单列交易费的付款期间另由已绑定的合成年度支付假设确定，销售回款仍按毛额列示。",
+      "actual_text_characters": 113,
+      "input_field_ids": [
+        "tariff.contract_id",
+        "tariff.ppa_price",
+        "tariff.revenue_share",
+        "tariff.transaction_fee"
+      ],
+      "metric_ids": [
+        "revenue.year.1",
+        "consumption.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [
+        "F-ENERGY-REVENUE",
+        "F-SELF-CONSUMPTION"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH10.05",
+      "title": "逐时市场价与其他收益",
+      "actual_word_body": "首年收入：157,635.65元；首年消纳电量：160,600kWh。市场现货价及其他收益无有效时序和执行规则时不应补进基准。",
+      "actual_text_characters": 63,
+      "input_field_ids": [
+        "tariff.market_series",
+        "revenue.other_items"
+      ],
+      "metric_ids": [
+        "revenue.year.1",
+        "consumption.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ENERGY-REVENUE",
+        "F-SELF-CONSUMPTION"
+      ],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH10.06",
+      "title": "储能调度独立边界",
+      "actual_word_body": "本项目未配置储能，充放电调度及收益测算不适用。",
+      "actual_text_characters": 23,
+      "input_field_ids": [
+        "project.has_storage"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH11.01",
+      "title": "总平面与功能分区",
+      "actual_word_body": "阵列行距：3.5m；消防退让：2m。总平面须预留排除区、检修和消防空间，输入边界不能代替实测布置图。",
+      "actual_text_characters": 50,
+      "input_field_ids": [
+        "site.boundary_vertices",
+        "layout.row_pitch",
+        "layout.fire_setback"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH11.02",
+      "title": "地基与支架基础",
+      "actual_word_body": "支架形式：固定支架。屋面锚固须依结构鉴定与防水构造确定，合成支架类型不足以证明屋面连接安全。",
+      "actual_text_characters": 46,
+      "input_field_ids": [
+        "site.geotechnical_reference",
+        "system.mounting_type"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH11.03",
+      "title": "结构承载与安全疏散",
+      "actual_word_body": "设计附加荷载：0.12kN/㎡。荷载及通道需要具名专业复核，报告编号或预留宽度不是审查结论。",
+      "actual_text_characters": 46,
+      "input_field_ids": [
+        "roof.structure_report_id",
+        "roof.design_added_load",
+        "roof.fire_access_reference"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH11.04",
+      "title": "施工物流道路与排水",
+      "actual_word_body": "运输条件：仅为概念方案；道路及吊装条件未经勘察。物流吊装与排水限制施工窗口，现阶段不宜锁定施工组织。",
+      "actual_text_characters": 50,
+      "input_field_ids": [
+        "site.transport_access",
+        "site.flood_reference",
+        "roof.waterproof_plan"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH11.05",
+      "title": "专项勘察及工程量缺口",
+      "actual_word_body": "专项勘察及工程量缺口传导至造价和工期，费用汇总不能反证工程量。",
+      "actual_text_characters": 31,
+      "input_field_ids": [
+        "risk.items",
+        "capex.items"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH12.01",
+      "title": "节能减排与因子",
+      "actual_word_body": "首年交付电量为合成预测245,313.45kWh，录入减排因子0.55kgCO2e/kWh；两者尚未形成可引用减排量，因子地区、适用期间、替代电源及核算边界未得到外部核验，不宣称实际减排。",
+      "actual_text_characters": 94,
+      "input_field_ids": [
+        "environment.grid_emission_factor",
+        "environment.factor_period"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH12.02",
+      "title": "环境生态与水土保持",
+      "actual_word_body": "生态及水保义务取决于场址调查和审批，登记资料不是专题评估。",
+      "actual_text_characters": 29,
+      "input_field_ids": [
+        "site.ecology_reference",
+        "environment.approval_reference"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH12.03",
+      "title": "消防与施工运行安全",
+      "actual_word_body": "消防通道、储能消防及施工风险各有责任边界，未经审查不能称合规。",
+      "actual_text_characters": 31,
+      "input_field_ids": [
+        "environment.fire_reference",
+        "roof.fire_access_reference"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH12.04",
+      "title": "社会影响与利益主体",
+      "actual_word_body": "产权人和周边主体同意须有文件支持，项目身份不代表已获同意。",
+      "actual_text_characters": 29,
+      "input_field_ids": [
+        "site.rights_holder"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH12.05",
+      "title": "专项评估与合规阻断",
+      "actual_word_body": "政策及专项评价须逐条核验，风险清单不是行政合规结论。",
+      "actual_text_characters": 26,
+      "input_field_ids": [
+        "policy.applicability",
+        "risk.items"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH13.01",
+      "title": "开发前提与组织分工",
+      "actual_word_body": "开发主体：同一合成演示主体；运营主体：同一合成演示主体；另录入5项合成实施任务，组织责任仍须在正式文件中落实。开发投资运营分工须对应权属、接网及资金条件，主体名称不落实责任。",
+      "actual_text_characters": 87,
+      "input_field_ids": [
+        "project.developer",
+        "project.operator",
+        "schedule.tasks"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH13.02",
+      "title": "初设采购施工调试验收",
+      "actual_word_body": "本项目已登记5项来源绑定的合成任务，计划窗口为2026-11-06至2027-01-01；各项持续自然日、前置任务和计划标记在下表逐项列明。开工、并网及投运须以各前置条件实际批准和验收为准，计划标记不是已验证关键路径。\n实施计划（中文任务类型由任务ID受控分类；任务ID及原名见来源清单）\n任务 | 开始 | 结束 | 持续时间 | 前置任务 | 计划性质\n任务1 · 方案设计及核查 | 2026-11-06 | 2026-11-20 | 15自然日（含起止日） | 无 | 关键路径输入标记（未作算法核验）\n任务2 · 开工前置条件核查 | 2026-11-21 | 2026-11-30 | 10自然日（含起止日） | 任务1 | 关键路径输入标记（未作算法核验）\n任务3 · 安装计划 | 2026-12-01 | 2026-12-20 | 20自然日（含起止日） | 任务2 | 关键路径输入标记（未作算法核验）\n任务4 · 测试计划 | 2026-12-21 | 2026-12-31 | 11自然日（含起止日） | 任务3 | 关键路径输入标记（未作算法核验）\n任务5 · 投运里程碑计划 | 2027-01-01 | 2027-01-01 | 1自然日（含起止日） | 任务4 | 关键路径输入标记（未作算法核验）",
+      "actual_text_characters": 565,
+      "input_field_ids": [
+        "schedule.tasks",
+        "schedule.construction_start",
+        "schedule.commissioning_date"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH13.03",
+      "title": "依赖关系与关键路径",
+      "actual_word_body": "计划前置依赖链共4条，由前置任务逐项进入后续任务；其中屋面排布与结构复核计划→权属、消防及接网待核节点计划；权属、消防及接网待核节点计划→屋面安装施工计划（须先取得真实许可）等；5项标记为计划关键路径。该标记是输入的计划属性，不是依据审批时长重新求得的实际关键路径；前置审批未批准时不能承诺投运日期。",
+      "actual_text_characters": 150,
+      "input_field_ids": [
+        "schedule.tasks.predecessor_ids",
+        "schedule.tasks.critical_path"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH13.04",
+      "title": "建设风险与缓释",
+      "actual_word_body": "运输条件：仅为概念方案；道路及吊装条件未经勘察；实施进度按5项合成任务预排，真实通道与审批窗口尚需核实。施工通道、供货和电网窗口分别可能延误进度，缓释责任须落实。",
+      "actual_text_characters": 81,
+      "input_field_ids": [
+        "risk.items",
+        "site.transport_access"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH13.05",
+      "title": "里程碑与进入下一阶段条件",
+      "actual_word_body": "拟投运里程碑按合成任务安排为2027-01-01，前置任务为电气测试与计量方案计划（非投运批准）。里程碑日期不是实际开工、获批并网或验收完成；启动节点须由权属、专业审查及资金共同触发，不由评价日触发。",
+      "actual_text_characters": 100,
+      "input_field_ids": [
+        "targets.risk_preference",
+        "risk.items"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH14.01",
+      "title": "估算依据与边界",
+      "actual_word_body": "本次评价期CAPEX合计539,000元，建设期账簿计划支付467,000元，差额72,000元需按后续更换及支付期间核对，不能并入首期采购。合成分项单价未取得供应商报价，屋面加固和防水工程量须另行核定。",
+      "actual_text_characters": 102,
+      "input_field_ids": [
+        "capex.estimate_basis",
+        "capex.user_budget",
+        "project.currency"
+      ],
+      "metric_ids": [
+        "financial.capex.total"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-CAPEX-TOTAL"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH14.02",
+      "title": "设备材料投资",
+      "actual_word_body": "本次设备清单以组件210,000元占已列初始设备分项最大份额：组件300块×700元/块=210,000元、逆变器3台×24,000元/台=72,000元、支架1项×90,000元/项=90,000元；上述均按含税价、增值税率13%输入。建设期计划支付资本支出467,000元，25年CAPEX合计539,000元，其中土建施工95,000元另列，不能充作设备费；计划在第13年逆变器更换72,000元，属于后期支出，不是初始设备采购。这些是合成数量与价格而非供应商签署报价，实际工程量、税额抵扣及采购付款仍须核验。",
+      "actual_text_characters": 258,
+      "input_field_ids": [
+        "capex.items"
+      ],
+      "metric_ids": [
+        "financial.capex.total"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-CAPEX-TOTAL"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH14.03",
+      "title": "工程建设与场址专项",
+      "actual_word_body": "组件清单不能覆盖屋面加固、锚固、防水与消防通道专项工程量；须按结构复核结果核量询价。",
+      "actual_text_characters": 42,
+      "input_field_ids": [
+        "capex.items.category",
+        "site.geotechnical_reference"
+      ],
+      "metric_ids": [
+        "financial.capex.total"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-CAPEX-TOTAL"
+      ],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH14.04",
+      "title": "前期与管理及预备费",
+      "actual_word_body": "预备费率：4%。管理、前期及预备费用须核查类别及基数，避免总投资重复计列。\n预备费率4%已登记为输入，当前汇总与建设期账簿没有另按该费率单列费用；能否认定分项报价内含预备费仍须核查。完整分项和期间边界见APP04。",
+      "actual_text_characters": 107,
+      "input_field_ids": [
+        "capex.items.category",
+        "capex.contingency_rate"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH14.05",
+      "title": "建设期利息与资金进度",
+      "actual_word_body": "资本支出是否包含建设期利息：否。建设期利息由提款日期、利率及进度决定，不按CAPEX比例猜测。",
+      "actual_text_characters": 47,
+      "input_field_ids": [
+        "capex.includes_construction_interest",
+        "finance.debt_schedule",
+        "schedule.tasks"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH14.06",
+      "title": "税口径与单位投资校核",
+      "actual_word_body": "评价期CAPEX合计539,000元对应直流装机165kWp，单位投资指标3,266.67元/kWp；该指标含评价期更换，不等同于建设期467,000元支出的单位造价，含税及专项范围须核对。",
+      "actual_text_characters": 95,
+      "input_field_ids": [
+        "capex.items.tax_included",
+        "capex.items.vat_rate",
+        "capex.includes_storage",
+        "capex.includes_land"
+      ],
+      "metric_ids": [
+        "financial.unit_investment"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-UNIT-INVESTMENT"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH15.01",
+      "title": "年度运营费",
+      "actual_word_body": "首年运维现金支出按年度账簿为11,220元；全周期现金运营费用：359,379.96元；检修维护首年基价输入7,200元；保险首年基价输入3,800元。现金运维费按项目汇集，保险及场地费仍需合同与期间依据。运维费现金与交易费预计付款分别列账，后者不继承运维付现比例。",
+      "actual_text_characters": 133,
+      "input_field_ids": [
+        "opex.items"
+      ],
+      "metric_ids": [
+        "financial.opex.cash_lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [
+        "F-ANNUAL-OPEX"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH15.02",
+      "title": "资产分类折旧与残值",
+      "actual_word_body": "首年非现金折旧按年度账簿为40,774.34元；期末资产账面价值：17,477.88元。折旧和账面价值是会计分摊，不等于处置所得或终期现金。",
+      "actual_text_characters": 70,
+      "input_field_ids": [
+        "assets.depreciation"
+      ],
+      "metric_ids": [
+        "financial.asset.ending_book_value"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ASSET-BOOK-VALUE"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH15.03",
+      "title": "更换与寿命计划",
+      "actual_word_body": "第13年更换现金支出为72,000元。设备更换同时影响停机及现金支出，不能用单一退化率代替。",
+      "actual_text_characters": 46,
+      "input_field_ids": [
+        "assets.replacements"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH15.04",
+      "title": "税制与实际现金税金",
+      "actual_word_body": "首年项目现金税费按年度账簿为29,472.76元；所得税率：25%；全周期现金税费：806,049.75元。现金税费须按税基和支付事件区分应计、应付及实付。",
+      "actual_text_characters": 78,
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.corporate_income_rate",
+        "tax.vat_recovery_timing",
+        "tax.surcharge_basis"
+      ],
+      "metric_ids": [
+        "financial.tax.cash_lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-CASH-TAX-TOTAL"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH15.05",
+      "title": "非现金与年度汇总校核",
+      "actual_word_body": "首年运维现金支出按年度账簿为11,220元；全周期现金运营费用：359,379.96元；检修维护首年基价输入7,200元；保险首年基价输入3,800元；第13年更换现金支出为72,000元。现金运维、非现金折旧和更换支出分账后才能避免重复列费。",
+      "actual_text_characters": 122,
+      "input_field_ids": [
+        "opex.items",
+        "assets.depreciation",
+        "assets.replacements"
+      ],
+      "metric_ids": [
+        "financial.opex.cash_lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ANNUAL-OPEX"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH16.01",
+      "title": "收入与残值",
+      "actual_word_body": "首年收入：157,635.65元。收入预测不是实际回款，账面残值不能自动计入终期现金。",
+      "actual_text_characters": 43,
+      "input_field_ids": [
+        "tariff.periods",
+        "tariff.market_series",
+        "revenue.other_items",
+        "assets.depreciation.residual_value"
+      ],
+      "metric_ids": [
+        "revenue.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ENERGY-REVENUE"
+      ],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH16.02",
+      "title": "项目投资现金流",
+      "actual_word_body": "项目税后年度现金流建设期为-479,000元，由建设期计划资本支出467,000元和营运资金投入12,000元构成；运营首年合成的余电预计回款35,579.65元与自用节费122,056元，预计另行支付交易费用1,016.56元，其所得税影响已在项目现金税费中反映，再扣运维现金11,220元与项目现金税费29,472.76元后，对应首年净流入115,926.33元；第13年计划更换支出72,000元，已在当年现金流扣除。本项是合成年度项目收支预测，不是实际银行流水、已收回款或投资者分红；股东出资及分配事件未闭合，不能由项目净流量替代。交易费为合成来源约定的预计支付，不是已付款凭证；税基扣费不等于现金付款。",
+      "actual_text_characters": 306,
+      "input_field_ids": [
+        "capex.items",
+        "opex.items",
+        "tax.regime_reference",
+        "finance.working_capital",
+        "project.sales_mode"
+      ],
+      "metric_ids": [
+        "financial.phase3e.project_cash_flow"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH16.03",
+      "title": "股东现金流与融资偿债",
+      "actual_word_body": "债务比例按0%输入；股东出资、实际分配及退出收款事件未形成独立投资者现金流；项目NPV和融资后权益可用现金都不能替代股东IRR，须取得股东现金事件及对应日期后重算。",
+      "actual_text_characters": 82,
+      "input_field_ids": [
+        "finance.debt_schedule",
+        "finance.debt_ratio",
+        "finance.loan_rate"
+      ],
+      "metric_ids": [
+        "financial.phase3e.equity-investor-cash-flow"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH16.04",
+      "title": "NPV与IRR",
+      "actual_word_body": "按合成的25年项目税后、名义价格及年度期末现金流，使用7.5%项目折现率得到年度NPV670,443.03元；项目IRR在声明搜索域-90.0%至500%内唯一已认证根为22.8723%；静态回收期4.1756年、动态回收期5.2152年，在本次假设下NPV为正且唯一IRR高于同口径折现率，模型项目回报超过折现假设。这不是逐笔日期NPV或实际投资者出资—分红回报：未提供股东现金事件及真实银行流水，也未获得现场审批、签署交易与专业复核，不能据此批准投资。",
+      "actual_text_characters": 228,
+      "input_field_ids": [
+        "finance.project_discount_rate",
+        "finance.equity_discount_rate",
+        "project.price_basis",
+        "project.evaluation_years",
+        "finance.cashflow_timing",
+        "project.cashflow_tax_basis"
+      ],
+      "metric_ids": [
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr",
+        "financial.phase3e.static_payback",
+        "financial.phase3e.dynamic_payback"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [
+        "F-DYNAMIC-PAYBACK",
+        "F-IRR-PROJECT",
+        "F-NPV",
+        "F-STATIC-PAYBACK"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH16.05",
+      "title": "静态动态回收期",
+      "actual_word_body": "按本次已计算的项目年度净流量，静态回收4.1756年、折现后动态回收5.2152年；折现推迟收回时点，不是实际银行回款日，须保留期末现金流和折现率口径。",
+      "actual_text_characters": 76,
+      "input_field_ids": [
+        "targets.payback_years",
+        "targets.payback_basis"
+      ],
+      "metric_ids": [
+        "financial.phase3e.static_payback",
+        "financial.phase3e.dynamic_payback"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [
+        "F-DYNAMIC-PAYBACK",
+        "F-STATIC-PAYBACK"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH16.06",
+      "title": "LCOE与可交付电量",
+      "actual_word_body": "首年交付预测245,313.45kWh，平准化度电成本仍受全期无杠杆成本及终期现金成本边界阻断；不能用首年电量或单位投资代算LCOE，须闭合终期成本与全期同边界交付量后重算。",
+      "actual_text_characters": 87,
+      "input_field_ids": [
+        "system.capacity_boundary",
+        "grid.export_power_limit",
+        "project.cashflow_tax_basis"
+      ],
+      "metric_ids": [
+        "financial.phase3e.lcoe",
+        "energy.delivered.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [
+        "F-DELIVERED-ENERGY"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH16.07",
+      "title": "DSCR与债务条件",
+      "actual_word_body": "明确无债务时本次不计算偿债覆盖倍数，零倍不能表述偿债能力。",
+      "actual_text_characters": 29,
+      "input_field_ids": [
+        "finance.cfads_definition",
+        "finance.debt_schedule.dscr_covenant",
+        "finance.debt_ratio"
+      ],
+      "metric_ids": [
+        "financial.phase3e.dscr",
+        "financial.phase3e.cfads"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH16.08",
+      "title": "盈亏平衡与目标差距",
+      "actual_word_body": "基准项目NPV虽可计算，盈亏平衡电价仍缺独立全链价格反向重算；不得用基准上网价格推定保本价或目标差距，须固定成本和交付边界逐次重算验证方向。",
+      "actual_text_characters": 70,
+      "input_field_ids": [
+        "targets.project_irr",
+        "targets.equity_irr",
+        "targets.budget_ceiling"
+      ],
+      "metric_ids": [
+        "financial.phase3e.break-even-price",
+        "financial.phase3e.investment-hurdle-gap"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH17.01",
+      "title": "单因素敏感性",
+      "actual_word_body": "资源不确定性输入：15%；资源不确定性仅给出输入边界，未重算辐照、电量及收入扰动，不能报告敏感性斜率。基准结果没有单因素扰动运行，不能报告敏感性斜率。",
+      "actual_text_characters": 75,
+      "input_field_ids": [
+        "scenarios.options",
+        "capex.items",
+        "tariff.periods",
+        "resource.uncertainty_fraction"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH17.02",
+      "title": "悲观基准乐观组合",
+      "actual_word_body": "未提供可各自追溯的悲观与乐观方案身份，单一基准现金流不能充作三情景。悲观乐观组合须各自定义参数并重算，单一基准不是三情景。",
+      "actual_text_characters": 61,
+      "input_field_ids": [
+        "scenarios.options"
+      ],
+      "metric_ids": [],
+      "source_ids": [],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH17.03",
+      "title": "阈值与稳健性",
+      "actual_word_body": "合成项目税后年度NPV计算为670,443.03元；项目IRR在声明搜索域-90.0%至500%内唯一已认证根为22.8723%；目标门槛与基准项目回报不同，尚无改变价格或投资后重算的耐受阈值。稳健性门槛须现金流和扰动均闭合后检验，不推断耐受区间。",
+      "actual_text_characters": 124,
+      "input_field_ids": [
+        "targets.project_irr",
+        "targets.equity_irr",
+        "targets.payback_years"
+      ],
+      "metric_ids": [
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [
+        "F-IRR-PROJECT",
+        "F-NPV"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH17.04",
+      "title": "风险清单与证据状态",
+      "actual_word_body": "资源、送出、电价和工程投资风险各需来源及应对责任，基准回报不表示风险已消除；风险清单登记权属及专业文件核验事项。权属、资源、工程和并网风险可分别阻断项目，风险登记不量化概率。",
+      "actual_text_characters": 87,
+      "input_field_ids": [
+        "risk.items",
+        "policy.applicability"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH17.05",
+      "title": "属性及反向约束校核",
+      "actual_word_body": "反向约束需各自改变有来源的输入并重新验证计量和费用边界，不能从基准推断。反向约束须检验来源授权、计量边界和项目类型，单次结果不是验收。",
+      "actual_text_characters": 67,
+      "input_field_ids": [
+        "scenarios.options"
+      ],
+      "metric_ids": [],
+      "source_ids": [],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH18.01",
+      "title": "四态唯一建议",
+      "actual_word_body": "按合成的25年税后项目现金流，建设期计划资本支出467,000元，首年交付预测245,313.45kWh；年度期末NPV为670,443.03元，项目IRR在声明搜索域-90.0%至500%内唯一已认证根为22.8723%；静态回收期4.1756年。上述是模型项目回报，不是股东回报或真实投资批准；屋面权属、荷载防水及余电接网意见仍须独立核验。上述回报含有独立的交易费同年支付假设，仅对合成年度项目边界成立。",
+      "actual_text_characters": 204,
+      "input_field_ids": [
+        "risk.items",
+        "targets.project_irr",
+        "targets.payback_years",
+        "site.rights_status",
+        "grid.opinion_status",
+        "project.evaluation_years"
+      ],
+      "metric_ids": [
+        "financial.phase3e.project_cash_flow",
+        "financial.phase3e.project_npv",
+        "financial.phase3e.project_irr",
+        "energy.delivered.year.1",
+        "financial.phase3e.static_payback"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [
+        "F-DELIVERED-ENERGY",
+        "F-IRR-PROJECT",
+        "F-NPV",
+        "F-PROJECT-CASH-FLOW",
+        "F-STATIC-PAYBACK"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "CH18.02",
+      "title": "结论证据及独立否决",
+      "actual_word_body": "权属核验：待取得正式核验；正式接网意见：待取得正式核验；风险清单登记权属及专业文件核验事项。屋顶权属、结构与接网意见各可独立限制项目实施。",
+      "actual_text_characters": 69,
+      "input_field_ids": [
+        "site.rights_status",
+        "grid.opinion_status",
+        "risk.items"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH18.03",
+      "title": "推进条件与触发阈值",
+      "actual_word_body": "风险偏好：均衡风险偏好。进入下一阶段须先取得权属、工程及接入证据，再检验现金流门槛。",
+      "actual_text_characters": 42,
+      "input_field_ids": [
+        "targets.risk_preference",
+        "scenarios.options"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH18.04",
+      "title": "资料缺口与专项核查",
+      "actual_word_body": "风险清单登记权属及专业文件核验事项。待核事项须按场址、资源、售电及财务分别取证，版本更新不等于关闭。",
+      "actual_text_characters": 50,
+      "input_field_ids": [
+        "risk.items",
+        "attachments.register"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "CH18.05",
+      "title": "决策里程碑及免责",
+      "actual_word_body": "评价基准日：2026-12-31。决策里程碑以具名审批和专业复核为前提，评价日期不是开工承诺。",
+      "actual_text_characters": 47,
+      "input_field_ids": [
+        "schedule.tasks",
+        "project.evaluation_date"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "APP01.01",
+      "title": "来源与附件索引",
+      "actual_word_body": "本次有1个来源标识；来源编号不证明原件授权或可读性，须逐份取回核对。",
+      "actual_text_characters": 34,
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "APP01.02",
+      "title": "输入血缘索引",
+      "actual_word_body": "字段来源快照登记622条原子记录；须逐实例核对取值、原件位置和来源身份，数量不证明全部已核验。",
+      "actual_text_characters": 47,
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "APP02.01",
+      "title": "月度气象与资源",
+      "actual_word_body": "绑定的合成月度气象输入共12个月；须逐月核对GHI/DNI/DHI/POA的kWh/㎡、气温℃、风速m/s及年份时区。\nRF789432D6A 为本项目来源快照的展示前缀；每行索引须与表头变量组合读取，在测算模型 M04 对应逐字段实例、原值、单位及来源号，不合并不同变量。公共数据集：SYNTHETIC-HOURLY-2025-industrial_rooftop，版本 v2.0.0，时区 Asia/Shanghai；登记来源 SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2，原始位置 documents/source-material.md#sha256=29127128fbcc74341626f93f63bf8b2eb6a6fc3e9f6ea4300b83a8fcebe2c04a。月度资源是已提供汇总，不是发电量。\n月度辐照资源（来源索引须结合变量列读取）\n月份 | GHI (kWh/㎡) | DNI (kWh/㎡) | DHI (kWh/㎡) | POA (kWh/㎡) | 来源索引\n1 | 117.8 | 86.8 | 31.0 | 150.04 | RF789432D6A-M01\n2 | 106.4 | 78.4 | 28.0 | 135.52 | RF789432D6A-M02\n3 | 117.8 | 86.8 | 31.0 | 150.04 | RF789432D6A-M03\n4 | 114.0 | 84.0 | 30.0 | 145.2 | RF789432D6A-M04\n5 | 117.8 | 86.8 | 31.0 | 150.04 | RF789432D6A-M05\n6 | 114.0 | 84.0 | 30.0 | 145.2 | RF789432D6A-M06\n7 | 117.8 | 86.8 | 31.0 | 150.04 | RF789432D6A-M07\n8 | 117.8 | 86.8 | 31.0 | 150.04 | RF789432D6A-M08\n9 | 114.0 | 84.0 | 30.0 | 145.2 | RF789432D6A-M09\n10 | 117.8 | 86.8 | 31.0 | 150.04 | RF789432D6A-M10\n11 | 114.0 | 84.0 | 30.0 | 145.2 | RF789432D6A-M11\n12 | 117.8 | 86.8 | 31.0 | 150.04 | RF789432D6A-M12\n月度气象资源（覆盖率由原始比值乘100展示）\n月份 | 气温 (°C) | 风速 (m/s) | 覆盖率（%） | 来源索引\n1 | 24 | 1.5 | 100% | RF789432D6A-M01\n2 | 24 | 1.5 | 100% | RF789432D6A-M02\n3 | 24 | 1.5 | 100% | RF789432D6A-M03\n4 | 24 | 1.5 | 100% | RF789432D6A-M04\n5 | 24 | 1.5 | 100% | RF789432D6A-M05\n6 | 24 | 1.5 | 100% | RF789432D6A-M06\n7 | 24 | 1.5 | 100% | RF789432D6A-M07\n8 | 24 | 1.5 | 100% | RF789432D6A-M08\n9 | 24 | 1.5 | 100% | RF789432D6A-M09\n10 | 24 | 1.5 | 100% | RF789432D6A-M10\n11 | 24 | 1.5 | 100% | RF789432D6A-M11\n12 | 24 | 1.5 | 100% | RF789432D6A-M12",
+      "actual_text_characters": 1602,
+      "input_field_ids": [
+        "resource.monthly",
+        "resource.period_start",
+        "resource.period_end",
+        "resource.timeseries"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "APP02.02",
+      "title": "月度能量平衡",
+      "actual_word_body": "首年12个月发电汇总245,313.45kWh，年度发电245,313.45kWh，与年度指标一致；屋面自用、余电及交付须逐月在同一计量边界对账。",
+      "actual_text_characters": 73,
+      "input_field_ids": [
+        "load.series"
+      ],
+      "metric_ids": [
+        "energy.monthly.year.1",
+        "energy.year.1",
+        "energy.delivered.year.1"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-DELIVERED-ENERGY",
+        "F-ENERGY-AGGREGATION"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "APP03.01",
+      "title": "设备与布局原子参数",
+      "actual_word_body": "设备额定直流165kWp、交流150kWac；须与组件和逆变器型号数据表、行距逐项复核。",
+      "actual_text_characters": 44,
+      "input_field_ids": [
+        "system.module_model",
+        "system.inverter_model",
+        "layout.row_pitch"
+      ],
+      "metric_ids": [
+        "dc_capacity",
+        "ac_capacity"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-AC-CAPACITY",
+        "F-DC-CAPACITY"
+      ],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "APP03.02",
+      "title": "损失与衰减链",
+      "actual_word_body": "首年发电245,313.45kWh；年度曲线须逐年核查衰减与更换停机，损失不得重复扣减。",
+      "actual_text_characters": 44,
+      "input_field_ids": [
+        "system.losses",
+        "system.annual_degradation"
+      ],
+      "metric_ids": [
+        "energy.annual_array"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-ENERGY-AGGREGATION"
+      ],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "APP04.01",
+      "title": "逐项含税及分类明细",
+      "actual_word_body": "评价期CAPEX539,000元包含计划更换；专项工程量与税价口径须逐项对账。\nCAPEX分项：建设期与后期更换分开列示；行ID、原金额、税口径与来源见测算模型 M10。\n投资分项 | 数量 | 金额（元） | 付款日期 | 期间及性质\n组件 | 300 件 | 210,000 | 2026-12-01 | 建设期分项\n逆变器 | 3 件 | 72,000 | 2026-12-01 | 建设期分项\n支架及安装材料 | 1 件 | 90,000 | 2026-12-01 | 建设期分项\n工程建设 | 1 件 | 95,000 | 2026-12-01 | 建设期分项\n逆变器 | 3 件 | 72,000 | 2039-01-01 | 运营第13年更换\n预备费率输入为4%；现有CAPEX分项、汇总与建设期付款均未单列按此费率计算的预备费。已列报价是否内含预备费无法由该比率证明，本报告不额外叠加；正式估算须确认适用基数与报价边界。",
+      "actual_text_characters": 418,
+      "input_field_ids": [
+        "capex.items",
+        "capex.includes_land",
+        "capex.includes_storage"
+      ],
+      "metric_ids": [
+        "financial.capex.total"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-CAPEX-TOTAL"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "APP04.02",
+      "title": "报价与投资勾稽",
+      "actual_word_body": "建设期账簿计划支付467,000元，评价期CAPEX539,000元；报价、应付与实付分别核验。\n资本支出、营运资金与后期更换的独立边界\n费用边界 | 金额（元） | 核算口径\n建设期资本现金付款 | 467000 | 建设期现金付款（不含营运资金）\n全期资本现金付款 | 539000 | 全部期间资本现金付款（含递延初始付款及更换）\n其中：后期更换付款 | 72000 | 运营期更换现金支出，已含在全期资本付款内\n建设期营运资金投入 | 12000 | 建设期营运资金单列",
+      "actual_text_characters": 239,
+      "input_field_ids": [
+        "capex.items",
+        "finance.debt_schedule"
+      ],
+      "metric_ids": [
+        "financial.capex.total"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-CAPEX-TOTAL"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "APP05.01",
+      "title": "运营更换及资产计划",
+      "actual_word_body": "全期现金运维359,379.96元；首年折旧40,774.34元为非现金，更换与交易费预计支付另列。交易费预计付款另列，不作为运维费第二次扣减。\n交易费不并入运维费；全期计提、预计付款和应付逐期核对见测算模型 M14。\n首年费用项目 | 本期计提（元） | 预计支付（元） | 期初／期末应付（元） | 来源与边界\n单列交易费用 | 1,016.56 | 1,016.56 | 0／0 | SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1；合成年度预测，非实付",
+      "actual_text_characters": 243,
+      "input_field_ids": [
+        "opex.items",
+        "assets.depreciation",
+        "assets.replacements"
+      ],
+      "metric_ids": [
+        "financial.opex.cash_lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [
+        "F-ANNUAL-OPEX"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "APP05.02",
+      "title": "适用税与年度勾稽",
+      "actual_word_body": "首年项目现金税费29,472.76元；须逐年勾稽税基、应计、应付和现金支付，不以税率替代税单。",
+      "actual_text_characters": 47,
+      "input_field_ids": [
+        "tax.regime_reference",
+        "tax.vat_recovery_timing"
+      ],
+      "metric_ids": [
+        "financial.tax.cash_lifecycle"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [
+        "F-CASH-TAX-TOTAL"
+      ],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "APP06.01",
+      "title": "项目投资全期现金流",
+      "actual_word_body": "项目建设期年度净流量-479,000元、第1年115,926.33元；全期还须逐年核对更换、营运资金与终期收付，合成预计付款不等于银行凭证。交易费计提、预计付款和应付余额须与本附录逐期收支桥相互核对。\n本合成测算按交易费当年发生、当年全额预计支付处理，期初无交易费欠款；该安排仅用于年度预测测试，不代表真实合同或实际付款记录。来源编号：SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1。\n建设期及运营全期项目现金流（已计算值，非资本金现金流）\n期别 | 项目税后净现金流（元） | 资本支出付款（元） | 营运资金增加（元） | 其中更换付款（元）\n建设期 | -479,000 | 467,000 | 12,000 | 不适用（建设期）\n第1年 | 115,926.33 | 0 | 0 | 0\n第2年 | 115,170.72 | 0 | 0 | 0\n第3年 | 114,416.52 | 0 | 0 | 0\n第4年 | 113,663.65 | 0 | 0 | 0\n第5年 | 112,911.99 | 0 | 0 | 0\n第6年 | 112,161.43 | 0 | 0 | 0\n第7年 | 111,411.87 | 0 | 0 | 0\n第8年 | 110,663.21 | 0 | 0 | 0\n第9年 | 107,796.75 | 0 | 0 | 0\n第10年 | 107,049.54 | 0 | 0 | 0\n第11年 | 97,004.66 | 0 | 0 | 0\n第12年 | 96,258.46 | 0 | 0 | 0\n第13年 | 23,990.24 | 72,000 | 0 | 72,000\n第14年 | 96,317.71 | 0 | 0 | 0\n第15年 | 95,572.16 | 0 | 0 | 0\n第16年 | 94,826.59 | 0 | 0 | 0\n第17年 | 94,080.89 | 0 | 0 | 0\n第18年 | 93,334.94 | 0 | 0 | 0\n第19年 | 92,588.6 | 0 | 0 | 0\n第20年 | 91,841.76 | 0 | 0 | 0\n第21年 | 91,094.29 | 0 | 0 | 0\n第22年 | 90,346.07 | 0 | 0 | 0\n第23年 | 89,596.96 | 0 | 0 | 0\n第24年 | 88,846.83 | 0 | 0 | 0\n第25年 | 100,095.56 | 0 | 0 | 0\n运营全期收支分项（按3D账簿原值列示，不将节费记作银行到账）\n期别 | 上网回款（元） | 自用节费（元） | 预计另付交易费（元） | 运维现金（元） | 项目现金税费（元） | 运营收支净额（元）\n第1年 | 35,579.65 | 122,056 | 1,016.56 | 11,220 | 29,472.76 | 115,926.33\n第2年 | 34,735.4 | 122,056 | 992.4401 | 11,444.4 | 29,183.85 | 115,170.72\n第3年 | 33,897.91 | 122,056 | 968.5118 | 11,673.29 | 28,895.59 | 114,416.52\n第4年 | 33,067.12 | 122,056 | 944.7749 | 11,906.75 | 28,607.94 | 113,663.65\n第5年 | 32,242.97 | 122,056 | 921.2278 | 12,144.89 | 28,320.87 | 112,911.99\n第6年 | 31,425.42 | 122,056 | 897.8692 | 12,387.79 | 28,034.33 | 112,161.43\n第7年 | 30,614.41 | 122,056 | 874.6974 | 12,635.54 | 27,748.29 | 111,411.87\n第8年 | 29,809.89 | 122,056 | 851.711 | 12,888.25 | 27,462.71 | 110,663.21\n第9年 | 29,011.8 | 122,056 | 828.9085 | 13,146.02 | 29,296.13 | 107,796.75\n第10年 | 28,220.09 | 122,056 | 806.2884 | 13,408.94 | 29,011.33 | 107,049.54\n第11年 | 27,434.72 | 122,056 | 783.8493 | 13,677.12 | 38,025.1 | 97,004.66\n第12年 | 26,655.64 | 122,056 | 761.5897 | 13,950.66 | 37,740.93 | 96,258.46\n第13年 | 24,348.51 | 122,056 | 695.6718 | 14,229.67 | 35,488.93 | 95,990.24\n第14年 | 25,116.11 | 122,056 | 717.6032 | 14,514.27 | 35,622.54 | 96,317.71\n第15年 | 24,355.58 | 122,056 | 695.8736 | 14,804.55 | 35,338.99 | 95,572.16\n第16年 | 23,601.12 | 122,056 | 674.3178 | 15,100.64 | 35,055.57 | 94,826.59\n第17年 | 22,852.7 | 122,056 | 652.9344 | 15,402.66 | 34,772.22 | 94,080.89\n第18年 | 22,110.27 | 122,056 | 631.7221 | 15,710.71 | 34,488.91 | 93,334.94\n第19年 | 21,373.78 | 122,056 | 610.6795 | 16,024.92 | 34,205.58 | 92,588.6\n第20年 | 20,643.18 | 122,056 | 589.8053 | 16,345.42 | 33,922.2 | 91,841.76\n第21年 | 19,918.43 | 122,056 | 569.098 | 16,672.33 | 33,638.71 | 91,094.29\n第22年 | 19,199.47 | 122,056 | 548.5564 | 17,005.78 | 33,355.08 | 90,346.07\n第23年 | 18,486.27 | 122,056 | 528.1791 | 17,345.89 | 33,071.24 | 89,596.96\n第24年 | 17,778.77 | 122,056 | 507.9649 | 17,692.81 | 32,787.16 | 88,846.83\n第25年 | 17,076.93 | 122,056 | 487.9123 | 18,046.67 | 32,502.79 | 88,095.56\n建设至终期全期现金事件桥（更换已含在资本支出；营运回收不重复计入终期资产现金）\n期别 | 运营收支净额（元） | 资本支出付款（元） | 营运资金增加（元） | 营运资金回收（元） | 终期资产现金（元） | 项目净现金流（元）\n建设期 | 不适用（建设期） | 467,000 | 12,000 | 不适用（建设期） | 0 | -479,000\n第1年 | 115,926.33 | 0 | 0 | 0 | 0 | 115,926.33\n第2年 | 115,170.72 | 0 | 0 | 0 | 0 | 115,170.72\n第3年 | 114,416.52 | 0 | 0 | 0 | 0 | 114,416.52\n第4年 | 113,663.65 | 0 | 0 | 0 | 0 | 113,663.65\n第5年 | 112,911.99 | 0 | 0 | 0 | 0 | 112,911.99\n第6年 | 112,161.43 | 0 | 0 | 0 | 0 | 112,161.43\n第7年 | 111,411.87 | 0 | 0 | 0 | 0 | 111,411.87\n第8年 | 110,663.21 | 0 | 0 | 0 | 0 | 110,663.21\n第9年 | 107,796.75 | 0 | 0 | 0 | 0 | 107,796.75\n第10年 | 107,049.54 | 0 | 0 | 0 | 0 | 107,049.54\n第11年 | 97,004.66 | 0 | 0 | 0 | 0 | 97,004.66\n第12年 | 96,258.46 | 0 | 0 | 0 | 0 | 96,258.46\n第13年 | 95,990.24 | 72,000 | 0 | 0 | 0 | 23,990.24\n第14年 | 96,317.71 | 0 | 0 | 0 | 0 | 96,317.71\n第15年 | 95,572.16 | 0 | 0 | 0 | 0 | 95,572.16\n第16年 | 94,826.59 | 0 | 0 | 0 | 0 | 94,826.59\n第17年 | 94,080.89 | 0 | 0 | 0 | 0 | 94,080.89\n第18年 | 93,334.94 | 0 | 0 | 0 | 0 | 93,334.94\n第19年 | 92,588.6 | 0 | 0 | 0 | 0 | 92,588.6\n第20年 | 91,841.76 | 0 | 0 | 0 | 0 | 91,841.76\n第21年 | 91,094.29 | 0 | 0 | 0 | 0 | 91,094.29\n第22年 | 90,346.07 | 0 | 0 | 0 | 0 | 90,346.07\n第23年 | 89,596.96 | 0 | 0 | 0 | 0 | 89,596.96\n第24年 | 88,846.83 | 0 | 0 | 0 | 0 | 88,846.83\n第25年 | 88,095.56 | 0 | 0 | 12,000 | 0 | 100,095.56",
+      "actual_text_characters": 4328,
+      "input_field_ids": [
+        "finance.working_capital"
+      ],
+      "metric_ids": [
+        "financial.phase3e.project_cash_flow"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-terminal-v2",
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [
+        "F-PROJECT-CASH-FLOW"
+      ],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "APP06.02",
+      "title": "资本金全期现金流",
+      "actual_word_body": "股东出资、实际分配及退出事件未闭合，投资者现金流受阻；无债务不代表项目年度净流量就是股东回款。\n资本金现金流尚未形成可列示的逐期序列；该缺口仅限资本金口径，不撤销APP06.01已计算的项目全期现金流。具体阻断实例和原因见测算模型 M15。",
+      "actual_text_characters": 120,
+      "input_field_ids": [
+        "finance.debt_schedule"
+      ],
+      "metric_ids": [
+        "financial.phase3e.equity-investor-cash-flow"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "APP07.01",
+      "title": "有债务偿债计划",
+      "actual_word_body": "无债务安排不存在有债务偿还计划，不能据此宣称偿债覆盖达标。",
+      "actual_text_characters": 29,
+      "input_field_ids": [
+        "finance.debt_schedule",
+        "finance.cfads_definition",
+        "finance.debt_ratio"
+      ],
+      "metric_ids": [
+        "financial.phase3e.dscr"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "APP07.02",
+      "title": "无债务或零分母说明",
+      "actual_word_body": "债务比例输入为零；零分母使本次DSCR未定义而非零倍，若新增融资应重建本息日程。\n本项目债务服务为零，DSCR在原计算契约中为未定义而非0倍；无债务事实与零分母状态同时成立，不将其改写为已计算或其他口径的不适用。",
+      "actual_text_characters": 106,
+      "input_field_ids": [
+        "finance.debt_ratio",
+        "finance.debt_schedule"
+      ],
+      "metric_ids": [
+        "financial.phase3e.dscr"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "APP08.01",
+      "title": "单因素与组合底表",
+      "actual_word_body": "本次只有基准测算，没有独立单因素及组合运行身份；资源、价格和造价扰动不得从基准值外推。",
+      "actual_text_characters": 43,
+      "input_field_ids": [
+        "scenarios.options"
+      ],
+      "metric_ids": [],
+      "source_ids": [],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "APP08.02",
+      "title": "阈值与属性验收",
+      "actual_word_body": "保本电价的全链反向重算仍受阻；须以同口径目标、重算身份和单调方向测试验收。",
+      "actual_text_characters": 37,
+      "input_field_ids": [
+        "targets.project_irr",
+        "targets.payback_years"
+      ],
+      "metric_ids": [
+        "financial.phase3e.break-even-price"
+      ],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2",
+        "SYNTHETIC-ROOF-TRADING-FEE-PAYMENT-V1"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "APP09.01",
+      "title": "政策条款与有效期",
+      "actual_word_body": "政策登记尚不能代替有文号、原文、地区及生效期的可适用条款；不得称已获项目批准。",
+      "actual_text_characters": 39,
+      "input_field_ids": [
+        "policy.applicability"
+      ],
+      "metric_ids": [],
+      "source_ids": [],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "APP09.02",
+      "title": "核验与限制意见",
+      "actual_word_body": "政策适用及潜在冲突没有逐条外部审查意见；应分别核对权属、接网与交易的有效文件。",
+      "actual_text_characters": 39,
+      "input_field_ids": [
+        "policy.applicability"
+      ],
+      "metric_ids": [],
+      "source_ids": [],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "APP10.01",
+      "title": "待核与冲突清单",
+      "actual_word_body": "统一结果当前列有11条发现项；逐项注明责任、阻断指标与关闭材料，不能按数量推断已消除。",
+      "actual_text_characters": 43,
+      "input_field_ids": [
+        "risk.items"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "APP10.02",
+      "title": "推进条件与里程碑",
+      "actual_word_body": "先关闭屋面权属、结构防水、消防及余电接入，再评价投资里程碑。",
+      "actual_text_characters": 30,
+      "input_field_ids": [
+        "schedule.tasks",
+        "targets.risk_preference"
+      ],
+      "metric_ids": [],
+      "source_ids": [
+        "SYNTHETIC-PHASE7L-R2-industrial_rooftop-v2"
+      ],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "APP11.01",
+      "title": "全部公式注册",
+      "actual_word_body": "本次列示42条被引用定义，冻结字典共89条；列示、引用与成功执行不等同。具体符号及边界按公式分组见下一节。\n公式索引（不等于冻结公式全部执行）\n正式编号 | 中文名称 | 本次引用与执行\nF-AC-CAPACITY | 逆变器交流额定容量 | 本次引用；已计算1项。\nF-AC-INVERTER-POWER | 逆变转换与限幅 | 本次引用；已计算25项。\nF-ANNUAL-OPEX | 年度现金运营费用计划 | 本次引用；已计算1项。\nF-ASSET-BOOK-VALUE | 资产净值滚动 | 本次引用；已计算1项。\nF-AVAILABLE-ENERGY | 计量点限发前可用电量 | 本次引用；已计算25项。\nF-AVERAGE-ANNUAL-ENERGY | 评价期年均电量 | 本次引用；已计算1项。\nF-BREAK-EVEN-PRICE | 净现值为零的盈亏平衡电价 | 本次引用；阻断1项。\nF-CAPACITY-FACTOR | 容量因子 | 本次引用；已计算25项。\nF-CAPEX-TOTAL | 分类投资估算总额 | 本次引用；已计算2项。\nF-CASH-FUNDING-BALANCE | 融资与现金账户平衡 | 本次引用；阻断1项。\nF-CASH-TAX-TOTAL | 同口径现金税费总额 | 本次引用；已计算26项。\nF-CFADS | 可用于偿债的现金流 | 本次引用；阻断1项。\nF-CUMULATIVE-CASH-FLOW | 静态累计现金流 | 本次引用；已计算1项。\nF-DATED-NPV | 非整年时点净现值 | 本次引用；阻断1项。\nF-DC-AC-RATIO | 直交流容配比 | 本次引用；已计算1项。\nF-DC-CAPACITY | 直流装机容量 | 本次引用；已计算1项。\nF-DEBT-BALANCE | 债务本金余额滚动 | 本次引用；已计算1项。\nF-DELIVERED-ENERGY | 可利用交付电量 | 本次引用；已计算25项。\nF-DISCOUNTED-CUMULATIVE-CASH | 动态累计现金流 | 本次引用；已计算1项。\nF-DSCR | 偿债备付率 | 本次引用；数学未定义1项。\nF-DYNAMIC-PAYBACK | 动态首次回收期 | 本次引用；已计算1项。\nF-ENERGY-AGGREGATION | 月年度电量汇总 | 本次引用；已计算52项。\nF-ENERGY-REVENUE | 自持项目电量经济收益 | 本次引用；已计算26项。\nF-EQUITY-AVAILABLE-CASH-FLOW | 股权可分配增量现金流 | 本次引用；阻断1项。\nF-EQUITY-INVESTOR-CASH-FLOW | 股东实际投入分配现金流 | 本次引用；阻断1项。\nF-EQUIVALENT-HOURS | 等效利用小时 | 本次引用；已计算25项。\nF-INVESTMENT-HURDLE-GAP | 投资门槛差距 | 本次引用；阻断1项。\nF-IRR-EQUITY | 资本金内部收益率根集 | 本次引用；阻断1项。\nF-IRR-PROJECT | 项目投资内部收益率根集 | 本次引用；已计算1项。\nF-LCOE | 平准化度电成本 | 本次引用；阻断1项。\nF-LIFECYCLE-COST | 无杠杆生命周期净成本 | 本次引用；阻断1项。\nF-LOAD-COVERAGE-RATIO | 负荷侧自给率 | 本次引用；已计算25项。\nF-NOMINAL-REAL-RATE | 名义与实际折现率桥 | 本次引用；阻断1项。\nF-NPV | 同口径净现值 | 本次引用；已计算1项、早期阶段留置占位1项。\nF-PR-OBSERVED | 同边界性能比校核 | 本次引用；已计算25项。\nF-PROJECT-CASH-FLOW | 项目投资无杠杆净现金流 | 本次引用；已计算1项。\nF-PROJECT-PRETAX-CASH-FLOW | 项目所得税前现金流 | 本次引用；已计算1项。\nF-SELF-CONSUMPTION | 时段自用电量 | 本次引用；已计算26项。\nF-SELF-CONSUMPTION-RATIO | 发电侧自用率 | 本次引用；已计算25项。\nF-STATIC-PAYBACK | 静态首次回收期 | 本次引用；已计算1项。\nF-UNIT-INVESTMENT | 单位装机投资 | 本次引用；已计算1项。\nF-WORST-CASH-YEAR | 最差现金流年份集合 | 本次引用；方法未实现1项。\nF-NPV 输出实例分别为：npv：3B阶段留置占位，非整条NPV方法未实现；financial.phase3e.project_npv：已计算。已计算的项目NPV不因其他实例未实现而失效。",
+      "actual_text_characters": 2006,
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "APP11.02",
+      "title": "全部符号逐一解释",
+      "actual_word_body": "各公式的完整符号、下标、集合与适用边界分别列示；定义存在不代表已执行。\n共通记法契约（按原文一致性分组）\n相同契约仅在此处完整定义一次；每条公式在下方注明所适用的组号。逐符号定义及量纲仍逐公式列出。\n运算符第1组：+ / −：同量纲逐项相加/相减；收入、成本及本金均按正额输入，方向由公式符号给出。；=：定义或应满足的恒等式；数值容差见后续实施规范。；min / max：在给定有限集合中取最小/最大；不把未知值当零。；× / /：标量乘法/除法，零分母按本条边界返回非数值状态。；Σ / Π：仅当正文出现时生效；求和/连乘范围必须见 本式下标与求和范围。；常数：0、1 是相应量纲的零/单位；出现时间换算常数时以单位契约明确。\n记法与歧义第1组：Δ：差值算子；资产余额变化默认期末减期初，非时间步长，Δt 例外指持续小时数。；完整符号：本式完整符号表 中按完整符号解释，不把 DC、AC、POA、PPA 等字母拆作相乘。；括号：函数参数/运算分组；CF_b(p)、M(x;z) 中 p/x 是求根/扰动变量，不是额外现金流乘数。；负号：运算符而不是负输入要求；税基/收益调整允许负值时见本条边界。；逗号：下标中逗号分隔物理标签和时序索引。；集合：花体或根集符号是集合，不作为金额参与普通算术。\n单位约定第1组：每年有效折现率/衰减率存为无量纲年度比例；(1+r) 的幂为年度步数或年化分数。合同单利 i_s 则按 1/年 与 δ_s 的年量相乘。kWp 计算数值按 kW 等价缩放但永久保留峰值/DC 标签。\n记法与歧义第2组：说明：完整符号/单位后缀依本条符号表解释；下标不是额外乘数，所有求和或幂运算需按本条范围执行。\n运算符第2组：+ / −：同量纲逐项相加/相减；收入、成本及本金均按正额输入，方向由公式符号给出。；=：定义或应满足的恒等式；数值容差见后续实施规范。；min / max：在给定有限集合中取最小/最大；不把未知值当零。；s：单位规范化换算系数；数值缩放保持物理标签，与纯物理公式的量纲计算分层处理。；× / /：标量乘法/除法，零分母按本条边界返回非数值状态。；Σ / Π：仅当正文出现时生效；求和/连乘范围必须见 本式下标与求和范围。；常数：0、1 是相应量纲的零/单位；出现时间换算常数时以单位契约明确。",
+      "actual_text_characters": 967,
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "APP12.01",
+      "title": "中英全称缩写",
+      "actual_word_body": "受控中英文术语按名称、全称、缩写、实际含义及适用边界列示。\nAPP12.01 · 受控编辑词典\n中文 | English | 缩写 | 定义及适用边界\n光伏 | Photovoltaic | PV | 利用光伏效应将太阳辐照转化为电能；装机不等于并网许可\n直流 | Direct Current | DC | 组件输出的单向电流侧；峰值装机以 kWp 标示，不是交流输出\n交流 | Alternating Current | AC | 逆变器输出的交变电流侧；额定容量以 kWac 标示\n资本性支出 | Capital Expenditure | CAPEX | 形成或更新长期资产的资本支出；区分初始建设款与运营期更换款\n运营性支出 | Operating Expenditure | OPEX | 运营中发生的费用；现金运维与非现金折旧分别核算\n净现值 | Net Present Value | NPV | 按指定折现率折现各期项目净现金流后的合计；年度项目口径不等于逐笔日期口径\n内部收益率 | Internal Rate of Return | IRR | 使指定现金流净现值为零的折现率根集；项目与投资者、税前与税后不混用\n平准化度电成本 | Levelized Cost of Energy | LCOE | 折现成本与同边界折现可交付电量之比；终期现金边界未闭合时不计算\n可供偿债现金流 | Cash Flow Available for Debt Service | CFADS | 在约定偿债口径下可用于支付本息的现金流；不是股东实收分红\n偿债覆盖倍数 | Debt Service Coverage Ratio | DSCR | 可供偿债现金流与同期应偿本息之比；无债务时不适用\n阵列面辐照 | Plane-of-Array Irradiation | POA | 入射到组件阵列平面的辐照量；单位面积资源不是发电电量\n系统性能比 | Performance Ratio | PR | 实际发电与按阵列面辐照及标称容量推算的参照发电之比；须保持同一时段和系统边界",
+      "actual_text_characters": 892,
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "APP12.02",
+      "title": "首次释义与单位区分",
+      "actual_word_body": "受控中英文术语按名称、全称、缩写、实际含义及适用边界列示。\nAPP12.02 · 受控编辑词典\n单位/符号 | 含义 | 不得混用的边界\nkWp | 直流峰值千瓦 | 不等于 kWac\nkWac | 交流额定千瓦 | 不等于 kWh\nkWh | 电量千瓦时 | 不等于辐照量 kWh/㎡\nkWh/㎡ | 单位面积辐照量 | 不等于交付电量\n元/kWp | 每直流峰值千瓦单位投资 | 不等于元/Wp或未说明边界的CNY",
+      "actual_text_characters": 209,
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "formula_ids": [],
+      "machine_review_flags": [],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "文本与证据索引已记录；机器检查不能证明工程判断或版面可接受。"
+    },
+    {
+      "id": "APP13.01",
+      "title": "同源版本与哈希",
+      "actual_word_body": "本次报告只绑定同一项目、输入和结果哈希；模型、运行及来源身份须逐文件比对，不得拼接历史导出。",
+      "actual_text_characters": 46,
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    },
+    {
+      "id": "APP13.02",
+      "title": "成熟度与审阅边界",
+      "actual_word_body": "统一计算状态为部分计算，真实项目来源另有独立核验门槛；文档结构完整不等于页面审阅或可投资。",
+      "actual_text_characters": 45,
+      "input_field_ids": [],
+      "metric_ids": [],
+      "source_ids": [],
+      "formula_ids": [],
+      "machine_review_flags": [
+        "THIN_BODY_REVIEW_REQUIRED"
+      ],
+      "professional_review_status": "INDEPENDENT_HUMAN_REVIEW_REQUIRED",
+      "review_opinion": "需核查：THIN_BODY_REVIEW_REQUIRED"
+    }
+  ]
+}

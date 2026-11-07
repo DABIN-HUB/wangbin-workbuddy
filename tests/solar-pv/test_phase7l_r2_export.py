@@ -13,7 +13,7 @@ from openpyxl import load_workbook
 
 
 from wangbin_solar_pv.catalog import Catalog
-from wangbin_solar_pv.report_export import ReportModel, _appendix_rows, _professional_metric_rows, _write_docx, _claim_binding_error, _item_evidence
+from wangbin_solar_pv.report_export import REPORT_CONTENT_VERSION, ReportModel, _appendix_rows, _metric_rows, _professional_metric_rows, _write_docx, _claim_binding_error, _item_evidence
 from wangbin_solar_pv.serialization import loads
 
 _CASES = Path(__file__).resolve().parents[2] / "reports/solar-pv/phase7l-r1-full-cases"
@@ -64,7 +64,10 @@ def test_irr_roots_are_percentages_without_silent_selection():
     model = _model()
     metric = model.metric("financial.phase3e.project_irr")
     rows = _professional_metric_rows(model, ("financial.phase3e.project_irr",))
-    assert rows[0][2] == "%"
+    assert rows[0][2] == "—"  # The value already includes %, so the unit column must not repeat it.
+    model_rows = [row for row in _metric_rows(model, prefixes=("financial.phase3e.project_irr",))
+                  if row[0] == "financial.phase3e.project_irr"]
+    assert len(model_rows) == 1 and model_rows[0][2].endswith("%") and model_rows[0][3] == "—"
     assert "11.95%" in rows[0][1] and "单根" in rows[0][3]
     metric.update(status="UNDEFINED", reason="MULTIPLE_ROOTS", value=None,
                   details={"roots": [0.12, 0.25], "root_count": 2,
@@ -149,10 +152,10 @@ def test_bilingual_glossary_defines_meaning_and_scope(exported):
 
 def test_reader_input_summary_shows_professional_name_value_unit_and_source_state(exported):
     _, document, _ = exported
-    summary = next(table for table in document.tables if table.rows[0].cells[0].text == "项目类型专属输入")
+    summary = next(table for table in document.tables if table.rows[0].cells[0].text == "建设及接网关键条件")
     body = "\n".join(cell.text for row in summary.rows[1:] for cell in row.cells)
-    assert "并网条件·变压器容量" in body
-    assert "kVA" in body and "合成假设已提供；未真实核验" in body
+    assert "并网条件·可接入容量" in body
+    assert "kWac" in body and "合成假设已提供；未真实核验" in body
     assert "相关参数" not in body and "GRID_DELIVERABLE" not in body
 
 
@@ -170,7 +173,7 @@ def test_toc_contains_editable_outline_without_pretending_to_have_refreshed_page
     assert "CH01 执行摘要与初步结论" in xml and "APP11 公式逐符号字典" in xml
     assert "PAGEREF" not in xml
     assert receipt["toc_status"] == "FIELD_REQUIRES_RENDER_REFRESH"
-    assert receipt["report_content_version"] == "phase7l-r2-v6"
+    assert receipt["report_content_version"] == REPORT_CONTENT_VERSION
 
 
 def test_input_display_changes_with_snapshot_and_distinguishes_assumption_from_approval():

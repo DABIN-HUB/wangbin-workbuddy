@@ -13,6 +13,8 @@ import json
 from pathlib import Path
 from typing import Any, Callable
 
+from .report_appendix_findings import appendix_finding
+
 # Frozen outline field bindings, copied by item ID (not inferred from the title).
 CHAPTER_FIELDS: dict[str, tuple[str, ...]] = {
     # OUTLINE_FIELDS
@@ -33,7 +35,7 @@ CHAPTER_FIELDS: dict[str, tuple[str, ...]] = {
     'CH03': (
         'project.owner project.investor project.operator',  # CH03.01
         'project.pv_type site.address site.latitude site.longitude',  # CH03.02
-        'project.ownership_mode site.rights_holder site.rights_document_id',  # CH03.03
+        'project.ownership_mode site.rights_holder site.rights_document_id site.rights_expiry project.evaluation_date project.evaluation_years',  # CH03.03
         'project.sales_mode load.monthly_bills tariff.contract_id',  # CH03.04
         'system.dc_capacity targets.budget_ceiling targets.project_irr',  # CH03.05
     ),
@@ -689,9 +691,9 @@ def _text_value(fid: str, value: Any, fmt: Callable[[Any], str]) -> str | None:
             'grid.connection_voltage': 'kV', 'grid.line_length': 'km',
             'system.inverter_max_input_current': 'A',
             'roof.remaining_life': 'year', 'project.evaluation_years': 'year',
-            'grid.transformer_capacity': 'kVA', 'grid.available_capacity': 'kW',
+            'grid.transformer_capacity': 'kVA', 'grid.available_capacity': 'kWac',
             'grid.export_power_limit': 'kW', 'system.dc_capacity': 'kWp',
-            'system.ac_capacity': 'kW', 'system.inverter_unit_ac': 'kW',
+            'system.ac_capacity': 'kWac', 'system.inverter_unit_ac': 'kWac',
             'system.module_power': 'Wp',
             'finance.working_capital': 'CNY', 'system.module_voc': 'V',
             'system.inverter_max_dc_voltage': 'V',
@@ -708,6 +710,11 @@ def _text_value(fid: str, value: Any, fmt: Callable[[Any], str]) -> str | None:
             return None
         if value == 'FICTIONAL: same model owner':
             return '同一合成演示主体'
+        if fid == 'project.name' and value.startswith('FICTIONAL: '):
+            if 'factory-roof calculation demo' in value:
+                return '工商业屋面合成测算方案（无真实场址）'
+            if 'ground PV calculation demo' in value:
+                return '集中式地面合成测算方案（无真实场址）'
         if value.startswith('FICTIONAL'):
             return value.replace('FICTIONAL ENTITY: ', '合成演示主体：').replace('FICTIONAL: ', '合成演示主体：').replace('FICTIONAL ', '合成演示').replace(' (not registered)', '（未核实注册）')
         if value.startswith(('Synthetic ', 'No real ', 'Not quantified ', 'Authored offline')):
@@ -850,21 +857,10 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
     result = model.result
     n = result["inputs"].get("normalized", {})
     records = result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
-    bound = {row.get("field_id"): row.get("value") for row in records if row.get("source_id")
-             and row.get("status") not in {"REJECTED", "INVALID"}}
-    category = result.get("pv_type")
-    ground = category == "utility_scale_ground"
-
+    ground = result.get("pv_type") == "utility_scale_ground"
     def inp(fid):
-        # The Phase 2 record must identify the *same* value, not merely a field
-        # name; list-child source metadata is flattened only for comparison.
-        source = bound.get(fid)
-        if fid == "capex.items" and isinstance(source, list):
-            source = [{"row_id": row.get("row_id"), "fields": {
-                key: atom.get("value") if isinstance(atom, dict) and "value" in atom else atom
-                for key, atom in row.get("fields", {}).items()}}
-                      for row in source if isinstance(row, dict)]
-        return n.get(fid) if source is not None and source == n.get(fid) else None
+        # Do not turn a matching value from an unrelated source into a claim.
+        return _source_value(n, records, fid)
 
     def metric(mid):
         row = model.metric(mid)
@@ -923,7 +919,7 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
                                          inp("grid.available_capacity"), inp("grid.export_power_limit"))
         if ac is None or transformer is None or available is None:
             return "变压器、可用接入余量与交流铭牌尚未同时绑定，不能作出并网可行结论。"
-        constraint = (f"可用接入余量低于{format_value(ac)}kW交流铭牌，不能以变压器额定容量直接认定可全额送出"
+        constraint = (f"可用接入余量低于{format_value(ac)}kWac交流铭牌，不能以变压器额定容量直接认定可全额送出"
                       if Decimal(str(available)) < Decimal(str(ac)) else
                       "可用接入余量不低于交流铭牌，但仍不等于核准可送出功率")
         export_text = f"；送出限值假设另为{format_value(export)}kW" if export is not None else ""
@@ -933,7 +929,7 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
         factor = inp("grid.power_factor")
         factor_text = (f"本次功率因数{format_value(factor)}仍是合成假设" if factor is not None
                        else "功率因数未提供，不将kVA强行折算为可接入kW")
-        return (f"{format_value(transformer)}kVA变压器是设备视在容量，不能直接与kW有功功率比较；"
+        return (f"{format_value(transformer)}kVA变压器是设备视在容量，不能直接与kWac有功容量比较；"
                 f"{factor_text}。本次填报可用接入余量{format_value(available)}kWac，{constraint}{export_text}。"
                 f"{point}还受保护、线路与计量边界约束；正式接网意见{opinion_text}，"
                 "仅属合成条件，正式电网接入与送出限值待批复，不视为已获接入许可。")
@@ -1138,6 +1134,157 @@ def _settlement_narrative(model: Any, item_id: str, fmt: Callable[[Any], str]) -
     return None
 
 
+def _research_finding(model: Any, item_id: str, fmt: Callable[[Any], str]) -> str | None:
+    """Project-bound comparisons; no conclusion from an unbound input or blocked metric."""
+    result = model.result
+    normalized = result['inputs'].get('normalized', {})
+    records = result.get('source_snapshot', {}).get('phase2', {}).get('records', ())
+    get = lambda fid: _source_value(normalized, records, fid)
+    def metric(mid: str) -> Any:
+        row = model.metric(mid)
+        return row.get('value') if row and row.get('status') == 'CALCULATED' else None
+    def number(x: Any) -> bool:
+        return isinstance(x, (int, float, Decimal)) and not isinstance(x, bool)
+    ground = result.get('pv_type') == 'utility_scale_ground'
+    ledger = result.get('evidence', {}).get('financial-ledger', {}).get('annual', ())
+    build = ledger[0] if (ledger and ledger[0].get('period') == 'CONSTRUCTION'
+                          and metric('financial.phase3e.project_cash_flow') is not None) else {}
+    if item_id == 'CH01.04':
+        dataset = 'tariff.market_series' if ground else 'load.series'
+        observed = _dataset_rows(result).get(dataset)
+        lineage = result.get('evidence', {}).get('settlement-input-lineage', {}).get(dataset, {})
+        if (not observed or observed['header'].get('source_id') != lineage.get('source_id')
+                or lineage.get('status') not in {'ASSUMED', 'VERIFIED'}):
+            return ('市场价格时序尚未与集中结算血缘对应，不能解释全额上网收入。' if ground else
+                    '厂区负荷时序尚未与逐时结算血缘对应，不能解释自用比例或节费。')
+        revenue = model.metric('revenue.year.1') or {}
+        details = revenue.get('details', {}).get('ledger', {}) if revenue.get('status') == 'CALCULATED' else {}
+        delivered = metric('energy.delivered.year.1')
+        if number(delivered) and all(number(details.get(k)) for k in ('self_kwh', 'self_value', 'export_kwh', 'export_sales_revenue')):
+            if ground:
+                return (f'集中式项目首年预测交付{fmt(delivered)}kWh，按市场价格时序全额上网预测销售'
+                        f'{fmt(details["export_sales_revenue"])}元；厂区负荷匹配与节费模型不适用。送出计量、交易准入与实收款须另核。')
+            return (f'屋面项目首年交付预测{fmt(delivered)}kWh，其中逐时自用{fmt(details["self_kwh"])}kWh'
+                    f'形成节费{fmt(details["self_value"])}元，余电上网{fmt(details["export_kwh"])}kWh'
+                    f'形成预测售电收入{fmt(details["export_sales_revenue"])}元；节费不是售电回款，负荷及结算边界待实测复核。')
+    if item_id == 'CH03.03':
+        expiry, baseline, years = get('site.rights_expiry'), get('project.evaluation_date'), get('project.evaluation_years')
+        if isinstance(expiry, str) and isinstance(baseline, str) and type(years) is int:
+            try:
+                end = date.fromisoformat(baseline).replace(year=date.fromisoformat(baseline).year + years)
+                rights = date.fromisoformat(expiry)
+            except ValueError:
+                pass
+            else:
+                condition = ('晚于' if rights >= end else '早于')
+                return (f'模型评价期自{baseline}延至{end.isoformat()}，录入的'
+                        + ('屋面使用权' if not ground else '地面土地使用权')
+                        + f'期限为{expiry}，{condition}模型终点；这只核对日期假设，不证明权属有效。'
+                          '须查验权利人、证载用途及可转让或续期条件。')
+    if item_id == 'CH06.02':
+        count, pitch, setback = (get(fid) for fid in ('system.module_count', 'layout.row_pitch', 'layout.fire_setback'))
+        if all(number(x) for x in (count, pitch, setback)):
+            return (f'拟布置{fmt(count)}块组件，行距输入{fmt(pitch)}m、消防退让{fmt(setback)}m；'
+                    + ('地面道路和排水占地须从实际地块扣除，' if ground else '屋面天窗、检修和消防通道须从可用面扣除，')
+                    + '仅凭组件数及间距不能证明现场排布，须提交实测总平面与遮挡复核。')
+    if item_id == 'CH12.01':
+        factor, energy = get('environment.grid_emission_factor'), metric('energy.delivered.year.1')
+        unit = next((row.get('unit') for row in records if row.get('field_id') == 'environment.grid_emission_factor'
+                     and row.get('value') == factor), None)
+        if number(factor) and number(energy) and unit == 'kgCO2e/kWh':
+            return (f'首年交付电量为合成预测{fmt(energy)}kWh，录入减排因子'
+                    f'{fmt(factor)}kgCO2e/kWh；两者尚未形成可引用减排量，'
+                    '因子地区、适用期间、替代电源及核算边界未得到外部核验，不宣称实际减排。')
+    if item_id == 'CH14.03':
+        return ('设备清单不能覆盖地面道路排水、桩基和集中送出专项工程量；须按地勘与接入方案核量询价。'
+                if ground else '组件清单不能覆盖屋面加固、锚固、防水与消防通道专项工程量；须按结构复核结果核量询价。')
+    if item_id in {'CH04.02', 'CH06.01'}:
+        total, usable, excluded = (get('site.' + suffix) for suffix in ('total_area', 'usable_area', 'exclusion_area'))
+        if all(number(v) for v in (total, usable, excluded)):
+            relation = ('在合成面积账上相符' if Decimal(str(total)) - Decimal(str(excluded)) == Decimal(str(usable))
+                        else '在合成面积账上不符，需暂停排布结论')
+            basis = ('道路、排水及桩基位置' if ground else '女儿墙、天窗与防火检修通道')
+            focus = ('选址可用范围' if item_id == 'CH04.02' else '阵列建设任务')
+            return (f'{focus}：录入总面积{fmt(total)}㎡扣除排除区{fmt(excluded)}㎡后，'
+                    f'可用面积为{fmt(usable)}㎡，{relation}；这是面积算术核对而非测绘定界。'
+                    f'{basis}须在实测红线内落位，'
+                    + ('不能据此确认地面装机可建。' if ground else '不能据此确认屋顶组件排布可建。'))
+    if item_id == 'CH04.04':
+        if ground:
+            shading = get('site.shading_fraction')
+            return ((f'阵列遮挡比例按合成输入{fmt(Decimal(str(shading))*100)}%设定；' if number(shading) else '')
+                    + '地面阵列桩基承载及排布须取得地勘和测绘，不适用屋面荷载验算。')
+        allowable, added = get('roof.allowable_additional_load'), get('roof.design_added_load')
+        if number(allowable) and number(added):
+            comparison = ('高于' if added > allowable else '未高于')
+            return (f'屋面设计附加荷载输入{fmt(added)}kN/㎡，{comparison}允许附加荷载假设'
+                    f'{fmt(allowable)}kN/㎡；该比较只校核录入假设，不能证明原结构安全。'
+                    '须连同结构鉴定、锚固、防水和消防通道取得具名复核。')
+        return '屋面荷载假设未在同一来源下绑定，不能比较承载余量；结构鉴定与消防通道仍需核查。'
+    if item_id == 'CH07.03':
+        count, voc, limit = (get(x) for x in ('system.modules_per_string', 'system.module_voc', 'system.inverter_max_dc_voltage'))
+        if all(number(v) for v in (count, voc, limit)):
+            nominal = Decimal(str(count)) * Decimal(str(voc))
+            return (f'每串{fmt(count)}块、组件标称开路电压{fmt(voc)}V形成标称串电压'
+                    f'{fmt(nominal)}V，对照逆变器直流上限{fmt(limit)}V；'
+                    '低温Voc上浮、MPPT工作电压和各路输入电流仍须依据实际设备数据表与场址极值逐项验算，'
+                    '本次标称对照不证明电气安全。')
+    if item_id == 'CH09.03':
+        upgrade, protection = get('grid.upgrade_plan'), get('grid.protection_plan')
+        if upgrade and protection:
+            return ('合成输入仅声明电网改造费用敞口尚未核量、保护方案停留在概念阶段；'
+                    + ('屋面余电送出接入' if not ground else '地面集中送出')
+                    + '须根据接入点、线路与整定审查确定工程量，并反馈至专项造价。')
+    if item_id == 'CH09.05':
+        limit = get('grid.export_power_limit')
+        opinion = get('grid.opinion_status')
+        if number(limit):
+            return (f'本次送出有功上限输入{fmt(limit)}kW，只是模型约束；'
+                    + ('厂内自用后的余电仍需在交接计量点核对，' if not ground else
+                       '集中上网还须核查线路、保护与交易接口，')
+                    + ('正式电网意见仍待取得，不能将计划限值写成批准容量。' if opinion == 'pending' else
+                       '必须查验正式电网批复与有效期后才能引用批准容量。'))
+    if item_id in {'CH14.01', 'CH14.06'}:
+        total, initial, unit = metric('financial.capex.total'), build.get('capex_cash_paid'), metric('financial.unit_investment')
+        if number(total) and number(initial):
+            difference = Decimal(str(total)) - Decimal(str(initial))
+            if item_id == 'CH14.01':
+                return (f'本次评价期CAPEX合计{fmt(total)}元，建设期账簿计划支付{fmt(initial)}元，'
+                        f'差额{fmt(difference)}元需按后续更换及支付期间核对，不能并入首期采购。'
+                        '合成分项单价未取得供应商报价，' +
+                        ('屋面加固和防水工程量须另行核定。' if not ground else '地面道路排水、基础与送出工程量须另行核定。'))
+            if number(unit) and number(metric('dc_capacity')):
+                return (f'评价期CAPEX合计{fmt(total)}元对应直流装机{fmt(metric("dc_capacity"))}kWp，'
+                        f'单位投资指标{fmt(unit)}元/kWp；该指标含评价期更换，不等同于建设期'
+                        f'{fmt(initial)}元支出的单位造价，含税及专项范围须核对。')
+    if item_id == 'CH16.03':
+        row = model.metric('financial.phase3e.equity-investor-cash-flow') or {}
+        debt = get('finance.debt_ratio')
+        if row.get('status') != 'CALCULATED':
+            return (f'债务比例按{fmt(Decimal(str(debt))*100)}%输入；' if number(debt) else '') + (
+                '股东出资、实际分配及退出收款事件未形成独立投资者现金流；项目NPV和融资后权益可用现金'
+                '都不能替代股东IRR，须取得股东现金事件及对应日期后重算。')
+    if item_id == 'CH16.05':
+        static, dynamic = metric('financial.phase3e.static_payback'), metric('financial.phase3e.dynamic_payback')
+        if number(static) and number(dynamic):
+            return (f'按本次已计算的项目年度净流量，静态回收{fmt(static)}年、折现后动态回收'
+                    f'{fmt(dynamic)}年；折现推迟收回时点，不是实际银行回款日，'
+                    '须保留期末现金流和折现率口径。')
+    if item_id == 'CH16.06':
+        lcoe = model.metric('financial.phase3e.lcoe') or {}
+        delivered = metric('energy.delivered.year.1')
+        if lcoe.get('status') != 'CALCULATED':
+            return (f'首年交付预测{fmt(delivered)}kWh，' if number(delivered) else '') + (
+                '平准化度电成本仍受全期无杠杆成本及终期现金成本边界阻断；不能用首年电量'
+                '或单位投资代算LCOE，须闭合终期成本与全期同边界交付量后重算。')
+    if item_id == 'CH16.08':
+        threshold = model.metric('financial.phase3e.break-even-price') or {}
+        if threshold.get('status') != 'CALCULATED':
+            return ('基准项目NPV虽可计算，盈亏平衡电价仍缺独立全链价格反向重算；'
+                    '不得用基准上网价格推定保本价或目标差距，须固定成本和交付边界逐次重算验证方向。')
+    return None
+
+
 def _project_narrative(model: Any, item_id: str, judgment: str,
                        fields: tuple[str, ...], metrics: tuple[str, ...],
                        fmt: Callable[[Any], str], label_metric: Callable[[str], str]) -> str:
@@ -1153,6 +1300,9 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
     calculated = lambda mid: (row.get('value') if (row := model.metric(mid))
                               and row.get('status') == 'CALCULATED' else None)
     ground = result.get('pv_type') == 'utility_scale_ground'
+    finding = _research_finding(model, item_id, fmt)
+    if finding is not None:
+        return finding
     if item_id == 'CH06.03':
         dc, ac = calculated('dc_capacity'), calculated('ac_capacity')
         ratio = calculated('dc_ac_ratio')
@@ -1380,7 +1530,13 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
         if item_id.startswith('CH17.'):
             scenario = get('scenarios.options')
             if not scenario:
-                facts.append('未执行独立扰动或组合情景，无法报告敏感性斜率及耐受阈值')
+                facts.append({
+                    'CH17.01': '资源不确定性仅给出输入边界，未重算辐照、电量及收入扰动，不能报告敏感性斜率',
+                    'CH17.02': '未提供可各自追溯的悲观与乐观方案身份，单一基准现金流不能充作三情景',
+                    'CH17.03': '目标门槛与基准项目回报不同，尚无改变价格或投资后重算的耐受阈值',
+                    'CH17.04': '资源、送出、电价和工程投资风险各需来源及应对责任，基准回报不表示风险已消除',
+                    'CH17.05': '反向约束需各自改变有来源的输入并重新验证计量和费用边界，不能从基准推断',
+                }[item_id])
     if item_id in {'CH17.04', 'CH18.02', 'CH18.04'}:
         risks = get('risk.items')
         if isinstance(risks, list) and risks:
@@ -1454,8 +1610,7 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
     if facts:
         return '；'.join(facts[:5]) + '。' + judgment
     missing = [FIELD_LABELS[fid] for fid in fields if fid in FIELD_LABELS and get(fid) is None]
-    return ('本项尚缺' + '、'.join(missing[:3]) + '等直接可追溯条件；' if missing else
-            '本项尚未形成可引用的项目直接结果；') + judgment
+    return judgment + ('须核对' + '、'.join(missing[:3]) + '的原件和适用性。' if missing else '')
 
 
 def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_rule: str,
@@ -1639,7 +1794,7 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
         claim = (specific if item_id in specific_items
                  else _project_narrative(model, item_id, judgment, field_ids, metric_ids,
                                          format_value, label_metric) if item_id.startswith('CH')
-                 else judgment + ("本次证据：" + "；".join(facts) + "。" if facts else ""))
+                 else appendix_finding(model, item_id, format_value, _source_value))
         fee_evidence = model.result.get('evidence', {}).get('financial-ledger', {}).get('trading_fee_payment')
         if fee_evidence and item_id in {'CH01.05', 'CH10.04', 'CH15.01', 'CH16.02',
                                         'CH18.01', 'APP05.01', 'APP06.01'}:

@@ -1,0 +1,245 @@
+{
+  "schema_version": "phase7l-r3-local-review/1.0.0",
+  "report_content_version": "phase7l-r3-v1-professional-content-and-full-cash-bridge",
+  "canonical_cases": {
+    "industrial_rooftop": {
+      "result_hash": "ca4bdff3f5e89e6770d43f4dad3b4efd57d965aba6c9ba0f1b4299f99295a43f",
+      "pdf_pages": 55,
+      "toc_entries": 205,
+      "toc_page_mapping": "ALL_TEXT_MATCHED",
+      "empty_text_pages": 0,
+      "body_items": 100,
+      "appendix_items": 26,
+      "formula_groups": 42,
+      "independent_items_flagged_for_professional_review": 64,
+      "app06_year25_working_capital_recovery_yuan": "12000",
+      "workbook_cash_periods": 26,
+      "workbook_irr_unit": "—",
+      "trading_fee_source_sha256": "a554f6ad45d094348cf513ada1ddc073b9529603bee9c8a7f4274b13e0af908b",
+      "pdf_visual_review": "NOT_PERFORMED",
+      "professional_content_review": "REQUIRED",
+      "workbuddy_platform_gate": "NOT_VERIFIED"
+    },
+    "utility_scale_ground": {
+      "result_hash": "69882cc39020f03fb3ef6cdb1a10b188c324de0f66066392970776b7495ad138",
+      "pdf_pages": 55,
+      "toc_entries": 205,
+      "toc_page_mapping": "ALL_TEXT_MATCHED",
+      "empty_text_pages": 0,
+      "body_items": 100,
+      "appendix_items": 26,
+      "formula_groups": 42,
+      "independent_items_flagged_for_professional_review": 65,
+      "app06_year25_working_capital_recovery_yuan": "12000",
+      "workbook_cash_periods": 26,
+      "workbook_irr_unit": "—",
+      "trading_fee_source_sha256": "09e80d600b67ffdca96c2a77d3fb1d2f85a797f9d9c5a951f1670d2dc9423e1a",
+      "pdf_visual_review": "NOT_PERFORMED",
+      "professional_content_review": "REQUIRED",
+      "workbuddy_platform_gate": "NOT_VERIFIED"
+    }
+  },
+  "toc_page_gate": "ALL_TEXT_PAGE_MAPPING_VERIFIED",
+  "pdf_render_gate": "GENERATED_WITH_WPS",
+  "visual_review_gate": "NOT_PERFORMED",
+  "professional_review_gate": "REQUIRED",
+  "four_file_gate": "NOT_FORMAL_ACCEPTANCE",
+  "workbuddy_platform_gate": "NOT_VERIFIED",
+  "members": [
+    {
+      "path": "FINAL-DELIVERY.md",
+      "bytes": 3845,
+      "sha256": "0768d54759225fb6775eb07c9113e4468575b03d5f416495dff5542e2160555d"
+    },
+    {
+      "path": "industrial_rooftop/assumptions/trading-fee-payment.json",
+      "bytes": 3484,
+      "sha256": "a554f6ad45d094348cf513ada1ddc073b9529603bee9c8a7f4274b13e0af908b"
+    },
+    {
+      "path": "industrial_rooftop/calculation/annual-three-way.json",
+      "bytes": 27818,
+      "sha256": "1192b1eeea6820f4fc43b3d423b6a5e4806ac8ec63cd1053f32ede7d64281829"
+    },
+    {
+      "path": "industrial_rooftop/calculation/phase3d.json",
+      "bytes": 4565749,
+      "sha256": "5fa6392b171fe448663784a4c60b6fec14ddce2901e165f9371b2bd39f3465c3"
+    },
+    {
+      "path": "industrial_rooftop/calculation/replay-receipt.json",
+      "bytes": 18231,
+      "sha256": "bbc141d86d6f9d31a9fb743f27186c1204ae7edf62db0bff643656382995ebd5"
+    },
+    {
+      "path": "industrial_rooftop/calculation-and-source-evidence.json",
+      "bytes": 62155,
+      "sha256": "5b089154b17573a1480c387ba0917ab6e8f63e52fdd143440c942a5390a035c5"
+    },
+    {
+      "path": "industrial_rooftop/canonical.json",
+      "bytes": 4806891,
+      "sha256": "d7eb2efac6a083a16c1e24ff38db289e46c3ddd481bfc5506a155ee31ddcc09d"
+    },
+    {
+      "path": "industrial_rooftop/CASE-MANIFEST.json",
+      "bytes": 3854,
+      "sha256": "540618e98102a60faa8983b097a9d0b273c74945872d9433319b7817deac7ae5"
+    },
+    {
+      "path": "industrial_rooftop/central-claim-review.json",
+      "bytes": 113489,
+      "sha256": "b78b89d5561c6906a3ddb50df2c35e75f35f6cf3ff96349867c66bf8bc416665"
+    },
+    {
+      "path": "industrial_rooftop/content-checklist.json",
+      "bytes": 374301,
+      "sha256": "b7a194d3b3f8271802b5cf0f80ce04b37aa4ffa0d80717fc72db5434eedf849c"
+    },
+    {
+      "path": "industrial_rooftop/delivery-audit.json",
+      "bytes": 689,
+      "sha256": "42ef34cc12488a78db470596cf91ea1f7456f4964a9b80b2a2f76f2bb5e4c351"
+    },
+    {
+      "path": "industrial_rooftop/execution/generator-pre-render-receipt.json",
+      "bytes": 25654,
+      "sha256": "b6fd7505b8bc4e9e5e2a66939a1e0928a4ff5c010a6b00e95dc69fa7e6e1a4e8"
+    },
+    {
+      "path": "industrial_rooftop/execution/wps-render-receipt.json",
+      "bytes": 2106,
+      "sha256": "3ddd0195fd8dd082ed9e05ba5a284c4d77412a676e0653434b2e2c3f129e28b2"
+    },
+    {
+      "path": "industrial_rooftop/independent-content-review.json",
+      "bytes": 190245,
+      "sha256": "f0cc312d2f945e486abf93803023245fa91093d7fe92a4f299a3269ef12d5fa3"
+    },
+    {
+      "path": "industrial_rooftop/input-coverage-matrix.json",
+      "bytes": 920390,
+      "sha256": "e5cdea90ae1addfc1767068812c0d715b599cc8182372cfd1038d2ebc1d2da75"
+    },
+    {
+      "path": "industrial_rooftop/manifest.json",
+      "bytes": 27951,
+      "sha256": "ab755fb50c48f08ba7441bcac5b00c465ea2535fd986a6d81f32e7fe120a40ce"
+    },
+    {
+      "path": "industrial_rooftop/工商业屋顶光伏项目（阶段性样件）-光伏预可研报告.docx",
+      "bytes": 215566,
+      "sha256": "3690b52f0689b74d0dd446bfe988b6e767743fda21447a4c6da5e197cdd22eb1"
+    },
+    {
+      "path": "industrial_rooftop/工商业屋顶光伏项目（阶段性样件）-光伏预可研报告.pdf",
+      "bytes": 1022897,
+      "sha256": "81a069d121b455b072e8def982738d73e8d0f6f0ff922e75995b9a8f4239ab94"
+    },
+    {
+      "path": "industrial_rooftop/工商业屋顶光伏项目（阶段性样件）-测算模型.xlsx",
+      "bytes": 109215,
+      "sha256": "c6c27d55b9a8b4f0d9f3d1dd6f40f35e52f69f0c46b30f4d15c2ee66a45eab29"
+    },
+    {
+      "path": "industrial_rooftop/工商业屋顶光伏项目（阶段性样件）-资料来源与假设清单.xlsx",
+      "bytes": 159927,
+      "sha256": "3e9f0424e97019a2cd2ee251e36a52aaa94e8d251064965d07b67e7ef8537aa0"
+    },
+    {
+      "path": "utility_scale_ground/assumptions/trading-fee-payment.json",
+      "bytes": 3492,
+      "sha256": "09e80d600b67ffdca96c2a77d3fb1d2f85a797f9d9c5a951f1670d2dc9423e1a"
+    },
+    {
+      "path": "utility_scale_ground/calculation/annual-three-way.json",
+      "bytes": 27846,
+      "sha256": "1e24859635f823690ce269ccb85216d5aed9e0cd2856fd2017054a53aa86e7c9"
+    },
+    {
+      "path": "utility_scale_ground/calculation/phase3d.json",
+      "bytes": 4339541,
+      "sha256": "55458cecc5cab4612a72ab55b4348f43ceaab00e19f9c2538a5d6694213c8d85"
+    },
+    {
+      "path": "utility_scale_ground/calculation/replay-receipt.json",
+      "bytes": 18033,
+      "sha256": "7f80f9285417cbde20bcec3c4e985631381df58b01420ab07a215c64e66cc6a2"
+    },
+    {
+      "path": "utility_scale_ground/calculation-and-source-evidence.json",
+      "bytes": 62255,
+      "sha256": "85be23d912507cedf28545f145f412d0489ba283955079c27a0e155dbe8d175e"
+    },
+    {
+      "path": "utility_scale_ground/canonical.json",
+      "bytes": 4571195,
+      "sha256": "70975ea9ce6cc480bfb128ea9876a85e46f17163bd2fff15ef60ad674ebc4a41"
+    },
+    {
+      "path": "utility_scale_ground/CASE-MANIFEST.json",
+      "bytes": 3892,
+      "sha256": "91d1989903997cd1f3c00ff4a684b95c495a92a884580bf8127cd79b9b86e68f"
+    },
+    {
+      "path": "utility_scale_ground/central-claim-review.json",
+      "bytes": 113541,
+      "sha256": "4bcb719c906928b5bdbdd16e91040ef3da005d7308903edfac17b84e77ea3570"
+    },
+    {
+      "path": "utility_scale_ground/content-checklist.json",
+      "bytes": 369046,
+      "sha256": "9f2befd4393c8dc45c017189f6c916d5e95c48e3bf9f2e626ba3f12ee6803947"
+    },
+    {
+      "path": "utility_scale_ground/delivery-audit.json",
+      "bytes": 689,
+      "sha256": "ae56f663af4713cdee19f5ab96c9e0084cc534c68e3445f549b717eed9be306d"
+    },
+    {
+      "path": "utility_scale_ground/execution/generator-pre-render-receipt.json",
+      "bytes": 25652,
+      "sha256": "bf2c9fdcd2cbc522c0692db6bacb6a763c8a33356cf26ce2d2748c93fcc99917"
+    },
+    {
+      "path": "utility_scale_ground/execution/wps-render-receipt.json",
+      "bytes": 2106,
+      "sha256": "8da5f803128bb1384b4c20b57a2240ab3af2a30328d2375e0485c0c24074cf3c"
+    },
+    {
+      "path": "utility_scale_ground/independent-content-review.json",
+      "bytes": 189735,
+      "sha256": "ce8cdeb156d20a2a095fd7db0e51dfb8fb9794831b5a5b4d2111ce6debbe7fef"
+    },
+    {
+      "path": "utility_scale_ground/input-coverage-matrix.json",
+      "bytes": 911682,
+      "sha256": "1cd6e34a4110c9f8da7e19863b44f73bc47c0eaa5f6eec02ca744dc6fc72bf8e"
+    },
+    {
+      "path": "utility_scale_ground/manifest.json",
+      "bytes": 27959,
+      "sha256": "074bf9c5e6d1f3610e33c48861933d4863c9d08b563f3089d6f3921ea316b60f"
+    },
+    {
+      "path": "utility_scale_ground/集中式地面光伏项目（阶段性样件）-光伏预可研报告.docx",
+      "bytes": 214403,
+      "sha256": "4db09adb5361f0b60b24bcb6c68978a38a0bd283c6a2020fcf7874ed09eb0ed5"
+    },
+    {
+      "path": "utility_scale_ground/集中式地面光伏项目（阶段性样件）-光伏预可研报告.pdf",
+      "bytes": 1021199,
+      "sha256": "6ae28fa0603633cc49bb53b8c0177b741795301fddd16b9d58435396ec29bafa"
+    },
+    {
+      "path": "utility_scale_ground/集中式地面光伏项目（阶段性样件）-测算模型.xlsx",
+      "bytes": 105186,
+      "sha256": "5329954bab8f17346eb2b13bd9691d8c08139ae634f7f1a900c87b3feb528464"
+    },
+    {
+      "path": "utility_scale_ground/集中式地面光伏项目（阶段性样件）-资料来源与假设清单.xlsx",
+      "bytes": 153946,
+      "sha256": "1631992ba2cebd220aa53b1582e6db3080e84a6316571ec0194cf6d0340a53ab"
+    }
+  ]
+}

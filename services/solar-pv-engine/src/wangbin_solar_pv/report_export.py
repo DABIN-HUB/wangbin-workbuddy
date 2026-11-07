@@ -123,7 +123,7 @@ _D_STYLE = {
     "white": "FFFFFF",
 }
 
-REPORT_CONTENT_VERSION = "phase7l-r2-v7-fee-source-v1"
+REPORT_CONTENT_VERSION = "phase7l-r3-v1-professional-content-and-full-cash-bridge"
 
 
 @dataclass(frozen=True)
@@ -326,7 +326,7 @@ def _metric_rows(model: ReportModel, *, prefixes: tuple[str, ...] = ()) -> list[
         irr = metric["metric_id"] == "financial.phase3e.project_irr"
         display, note = _irr_presentation(metric) if irr else (None, None)
         rows.append([metric["metric_id"], metric["status"], display if irr else _metric_cell_value(metric),
-                     "%" if irr else _metric_unit(metric),
+                     "—" if irr else _metric_unit(metric),
                      metric.get("formula_id") or "UNKNOWN", ",".join(metric.get("source_ids") or []) or "UNKNOWN",
                      f"{metric.get('reason') or ''}；{note}；认证根原值={dumps((metric.get('details') or {}).get('roots'))}" if irr else metric.get("reason") or "",
                      _raw_value(metric.get("value"))])
@@ -1490,7 +1490,7 @@ def _professional_metric_rows(model: ReportModel, metric_ids: tuple[str, ...]) -
             display, note = "状态待核对", "当前结果状态未知；不可当作不适用"
         unit = _metric_unit(metric)
         rows.append([_metric_label(metric_id), display,
-                     "%" if metric_id.endswith("project_irr") else
+                     "—" if metric_id.endswith("project_irr") and status in {"CALCULATED", "UNDEFINED"} else
                      "—" if status != "CALCULATED" and str(unit).startswith("集合") else
                      "比值" if unit == "1" else unit,
                      "按直流kWp计；分子为评价期CAPEX，非仅建设期付款" if metric_id == "financial.unit_investment" and status == "CALCULATED" else note])
@@ -1510,6 +1510,15 @@ def _project_summary(model: ReportModel) -> str:
         if initial is not None:
             lines.append(f"建设期初始资本支出现金付款 {_word_number(initial)}元；" +
                          (f"营运资金投入 {_word_number(working)}元。" if working is not None else "营运资金待核对。"))
+        if len(ledger) > 1:
+            receipts = ledger[1].get("revenue_cash_receipts")
+            savings = ledger[1].get("self_use_avoided_expenditure")
+            if model.result["pv_type"] == "industrial_rooftop" and receipts is not None and savings is not None:
+                lines.append(f"首年预计余电回款 {_word_number(receipts)}元；自用节费 {_word_number(savings)}元"
+                             "属于避免购电支出，不是售电到账，综合经济收益不能全部列为实际销售收款。")
+            elif model.result["pv_type"] == "utility_scale_ground" and receipts is not None:
+                lines.append(f"首年预计上网回款 {_word_number(receipts)}元；需以逐时市场价格和计量结算条件复核，"
+                             "不将其写成已签合同或实际到账。")
         renewals = [(row.get("period", "运营期"), row["replacement_cash_paid"]) for row in ledger[1:]
                     if isinstance(row.get("replacement_cash_paid"), (int, float, Decimal)) and row["replacement_cash_paid"]]
         if renewals:
@@ -1927,6 +1936,54 @@ def _project_cash_word_rows(model: ReportModel) -> list[list[Any]]:
     return rows
 
 
+def _project_annual_bridge_rows(model: ReportModel) -> tuple[list[list[str]], list[list[str]]] | None:
+    """Display the ledger's annual events against the sourced 3E project flow."""
+    annual = model.result.get("evidence", {}).get("financial-ledger", {}).get("annual")
+    metric = model.metric("financial.phase3e.project_cash_flow") or {}
+    values = metric.get("value") if metric.get("status") == "CALCULATED" else None
+    terminal = model.result.get("evidence", {}).get("phase3e-terminal-reconciliation", {}).get("terminal_cash")
+    if (not isinstance(annual, list) or not isinstance(values, list) or not isinstance(terminal, list)
+            or len(annual) < 2 or len(annual) != len(values) or len(annual) != len(terminal)
+            or annual[0].get("period") != "CONSTRUCTION"):
+        return None
+    detail, bridge = [], []
+    operating_fields = ("revenue_cash_receipts", "self_use_avoided_expenditure", "transaction_cost_cash_paid",
+                        "opex_cash_paid", "cash_tax_total_project")
+    for index, (ledger, amount, terminal_cash) in enumerate(zip(annual, values, terminal)):
+        period = ledger.get("period")
+        if period != ("CONSTRUCTION" if index == 0 else f"OPERATING_YEAR_{index}"):
+            return None
+        required = ("capex_cash_paid", "working_capital_increase") + (() if index == 0 else
+                    ("working_capital_release", *operating_fields))
+        if any(not isinstance(ledger.get(key), (int, float, Decimal)) or isinstance(ledger[key], bool)
+               for key in required):
+            return None
+        if (not isinstance(amount, (int, float, Decimal)) or isinstance(amount, bool)
+                or not isinstance(terminal_cash, (int, float, Decimal)) or isinstance(terminal_cash, bool)):
+            return None
+        if index == 0:
+            operating = Decimal(0)  # 3E construction has no operating cash benefit.
+            release = Decimal(0)  # 3D records release only in operating years.
+        else:
+            receipts, savings, fee, opex, tax = (Decimal(str(ledger[key])) for key in operating_fields)
+            operating = receipts + savings - fee - opex - tax
+            release = Decimal(str(ledger["working_capital_release"]))
+            detail.append([_reader_text(period), *(_word_number(ledger[key]) for key in operating_fields),
+                           _word_number(operating)])
+        # Reconcile at ledger precision; never make an incomplete or inconsistent bridge look complete.
+        reconstructed = (operating - Decimal(str(ledger["capex_cash_paid"]))
+                         - Decimal(str(ledger["working_capital_increase"])) + release
+                         + Decimal(str(terminal_cash)))
+        if abs(reconstructed - Decimal(str(amount))) > Decimal("0.00000001"):
+            return None
+        bridge.append(["建设期" if index == 0 else _reader_text(period),
+                       "不适用（建设期）" if index == 0 else _word_number(operating),
+                       _word_number(ledger["capex_cash_paid"]), _word_number(ledger["working_capital_increase"]),
+                       "不适用（建设期）" if index == 0 else _word_number(release),
+                       _word_number(terminal_cash), _word_number(amount)])
+    return detail, bridge
+
+
 def _add_evidence_table(document: Document, evidence: dict[str, Any], caption: str) -> None:
     rows = [[row["kind"], row["id"], row["value"], row["unit"], row["status"], row["formula_id"], ", ".join(row["source_ids"]) or "UNKNOWN"]
             for row in evidence["rows"][:12]]
@@ -2017,7 +2074,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
         run.font.color.rgb = RGBColor.from_string(_D_STYLE["muted"])
     document.add_page_break()
 
-    document.add_heading("目录", level=1)
+    document.add_paragraph("目录", style="Title")
     _add_toc(document)
     document.add_page_break()
     document.add_heading("执行摘要", level=1)
@@ -2036,8 +2093,13 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     input_rows = []
     records = model.result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
     input_sources = {record.get("field_id"): record for record in records if record.get("source_id")}
+    summary_fields = ({"roof.remaining_life", "roof.allowable_additional_load", "roof.design_added_load",
+                       "grid.available_capacity", "grid.export_power_limit", "load.annual_energy"}
+                      if pv_type == "industrial_rooftop" else
+                      {"site.total_area", "site.usable_area", "site.exclusion_area",
+                       "grid.available_capacity", "grid.export_power_limit", "grid.connection_voltage"})
     for key, value in sorted(normalized.items()):
-        if profile["special_prefixes"] and key.startswith(profile["special_prefixes"]):
+        if key in summary_fields:
             display = _word_value(value)
             source = input_sources.get(key, {})
             unit = source.get("unit")
@@ -2048,7 +2110,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             state = "合成假设已提供；未真实核验" if source.get("status") == "ASSUMED" else (
                 "来源已核验" if source.get("status") == "VERIFIED" else "已提供；来源状态待核验")
             input_rows.append([_input_label(key), display, state, "详细字段见来源清单"])
-    _add_table(document, ["项目类型专属输入", "展示值", "采用情况", "追溯位置"], input_rows[:16],
+    _add_table(document, ["建设及接网关键条件", "展示值", "采用情况", "追溯位置"], input_rows,
                "项目类型专属输入摘要（不展开原始对象）", widths_cm=(4.2, 5.0, 3.0, 5.0))
     document.add_paragraph("初步结论：" + _project_summary(model))
     chart_specs = _canonical_chart_specs(model)
@@ -2181,21 +2243,19 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 _add_table(document, ["期别", "项目税后净现金流（元）", "资本支出付款（元）", "营运资金增加（元）", "其中更换付款（元）"],
                            _project_cash_word_rows(model), "建设期及运营全期项目现金流（已计算值，非资本金现金流）",
                            widths_cm=(2.2, 4.0, 3.6, 3.5, 3.7))
-                annual = model.result.get("evidence", {}).get("financial-ledger", {}).get("annual", ())
-                flow = model.metric("financial.phase3e.project_cash_flow") or {}
-                fields = ("revenue_cash_receipts", "self_use_avoided_expenditure", "transaction_cost_cash_paid",
-                          "opex_cash_paid", "cash_tax_total_project")
-                values = flow.get("value") if flow.get("status") == "CALCULATED" else None
-                if (isinstance(values, list) and isinstance(annual, list) and len(values) == len(annual)
-                        and all(all(row.get(field) is not None for field in fields) for row in annual[1:])):
-                    bridge_rows = [[_reader_text(row["period"]), *(_word_number(row[field]) for field in fields),
-                                    _word_number(values[index])] for index, row in enumerate(annual[1:], 1)]
+                annual_bridge = _project_annual_bridge_rows(model)
+                if annual_bridge is not None:
+                    detail_rows, bridge_rows = annual_bridge
                     _add_table(document, ["期别", "上网回款（元）", "自用节费（元）", "预计另付交易费（元）",
-                                          "运维现金（元）", "项目现金税费（元）", "项目净现金流（元）"],
-                               bridge_rows, "运营全期收支桥（按3D账簿原值列示，不将节费记作银行到账）",
+                                          "运维现金（元）", "项目现金税费（元）", "运营收支净额（元）"],
+                               detail_rows, "运营全期收支分项（按3D账簿原值列示，不将节费记作银行到账）",
                                widths_cm=(2.0, 2.75, 2.45, 2.3, 2.4, 2.45, 2.65), font_size=9)
+                    _add_table(document, ["期别", "运营收支净额（元）", "资本支出付款（元）", "营运资金增加（元）",
+                                          "营运资金回收（元）", "终期资产现金（元）", "项目净现金流（元）"],
+                               bridge_rows, "建设至终期全期现金事件桥（更换已含在资本支出；营运回收不重复计入终期资产现金）",
+                               widths_cm=(2.0, 2.9, 2.65, 2.65, 2.65, 2.4, 2.75), font_size=9)
                 else:
-                    document.add_paragraph("交易费用的逐期付现账簿或已计算项目现金流缺失；"
+                    document.add_paragraph("逐期付现账簿、终期来源或已计算项目现金流缺失／不一致；"
                                            "本页不能声称已完成全期收支桥，须在计算层重新核验。")
             if item_id == "APP06.02":
                 equity = model.metric("financial.phase3e.equity-investor-cash-flow")
@@ -2363,7 +2423,11 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
     except ValueError as exc:
         raise ContractError(str(exc)) from exc
     normalized = model.result["inputs"].get("normalized", {})
-    display_name, name_mapping = _safe_stem(normalized.get("project.name") or model.result["project_id"])
+    raw_name = normalized.get("project.name") or model.result["project_id"]
+    cover_name = (editorial_fixture.get("project_alias") if editorial_fixture else None) or _cover_project_name(expected_pv_type)
+    display_name, name_mapping = _safe_stem(cover_name if isinstance(raw_name, str) and raw_name.startswith("FICTIONAL") else raw_name)
+    if display_name == cover_name:
+        name_mapping = raw_name
     stem = display_name
     files: dict[str, Any] = {}
     started = time.perf_counter()
@@ -2373,7 +2437,6 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
     if any(path.exists() for path in (docx_path, xlsx_path, root / source_name)):
         raise ContractError("REPORT_OUTPUT_EXISTS")
     artifact_started = time.perf_counter()
-    cover_name = (editorial_fixture.get("project_alias") if editorial_fixture else None) or _cover_project_name(expected_pv_type)
     files["F01"] = _write_docx(model, docx_path, cover_name, expected_pv_type,
                                 editorial_fixture=editorial_fixture)
     files["F01"]["generation_seconds"] = round(time.perf_counter() - artifact_started, 6)

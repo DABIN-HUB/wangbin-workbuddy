@@ -1,0 +1,18 @@
+{
+  "result_hash": "ca4bdff3f5e89e6770d43f4dad3b4efd57d965aba6c9ba0f1b4299f99295a43f",
+  "pdf_pages": 55,
+  "toc_entries": 205,
+  "toc_page_mapping": "ALL_TEXT_MATCHED",
+  "empty_text_pages": 0,
+  "body_items": 100,
+  "appendix_items": 26,
+  "formula_groups": 42,
+  "independent_items_flagged_for_professional_review": 64,
+  "app06_year25_working_capital_recovery_yuan": "12000",
+  "workbook_cash_periods": 26,
+  "workbook_irr_unit": "—",
+  "trading_fee_source_sha256": "a554f6ad45d094348cf513ada1ddc073b9529603bee9c8a7f4274b13e0af908b",
+  "pdf_visual_review": "NOT_PERFORMED",
+  "professional_content_review": "REQUIRED",
+  "workbuddy_platform_gate": "NOT_VERIFIED"
+}

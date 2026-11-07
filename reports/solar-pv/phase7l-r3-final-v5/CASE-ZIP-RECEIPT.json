@@ -1,0 +1,17 @@
+{
+  "status": "LOCAL_BYTE_VERIFIED_NOT_PROFESSIONALLY_ACCEPTED",
+  "archives": {
+    "industrial_rooftop": {
+      "path": "phase7l-r3-industrial_rooftop-review.zip",
+      "bytes": 1865667,
+      "sha256": "7f0a20dd4352485d8e4f4d2b4b12d48d01f5f9cf28f579ab9fd899db9d35f019",
+      "member_count": 19
+    },
+    "utility_scale_ground": {
+      "path": "phase7l-r3-utility_scale_ground-review.zip",
+      "bytes": 1842194,
+      "sha256": "844e96205292861afdd0046ac768c04d0c4bde92befe5e33cb498531c1b2c633",
+      "member_count": 19
+    }
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "schema_version": "phase7l-r3-case-review/1.0.0",
+  "case": "industrial_rooftop",
+  "result_hash": "ca4bdff3f5e89e6770d43f4dad3b4efd57d965aba6c9ba0f1b4299f99295a43f",
+  "professional_review_gate": "REQUIRED",
+  "visual_review_gate": "NOT_PERFORMED",
+  "members": [
+    {
+      "path": "industrial_rooftop/assumptions/trading-fee-payment.json",
+      "bytes": 3484,
+      "sha256": "a554f6ad45d094348cf513ada1ddc073b9529603bee9c8a7f4274b13e0af908b"
+    },
+    {
+      "path": "industrial_rooftop/calculation/annual-three-way.json",
+      "bytes": 27818,
+      "sha256": "1192b1eeea6820f4fc43b3d423b6a5e4806ac8ec63cd1053f32ede7d64281829"
+    },
+    {
+      "path": "industrial_rooftop/calculation/phase3d.json",
+      "bytes": 4565749,
+      "sha256": "5fa6392b171fe448663784a4c60b6fec14ddce2901e165f9371b2bd39f3465c3"
+    },
+    {
+      "path": "industrial_rooftop/calculation/replay-receipt.json",
+      "bytes": 18231,
+      "sha256": "bbc141d86d6f9d31a9fb743f27186c1204ae7edf62db0bff643656382995ebd5"
+    },
+    {
+      "path": "industrial_rooftop/calculation-and-source-evidence.json",
+      "bytes": 62155,
+      "sha256": "5b089154b17573a1480c387ba0917ab6e8f63e52fdd143440c942a5390a035c5"
+    },
+    {
+      "path": "industrial_rooftop/canonical.json",
+      "bytes": 4806891,
+      "sha256": "d7eb2efac6a083a16c1e24ff38db289e46c3ddd481bfc5506a155ee31ddcc09d"
+    },
+    {
+      "path": "industrial_rooftop/central-claim-review.json",
+      "bytes": 113489,
+      "sha256": "b78b89d5561c6906a3ddb50df2c35e75f35f6cf3ff96349867c66bf8bc416665"
+    },
+    {
+      "path": "industrial_rooftop/content-checklist.json",
+      "bytes": 374301,
+      "sha256": "b7a194d3b3f8271802b5cf0f80ce04b37aa4ffa0d80717fc72db5434eedf849c"
+    },
+    {
+      "path": "industrial_rooftop/delivery-audit.json",
+      "bytes": 689,
+      "sha256": "42ef34cc12488a78db470596cf91ea1f7456f4964a9b80b2a2f76f2bb5e4c351"
+    },
+    {
+      "path": "industrial_rooftop/execution/generator-pre-render-receipt.json",
+      "bytes": 25654,
+      "sha256": "b6fd7505b8bc4e9e5e2a66939a1e0928a4ff5c010a6b00e95dc69fa7e6e1a4e8"
+    },
+    {
+      "path": "industrial_rooftop/execution/wps-render-receipt.json",
+      "bytes": 2106,
+      "sha256": "3ddd0195fd8dd082ed9e05ba5a284c4d77412a676e0653434b2e2c3f129e28b2"
+    },
+    {
+      "path": "industrial_rooftop/independent-content-review.json",
+      "bytes": 190245,
+      "sha256": "f0cc312d2f945e486abf93803023245fa91093d7fe92a4f299a3269ef12d5fa3"
+    },
+    {
+      "path": "industrial_rooftop/input-coverage-matrix.json",
+      "bytes": 920390,
+      "sha256": "e5cdea90ae1addfc1767068812c0d715b599cc8182372cfd1038d2ebc1d2da75"
+    },
+    {
+      "path": "industrial_rooftop/manifest.json",
+      "bytes": 27951,
+      "sha256": "ab755fb50c48f08ba7441bcac5b00c465ea2535fd986a6d81f32e7fe120a40ce"
+    },
+    {
+      "path": "industrial_rooftop/工商业屋顶光伏项目（阶段性样件）-光伏预可研报告.docx",
+      "bytes": 215566,
+      "sha256": "3690b52f0689b74d0dd446bfe988b6e767743fda21447a4c6da5e197cdd22eb1"
+    },
+    {
+      "path": "industrial_rooftop/工商业屋顶光伏项目（阶段性样件）-光伏预可研报告.pdf",
+      "bytes": 1022897,
+      "sha256": "81a069d121b455b072e8def982738d73e8d0f6f0ff922e75995b9a8f4239ab94"
+    },
+    {
+      "path": "industrial_rooftop/工商业屋顶光伏项目（阶段性样件）-测算模型.xlsx",
+      "bytes": 109215,
+      "sha256": "c6c27d55b9a8b4f0d9f3d1dd6f40f35e52f69f0c46b30f4d15c2ee66a45eab29"
+    },
+    {
+      "path": "industrial_rooftop/工商业屋顶光伏项目（阶段性样件）-资料来源与假设清单.xlsx",
+      "bytes": 159927,
+      "sha256": "3e9f0424e97019a2cd2ee251e36a52aaa94e8d251064965d07b67e7ef8537aa0"
+    }
+  ]
+}
