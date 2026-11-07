@@ -149,9 +149,9 @@ def object_name(text: str) -> str | None:
 
 
 CURRENT_UNKNOWN = re.compile(
-    r'(?:是否|能否|可否|与否|状态|情况|时点|时间|实际投用|实际使用|实际运行).{0,18}'
-    r'(?:无法确认|不能确认|尚待核实|待核实|待确认|未确定|不确定|尚不明确|有待确认)|'
-    r'(?:无法确认|不能确认|尚待核实|待核实|待确认|未确定|不确定|尚不明确).{0,18}'
+    r'(?:是否|能否|可否|与否|状态|情况|时点|时间|实际投用|实际使用|实际运行).{0,30}'
+    r'(?:无法确认|不能确认|尚待核实|待核实|待确认|未确定|不确定|尚不明确|有待确认|尚无核实结论|未得到核实结论|没有核实结果)|'
+    r'(?:无法确认|不能确认|尚待核实|待核实|待确认|未确定|不确定|尚不明确|尚无核实结论|未得到核实结论).{0,18}'
     r'(?:是否|能否|可否|上线|启用|投用|运行|可用|使用|支持|状态|情况)')
 CURRENT_NEGATIVE = re.compile(
     r'尚?未(?:启用|上线|投产|实现|开发|投入使用|投入运行)|还未投入使用|'
@@ -164,38 +164,75 @@ CURRENT_POSITIVE = re.compile(
     r'(?<!不)(?<!无)(?:支持|具备|提供|使用)[\u4e00-\u9fff\w/]*')
 FUTURE_ONLY = re.compile(r'仅(?:处于|在).{0,12}(?:设计|规划|研发)|仅(?:提供|有).{0,20}(?:设计|文档|方案)|(?:计划|拟于|将在|准备在|列入|后续|未来).{0,18}(?:上线|开发|交付|实现|计划)|(?:购买后|交付后|满足条件后|另行购买|只有.{0,12}才)')
 
+def capability_object(term: str) -> str | None:
+    """Extract the required action's object; a number or topic token is not a fact."""
+    match = re.search(r'(?:支持|使用|具备)([\u4e00-\u9fff\w/]+)', term)
+    if match and re.search(r'(?:不|未|无)' + re.escape(match.group(0)), term):
+        return None
+    return match.group(1)[:4] if match else None
+
+
 def scoped_facts(text: str, term: str) -> list[tuple[str, str]]:
-    """Collect same-object assertions with their clause provenance and time scope."""
-    action = re.search(r'(?:支持|使用|提供|具备)([\u4e00-\u9fff\w/]+)', term)
-    if not action:
+    """Collect current facts only from clauses bound to the requested object.
+
+    Split separate assertions before classifying them, so a future plan cannot
+    erase an explicit current denial and a denial cannot hide a positive peer.
+    """
+    stem = capability_object(term)
+    if not stem:
         return []
-    stem = action.group(1)[:4]
     result = []
     clauses = re.split(r'[，。；,;\n]', text)
     for index, clause in enumerate(clauses):
         if stem not in clause:
             continue
-        context = clause
+        context = clause.strip()
+        # A pronoun in the immediately following clause may qualify this
+        # assertion, but another named object must never donate its status.
         if index + 1 < len(clauses):
             following = clauses[index + 1].strip()
-            if stem in following or re.search(r'^(?:该|此)(?:项|功能|能力|服务)', following):
+            if re.search(r'^(?:该|此)(?:项|功能|能力|服务)', following) or (
+                    (re.search(r'^(?:目前|当前|现阶段|暂时|具体时间|我们|我方)', following) or
+                     (re.search(r'是否|能否|可否', clause) and re.search(r'^(?:尚无|尚未|仍未|没有).{0,8}(?:核实|结论)', following))) and
+                    not re.search(r'[^\s，,。；;]{2,}(?:功能|查询|备份|存储)', following)):
                 context += '，' + following
-        unknown = bool(CURRENT_UNKNOWN.search(context))
-        negative = bool(CURRENT_NEGATIVE.search(context)) and not (unknown and not re.search(r'尚?未启用|尚?未上线|不具备|不支持|未实现', context))
-        future = bool(FUTURE_ONLY.search(context))
-        positive = bool(CURRENT_POSITIVE.search(context)) and not unknown and not future
+        unknown = bool(CURRENT_UNKNOWN.search(context) or
+                       (re.search(r'是否|能否|可否|与否', context) and
+                        re.search(r'核实结论|核实结果|尚待确认|未确认', context)))
+        negative = bool(CURRENT_NEGATIVE.search(context) or re.search(r'做不到', context) or
+                        re.search(r'(?:不能|无法|不可|做不到)(?:正常|实际|按要求)?(?:运行|使用|执行|提供|实现|投入使用)', context))
+        if re.search(r'具体时间待定|时间未定|交付时.{0,8}待定', context):
+            unknown = True
+            negative = False
+        future = bool(FUTURE_ONLY.search(context) or re.search(r'预计.{0,12}交付时', context))
+        positive = bool(CURRENT_POSITIVE.search(clause) or
+                        re.search(r'(?:当前|目前|现阶段|现在|已|已经).{0,8}(?:可|能|正常)(?:正常|实际)?(?:运行|使用|执行|提供|操作|完成)', clause))
         if negative:
             result.append(('CONFIRMED_UNAVAILABLE', context))
-        if unknown and not negative:
+        elif unknown:
             result.append(('UNKNOWN', context))
         if future:
             result.append(('CONDITIONAL_OR_FUTURE', context))
-        if positive and not (negative and not re.search(r'已启用|已部署|已经正常|现已投入|现在可以|当前已', context)):
+        if positive and not (unknown or negative or future):
             result.append(('CONFIRMED_AVAILABLE', context))
     states = {state for state, _ in result}
     if 'CONFIRMED_AVAILABLE' in states and 'CONFIRMED_UNAVAILABLE' in states:
         result.append(('CONFLICT', '同一对象的当前肯定与否定并存'))
     return result
+
+
+def capability_verdict(facts: list[tuple[str, str]]) -> str:
+    """Resolve once, before presentation or material checks can upgrade a status."""
+    states = {status for status, _ in facts}
+    if 'CONFLICT' in states or {'CONFIRMED_AVAILABLE', 'CONFIRMED_UNAVAILABLE'} <= states:
+        return 'CONFLICT'
+    if 'CONFIRMED_UNAVAILABLE' in states:
+        return 'CONFIRMED_UNAVAILABLE'
+    if 'UNKNOWN' in states:
+        return 'UNKNOWN'
+    if 'CONFIRMED_AVAILABLE' in states:
+        return 'CONFIRMED_AVAILABLE'
+    return 'UNKNOWN' if 'CONDITIONAL_OR_FUTURE' in states else 'NO_FACT'
 
 def action_fact(text: str, term: str) -> tuple[int, str] | None:
     """Bind polarity and current availability to the requested action and object.
@@ -303,9 +340,10 @@ def uncertain_capability(condition: str, reply: str) -> bool:
 def covered(condition: str, reply: str) -> bool:
     if not reply or response_conflict(condition, reply) or uncertain_capability(condition, reply):
         return False
-    facts = scoped_facts(reply, condition)
-    if facts and not any(s == 'CONFIRMED_AVAILABLE' for s, _ in facts):
-        return False
+    if capability_object(condition):
+        # Lexical overlap is useful for finding a candidate, never for
+        # proving an operational capability or undoing an adverse fact.
+        return capability_verdict(scoped_facts(reply, condition)) == 'CONFIRMED_AVAILABLE'
     expected, actual = polarity(condition, condition), polarity(reply, condition)
     if expected is not None and actual == expected:
         return True
@@ -436,7 +474,7 @@ def material_assessment(requirement: dict, present: list[tuple[str, str]]):
     if not relevant:
         return '待确认', '实际材料无可读正文，须人工确认', []
     locations = [loc(name, i) for name, i, _ in relevant][:12]
-    missing_body = re.compile(r'(?:没有|缺少|缺失|未附|未提供|不含|不包含|无)(?:任何)?(?:证照|执照|证书|证明|登记)?(?:的)?(?:正文|登记内容|实质内容)|(?:仅有|只有|只剩)(?:标题|封面|目录)(?:[，,；;。]|$)|(?:仅|只有).{0,8}(?:封面|标题).{0,8}(?:没有|缺少|未附|无)(?:证照|执照|证明)?正文')
+    missing_body = re.compile(r'(?:没有|缺少|缺失|未附|未提供|不含|不包含|无)(?:任何)?(?:证照|执照|证书|证明|登记)?(?:的)?(?:正文|登记内容|实质内容)|(?:没有|未|尚未|并未).{0,6}附.{0,12}(?:证照|执照|证书|证明)(?:的证照|的)?正文|(?:证照|执照|证书|证明|登记)?(?:的)?(?:正文|登记内容|实质内容).{0,8}(?:未|没有|尚未|并未|无法|不能)(?:随.{0,4})?(?:附|提供|包含|录入)|(?:仅有|只有|只剩)(?:标题|封面|目录)(?:[，,；;。]|$)|(?:仅|只有).{0,8}(?:封面|标题).{0,16}(?:没有|缺少|未附|无|尚未|并未)(?:随.{0,4})?(?:证照|执照|证明)?(?:的)?正文|(?:除封面外).{0,8}(?:没有|未附|无).{0,8}正文')
     negatives = [(name, i, line) for name, i, line in relevant if NEGATIVE_EVIDENCE.search(line) or missing_body.search(line)]
     positives = [(name, i, line) for name, i, line in relevant if not missing_body.search(line) and not NEGATIVE_EVIDENCE.search(line) and
                  (re.search(r'(?:营业执照|证书|证明)(?:文本|正文)[：:]\s*\S{4,}|统一社会信用代码|(?:证明文本|证明材料|资质证明).{0,20}有效', line))]
@@ -522,27 +560,40 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
         for material in owner['materials']:
             material_owners.setdefault(material, set()).add(owner['id'])
     for r in reqs:
+        cond = r['conditions']
+        stems = [stem for p in cond if (stem := capability_object(p))]
+        other_stems = {stem for peer in reqs if peer is not r
+                       for p in peer['conditions'] if (stem := capability_object(p))} - set(stems)
         candidates = []
+        bound = []
         for n, line, num in replies:
             exact = bool(r['number'] and num == r['number'])
             similar = bool(tokens(body(r['raw'])) & tokens(body(line)))
-            if exact or similar:
+            own_object = any(stem in body(line) for stem in stems)
+            peer_only = bool(stems and not own_object and any(stem in body(line) for stem in other_stems))
+            if (exact or similar or own_object) and not peer_only:
                 candidates.append((n, line, exact))
+                if stems and own_object and not any(stem in body(line) for stem in other_stems):
+                    bound.append((n, line, exact))
         exacts = [c for c in candidates if c[2]]
-        # Repeated source numbers do not uniquely identify a response; keep every candidate.
         duplicate_number = sum(x['number'] == r['number'] for x in reqs) > 1
         selected = exacts[0] if len(exacts) == 1 and not duplicate_number else None
-        unique = selected is not None
+        # A named capability disambiguates a changed number, but a bare
+        # matching number or shared vocabulary cannot provide a fact.
+        selected_replies = bound if stems and bound else [selected] if selected else []
+        unique = bool(selected_replies) and (bool(bound) or selected is not None)
+        if stems and any((reply_num := number(line)) and re.fullmatch(re.escape(r['number'] or '') + r'[a-zA-Z]', reply_num)
+                         for _, line, _ in bound):
+            unique = False
         ambiguous = response is not None and not unique and bool(candidates)
-        # Retain advisory candidates unless their number belongs to another
-        # requirement; a peer's response is not this requirement's provenance.
-        positions = [loc(response_name or '', n) for n, line, _ in candidates
-                     if number(line) == r['number'] or number(line) not in numbered]
-        reply = selected[1] if selected else ''
-        cond = r['conditions']
-        facts = [(p, scoped_facts(reply, p)) for p in cond] if selected else []
-        fact_conflict = any(any(s == 'CONFLICT' for s, _ in assertions) for _, assertions in facts)
-        uncovered = [p for p in cond if not covered(p, reply)] if selected else cond
+        positions = [loc(response_name or '', n) for n, line, _ in
+                     (selected_replies if stems and bound else candidates)
+                     if stems and bound or number(line) == r['number'] or number(line) not in numbered]
+        reply = '\n'.join(line for _, line, _ in selected_replies)
+        facts = [(p, scoped_facts(reply, p)) for p in cond] if unique else []
+        verdicts = {p: capability_verdict(scoped_facts(reply, p)) for p in cond if capability_object(p)}
+        fact_conflict = any(v == 'CONFLICT' for v in verdicts.values())
+        uncovered = [p for p in cond if not covered(p, reply)] if unique else cond
         existence = '未核查' if response is None else '已定位' if unique else '候选待确认' if ambiguous else '未找到（限已提供响应）'
         condition_state = '未核查' if response is None else '待确认' if ambiguous else '可能不充分' if not unique or uncovered else '已覆盖（文本层面）'
         materials = r['materials'][:]
@@ -620,6 +671,27 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
             condition_state = '待确认'
         if fact_conflict:
             condition_state = '待确认'
+        # This is the last functional decision. Material support, keywords and
+        # a second response cannot subsequently promote an adverse/unknown fact.
+        if unique and verdicts:
+            states = set(verdicts.values())
+            if 'CONFLICT' in states:
+                condition_state = '待确认'
+            elif 'CONFIRMED_UNAVAILABLE' in states:
+                condition_state = '可能不充分'
+            elif 'UNKNOWN' in states:
+                solely_deferred = all(s == 'CONDITIONAL_OR_FUTURE' for _, assertions in facts
+                                      for s, _ in assertions) and bool(facts)
+                condition_state = ('可能不充分' if solely_deferred and
+                                   re.search(r'仅提供.{0,12}(?:设计|方案)|拟于.{0,16}上线|交付后.{0,8}方可|只有.{0,12}才|另行购买', reply)
+                                   else '待确认')
+            elif 'NO_FACT' in states:
+                condition_state = ('可能不充分' if re.search(r'仅提供.{0,12}(?:设计|方案)|拟于.{0,16}上线', reply)
+                                   else '待确认')
+            elif uncovered:
+                condition_state = '可能不充分'
+            else:
+                condition_state = '已覆盖（文本层面）'
         gaps = []
         if existence == '未找到（限已提供响应）':
             gaps.append('在已提供响应中未找到')
@@ -649,8 +721,10 @@ def compare(reqs: list[dict], response: str | None, response_name: str | None,
             pending.append('响应候选歧义或编号改变；逐一核对双向原句')
         if fact_conflict:
             pending.append('同对象当前肯否冲突；回应 ' + '、'.join(positions) + ' 两侧原句须核对，不可按顺序裁决')
-        if unique and any(uncertain_capability(p, reply) and not response_conflict(p, reply)
-                          for p in cond):
+        if unique and ('UNKNOWN' in verdicts.values() or 'NO_FACT' in verdicts.values()):
+            pending.append('当前功能事实尚未核实或仅有未来计划；回应 ' + '、'.join(positions) + ' 须确认现时可用性')
+        elif unique and any(uncertain_capability(p, reply) and not response_conflict(p, reply)
+                            for p in cond):
             pending.append('功能当前可用性或交付时点尚未确定，须核实该要求与响应原句')
         if conflicting:
             pending.append('材料候选重复、编号冲突或响应配对歧义；逐一核对文件与要求关联')
