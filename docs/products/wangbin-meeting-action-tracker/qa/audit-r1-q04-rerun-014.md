@@ -1,0 +1,19 @@
+# AUDIT-R1 Q04 0.1.4 精确 ZIP 独立本地复验：PASS（仅 L1–L3）
+
+- `product_id=wangbin-meeting-action-tracker`; `task_id=t_1f081465`; workspace `F:/ideaWorkSpace/wangbin-workbuddy-meeting-action-tracker`; branch `skill/meeting-action-tracker`; 开始时 HEAD `d52c01d31d38b326e373efa359a078d001f44618`、工作树 clean（仅本次 QA 文件生成后为未跟踪文件）；FIX-R2 源码提交即该 HEAD。冻结合同 `requirements.md`、`input-output-contract.md`、`acceptance-cases.md`，授权原文 §09、§17–20 已查。本报告不改旧合同、源码、ZIP 或历史 QA。
+- 精确新路径 `dist/wangbin-meeting-action-tracker-0.1.4-skill-candidate.zip`；SHA-256 `8b45ac776227db6128f6e6c60e2f345604e63fbb52e693b4bd3dadccb2a45193`。`zip.sha256` 侧车 `sha256sum -c` exit0，`zip.manifest.json` archive/id/version/SHA 匹配，四个唯一安全成员 `SKILL.md`、`manifest.json`、`references/usage-and-contract.md`、`scripts/track.py` 各大小/内容 SHA 与 manifest 以及工作树源码逐项相等；`ZipFile.testzip()` 无损坏且 `python -m zipfile -t` exit0。SKILL YAML 身份/0.1.4/中英展示名/三条中英推荐问题、包内相对路径；manifest 0.1.4、Python 3.11+ 声明、依赖 `openpyxl>=3.1,<4` 与 `python-docx>=1.1,<2`；catalog active 0.1.4 与此候选路径/SHA 相符。工厂 `python -m tooling.products validate --id wangbin-meeting-action-tracker` exit0 PASS findings=[]、`python -m tooling.products verify --id wangbin-meeting-action-tracker` exit0 PASS 此新 SHA。该 verify 是当前 active/source 对应，不等于旧 ZIP 针对新源码 verify。
+- 历史实读：`qa/audit-r1-q04-candidate.md` 与其逐案 JSON 为 **0.1.2 21/26 FAIL**（否定/提议误取消与不同 A/B 新任务错合并，后两项重导入/调序连带失败）；`qa/audit-r1-q04-rerun-013.md` 与其 JSON 为 **0.1.3 34/35 FAIL**（`T01的取消事项仍在讨论，尚无最终决定。` 误确定取消）。旧 0.1.1/0.1.2/0.1.3 精确 SHA 分别为 `5f5f0bc86ca469c89d758010194d8768e27badc96584791495e4b71c8ef745ae` / `a724a682364cef80eb0a64791f6ea447de463c20f0b14bd05aba87c558ba9ffe` / `7a336890accd132e69deff91a60b4e4cd30b7d7ce144862f778fa6e5023b2a6d`，本轮重核未变；这两个旧版 FAIL 绝不改判。
+
+## 真实业务运行与逐案证据
+
+`PYTHONDONTWRITEBYTECODE=1 python docs/products/wangbin-meeting-action-tracker/qa/audit_r1_q04_rerun_014.py`，cwd 产品工作树，exit0，**42/42 实际业务断言符合预期**：原先 35 个测试逐项复跑 35/35（0.1.2 的 26 项与 0.1.3 新增 9 项）；另选 7 项 7/7。探针与新选择的预期在运行前写定；42/42 是逐案 `pass` 计数而非仅探针 exit0。脚本仅在 wb-quality profile scratch `C:/Users/wangbin/AppData/Local/hermes/profiles/wb-quality/cache/scratch` 建干净临时目录，校验精确 ZIP 后解压，只调用解压出的 `scripts/track.py` 正式 CLI，移除 `PYTHONPATH`；各案真实 UTF-8 MD/TXT、旧 CSV 与轮二 XLSX、补证 TXT、用户更正，生成 XLSX 与 MD 并回读**恰四表**。错误输入的 CLI exit2、无工作簿也逐项断言；旧 CSV 与补证文件 SHA 前后未变。
+
+独立新增：`unresolved_synonym` 的 `T01取消的议题尚在商议，至今没有达成决议。`、`unresolved_continuing` 的 `关于取消T01仍在讨论中，最终方案尚未确定。`、`unresolved_exact_variant` 的 `取消T01的事项仍在讨论，尚无最终决定。`：T01 均为进行中，T02 均待执行，历史无确定取消，变化仅候选，待确认有取消且摘要不宣称确定取消。`scoped_mixed` 的 `T01的取消事项仍在讨论，尚无最终决定；T02已经完成。`：T01 进行中且取消仍待确认，T02 报告完成且仅 T02 的确定迁移在历史；摘要与四表一致。否定 `T01不能取消，继续进行中。`、提议 `有人提议取消T01，但会议尚未形成决议。` 均无假取消；正向 `经会议表决，正式决定取消T01。` 真正使 T01 取消并记录有源取消事件。已有案例复跑了明确取消、完成/否定作用域、不同姓名/日期、A/B 独立任务及重排/重复、补证和更正的跨轮、冲突以及错误输入。未把所有取消都改为待确认。
+
+逐案完整原文、expected、真实解释器及命令/cwd/exit/stdout/stderr、旧 CSV 与每次会议/补证 SHA、输出 XLSX/MD SHA、四表完整数据和摘要实际内容、断言与最终计数见 `qa/audit-r1-q04-rerun-014-results.json`；probe 脚本可再生成独立 scratch 案例（临时路径运行完会清理）。本机执行 Python 3.14.9、openpyxl 3.1.5、python-docx 1.2.0，不是 WorkBuddy 依赖证明。
+
+## 门禁划分与后续
+
+- L1 本地 ZIP 完整性/源码一致、工厂 validate/verify **PASS**；L2 focused `PYTHONDONTWRITEBYTECODE=1 python -m pytest -q -p no:cacheprovider --basetemp="C:/Users/wangbin/AppData/Local/hermes/profiles/wb-quality/cache/scratch/q04-rerun-014-tests" tests/test_meeting_action_tracker.py tests/test_meeting_action_tracker_audit_r1.py` exit0 **72 passed, 1 anyio 第三方弃用警告**；`python -m tooling.products test --id wangbin-meeting-action-tracker` exit0 **20 passed, 1 warning**。L3 独立解压文件/CLI/回读 **PASS 42/42**（仅已列测试范围）。
+- L4 真模型多轮 **NOT_TESTED**；L5 WorkBuddy 平台安装/运行/审核 **NOT_TESTED**；目标平台依赖可得性/第三方许可证与发布权 **NOT_VERIFIED**；跨产品相似性 **NOT_TESTED**；普通 push **NOT_TESTED（本 QA 卡不 push）**；无上传/发布。规则驱动中文复杂跨句、隐含对象等开放语义空间仍有剩余风险；本地通过不代表平台通过。
+- 交经理 `t_ec1150c3` 核本产品 ZIP、测试源码与 QA 提交、仅本产品普通 push 的前置一致性；本 QA 不操作远端。QA-only 提交仅上述本轮 probe/JSON/报告，不覆盖旧 0.1.2/0.1.3 文件。
