@@ -144,9 +144,76 @@ def statements(lines, filename):
 
 
 def proposed_status_change(segment, action):
-    # A proposal must qualify the status action itself. Matching a bare 拟 also
-    # catches unrelated words in the explanation, e.g. 模拟需求撤回.
-    return bool(re.search(r"(?:考虑|建议|拟)\s*(?:将\s*)?(?:[\w-]+\s*)?" + action, segment))
+    return bool(re.search(r"(?:考虑|建议|拟(?!定))\s*(?:将\s*)?(?:[A-Za-z0-9_-]+\s*)?" + action, segment))
+
+
+def task_mentions(segment, ids):
+    """Match complete ASCII IDs even when adjacent to Chinese characters."""
+    return [tid for tid in ids if re.search(r"(?<![A-Za-z0-9_-])" + re.escape(tid) + r"(?![A-Za-z0-9_-])", segment, re.I)]
+
+
+def owner_claim(segment):
+    name = r"([\u4e00-\u9fff]{2,4}?|[A-Za-z][A-Za-z-]{1,19}?)"
+    patterns = [
+        (r"(?:改由|建议由|由)\s*" + name + r"\s*(?:本人)?(?:确认接受|确认负责|接手|负责)", 1),
+        (r"负责人\s*(?:为|是|改为)\s*" + name + r"(?=\s*(?:[，,。；;]|截止|$))", 1),
+        (name + r"\s*(?:本人确认接受|负责|接手)", 1),
+    ]
+    for pattern, index in patterns:
+        match = re.search(pattern, segment)
+        if match:
+            candidate = match.group(index)
+            if candidate not in {"新增任务", "新增事项", "明确决定", "会议决定", "接口测试", "尚未确认"}:
+                return candidate, bool(re.search(r"(?:建议|考虑|拟由|尚未确认|未获.*接受)", segment))
+    return None, False
+
+
+def status_claim(segment):
+    """Return the action scoped to this task clause, not a keyword from another task."""
+    if re.search(r"(?:取消|撤销)(?:此前|之前|原先|上次)?取消.*(?:决定|决议)", segment):
+        return "重新开启" if re.search(r"继续执行|继续进行|恢复|重新开启|重开", segment) else None
+    if re.search(r"(?:重新开启|重开|恢复执行)", segment):
+        return "重新开启"
+    if re.search(r"(?:不|未|不是|尚未|没有|无需|别)\s*(?:要|再|被|已)?\s*取消", segment):
+        return "进行中" if re.search(r"(?:继续|仍|保持).*进行中", segment) else None
+    if re.search(r"(?:不是|未|尚未|没有|并未)\s*(?:已|经)?完成", segment):
+        return "进行中" if re.search(r"(?:继续|仍|保持).*进行中", segment) else None
+    if re.search(r"(?:已完成|已经完成|完成了)", segment):
+        return "报告完成"
+    if re.search(r"取消", segment):
+        return "取消"
+    if re.search(r"进行中|继续执行", segment):
+        return "进行中"
+    return None
+
+
+def action_description(segment):
+    match = re.search(r"(?:新增(?:事项|任务)?|决定新增|决议新增)\s*[：:]?\s*(.+)", segment)
+    if match:
+        return re.split(r"[，,](?:由|建议|截止|明天)", match.group(1))[0].strip(" .；。")
+    # Explicit accountable action, not a discussion or an unassigned suggestion.
+    if re.search(r"(?:建议|讨论|可以|考虑|尚未指定|未确定|是否)", segment):
+        return None
+    owner, tentative = owner_claim(segment)
+    if not owner or tentative or not re.search(r"(?:截止|期限|交付日期)\s*(?:日|时间)?\s*[：:]?\s*\d{4}-\d{2}-\d{2}", segment):
+        return None
+    remainder = re.sub(r"^(?:由\s*)?" + re.escape(owner) + r"\s*(?:本人确认接受|确认负责|负责|接手)\s*", "", segment)
+    remainder = re.sub(r"^(.+?)\s*(?:由\s*" + re.escape(owner) + r"\s*(?:确认负责|负责|接手)|负责人\s*(?:为|是)\s*" + re.escape(owner) + r")", r"\1", remainder)
+    remainder = re.split(r"[，,]\s*(?:截止|期限|交付日期)", remainder)[0].strip(" ：:，,。")
+    if remainder and remainder != segment and re.search(r"[\u4e00-\u9fffA-Za-z]", remainder):
+        return remainder
+    return None
+
+
+def meeting_date_claims(lines, filename):
+    claims = []
+    for line, text in lines:
+        for match in re.finditer(r"\d{4}-\d{2}-\d{2}", text):
+            before, after = text[max(0, match.start()-18):match.start()], text[match.end():match.end()+18]
+            if (re.search(r"(?:会议日期|开会日期|会议时间|例会日期|会议日)\s*[：:\s]*$", before)
+                or re.match(r"\s*(?:项目)?(?:例会|会议|周会)", after)) and not re.search(r"(?:上次|上回|前次|此前|截止|期限)\s*$", before):
+                claims.append((iso(match.group()), f"{filename}:行{line}：{text[:200]}"))
+    return claims
 
 
 def reconcile(meeting_file, previous_tasks=None, supplemental_evidence=None, corrections=None,
@@ -168,8 +235,8 @@ def reconcile(meeting_file, previous_tasks=None, supplemental_evidence=None, cor
     for task in tasks.values():
         task["最近变更"] = "无新增进展"
     full = "\n".join(s for _, s in lines)
-    dates = set(re.findall(r"\b\d{4}-\d{2}-\d{2}\b", full))
-    meeting_dates = sorted({iso(d) for d in dates if re.search(re.escape(d) + r"[^。；\n]{0,20}(?:会议|例会)", full)})
+    date_claims = meeting_date_claims(lines, meeting_file.name)
+    meeting_dates = sorted({d for d, _ in date_claims})
     meeting_date = meeting_dates[0] if len(meeting_dates) == 1 else None
 
     def ask(tid, field, value, reason, source):
@@ -181,13 +248,14 @@ def reconcile(meeting_file, previous_tasks=None, supplemental_evidence=None, cor
         semantic = "|".join([tid, typ, str(old), str(new), str(conflict)])
         eid = "EV-" + digest(semantic)[:20]
         if eid in history_by_id:
-            return
+            return False
         row = dict(zip(SHEETS["状态历史"], [eid, tid, typ, old, new, source, meeting_date or "", "是" if conflict else "否"]))
         history_by_id[eid] = row
         changes.append(dict(zip(SHEETS["本次新增与变化"], [tid, tid if tid in tasks else "", typ, old, new, "待确认" if conflict or not confirmed else "已确认", source, eid])))
+        return True
 
     def locate(segment, source):
-        ids = [tid for tid in tasks if re.search(r"(?<![\w-])" + re.escape(tid) + r"(?![\w-])", segment, re.I)]
+        ids = task_mentions(segment, tasks)
         if len(ids) == 1:
             return ids[0]
         if len(ids) > 1:
@@ -204,10 +272,12 @@ def reconcile(meeting_file, previous_tasks=None, supplemental_evidence=None, cor
         task = tasks[tid]
         old = task.get(field, "")
         if not confirmed:
-            event(tid, typ, old, value, source, False)
+            change = dict(zip(SHEETS["本次新增与变化"], [tid, tid, typ, old, value, "建议", source, ""]))
+            if change not in changes:
+                changes.append(change)
             ask(tid, field, value, "仅为建议或未获确认", source)
             return
-        if old == value:
+        if old == value or any(h["task_id"] == tid and h["事件类型"] == typ and h["新值"] == value and h["来源"] == source for h in history_by_id.values()):
             return
         event(tid, typ, old, value, source)
         task[field] = value
@@ -216,50 +286,67 @@ def reconcile(meeting_file, previous_tasks=None, supplemental_evidence=None, cor
 
     recent_new = []
     def apply(segment, source, evidence=False, correction=False):
+        # A clause containing multiple IDs may assert independent, opposing facts.
+        mentioned = task_mentions(segment, tasks)
+        if len(mentioned) > 1:
+            clauses = re.split(r"[，,](?=\s*(?:但|而|且|以及|同时)?\s*[A-Za-z][A-Za-z0-9_-]*)", segment)
+            if len(clauses) > 1 and all(len(task_mentions(clause, tasks)) <= 1 for clause in clauses):
+                for clause in clauses:
+                    apply(clause, source, evidence, correction)
+                return
         tid = locate(segment, source)
         if tid is None and not evidence and not correction and re.search(r"建议由|由.*确认负责", segment) and len(recent_new) == 1:
             tid = recent_new[0]
-        new_match = re.search(r"(?:新增(?:事项|任务)?|决定新增|决议新增)\s*[：:]?\s*(.+)", segment)
-        if tid is None and new_match:
-            description = re.split(r"[，,](?:由|建议|截止|明天)", new_match.group(1))[0].strip(" .；。")
+        description = action_description(segment) if tid is None and not evidence and not correction else None
+        if tid is None and description:
             if not description:
                 ask("", "任务内容", segment, "无法抽取新任务", source)
                 return
             key = re.sub(r"\s+", "", description)
             tid = "MTG-" + digest(project_name + "|" + key)[:16].upper()
+            # Existing generated task can also be located by its stable description.
             if tid not in tasks:
                 tasks[tid] = {key: "" for key in SHEETS["当前任务"]}
                 tasks[tid].update(task_id=tid, 任务内容=description, 执行状态="待执行", 来源=source, 最近变更="新增")
                 event(tid, "新增", "", description, source)
             recent_new[:] = [tid]
         if tid is None:
-            if evidence or correction or re.search(r"(已完成|取消|负责|明天|截止|重开|进行中)", segment):
+            if evidence or correction or re.search(r"(已完成|取消|负责|明天|截止|重开|进行中|讨论|行动|任务)", segment):
                 ask("", "任务关联", segment, "无法唯一定位旧任务", source)
             return
         task = tasks[tid]
-        explicit = bool(re.search(r"(明确|决定|确认|已签收|更正|改由|重新开启|已完成|取消)", segment))
+        status = status_claim(segment)
+        prior_type = {"取消": "取消", "重新开启": "重新开启", "报告完成": "报告完成"}.get(status or "")
+        if prior_type and any(h["task_id"] == tid and h["事件类型"] == prior_type and h["来源"] == source for h in history_by_id.values()):
+            status = None
         if re.search(r"(验收单|交付确认记录|验收记录|签收记录)", segment) and re.search(r"(签收|确认|已交付|已验收|E-\d+)", segment):
             update(tid, "完成证据", f"{segment}（提交材料所称证据，未独立核验；{source}）", "证据确认完成", source)
             update(tid, "执行状态", "证据确认完成", "证据确认完成", source)
-        elif re.search(r"已完成|完成了", segment):
-            update(tid, "执行状态", "报告完成", "报告完成", source)
-        elif re.search(r"重新开启|重开", segment):
-            if explicit and not proposed_status_change(segment, r"(?:重新开启|重开)"):
-                update(tid, "执行状态", "待执行", "重新开启", source)
+        elif status == "报告完成":
+            # Replaying the meeting must not downgrade a later evidence-backed state.
+            if not (task["执行状态"] == "证据确认完成" and any(
+                h["task_id"] == tid and h["事件类型"] == "报告完成" and h["来源"] == source
+                for h in history_by_id.values()
+            )):
+                update(tid, "执行状态", "报告完成", "报告完成", source)
+        elif status == "重新开启":
+            if not proposed_status_change(segment, r"(?:重新开启|重开|恢复执行)"):
+                if task["执行状态"] == "取消":
+                    value = "进行中" if re.search(r"继续执行|继续进行|恢复执行", segment) else "待执行"
+                    update(tid, "执行状态", value, "重新开启", source)
             else:
                 ask(tid, "执行状态", segment, "仅为重开提议", source)
-        elif re.search(r"取消", segment):
-            if explicit and not proposed_status_change(segment, r"取消"):
+        elif status == "取消":
+            if not proposed_status_change(segment, r"取消") and not re.search(r"尚未形成决定|尚未决定", segment):
                 update(tid, "执行状态", "取消", "取消", source)
             else:
-                ask(tid, "执行状态", segment, "仅为取消提议", source)
-        elif re.search(r"进行中", segment):
+                update(tid, "执行状态", "取消", "取消提议", source, False)
+        elif status == "进行中":
             update(tid, "执行状态", "进行中", "进展", source)
-        owner = re.search(r"(?:改由|由|建议由|建议)\s*([^，,。；;\s]{1,20}?(?:工|人|经理))\s*(?:确认接受|确认负责|负责|接手)?", segment)
+        owner, tentative = owner_claim(segment)
         if owner:
-            confirmed = bool(re.search(r"确认接受|确认负责|明确由|改由.*确认", segment)) or correction
-            update(tid, "负责人", owner.group(1), "负责人变更", source, confirmed)
-            if confirmed:
+            update(tid, "负责人", owner, "用户更正" if correction else "负责人变更", source, not tentative)
+            if not tentative:
                 task["负责人确认状态"] = "已确认"
             elif not task["负责人确认状态"]:
                 task["负责人确认状态"] = "建议"
@@ -269,10 +356,14 @@ def reconcile(meeting_file, previous_tasks=None, supplemental_evidence=None, cor
                 update(tid, "截止时间", day, "期限变更", source + f"（基准会议日 {meeting_date}，明天）")
                 task["截止时间确认状态"] = "已确认"
             else:
-                task["截止时间确认状态"] = "待确认"
-                ask(tid, "截止时间", segment, "缺会议日或相对期限不唯一", source)
+                reason = "会议日期冲突" if len(meeting_dates) > 1 else "缺会议日或相对期限不唯一"
+                if len(meeting_dates) > 1:
+                    for day, date_src in date_claims:
+                        ask(tid, "会议日期", day, reason, date_src)
+                ask(tid, "截止时间", segment, reason, source)
+                changes.append(dict(zip(SHEETS["本次新增与变化"], [tid, tid, "期限待确认", task["截止时间"], segment, "待确认", source, ""])))
         else:
-            match = re.search(r"(?:截止(?:日|时间)?|更正为|改到)\s*[：:]?\s*(\d{4}-\d{2}-\d{2})", segment)
+            match = re.search(r"(?:截止(?:日|时间)?|更正为|改到|期限)\s*[：:]?\s*(\d{4}-\d{2}-\d{2})", segment)
             if match:
                 day = iso(match.group(1))
                 update(tid, "截止时间", day, "用户更正" if correction else "期限变更", source)
@@ -322,8 +413,13 @@ def reconcile(meeting_file, previous_tasks=None, supplemental_evidence=None, cor
             task["是否逾期"], task["逾期判断依据"] = ("是" if iso(due) < check_date else "否"), f"截止日 {due}；核查日 {check_date}；时区 {timezone or '日期比较'}"
     change_count = len(changes)
     summary = f"本次对照会议记录，记录{change_count}项新增或变化；{len(questions)}处待确认。"
+    if any(c['确认状态'] == '已确认' for c in changes):
+        summary += " 确定变化：" + "；".join(
+            f"{c['task_id']} {c['变化类型']} {c['原值']}→{c['新值']}（{c['来源']}）"
+            for c in changes if c['确认状态'] == '已确认'
+        ) + "。"
     if questions:
-        summary += " 待确认事项包括：" + "；".join(q["待确认字段"] + "（" + q["原因"] + "）" for q in questions[:3]) + "。"
+        summary += " 待确认事项包括：" + "；".join(q["待确认字段"] + "（" + q["候选值或问题"] + "；" + q["原因"] + "）" for q in questions[:3]) + "。"
     if any(t["执行状态"] == "报告完成" for t in tasks.values()):
         summary += " 有任务仅报告完成，未提供可核验的验收凭据。"
     if not previous_tasks:

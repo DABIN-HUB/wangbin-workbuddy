@@ -1,6 +1,7 @@
 {
   "id": "wangbin-meeting-action-tracker",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "星核实验室",
-  "runtime": "Python 3.11+; requires openpyxl and python-docx installed locally; WorkBuddy runtime unverified"
+  "runtime": "Python 3.11+; requires openpyxl and python-docx installed locally; WorkBuddy runtime unverified",
+  "dependencies": ["openpyxl>=3.1,<4", "python-docx>=1.1,<2"]
 }
