@@ -264,15 +264,18 @@ def concurrency_statements(text):
 
 
 def unexecuted_test_subset(text):
-    """An explicitly omitted login subset defeats a claim of complete scope."""
+    """Return the omitted login sub-scope, not the completed subset's counts."""
     for clause in re.split(r'[，,。；;\n]', text):
-        if not re.search(r'登录.{0,12}(?:用例|测试)|(?:用例|测试).{0,12}登录', clause):
+        # A login path/flow is also a test sub-scope, even if the author
+        # omits the literal words 测试/用例 in the exception clause.
+        if not re.search(r'登录.{0,24}(?:用例|测试|路径|场景|流程|分支)|'
+                         r'(?:用例|测试|路径|场景|流程|分支).{0,24}登录', clause):
             continue
-        if re.search(r'(?:未|没有|尚未|并未|未曾|未予)\s*(?:执行|测试|覆盖|纳入)|'
-                     r'(?:不曾|并未)\s*(?:运行|验证)|未测|漏测|未覆盖|未执行|'
+        if re.search(r'(?:未|没有|尚未|并未|未曾|未予)\s*(?:执行|测试|覆盖|纳入|运行|验证)|'
+                     r'未测|漏测|没测|未覆盖|未执行|'
                      r'(?:未|没有|尚未|并未)\s*对.{0,18}(?:执行|测试|覆盖)', clause):
-            return True
-    return False
+            return clause.strip()
+    return None
 
 
 def threshold(text):
@@ -351,8 +354,9 @@ def judge(cond, req_text, text, ev):
         if failed is not None and failed > 0 or passed is not None and passed < executed:
             return 'NONCONFORMING', f'执行 {executed} 项，成功 {passed} 项，失败 {failed} 项；未全部通过'
         if failed == 0 and passed == executed:
-            if unexecuted_test_subset(text):
-                return 'PENDING', f'执行 {executed} 项均通过，但登录测试子范围明确未执行/覆盖，不能证明全部用例通过'
+            omitted = unexecuted_test_subset(text) if '登录' in cond else None
+            if omitted:
+                return 'PENDING', f'执行 {executed} 项均通过，但登录子范围「{omitted}」明确未执行/覆盖，不能证明全部用例通过'
             return 'SUPPORT', f'相同测试范围执行 {executed} 项，成功 {passed} 项，失败 0 项'
         return 'PENDING', '缺成功或失败计数，不能确认全量通过'
     if '培训记录' in cond and '培训记录' not in text:
@@ -501,8 +505,11 @@ def analyze(project, root, groups, previous=None, effective_version_ref=''):
                 findings.append({'id': stable('GAP', cid, 'NONCONFORMING'), 'requirement_id': req['requirement_id'], 'condition_id': cid,
                                  'type': 'NONCONFORMING', 'text': cond, 'sources': [r['source'] for r in negatives], 'status': 'OPEN'})
             if not positives or negatives or unknowns:
+                omitted = next((reason for _, decision, reason in matches
+                                if decision == 'PENDING' and '登录子范围「' in reason), None)
                 findings.append({'id': stable('GAP', cid, 'MISSING'), 'requirement_id': req['requirement_id'], 'condition_id': cid,
-                                 'type': 'MISSING', 'text': cond, 'sources': [req['source']], 'status': 'OPEN'})
+                                 'type': 'MISSING', 'text': cond + ('；' + omitted if omitted else ''),
+                                 'sources': [req['source']] + ([r['source'] for r in unknowns] if omitted else []), 'status': 'OPEN'})
         statuses = [r['status'] for r in results]
         req['status'] = ('CONFLICT' if 'CONFLICT' in statuses or relevant_version else 'NONCONFORMING' if 'NONCONFORMING' in statuses else
                          'PENDING_CONFIRMATION' if pending or 'PENDING_CONFIRMATION' in statuses and 'EVIDENCE_FOUND' not in statuses else

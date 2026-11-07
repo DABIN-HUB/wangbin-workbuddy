@@ -189,3 +189,39 @@ def test_compound_incremental_and_conflict(tmp_path):
     assert snap['requirements'][0]['status'] == 'CONFLICT'
     assert snap['requirements'][0]['results'][0]['support'] and snap['requirements'][0]['results'][0]['negative']
     assert len(snap['requirements'][0]['results'][0]['sources']) == 2
+
+
+@pytest.mark.parametrize('subset,omission,expected', [
+    ('登录异常路径', '尚未执行', 'PENDING_CONFIRMATION'),
+    ('登录边界场景', '没测', 'PENDING_CONFIRMATION'),
+    ('登录安全流程', '未覆盖', 'PENDING_CONFIRMATION'),
+    ('高并发登录分支', '没有测试', 'PENDING_CONFIRMATION'),
+    ('登录测试用例', '尚未纳入', 'PENDING_CONFIRMATION'),
+    ('注册异常路径', '尚未执行', 'EVIDENCE_FOUND'),
+    ('', '', 'EVIDENCE_FOUND'),
+])
+def test_login_exception_scope_reopened_reports(tmp_path, subset, omission, expected):
+    material = '共执行57项登录用例，成功57项，失败0项' + (f'；但是{subset}{omission}' if subset else '') + '。'
+    snap = run(tmp_path, '全部登录测试用例通过。', material)
+    req = snap['requirements'][0]
+    assert req['status'] == expected
+    assert snap['coverage'] == ('0/1' if omission and expected == 'PENDING_CONFIRMATION' else '1/1')
+    comparison = req['results'][0]['comparisons'][0]
+    assert comparison['source'] == 'material.md/行1'
+    book = load_workbook(tmp_path / 'out/虚构项目-验收资料核对.xlsx', read_only=True)
+    doc = Document(tmp_path / 'out/虚构项目-验收准备报告.docx')
+    doc_text = '\n'.join(p.text for p in doc.paragraphs) + '\n' + '\n'.join(
+        c.text for table in doc.tables for row in table.rows for c in row.cells)
+    assert book['核查概览']['B2'].value == snap['coverage']
+    assert book['要求追踪']['H2'].value == expected
+    if expected == 'PENDING_CONFIRMATION':
+        assert subset in comparison['reason']
+        assert req['results'][0]['pending'] and not req['results'][0]['support']
+        assert any(subset in gap['text'] and 'material.md/行1' in gap['sources'] for gap in snap['findings'])
+        assert subset in book['要求追踪']['K2'].value
+        assert 'material.md/行1' in book['要求追踪']['M2'].value
+        assert subset in doc_text and 'material.md/行1' in doc_text
+    else:
+        assert req['results'][0]['support'] and not req['results'][0]['pending']
+        assert not snap['findings']
+    book.close()
