@@ -247,6 +247,34 @@ def concurrent(text):
     return int(match.group(1).replace(',', '')) if match else None
 
 
+def concurrency_statements(text):
+    """Keep polarity and numeric roles together; a denied target is not a measured result."""
+    statements = []
+    for clause in re.split(r'[，,。；;\n]', text):
+        if not re.search(r'并发.{0,12}登录|登录.{0,12}并发', clause):
+            continue
+        amount = concurrent(clause)
+        if amount is None:
+            continue
+        denied = bool(re.search(r'(?:不|无法|不能|未能|不可|尚未)\s*(?:支持|达到|容纳|承载|满足)\s*\d|'
+                                r'\d[\d,]*\s*(?:个|人|名|位)\s*并发登录\s*(?:不支持|未达到)', clause))
+        maximum = bool(re.search(r'最大|上限|至多|最多|仅支持|只能支持', clause))
+        statements.append((amount, denied, maximum))
+    return statements
+
+
+def unexecuted_test_subset(text):
+    """An explicitly omitted login subset defeats a claim of complete scope."""
+    for clause in re.split(r'[，,。；;\n]', text):
+        if not re.search(r'登录.{0,12}(?:用例|测试)|(?:用例|测试).{0,12}登录', clause):
+            continue
+        if re.search(r'(?:未|没有|尚未|并未|未曾|未予)\s*(?:执行|测试|覆盖|纳入)|'
+                     r'(?:不曾|并未)\s*(?:运行|验证)|未测|漏测|未覆盖|未执行|'
+                     r'(?:未|没有|尚未|并未)\s*对.{0,18}(?:执行|测试|覆盖)', clause):
+            return True
+    return False
+
+
 def threshold(text):
     if not re.search(r'并发.{0,12}登录|登录.{0,12}并发', text):
         return None
@@ -272,11 +300,22 @@ def judge(cond, req_text, text, ev):
     if required:
         if not re.search(r'并发.{0,12}登录|登录.{0,12}并发', text):
             return ('PENDING', '材料提及登录但缺可比并发人数或单位') if '登录' in text else ('IRRELEVANT', '没有对应的并发登录指标')
-        actual = concurrent(text)
-        if actual is None:
+        statements = concurrency_statements(text)
+        if not statements:
             return 'PENDING', '缺可比并发登录人数/数量单位或混用了每日登录次数'
         if ('场景' in req_text and not re.search(r'同一.{0,6}场景|场景相同|同场景|同一压测场景', text)):
             return 'PENDING', '缺相同测试场景依据'
+        affirmative = [s for s in statements if not s[1]]
+        if not affirmative:
+            return 'PENDING', '仅声明不支持指定并发人数，未给出可比较的实际容量上限'
+        if len(affirmative) > 1 and len({s[0] for s in affirmative}) > 1 and not any(s[2] for s in affirmative):
+            return 'PENDING', '多个并发人数无明确实际容量角色，不能任选其一'
+        maximums = [s[0] for s in affirmative if s[2]]
+        if len(set(maximums)) > 1:
+            return 'PENDING', '实际最大并发人数互相矛盾'
+        if any(s[1] and s[0] <= max(s[0] for s in affirmative) for s in statements):
+            return 'PENDING', '同一并发人数存在支持与不支持的矛盾表述'
+        actual = maximums[0] if maximums else affirmative[0][0]
         op, value = required
         ok = (actual >= value if op in ('至少', '不低于', '不得低于', '不少于', '≥', '>=') else
               actual > value if op in ('高于', '超过', '大于', '>') else
@@ -312,6 +351,8 @@ def judge(cond, req_text, text, ev):
         if failed is not None and failed > 0 or passed is not None and passed < executed:
             return 'NONCONFORMING', f'执行 {executed} 项，成功 {passed} 项，失败 {failed} 项；未全部通过'
         if failed == 0 and passed == executed:
+            if unexecuted_test_subset(text):
+                return 'PENDING', f'执行 {executed} 项均通过，但登录测试子范围明确未执行/覆盖，不能证明全部用例通过'
             return 'SUPPORT', f'相同测试范围执行 {executed} 项，成功 {passed} 项，失败 0 项'
         return 'PENDING', '缺成功或失败计数，不能确认全量通过'
     if '培训记录' in cond and '培训记录' not in text:

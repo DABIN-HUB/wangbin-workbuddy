@@ -70,6 +70,49 @@ def test_comparator_paraphrases(tmp_path, requirement, material, expected):
     assert snap['requirements'][0]['status'] == expected
 
 
+@pytest.mark.parametrize('material,expected,actual', [
+    ('同一压测场景不支持74人并发登录，最大仅支持72人并发登录。', 'NONCONFORMING', '72'),
+    ('同一压测场景无法支持74人并发登录。', 'PENDING_CONFIRMATION', None),
+    ('同一压测场景不能达到74人并发登录。', 'PENDING_CONFIRMATION', None),
+    ('同一压测场景最大只能支持72人并发登录；无法支持74人并发登录。', 'NONCONFORMING', '72'),
+    ('同一压测场景无法支持74人并发登录；实测支持73人并发登录。', 'EVIDENCE_FOUND', '73'),
+    ('同一压测场景支持74人并发登录；但不支持74人并发登录。', 'PENDING_CONFIRMATION', None),
+    ('同一压测场景实测最大支持72人并发登录。', 'NONCONFORMING', '72'),
+    ('同一压测场景实测最大支持73人并发登录。', 'EVIDENCE_FOUND', '73'),
+    ('同一压测场景实测最大支持74人并发登录。', 'EVIDENCE_FOUND', '74'),
+    ('同一压测场景支持74人并发登录。', 'EVIDENCE_FOUND', '74'),
+])
+def test_negated_capacity_and_number_roles(tmp_path, material, expected, actual):
+    snap = run(tmp_path, '同一测试场景下并发登录人数不得低于73人。', material)
+    req = snap['requirements'][0]
+    assert req['status'] == expected
+    assert snap['coverage'] == ('1/1' if expected == 'EVIDENCE_FOUND' else '0/1')
+    comparisons = req['results'][0]['comparisons']
+    assert comparisons and comparisons[0]['source'] == 'material.md/行1'
+    if actual:
+        assert f'实际 {actual} 人' in comparisons[0]['reason']
+    else:
+        assert not req['results'][0]['support']
+
+
+@pytest.mark.parametrize('material,expected', [
+    ('共执行41项登录用例，成功41项，失败0项，但高并发登录用例没有执行。', 'PENDING_CONFIRMATION'),
+    ('共执行41项登录用例，成功41项，失败0项；高并发登录测试尚未覆盖。', 'PENDING_CONFIRMATION'),
+    ('共执行41项登录用例，成功41项，失败0项，但登录压测用例未执行。', 'PENDING_CONFIRMATION'),
+    ('共执行41项登录用例，成功41项，失败0项；高并发登录用例未纳入测试。', 'PENDING_CONFIRMATION'),
+    ('共执行41项登录用例，成功41项，失败0项；尚未对高并发登录测试用例进行测试。', 'PENDING_CONFIRMATION'),
+    ('共执行41项登录用例，成功41项，失败0项。', 'EVIDENCE_FOUND'),
+    ('共执行41项登录用例，成功40项，失败1项。', 'NONCONFORMING'),
+])
+def test_unexecuted_login_subset(tmp_path, material, expected):
+    snap = run(tmp_path, '全部登录测试用例通过。', material)
+    req = snap['requirements'][0]
+    assert req['status'] == expected
+    assert snap['coverage'] == ('1/1' if expected == 'EVIDENCE_FOUND' else '0/1')
+    assert req['results'][0]['comparisons'][0]['source'] == 'material.md/行1'
+    assert bool(req['results'][0]['pending']) == (expected == 'PENDING_CONFIRMATION')
+
+
 @pytest.mark.parametrize('os_name,other', [('Windows Server 2022', 'Ubuntu 22.04'),
                                            ('Debian 12', 'Ubuntu 22.04'), ('Debian 13', 'Debian 12')])
 def test_environment_difference_not_product_failure(tmp_path, os_name, other):

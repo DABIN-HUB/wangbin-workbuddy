@@ -14,7 +14,7 @@ examples_en:
 - Review this contract, requirements list, and delivery material to identify acceptance gaps and the evidence for each requirement.
 - I have added test and training records. Update the findings and explain which gaps are now covered.
 - Prepare an acceptance-readiness report from the verified findings, keeping unresolved items separate from confirmed evidence.
-version: 0.1.3
+version: 0.1.4
 author: wangbin
 ---
 
