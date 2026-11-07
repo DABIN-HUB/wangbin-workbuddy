@@ -1,0 +1,226 @@
+{
+  "zip_sha256": "f8b4188f6b4fe11a5074a3e6ffc60016f3a1322938b7f28953c1a0a62b6f47ed",
+  "source_script": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\extracted\\wangbin-import-precheck\\scripts\\precheck.py",
+  "cases": [
+    {
+      "name": "mapped",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmpzDPLKT\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\extracted\\wangbin-import-precheck\\scripts\\precheck.py",
+        "--input",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\mapped\\input.csv",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\mapped\\output",
+        "--rules",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\mapped\\rules.json",
+        "--split",
+        "--authorization",
+        "developer fixture: split in scratch"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\extracted",
+      "exit_code": 0,
+      "status": "COMPLETED",
+      "source_sha256": "221d83c6233634936abf300489cec081830b84b0ba55a36d5b823ca3fa9bb942",
+      "outputs": {
+        "report": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\mapped\\output\\input-导入预检.xlsx",
+        "candidate": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\mapped\\output\\input-候选导入.xlsx",
+        "quarantine": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\mapped\\output\\input-隔离记录.xlsx"
+      },
+      "candidate_records": 1,
+      "quarantine_records": 0,
+      "findings": []
+    },
+    {
+      "name": "strip",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmpzDPLKT\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\extracted\\wangbin-import-precheck\\scripts\\precheck.py",
+        "--input",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\strip\\input.csv",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\strip\\output",
+        "--rules",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\strip\\rules.json",
+        "--split",
+        "--authorization",
+        "developer fixture: split in scratch",
+        "--transforms",
+        "{\"customer_name\": \"strip\"}"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\extracted",
+      "exit_code": 0,
+      "status": "COMPLETED",
+      "source_sha256": "cff14faa585c121022956b7909c53848ec14e2de2757758103cda7d448f993f7",
+      "outputs": {
+        "report": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\strip\\output\\input-导入预检.xlsx",
+        "candidate": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\strip\\output\\input-候选导入.xlsx",
+        "quarantine": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\strip\\output\\input-隔离记录.xlsx"
+      },
+      "candidate_records": 0,
+      "quarantine_records": 1,
+      "findings": [
+        "MISSING_REQUIRED_FIELD"
+      ]
+    },
+    {
+      "name": "lower",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmpzDPLKT\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\extracted\\wangbin-import-precheck\\scripts\\precheck.py",
+        "--input",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\lower\\input.csv",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\lower\\output",
+        "--rules",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\lower\\rules.json",
+        "--split",
+        "--authorization",
+        "developer fixture: split in scratch",
+        "--reference",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\lower\\reference.csv",
+        "--transforms",
+        "{\"region\": \"lower\"}"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\extracted",
+      "exit_code": 0,
+      "status": "COMPLETED",
+      "source_sha256": "ecd1346983e7bd9ab05258a4b09565345e61397850e9fec06643bbdc95b73638",
+      "outputs": {
+        "report": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\lower\\output\\input-导入预检.xlsx",
+        "candidate": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\lower\\output\\input-候选导入.xlsx",
+        "quarantine": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\lower\\output\\input-隔离记录.xlsx"
+      },
+      "candidate_records": 0,
+      "quarantine_records": 1,
+      "findings": [
+        "INVALID_VALUE",
+        "NOT_IN_REFERENCE"
+      ]
+    },
+    {
+      "name": "upper",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmpzDPLKT\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\extracted\\wangbin-import-precheck\\scripts\\precheck.py",
+        "--input",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\upper\\input.csv",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\upper\\output",
+        "--rules",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\upper\\rules.json",
+        "--split",
+        "--authorization",
+        "developer fixture: split in scratch",
+        "--reference",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\upper\\reference.csv",
+        "--transforms",
+        "{\"region\": \"upper\"}"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\extracted",
+      "exit_code": 0,
+      "status": "COMPLETED",
+      "source_sha256": "d532d6e45e9c63a3f2ed1bdbadf42eeced4431f3add5065038c644bda597c983",
+      "outputs": {
+        "report": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\upper\\output\\input-导入预检.xlsx",
+        "candidate": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\upper\\output\\input-候选导入.xlsx",
+        "quarantine": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\upper\\output\\input-隔离记录.xlsx"
+      },
+      "candidate_records": 1,
+      "quarantine_records": 0,
+      "findings": []
+    },
+    {
+      "name": "collision",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmpzDPLKT\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\extracted\\wangbin-import-precheck\\scripts\\precheck.py",
+        "--input",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\collision\\input.csv",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\collision\\output",
+        "--rules",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\collision\\rules.json",
+        "--split",
+        "--authorization",
+        "developer fixture: split in scratch",
+        "--transforms",
+        "{\"code\": \"upper\"}"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\extracted",
+      "exit_code": 0,
+      "status": "COMPLETED",
+      "source_sha256": "7724944aac1c9dd1156b78ce3049506c0b09742661868fe7abaac2703e2ad45c",
+      "outputs": {
+        "report": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\collision\\output\\input-导入预检.xlsx",
+        "candidate": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\collision\\output\\input-候选导入.xlsx",
+        "quarantine": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\collision\\output\\input-隔离记录.xlsx"
+      },
+      "candidate_records": 0,
+      "quarantine_records": 2,
+      "findings": [
+        "DUPLICATE_KEY",
+        "DUPLICATE_KEY"
+      ]
+    },
+    {
+      "name": "missing-reference",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmpzDPLKT\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\extracted\\wangbin-import-precheck\\scripts\\precheck.py",
+        "--input",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\missing-reference\\input.csv",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\missing-reference\\output",
+        "--rules",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\missing-reference\\rules.json",
+        "--split",
+        "--authorization",
+        "developer fixture: split in scratch"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\extracted",
+      "exit_code": 0,
+      "status": "PARTIAL",
+      "source_sha256": "ecd1346983e7bd9ab05258a4b09565345e61397850e9fec06643bbdc95b73638",
+      "outputs": {
+        "report": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\missing-reference\\output\\input-导入预检.xlsx",
+        "candidate": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\missing-reference\\output\\input-候选导入.xlsx",
+        "quarantine": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\missing-reference\\output\\input-隔离记录.xlsx"
+      },
+      "candidate_records": 0,
+      "quarantine_records": 1,
+      "findings": []
+    },
+    {
+      "name": "length",
+      "command": [
+        "C:\\Users\\wangbin\\AppData\\Local\\uv\\cache\\builds-v0\\.tmpzDPLKT\\Scripts\\python.exe",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\extracted\\wangbin-import-precheck\\scripts\\precheck.py",
+        "--input",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\length\\input.csv",
+        "--output-dir",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\length\\output",
+        "--rules",
+        "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\length\\rules.json",
+        "--split",
+        "--authorization",
+        "developer fixture: split in scratch",
+        "--transforms",
+        "{\"name\": \"strip\"}"
+      ],
+      "cwd": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\extracted",
+      "exit_code": 0,
+      "status": "COMPLETED",
+      "source_sha256": "b11e725013753e760c5811594f90ff654f895908fa43416d91f8084507695f4e",
+      "outputs": {
+        "report": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\length\\output\\input-导入预检.xlsx",
+        "candidate": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\length\\output\\input-候选导入.xlsx",
+        "quarantine": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\profiles\\wb-developer\\cache\\scratch\\q01-r1-015-developer\\length\\output\\input-隔离记录.xlsx"
+      },
+      "candidate_records": 0,
+      "quarantine_records": 1,
+      "findings": [
+        "LENGTH_VIOLATION"
+      ]
+    }
+  ]
+}

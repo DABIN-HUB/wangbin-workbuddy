@@ -471,6 +471,15 @@
           "sha256": "536763a9c5d64d5b5b53364f5e6e7be93c13457351624b544a0b722b07955d3c",
           "source": "packages/skills/wangbin-import-precheck",
           "version": "0.1.4"
+        },
+        {
+          "archive_evidence": "dist/wangbin-import-precheck-0.1.5-skill-candidate.zip",
+          "candidate": "dist/wangbin-import-precheck-0.1.5-skill-candidate.zip",
+          "date": "UNKNOWN",
+          "published_at": "UNKNOWN",
+          "sha256": "f8b4188f6b4fe11a5074a3e6ffc60016f3a1322938b7f28953c1a0a62b6f47ed",
+          "source": "packages/skills/wangbin-import-precheck",
+          "version": "0.1.5"
         }
       ]
     }
