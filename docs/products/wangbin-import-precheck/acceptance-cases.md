@@ -20,3 +20,37 @@
 |IMP-A14 可重复|同源字节、同映射/规则/参考快照重跑两次。|相同业务发现类别、行、计数和已检查规则；不同 run 名称不影响业务结论；不额外复制旧异常。|依赖目录遍历/文件时间导致不同判定。|
 
 补充安全门禁（§09、§32）：不支持/伪造扩展名、损坏与加密文件明确 REJECTED；宏或外部链接不执行且范围标识；路径穿越、输出目录逃逸、符号链接越界、未经授权外部读取和数据内“上传到某站”指令拒绝；异常大输入明确资源上限和安全错误，不能空报告写成功。验证真实输出哈希/表头、筛选及长编码文本；无可用视觉环境标 NOT_TESTED。核心自然语言与多轮见 `conversation-cases.md`；独立 ZIP、平台和许可分别验证，不能以本文存在判 PASS。
+
+## AUDIT-R1 新版独立验收增补（只冻结预期，不填新版 PASS）
+
+**执行共同夹具**：真实 UTF-8 CSV / 同义 XLSX、明确规则 JSON 或真实目标模板（必要时参考 CSV/XLSX），来源只读；以正式入口从*最终*候选 ZIP 干净解压运行，不引用开发树 PYTHONPATH。每案记录 ZIP SHA/成员、输入快照 SHA、命令/cwd/退出码/stdout、执行状态、报告/候选/隔离路径；重开 XLSX 的五表及实际业务行、CSV 文本读取并核对报告与终端数量一致。报告文件 `{主题}-导入预检.xlsx` 必须存在（有效输入），只有已明确授权才有 `{主题}-候选导入.xlsx` 或 CSV，只有明确分流才有 `{主题}-隔离记录.xlsx`；无输出或异常须明确 NEEDS_INPUT/REJECTED/FAILED 且不得编造链接。下面 `C/Q` 是合格候选/隔离**业务行**数，若名称带 run 后缀按实际 run 核验。所有案例额外检查原件哈希不变、目标业务列无额外追踪列、`C+Q=输入业务行数` 且 row_id 精确不交并集；报告中可存 row_id 与原坐标，候选不额外夹带。CASE 预期基于 V2 和本轮授权而不是当前程序行为。
+
+|缺陷/独立用例|真实输入/授权和边界|新版期望：文件、业务值/状态|0.1.4 旧包证据；新版|
+|---|---|---|---|
+|F01-A 映射主例|`编码,名称` / `00123,甲客户`；确认 `customer_code←编码,customer_name←名称`，明确生成/分流|报告映射源/目标/依据；候选表头严格 `customer_code,customer_name`、唯一行 `00123,甲客户`，编码 XLSX 文本；C1/Q0；无 `row_id/source_line/编码/名称` 数据列；执行 COMPLETED（规则完备）|`F01-map` L3 FAIL：旧列夹追踪；文本 `00123` 旧包已保留；新 NOT_TESTED|
+|F01-B 模板换序/额外列|源 `customer_name,customer_code,extra` / `乙客户,00008,不应夹带`，模板 `customer_code,customer_name`；明确分流|目标顺序 code/name，C1/Q0（仅模板未知 required 应明确 PARTIAL/未检查，**不得称完整目标规则均通过**）；`extra` 不夹带；`00008` 是文本|`F01-template-order` L3 FAIL；新 NOT_TESTED|
+|F01-C 仅规则顺序|源 `名称,编码,备注` / `甲客户,00007,不应夹带`；规则目标序 code/name，无模板|报告记录规则序来源；候选列 code/name，值 `00007,甲客户`，C1/Q0；备注只留源审计|`F01-rule-order` L3 FAIL；新 NOT_TESTED|
+|F01-D 歧义反例|源 `客户名称,名称`，两列都争 `customer_name`；或模板有重复目标表头，未确认|报告字段映射列出两候选和来源；NEEDS_INPUT 或 PARTIAL；不生成宣称合格的目标候选；不默选第一列/不丢行|旧包此变体 NOT_TESTED；新 NOT_TESTED|
+|F01-E 类型边界|CSV 文本 `00000000000000000123`、XLSX 同值文本、XLSX 数值 123 但显示 `00123`、已失精度长数值|前两种按文本原样读回；后二种标数值/显示差异及不可恢复风险，不伪造原码；模板若**明确要求** `row_id` 才将其纳入目标数据|旧包此变体 NOT_TESTED；新 NOT_TESTED|
+|F02-A strip 必填|`名称="   "`、customer_name 必填，明确授权 strip + split|最终空，MISSING_REQUIRED 1、受影响1；候选只表头 C0、隔离 Q1/VIOLATION；变更记录空格→空且最终检查有依据；COMPLETED 表示执行而非合格|`F02-strip` L3 FAIL，旧 C1/Q0/findings0；新 NOT_TESTED|
+|F02-B lower 双规则|`地区=R01`，允许值/参考快照都仅 `R01`；授权 lower|最终 `r01`，最终 INVALID_VALUE + NOT_IN_REFERENCE 各一（2 finding、1 行），C0/Q1，变更 `R01→r01`；COMPLETED|`F02-lower` L3 FAIL，旧 C1/Q0/0 finding；新 NOT_TESTED|
+|F02-C upper 修复旧错|`地区=r01`，允许值/参考快照都仅 `R01`；授权 upper|最终 `R01`，C1/Q0，当前阻断0；旧原值两类失配如显示则标 RESOLVED 并排除当前计数/隔离；变更有原/新值|`F02-upper-resolve` L3 FAIL，旧 C0/Q1/旧2 finding；新 NOT_TESTED|
+|F02-D upper 唯一冲突|`abc`、`ABC`，单列唯一组，授权 upper|最终均 `ABC`；DUPLICATE_KEY 两条/组1/受影响2，C0/Q2，row_id 不重不漏|`F02-upper-collision` L3 **PASS 仅此子项**；新 NOT_TESTED|
+|F02-E 边界/综合|空串、文字 `0`、数值0 分别检必填；独立一行文本 ` ab ` 明确最小长度3、授权 strip；再以 `(country,code)` 组合键一列缺失|只真实空触发必填；` ab ` 初始长度4，最终 `ab` 长度2违反已确认最短3，C0/Q1 且列明变更与最终长度问题，不用旧值放行；缺组合键不形成重复组，列明未验证/缺值（若该列必填再另计必填）|旧包此变体 NOT_TESTED；新 NOT_TESTED|
+|F02-F 等义变换|替换地区为 `Z09/z09` 且参考仅 `Z09`，同样分别 lower/upper；把输入 CSV 换 XLSX|lower 最终违规，upper 最终合格；不能硬编码 R01/r01；所有适用规则在最终值重跑|旧包此变体 NOT_TESTED；新 NOT_TESTED|
+|F03-A 声明缺参考|`地区=R01`，规则明确 reference_key=region，但无表；授权 split|报告未检查项有规则、行及缺表；不报 NOT_IN_REFERENCE，状态 PARTIAL；C0/Q1，隔离 PENDING_VERIFICATION；已验证合格数0、待确认数1；不可仅以无阻断数1称合格|`F03-reference-missing` L3 FAIL，旧 PARTIAL 但 C1/Q0；新 NOT_TESTED|
+|F03-B 正反边界|两行 R01/R99，已声明参考且实际快照只有 R01；已确认无歧义映射，split|R01 已核验 C1，R99 明确违规 Q1/NOT_IN_REFERENCE；与全表无参考时两行均 PENDING 不同；输入2=C1+Q1|旧包此变体 NOT_TESTED；新 NOT_TESTED|
+|F03-C 参考歧义/混合|参考键 R01 重复且对应冲突；源两行 R01、一行明确必填缺失；或必要目标映射歧义|R01 行 PENDING、非无效；缺名行 VIOLATION（如同时参考未核验需兼列待确认）；无默选；无目标表头时无标合格的候选；报告/隔离保留所有原行，状态 PARTIAL 或 NEEDS_INPUT|旧包此变体 NOT_TESTED；新 NOT_TESTED|
+|F03-D 全量副本与补表|缺参考条件下**仅授权全量转换副本**，并另轮补 R01 快照；不授权 split|前轮全量副本保留全部行且逐行标 PENDING/不可直接导入（报告与副本伴随说明可见），无伪合格隔离；补表新 run 重算为已验证，旧 run 保留，不复用旧待确认|旧包此变体 NOT_TESTED；新 NOT_TESTED|
+|F04-A 版本/包|静态解压新候选并核对 README、SKILL YAML、manifest/catalog candidate、ZIP 名、包外清单|新未占用版本严格一致；旧 0.1.4 SHA 不变；包内入口与规则存在；active 不提前激活|旧 README 0.1.2 vs SKILL/ZIP 0.1.4，L1 FAIL；新 NOT_TESTED|
+
+**既有 V2 回归不可删**：IMP-A01（4 行，发现4/有问题3/组1）、A02–A14（缺模板/争映射/多表/缺参考/参考键重复/空零/日期歧义/长编码/组合键缺失/授权分流/参考补充/公式注入/重复运行），均独立重新跑；尤其旧 `acceptance-cases.md` A11 若参考缺失或映射未知，不能仅按“无阻断”纳入合格。混合组按每 row_id 归属统计，`已证实违规` 与 `未验证` 不能用单一 findings 数量互换。独立 QA 另选未交给开发者的正反/边界/歧义/变换样例并保存夹具和哈希，不得从实际输出倒写 expected。
+
+**分层证据/放行门禁**：基线旧包 L3 上表具体 FAIL/PASS，F04 为 L1；新版 L1/L2/L3 均 **NOT_TESTED**，后续 QA 从最终 ZIP 的脚本运行并重开真实 CSV/XLSX、核对口径/行级和资源路径。L4 用真实宿主模型、实际工具及原始用户文件：回合1上传源+模板/规则并问检查；回合2追问问题来源或只要结论；回合3补参考表/改已确认规则并要求重跑，记录调用、输入、run、真实文件和回复，旧结果保留；还需核对 SKILL 既有 `examples_zh/en` 各三条及第三句必须有前置上下文。预写话术不算 L4。L5 WorkBuddy 安装实际使用目前 **NOT_TESTED**，无权限不伪造；许可/平台/发布与本地 CLI 分开。包门禁检查元数据可解析、真实 author/描述、脚本命令/引用路径可在解压目录运行、Python 与第三方依赖的版本和隔离环境安装、实际版本发行许可、密钥/私人资料/.git 不入包；验证只读原件、授权范围、路径/符号链接越界、公式注入、宏/外链/文档指令、解压上限，静态与 Windows 实测分别填，未运行项标 NOT_TESTED。整改记录逐 F01–F04 填：V2 映射、旧版本/输入/结果/复现层级、正确预期、已核实根因或待查、开发实际修复位置、新版本、独立案例、输出路径/哈希/退出码、最终状态；**当前本合同只证明预期冻结，不证明缺陷关闭**。
+
+|整改追溯 ID→V2|0.1.4 复现层级/实际与反证|正确预期/根因定位|建议修复处（非完成事实）|新版独立证据/状态|
+|---|---|---|---|---|
+|F01→IMP-02/06/08、§14.6|L3 `F01-map/template-order/rule-order` FAIL：旧目标候选夹源列及追踪列；但 `00123` 文本已保留|候选目标名/模板或规则序/无夹带；旧导出用原 meta.columns 而非目标映射|`scripts/precheck.py` analyze→候选数据导出、映射顺序和报告关联|F01-A..E 新 ZIP/实际文件/退出码 **NOT_TESTED/OPEN**|
+|F02→IMP-03/04/05/07/09|L3 `F02-strip/lower/upper-resolve` FAIL；`upper-collision` **PASS 子项**|转换最终值全面校验、旧错误解决、新错误产生；旧只在转换后复查唯一性且分流读旧 findings|`scripts/precheck.py` 转换、规则校验、分流及统计|F02-A..F **NOT_TESTED/OPEN**|
+|F03→IMP-05/08、A05/A06/A11|L3 `F03-reference-missing` FAIL：旧报告 PARTIAL/未检查正确，但候选 C1/Q0 错|缺已声明必要依据者待确认不得 clean；旧 split 只依据 findings 不依据 unchecked|`scripts/precheck.py` 资格分类、分流和隔离原因|F03-A..D **NOT_TESTED/OPEN**|
+|F04→本轮 §06/15/16 + V2 元数据|L1 原包 README `0.1.2`、SKILL/ZIP `0.1.4` 不一致；非 L3|新未占用版本全链一致，旧包留存；包内 README 漏更新|`README.md`、`SKILL.md`、适用 manifest/catalog/包外清单与打包核验|F04-A **NOT_TESTED/OPEN**|
