@@ -40,7 +40,7 @@ def validate():
     for key, value in {'name': NAME, 'version': version, 'display_name_en': 'Returned Contract Change Check'}.items():
         if not re.search(r'^' + key + r':\s*' + re.escape(value) + r'\s*$', text, re.M):
             raise ValueError(f'SKILL metadata mismatch: {key}')
-    if manifest['id'] != NAME or version != '0.1.4' or entry['active_version'] != version:
+    if manifest['id'] != NAME or version != '0.1.5' or entry['active_version'] != version:
         raise ValueError('manifest/catalog id or version mismatch')
     if set(manifest['runtime_dependencies']) != {'python-docx>=1.2,<2', 'openpyxl>=3.1,<4', 'defusedxml>=0.7,<1'}:
         raise ValueError('runtime requirements drift')
@@ -48,7 +48,7 @@ def validate():
     if set(requirements) != set(manifest['runtime_dependencies']):
         raise ValueError('requirements mismatch')
     versions = entry['versions']
-    if [v['version'] for v in versions] != ['0.1.0', '0.1.1', '0.1.2', '0.1.3', '0.1.4']:
+    if [v['version'] for v in versions] != ['0.1.0', '0.1.1', '0.1.2', '0.1.3', '0.1.4', '0.1.5']:
         raise ValueError('history metadata drift')
     if any(v['candidate'] != 'UNKNOWN' or v['sha256'] != 'UNKNOWN' for v in versions):
         raise ValueError('excluded historical candidate referenced')

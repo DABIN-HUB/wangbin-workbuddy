@@ -1,6 +1,6 @@
 {
   "id": "wangbin-contract-return-check",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "wangbin",
   "runtime_dependencies": ["python-docx>=1.2,<2", "openpyxl>=3.1,<4", "defusedxml>=0.7,<1"],
   "platform_runtime": "NOT_TESTED"
