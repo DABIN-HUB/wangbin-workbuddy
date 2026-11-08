@@ -2462,7 +2462,10 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                     for formula in definitions:
                         fid = formula["formula_id"]
                         heading = document.add_heading(f"{fid} {formula.get('chinese_name', '未定义')}", level=3)
-                        document.add_paragraph(f"公式：{formula.get('text_equation') or formula.get('latex') or '未提供'}（结果单位：{formula.get('unit') or '未定义'}）")
+                        equation = formula.get("text_equation") or formula.get("latex") or "未提供"
+                        unit = formula.get("unit") or "未定义"
+                        unit_separator = "\n" if fid == "F-EQUITY-AVAILABLE-CASH-FLOW" else ""
+                        document.add_paragraph(f"公式：{equation}{unit_separator}（结果单位：{unit}）")
                         document.add_paragraph("适用边界：" + _reader_text(str(formula.get("calculation_boundary") or "未定义")))
                         document.add_paragraph("本项目状态：" + _formula_status(model, fid))
                         references = [f"{label}第{shared_ids[key, _formula_contract_text(formula[key])]}组"
