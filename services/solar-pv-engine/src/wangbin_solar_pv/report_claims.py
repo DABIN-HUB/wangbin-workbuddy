@@ -1360,7 +1360,10 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                     if len(numbers) == 12 and all(isinstance(x, (float, int, Decimal)) for x in numbers):
                         parts.append(f'{label}按12个月输入求和为{fmt(sum(Decimal(str(x)) for x in numbers))}kWh/㎡')
                 if parts:
-                    return '；'.join(parts) + '。这是合成月值的算术汇总，不是多年实测资源或已核定发电量；' + judgment
+                    return ('；'.join(parts) + '。表中单位为kWh/㎡，表示期间辐照量而非W/m²辐照度；'
+                            'GHI是水平面全球辐照量，DNI是法向直射辐照量，DHI是水平面散射辐照量，'
+                            'POA是阵列面辐照量。DNI到水平面的投影受太阳天顶角影响，不能把GHI=DNI+DHI当作一般物理恒等式；'
+                            '当前合成月值仅能作口径受限的算术汇总，不是多年实测资源或已核定发电量；' + judgment)
             if item_id == 'CH05.03':
                 parts = []
                 for key, label, unit in (('ambient_temperature', '月均气温', '℃'),
@@ -1537,6 +1540,14 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                     'CH17.04': '资源、送出、电价和工程投资风险各需来源及应对责任，基准回报不表示风险已消除',
                     'CH17.05': '反向约束需各自改变有来源的输入并重新验证计量和费用边界，不能从基准推断',
                 }[item_id])
+            risk_actions = {
+                'CH17.01': '资源代表性风险的影响路径是辐照偏差传导至发电量、收入和现金流；当前仅有合成月序列，下一步应取得带时间戳的原始气象数据并完成代表性复核',
+                'CH17.02': '设备技术风险可能通过温度、遮挡、失配或停机降低交付电量；当前为铭牌和损失参数输入，下一步应取得设备数据表并完成低温Voc、MPPT、电流和损失边界校核',
+                'CH17.03': '电网接入与送出风险可能通过可交付电量和结算边界影响收入；当前接入余量及送出限值是合成条件，下一步应取得正式接网意见、保护定值和计量边界文件',
+                'CH17.04': '资源、送出、电价、交易结算和CAPEX风险分别可能压缩收入、增加支出或延迟回款；当前只有基准账簿和风险登记，下一步应逐项绑定合同、报价和审批证据，不以基准回报推断风险已消除',
+                'CH17.05': '权属、地勘、消防和实施风险可能在开工前形成独立否决；当前尚无正式现场文件，下一步应按权属、地勘、消防和施工组织分别取得签署版核验材料',
+            }
+            facts.append(risk_actions[item_id])
     if item_id in {'CH17.04', 'CH18.02', 'CH18.04'}:
         risks = get('risk.items')
         if isinstance(risks, list) and risks:
@@ -1607,6 +1618,16 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                     '上述是模型项目回报，不是股东回报或真实投资批准；'
                     + ('土地权属、地勘道路排水及集中接网意见仍须独立核验。' if ground else
                        '屋面权属、荷载防水及余电接网意见仍须独立核验。'))
+    if item_id == 'CH18.03' and ground:
+        annual = result.get('evidence', {}).get('financial-ledger', {}).get('annual', ())
+        replacement = next((row for row in annual if row.get('period') == 'OPERATING_YEAR_13'), None)
+        if replacement and replacement.get('replacement_cash_paid') is not None:
+            cashflow = calculated('financial.phase3e.project_cash_flow')
+            value = cashflow[13] if isinstance(cashflow, list) and len(cashflow) > 13 else None
+            return (f"第13年设备更换预计付款{fmt(replacement['replacement_cash_paid'])}元"
+                    + (f"，该年项目净现金流约{fmt(value)}元" if value is not None else '')
+                    + '；年度净流出不等于某一付款瞬间必然资金不足，但已形成明确的资金安排压力。'
+                    '实施前应核对付款计划、可动用现金、准备金或其他合法资金安排；当前没有日期化资金余额，不能宣布付款覆盖已满足。')
     if facts:
         return '；'.join(facts[:5]) + '。' + judgment
     missing = [FIELD_LABELS[fid] for fid in fields if fid in FIELD_LABELS and get(fid) is None]

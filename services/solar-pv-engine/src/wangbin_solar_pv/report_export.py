@@ -124,6 +124,7 @@ _D_STYLE = {
 }
 
 REPORT_CONTENT_VERSION = "phase7l-r3-v1-professional-content-and-full-cash-bridge"
+R4_REPORT_CONTENT_VERSION = "phase7l-r4-v1-professional-content-and-real-pdf-review"
 
 
 @dataclass(frozen=True)
@@ -1067,6 +1068,7 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
             run.font.bold = True
             run.font.color.rgb = RGBColor.from_string(_D_STYLE["white"])
             run.font.size = Pt(font_size)
+
     header_pr = table.rows[0]._tr.get_or_add_trPr()
     header_pr.append(OxmlElement("w:tblHeader"))
     for row_index, row in enumerate(rows, 1):
@@ -1513,12 +1515,23 @@ def _project_summary(model: ReportModel) -> str:
         if len(ledger) > 1:
             receipts = ledger[1].get("revenue_cash_receipts")
             savings = ledger[1].get("self_use_avoided_expenditure")
+            transaction_fee = ledger[1].get("transaction_cost_cash_paid")
+            project_flow = model.value("financial.phase3e.project_cash_flow")
             if model.result["pv_type"] == "industrial_rooftop" and receipts is not None and savings is not None:
                 lines.append(f"首年预计余电回款 {_word_number(receipts)}元；自用节费 {_word_number(savings)}元"
                              "属于避免购电支出，不是售电到账，综合经济收益不能全部列为实际销售收款。")
+                if transaction_fee is not None:
+                    lines.append(f"两者合计经济收益 {_word_number(Decimal(str(receipts)) + Decimal(str(savings)))}元；"
+                                 f"交易费单列预计付款 {_word_number(transaction_fee)}元，不重复并入运维费用。")
             elif model.result["pv_type"] == "utility_scale_ground" and receipts is not None:
                 lines.append(f"首年预计上网回款 {_word_number(receipts)}元；需以逐时市场价格和计量结算条件复核，"
                              "不将其写成已签合同或实际到账。")
+                if transaction_fee is not None:
+                    lines.append(f"首年交易费单列预计付款 {_word_number(transaction_fee)}元；该项是合成支付规则下的预计现金事件，"
+                                 "不是已付款凭证。")
+            if isinstance(project_flow, list) and len(project_flow) > 1:
+                lines.append(f"首年项目税后现金流 {_word_number(project_flow[1])}元；该值已在年度项目现金桥中"
+                             "同时反映运维、现金税费和交易费预计支付。")
         renewals = [(row.get("period", "运营期"), row["replacement_cash_paid"]) for row in ledger[1:]
                     if isinstance(row.get("replacement_cash_paid"), (int, float, Decimal)) and row["replacement_cash_paid"]]
         if renewals:
@@ -1608,6 +1621,108 @@ def _professional_missing(title: str, chapter_id: str, pv_type: str) -> str:
     return f"与“{title}”直接相关的原始资料或专业复核尚未闭合，因此本阶段仅保留条件性判断；下一阶段应补充对应资料并复核其对方案的影响。"
 
 
+def _r4_special_narrative(model: ReportModel, pv_type: str, chapter_id: str,
+                          item_no: int) -> str | None:
+    """Return evidence-backed R4 prose for the high-stakes engineering items.
+
+    These paragraphs intentionally stay in the presentation layer.  They read
+    canonical inputs, ledger events and metric details but never repair, round
+    or recompute the frozen calculation result.
+    """
+    normalized = model.result["inputs"].get("normalized", {})
+    ground = pv_type == "utility_scale_ground"
+
+    def number(value: Any) -> str:
+        return _word_number(value) if value is not None else "UNKNOWN"
+
+    if chapter_id == "CH05" and item_no == 2:
+        rows = normalized.get("resource.monthly")
+        values = [row.get("fields", {}) for row in rows] if isinstance(rows, list) else []
+        complete = len(values) == 12 and all(
+            all(isinstance(fields.get(f"resource.monthly.{key}"), (int, float, Decimal))
+                and not isinstance(fields.get(f"resource.monthly.{key}"), bool)
+                for key in ("ghi", "dni", "dhi", "poa"))
+            for fields in values)
+        additive = complete and all(
+            abs(Decimal(str(fields["resource.monthly.ghi"]))
+                - Decimal(str(fields["resource.monthly.dni"]))
+                - Decimal(str(fields["resource.monthly.dhi"]))) <= Decimal("0.000001")
+            for fields in values)
+        energy = model.metric("energy.year.1") or {}
+        poa = energy.get("details", {}).get("poa_kwh_m2")
+        pattern = ("当前12个月合成表逐月满足GHI=DNI+DHI；这只是现有录入值的数值模式，"
+                   "不是可普遍采用的物理恒等式。GHI为水平面期间辐照量，DNI为法向直射期间辐照量，"
+                   "DHI为水平面散射期间辐照量，三者不能在未给出太阳天顶角、时间积分和投影关系时直接相加。"
+                   if additive else
+                   "当前月度表未呈现可直接验证的GHI、DNI、DHI简单相加模式；仍须按原始时间序列和投影关系核对。")
+        return (pattern + f"本次发电链消费的是阵列面POA辐照量及其时间积分，首年能量记录的POA为{number(poa)} kWh/㎡；"
+                "由于现有输入为合成月度汇总且缺少逐时太阳位置/质量控制证据，不能据此宣称DNI法向口径或资源代表性已经通过。")
+
+    if chapter_id in {"CH06", "CH07"} and item_no in ({3} if chapter_id == "CH06" else {1, 3}):
+        dc = model.value("dc_capacity")
+        ac = model.value("ac_capacity")
+        count = normalized.get("system.module_count")
+        power = normalized.get("system.module_power")
+        per_string = normalized.get("system.modules_per_string")
+        strings = normalized.get("system.parallel_strings")
+        voc = normalized.get("system.module_voc")
+        nominal_string = (Decimal(str(per_string)) * Decimal(str(voc))
+                          if isinstance(per_string, (int, float, Decimal))
+                          and isinstance(voc, (int, float, Decimal)) else None)
+        ratio = (Decimal(str(dc)) / Decimal(str(ac))
+                 if isinstance(dc, (int, float, Decimal)) and isinstance(ac, (int, float, Decimal)) and ac else None)
+        if chapter_id == "CH06":
+            return (f"当前{('地面集中式' if ground else '屋顶')}方案为{number(dc)} kWp直流、{number(ac)} kWac交流，"
+                    f"容配比约{number(ratio)}；该比例说明直流阵列相对逆变器存在名义裕量，"
+                    "只能用于方案边界比较，不能替代并网容量和限发校核。")
+        if item_no == 1:
+            return (f"设备配置为{number(count)}块×{number(power)} Wp组件，"
+                    f"{number(strings)}串、每串{number(per_string)}块，组件名义开路电压{number(voc)} V。"
+                    "这些参数与直流装机的数量关系一致，属于当前合成方案的设备边界；型号数据表、认证和环境适用性仍需逐项核验。")
+        return (f"按当前输入，每串名义开路电压约为{number(nominal_string)} V（{number(per_string)}×{number(voc)} V），"
+                "这是标准条件下的名义比较，不是低温最大开路电压、MPPT窗口或输入电流匹配的通过证明。"
+                "低温校核至少需要组件电压温度系数和当地最低设计温度，高温MPPT及逆变器电流还需用完整数据表复核。")
+
+    if chapter_id == "CH09" and item_no in {1, 2, 5}:
+        ac = model.value("ac_capacity")
+        available = normalized.get("grid.available_capacity")
+        export_limit = normalized.get("grid.export_power_limit")
+        return (f"本{('地面集中式' if ground else '屋顶')}方案逆变器交流额定容量为{number(ac)} kWac，"
+                f"录入的申报可接入余量为{number(available)} kWac，送出有功限制为{number(export_limit)} kW。"
+                "三者分别代表设备额定、接入边界和调度/计量边界，不能互相替代；"
+                "容量差异本身不证明已经发生相应电量损失。当前现金与能量结果按既有送出/计量边界计算，"
+                "是否获准接入、限发如何执行及实际结算仍须以具名电网意见和计量记录核验。")
+
+    if chapter_id == "CH14" and item_no == 4:
+        rate = normalized.get("capex.contingency_rate")
+        capex = model.value("financial.capex.total")
+        return (f"当前输入登记预备费率{number(Decimal(str(rate)) * 100) if rate is not None else 'UNKNOWN'}%，"
+                f"评价期CAPEX为{number(capex)}元；现有结果没有另按该费率自动叠加预备费用。"
+                "因此本报告只能确认费率已登记，不能确认预备费已经包含在总投资或报价中；"
+                "正式投资估算应取得分项报价、适用基数、税口径和付款边界后再勾稽，不能用CAPEX×1.04替换本次结果。")
+
+    if chapter_id == "CH18" and item_no == 1:
+        annual = model.result.get("evidence", {}).get("financial-ledger", {}).get("annual", ())
+        replacement = next((row for row in annual if row.get("period") == "OPERATING_YEAR_13"), None)
+        terminal = next((row for row in annual if row.get("period") == "OPERATING_YEAR_25"), None)
+        if replacement and terminal:
+            return (f"全期现金桥显示第13年更换支出{number(replacement.get('replacement_cash_paid'))}元，"
+                    f"该年项目净现金流为{number((model.value('financial.phase3e.project_cash_flow') or [])[13])}元；"
+                    "年度净流出不等于某一付款瞬间已经发生资金缺口，但确实形成准备金、可动用现金或其他合法资金安排压力。"
+                    f"第25年营运资金回收为{number(terminal.get('working_capital_release'))}元，"
+                    "终期资产现金为0元，年末差额由营运资金回收解释而不是残值。"
+                    "在实施前应核对更换付款计划和资金来源；当前资料没有日期化余额，不能宣称付款覆盖已满足。")
+
+    if chapter_id == "CH17" and item_no == 4:
+        focus = "资源代表性、设备与结构、接入与送出、自用消纳/市场电价、交易结算、CAPEX及预备费、第13年更换资金、权属地勘消防实施"
+        return (f"当前风险清单应按{focus}分别管理。其共同影响路径是：资料或边界变化会先改变可建设条件、"
+                "可交付电量或现金事件，再传导到项目现金流和回报指标；当前来源均为合成或待核实状态，"
+                "没有正式合同、审批或现场实测可以替代。下一步应为每项风险指定责任人和关闭材料：资源用授权时序与交叉验证，"
+                "设备/结构用数据表和专业校核，接入用电网意见，交易用合同与计量，CAPEX用报价勾稽，"
+                "更换用付款计划和资金安排，权属/地勘/消防用具名文件。")
+    return None
+
+
 def _professional_narrative(model: ReportModel, pv_type: str, chapter_id: str, title: str,
                             evidence: dict[str, Any], *, item_no: int = 1,
                             editorial_fixture: dict[str, Any] | None = None) -> tuple[list[str], str, str]:
@@ -1616,6 +1731,18 @@ def _professional_narrative(model: ReportModel, pv_type: str, chapter_id: str, t
     fact_text = "；".join(facts) + "。" if facts else ""
     profile = REPORT_PROFILES[pv_type]
     ground = pv_type == "utility_scale_ground"
+    special = _r4_special_narrative(model, pv_type, chapter_id, item_no)
+    if special:
+        if evidence["state"] == "EVIDENCED":
+            tail = ("该判断仅适用于当前同一canonical中的合成输入和计算边界；"
+                    "不替代现场实测、具名审批、设备数据表或正式专业签审。")
+            claim_status = "EVIDENCE_BOUND_CONDITIONAL"
+        else:
+            tail = _topic_missing(title, chapter_id, pv_type,
+                                  _professional_missing(title, chapter_id, pv_type))
+            claim_status = "LIMITED_BY_MISSING_EVIDENCE"
+        paragraphs = [special, tail]
+        return paragraphs, "".join(paragraphs), claim_status
     if evidence["state"] == "NOT_APPLICABLE":
         return [f"{title}在{profile['boundary']}的评价边界内不构成适用事项，相关模型不作替代性套用。"], "不适用", "NOT_APPLICABLE"
     if chapter_id == "CH05":
@@ -1991,7 +2118,8 @@ def _add_evidence_table(document: Document, evidence: dict[str, Any], caption: s
 
 
 def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: str,
-                editorial_fixture: dict[str, Any] | None = None) -> dict[str, Any]:
+                editorial_fixture: dict[str, Any] | None = None,
+                content_version: str = REPORT_CONTENT_VERSION) -> dict[str, Any]:
     profile = REPORT_PROFILES[pv_type]
     source_map = _source_ref_map(model)
     document = Document()
@@ -2205,6 +2333,13 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 _add_table(document, ["月份", "气温 (°C)", "风速 (m/s)", "覆盖率（%）", "来源索引"], weather,
                            "月度气象资源（覆盖率由原始比值乘100展示）",
                            widths_cm=(1.2, 2.8, 2.8, 2.8, 7.0))
+                document.add_paragraph(
+                    "辐照物理口径专项说明：本表数值单位为kWh/㎡，表示期间辐照量而非W/m²辐照度；"
+                    "GHI是水平面全球辐照量，DNI是法向直射辐照量，DHI是水平面散射辐照量，POA是阵列面辐照量。"
+                    "当前合成表若出现GHI=DNI+DHI的逐月数值模式，不应被解释为一般物理恒等式；"
+                    "太阳天顶角、法向到水平投影、时间积分和质量控制仍需原始逐时资料证明。"
+                    "发电计算沿既有POA/时间积分链消费资源，不以报告表格中的简单相加替代物理转换。"
+                )
             if item_id == "APP04.01":
                 _add_table(document, ["投资分项", "数量", "金额（元）", "付款日期", "期间及性质"],
                            _capex_word_rows(model), "CAPEX分项：建设期与后期更换分开列示；行ID、原金额、税口径与来源见测算模型 M10。",
@@ -2254,6 +2389,14 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                           "营运资金回收（元）", "终期资产现金（元）", "项目净现金流（元）"],
                                bridge_rows, "建设至终期全期现金事件桥（更换已含在资本支出；营运回收不重复计入终期资产现金）",
                                widths_cm=(2.0, 2.9, 2.65, 2.65, 2.65, 2.4, 2.75), font_size=9)
+                    final_ledger = model.result.get("evidence", {}).get("financial-ledger", {}).get("annual", [])
+                    final_row = next((row for row in final_ledger if row.get("period") == "OPERATING_YEAR_25"), None)
+                    if final_row is not None:
+                        document.add_paragraph(
+                            f"终期勾稽：第25年营运资金回收{_word_number(final_row.get('working_capital_release'))}元，"
+                            "终期资产现金按当前canonical为0元；因此第25年净现金流与运营收支的差额由营运资金回收解释，"
+                            "不是未列示的残值或其他未知收款。"
+                        )
                 else:
                     document.add_paragraph("逐期付现账簿、终期来源或已计算项目现金流缺失／不一致；"
                                            "本页不能声称已完成全期收支桥，须在计算层重新核验。")
@@ -2293,7 +2436,6 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                     for formula in definitions:
                         fid = formula["formula_id"]
                         heading = document.add_heading(f"{fid} {formula.get('chinese_name', '未定义')}", level=3)
-                        heading.paragraph_format.keep_with_next = True
                         document.add_paragraph(f"公式：{formula.get('text_equation') or formula.get('latex') or '未提供'}（结果单位：{formula.get('unit') or '未定义'}）")
                         document.add_paragraph("适用边界：" + _reader_text(str(formula.get("calculation_boundary") or "未定义")))
                         document.add_paragraph("本项目状态：" + _formula_status(model, fid))
@@ -2336,7 +2478,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     document.add_heading("术语与公式说明", level=1)
     document.add_paragraph("公式定义、版本、变量、单位、输入字段和完整来源绑定见测算模型.xlsx 的公式说明工作表，以及资料来源与假设清单.xlsx 的公式/方法工作表。正文不复制原始对象或过高精度小数。")
     document.add_heading("版本与质量声明", level=1)
-    document.add_paragraph(f"项目边界：{profile['boundary']}。报告内容版本：{REPORT_CONTENT_VERSION}；该版本只表示写作与排版，不修改计算结果身份。配套 Excel 为本次测算快照；修改 Excel 不会使本报告或旧结果自动有效，必须重新运行计算程序生成新的统一身份。PDF 只有在真实转换器可用并成功解析时才生成；本次渲染、页面视觉和目录页码门禁以质量清单实际状态为准。")
+    document.add_paragraph(f"项目边界：{profile['boundary']}。报告内容版本：{content_version}；该版本只表示写作与排版，不修改计算结果身份。配套 Excel 为本次测算快照；修改 Excel 不会使本报告或旧结果自动有效，必须重新运行计算程序生成新的统一身份。PDF 只有在真实转换器可用并成功解析时才生成；本次渲染、页面视觉和目录页码门禁以质量清单实际状态为准。")
     _add_table(document, ["身份字段", "统一测算值"], [[key, str(value)] for key, value in model.identity.items()],
                "统一测算身份（仅在此处展示一次）", widths_cm=(4.5, 12.5), font_size=8.5)
     footer = section.footer.paragraphs[0]
@@ -2362,7 +2504,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     document.save(tmp)
     os.replace(tmp, output)
     return {"path": output.name, "size": output.stat().st_size, "sha256": _sha256(output),
-            "report_content_version": REPORT_CONTENT_VERSION,
+            "report_content_version": content_version,
             **coverage,
             "charts": chart_receipts, "content_checklist": checklist,
             "duplicate_scan": duplicate_scan, "language_scan": language_scan,
@@ -2404,7 +2546,8 @@ def _assert_same_identity(files: dict[str, Any], identity: dict[str, str]) -> No
 
 def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output_dir: str, *, formula_map: dict[str, Any] | None,
                    expected_pv_type: str, phase: str,
-                   editorial_fixture: dict[str, Any] | None = None) -> dict[str, Any]:
+                   editorial_fixture: dict[str, Any] | None = None,
+                   content_version: str = REPORT_CONTENT_VERSION) -> dict[str, Any]:
     """Generate a bounded DRAFT_PARTIAL report set from one category-bound canonical result."""
     if not isinstance(workspace, Workspace) or not isinstance(output_dir, str) or not output_dir.strip():
         raise ContractError("REPORT_OUTPUT_TARGET")
@@ -2438,7 +2581,7 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
         raise ContractError("REPORT_OUTPUT_EXISTS")
     artifact_started = time.perf_counter()
     files["F01"] = _write_docx(model, docx_path, cover_name, expected_pv_type,
-                                editorial_fixture=editorial_fixture)
+                                editorial_fixture=editorial_fixture, content_version=content_version)
     files["F01"]["generation_seconds"] = round(time.perf_counter() - artifact_started, 6)
     checklist = files["F01"].pop("content_checklist")
     coverage = _validate_checklist_coverage(checklist)
@@ -2448,7 +2591,7 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
     checklist_payload = {
         "schema_version": "phase7i-content-checklist-v1",
         "claim_contract_version": "phase7l-central-claim-v1",
-        "report_content_version": REPORT_CONTENT_VERSION,
+        "report_content_version": content_version,
         "project_id": model.result["project_id"], "pv_type": model.result["pv_type"],
         "identity": model.identity,
         "coverage": coverage,
@@ -2498,7 +2641,7 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
     receipt = {
         "status": "DRAFT_PARTIAL" if files["F02"].get("status") != "GENERATED" else "DRAFT_PARTIAL",
         "phase": phase,
-        "report_content_version": REPORT_CONTENT_VERSION,
+        "report_content_version": content_version,
         "project_id": model.result["project_id"], "pv_type": model.result["pv_type"],
         "display_name": display_name, "name_mapping": name_mapping,
         "identity": identity, "files": files,
@@ -2553,14 +2696,16 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
 
 
 def export_rooftop_report(result: dict[str, Any], catalog, workspace: Workspace, output_dir: str, *, formula_map: dict[str, Any] | None = None,
-                          editorial_fixture: dict[str, Any] | None = None) -> dict[str, Any]:
+                          editorial_fixture: dict[str, Any] | None = None,
+                          content_version: str = REPORT_CONTENT_VERSION) -> dict[str, Any]:
     return _export_report(result, catalog, workspace, output_dir, formula_map=formula_map,
                           expected_pv_type="industrial_rooftop", phase="PHASE5_INDUSTRIAL_ROOFTOP_REPORT_EXPORT",
-                          editorial_fixture=editorial_fixture)
+                          editorial_fixture=editorial_fixture, content_version=content_version)
 
 
 def export_ground_report(result: dict[str, Any], catalog, workspace: Workspace, output_dir: str, *, formula_map: dict[str, Any] | None = None,
-                         editorial_fixture: dict[str, Any] | None = None) -> dict[str, Any]:
+                         editorial_fixture: dict[str, Any] | None = None,
+                         content_version: str = REPORT_CONTENT_VERSION) -> dict[str, Any]:
     return _export_report(result, catalog, workspace, output_dir, formula_map=formula_map,
                           expected_pv_type="utility_scale_ground", phase="PHASE6_UTILITY_SCALE_GROUND_REPORT_EXPORT",
-                          editorial_fixture=editorial_fixture)
+                          editorial_fixture=editorial_fixture, content_version=content_version)
