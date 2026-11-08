@@ -1,0 +1,58 @@
+{
+  "archive": "dist/wangbin-project-acceptance-check-0.1.5-skill-candidate.zip",
+  "id": "wangbin-project-acceptance-check",
+  "members": [
+    {
+      "path": "wangbin-project-acceptance-check/LICENSE",
+      "sha256": "77e14f72b077bbcc88b3dad0d686fe7d30b45e766f5e25c274089aeef527d217",
+      "size": 268
+    },
+    {
+      "path": "wangbin-project-acceptance-check/SKILL.md",
+      "sha256": "0c13467bc798f8af7e7d471438378d835f83a7b63768daabdeeddc6ea6c08fd9",
+      "size": 3312
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/README.md",
+      "sha256": "97b9830b6d4bc2a02747b28edac3c1534c115c2df2b529ab0bdc756e8cebb88f",
+      "size": 304
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/deploy.md",
+      "sha256": "7a8f1f68d71bbef7a25b20f29ba83b7136c0a5666e8efa328bb969f46512c980",
+      "size": 76
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/interface.md",
+      "sha256": "4dc1984259dad9dcf9713a6ec8989e55776f4356376489366c844fd9c9dbb097",
+      "size": 94
+    },
+    {
+      "path": "wangbin-project-acceptance-check/examples/scope.md",
+      "sha256": "782bd91ee6a7f8099a0bd82193abcbd659d62a4ddcadb318d7d47d8bc54b38c3",
+      "size": 159
+    },
+    {
+      "path": "wangbin-project-acceptance-check/manifest.json",
+      "sha256": "94b6d3ebcaf4b2517f499976c9c217809104703b38d20100290471af40143962",
+      "size": 567
+    },
+    {
+      "path": "wangbin-project-acceptance-check/references/runtime.md",
+      "sha256": "47d2d35d6839789a2b14d05a76c29cf8e04577e5ed9cae126a78c3726597e8e8",
+      "size": 3684
+    },
+    {
+      "path": "wangbin-project-acceptance-check/scripts/check_acceptance.py",
+      "sha256": "14d2af381f0e0bf922c4a689029325b1ae2e1112bf1e852f5459bee65a55506c",
+      "size": 43394
+    }
+  ],
+  "payload_snapshot_sha256": "f6f0f54673933b858bf720e6581521f0e7b053dececa2ab22ed2667db5cf887a",
+  "platform": "BLOCKED",
+  "scope": "local archive integrity only",
+  "sha256": "0d4323e352ba99ecad3c3baa00286e77815a6ebdf9912add6d63de95ef91edf9",
+  "source": "packages/skills/wangbin-project-acceptance-check",
+  "status": "PASS",
+  "version": "0.1.5"
+}
