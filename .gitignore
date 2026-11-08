@@ -8,6 +8,12 @@ __pycache__/
 services/document-engine/build/
 dist/
 
+# Generated FIX-6 QA run outputs; keep scripts, pre-frozen inputs and expected tracked.
+/docs/products/wangbin-tender-analyzer/qa-fix6-0212-independent-results.json
+/docs/products/wangbin-tender-analyzer/qa-fix6-0212-raw-evidence.zip
+/docs/products/wangbin-tender-analyzer/qa-fix6-0213-independent-results.json
+/docs/products/wangbin-tender-analyzer/qa-fix6-0213-raw-evidence.zip
+
 # Local generated data
 .runtime/
 output/
