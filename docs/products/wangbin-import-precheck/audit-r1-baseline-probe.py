@@ -1,4 +1,4 @@
-"""Independent historical 0.1.4 ZIP probe. Writes only to Hermes TMPDIR, never the product ZIP."""
+"""Independent historical 0.1.4 ZIP probe; optional isolated product .runtime base."""
 import csv
 import hashlib
 import json
@@ -13,7 +13,17 @@ ROOT = Path(__file__).resolve().parents[3]
 ZIP = ROOT.parent / 'wangbin-workbuddy-delivery/six-skills-final/reports/Q01/history/wangbin-import-precheck-0.1.4-skill-candidate.zip'
 EXPECTED_SHA = '536763a9c5d64d5b5b53364f5e6e7be93c13457351624b544a0b722b07955d3c'
 assert hashlib.sha256(ZIP.read_bytes()).hexdigest() == EXPECTED_SHA
-base = (Path.home() / 'AppData/Local/hermes/profiles/wb-quality/cache/scratch/audit-r1-q01-baseline-t_0eaab29a').resolve()
+configured_base = os.environ.get('WANGBIN_Q01_PROBE_BASE')
+if configured_base is None:
+    base = (Path.home() / 'AppData/Local/hermes/profiles/wb-quality/cache/scratch/audit-r1-q01-baseline-t_0eaab29a').resolve()
+    assert ROOT not in base.parents and base != ROOT
+else:
+    requested = Path(configured_base)
+    runtime = ROOT / '.runtime'
+    assert requested.is_absolute() and '..' not in requested.parts
+    assert runtime.resolve() == runtime  # Do not follow a redirected temporary root.
+    base = requested.resolve()
+    assert runtime in base.parents  # Never write to the product root or arbitrary locations.
 base.mkdir(parents=True, exist_ok=True)
 extract = base / 'clean-014'
 extract.mkdir(exist_ok=True)

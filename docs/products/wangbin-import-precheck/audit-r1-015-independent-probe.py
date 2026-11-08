@@ -1,4 +1,4 @@
-"""Independent ZIP-only L3 QA; fixtures and extraction outside product tree."""
+"""Independent ZIP-only L3 QA; optional isolated product .runtime base."""
 import csv
 import hashlib
 import json
@@ -15,8 +15,17 @@ SHA = 'f8b4188f6b4fe11a5074a3e6ffc60016f3a1322938b7f28953c1a0a62b6f47ed'
 OLD = ROOT.parent / 'wangbin-workbuddy-delivery/six-skills-final/reports/Q01/history/wangbin-import-precheck-0.1.4-skill-candidate.zip'
 assert hashlib.sha256(ARCHIVE.read_bytes()).hexdigest() == SHA
 assert hashlib.sha256(OLD.read_bytes()).hexdigest() == '536763a9c5d64d5b5b53364f5e6e7be93c13457351624b544a0b722b07955d3c'
-BASE = Path.home() / 'AppData/Local/hermes/profiles/wb-quality/cache/scratch/q01-015-independent-t_c8518a89'
-assert ROOT not in BASE.parents
+configured_base = os.environ.get('WANGBIN_Q01_PROBE_BASE')
+if configured_base is None:
+    BASE = (Path.home() / 'AppData/Local/hermes/profiles/wb-quality/cache/scratch/q01-015-independent-t_c8518a89').resolve()
+    assert ROOT not in BASE.parents and BASE != ROOT
+else:
+    requested = Path(configured_base)
+    runtime = ROOT / '.runtime'
+    assert requested.is_absolute() and '..' not in requested.parts
+    assert runtime.resolve() == runtime  # Do not follow a redirected temporary root.
+    BASE = requested.resolve()
+    assert runtime in BASE.parents  # Never write to the product root or arbitrary locations.
 BASE.mkdir(parents=True, exist_ok=True)
 EXTRACT = BASE / 'extract'
 EXTRACT.mkdir(exist_ok=True)
