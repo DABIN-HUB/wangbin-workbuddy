@@ -82,7 +82,9 @@ def archive(root: Path, scratch: Path) -> dict:
     summaries = {}
     for case in CASES:
         sealed = Path("reports/solar-pv/phase7l-r2-full-cases") / case / "project/canonical.json"
-        diagnostic = Path("reports/solar-pv/phase7l-r2-delivery-final-v7/calculation") / case / "canonical.json"
+        protected_v7 = Path(".runtime/solar-pv/protected-r2-recovery/phase7l-r2-delivery-final-v7/calculation")
+        historical_v7 = Path("reports/solar-pv/phase7l-r2-delivery-final-v7/calculation")
+        diagnostic = (protected_v7 if protected_v7.is_dir() else historical_v7) / case / "canonical.json"
         new = scratch / case
         delivery = root / case
         if not delivery.is_dir():

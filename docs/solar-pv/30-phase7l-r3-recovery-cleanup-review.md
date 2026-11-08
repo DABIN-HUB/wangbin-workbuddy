@@ -76,3 +76,17 @@
 | `WORKBUDDY_PLATFORM_TEST` | `NOT_VERIFIED` | 未安装、上传、发布或运行平台验收。 |
 
 本轮不 push、不发布、不启动 Phase 8。
+
+## G. 后续工作区卫生清理（不改写上述历史回执）
+
+在后续本地清理中，原先保留于 `reports/solar-pv/phase7l-r2-delivery/` 与
+`phase7l-r2-delivery-final-v7/` 的49个未跟踪恢复件，按原路径、原大小及
+SHA-256 逐项核对后，原字节移至已忽略的
+`.runtime/solar-pv/protected-r2-recovery/`。新位置的 `recovery-inventory.json`
+列出原路径、留存路径和每个文件的 SHA-256；原有受控的10文件测试 fixture
+仍留在 `tests/fixtures/solar-pv/phase7l-r2-delivery/`，不以新位置替换它。
+这一动作是**位置迁移而非删除原件**，保留旧R2结果身份和v7历史回溯价值；
+不得把已忽略的本地副本误称为Git托管、远程备份或正式交付。
+历史 `tooling/solar_pv_phase7l_fee_archive.py` 现在优先读取该受保护 v7 位置，
+旧路径存在时仍可回退读取；此历史入口在没有原件的其他 checkout 上依旧受阻，
+不能把已忽略副本描述为可从 Git 独立重建。
