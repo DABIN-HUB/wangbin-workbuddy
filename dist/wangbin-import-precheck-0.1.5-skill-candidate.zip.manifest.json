@@ -1,0 +1,33 @@
+{
+  "archive": "dist/wangbin-import-precheck-0.1.5-skill-candidate.zip",
+  "id": "wangbin-import-precheck",
+  "members": [
+    {
+      "path": "wangbin-import-precheck/README.md",
+      "sha256": "2e2ec38a3ff73d2715fc88417b6704773ea23e4f1394a6ac9b9c9b9a3ea4ee10",
+      "size": 2029
+    },
+    {
+      "path": "wangbin-import-precheck/SKILL.md",
+      "sha256": "9d178e7a867d324f36c1a367b888c71e1c6e11c4b7b28deeef0be2a3d2610032",
+      "size": 6105
+    },
+    {
+      "path": "wangbin-import-precheck/references/rules.md",
+      "sha256": "e32f10a5377a4cef7d8f5db4ac1f0e2f73023e486d8b73d5e69887b8f4ab9142",
+      "size": 1862
+    },
+    {
+      "path": "wangbin-import-precheck/scripts/precheck.py",
+      "sha256": "48192aedb769d4e41633621209eed56506ab7cb0b1f51c32ba6310f5c380e49f",
+      "size": 33551
+    }
+  ],
+  "payload_snapshot_sha256": "6ede85251d4c2130297025ef7db219cdd3dc0cb309bffddd8bdadf4163110e4b",
+  "platform": "BLOCKED",
+  "scope": "local archive integrity only",
+  "sha256": "f8b4188f6b4fe11a5074a3e6ffc60016f3a1322938b7f28953c1a0a62b6f47ed",
+  "source": "packages/skills/wangbin-import-precheck",
+  "status": "PASS",
+  "version": "0.1.5"
+}
