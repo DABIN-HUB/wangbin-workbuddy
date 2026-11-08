@@ -1,0 +1,50 @@
+FFFF.F                                                                   [100%]
+================================== FAILURES ===================================
+_ test_context_invalidated_verified_candidate_never_revives_without_new_review[intake] _
+tests\solar-pv\test_context_reactivation.py:38: in test_context_invalidated_verified_candidate_never_revives_without_new_review
+    assert active['status']=='UNVERIFIED' and active['reviewer'] is None
+E   AssertionError: assert ('VERIFIED' == 'UNVERIFIED'
+E
+E     - UNVERIFIED
+E     ? --
+E     + VERIFIED)
+_ test_context_invalidated_verified_candidate_never_revives_without_new_review[provenance] _
+tests\solar-pv\test_context_reactivation.py:38: in test_context_invalidated_verified_candidate_never_revives_without_new_review
+    assert active['status']=='UNVERIFIED' and active['reviewer'] is None
+E   AssertionError: assert ('VERIFIED' == 'UNVERIFIED'
+E
+E     - UNVERIFIED
+E     ? --
+E     + VERIFIED)
+_ test_context_invalidated_verified_candidate_never_revives_without_new_review[registration] _
+tests\solar-pv\test_context_reactivation.py:38: in test_context_invalidated_verified_candidate_never_revives_without_new_review
+    assert active['status']=='UNVERIFIED' and active['reviewer'] is None
+E   AssertionError: assert ('VERIFIED' == 'UNVERIFIED'
+E
+E     - UNVERIFIED
+E     ? --
+E     + VERIFIED)
+_ test_context_invalidated_verified_candidate_never_revives_without_new_review[legacy_history] _
+tests\solar-pv\test_context_reactivation.py:38: in test_context_invalidated_verified_candidate_never_revives_without_new_review
+    assert active['status']=='UNVERIFIED' and active['reviewer'] is None
+E   AssertionError: assert ('VERIFIED' == 'UNVERIFIED'
+E
+E     - UNVERIFIED
+E     ? --
+E     + VERIFIED)
+__ test_nested_verified_atoms_are_demoted_when_old_container_is_reactivated ___
+tests\solar-pv\test_context_reactivation.py:55: in test_nested_verified_atoms_are_demoted_when_old_container_is_reactivated
+    s.submit('first',faces(100),expected_revision=0)
+services\solar-pv-engine\src\wangbin_solar_pv\intake.py:169: in submit
+    record=self._build(update,submission_id,"updates/"+str(n),currency=currency)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+services\solar-pv-engine\src\wangbin_solar_pv\intake.py:94: in _build
+    raise ContractError("UNKNOWN_UPDATE_FIELD")
+E   wangbin_solar_pv.errors.ContractError: UNKNOWN_UPDATE_FIELD
+=========================== short test summary info ===========================
+FAILED tests/solar-pv/test_context_reactivation.py::test_context_invalidated_verified_candidate_never_revives_without_new_review[intake]
+FAILED tests/solar-pv/test_context_reactivation.py::test_context_invalidated_verified_candidate_never_revives_without_new_review[provenance]
+FAILED tests/solar-pv/test_context_reactivation.py::test_context_invalidated_verified_candidate_never_revives_without_new_review[registration]
+FAILED tests/solar-pv/test_context_reactivation.py::test_context_invalidated_verified_candidate_never_revives_without_new_review[legacy_history]
+FAILED tests/solar-pv/test_context_reactivation.py::test_nested_verified_atoms_are_demoted_when_old_container_is_reactivated
+5 failed, 1 passed in 12.18s
