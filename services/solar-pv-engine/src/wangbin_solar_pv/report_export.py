@@ -124,7 +124,7 @@ _D_STYLE = {
 }
 
 REPORT_CONTENT_VERSION = "phase7l-r3-v1-professional-content-and-full-cash-bridge"
-R4_REPORT_CONTENT_VERSION = "phase7l-r4-v1-professional-content-and-real-pdf-review"
+R4_REPORT_CONTENT_VERSION = "phase7l-r4-v2-layout-and-formula-clarification"
 
 
 @dataclass(frozen=True)
@@ -626,6 +626,27 @@ def _formula_contract_text(value: Any) -> str:
             .replace("set_and_range_definition", "本式下标与求和范围"))
 
 
+def _formula_dimensional_text(formula: dict[str, Any]) -> str:
+    """Explain each visible operation without changing the frozen formula contract."""
+    text = _formula_contract_text(formula["dimensional_check"])
+    # The frozen wording describes the additive rule only. Do not present it
+    # as a dimensional proof of a quotient, discount factor or root set.
+    text = text.replace("同量纲才能相加", "仅加减项要求可比较的同量纲")
+    equation = formula.get("text_equation") or formula.get("latex") or ""
+    checks = []
+    if "×" in equation or "\\cdot" in equation:
+        checks.append("乘法应逐项核对因子单位与乘积单位")
+    if "/" in equation or "\\frac" in equation:
+        checks.append("除法应核对分子/分母单位与非零分母")
+    if "^" in equation:
+        checks.append("幂运算应核对底数与指数的量纲及定义域")
+    if "Σ" in equation or "\\sum" in equation:
+        checks.append("求和应核对索引范围及各项结果单位")
+    if "{" in equation and "}" in equation:
+        checks.append("结果集合应核对元素单位与求根定义域，不当作单个标量")
+    return text + ("；本式另含" + "、".join(checks) + "。" if checks else "。")
+
+
 def _formula_shared_contracts(definitions: list[dict[str, Any]]) -> tuple[list[tuple[str, str, int]], dict[tuple[str, str], int]]:
     """Deduplicate identical *notation* contracts; never merge per-formula symbols."""
     kinds = {"operator_definition": "运算符", "notation_contract": "记法与歧义",
@@ -1026,6 +1047,7 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
     if caption:
         paragraph = document.add_paragraph(caption)
         paragraph.style = "Caption"
+        paragraph.paragraph_format.keep_with_next = True
         for run in paragraph.runs:
             run.font.color.rgb = RGBColor.from_string(_D_STYLE["muted"])
     table = document.add_table(rows=1, cols=len(headers))
@@ -1071,6 +1093,10 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
 
     header_pr = table.rows[0]._tr.get_or_add_trPr()
     header_pr.append(OxmlElement("w:tblHeader"))
+    header_pr.append(OxmlElement("w:cantSplit"))
+    for cell in table.rows[0].cells:
+        for paragraph in cell.paragraphs:
+            paragraph.paragraph_format.keep_with_next = True
     for row_index, row in enumerate(rows, 1):
         cells = table.add_row().cells
         for index, value in enumerate(row):
@@ -2446,7 +2472,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                         if references:
                             document.add_paragraph("本式共通契约：" + "；".join(references))
                         if formula.get("dimensional_check"):
-                            document.add_paragraph("本式量纲校核：" + _formula_contract_text(formula["dimensional_check"]))
+                            document.add_paragraph("本式量纲校核（原定义并按运算类型提示复核）：" + _formula_dimensional_text(formula))
                         symbols = [[s.get("symbol") or "未定义", s.get("definition_zh") or "未定义",
                                     s.get("unit") or "未定义"] for s in formula.get("every_symbol_definition", ())]
                         if symbols:
