@@ -31,3 +31,5 @@
 ## Hermes Dots 四 Bot 接入边界
 
 本模板可由仓库内任务生成器与人工/看板任务描述引用；根目录 `AGENTS.md` 不会在任意子目录或仓库外 Bot 配置中自动继承。将上述“开始前”步骤分别注入 `wb-analyst`、`wb-developer`、`wb-quality`、`wb-manager` 的真实 Bot 开发者指令或看板任务模板，并在各 Bot 的独立工作树验证读入；需先定位实际 profile/提示词配置与运行入口。仓库文件接入本身不证明四 Bot 的外部配置已修改或运行强制生效。
+
+当前本机四份角色提示位于 `C:/Users/wangbin/AppData/Local/hermes/profiles/{wb-analyst,wb-developer,wb-quality,wb-manager}/SOUL.md`，已分别增补本模板入口、根目录文件读取顺序和禁止自动 push 约束。它们不属于仓库 Git 提交；已有 Bot 会话是否重新加载、实际看板任务是否读入正确版本仍需独立运行时观察，不因文件修改而标 PASS。
