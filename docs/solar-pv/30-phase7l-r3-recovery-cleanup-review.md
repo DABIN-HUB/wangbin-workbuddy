@@ -32,7 +32,7 @@
 - 从当前 Git 版本删除 **188 个文件／118,489,925 B**：`phase7l-r1-delivery`、`phase7l-r2-delivery-final-v4`、`phase7l-r2-delivery-final-v5`、`phase7l-r2-delivery-final-v6` 和已被 fee-v4 取代的 `phase7l-r2-delivery-final-fee-v3`。这些是无当前源码/测试引用的旧报告快照；R1/R2 原始计算树没有删除。
 - 从恢复的365个未跟踪文件中删除 **316 个／226,581,158 B**：旧 R2 fee-v1/v2/v3、旧 R2/R3 delivery/final-v1/v2/v3/v4、Phase 7I chain partial review 和 Phase 5 synthetic rooftop 等重复或中间导出。
 - 保留恢复未跟踪文件 **49 个／44,402,610 B**：原始 `phase7l-r2-delivery/` 25个文件作为回收站事件和旧R2独立身份的原字节证据；`phase7l-r2-delivery-final-v7/` 24个文件作为受保护 v7 历史包。两组都没有改写成新的 Git fixture，也没有将其哈希冒充当前 R3。
-- 本次实际删除 **504 个文件／345,071,083 B**。Git 当前索引为 **1,215 个文件／613,728,727 B（blob 原始字节）**，报告范围为 **706 个／591,066,553 B**；本地仍有上述49个受保护未跟踪文件，因此工作区不会宣称为完全 clean。`phase7l-synthetic-review`、Phase 3B/3C/3D/3E 证据、Phase 7I upload review、dist 候选、`.venv` 和用途仍不确定的证据未删。
+- 本次实际删除 **504 个文件／345,071,083 B**。Git 当前版本为 **1,215 个文件／613,730,231 B（blob 原始字节）**，报告范围为 **706 个／591,066,553 B**；本地仍有上述49个受保护未跟踪文件，因此工作区不会宣称为完全 clean。`phase7l-synthetic-review`、Phase 3B/3C/3D/3E 证据、Phase 7I upload review、dist 候选、`.venv` 和用途仍不确定的证据未删。
 
 ## D. R3 正文专业内容审阅：不通过
 
