@@ -1,0 +1,2 @@
+# Preserve the frozen 0.1.3 executable byte-for-byte on Windows clean checkouts.
+packages/skills/wangbin-contract-return-check/scripts/compare_contracts.py text eol=lf
