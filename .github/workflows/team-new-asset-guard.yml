@@ -1,0 +1,23 @@
+name: Team new Git asset guard
+
+on:
+  push:
+    branches: [team/skill-factory-v1]
+  pull_request:
+    branches: [team/skill-factory-v1]
+  workflow_dispatch:
+
+jobs:
+  new-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Guard newly added Git assets since reviewed baseline
+        run: python tooling/git_asset_guard.py --base b2b2f6d4aeec90fc5343962616f3eafb19d1af88
+      - name: Exercise guard positive and negative cases
+        run: python -m unittest discover -s tests -p 'test_git_asset_guard.py' -v
