@@ -23,6 +23,7 @@ from .validators.project_validator import SEMVER, validate_connector, validate_s
 from .validators.secret_scanner import scan_for_secrets
 
 KINDS = {"Skill": "skills", "Expert": "experts", "Connector": "connectors"}
+DEVELOPMENT_POLICY = "docs/development-task-template.md"
 STATES = {"BACKLOG", "DEVELOPING", "TESTED", "SUBMITTED", "APPROVED", "REJECTED", "PUBLISHED", "PAUSED"}
 REVIEWS = {"UNKNOWN", "NOT_AVAILABLE", "BLOCKED", "NOT_TESTED", "USER_REPORTED_SUBMITTED", "APPROVED", "REJECTED"}
 METRIC_FIELDS = {"exposures", "installs", "uses", "feedback", "review_result", "development_cost", "maintenance_cost"}
@@ -186,6 +187,21 @@ def _version(item: dict) -> str:
     return _version_entry(item)["version"]
 
 
+def _development_readme(root: Path, description: str) -> str:
+    """Keep development rules in the repository, not copied into product runtimes."""
+    policy = root / DEVELOPMENT_POLICY
+    for name in ("AGENTS.md", "agent.md"):
+        if not (root / name).is_file():
+            raise ValueError(f"repository policy missing: {name}")
+    if not policy.is_file():
+        raise ValueError(f"development task template missing: {DEVELOPMENT_POLICY}")
+    return (description + "\n\n## 开发任务入口（仅仓库开发，不是产品运行时指令）\n\n"
+            "开发或修改本产品前，先读仓库根目录 `AGENTS.md`，再完整读取根目录 `agent.md`，"
+            f"然后读取本产品的专属冻结合同；按仓库根目录 `{DEVELOPMENT_POLICY}` "
+            "执行验证、清理、dist 保护、显式暂存、本地提交和最终 Git 状态检查。"
+            "禁止自动 push、上传、审核或发布。\n")
+
+
 def init_product(root: Path, product_id: str, kind: str | None = None, connector_mode: str | None = None) -> Path:
     item = get_product(root, product_id)
     if kind and kind != item["type"]:
@@ -214,10 +230,12 @@ def init_product(root: Path, product_id: str, kind: str | None = None, connector
             if text.startswith("---") and yaml.safe_load(text.split("---", 2)[1]).get("name") == product_id:
                 raise ValueError("Skill metadata name collision")
     version = _version(item)
+    development_readme = _development_readme(root, "TODO: review this product's behavior, rights and claims before release.")
     if item["type"] == "Skill":
         generate_skill(target, skill_id=product_id, display_name=item["name"], display_name_en=item["name"],
                        author="TODO-author", version=version, description_zh="TODO: describe verified capabilities",
                        description_en="TODO: describe verified capabilities")
+        (target / "README.md").write_text(development_readme, encoding="utf-8")
     elif item["type"] == "Expert":
         template = root / "packages/experts/wangbin-expert-template"
         if not template.is_dir():
@@ -245,7 +263,7 @@ def init_product(root: Path, product_id: str, kind: str | None = None, connector
                  "profession": meta["profession"]}
         renamed.write_text("---\n" + yaml.safe_dump(front, allow_unicode=True, sort_keys=False) +
                            "---\n# TODO: define expert behavior and safety boundaries before validation.\n", encoding="utf-8")
-        (target / "README.md").write_text("TODO: review this Expert's behavior, avatar rights, license and claims.\n", encoding="utf-8")
+        (target / "README.md").write_text(development_readme, encoding="utf-8")
         (target / "LICENSE").write_text("TODO: choose license before release\n", encoding="utf-8")
     else:
         template = root / "packages/connectors" / f"wangbin-{connector_mode}-connector-template"
@@ -261,7 +279,7 @@ def init_product(root: Path, product_id: str, kind: str | None = None, connector
         (target / ("cli.json" if connector_mode == "cli" else "mcp.json")).write_bytes(
             _dump({"runtime": {"type": "node", "version": "20"}} if connector_mode == "cli" else {"mcpServers": {}}))
         shutil.rmtree(target / "skills", ignore_errors=True)
-        (target / "README.md").write_text("TODO: implement and review this Connector's runtime, permissions, icon and claims before release.\n", encoding="utf-8")
+        (target / "README.md").write_text(development_readme, encoding="utf-8")
     return target
 
 

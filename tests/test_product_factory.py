@@ -19,6 +19,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def registry(root: Path, *, kind: str = "Skill", product_id: str = "sample-skill", source: bool = True) -> Path:
     (root / "products").mkdir(parents=True)
+    (root / "docs").mkdir()
+    for name in ("AGENTS.md", "agent.md"):
+        shutil.copyfile(ROOT / name, root / name)
+    shutil.copyfile(ROOT / "docs/development-task-template.md", root / "docs/development-task-template.md")
     folder = {"Skill": "skills", "Expert": "experts", "Connector": "connectors"}[kind]
     path = root / "packages" / folder / product_id
     data = {"schema_version": 1, "products": [{"id": product_id, "name": "Sample", "type": kind,
@@ -51,8 +55,27 @@ def test_init_is_type_aware_and_refuses_collision(tmp_path: Path) -> None:
     assert (path / "SKILL.md").exists()
     front = yaml.safe_load((path / "SKILL.md").read_text(encoding="utf-8").split("---", 2)[1])
     assert front["name"] == "sample-skill"
+    readme = (path / "README.md").read_text(encoding="utf-8")
+    assert all(name in readme for name in ("AGENTS.md", "agent.md", "docs/development-task-template.md", "冻结合同", "本地提交"))
     with pytest.raises(ValueError):
         factory.init_product(tmp_path, "sample-skill")
+
+
+def test_init_requires_repository_policy_before_scaffolding(tmp_path: Path) -> None:
+    path = registry(tmp_path, source=False)
+    (tmp_path / "agent.md").unlink()
+    with pytest.raises(ValueError, match="repository policy missing: agent.md"):
+        factory.init_product(tmp_path, "sample-skill")
+    assert not path.exists()
+
+
+def test_repository_governance_and_qa_require_local_commit_only() -> None:
+    agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+    policy = (ROOT / "agent.md").read_text(encoding="utf-8")
+    task = (ROOT / "docs/development-task-template.md").read_text(encoding="utf-8")
+    assert "agent.md" in agents
+    assert all(name in task for name in ("AGENTS.md", "agent.md", "冻结合同", "测试", "清理", "dist", "显式暂存", "本地 commit", "git status", "push", "发布"))
+    assert "不自动" in task and "push" in policy
 
 
 def test_init_refuses_reserved_candidate_path(tmp_path: Path) -> None:
@@ -83,6 +106,8 @@ def test_init_expert_and_connector_scaffolds_do_not_claim_old_runtime(tmp_path: 
         shutil.copytree(template, root / "packages" / ("experts/wangbin-expert-template" if kind == "Expert" else "connectors/wangbin-cli-connector-template"))
         built = factory.init_product(root, pid, connector_mode="cli" if kind == "Connector" else None)
         assert built == path
+        assert all(name in (built / "README.md").read_text(encoding="utf-8")
+                   for name in ("AGENTS.md", "agent.md", "docs/development-task-template.md", "冻结合同"))
         if kind == "Expert":
             meta = json.loads((built / ".codebuddy-plugin/plugin.json").read_text(encoding="utf-8"))
             assert meta["name"] == pid and meta["agents"] == [f"./agents/{pid}.md"]
@@ -236,7 +261,7 @@ def test_cli_record_and_portfolio_round_trip(tmp_path: Path) -> None:
 def test_cli_lists_registered_products() -> None:
     result = subprocess.run([sys.executable, "-m", "tooling.products", "list", "--root", str(ROOT)], cwd=ROOT, text=True, capture_output=True)
     assert result.returncode == 0, result.stderr
-    assert len(json.loads(result.stdout)["products"]) == 10
+    assert json.loads(result.stdout) == factory.load_catalog(ROOT)
 
 
 def test_release_check_reports_local_blocked_in_exit_status_and_platform_separately(tmp_path: Path) -> None:
