@@ -2,6 +2,7 @@
 import csv
 import hashlib
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -9,7 +10,7 @@ import zipfile
 from openpyxl import load_workbook
 
 ROOT = Path(__file__).resolve().parents[3]
-ZIP = ROOT / 'dist/wangbin-import-precheck-0.1.4-skill-candidate.zip'
+ZIP = ROOT.parent / 'wangbin-workbuddy-delivery/six-skills-final/reports/Q01/history/wangbin-import-precheck-0.1.4-skill-candidate.zip'
 EXPECTED_SHA = '536763a9c5d64d5b5b53364f5e6e7be93c13457351624b544a0b722b07955d3c'
 assert hashlib.sha256(ZIP.read_bytes()).hexdigest() == EXPECTED_SHA
 base = (Path.home() / 'AppData/Local/hermes/profiles/wb-quality/cache/scratch/audit-r1-q01-baseline-t_0eaab29a').resolve()
@@ -108,7 +109,7 @@ member = extract / 'wangbin-import-precheck/README.md'
 results['F04'] = {'readme_first_line': member.read_text(encoding='utf-8').splitlines()[0],
                   'skill_version_line': next(line for line in (extract / 'wangbin-import-precheck/SKILL.md').read_text(encoding='utf-8').splitlines() if line.startswith('version:')),
                   'readme_sha256': hashlib.sha256(member.read_bytes()).hexdigest()}
-evidence = Path(__file__).with_name('audit-r1-baseline-results.json')
+evidence = Path(os.environ.get('WANGBIN_Q01_PROBE_EVIDENCE', str(Path(__file__).with_name('audit-r1-baseline-results.json'))))
 evidence.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding='utf-8')
 print(json.dumps({'evidence': str(evidence), 'cases': {k: {'exit_code': v['exit_code'],
       'receipt_status': (v['receipt'] or {}).get('status'), 'findings': (v['receipt'] or {}).get('finding_details'),

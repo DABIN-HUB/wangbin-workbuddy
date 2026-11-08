@@ -12,7 +12,7 @@ from openpyxl import Workbook, load_workbook
 ROOT = Path(__file__).resolve().parents[3]
 ARCHIVE = ROOT / 'dist/wangbin-import-precheck-0.1.5-skill-candidate.zip'
 SHA = 'f8b4188f6b4fe11a5074a3e6ffc60016f3a1322938b7f28953c1a0a62b6f47ed'
-OLD = ROOT / 'dist/wangbin-import-precheck-0.1.4-skill-candidate.zip'
+OLD = ROOT.parent / 'wangbin-workbuddy-delivery/six-skills-final/reports/Q01/history/wangbin-import-precheck-0.1.4-skill-candidate.zip'
 assert hashlib.sha256(ARCHIVE.read_bytes()).hexdigest() == SHA
 assert hashlib.sha256(OLD.read_bytes()).hexdigest() == '536763a9c5d64d5b5b53364f5e6e7be93c13457351624b544a0b722b07955d3c'
 BASE = Path.home() / 'AppData/Local/hermes/profiles/wb-quality/cache/scratch/q01-015-independent-t_c8518a89'
@@ -142,7 +142,7 @@ for cid, headers, rows, fields, refs, transforms, template, expected, cols in CA
             if cid == 'ambig-ref': check('PENDING_VERIFICATION' in str(isolated[1]) and 'VIOLATION' in str(isolated[2]),'ambiguous key distinct from invalid key')
             if cid == 'missing-ref': check(all('PENDING_VERIFICATION' in str(r) for r in isolated[1:]),'missing reference is pending not false positive')
     all_results['cases'][cid] = result
-EVIDENCE = Path(__file__).with_name('audit-r1-015-independent-results.json')
+EVIDENCE = Path(os.environ.get('WANGBIN_Q01_PROBE_EVIDENCE', str(Path(__file__).with_name('audit-r1-015-independent-results.json'))))
 EVIDENCE.write_text(json.dumps(all_results,ensure_ascii=False,indent=2,default=str),encoding='utf-8')
 print(json.dumps({'evidence':str(EVIDENCE),'cases':len(CASES),'assertions':sum(len(x['assertions']) for x in all_results['cases'].values()),'failures':all_results['failures']},ensure_ascii=False,indent=2))
 sys.exit(1 if all_results['failures'] else 0)
