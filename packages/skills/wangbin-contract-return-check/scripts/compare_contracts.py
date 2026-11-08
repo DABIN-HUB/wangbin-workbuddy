@@ -257,8 +257,28 @@ def compare(original: list[Unit], returned: list[Unit]) -> tuple[list[dict], lis
         if basis:
             paired(i, j, basis)
             remaining_o = remaining_r = []
-    ambiguous = bool(remaining_o and remaining_r)
-    if ambiguous:
+    # Keep an unresolved replacement conservative, but do not let a *separate*
+    # competing obligation consume unrelated one-sided changes. An isolated
+    # endpoint is independent only if its topic has no counterpart at all;
+    # without a competing group, two unmatched sides remain an uncertain pair.
+    competing = any(sum(obligation_evidence(original[i], returned[j]) != ''
+                        for j in remaining_r) > 1 for i in remaining_o) or any(
+        sum(obligation_evidence(original[i], returned[j]) != '' for i in remaining_o) > 1
+        for j in remaining_r)
+    if competing:
+        old_topics = {topic(original[i].text) for i in remaining_o}
+        new_topics = {topic(returned[j].text) for j in remaining_r}
+        independent_o = [i for i in remaining_o if topic(original[i].text) not in new_topics
+                         and topic(original[i].text) != '其他'
+                         and not any(obligation_evidence(original[i], returned[j]) for j in remaining_r)]
+        independent_r = [j for j in remaining_r if topic(returned[j].text) not in old_topics
+                         and topic(returned[j].text) != '其他'
+                         and not any(obligation_evidence(original[i], returned[j]) for i in remaining_o)]
+        for i in independent_o: emit('DELETE', original[i], None)
+        for j in independent_r: emit('ADD', None, returned[j])
+        remaining_o = [i for i in remaining_o if i not in independent_o]
+        remaining_r = [j for j in remaining_r if j not in independent_r]
+    if remaining_o and remaining_r:
         uncertainty.append({'locator': ' / '.join(original[i].locator for i in remaining_o) + ' → ' +
                             ' / '.join(returned[j].locator for j in remaining_r),
                             'reason': '对应证据不足或多个候选；原稿：' + ' | '.join(original[i].text for i in remaining_o) +

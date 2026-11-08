@@ -169,6 +169,31 @@ def test_a07_no_forced_payment_pair_when_delivery_not_comparable(tmp_path):
     assert not any(c['topic'] == '付款' for c in r['changes'])
 
 
+def test_competing_payment_with_independent_one_sided_changes(tmp_path):
+    old = ['付款条件', '付款30天。', '付款条件', '付款30天。', '附录培训一次。']
+    new = ['付款条件', '付款60天。', '付款条件', '付款60天。', '验收7日内书面反馈。']
+    result, book, word = run(tmp_path, old, new)
+    assert result['status'] == 'PARTIAL'
+    assert [(c['type'], c['old_locator'], c['new_locator']) for c in result['changes']] == [
+        ('DELETE', '正文段落5', 'N/A (不存在)'),
+        ('ADD', 'N/A (不存在)', '正文段落5')]
+    assert len(result['uncertainty']) == 1
+    assert [c['locator'] for c in result['uncertainty'][0]['candidate_old']] == ['正文段落2', '正文段落4']
+    assert [c['locator'] for c in result['uncertainty'][0]['candidate_new']] == ['正文段落2', '正文段落4']
+    assert book['检查概览']['B9'].value == '2'
+    assert book['逐项差异'].max_row == book['关键商务变化'].max_row == 3
+    assert book['待确认与未覆盖'].max_row == 2
+    assert all(c['change_id'] in word for c in result['changes'])
+
+
+def test_competing_payment_same_topic_unmatched_stays_uncertain(tmp_path):
+    old = ['付款条件', '付款30天。', '付款条件', '付款30天。', '付款特别安排。']
+    new = ['付款条件', '付款60天。', '付款条件', '付款60天。', '付款另外规则。']
+    result, _, _ = run(tmp_path, old, new)
+    assert result['status'] == 'PARTIAL' and not result['changes']
+    assert '正文段落5' in str(result['uncertainty'])
+
+
 def test_a08_reversed_direction(tmp_path):
     r, _, _ = run(tmp_path, ['第七条，验收后60天付款，金额100000元。'],
                   ['第六条，验收后30天付款，金额100000元。'])

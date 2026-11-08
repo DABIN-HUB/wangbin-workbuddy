@@ -12,12 +12,13 @@
       "scenario": "Compare explicitly designated original and returned DOCX contracts with evidence-linked commercial change review",
       "target_users": "授权合同运营、采购与销售人员",
       "test_path": "tests/test_contract_return_check.py",
-      "active_version": "0.1.3",
+      "active_version": "0.1.4",
       "versions": [
         {"version": "0.1.0", "source": "packages/skills/wangbin-contract-return-check", "candidate": "UNKNOWN", "sha256": "UNKNOWN", "published_at": "UNKNOWN"},
         {"version": "0.1.1", "source": "packages/skills/wangbin-contract-return-check", "candidate": "UNKNOWN", "sha256": "UNKNOWN", "published_at": "UNKNOWN"},
         {"version": "0.1.2", "source": "packages/skills/wangbin-contract-return-check", "candidate": "UNKNOWN", "sha256": "UNKNOWN", "published_at": "UNKNOWN"},
-        {"version": "0.1.3", "source": "packages/skills/wangbin-contract-return-check", "candidate": "UNKNOWN", "sha256": "UNKNOWN", "published_at": "UNKNOWN"}
+        {"version": "0.1.3", "source": "packages/skills/wangbin-contract-return-check", "candidate": "UNKNOWN", "sha256": "UNKNOWN", "published_at": "UNKNOWN"},
+        {"version": "0.1.4", "source": "packages/skills/wangbin-contract-return-check", "candidate": "UNKNOWN", "sha256": "UNKNOWN", "published_at": "UNKNOWN"}
       ]
     }
   ]

@@ -14,7 +14,7 @@ examples_en:
   - The first file is our original contract and the second is the returned draft. Check changes to payment, delivery, and acceptance terms.
   - Focus on commercial changes and briefly summarize numbering adjustments and wording edits.
   - Draft a polite clarification message based on the verified differences without accepting the changes on my behalf.
-version: 0.1.3
+version: 0.1.4
 author: wangbin
 ---
 # 合同回传变更检查 / Returned Contract Change Check
