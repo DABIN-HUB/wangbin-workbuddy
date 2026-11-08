@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "semantics": "New synthetic inputs; old DOCX and historical QA are excluded. These are expected values, not actual results.",
+  "cases": {
+    "core": {"original": ["第六条，验收后30天付款，金额100000元。"], "returned": ["第七条，验收后60天付款，金额100000元。"], "status": "COMPLETE", "types": ["NUMBER", "MODIFY"], "confirmed_ids": 2, "payment_change_count": 1, "amount_change_count": 0, "delta": "延长30天", "locators": ["正文段落1", "正文段落1"]},
+    "identical": {"original": ["交付后10天验收。"], "returned": ["交付后10天验收。"], "table": [["项目A", "100元"]], "status": "COMPLETE", "types": [], "confirmed_ids": 0},
+    "reverse": {"original": ["第七条，验收后60天付款，金额100000元。"], "returned": ["第六条，验收后30天付款，金额100000元。"], "status": "COMPLETE", "types": ["NUMBER", "MODIFY"], "confirmed_ids": 2, "delta": "缩短30天"},
+    "unrelated": {"original": ["双方不得泄露商业秘密。"], "returned": ["发生地震时由双方协商履行。"], "status": "PARTIAL", "types": [], "confirmed_ids": 0, "uncertainty_count": 1},
+    "invalid_docx": {"invalid_original_bytes": "not a docx", "returned": ["交付后10天验收。"], "status": "ERROR", "reason": "INVALID_DOCX"}
+  },
+  "output": {"xlsx_sheets": ["检查概览", "逐项差异", "关键商务变化", "待确认与未覆盖"], "docx_editable": true, "source_sha256_before_after": "equal"},
+  "unexercised_cases": "The formal CON-A02..A14, E01..E05 and F01/F02 matrix is expected in docs; generator cases are a bounded subset. WorkBuddy conversations and platform NOT_TESTED."
+}

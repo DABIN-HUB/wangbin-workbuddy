@@ -1,0 +1,22 @@
+# Python
+.venv/
+.phase3-ci-venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+services/document-engine/build/
+dist/
+
+# Local generated data
+.runtime/
+output/
+reports/raw/
+tests/fixtures/generated/
+*.log
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
