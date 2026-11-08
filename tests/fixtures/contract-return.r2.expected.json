@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "provenance": "FROZEN BEFORE any R2 generator/test/CLI execution; fictional requirements, not observed output. Original 41 matrix cases unchanged.",
+  "cases": {
+    "F01_B2_P3_same_case": {
+      "original": ["付款条件", "付款30天。", "付款条件", "付款30天。", "附录培训一次。"],
+      "returned": ["付款条件", "付款60天。", "付款条件", "付款60天。", "验收7日内书面反馈。"],
+      "expected": {
+        "status": "PARTIAL", "rc": 0,
+        "confirmed": [
+          {"type": "DELETE", "topic": "服务范围", "old_text": "附录培训一次。", "new_text": "N/A (不存在)", "old_locator": "正文段落5", "new_locator": "N/A (不存在)"},
+          {"type": "ADD", "topic": "验收", "old_text": "N/A (不存在)", "new_text": "验收7日内书面反馈。", "old_locator": "N/A (不存在)", "new_locator": "正文段落5"}
+        ],
+        "unconfirmed_old": [{"locator": "正文段落2", "text": "付款30天。"}, {"locator": "正文段落4", "text": "付款30天。"}],
+        "unconfirmed_new": [{"locator": "正文段落2", "text": "付款60天。"}, {"locator": "正文段落4", "text": "付款60天。"}],
+        "no_payment_confirmed": true,
+        "no_cross_link_delete_add": true
+      }
+    },
+    "E04_control_prefix": {
+      "original": ["\t=1+1付款30天。"], "returned": ["\t=1+1付款60天。"],
+      "expected": {"status": "COMPLETE", "rc": 0, "types": ["MODIFY"], "literal_original": "\t=1+1付款30天。", "literal_returned": "\t=1+1付款60天。", "all_cells_text_no_formula": true}
+    },
+    "LIMIT_chars_below": {
+      "generator": {"kind": "identical_random_chinese_text", "chars_per_document": 99999, "seed": 2703},
+      "expected": {"status": "COMPLETE", "rc": 0, "confirmed_count": 0, "reason": null, "max_chars": 100000}
+    },
+    "LIMIT_chars_exact": {
+      "generator": {"kind": "identical_random_chinese_text", "chars_per_document": 100000, "seed": 2703},
+      "expected": {"status": "COMPLETE", "rc": 0, "confirmed_count": 0, "reason": null, "max_chars": 100000}
+    },
+    "LIMIT_chars_over": {
+      "generator": {"kind": "identical_random_chinese_text", "chars_per_document": 100001, "seed": 2703},
+      "expected": {"status": "ERROR", "rc": 2, "reason": "LIMIT_EXCEEDED", "no_success_artifacts": true, "max_chars": 100000}
+    }
+  }
+}
