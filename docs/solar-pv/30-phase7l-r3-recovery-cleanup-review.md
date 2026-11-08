@@ -29,10 +29,10 @@
 
 依据本轮授权，先以 Hermes scratch 中的 `solar-pv-cleanup-plan-20261108.json` 固定删除前逐文件大小和 SHA-256，再执行显式路径删除；没有使用 `git clean -fdx`、`reset --hard`、无差别递归删除或历史重写。删除前确认五个 Git 目录在源码、测试和文档之外无引用，并保留测试仍读取的两个封存25年案例、R2 fee-v4、R3-final-v5、诊断 v7、Phase 7I 审计记录和其他证据。
 
-- 从当前 Git 版本删除 **188 个文件／118,489,925 B**：`phase7l-r1-delivery`、`phase7l-r2-delivery-final-v4`、`phase7l-r2-delivery-final-v5`、`phase7l-r2-delivery-final-v6` 和已被 fee-v4 取代的 `phase7l-r2-delivery-final-fee-v3`。这些是无当前源码/测试引用的旧报告快照；R1/R2 原始计算树没有删除。
+- 从当前 Git 版本删除 **188 个文件／118,489,925 B（Git blob 原始字节；本地删除前文件字节为118,583,778 B）**：`phase7l-r1-delivery`、`phase7l-r2-delivery-final-v4`、`phase7l-r2-delivery-final-v5`、`phase7l-r2-delivery-final-v6` 和已被 fee-v4 取代的 `phase7l-r2-delivery-final-fee-v3`。这些是无当前源码/测试引用的旧报告快照；R1/R2 原始计算树没有删除。
 - 从恢复的365个未跟踪文件中删除 **316 个／226,581,158 B**：旧 R2 fee-v1/v2/v3、旧 R2/R3 delivery/final-v1/v2/v3/v4、Phase 7I chain partial review 和 Phase 5 synthetic rooftop 等重复或中间导出。
 - 保留恢复未跟踪文件 **49 个／44,402,610 B**：原始 `phase7l-r2-delivery/` 25个文件作为回收站事件和旧R2独立身份的原字节证据；`phase7l-r2-delivery-final-v7/` 24个文件作为受保护 v7 历史包。两组都没有改写成新的 Git fixture，也没有将其哈希冒充当前 R3。
-- 本次实际删除 **504 个文件／345,071,083 B**。Git 当前版本为 **1,215 个文件／613,730,231 B（blob 原始字节）**，报告范围为 **706 个／591,066,553 B**；本地仍有上述49个受保护未跟踪文件，因此工作区不会宣称为完全 clean。`phase7l-synthetic-review`、Phase 3B/3C/3D/3E 证据、Phase 7I upload review、dist 候选、`.venv` 和用途仍不确定的证据未删。
+- 本次实际删除 **504 个文件／345,164,936 B 本地文件字节**（其中未跟踪恢复件226,581,158 B；Git删除项按本地字节计118,583,778 B）。Git 当前版本为 **1,215 个文件／613,730,231 B（blob 原始字节）**，报告范围为 **706 个／591,066,553 B**；本地仍有上述49个受保护未跟踪文件，因此工作区不会宣称为完全 clean。`phase7l-synthetic-review`、Phase 3B/3C/3D/3E 证据、Phase 7I upload review、dist 候选、`.venv` 和用途仍不确定的证据未删。
 
 ## D. R3 正文专业内容审阅：不通过
 
@@ -58,7 +58,7 @@
 
 | 门禁 | 本次状态 | 依据 |
 |---|---|---|
-| `WORKSPACE_CLEANUP` | `PARTIAL_SCOPED` | 已实际删除504个文件／345,071,083 B，其中 Git 旧交付188个、恢复重复导出316个；仍保留49个受保护未跟踪历史文件及用途不确定证据，故不宣称完全 clean。 |
+| `WORKSPACE_CLEANUP` | `PARTIAL_SCOPED` | 已实际删除504个文件／345,164,936 B 本地文件字节，其中 Git 旧交付188个、恢复重复导出316个；仍保留49个受保护未跟踪历史文件及用途不确定证据，故不宣称完全 clean。 |
 | `HISTORICAL_FILE_RECOVERY` | `PARTIAL` | 365个原字节恢复；43个相同，2个不同版本回执未覆盖；触发者未确定。 |
 | `REGRESSION_TESTS` | `PASS_FOCUSED` | 88 passed、2 skipped、1 warning；不宣称全库或六小时 L3。 |
 | `PROFESSIONAL_CONTENT_REVIEW` | `BLOCKED` | 存在资源口径、工程依据、公式校核和结论边界问题；未专业签审。 |
