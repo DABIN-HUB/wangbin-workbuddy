@@ -23,7 +23,16 @@
 
 清理前快照（`reports/solar-pv/`、`services/solar-pv-engine/`、`tests/solar-pv/`、`tooling/solar_pv_*`、`dist/` 中 PV 文件）：**1,458 文件，723,632,886 B**；这发生在原历史文件尚缺失时，不能作为“恢复后清理前”空间基数。恢复原件后仅对经检查的引擎、测试和 tooling 目录中未跟踪且已忽略的 `__pycache__/*.pyc` 和 `wangbin_solar_pv_input.egg-info/` 逐文件计算 SHA-256 并删除：**328个、7,925,249 B**。删除前路径、大小、哈希在 Hermes scratch `r3-scoped-cache-cleanup-receipt.json`；本次**Git 跟踪文件删除数为0，废弃生产代码删除数为0**。缓存本身不承担关键审计证据；未删除已跟踪 `phase2d-parsers-red.txt`、R1/R2封存案例、v7、R3-final-v5、回收原件、其他产品或用户材料。
 
-恢复及缓存清理后的同范围快照：**1,495文件，986,717,437 B**，其中报告范围1,261个（894跟踪、365恢复的未跟踪历史文件、2个已忽略且与既有回执哈希相符的日志）。另外本次受控 fixture 共10文件／10,089,579 B，属于 `tests/fixtures/solar-pv/`，不在上述前后统计范围。当前没有足够证据把其余旧Phase归档、诊断版v7、候选 ZIP 或带哈希回执的日志判为可删：分类为 `KEEP_EVIDENCE`／`UNCERTAIN`，**先保留**。非光伏产品只作只读关联核查；`dist/` 的21个光伏候选文件（676,365 B）为被忽略的历史归档，暂不删除。`services/solar-pv-engine/.venv/` 为本地环境，暂不清理。既有 `.gitignore` 已涵盖 Python 缓存、egg-info、dist；不追加会误隐藏正式交付物的宽泛规则。
+恢复及缓存清理后的同范围快照：**1,495文件，986,717,437 B**，其中报告范围1,261个（894跟踪、365恢复的未跟踪历史文件、2个已忽略且与既有回执哈希相符的日志）。另外本次受控 fixture 共10文件／10,089,579 B，属于 `tests/fixtures/solar-pv/`，不在上述前后统计范围。该段是本次大范围清理前的历史快照，后续实际删除见下节。
+
+### C.1 受授权的历史产物清理（2026-11-08）
+
+依据本轮授权，先以 Hermes scratch 中的 `solar-pv-cleanup-plan-20261108.json` 固定删除前逐文件大小和 SHA-256，再执行显式路径删除；没有使用 `git clean -fdx`、`reset --hard`、无差别递归删除或历史重写。删除前确认五个 Git 目录在源码、测试和文档之外无引用，并保留测试仍读取的两个封存25年案例、R2 fee-v4、R3-final-v5、诊断 v7、Phase 7I 审计记录和其他证据。
+
+- 从当前 Git 版本删除 **188 个文件／118,489,925 B**：`phase7l-r1-delivery`、`phase7l-r2-delivery-final-v4`、`phase7l-r2-delivery-final-v5`、`phase7l-r2-delivery-final-v6` 和已被 fee-v4 取代的 `phase7l-r2-delivery-final-fee-v3`。这些是无当前源码/测试引用的旧报告快照；R1/R2 原始计算树没有删除。
+- 从恢复的365个未跟踪文件中删除 **316 个／226,581,158 B**：旧 R2 fee-v1/v2/v3、旧 R2/R3 delivery/final-v1/v2/v3/v4、Phase 7I chain partial review 和 Phase 5 synthetic rooftop 等重复或中间导出。
+- 保留恢复未跟踪文件 **49 个／44,402,610 B**：原始 `phase7l-r2-delivery/` 25个文件作为回收站事件和旧R2独立身份的原字节证据；`phase7l-r2-delivery-final-v7/` 24个文件作为受保护 v7 历史包。两组都没有改写成新的 Git fixture，也没有将其哈希冒充当前 R3。
+- 本次实际删除 **504 个文件／345,071,083 B**。Git 当前索引为 **1,215 个文件／613,728,727 B（blob 原始字节）**，报告范围为 **706 个／591,066,553 B**；本地仍有上述49个受保护未跟踪文件，因此工作区不会宣称为完全 clean。`phase7l-synthetic-review`、Phase 3B/3C/3D/3E 证据、Phase 7I upload review、dist 候选、`.venv` 和用途仍不确定的证据未删。
 
 ## D. R3 正文专业内容审阅：不通过
 
@@ -49,7 +58,7 @@
 
 | 门禁 | 本次状态 | 依据 |
 |---|---|---|
-| `WORKSPACE_CLEANUP` | `PARTIAL` | 定界缓存328项已删，365个历史原件保留未入库；其他归档/代码没有高置信度删除结论。 |
+| `WORKSPACE_CLEANUP` | `PARTIAL_SCOPED` | 已实际删除504个文件／345,071,083 B，其中 Git 旧交付188个、恢复重复导出316个；仍保留49个受保护未跟踪历史文件及用途不确定证据，故不宣称完全 clean。 |
 | `HISTORICAL_FILE_RECOVERY` | `PARTIAL` | 365个原字节恢复；43个相同，2个不同版本回执未覆盖；触发者未确定。 |
 | `REGRESSION_TESTS` | `PASS_FOCUSED` | 88 passed、2 skipped、1 warning；不宣称全库或六小时 L3。 |
 | `PROFESSIONAL_CONTENT_REVIEW` | `BLOCKED` | 存在资源口径、工程依据、公式校核和结论边界问题；未专业签审。 |
