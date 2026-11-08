@@ -319,7 +319,9 @@ def test_source_entry_module_entry_and_help_are_cwd_independent(tmp_path):
                             capture_output=True, text=True, encoding="utf-8", timeout=30)
     assert result.returncode == 0
     assert "--workspace" in result.stdout and "--baseline-dir" in result.stdout
-    assert "不计算、不联网" in result.stdout
+    # The current CLI exposes explicit offline calculation commands; preserve the
+    # safety contract by asserting the narrower no-network guarantee.
+    assert "不联网" in result.stdout and "显式方法" in result.stdout
     help_result = run_cli(tmp_path, "accept", "--help")
     assert "parsed_file" in help_result.stdout and "indices" in help_result.stdout
     assert "KNOWN_LIMIT" in result.stdout and "沙箱" in result.stdout
