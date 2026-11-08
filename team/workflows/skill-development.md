@@ -1,8 +1,8 @@
 # 六阶段 Kanban 模板
-所有卡：board=wb-skill-factory，tenant/product_id=产品 ID，workspace=产品 worktree 的绝对路径，`idempotency_key=产品ID:阶段`，max_runtime=30m（复杂阶段需人工调整），max_retries=1，local-only；每卡写明验收条件，下一阶段依赖上一阶段。
+所有卡：board=wb-skill-factory，tenant/product_id=产品 ID，workspace=该 `product_id` 唯一固定 `canonical_workspace` 的绝对路径（各 Bot 共用同一正式产品目录、冲突写串行协调），`idempotency_key=产品ID:阶段`，max_runtime=30m（复杂阶段需人工调整），max_retries=1，local-only；每卡写明验收条件，下一阶段依赖上一阶段。不得为阶段、QA、修复或导出另建 worktree / clone / `-export` / `-fix` / `-qa` / `-backup` 平行产品开发目录；QA 用独立角色、事前冻结用例、唯一目录内已忽略的临时测试子目录和干净 ZIP 独立核验，统一交付区只存归档。
 每个产品必须另有一个 `wb-manager` T05 收尾根卡（幂等键 `产品ID:T05`），并把所有必要的开发、QA、修复、复验、打包和推送卡直接或间接依赖到该收尾卡；收尾卡只能核对真实物证、保存报告和汇报，不实现业务代码。
 创建后不得依赖用户再次提醒：Ready 由 Gateway Dispatcher 自动领取，Todo 在父任务 Done 后自动晋级，Blocked 通过 `auto_subscribe_on_create`/`notify_in_gateway` 发送 terminal-event；经理收到事件后必须读取卡片、核验失败证据，按 `产品ID:fix:轮次` 幂等创建独立修复卡，并在最多两轮后保持 BLOCKED。
-- T00 wb-developer：检查 ID/路径/分支/登记与基线，安全创建独立 worktree，报告可写性与原始状态。
+- T00 wb-developer：检查 ID / 唯一固定产品目录 / 分支 / worktree 登记与基线；仅在该产品首次初始化且不存在正式目录时安全建立它，已有目录只核验和复用，不为新阶段建第二 worktree；报告可写性与原始状态。
 - T01 wb-analyst：交付 requirements.md、input-output-contract.md、acceptance-cases.md，冻结 MVP；依赖 T00。
 - T02 wb-developer：实现业务代码、SKILL.md、示例及专项测试，真实运行并本地 commit；必要检查通过后允许自动 push 到该产品远程分支；依赖 T01。
 - 所有新旧 Skill / Expert 的 T02、T03、T04 及修复卡均遵循 [`../policies/git-policy.md`](../policies/git-policy.md)：逐文件审定 A（源码/合同/测试/固定输入及必要 fixtures）保留跟踪，B（实际输出/QA 证据包/历史和候选 ZIP）经产品隔离归档、哈希/CRC/manifest 读回及回放复核后才逐路径停跟踪，C（已确认可重建缓存）不当证据；混合或引用未明的 B-review 暂缓。`.gitignore` 不可按扩展名屏蔽 A，并核对已跟踪且被忽略的路径。T00 六 Skill 只读审计见交付区 `reports/six-git-t00-audit.md` / `reports/six-git-t00-file-ledger.md`，不是直接批量删除许可。每卡记录 `git status --short --branch`、工作区和暂存 `git diff --name-status`、`git ls-files -- <限定路径>`，仅限精确文件 `git add -- <路径>` / `git rm --cached -- <已确认B路径>`；严禁 `git add .`、`git add -A`。提交前核对 `git diff --cached --stat`、`git diff --cached --check`、`git diff --cached --name-status`、实际内容及敏感信息；按 `docs(<scope>): ...` / `fix(<scope>): ...` 等独立 scope commit，记录完整哈希、测试命令与结果，未运行项标 NOT_TESTED。
