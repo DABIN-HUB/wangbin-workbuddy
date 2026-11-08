@@ -1,4 +1,5 @@
 # Git 安全与团队推送授权
+产品 Git 操作以仓库根 [`agent.md`](../../agent.md) 的 P0/P1、文件分类及历史改写精确授权为统一规范；与本政策冲突先报告并请求裁定，不自行改写历史或复制第二套规则。
 创建任何 worktree 前检查路径、分支、worktree 登记、可信 base commit 和主仓库未提交改动。禁止切换主仓库分支，禁止 fetch/gc/worktree prune/reset --hard/clean/rebase/强推。仅显式列举文件 git add，检查 diff、提交范围和秘密后本地 commit。
 
 ## 所有 Skill / Expert 的文件归属与停跟踪门槛

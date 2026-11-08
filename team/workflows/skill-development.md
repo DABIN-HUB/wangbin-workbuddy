@@ -1,4 +1,5 @@
 # 六阶段 Kanban 模板
+实际建卡入口：经理按本模板创建每张 Skill / Expert 任务卡时，正文必须先要求执行者**显式读取团队 worktree 根已提交 `agent.md` 全文**及现有团队政策，不假设运行时自动加载。经理先核团队分支 `team/skill-factory-v1` 的完整 commit、`agent.md` 已提交 blob 与工作树字节 SHA-256、规则版本及适用约束，在每卡写入这些实测值、可读团队目录路径、读取证据和验收条件；产品分支没有 `agent.md` 时从该团队工作树读取，不能跳过或改从未提交副本读取。执行者领取后复核上述值、产品 HEAD/status/源码/diff/QA 原件，将适用约束列入本卡验收；规则与政策冲突先报告请求裁定。按根规则优先完成 P0 真实产品交付，P1 生成物禁入及历史重写须精确授权，不以卫生或文档替代交付；必要源码/测试精确提交及获授权的普通 push、远端 HEAD 回读，QA FAIL 保留原证据，WorkBuddy 上传/发布不得擅自进行。
 所有卡：board=wb-skill-factory，tenant/product_id=产品 ID，workspace=该 `product_id` 唯一固定 `canonical_workspace` 的绝对路径（各 Bot 共用同一正式产品目录、冲突写串行协调），`idempotency_key=产品ID:阶段`，max_runtime=30m（复杂阶段需人工调整），max_retries=1，local-only；每卡写明验收条件，下一阶段依赖上一阶段。不得为阶段、QA、修复或导出另建 worktree / clone / `-export` / `-fix` / `-qa` / `-backup` 平行产品开发目录；QA 用独立角色、事前冻结用例、唯一目录内已忽略的临时测试子目录和干净 ZIP 独立核验，统一交付区只存归档。
 每个产品必须另有一个 `wb-manager` T05 收尾根卡（幂等键 `产品ID:T05`），并把所有必要的开发、QA、修复、复验、打包和推送卡直接或间接依赖到该收尾卡；收尾卡只能核对真实物证、保存报告和汇报，不实现业务代码。
 创建后不得依赖用户再次提醒：Ready 由 Gateway Dispatcher 自动领取，Todo 在父任务 Done 后自动晋级，Blocked 通过 `auto_subscribe_on_create`/`notify_in_gateway` 发送 terminal-event；经理收到事件后必须读取卡片、核验失败证据，按 `产品ID:fix:轮次` 幂等创建独立修复卡，并在最多两轮后保持 BLOCKED。
