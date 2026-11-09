@@ -93,6 +93,9 @@
 
 ## 9. 团队协作和变更控制
 
+- `product_type = Skill | Expert` 必须写进每张新产品卡，四 Bot 保持原 Profile 和唯一 `wb-skill-factory` 看板。Skill 与 Expert 共用 T00–T05 依赖模型，但 Expert 的职业定位、多轮对话、专业依据/不确定性与 prompt-only 配置采用专用合同；不能套用 Skill 的全部脚本和用户示例门禁。具体路由只在 `team/workflows/skill-development.md` 维护。现有 `tooling/phase5_expert_packager.py` 限定单个 Expert 身份/版本/成员，不能据此宣称新 Expert 的通用打包已支持。
+- 同一个 `wb-manager` Profile 的长会话交接：在既有交付目录写事实性 Checkpoint，不复制大日志和密钥；仅产品/阶段安全边界启动新会话，新会话以本文件、实时 Kanban/Git 和 Checkpoint 对照恢复，旧会话停止同批任务派单。具体字段及核验步骤见 `team/workflows/task-handoff.md`。未实测新会话读取与接班不得写 PASS；不删除旧会话、不直接修改 Hermes state.db、不因压缩上下文减少 QA。
+
 - `wb-manager` 管理唯一产品任务链、固定目录、范围/依赖、阶段提交、Git/交付门禁；不自作主张将产品开发任务变成下一批选型。
 - `wb-analyst` 冻结需求、业务口径、反例和验收合同；不为了过测试增加需求。
 - `wb-developer` 仅在固定产品目录开发和打包，按实际测试与精确路径提交、普通推送。

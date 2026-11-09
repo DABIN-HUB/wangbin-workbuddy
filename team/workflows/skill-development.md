@@ -5,7 +5,7 @@
 创建后不得依赖用户再次提醒：Ready 由 Gateway Dispatcher 自动领取，Todo 在父任务 Done 后自动晋级，Blocked 通过 `auto_subscribe_on_create`/`notify_in_gateway` 发送 terminal-event；经理收到事件后必须读取卡片、核验失败证据，按 `产品ID:fix:轮次` 幂等创建独立修复卡，并在最多两轮后保持 BLOCKED。
 - T00 wb-developer：检查 ID / 唯一固定产品目录 / 分支 / worktree 登记与基线；仅在该产品首次初始化且不存在正式目录时安全建立它，已有目录只核验和复用，不为新阶段建第二 worktree；报告可写性与原始状态。
 - T01 wb-analyst：交付 requirements.md、input-output-contract.md、acceptance-cases.md，冻结 MVP；依赖 T00。
-- T02 wb-developer：实现业务代码、SKILL.md、示例及专项测试，真实运行并本地 commit；必要检查通过后允许自动 push 到该产品远程分支；依赖 T01。
+- T02 wb-developer：按 product_type 的冻结合同实现 Skill 或 Expert；Skill 仍交付 SKILL.md、必要业务代码、示例及专项验证，Expert 交付配置、agent Markdown 和必要资源；执行当次明确要求的检查后本地 commit，必要检查通过后允许当前授权分支自动普通 push；依赖 T01。
 - 所有新旧 Skill / Expert 的 T02、T03、T04 及修复卡均遵循 [`../policies/git-policy.md`](../policies/git-policy.md)：逐文件审定 A（源码/合同/测试/固定输入及必要 fixtures）保留跟踪，B（实际输出/QA 证据包/历史和候选 ZIP）经产品隔离归档、哈希/CRC/manifest 读回及回放复核后才逐路径停跟踪，C（已确认可重建缓存）不当证据；混合或引用未明的 B-review 暂缓。`.gitignore` 不可按扩展名屏蔽 A，并核对已跟踪且被忽略的路径。T00 六 Skill 只读审计见交付区 `reports/six-git-t00-audit.md` / `reports/six-git-t00-file-ledger.md`，不是直接批量删除许可。每卡记录 `git status --short --branch`、工作区和暂存 `git diff --name-status`、`git ls-files -- <限定路径>`，仅限精确文件 `git add -- <路径>` / `git rm --cached -- <已确认B路径>`；严禁 `git add .`、`git add -A`。提交前核对 `git diff --cached --stat`、`git diff --cached --check`、`git diff --cached --name-status`、实际内容及敏感信息；按 `docs(<scope>): ...` / `fix(<scope>): ...` 等独立 scope commit，记录完整哈希、测试命令与结果，未运行项标 NOT_TESTED。
 - T02/T04 自动普通 push 只指当前授权的独立产品分支（精确远端分支不存在时首次 `git push -u origin HEAD:refs/heads/<当前分支>` 建同名 upstream；其后 `git push origin HEAD:refs/heads/<当前分支>`）；先查待推提交授权范围及 `git ls-remote --heads origin refs/heads/<当前分支>` 精确 HEAD，非本轮/未授权 ahead 提交先报告、不推也不改写历史；已明确授权追补同步的精确产品分支及待推提交按本轮授权审查。旧任务正文明确禁 push 时不得复用旧上下文；应建立明确允许同步的独立新卡、新会话，仍遵守更高优先级限制。push 后再次核对精确远端 HEAD 与本地哈希，不可仅凭 upstream 判断。冲突/认证异常保留状态并上报。QA FAIL 的 ZIP/证据可以隔离备份和追溯，但不得归入 qa-passed、候选发布或宣称 PASS；所有平台门禁仍是 NOT_TESTED，除非有真实回执。
 - T02/T04 分开报告 `SOURCE_COMMIT_PASS`、`GIT_PUSH_PASS`、`GIT_HYGIENE_PASS`、`LOCAL_QA_PASS`、`WORKBUDDY_PUBLISH_READY`，未执行记 `NOT_TESTED`；卫生例外或 QA FAIL 不自动否定必要源码提交/普通 push，也不使 QA/发布通过。每次新提交仍限精确路径、cached stat/check/name-status 与秘密审查，禁止新增候选 ZIP、运行输出、缓存。已提交祖先若有旧构件，审查实际待推历史的秘密/隐私/真实客户及禁上传风险，记录路径、当前 HEAD、卫生遗留；确认非敏感且获授权可普通推送，疑敏感/来源不明则停推，不强推或改写历史。WorkBuddy 发布独立核验、独立授权，不由 Git push 推定。
@@ -15,7 +15,16 @@
 - Skill 用户文案门禁为 `USER_EXAMPLES_PASS` 与 `USER_DESCRIPTION_PASS`，仅在对应检查真实运行且所有子项通过时记 `PASS`；任一结构、类型、数量、空项、规范化重复、术语/命令或确定的越界声明命中记 `FAIL`，未运行或无法静态证明的语义/能力对应检查记 `NOT_TESTED` 并人工复核。报告须含失败路径、字段、示例索引、规则 ID 与证据命令；YAML 安全解析失败不得吞为 PASS。Expert 的 `.codebuddy-plugin/plugin.json` `quickPrompts` 是另一种专家快捷入口，仍由 Expert 独立规则检查双语对象恰好 3 个及其首条与 `defaultInitPrompt` 一致，不套用 Skill examples 数组规则。
 - T03 wb-quality：独立业务准确性、边界、安全和许可核查；依赖 T02，失败走 qa-rework.md。
 - T03 独立执行 Skill 文案/示例正反用例、产品级 validate 与必要的本地专项测试；复查脚本/正文支持每项用户可见能力。T04 在打包前检查上述两门禁及人工语义复核证据；任一 FAIL 或 NOT_TESTED 时不能宣称该项已通过，也不能以一般结构 validate PASS、Expert quickPrompts PASS 或本地 ZIP PASS 冒充。平台三门禁仍须真实平台回执方可 PASS。
-- T04 wb-quality：现有工厂的实际 ZIP 构建、SHA-256、版本、成员、回归和发布限制；必要验收证据提交后允许自动 push 到该产品远程分支；依赖 T03。
+- T04 wb-quality：使用与 product_type 相符、已经核实适用范围的本地工具对当前候选构建/校验，核实 ZIP 成员、版本与 SHA-256，检查 QA 证据和发布限制；必要验收证据提交后允许自动普通 push 到该产品远程分支；依赖 T03。
 - T05 wb-manager：对照真实任务记录、提交哈希、包、测试和平台未测项完成交付；依赖 T04。
 不能靠群聊或普通 CLI 输出代替 Worker 的 kanban_complete/kanban_block。经理需在工作前确认模型与 Dispatcher 可用，并在收尾卡保存最终报告路径、看板状态和通知送达状态。
-每次新模板变更必须先用隔离的虚构任务验证：依赖晋级、Ready 领取、Blocked 事件、经理唤醒、独立修复/QA 续跑和 T05 收尾；任一步无真实事件、run 或评论证据均标记 NOT_VERIFIED。
+每次新模板变更使用有界隔离虚构任务核实本轮受影响的路由与角色；没有实测的依赖晋级、Ready 领取、Blocked 事件、经理唤醒、修复/QA 续跑或 T05 收尾各自标记 NOT_VERIFIED，不因本轮只测 Expert 需求/QA 路由而重复完整六阶段产品开发。
+
+## `product_type` 路由：复用 T00–T05，不混用验收合同
+- 每张卡明确 `product_type: Skill | Expert`、`product_id`、唯一 `canonical_workspace`、分支、HEAD、冻结合同、允许路径和当前产品独立验收条件；无用户冻结产品目标不建正式产品链。旧 Skill 的 T00–T05 与用户文案门禁继续有效，不因 Expert 新分支改变其验收口径。
+- **Expert T00** 核 ID、唯一目录、分支、真实基线，复用已存在工作树；**T01** 由分析师冻结职业定位、用户/问题、多轮对话流程、信息确认/假设、专业判断、输出、不支持范围、准确性及不确定性，并给出正常、变更、矛盾、专业错误和边界验收断言。
+- **Expert T02** 仅按冻结合同开发 `.codebuddy-plugin/plugin.json`、agent Markdown 与必要资源/测试；以现有 `packages/experts/wangbin-software-consultant/` 为示例，先核 `tooling/expert_rules.py` 的 prompt-only 限定（其拒绝 `skills`/`dependencies` 只代表本地校验 profile 的适用范围；官方 Expert 规范可选声明依赖，不可写成平台一律不支持）。不得要求 Expert 默认有 Python 业务脚本、数据库或后台；若新产品需要新能力，须单独授权并核实实际平台支持。**T03** 由 wb-quality 用虚构输入独立验证多轮对话、变更/矛盾处理、专业依据、可追溯性、无依据结论拒绝、边界和自然语言体验；无法实际平台运行则该门禁 NOT_TESTED，不以静态检查替代。
+- **Expert T04** 先对照当时有效官方公开规范及产品结构，在隔离输出路径上本地验证/打包并复开 ZIP 核精确成员、版本与 SHA-256；`tooling/phase5_expert_packager.py` 写死 `wangbin-software-consultant`、`1.0.0` 和 5 个成员，仅用于该既有产品，不证明新 Expert 通用可打包。新产品没有合适的经验证工具时阻断 T04 或另行授权最小通用适配，不改写既有专家/候选产物。**T05** 经理只读核合同、任务、QA、包与 Git，明确平台上传/安装/审核/发布均需用户本人操作，不把本地结构 PASS 说成平台 PASS。
+
+## Manager 阶段会话交接
+同一 wb-manager Profile 管理多个产品时，按 [`task-handoff.md`](task-handoff.md) 在现有统一交付目录记录简短 Checkpoint，产品或复杂 QA 返工收口后再换新会话；不要在开发/QA/push/任务交接运行中切换、不要清除旧历史。新会话先读根 agent.md、Checkpoint、现有看板各活动状态与相关 Git，再查重并接续；旧会话停止派同批任务。QA 原始输出归档，仅传结论、关键失败和证据路径。没有真实新会话及独立 QA 证据时 `SESSION_HANDOFF_NOT_VERIFIED`，不因此减少必要业务测试。
