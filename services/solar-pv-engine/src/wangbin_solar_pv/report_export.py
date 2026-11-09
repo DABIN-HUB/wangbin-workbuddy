@@ -13,6 +13,7 @@ import calendar
 from datetime import date
 from decimal import Decimal
 from hashlib import sha256
+from importlib.resources import files
 from io import BytesIO
 import json
 import math
@@ -123,8 +124,7 @@ _D_STYLE = {
     "white": "FFFFFF",
 }
 
-REPORT_CONTENT_VERSION = "phase7l-r3-v1-professional-content-and-full-cash-bridge"
-R4_REPORT_CONTENT_VERSION = "phase7l-r4-v4-project-led-narrative"
+REPORT_CONTENT_VERSION = "phase7l-r4-v6-evidence-led-appendix-corrections"
 
 
 @dataclass(frozen=True)
@@ -573,21 +573,14 @@ def _formula_definitions(model: ReportModel) -> list[dict[str, Any]]:
     return [definitions[fid] for fid in sorted(definitions)]
 
 
-# This is an editorial bilingual glossary, not a formula or a source of measured data.
-_GLOSSARY = (
-    ("光伏", "Photovoltaic", "PV", "利用光伏效应将太阳辐照转化为电能；装机不等于并网许可"),
-    ("直流", "Direct Current", "DC", "组件输出的单向电流侧；峰值装机以 kWp 标示，不是交流输出"),
-    ("交流", "Alternating Current", "AC", "逆变器输出的交变电流侧；额定容量以 kWac 标示"),
-    ("资本性支出", "Capital Expenditure", "CAPEX", "形成或更新长期资产的资本支出；区分初始建设款与运营期更换款"),
-    ("运营性支出", "Operating Expenditure", "OPEX", "运营中发生的费用；现金运维与非现金折旧分别核算"),
-    ("净现值", "Net Present Value", "NPV", "按指定折现率折现各期项目净现金流后的合计；年度项目口径不等于逐笔日期口径"),
-    ("内部收益率", "Internal Rate of Return", "IRR", "使指定现金流净现值为零的折现率根集；项目与投资者、税前与税后不混用"),
-    ("平准化度电成本", "Levelized Cost of Energy", "LCOE", "折现成本与同边界折现可交付电量之比；终期现金边界未闭合时不计算"),
-    ("可供偿债现金流", "Cash Flow Available for Debt Service", "CFADS", "在约定偿债口径下可用于支付本息的现金流；不是股东实收分红"),
-    ("偿债覆盖倍数", "Debt Service Coverage Ratio", "DSCR", "可供偿债现金流与同期应偿本息之比；无债务时不适用"),
-    ("阵列面辐照", "Plane-of-Array Irradiation", "POA", "入射到组件阵列平面的辐照量；单位面积资源不是发电电量"),
-    ("系统性能比", "Performance Ratio", "PR", "实际发电与按阵列面辐照及标称容量推算的参照发电之比；须保持同一时段和系统边界"),
-)
+def _appendix_formula_definitions(model: ReportModel) -> list[dict[str, Any]]:
+    """List the frozen registry without marking unreferenced formulas executed."""
+    if model.catalog is None:
+        return _formula_definitions(model)
+    if model.result.get("formula_snapshot", {}).get("definition_hash") != model.catalog.definition_hash:
+        raise ContractError("REPORT_FORMULA_DEFINITION_IDENTITY_MISMATCH")
+    return [model.catalog.formulas[fid] for fid in sorted(model.catalog.formulas)]
+
 
 def _formula_index_lines(formula: dict[str, Any]) -> list[str]:
     """Flatten frozen notation into editable prose, once per formula."""
@@ -629,9 +622,10 @@ def _formula_contract_text(value: Any) -> str:
 def _formula_dimensional_text(formula: dict[str, Any]) -> str:
     """Explain each visible operation without changing the frozen formula contract."""
     text = _formula_contract_text(formula["dimensional_check"])
-    # The frozen wording describes the additive rule only. Do not present it
-    # as a dimensional proof of a quotient, discount factor or root set.
-    text = text.replace("同量纲才能相加", "仅加减项要求可比较的同量纲")
+    # Retain the exact frozen dimensional wording; it describes only additive
+    # terms, not a proof of quotients or discount factors. Clarify separately.
+    if "同量纲才能相加" in text:
+        text += "（此处同量纲要求针对加减项，不代表其他运算已通过量纲校核。）"
     equation = formula.get("text_equation") or formula.get("latex") or ""
     checks = []
     if "×" in equation or "\\cdot" in equation:
@@ -687,7 +681,7 @@ def _formula_status(model: ReportModel, fid: str) -> str:
 
 
 def _appendix_rows(model: ReportModel, app_id: str) -> tuple[list[str], list[list[Any]]]:
-    definitions = _formula_definitions(model)
+    definitions = _appendix_formula_definitions(model) if app_id in {"APP11.01", "APP11.02"} else []
     if app_id == "APP11.01":
         return (["公式ID", "正式名称", "公式文本", "结果单位", "适用边界", "本次状态"],
                 [[f["formula_id"], f.get("chinese_name", "未定义"),
@@ -701,11 +695,26 @@ def _appendix_rows(model: ReportModel, app_id: str) -> tuple[list[str], list[lis
                   "；".join(_formula_index_lines(f)) if i == 0 else ""]
                  for f in definitions for i, s in enumerate(f.get("every_symbol_definition", ()))])
     if app_id == "APP12.01":
-        return ["中文", "English", "缩写", "定义及适用边界"], [list(row) for row in _GLOSSARY]
+        terms = json.loads(files("wangbin_solar_pv").joinpath("report-glossary.json").read_text(encoding="utf-8"))["terms"]
+        if (len(terms) != len({term["term_id"] for term in terms})
+                or any(not term.get("chinese_name") or not term.get("english_name")
+                       or not term.get("definition_zh") for term in terms)):
+            raise ContractError("REPORT_GLOSSARY_INCOMPLETE")
+        introductory = {"PV": 0, "DC": 1, "AC": 2}
+        terms.sort(key=lambda term: (0, introductory[term["abbreviation"]])
+                   if term.get("abbreviation") in introductory else (1, 0))
+        return ["中文", "English", "缩写", "定义及适用边界"], [
+            [term["chinese_name"], term["english_name"], term.get("abbreviation") or "无缩写",
+             term["definition_zh"] + "；" + term["distinction_and_boundary"]]
+            for term in terms]
     if app_id == "APP12.02":
         return ["单位/符号", "含义", "不得混用的边界"], [
             ["kWp", "直流峰值千瓦", "不等于 kWac"], ["kWac", "交流额定千瓦", "不等于 kWh"],
             ["kWh", "电量千瓦时", "不等于辐照量 kWh/㎡"], ["kWh/㎡", "单位面积辐照量", "不等于交付电量"],
+            ["W/㎡", "瞬时单位面积辐照度", "不是按月累计的kWh/㎡"],
+            ["kVA", "视在容量", "不能不经功率因数与电网意见换算为可接入kW"],
+            ["V", "电压伏特", "标称串电压与低温开路电压、MPPT窗口分别验证"],
+            ["A", "电流安培", "组件短路电流与逆变器输入电流分别校核"],
             ["元/kWp", "每直流峰值千瓦单位投资", "不等于元/Wp或未说明边界的CNY"]]
     raise ValueError(app_id)
 
@@ -1407,7 +1416,7 @@ _METRIC_LABELS = {
     "financial.phase3e.investment-hurdle-gap": "投资目标差距",
     "financial.tax.cash_lifecycle": "全周期现金税费",
     "financial.asset.ending_book_value": "期末资产账面价值",
-    "revenue.year.1": "首年收入",
+    "revenue.year.1": "首年预测经济收益或售电收入",
     "consumption.year.1": "首年消纳电量",
 }
 
@@ -1517,7 +1526,10 @@ def _professional_metric_rows(model: ReportModel, metric_ids: tuple[str, ...]) -
         else:
             display, note = "状态待核对", "当前结果状态未知；不可当作不适用"
         unit = _metric_unit(metric)
-        rows.append([_metric_label(metric_id), display,
+        label = (_metric_label(metric_id) if metric_id != "revenue.year.1" else
+                 "首年预测上网销售收入" if model.result.get("pv_type") == "utility_scale_ground" else
+                 "首年预测综合经济收益（自用节费＋余电销售）")
+        rows.append([label, display,
                      "—" if metric_id.endswith("project_irr") and status in {"CALCULATED", "UNDEFINED"} else
                      "—" if status != "CALCULATED" and str(unit).startswith("集合") else
                      "比值" if unit == "1" else unit,
@@ -1965,14 +1977,28 @@ def _item_evidence(model: ReportModel, pv_type: str, chapter_id: str, title: str
     # must carry their own source/metric bindings in the checklist as well.
     extra_fields = {
         "CH01.01": ("project.evaluation_years",),
+        "CH03.05": ("project.sales_mode",),
+        "CH06.02": ("layout.fire_setback",),
+        "CH06.03": ("grid.available_capacity", "grid.export_power_limit"),
+        "CH06.06": ("project.has_storage",),
         "CH07.01": ("system.module_count",),
+        "CH07.06": ("project.has_storage",),
+        "CH12.01": ("environment.grid_emission_factor",),
         "CH14.05": ("finance.debt_ratio",),
     }
     extra_metrics = {
         "CH01.01": ("dc_capacity",),
+        "CH03.05": ("dc_capacity", "consumption.year.1"),
+        "CH06.01": ("dc_capacity",),
+        "CH06.04": ("dc_capacity", "ac_capacity"),
+        "CH06.05": ("dc_capacity", "ac_capacity"),
+        "CH06.06": ("dc_capacity", "ac_capacity"),
         "CH07.01": ("dc_ac_ratio",),
         "CH10.05": ("revenue.year.1",),
+        "CH12.01": ("energy.delivered.year.1",),
+        "CH17.01": ("energy.delivered.year.1", "revenue.year.1"),
         "CH14.04": ("financial.capex.total",),
+        "CH18.03": ("financial.phase3e.project_cash_flow",),
     }
     fields = tuple(dict.fromkeys((*fields, *extra_fields.get(item_id, ()))))
     metrics = tuple(dict.fromkeys((*metrics, *extra_metrics.get(item_id, ()))))
@@ -1980,7 +2006,7 @@ def _item_evidence(model: ReportModel, pv_type: str, chapter_id: str, title: str
         fields = tuple(dict.fromkeys((*fields, "site.rights_status", "grid.opinion_status")))
         metrics = (*metrics, "financial.phase3e.project_cash_flow")
     metrics = tuple(dict.fromkeys(metrics))
-    if pv_type == "utility_scale_ground" and item_id in {"CH01.04", "CH10.02"}:
+    if pv_type == "utility_scale_ground" and item_id in {"CH01.04", "CH03.05", "CH10.02"}:
         metrics = tuple(metric for metric in metrics if not metric.startswith("consumption."))
     claim = build_claim(model, item_id, title, f"{title}：{rule.rstrip('。')}？", rule,
                         fields, metrics,
@@ -1994,6 +2020,45 @@ def _item_evidence(model: ReportModel, pv_type: str, chapter_id: str, title: str
 
 def profile_name(pv_type: str) -> str:
     return REPORT_PROFILES[pv_type]["boundary"]
+
+
+def _monthly_balance_rows(model: ReportModel) -> list[list[str]]:
+    """Display existing, aligned monthly results; never apportion annual totals."""
+    energy = model.value("energy.monthly.year.1")
+    revenue = model.metric("revenue.year.1") or {}
+    consumption = model.metric("consumption.year.1") or {}
+    monthly = revenue.get("details", {}).get("monthly")
+    inputs = model.result["inputs"].get("normalized", {})
+    records = model.result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
+    resource = _source_value(inputs, records, "resource.monthly")
+    unavailable = [["UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN",
+                    "逐月身份、来源或电量平衡待确认"]]
+    if (not isinstance(energy, list) or len(energy) != 12 or
+            revenue.get("status") != "CALCULATED" or consumption.get("status") != "CALCULATED" or
+            not isinstance(monthly, list) or len(monthly) != 12 or
+            monthly != consumption.get("details", {}).get("monthly") or
+            not isinstance(resource, list) or len(resource) != 12 or
+            [row.get("fields", {}).get("resource.monthly.month") for row in resource] != list(range(1, 13))):
+        return unavailable
+    keys = ("self_kwh", "export_kwh", "curtailed_kwh", "delivered_kwh", "available_kwh")
+    rows = []
+    for month, (generated, settled) in enumerate(zip(energy, monthly), 1):
+        if (isinstance(generated, bool) or not isinstance(generated, (int, float, Decimal)) or
+                not isinstance(settled, dict) or
+                any(isinstance(settled.get(key), bool) or
+                    not isinstance(settled.get(key), (int, float, Decimal)) for key in keys)):
+            return unavailable
+        available = Decimal(str(settled["available_kwh"]))
+        if (abs(available - sum(Decimal(str(settled[key])) for key in
+                              ("self_kwh", "export_kwh", "curtailed_kwh"))) > Decimal("0.01") or
+                abs(Decimal(str(settled["delivered_kwh"])) - available
+                    + Decimal(str(settled["curtailed_kwh"]))) > Decimal("0.01")):
+            return unavailable
+        rows.append([str(month), _word_number(generated), _word_number(settled["self_kwh"]),
+                     _word_number(settled["export_kwh"]), _word_number(settled["curtailed_kwh"]),
+                     _word_number(settled["delivered_kwh"]), _word_number(available),
+                     "合成月度结果；非实际计量"])
+    return rows
 
 
 def _appendix_rule(app_id: str, pv_type: str) -> tuple[tuple[str, ...], tuple[str, ...], str]:
@@ -2137,8 +2202,11 @@ def _project_annual_bridge_rows(model: ReportModel) -> tuple[list[list[str]], li
             receipts, savings, fee, opex, tax = (Decimal(str(ledger[key])) for key in operating_fields)
             operating = receipts + savings - fee - opex - tax
             release = Decimal(str(ledger["working_capital_release"]))
+            shown = lambda value: Decimal(_word_number(value).replace(",", ""))
+            display_difference = (shown(operating) - shown(receipts) - shown(savings) + shown(fee)
+                                  + shown(opex) + shown(tax))
             detail.append([_reader_text(period), *(_word_number(ledger[key]) for key in operating_fields),
-                           _word_number(operating)])
+                           _word_number(display_difference), _word_number(operating)])
         # Reconcile at ledger precision; never make an incomplete or inconsistent bridge look complete.
         reconstructed = (operating - Decimal(str(ledger["capex_cash_paid"]))
                          - Decimal(str(ledger["working_capital_increase"])) + release
@@ -2347,13 +2415,17 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             document.add_heading(f"{item_id} {item_title}", level=2)
             evidence = _appendix_evidence(model, pv_type, app_id, item_no)
             if app_id in {"APP11", "APP12"}:
-                detail = (f"本次列示{len(_formula_definitions(model))}条被引用定义"
-                          + (f"，冻结字典共{len(model.catalog.formulas)}条" if model.catalog else "")
-                          + "；列示、引用与成功执行不等同。具体符号及边界按公式分组见下一节。"
+                detail = (f"冻结字典共列示{len(_appendix_formula_definitions(model))}条正式定义，"
+                          f"本次结果引用{len(_formula_definitions(model))}条；"
+                          "列示、引用与成功执行不等同。具体符号及边界按公式分组见下一节。"
                           if item_id == "APP11.01" else
                           "各公式的完整符号、下标、集合与适用边界分别列示；定义存在不代表已执行。"
                           if item_id == "APP11.02" else
-                          "受控中英文术语按名称、全称、缩写、实际含义及适用边界列示。")
+                          f"本附录列示受控词典全部{len(_appendix_rows(model, item_id)[1])}条术语及扩展条目；"
+                          "包含本项目未采用的储能等术语，不意味着相关技术已实施或取得专业认可。"
+                          "各条均按原词典的名称、全称、定义及适用边界列示。"
+                          if item_id == "APP12.01" else
+                          "功率、能量、辐照与投资单位分开解释，不能混作同一物理量。")
                 evidence["narrative"] = [detail]
                 evidence["summary"] = detail
             for text in evidence["narrative"]:
@@ -2377,6 +2449,74 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                     "太阳天顶角、法向到水平投影、时间积分和质量控制仍需原始逐时资料证明。"
                     "发电计算沿既有POA/时间积分链消费资源，不以报告表格中的简单相加替代物理转换。"
                 )
+            if item_id == "APP02.02":
+                document.add_paragraph("下表按已记录的月份顺序对应既有发电与结算月度结果；"
+                                       "可用列表示结算前、已计入发电链限发的月度电量；结算截弃是另一边界。"
+                                       "未绑定逐月发电链限发损失时不按全年比例分摊，也不把月表的可用列称为限发前电量。"
+                                       "任何月份身份或平衡无法确认时仅列UNKNOWN。")
+                _add_table(document, ["月", "发电", "自用", "上网", "结算截弃", "交付", "可用（结算前）", "性质"],
+                           _monthly_balance_rows(model), "首年月度电量平衡（均为kWh；合成预测）",
+                           widths_cm=(0.8, 2.2, 2.1, 2.1, 2.3, 2.1, 2.1, 3.1))
+                available = model.metric("available_kwh.year.1") or {}
+                energy = model.metric("energy.year.1") or {}
+                loss = (energy.get("details") or {}).get("losses_kwh", {}).get("curtailment")
+                if (available.get("status") == energy.get("status") == "CALCULATED"
+                        and all(isinstance(value, (int, float, Decimal)) and not isinstance(value, bool)
+                                for value in (available.get("value"), energy.get("value"), loss))
+                        and abs(Decimal(str(available["value"])) - Decimal(str(energy["value"]))
+                                - Decimal(str(loss))) <= Decimal("0.01")):
+                    document.add_paragraph(
+                        f"全年限发前可利用电量{_word_number(available['value'])}kWh，"
+                        f"发电链限发损失{_word_number(loss)}kWh，"
+                        f"限发后发电量{_word_number(energy['value'])}kWh。"
+                        "这是年度已计算值的勾稽，不把年度限发损失分摊到未绑定的月份；"
+                        "月度两位小数独立取整，与年度高精度总量可能存在尾差。")
+            if item_id == "APP03.01":
+                equipment_fields = ("system.module_model", "system.module_count", "system.module_power",
+                                    "system.module_voc", "system.module_vmp", "system.module_isc",
+                                    "system.module_imp", "system.modules_per_string", "system.parallel_strings",
+                                    "system.inverter_model",
+                                    "system.inverter_count", "system.inverter_unit_ac", "system.inverter_mppt_min",
+                                    "system.inverter_mppt_max", "system.inverter_max_dc_voltage",
+                                    "system.inverter_max_input_current", "layout.tilt", "layout.azimuth",
+                                    "layout.row_pitch", "layout.fire_setback")
+                equipment_rows = []
+                equipment_labels = {
+                    "module_model": "组件型号", "module_count": "组件数量", "module_power": "组件功率（Wp）",
+                    "module_voc": "组件开路电压（V）", "module_vmp": "组件最大功率电压（V）",
+                    "module_isc": "组件短路电流（A）", "module_imp": "组件最大功率电流（A）",
+                    "modules_per_string": "每串组件数", "parallel_strings": "并联组串数", "inverter_model": "逆变器型号",
+                    "inverter_count": "逆变器台数", "inverter_unit_ac": "单台交流功率（kW）",
+                    "inverter_mppt_min": "MPPT电压下限（V）", "inverter_mppt_max": "MPPT电压上限（V）",
+                    "inverter_max_dc_voltage": "直流电压上限（V）", "inverter_max_input_current": "输入电流上限（A）",
+                    "tilt": "倾角（°）", "azimuth": "方位角（°）", "row_pitch": "行距（m）",
+                    "fire_setback": "消防退让（m）",
+                }
+                for fid in equipment_fields:
+                    value = _source_value(normalized, records, fid)
+                    if value is not None:
+                        equipment_rows.append([equipment_labels[fid.rsplit(".", 1)[-1]], _word_value(value), fid])
+                _add_table(document, ["设备／布置输入", "合成方案值", "字段索引"], equipment_rows,
+                           "设备原子参数（不代表供货商数据表或电气专项校核）", widths_cm=(5.0, 4.0, 8.0))
+            if item_id == "APP03.02":
+                loss_rows = []
+                losses = _source_value(normalized, records, "system.losses")
+                if isinstance(losses, list):
+                    for row in losses:
+                        atom = row.get("fields", {})
+                        loss_rows.append([_word_value(atom.get("system.losses.sequence")),
+                                          _word_value(atom.get("system.losses.kind")),
+                                          _word_value(atom.get("system.losses.value")),
+                                          _word_value(atom.get("system.losses.boundary")),
+                                          _word_value(atom.get("system.losses.included_in_source")),
+                                          _word_value(atom.get("system.losses.method")),
+                                          _word_value(atom.get("system.losses.period"))])
+                _add_table(document, ["序", "损失类型", "原始比例", "边界", "来源已含", "方法", "期间"], loss_rows,
+                           "系统损失原子链（原始比值；顺序与已含标志不可忽略）",
+                           widths_cm=(1, 2.4, 2.1, 1.4, 1.7, 4.2, 4.2))
+                degradation = _source_value(normalized, records, "system.annual_degradation")
+                document.add_paragraph("年度衰减输入为" + (_word_value(degradation) if degradation is not None else "UNKNOWN") +
+                                       "（原始比值）；后期设备更换停机见年度发电结果，不由更换事件推定性能恢复增益。")
             if item_id == "APP04.01":
                 _add_table(document, ["投资分项", "数量", "金额（元）", "付款日期", "期间及性质"],
                            _capex_word_rows(model), "CAPEX分项：建设期与后期更换分开列示；行ID、原金额、税口径与来源见测算模型 M10。",
@@ -2395,6 +2535,31 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                            "资本支出、营运资金与后期更换的独立边界", widths_cm=(5.0, 3.5, 8.5))
             if item_id == "APP05.01":
                 ledger = model.result.get("evidence", {}).get("financial-ledger", {})
+                annual = (ledger.get("annual", ()) if
+                          model.status("financial.phase3e.project_cash_flow") == "CALCULATED" else ())
+                if annual:
+                    _add_table(document, ["期别", "运维计提", "运维预计付款", "非现金折旧", "更换预计付款",
+                                          "交易费计提", "交易费预计付款"],
+                               [[row["period"].replace("OPERATING_YEAR_", "第") +
+                                 ("年" if row["period"].startswith("OPERATING_YEAR_") else ""),
+                                 *(_word_value(row.get(key)) for key in
+                                   ("opex_accrued", "opex_cash_paid", "depreciation", "replacement_cash_paid",
+                                    "transaction_cost_accrued", "transaction_cost_cash_paid"))]
+                                for row in annual],
+                               "逐年运营及更换账簿（元；均为预测，不是实付款记录）",
+                               widths_cm=(2.8, 2.4, 2.4, 2.4, 2.4, 2.4, 2.4))
+                    operating = [row.get("opex_cash_paid") for row in annual[1:]]
+                    lifecycle_opex = model.value("financial.opex.cash_lifecycle")
+                    if (len(operating) == len(annual) - 1
+                            and all(isinstance(value, (int, float, Decimal)) and not isinstance(value, bool)
+                                    for value in operating + [lifecycle_opex])):
+                        displayed = sum(Decimal(_word_number(value).replace(",", "")) for value in operating)
+                        discrepancy = Decimal(_word_number(lifecycle_opex).replace(",", "")) - displayed
+                        document.add_paragraph(
+                            f"{len(operating)}个运营年度运维预计付款显示值合计{_word_number(displayed)}元，"
+                            f"全期现金运维指标为{_word_number(lifecycle_opex)}元；"
+                            f"两者展示差额（全期指标减年度显示值之和）为{_word_number(discrepancy)}元。"
+                            "年度与全期分别按未取整账簿计算后列示，展示差额不是新增付款。")
                 fee_source = ledger.get("trading_fee_payment")
                 if fee_source and len(ledger.get("annual", ())) > 1:
                     first = ledger["annual"][1]
@@ -2406,6 +2571,51 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                  fee_source["source_id"] + "；合成年度预测，非实付"]],
                                "交易费不并入运维费；全期计提、预计付款和应付逐期核对见测算模型 M14。",
                                widths_cm=(2.7, 2.75, 2.75, 3.4, 5.4))
+            if item_id == "APP05.02":
+                annual = (model.result.get("evidence", {}).get("financial-ledger", {}).get("annual", ())
+                          if model.status("financial.phase3e.project_cash_flow") == "CALCULATED" else ())
+                if annual:
+                    def tax_display(row: dict[str, Any]) -> tuple[str, str]:
+                        required = ("cash_tax_total_project", "income_tax_cash_paid_project",
+                                    "other_cash_taxes_project")
+                        if any(not isinstance(row.get(key), (int, float, Decimal)) or
+                               isinstance(row.get(key), bool) for key in required):
+                            return "UNKNOWN", "UNKNOWN"
+                        vat = Decimal(str(row[required[0]])) - sum(
+                            Decimal(str(row[key])) for key in required[1:])
+                        if abs(vat) < Decimal("0.0000001"):
+                            vat = Decimal(0)  # Remove binary-source noise only from presentation.
+                        shown = lambda value: Decimal(_word_number(value).replace(",", ""))
+                        rounding = shown(row[required[0]]) - shown(row[required[1]]) - shown(row[required[2]]) - shown(vat)
+                        return _word_number(vat), _word_number(rounding)
+                    document.add_paragraph("增值税净现金额按本次年度账簿中的项目现金税费合计扣除"
+                                           "所得税预计付款和其他现金税费列示，包含计入账簿的"
+                                           "增值税预计支付与退税的净影响；仅是既有结果的展示勾稽，"
+                                           "不表示税款已经实际缴纳。各分项独立显示取整产生的分位尾差"
+                                           "单列为舍入差额，不充作真实增值税；建设期缺少税费事件时保留UNKNOWN。")
+                    _add_table(document, ["期别", "应税所得", "所得税计提", "所得税预计付款",
+                                          "其他现金税费", "增值税净现金额", "列示舍入差额", "项目现金税费合计"],
+                               [[row["period"].replace("OPERATING_YEAR_", "第") +
+                                 ("年" if row["period"].startswith("OPERATING_YEAR_") else ""),
+                                 *(_word_value(row.get(key)) for key in
+                                   ("taxable_income_project", "income_tax_accrual_project",
+                                    "income_tax_cash_paid_project", "other_cash_taxes_project")),
+                                 *tax_display(row), _word_value(row.get("cash_tax_total_project"))]
+                                for row in annual],
+                               "逐年税费账簿（元；计提与预计现金支出区分；舍入差额仅为展示）",
+                               widths_cm=(1.8, 2.1, 2.1, 2.35, 2.2, 2.15, 1.6, 2.7))
+                    taxes = [row.get("cash_tax_total_project") for row in annual[1:]]
+                    lifecycle = model.value("financial.tax.cash_lifecycle")
+                    if (len(taxes) == 25 and all(isinstance(tax, (int, float, Decimal)) and
+                                                  not isinstance(tax, bool) for tax in taxes)
+                            and isinstance(lifecycle, (int, float, Decimal)) and not isinstance(lifecycle, bool)):
+                        displayed = sum(Decimal(_word_number(tax).replace(",", "")) for tax in taxes)
+                        discrepancy = Decimal(_word_number(lifecycle).replace(",", "")) - displayed
+                        document.add_paragraph(
+                            f"25个运营年度显示值合计{_word_number(displayed)}元，"
+                            f"全期现金税费指标为{_word_number(lifecycle)}元；"
+                            f"两者展示差额（全期指标减年度显示值之和）为{_word_number(discrepancy)}元。"
+                            "年度与全期分别由未取整账簿计算后列示，不把此差额填作税款。")
             if item_id == "APP06.01":
                 fee_source = model.result.get("evidence", {}).get("financial-ledger", {}).get("trading_fee_payment")
                 if fee_source:
@@ -2419,9 +2629,9 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 if annual_bridge is not None:
                     detail_rows, bridge_rows = annual_bridge
                     _add_table(document, ["期别", "上网回款（元）", "自用节费（元）", "预计另付交易费（元）",
-                                          "运维现金（元）", "项目现金税费（元）", "运营收支净额（元）"],
-                               detail_rows, "运营全期收支分项（按3D账簿原值列示，不将节费记作银行到账）",
-                               widths_cm=(2.0, 2.75, 2.45, 2.3, 2.4, 2.45, 2.65), font_size=9)
+                                          "运维现金（元）", "项目现金税费（元）", "列示舍入差额（元）", "运营收支净额（元）"],
+                               detail_rows, "运营全期收支分项（原值分别显示取整；舍入差额仅为展示，不是现金事件；节费不是银行到账）",
+                               widths_cm=(1.75, 2.35, 2.05, 2.3, 2.15, 2.3, 1.75, 2.35), font_size=9)
                     _add_table(document, ["期别", "运营收支净额（元）", "资本支出付款（元）", "营运资金增加（元）",
                                           "营运资金回收（元）", "终期资产现金（元）", "项目净现金流（元）"],
                                bridge_rows, "建设至终期全期现金事件桥（更换已含在资本支出；营运回收不重复计入终期资产现金）",
@@ -2447,6 +2657,35 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 if dscr and dscr.get("status") == "UNDEFINED" and dscr.get("reason") == "ZERO_DEBT_SERVICE":
                     document.add_paragraph("本项目债务服务为零，DSCR在原计算契约中为未定义而非0倍；"
                                            "无债务事实与零分母状态同时成立，不将其改写为已计算或其他口径的不适用。")
+            if item_id == "APP10.01":
+                explanations = {
+                    "NO_REAL_PROJECT_VERIFICATION": ("真实工程条件未验证", "取得权属、现场工程和接网原件"),
+                    "INTERVAL_MEAN_NOT_SUBINTERVAL_CLIPPING": ("逐时均值不能表示瞬时削峰", "取得更细时段的设备和电网约束数据"),
+                    "REPEATED_RESOURCE_YEAR_NOT_MULTIPLE_OBSERVED_YEARS": ("多年发电只重复合成年资源", "取得多年授权的逐时气象资料"),
+                    "REPLACEMENT_YEAR_START_AND_UNIFORM_DOWNTIME_NOT_REAL_DATES": ("更换停机并非实际日期", "取得设备寿命与真实施工窗口"),
+                    "INTERVAL_MEAN_SAME_GRID_NOT_INSTANTANEOUS_LOAD_MATCH": ("逐时匹配不代表瞬时自用", "取得真实厂区负荷及计量曲线"),
+                    "ECONOMIC_BASIS_NOT_TAX_PAYMENT_OR_CURRENCY_CONVERSION": ("经济收益不等同实际税款或收款", "取得税单与结算凭证"),
+                    "REPEATED_LOAD_AND_BASE_PERIOD_PRICES_ARE_EXPLICIT_SCENARIOS_NOT_OBSERVED_FUTURE_YEARS":
+                        ("负荷与价格的后续年份仍为情景", "取得连续负荷与有效交易价格资料"),
+                    "GRID_ACCEPTANCE_UNCONFIRMED_SCENARIO_NOT_APPROVAL": ("可交付电量以接入条件为前提", "取得正式接网及保护计量意见"),
+                    "TRANSACTION_FEE_PAYMENT_SYNTHETIC_ASSUMPTION": ("交易费支付仅为合成安排", "取得合同账期及支付记录"),
+                    "PHASE3E_PARTIAL_MISSING_FROZEN_INPUTS": ("部分经济评价指标仍受阻", "补齐各指标专属的现金事件与依据"),
+                    "SOURCED_PROJECT_NPV_SYNTHETIC_ONLY": ("项目净现值不代表实际投资批准", "取得工程报价、业主权利及真实交易资料"),
+                }
+                if pv_type == "utility_scale_ground":
+                    explanations["REPEATED_LOAD_AND_BASE_PERIOD_PRICES_ARE_EXPLICIT_SCENARIOS_NOT_OBSERVED_FUTURE_YEARS"] = (
+                        "后续年份市场价格仍为情景", "取得有效的市场结算价格资料")
+                    document.add_paragraph("本项目为全额上网，不存在厂区自用负荷匹配；计算快照中的"
+                                           "逐时自用匹配通用限制保留在配套测算模型，不作为本项目的待核事项。")
+                findings = [row for row in model.result.get("findings", ())
+                            if not (pv_type == "utility_scale_ground" and row.get("code") ==
+                                    "INTERVAL_MEAN_SAME_GRID_NOT_INSTANTANEOUS_LOAD_MATCH")]
+                _add_table(document, ["发现项索引", "状态", "影响判断", "所需材料"],
+                           [[_word_value(row.get("code")), _word_value(row.get("status")),
+                             *explanations.get(row.get("code"), ("影响待专业复核", "取得该项发现的原始证明材料"))]
+                            for row in findings],
+                           "待复核发现项（合成登记不代表已有真实责任人或完成期限）",
+                           widths_cm=(5.2, 2.1, 4.9, 4.8))
             if app_id in {"APP11", "APP12"}:
                 appendix_headers, appendix_rows = _appendix_rows(model, item_id)
                 if item_id == "APP11.01" and appendix_rows:
@@ -2463,7 +2702,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                              statuses.get(metric["status"], _reader_text(metric["status"])))
                             for metric in npv_outputs) + "。已计算的项目NPV不因其他实例未实现而失效。")
                 elif item_id == "APP11.02":
-                    definitions = _formula_definitions(model)
+                    definitions = _appendix_formula_definitions(model)
                     shared, shared_ids = _formula_shared_contracts(definitions)
                     if shared:
                         document.add_heading("共通记法契约（按原文一致性分组）", level=3)

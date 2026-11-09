@@ -218,13 +218,13 @@ APPENDIX_RULES: dict[str, tuple[str, str, tuple[str, ...], tuple[str, ...]]] = {
     "APP01.01": ("本次使用的资料是否逐份有身份、授权和可读位置？", "核验来源登记、附件位置与授权，不把来源编号当作已读全文。", (), ()),
     "APP01.02": ("关键输入能否回溯到字段实例与原始来源？", "逐项核对输入血缘，缺少实例位置时保留追溯缺口。", (), ()),
     "APP02.01": ("12个月气象资料的分量、覆盖和单位能否核查？", "取得资源原始月表及授权；月发电量不能倒推辐照分量。", ("resource.monthly", "resource.period_start", "resource.period_end"), ()),
-    "APP02.02": ("月度发电、消纳与交付电量能否同边界对账？", "核对时区、月度能量和结算边界，不由发电量代替交付。", ("load.series",), ("energy.monthly.year.1", "energy.year.1", "energy.delivered.year.1")),
-    "APP03.01": ("设备和布局的原子参数是否有可核验型号？", "取得组件、逆变器和支架数据表并逐字段复核。", ("system.module_model", "system.inverter_model", "layout.row_pitch"), ("dc_capacity", "ac_capacity")),
+    "APP02.02": ("月度发电、消纳与交付电量能否同边界对账？", "核对时区、月度能量和结算边界，不由发电量代替交付。", ("resource.monthly", "load.series"), ("energy.monthly.year.1", "energy.year.1", "energy.delivered.year.1", "consumption.year.1", "revenue.year.1")),
+    "APP03.01": ("设备和布局的原子参数是否有可核验型号？", "取得组件、逆变器和支架数据表并逐字段复核。", ("system.module_model", "system.module_count", "system.module_power", "system.module_voc", "system.module_vmp", "system.module_isc", "system.module_imp", "system.modules_per_string", "system.inverter_model", "system.inverter_count", "system.inverter_unit_ac", "system.inverter_mppt_min", "system.inverter_mppt_max", "system.inverter_max_dc_voltage", "system.inverter_max_input_current", "layout.tilt", "layout.azimuth", "layout.row_pitch", "layout.fire_setback"), ("dc_capacity", "ac_capacity")),
     "APP03.02": ("每项损失与退化是否只计入一次？", "核查损失顺序、已含标志与衰减时点。", ("system.losses", "system.annual_degradation"), ("energy.annual_array",)),
     "APP04.01": ("费用清单是否覆盖设备、土建、预备与专项投资？", "逐项核实工程量、数量单价、税与分类专项范围。", ("capex.items", "capex.includes_land", "capex.includes_storage"), ("financial.capex.total",)),
     "APP04.02": ("报价、付款与投资总额能否勾稽？", "补充报价有效期及付款时点，避免应付替代实付。", ("capex.items", "finance.debt_schedule"), ("financial.capex.total",)),
-    "APP05.01": ("年度现金运维与更换、非现金折旧是否分账？", "核对全期运维、更换与残值计划，折旧不作为现金支出。", ("opex.items", "assets.depreciation", "assets.replacements"), ("financial.opex.cash_lifecycle",)),
-    "APP05.02": ("适用税制与实际税金能否逐年衔接？", "取得税制与现金支付依据，对账应计、应付及实付。", ("tax.regime_reference", "tax.vat_recovery_timing"), ("financial.tax.cash_lifecycle",)),
+    "APP05.01": ("年度现金运维与更换、非现金折旧是否分账？", "核对全期运维、更换与残值计划，折旧不作为现金支出。", ("opex.items", "assets.depreciation", "assets.replacements"), ("financial.opex.cash_lifecycle", "financial.phase3e.project_cash_flow")),
+    "APP05.02": ("适用税制与实际税金能否逐年衔接？", "取得税制与现金支付依据，对账应计、应付及实付。", ("tax.regime_reference", "tax.vat_recovery_timing"), ("financial.tax.cash_lifecycle", "financial.phase3e.project_cash_flow")),
     "APP06.01": ("建设至终期的项目投资现金事件是否闭合？", "取得有日期的投资、税、营运资金和终期收付记录。", ("finance.working_capital",), ("financial.phase3e.project_cash_flow",)),
     "APP06.02": ("资本金全期现金流是否独立包含提款和偿债？", "核实股东出资、提款、本息和分配，不能沿用项目现金流。", ("finance.debt_schedule",), ("financial.phase3e.equity-investor-cash-flow",)),
     "APP07.01": ("有债务时偿债计划与可偿债现金是否逐期匹配？", "取得合同还本付息日程与CFADS定义后计算覆盖倍数。", ("finance.debt_schedule", "finance.cfads_definition"), ("financial.phase3e.dscr",)),
@@ -898,9 +898,21 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
                 or any(isinstance(x, bool) or not isinstance(x, (int, float, Decimal)) for x in months)):
             return "首年月度与年度发电未同时形成可对账结果，暂不推断季节发电。"
         reconciled = abs(sum(Decimal(str(x)) for x in months) - Decimal(str(year1))) < Decimal("0.01")
-        reconciliation = ("与年度发电指标一致" if reconciled else "与年度发电指标不符，需先查清口径")
+        displayed_sum = sum(Decimal(format_value(x).replace(',', '')) for x in months)
+        displayed_year = Decimal(format_value(year1).replace(',', ''))
+        if reconciled and displayed_sum != displayed_year:
+            reconciliation = (f'12个月显示值汇总{format_value(displayed_sum)}kWh，'
+                              f'年度未取整结果列示{format_value(year1)}kWh；'
+                              '差异来自逐月显示取整，不把两者称作相等')
+        elif reconciled:
+            reconciliation = (f'12个月显示值汇总{format_value(displayed_sum)}kWh，'
+                              f'与年度指标{format_value(year1)}kWh一致')
+        else:
+            reconciliation = '月度与年度原值未闭合，须先查清口径'
         peak = max(range(12), key=lambda i: months[i])
         low = min(range(12), key=lambda i: months[i])
+        peak_label = '、'.join(str(i + 1) for i, x in enumerate(months)
+                              if format_value(x) == format_value(months[peak]))
         resource_months = _source_value(n, records, 'resource.monthly')
         day_note = ''
         if isinstance(resource_months, list) and len(resource_months) == 12:
@@ -917,10 +929,10 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
                 else "后续年份衰减假设尚需核对")
         boundary = "屋顶自用与余电上网" if not ground else "地面集中送出"
         return (f"首年12个月预测发电中，1月{format_value(months[0])}kWh、"
-                f"12月{format_value(months[-1])}kWh；峰值在{peak + 1}月"
+                f"12月{format_value(months[-1])}kWh；显示峰值在{peak_label}月"
                 f"（{format_value(months[peak])}kWh），谷值在{low + 1}月"
-                f"（{format_value(months[low])}kWh），逐月汇总{reconciliation}，对应年度"
-                f"{format_value(year1)}kWh。{day_note}月发电不是辐照实测或{boundary}结算电量；{tail}。")
+                f"（{format_value(months[low])}kWh）。{reconciliation}。{day_note}"
+                f"月发电不是辐照实测或{boundary}结算电量；{tail}。")
     if item_id == "CH09.02":
         transformer, available, export = (inp("grid.transformer_capacity"),
                                          inp("grid.available_capacity"), inp("grid.export_power_limit"))
@@ -1040,10 +1052,12 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
                    if npv > 0 else "本次NPV未为正，不据此下正收益结论")
         payback = (f"静态回收期{format_value(static)}年、动态回收期{format_value(dynamic)}年，"
                    if static is not None and dynamic is not None else "回收期按其独立指标状态核查，")
+        irr_text = (f"项目IRR（内部收益率）为{pct(irr_metric['value'])}"
+                    if single else "项目IRR尚不能作为单一回报率解释，具体根集见方法附录")
         return (f"以{format_value(years)}年名义价格、税后项目年度现金流为基础，按"
                 f"{pct(discount)}折现率计算的项目净现值（NPV）为{money(npv)}。净现值衡量"
                 "预测现金流折现后相对于投资的余额；"
-                f"{_project_irr_claim(model)}。内部收益率（IRR）反映使项目净现值为零的折现率，"
+                f"{irr_text}。内部收益率反映使项目净现值为零的折现率，"
                 f"{payback}{outcome}。\n\n"
                 "这些指标使用年度期末而非逐笔日期现金事件；项目回报不能替代投资者实际出资和分配回报。"
                 "股东现金事件、签署交易条件与现场审批尚未闭合，不能仅凭正的预测净现值批准投资。")
@@ -1218,14 +1232,24 @@ def _research_finding(model: Any, item_id: str, fmt: Callable[[Any], str]) -> st
     if item_id in {'CH04.02', 'CH06.01'}:
         total, usable, excluded = (get('site.' + suffix) for suffix in ('total_area', 'usable_area', 'exclusion_area'))
         if all(number(v) for v in (total, usable, excluded)):
-            relation = ('在合成面积账上相符' if Decimal(str(total)) - Decimal(str(excluded)) == Decimal(str(usable))
-                        else '在合成面积账上不符，需暂停排布结论')
-            basis = ('道路、排水及桩基位置' if ground else '女儿墙、天窗与防火检修通道')
-            focus = ('选址可用范围' if item_id == 'CH04.02' else '阵列建设任务')
-            return (f'{focus}：录入总面积{fmt(total)}㎡扣除排除区{fmt(excluded)}㎡后，'
-                    f'可用面积为{fmt(usable)}㎡，{relation}；这是面积算术核对而非测绘定界。'
-                    f'{basis}须在实测红线内落位，'
-                    + ('不能据此确认地面装机可建。' if ground else '不能据此确认屋顶组件排布可建。'))
+            if Decimal(str(total)) - Decimal(str(excluded)) != Decimal(str(usable)):
+                return (f'录入的总面积{fmt(total)}㎡扣除排除区{fmt(excluded)}㎡后，'
+                        f'与申报可用面积{fmt(usable)}㎡不符；在核对测绘面积和排除区之前，'
+                        '不能据此判断阵列排布和装机规模。')
+            if item_id == 'CH04.02':
+                return (f'方案记录的总面积为{fmt(total)}㎡，扣除排除区{fmt(excluded)}㎡后，'
+                        f'拟用于布置的面积为{fmt(usable)}㎡。'
+                        + ('地面阵列还需在同一地块内安排基础、施工及检修道路和排水设施；'
+                           '这些工程会改变阵列行列与可建设范围。' if ground else
+                           '厂房屋面还要为女儿墙、天窗、设备基础、消防及检修通道留出位置；'
+                           '面积输入并没有替代逐栋屋面测绘和遮挡调查。')
+                        + '取得现场测绘边界和布置图后才能确认这片面积是否适合当前装机。')
+            dc = metric('dc_capacity')
+            capacity = f'拟议直流规模{fmt(dc)}kWp' if dc is not None else '拟议规模'
+            return (f'{capacity}暂以{fmt(usable)}㎡可用面积为排布条件。'
+                    + ('阵列行距、地形坡度及道路排水需要在总平面上同时落位，桩基条件也会改变排布。'
+                       if ground else '组件间距、天窗位置及消防通道必须在逐栋屋面图上落实，不能占用维护空间。')
+                    + '目前没有经过现场校核的排布图，不能仅凭面积输入确认该规模可建。')
     if item_id == 'CH04.04':
         if ground:
             shading = get('site.shading_fraction')
@@ -1320,6 +1344,70 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
     finding = _research_finding(model, item_id, fmt)
     if finding is not None:
         return finding
+    if item_id == 'CH02.01':
+        return (('本次报告研究利用现有厂房屋面建设光伏系统、厂区优先自用及余电上网的可行性。'
+                 '主要分析可利用屋面、系统配置、发电与经济收益之间的关系。' if not ground else
+                 '本次报告研究地面阵列、场区建设与集中送出相结合的方案，'
+                 '主要分析可利用土地、发电、送出和市场售电收入之间的关系。')
+                + '当前开发主体为合成演示对象，编制本报告的目的在于识别继续研究所需的关键资料，'
+                '并非代表真实业主已授权建设。')
+    if item_id == 'CH02.02':
+        baseline, years = get('project.evaluation_date'), get('project.evaluation_years')
+        if baseline and years is not None:
+            return (f'本次以{baseline}为评价基准日，按{fmt(years)}年研究建设及运行期间的发电、'
+                    '年度费用、税费和项目回报。价格采用名义口径，项目现金流按税后年度期末口径评价；'
+                    '这些假设影响不同年份支出与收入的折现比较。股东出资和分配没有独立现金事件，'
+                    '不能把已计算的项目回报当作投资者实际收益。')
+    if item_id == 'CH02.04':
+        start, end = get('resource.period_start'), get('resource.period_end')
+        if start and end:
+            return (f'发电预测采用登记为{start}至{end}的合成气象资源，设备、场址、'
+                    '费用和结算条件也来自本次输入快照。资料及计算结果均保留逐项来源索引，'
+                    '以便检查数字在不同章节是否采用同一口径。'
+                    '但来源登记不等于取得原始气象授权、现场图纸、合同报价或实际用电记录；'
+                    '本阶段只据已绑定的合成材料形成条件性分析。')
+    if item_id == 'CH02.05':
+        return ('本报告把已计算的装机、发电及项目现金流与真实工程成熟度分别看待。'
+                + ('厂区负荷、屋面权利和结构条件仍需原始资料确认。' if not ground else
+                   '土地权利、地勘、集中接网与真实交易价格仍需原始资料确认。')
+                + '基准方案之外尚无独立情景测算；条件变化时应沿相同来源和计算口径更新结果，'
+                '现有预测不构成建设批准或保底收益。')
+    if item_id == 'CH04.01':
+        return (('厂房屋面是拟议建设载体，面积输入用于初步估算阵列空间。' if not ground else
+                 '拟议场区面积用于初步安排地面阵列、道路与附属设施。')
+                + '当前没有可核对的地址坐标与实测边界，尚不能确定'
+                + ('地块红线、' if ground else '逐栋屋面边界、')
+                + '障碍和相邻设施。下一阶段须取得测绘资料及可定位的总平面，再确定组件与送出路径。')
+    if item_id == 'CH04.03':
+        expiry = get('site.rights_expiry')
+        return ((f'当前方案记录的使用权期限为{expiry}，' if expiry else '目前缺少可核对的使用期限，')
+                + ('但厂房屋面的实际权利、租赁与防水维护责任仍要由原件确认。' if not ground else
+                   '但地块性质、用途、实际权利与建设期限仍需由正式土地文件确认。')
+                + '期限输入仅供评价期假设使用，不等于权属审查已通过；未确定合法使用条件前不能锁定施工方案。')
+    if item_id == 'CH04.06':
+        return (('屋面结构、防水层和消防通道资料是确定支架、锚固及吊装方案的前提。'
+                 '若原结构需加固，还会改变造价和施工时段。' if not ground else
+                 '场区地勘、防洪排水和实际边界会影响支架基础、道路及电缆送出工程。'
+                 '缺少这些成果时，工程量和建设费用仍有较大不确定性。')
+                + '应先取得专项调查及初步设计，再将工程量与投资估算对应，不能用概算总额反推已包含所有工程。')
+    if item_id == 'CH05.04':
+        return ('目前只有一个用于演示的合成年份，并非由多年观测筛选出的典型气象年。'
+                '将这一年作为后续运营期资源输入，可生成条件性的多年发电预测，'
+                '却不能说明场址逐年辐照波动或证明当地长期资源代表性。'
+                '下一阶段需要可授权的多年逐时气象资料及相邻站点对照。')
+    if item_id == 'CH05.05':
+        tilt, azimuth = get('layout.tilt'), get('layout.azimuth')
+        if tilt is not None and azimuth is not None:
+            return (f'阵列暂按倾角{fmt(tilt)}°、方位角{fmt(azimuth)}°接受合成的阵列面辐照输入。'
+                    '倾角和方向改变组件受光方式，故不能直接把水平面辐照数值当成组件面资源。'
+                    '当前缺少可独立复核的逐时转置和遮挡资料，场址实际阵列面资源及最优朝向仍需验证。')
+    if item_id == 'CH05.06':
+        uncertainty = get('resource.uncertainty_fraction')
+        if uncertainty is not None:
+            return (f'资源不确定性以{fmt(Decimal(str(uncertainty)) * 100)}%输入假设表示，'
+                    '但并无真实测站交叉验证或多年份误差统计。'
+                    '太阳能资源偏差会影响预测电量及对应收益；这个假设不是置信区间，'
+                    '不能直接推成保底发电量或独立敏感性结果。应取得原始逐时数据再校验资源代表性。')
     if item_id == 'CH01.01':
         dc = calculated('dc_capacity')
         years = get('project.evaluation_years')
@@ -1367,6 +1455,34 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                     '倾角与方向影响阵列面受光，行距则影响遮挡与通行，不能单凭额定装机确定最终排布。'
                     + ('屋顶还需核定承载、锚固、防水及消防通道的可用区域。' if not ground else
                        '地面还需结合坡度、基础位置、检修道路及排水确定可用阵列面积。'))
+    if item_id == 'CH07.04':
+        losses = get('system.losses')
+        if isinstance(losses, list) and losses:
+            return (f'当前方案分别登记{len(losses)}项系统损失输入，涵盖阵列受光、直流输送、逆变及交流送出等环节。'
+                    '遮挡与积灰会减少组件接收到的有效辐照，线路及设备效率则影响可交付电量；'
+                    '不能把未经确认的损失项简单累加或再次扣减已包含在上游资源中的影响。'
+                    '各项顺序、数值与来源已含标志列在设备附录，真实设备和现场遮挡资料仍需校核。')
+    if item_id == 'CH07.05':
+        topology = get('system.topology')
+        if topology:
+            return (f'本次以{_text_value("system.topology", topology, fmt) or "组串式方案"}组织初步电气系统。'
+                    + ('组件直流侧经逆变后先对接厂区配电与自用计量，余电再进入电网计量边界。'
+                       if not ground else '组件直流侧经逆变、集电和升压送出后进入集中交易计量边界。')
+                    + '保护配置、电缆路由和交接点尚未形成正式接入设计，不能从拓扑名称推定电气方案获批。')
+    if item_id == 'CH07.06' and get('project.has_storage') is False:
+        return (('本次屋顶方案没有配置储能，发电优先自用、余电上网的电量路径不包含储能充放电。'
+                 '但锚固、防水和建筑消防需要单独形成设计。' if not ground else
+                 '本次地面方案没有配置储能，电量按集中送出和交易条件进入结算，'
+                 '无需假设储能调度收益；基础与集电送出仍需专项设计。')
+                + '如果后续新增储能，应重新明确接入与消防、投资及结算条件，不能沿用当前项目测算。')
+    if item_id == 'CH08.01':
+        energy = calculated('energy.year.1')
+        if energy is not None:
+            return (f'本次以合成阵列面资源、组件规模及已有损失参数形成首年预测发电{fmt(energy)}kWh。'
+                    '这个结果反映设备在当前气象与系统效率假设下的输出，'
+                    + ('厂区自用和余电结算尚需在此后按负荷与计量边界分配。' if not ground else
+                       '地面项目的集中送出与结算电量还需按电网和交易限制另行区分。')
+                    + '气象输入不是当地多年实测，模型输出并非保底发电承诺。')
     if item_id == 'CH08.04':
         pr, hours, factor = (calculated(mid) for mid in ('pr_observed.year.1',
                                                          'equivalent_hours.year.1', 'capacity_factor.year.1'))
@@ -1381,6 +1497,22 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                     f'性能比关注阵列面辐照与{energy_boundary}的关系；等效小时与容量因子分别按'
                     '装机容量及年度时间口径评价利用水平，三者不能互作现场实测效率证明。'
                     '其可信度仍取决于资源代表性和系统损失假设。')
+    if item_id == 'CH08.05':
+        availability = get('system.unavailability')
+        available, energy = calculated('available_kwh.year.1'), calculated('energy.year.1')
+        details = (model.metric('energy.year.1') or {}).get('details', {})
+        losses = details.get('losses_kwh', {})
+        unavailable, curtailed = losses.get('availability'), losses.get('curtailment')
+        if (all(isinstance(value, (int, float, Decimal)) and not isinstance(value, bool)
+                for value in (availability, available, energy, unavailable, curtailed))
+                and Decimal(str(unavailable)) >= 0 and Decimal(str(curtailed)) >= 0
+                and abs(Decimal(str(available)) - Decimal(str(energy))
+                        - Decimal(str(curtailed))) <= Decimal('0.01')):
+            return (f'不可用比例输入为{fmt(Decimal(str(availability)) * 100)}%，'
+                    f'发电损失链在形成可利用量之前已扣除不可用损失{fmt(unavailable)}kWh；'
+                    f'限发前可利用电量{fmt(available)}kWh再扣除发电链限发{fmt(curtailed)}kWh，'
+                    f'得到限发后发电量{fmt(energy)}kWh。不可用损失不在这两个年度电量之间再次扣减；'
+                    '交付及结算截弃仍须按后续计量边界单独核对。')
     if item_id == 'CH10.05' and not ground:
         revenue = calculated('revenue.year.1')
         if revenue is not None:
@@ -1419,9 +1551,159 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
         ratio = calculated('dc_ac_ratio')
         if all(isinstance(x, (int, float, Decimal)) and not isinstance(x, bool)
                for x in (dc, ac, ratio)):
-            return (f'当前直流装机{fmt(dc)}kWp对应交流额定{fmt(ac)}kW，'
-                    f'容配比计算为{fmt(ratio)}；这是铭牌配置关系，'
-                    '不等于变压器余量、核准接入容量或并网许可。')
+            available, export = get('grid.available_capacity'), get('grid.export_power_limit')
+            limits = (f'对应的接入余量和送出功率另分别按{fmt(available)}kW、{fmt(export)}kW输入；'
+                      if available is not None and export is not None else '')
+            return (f'当前直流装机{fmt(dc)}kWp搭配交流额定{fmt(ac)}kW逆变器，'
+                    f'直交流容配比为{fmt(ratio)}。直流组件标称规模和逆变器输出能力并不相同；'
+                    + limits + '实际接入条件须以电网意见核定，不能从铭牌容量推断已获并网许可或限发电量。')
+    if item_id == 'CH02.03':
+        focus = ('用地、生态水保及集中送出' if ground else '建筑结构、防火和余电接入')
+        return ('本次研究采用输入资料中登记的政策及技术条件作为待查线索，尚无经逐条比对的'
+                f'适用法规和标准清单。本项目还需确认{focus}要求；应以项目所在地、实施时间和正式文件逐项确定适用条款，'
+                '现阶段不能作合规或审批已通过的结论。')
+    if item_id == 'CH03.05':
+        dc = calculated('dc_capacity')
+        if dc is not None:
+            if ground:
+                return (f'本次拟以{fmt(dc)}kWp直流规模在地面布置光伏阵列，电量按集中送出和市场售电方案评价。'
+                        '土地面积、基础和道路排水将影响阵列的实际布置，接入条件与交易价格则决定可出售电量的收益。'
+                        '当前容量和收入来自同一合成方案；真实土地权利、接网意见与交易安排尚未取得，'
+                        '项目回报测算不能代替建设必要性论证。下一阶段应先确认用地、送出工程及市场交易条件。')
+            self_use = calculated('consumption.year.1')
+            use_text = (f'首年预测自用电量{fmt(self_use)}kWh说明模拟负荷与发电有一定匹配，'
+                        if isinstance(self_use, (int, float, Decimal)) else '')
+            return (f'本次拟利用厂房屋面建设{fmt(dc)}kWp光伏系统，优先由厂区消纳发电量，余电送入电网。'
+                    '这样可利用现有建筑空间，减少部分白天购电支出，并取得余电销售收入。'
+                    + use_text + '但负荷输入并非真实厂区用电记录，不能据此认定该规模已经符合企业需求。'
+                    '取得实际电费账单、屋面布置与结构资料后，才能进一步确定装机和消纳方案。')
+    if item_id in {'CH06.04', 'CH06.05', 'CH06.06'}:
+        dc, ac = calculated('dc_capacity'), calculated('ac_capacity')
+        if dc is not None and ac is not None:
+            base = f'基准方案采用{fmt(dc)}kWp组件和{fmt(ac)}kW逆变器。'
+            if item_id == 'CH06.04':
+                return (base + ('场区阵列排布和基础做法会同时影响用地与投资，下一阶段可比较不同排布及基础方案。'
+                                if ground else '屋面可用面积、逆变器配置和余电送出能力共同约束装机，下一阶段可比较不同装机与接线方案。')
+                        + '当前没有同一边界的备选方案及其发电、投资结果，不能称已选出经济最优方案。')
+            if item_id == 'CH06.05':
+                return (base + ('地面基础、道路排水及集中送出工程量尚未通过现场设计确定；'
+                                '若改变排布，应同时重估工程费、发电和交易条件。' if ground else
+                                '屋面承载与可利用空间尚未通过现场鉴定；若调整容量，应同时复核组件布置、'
+                                '逆变器、接入余量及自用电量。') + '当前只有基准投资估算，不宜对未测算方案排序。')
+            return (base + ('项目未设置储能，地勘、基础与集中送出仍是需完成的专项设计。' if ground else
+                            '项目未设置储能，屋面结构、防水与消防通道仍是需完成的专项设计。')
+                    + '这些工程条件决定方案能否实施，不因基准模型已有发电及财务结果而自动满足。')
+    if item_id == 'CH04.05':
+        return ('地面设备运输、施工道路和场内排水尚停留在概念方案；实际道路宽度、坡度及排水方向'
+                '将影响运输组织、基础施工和占地，须通过测绘及施工组织方案落实。' if ground else
+                '屋顶设备运输和吊装目前仅有概念安排。组件进入厂区后还需避开生产通道，落实吊装位置、'
+                '屋面临时堆载及防水保护；在确定施工方案前，不能把物流可达等同于屋面可施工。')
+    if item_id.startswith('CH11.'):
+        works = {
+            'CH11.01': ('地面施工须先确认地块红线、道路与排水方向，随后才能确定阵列和设备区的位置。'
+                        '现有面积输入没有实测坐标或高程，不能用概念布置图代替施工总平面。' if ground else
+                        '屋顶施工须以逐栋结构图和可用屋面图为基础，确定组件、锚固点与消防检修通道。'
+                        '现有屋面面积输入不能反映天窗、设备及厂区生产通道的位置。'),
+            'CH11.02': ('地面支架基础形式和数量取决于地层、地下水与地形，现有地勘引用尚无签署成果。'
+                        '桩基与支架设计需在勘察后配套确定，不能由设备清单倒推基础工程量。' if ground else
+                        '屋顶支架需与原结构可靠连接，锚固点选取还受防水层和屋面构造约束。'
+                        '没有结构鉴定与节点设计，不能把支架数量直接转化为可施工的基础做法。'),
+            'CH11.03': ('地面阵列抗风及支架结构取决于基础承载与实际布置，疏散和集电线路需在总图上落实。'
+                        '缺少签署地勘与结构设计，不能认定现有方案安全合格。' if ground else
+                        '屋顶结构荷载、锚固、防水与建筑消防疏散须联合复核。现有两个荷载输入只是方案假设，'
+                        '没有原结构鉴定和消防通道图，不能判定建筑安全合格。'),
+            'CH11.04': ('设备运输道路、排水与电缆沟需结合自然坡度布置，雨季通行与施工扰动也须考虑。'
+                        '未取得高程与排水去向前，不能确定道路沟渠工程量。' if ground else
+                        '屋顶组件吊装需落实厂区进场路线、起吊位置及临时堆放荷载。'
+                        '施工须避开生产和消防通道，开孔及电缆敷设也需要保护屋面防水层。'),
+            'CH11.05': ('除组件与逆变器外，地面项目还需基础、道路、排水及送出施工。'
+                        '当前仅列概念性土建费用，没有测绘、地勘和完整工程量清单；'
+                        '应先确定基础与送出初设，再核量询价，避免实际投资遗漏。' if ground else
+                        '屋顶工程费用不仅取决于组件安装，还涉及锚固、防水恢复、吊装和可能的结构加固。'
+                        '当前费用是合成概算，缺少结构鉴定和逐栋施工图；应把这些专项工程量列出后再更新报价。'),
+        }
+        return works[item_id]
+    if item_id in {'CH12.02', 'CH12.03', 'CH12.04', 'CH12.05'}:
+        return {
+            'CH12.02': ('地面阵列施工可能改变地表径流与植被，应先确认土地现状、排水去向及水保要求。'
+                        '当前仅有场址登记信息，不能替代生态调查或正式审批。' if ground else
+                        '屋顶光伏不直接占用新增地面，但锚固、材料堆放及废旧设备处置仍需与厂区环境管理衔接。'
+                        '实际屋面状态和废弃物处理安排尚未取得，不能作环保已达标结论。'),
+            'CH12.03': ('地面电缆和送出线路的路径、保护设施及消防间距需在场区图上落实。'
+                        '没有现场布置和接网方案，不能仅凭设备铭牌确认电气与消防安全。' if ground else
+                        '屋顶阵列须保留建筑消防通道并处理直流拉弧、隔离和电缆穿屋面风险。'
+                        '当前消防通道和结构资料尚未实测，需由建筑及电气专业联合审核。'),
+            'CH12.04': ('地面项目建设可能影响土地使用者及周边道路通行，送出线路的路径也需与相关利益主体沟通。'
+                        '现无正式用地权利或外部协商材料，不能断言周边无影响。' if ground else
+                        '屋顶施工涉及原建筑使用者和厂区生产安排，停电、吊装与消防通道变化均需征得实际使用方确认。'
+                        '合成业主信息不能代替正式授权或生产协调方案。'),
+            'CH12.05': ('土地、生态水保、消防及送出要求各涉及不同专业审查。当前没有可逐项确认适用性的正式文件，'
+                        '下一阶段须取得场址调查和主管部门要求，在审批完成前不得把登记资料写为合规结论。'
+                        if ground else '屋顶结构、防火和建筑使用管理均需按实际建筑与所在地规定审查。'
+                        '现有消防和结构参考信息并非签署意见；在专业结论形成前不应批准现场安装。'),
+        }[item_id]
+    if item_id in {'CH13.01', 'CH13.04'}:
+        tasks = get('schedule.tasks')
+        if isinstance(tasks, list) and tasks:
+            return (('地面项目应先落实土地和地勘、道路排水条件，再据此形成阵列和送出初设。' if ground else
+                     '屋顶项目应先取得真实负荷、屋面权属与结构复核，再据此确定安装和接网方案。')
+                    + ('采购可与非阻断设计工作衔接，但施工不得越过权属、工程安全和接网前置条件。'
+                       if item_id == 'CH13.01' else
+                       '设备采购时点须与设计冻结及现场施工窗口衔接；并网验收通过后才能转为正式运行。')
+                    + f'现有{len(tasks)}项任务是合成预排，实际日期仍需以相关文件和验收进度调整。')
+    if item_id.startswith('CH17.'):
+        energy, revenue = calculated('energy.delivered.year.1'), calculated('revenue.year.1')
+        npv = calculated('financial.phase3e.project_npv')
+        if item_id == 'CH17.01':
+            observed = (f'基准首年交付电量预测{fmt(energy)}kWh，' if energy is not None else '')
+            return (observed + ('厂区实际负荷与辐照若低于模型假设，自用节费与余电收益都可能减少。'
+                               if not ground else '资源偏差会先改变可上网电量，市场价格偏差又会改变同一电量的销售收入。')
+                    + (f'首年综合经济收益预测{fmt(revenue)}元。' if revenue is not None and not ground else
+                       f'首年预测售电收入{fmt(revenue)}元。' if revenue is not None else '')
+                    + '目前没有独立扰动后的电量和现金流结果，不能给出收入敏感性幅度；'
+                    + ('应先以真实资源和交易数据设置同边界情景。' if ground else
+                       '应先以真实资源、交易和厂区负荷数据设置同边界情景。'))
+        if item_id == 'CH17.02':
+            return (('屋顶方案需同时考虑白天负荷不足、屋面结构加固和余电接入受限：'
+                     '即使光伏发电符合预测，自用比例或实际建设费变化仍可能改变项目收益。' if not ground else
+                     '地面方案需同时考虑资源偏差、市场电价和基础送出费用：'
+                     '电量、售价与工程量可能相互作用，不宜只改变其中一个输入推断最差情景。')
+                    + '当前只有一套基准现金流，未执行悲观与乐观组合的独立计算，故不列三情景回报。')
+        if item_id == 'CH17.03':
+            return ((f'当前基准项目税后净现值为{fmt(npv)}元，' if npv is not None else
+                     '当前项目回报尚无可引用净现值，')
+                    + '但这不是电价、资源或投资变化的耐受上限。业主目标与独立价格、费用情景尚未形成，'
+                    '不能从基准结果倒推保本电价或投资门槛；需要分别改变有来源的输入并重算现金流。')
+        if item_id == 'CH17.04':
+            return (('地面土地、地勘与送出工程尚未由正式资料确认，基础和线路费用存在上调风险；'
+                     '售电还依赖实际交易价格及计量结算条件。' if ground else
+                     '屋面权属、结构与防水资料尚未确认，加固可能增加建设费；'
+                     '实际用电曲线和接网意见可能改变自用、余电及对应收益。')
+                    + '风险登记仅记录待查事项，下一阶段需分别取得签署文件、工程报价和交易资料，'
+                    '据此确定应对措施，不能把当前模型回报视为风险已经消除。')
+        return (('地面工程必须先完成用地、地勘及接网审查，'
+                 '第13年设备更换还需预留实际付款来源。' if ground else
+                 '屋顶项目必须先确认合法使用期限、建筑结构安全、真实厂区负荷和余电接入。')
+                + '任何单项条件未满足都可能阻止实施；目前没有完成独立逆向约束测算，'
+                '因此只能给出需要关闭的条件，不能给出定量临界值。')
+    if item_id in {'CH18.02', 'CH18.04', 'CH18.05'}:
+        if item_id == 'CH18.02':
+            return (('地面项目的模型回报不能覆盖土地权利、场址地勘和正式接网意见。'
+                     '其中任一条件不成立，都可能使当前阵列与送出方案无法实施。' if ground else
+                     '屋顶项目的屋面权利、结构承载与建筑消防待取得正式核验；模型回报不能证明这些条件。'
+                     '即使用电收益可观，只要屋面无法安全使用或余电不能按计划接入，方案仍须调整。')
+                    + '应分别取得真实权利文件、专业设计与电网答复，不能以合成登记替代批准。')
+        if item_id == 'CH18.04':
+            return (('应取得土地权属、测绘地勘、道路排水和集中接网资料，逐项检查基础与送出报价；'
+                     '实际交易价格也需有可执行依据。' if ground else
+                     '应取得厂区逐时用电记录、屋面权属、结构鉴定、防水消防图和余电接入意见；'
+                     '只有这样才能复核自用电量、施工方案与相关费用。')
+                    + '资料登记表用于追踪尚缺的专业成果，不把登记数量或预计完成日当作已关闭事项。')
+        return (('可以先开展地块测绘、地勘和接网沟通，同时完善送出及设备更换付款计划；'
+                 '这些工作完成后再据实更新价格、工程量和项目现金流。' if ground else
+                 '可以先收集电费账单并开展屋面测绘和结构初查，同时与电网沟通余电接入；'
+                 '拿到结果后再调整容量与自用收益测算。')
+                + '在正式权利、安全、接网与更新后的经济评价未完成前，不应形成真实项目投资批准。')
     if item_id.startswith('CH10.'):
         settlement = _settlement_narrative(model, item_id, fmt)
         if settlement is not None:
@@ -1476,14 +1758,22 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                             'POA是阵列面辐照量。DNI到水平面的投影受太阳天顶角影响，不能把GHI=DNI+DHI当作一般物理恒等式；'
                             '当前合成月值仅能作口径受限的算术汇总，不是多年实测资源或已核定发电量；' + judgment)
             if item_id == 'CH05.03':
-                parts = []
-                for key, label, unit in (('ambient_temperature', '月均气温', '℃'),
-                                          ('wind_speed', '月均风速', 'm/s')):
-                    values = [r.get('fields', {}).get('resource.monthly.' + key) for r in months]
-                    if len(values) == 12 and all(isinstance(x, (int, float, Decimal)) for x in values):
-                        parts.append(f'{label}输入范围{fmt(min(values))}—{fmt(max(values))}{unit}')
-                if parts:
-                    return '、'.join(parts) + '；月均值无法给出极端温度或设计风速，' + judgment
+                temperatures = [r.get('fields', {}).get('resource.monthly.ambient_temperature') for r in months]
+                winds = [r.get('fields', {}).get('resource.monthly.wind_speed') for r in months]
+                identities = [r.get('fields', {}).get('resource.monthly.month') for r in months]
+                if (len(months) == 12 and identities == list(range(1, 13))
+                        and all(isinstance(v, (int, float, Decimal)) and not isinstance(v, bool)
+                                for v in temperatures + winds)):
+                    if len(set(temperatures)) == len(set(winds)) == 1:
+                        return (f'本次合成气象数据将12个月的月均气温均设为{fmt(temperatures[0])}℃，'
+                                f'月均风速均设为{fmt(winds[0])}m/s。温度会改变组件运行效率，'
+                                '风速则影响散热与支架设计；同值输入无法反映实际季节变化，'
+                                '月均风速也不能代替极端风速设计值。逐月原始输入列于资源附录，'
+                                '后续应取得有时间范围和来源授权的当地气象资料。')
+                    return (f'本次采用12个月的合成月均气温和风速输入；气温分别落在'
+                            f'{fmt(min(temperatures))}至{fmt(max(temperatures))}℃，风速为'
+                            f'{fmt(min(winds))}至{fmt(max(winds))}m/s。这些月均输入影响组件温度损失的预测，'
+                            '但不是极端温度或结构设计风速；实际逐时与极值资料仍须另行取得。')
         if item_id == 'CH05.01':
             start, end = get('resource.period_start'), get('resource.period_end')
             if start and end:
@@ -1536,7 +1826,6 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                      for r in tasks if r.get('fields', {}).get('schedule.tasks.task_id')}
             if item_id == 'CH13.03':
                 edges = []
-                critical = []
                 for row in tasks:
                     task = row.get('fields', {})
                     current = names.get(task.get('schedule.tasks.task_id'))
@@ -1545,14 +1834,15 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                     for predecessor in task.get('schedule.tasks.predecessor_ids') or []:
                         if predecessor in names:
                             edges.append(f'{names[predecessor]}→{current}')
-                    if task.get('schedule.tasks.critical_path') is True:
-                        critical.append(current)
                 if edges:
-                    return (f'计划前置依赖链共{len(edges)}条，由前置任务逐项进入后续任务；其中'
-                            + '；'.join(edges[:2]) + ('等' if len(edges) > 2 else '')
-                            + f'；{len(critical)}项标记为计划关键路径。'
-                            '该标记是输入的计划属性，不是依据审批时长重新求得的实际关键路径；'
-                            '前置审批未批准时不能承诺投运日期。')
+                    first, following = edges[0].split('→', 1)
+                    need = ('土地权利、地勘及集中接网意见' if ground else
+                            '屋面权利、结构消防和余电接网意见')
+                    return (f'在这条前置依赖链中，“{first}”是“{following}”的前置任务，'
+                            '因为工程条件尚不清楚时，采购数量和施工组织均难以确定。'
+                            f'对本项目而言，{need}仍须落实，施工完成后还需完成电气调试与并网验收，'
+                            '才能按计划投运。任务中的关键路径标记不代表已按真实审批和交付时长'
+                            '完成进度计算；前置条件未批准时，不能用预排日期承诺投运。')
                 return '任务已提供，但缺少可追溯的前置边，不能推断关键路径。'
             if item_id == 'CH13.02':
                 starts = [row['fields'].get('schedule.tasks.start_date') for row in tasks]
@@ -1613,8 +1903,12 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                      and (focus is None or row['fields']['capex.items.category'] in focus)]
             facts.extend(parts[:3])
     if item_id.startswith('CH15.'):
+        if item_id == 'CH15.05':
+            return ('年度项目现金流同时受到运维付款、税费和设备更换支出的影响。运维是持续的运营现金支出，'
+                    '折旧只进入利润与所得税计算，不应再从现金流扣一次；第13年设备更换则是单独的计划现金支付。'
+                    '复核逐年账簿时须区分费用计提与实际预计付款，避免把交易费或更换费用重复计入。')
         opex_items = get('opex.items')
-        if isinstance(opex_items, list) and item_id in {'CH15.01', 'CH15.05'}:
+        if isinstance(opex_items, list) and item_id == 'CH15.01':
             names = {'maintenance': '检修维护', 'insurance': '保险', 'land_lease': '场地租赁'}
             for row in opex_items[:3]:
                 detail = row.get('fields', {})
@@ -1627,11 +1921,11 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
             key = {'CH15.01': ('opex_cash_paid', '首年运维现金支出'),
                    'CH15.02': ('depreciation', '首年非现金折旧'),
                    'CH15.04': ('cash_tax_total_project', '首年项目现金税费'),
-                   'CH15.05': ('opex_cash_paid', '首年运维现金支出')}.get(item_id)
+                   }.get(item_id)
             if key and annual[1].get(key[0]) is not None:
                 facts.insert(0, f'{key[1]}按年度账簿为{fmt(annual[1][key[0]])}元')
             replacements = [r for r in annual[1:] if r.get('replacement_cash_paid')]
-            if replacements and item_id in {'CH15.03', 'CH15.05'}:
+            if replacements and item_id == 'CH15.03':
                 r = replacements[0]
                 facts.append(f"第{r['period'].removeprefix('OPERATING_YEAR_')}年更换现金支出为{fmt(r['replacement_cash_paid'])}元")
     if item_id.startswith(('CH17.', 'CH18.')):
@@ -1716,8 +2010,7 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
         years = get('project.evaluation_years')
         if npv is not None and years is not None:
             irr_claim = _project_irr_claim(model)
-            irr_note = (f'项目IRR（Internal Rate of Return，内部收益率）为{fmt(Decimal(str(irr)) * 100)}%，'
-                        '且在声明的搜索范围内为唯一根'
+            irr_note = (f'项目IRR（内部收益率）为{fmt(Decimal(str(irr)) * 100)}%'
                         if irr is not None and '唯一已认证根' in irr_claim else irr_claim)
             construction = result.get('evidence', {}).get('financial-ledger', {}).get('annual', ())
             initial = (construction[0].get('capex_cash_paid') if construction
@@ -1747,6 +2040,10 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                     + (f"，该年项目净现金流约{fmt(value)}元" if value is not None else '')
                     + '；年度净流出不等于某一付款瞬间必然资金不足，但已形成明确的资金安排压力。'
                     '实施前应核对付款计划、可动用现金、准备金或其他合法资金安排；当前没有日期化资金余额，不能宣布付款覆盖已满足。')
+    if item_id == 'CH18.03' and not ground:
+        return ('当前屋顶装机与自用节费以模拟负荷为条件，下一阶段需以实际逐时用电记录检验白天消纳。'
+                '若屋面结构或防水需要加固，应将专项费用更新到投资估算，并重新核对接网余量与余电收入。'
+                '在这些输入未闭合前，不能给出真实投资门槛已达成或批准建设的结论。')
     if facts:
         # Keep the evidence attached to its authored engineering implication;
         # four or five label:value pairs separated by semicolons are a table,
@@ -1788,6 +2085,7 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
                 year = row.get('fields', {}).get('assets.replacements.year')
                 if isinstance(year, int) and year > 1:
                     metric_ids += (f'energy.year.{year}',)
+    metric_ids = tuple(dict.fromkeys(metric_ids))
     datasets = _dataset_rows(model.result)
     # Optional corroboration is not a missing prerequisite when the ordinary
     # producer already consumed a bound time series / annual result. Keep these

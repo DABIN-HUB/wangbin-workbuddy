@@ -31,18 +31,25 @@ def appendix_finding(model: Any, item_id: str, fmt: Callable[[Any], str], source
             and all(isinstance(x, (int, float, Decimal)) and not isinstance(x, bool) for x in months)):
         month_total = sum(Decimal(str(x)) for x in months)
         annual_total = metric('energy.year.1')
-        month_note = ('与年度指标一致' if isinstance(annual_total, (int, float, Decimal))
-                      and abs(month_total - Decimal(str(annual_total))) < Decimal('0.01') else
-                      '与年度指标不一致，先核查月序列及年度边界')
+        if isinstance(annual_total, (int, float, Decimal)) and not isinstance(annual_total, bool):
+            displayed_total = sum(Decimal(fmt(x).replace(',', '')) for x in months)
+            month_note = (f'月度显示值合计{fmt(displayed_total)}kWh，年度指标列示{fmt(annual_total)}kWh；'
+                          '逐月与年度独立取整，按未取整值核对'
+                          if abs(month_total - Decimal(str(annual_total))) < Decimal('0.01') else
+                          '原始月度与年度指标不一致，先核查月序列及年度边界')
+        else:
+            month_note = '年度指标未计算，不推断月年闭合'
     else:
         month_total, month_note = None, '缺少可对账的十二个月发电指标'
     return {
-        'APP01.01': f'本次有{len({r.get("source_id") for r in records if r.get("source_id")})}个来源标识；来源编号不证明原件授权或可读性，须逐份取回核对。',
+        'APP01.01': f'Phase 2字段原子记录中有{len({r.get("source_id") for r in records if r.get("source_id")})}个来源标识；'
+                       '时序数据和交易费等独立来源另见配套来源清单，不能把此计数当作全报告来源总数；'
+                       '来源编号不证明原件授权或可读性，须逐份取回核对。',
         'APP01.02': f'字段来源快照登记{len(records)}条原子记录；须逐实例核对取值、原件位置和来源身份，数量不证明全部已核验。',
         'APP02.01': (f'绑定的合成月度气象输入共{len(daily)}个月；须逐月核对GHI/DNI/DHI/POA的kWh/㎡、气温℃、风速m/s及年份时区。'
                       if isinstance(daily, list) else '月度气象未完成原子来源核对；不能从月发电结果倒推辐照分量。'),
-        'APP02.02': (f'首年12个月发电汇总{amount(month_total, "kWh")}，'
-                      f'年度发电{amount(metric("energy.year.1"), "kWh")}，{month_note}；'
+        'APP02.02': (f'首年12个月发电原值求和{amount(month_total, "kWh")}，'
+                      f'年度发电{amount(metric("energy.year.1"), "kWh")}；{month_note}；'
                       + ('屋面自用、余电及交付须逐月在同一计量边界对账。' if not ground else '地面交付与集中上网须逐月对账，不引入自用账。')
                       if month_total is not None else '月度发电与年度指标未同时闭合；不把发电代替交付结算。'),
         'APP03.01': f'设备额定直流{amount(metric("dc_capacity"), "kWp")}、交流{amount(metric("ac_capacity"), "kWac")}；须与组件和逆变器型号数据表、行距逐项复核。',
@@ -70,9 +77,14 @@ def appendix_finding(model: Any, item_id: str, fmt: Callable[[Any], str], source
                      '保本电价的全链反向重算仍受阻；须以同口径目标、重算身份和单调方向测试验收。'),
         'APP09.01': '政策登记尚不能代替有文号、原文、地区及生效期的可适用条款；不得称已获项目批准。',
         'APP09.02': '政策适用及潜在冲突没有逐条外部审查意见；应分别核对权属、接网与交易的有效文件。',
-        'APP10.01': f'统一结果当前列有{len(result.get("findings", ()))}条发现项；逐项注明责任、阻断指标与关闭材料，不能按数量推断已消除。',
-        'APP10.02': ('先关闭屋面权属、结构防水、消防及余电接入，再评价投资里程碑。' if not ground else
-                       '先关闭用地、地勘道路排水、集中接网和交易边界，再评价投资里程碑。'),
+        'APP10.01': ('屋顶权属与结构证明缺失会影响合法使用和安全布置；真实负荷及接网资料缺失会改变自用电量和余电收入。'
+                       '须分别取得权利原件、结构防水消防图、逐时电费记录和电网答复；发现项登记不等于这些资料已关闭。'
+                       if not ground else '土地权利、地勘测绘和道路排水资料缺失，会影响阵列排布、基础与总投资；'
+                       '正式接网与交易文件缺失会影响可售电量和价格。须取得签署原件及工程初设逐项复核。'),
+        'APP10.02': ('可先开展负荷资料收集及屋面结构初查；取得合法权利、结构消防及接网意见后，'
+                       '按实际费用和消纳重新计算项目回报，再提请真实投资决策。' if not ground else
+                       '可先开展场址测绘、地勘及送出沟通；取得合法用地、工程量、正式接入与交易条件后，'
+                       '重新评估回报及第13年设备更换的资金安排。'),
         'APP11.01': '本次公式快照仅是正式定义与执行状态的入口；逐公式核对单位、适用条件和绑定输入，不补造计算式。',
         'APP11.02': '公式局部符号须逐个说明定义、单位和求和范围；同名字母在不同公式内不可跨式套用。',
         'APP12.01': '报告术语须分别对应中文、英文全称、缩写和首次释义；IRR根集与NPV币种均不能只列缩写。',
