@@ -94,10 +94,17 @@ def configure(document, profile: SolarWordFormat = WORD_FORMAT) -> None:
         ("Heading 2", 14, profile.heading_chinese, False, 7, 7),
         ("Heading 3", 12, profile.chinese, True, 0, 0),
         ("Heading 4", 12, profile.chinese, False, 0, 0),
+        ("Heading 5", 12, profile.chinese, False, 0, 0),
     ):
         _style(document, name, size=size, chinese=chinese, bold=bold,
                alignment=WD_ALIGN_PARAGRAPH.LEFT, before=before, after=after,
                spacing=1.5, keep_next=True)
+    _style(document, "Solar Figure Group", size=14, chinese=profile.heading_chinese,
+           alignment=WD_ALIGN_PARAGRAPH.LEFT, before=7, after=7, keep_next=True)
+    _style(document, "Solar Formula Title", size=12, chinese=profile.chinese,
+           bold=True, alignment=WD_ALIGN_PARAGRAPH.LEFT, keep_next=True)
+    _style(document, "Solar Unnumbered Title", size=16, chinese=profile.heading_chinese,
+           alignment=WD_ALIGN_PARAGRAPH.LEFT, before=8, after=8, keep_next=True)
     _style(document, "Solar Cover Title", size=22, chinese=profile.heading_chinese,
            bold=True, alignment=WD_ALIGN_PARAGRAPH.CENTER, before=25, after=15)
     _style(document, "Solar Cover Subtitle", size=18, alignment=WD_ALIGN_PARAGRAPH.CENTER,

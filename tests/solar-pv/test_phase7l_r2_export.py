@@ -46,7 +46,7 @@ def test_partial_snapshot_keeps_calculated_project_returns_separate_from_blocked
     assert model.result["status"] == "PARTIAL"
     paragraphs = [p.text for p in document.paragraphs]
     begin = paragraphs.index("摘要")
-    summary = "\n".join(paragraphs[begin:paragraphs.index("CH01 执行摘要与初步结论", begin)])
+    summary = "\n".join(paragraphs[begin:paragraphs.index("一、执行摘要与初步结论", begin)])
     assert "项目净现值" in summary and "项目内部收益率" in summary and "回收期" in summary
     assert "营运资金" in summary and "后期更换" in summary and "25年" in summary
     assert "股东" in summary and "未核验" in summary
@@ -89,14 +89,14 @@ def test_formula_groups_keep_all_symbols_once_and_shared_index_once(exported):
                    *model.result["formula_snapshot"]["financial_definitions"].values()]
     _, symbols = _appendix_rows(model, "APP11.02")
     assert len({p.text.split(" ", 1)[0] for p in document.paragraphs
-                if p.style.name == "Heading 3" and p.text.startswith("F-")}) == 89
+                if p.style.name == "Solar Formula Title" and p.text.startswith("F-")}) == 89
     fid = "F-ANNUAL-OPEX"
     formula = next(f for f in definitions if f["formula_id"] == fid)
     assert {row[1] for row in symbols if row[0] == fid} == {s["symbol"] for s in formula["every_symbol_definition"]}
     # Read the actual generated formula group, not a formatting helper.
     start = next(i for i, p in enumerate(document.paragraphs) if p.text.startswith(fid + " "))
     following = next(i for i in range(start + 1, len(document.paragraphs))
-                     if document.paragraphs[i].text.startswith("F-") and document.paragraphs[i].style.name.startswith("Heading"))
+                     if document.paragraphs[i].text.startswith("F-") and document.paragraphs[i].style.name == "Solar Formula Title")
     group = "\n".join(p.text for p in document.paragraphs[start:following])
     assert formula["text_equation"] in group and "本次引用" in group
     assert group.count("逐个下标词素") == 1
@@ -171,7 +171,8 @@ def test_toc_contains_editable_outline_without_pretending_to_have_refreshed_page
     _, document, receipt = exported
     xml = document.element.body.xml
     assert 'TOC \\o "1-3"' in xml
-    assert "CH01 执行摘要与初步结论" in xml and "APP11 公式逐符号字典" in xml
+    headings = [p.text for p in document.paragraphs if p.style.name == "Heading 1"]
+    assert "一、执行摘要与初步结论" in headings and "附录K 公式逐符号字典" in headings
     assert "PAGEREF" not in xml
     assert receipt["toc_status"] == "FIELD_REQUIRES_RENDER_REFRESH"
     assert receipt["report_content_version"] == REPORT_CONTENT_VERSION

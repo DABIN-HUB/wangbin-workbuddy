@@ -44,6 +44,7 @@ from .calculation.result_contract import validate_result
 from .errors import ContractError
 from .local_files import Workspace
 from .report_narrative import guidance, validate_fixture
+from .report_numbering import heading_number, add_numbered_heading, validate_numbering
 from .report_claims import APPENDIX_RULES, APPENDIX_TITLES, CHAPTER_FIELDS, CHAPTER_METRICS, RESOURCE_MONTHLY_UNITS, build_claim, category_fields, _dataset_rows, _source_value
 from .report_resource_display import prepare_resource_word_rows
 from .report_word_styles import WORD_FORMAT, borders as word_table_borders, configure as configure_word, equation_paragraph, set_run_font
@@ -1067,7 +1068,7 @@ def _write_model_xlsx(model: ReportModel, output: Path, pv_type: str) -> dict[st
 def _add_table(document: Document, headers: list[str], rows: list[list[Any]], caption: str | None = None,
                *, widths_cm: tuple[float, ...] | None = None) -> None:
     if caption:
-        paragraph = document.add_paragraph(f"表 {len(document.tables) + 1} {caption}", style="Caption")
+        paragraph = document.add_paragraph(f"表{len(document.tables) + 1} {caption.rstrip('。；：,.、 ')}", style="Caption")
         paragraph.paragraph_format.keep_with_next = True
     table = document.add_table(rows=1, cols=len(headers))
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
@@ -1130,15 +1131,15 @@ def _add_canonical_charts(document: Document, specs: list[dict[str, Any]], sourc
     if not specs:
         return []
     if heading:
-        document.add_heading(heading, level=2)
+        document.add_paragraph(heading, style="Solar Figure Group")
     receipts = []
     for spec in specs:
         paragraph = document.add_paragraph()
         paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
         font_metadata: dict[str, Any] = {}
         paragraph.add_run().add_picture(_chart_png(spec, font_metadata=font_metadata), width=Cm(WORD_FORMAT.text_width_cm))
-        figure_no = len(receipts) + 1
-        document.add_paragraph(f"图 8.{figure_no} {spec['title']}", style="Caption")
+        figure_no = len([p for p in document.paragraphs if p.style.name == "Caption" and p.text.startswith("图")]) + 1
+        document.add_paragraph(f"图{figure_no} {spec['title'].rstrip('。；：,.、 ')}", style="Caption")
         document.add_paragraph(
             f"图示反映{spec.get('title', '本次发电量测算')}。数据来自当前合成测算的已计算序列，"
             f"资料引用 {_word_sources(spec['source_ids'], source_map)}；完整计算绑定见测算模型和资料来源清单。"
@@ -2311,8 +2312,10 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     chart_receipts: list[dict[str, Any]] = []
     checklist: list[dict[str, Any]] = []
 
+    bookmark_index = 1
     for chapter_id, chapter_title, items in CHAPTERS:
-        chapter_heading = document.add_heading(f"{chapter_id} {chapter_title}", level=1)
+        chapter_heading = add_numbered_heading(document, heading_number(chapter_id, chapter_title), bookmark_index)
+        bookmark_index += 1
         chapter_heading.paragraph_format.page_break_before = chapter_id != "CH01"
         # The first subsection supplies the substantive opening. A stock
         # "本章说明…" paragraph before every chapter adds no project finding.
@@ -2320,7 +2323,9 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             chart_receipts = _add_canonical_charts(document, chart_specs, source_map, "发电量变化")
         for number, item in enumerate(items, 1):
             item_id = f"{chapter_id}.{number:02d}"
-            document.add_heading(f"{item_id} {item}", level=2)
+            add_numbered_heading(document, heading_number(item_id, item, parent_stable_id=chapter_id,
+                                                          parent_level=1), bookmark_index)
+            bookmark_index += 1
             evidence = _item_evidence(model, pv_type, chapter_id, item, item_no=number,
                                        editorial_fixture=editorial_fixture)
             _add_professional_narrative(document, evidence)
@@ -2345,7 +2350,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                               "visual_layout_status": "NOT_TESTED", "missing_materials": evidence["missing"],
                               "final_conclusion": evidence["conclusion"]})
 
-    document.add_heading("结果与公式索引", level=1)
+    document.add_paragraph("结果与公式索引", style="Solar Unnumbered Title")
     document.add_paragraph("本节仅列示与投资评价直接相关的专业指标。完整数值精度、计算口径和来源绑定保留在配套测算模型中，正文不重复展开审计字段。")
     blocked = [metric for metric in model.metrics if str(metric.get("status", "")).startswith("BLOCKED")]
     index_ids = ("financial.capex.total", "financial.opex.cash_lifecycle",
@@ -2364,13 +2369,16 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
         else:
             document.add_paragraph("以下指标按各自阻断理由补证；不能由尚未计算的项目回报或其他指标推断有效收益。")
     for app_id, app_title in APPENDICES:
-        appendix_heading = document.add_heading(f"{app_id} {app_title}", level=1)
+        appendix_heading = add_numbered_heading(document, heading_number(app_id, app_title), bookmark_index)
+        bookmark_index += 1
         appendix_heading.paragraph_format.page_break_before = True
-        document.add_paragraph(f"{app_id}《{app_title}》提供受控追溯摘要；完整字段、原始精度和来源编号保留在配套 Excel。")
+        document.add_paragraph(f"本附录《{app_title}》提供受控追溯摘要；完整字段、原始精度和来源编号保留在配套 Excel。")
         for item_no in (1, 2):
             item_id = f"{app_id}.{item_no:02d}"
             item_title = APPENDIX_TITLES[item_id]
-            document.add_heading(f"{item_id} {item_title}", level=2)
+            add_numbered_heading(document, heading_number(item_id, item_title,
+                                                          parent_stable_id=app_id, parent_level=1), bookmark_index)
+            bookmark_index += 1
             evidence = _appendix_evidence(model, pv_type, app_id, item_no)
             if app_id in {"APP11", "APP12"}:
                 detail = (f"冻结字典共列示{len(_appendix_formula_definitions(model))}条正式定义，"
@@ -2663,16 +2671,16 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                     definitions = _appendix_formula_definitions(model)
                     shared, shared_ids = _formula_shared_contracts(definitions)
                     if shared:
-                        document.add_heading("共通记法契约（按原文一致性分组）", level=3)
+                        document.add_paragraph("共通记法契约（按原文一致性分组）", style="Solar Formula Title")
                         document.add_paragraph("相同契约仅在此处完整定义一次；每条公式在下方注明所适用的组号。逐符号定义及量纲仍逐公式列出。")
                         for label, text, number in shared:
                             document.add_paragraph(f"{label}第{number}组：{text}")
                     for formula_no, formula in enumerate(definitions, 1):
                         fid = formula["formula_id"]
-                        document.add_heading(f"{fid} {formula.get('chinese_name', '未定义')}", level=3)
+                        document.add_paragraph(f"{fid} {formula.get('chinese_name', '未定义')}", style="Solar Formula Title")
                         equation = formula.get("text_equation") or formula.get("latex") or "未提供"
                         unit = formula.get("unit") or "未定义"
-                        equation_paragraph(document, equation, f"（11-{formula_no}）")
+                        equation_paragraph(document, equation, f"（{formula_no}）")
                         document.add_paragraph(f"结果单位：{unit}", style="Solar Formula Note")
                         document.add_paragraph("适用边界：" + _reader_text(str(formula.get("calculation_boundary") or "未定义")))
                         document.add_paragraph("本项目状态：" + _formula_status(model, fid))
@@ -2694,7 +2702,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                             document.add_paragraph("下标、索引、集合与求和范围：" + "；".join(index_lines))
                 elif appendix_rows:
                     _add_table(document, appendix_headers, appendix_rows,
-                               f"{item_id} · 受控编辑词典")
+                               "受控编辑词典")
             checklist.append({"id": item_id, "title": item_title,
                               "content_summary": evidence["summary"][:600], "input_field_ids": evidence["field_ids"],
                               "metric_ids": evidence["metric_ids"], "source_ids": evidence["source_ids"],
@@ -2712,12 +2720,14 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                               "visual_layout_status": "NOT_TESTED", "missing_materials": evidence["missing"],
                               "final_conclusion": evidence["conclusion"]})
 
-    document.add_heading("术语与公式说明", level=1)
+    document.add_paragraph("术语与公式说明", style="Solar Unnumbered Title")
     document.add_paragraph("公式定义、版本、变量、单位、输入字段和完整来源绑定见测算模型.xlsx 的公式说明工作表，以及资料来源与假设清单.xlsx 的公式/方法工作表。正文不复制原始对象或过高精度小数。")
-    document.add_heading("版本与质量声明", level=1)
+    document.add_paragraph("版本与质量声明", style="Solar Unnumbered Title")
     document.add_paragraph(f"项目边界：{profile['boundary']}。报告内容版本：{content_version}；该版本只表示写作与排版，不修改计算结果身份。配套 Excel 为本次测算快照；修改 Excel 不会使本报告或旧结果自动有效，必须重新运行计算程序生成新的统一身份。PDF 只有在真实转换器可用并成功解析时才生成；本次渲染、页面视觉和目录页码门禁以质量清单实际状态为准。")
     _add_table(document, ["身份字段", "统一测算值"], [[key, str(value)] for key, value in model.identity.items()],
                "统一测算身份（仅在此处展示一次）", widths_cm=(4.5, 12.5))
+    numbering = validate_numbering(document, CHAPTERS, APPENDICES, APPENDIX_TITLES,
+                                   [formula["formula_id"] for formula in _appendix_formula_definitions(model)])
     coverage = _validate_checklist_coverage(checklist)
     claim_fields = ("claim_id", "core_question", "central_claim", "claim_status",
                     "causal_reasoning", "decision", "unresolved", "next_action")
@@ -2737,6 +2747,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     return {"path": output.name, "size": output.stat().st_size, "sha256": _sha256(output),
             "report_content_version": content_version,
             "word_format_version": WORD_FORMAT.identifier,
+            "numbering": numbering,
             **coverage,
             "charts": chart_receipts, "content_checklist": checklist,
             "duplicate_scan": duplicate_scan, "language_scan": language_scan,
