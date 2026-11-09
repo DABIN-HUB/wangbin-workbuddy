@@ -882,9 +882,16 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
                     "地面场址的土地权属、地勘与道路排水仍需逐项核验" if ground else
                     "屋面权属与结构条件尚需复核")
         energy = f"；首年合成资源下预测发电{format_value(year1)}kWh" if year1 is not None else "；首年发电结果尚未形成"
-        return (f"本次方案按{format_value(dc)}kWp直流组件和{format_value(ac)}kW交流逆变器配置，"
-                f"以{format_value(years)}年作为测算期{energy}。这只是设备铭牌与模型发电边界，"
-                f"并非获批装机或保底上网电量；{location}。")
+        ratio = metric('dc_ac_ratio')
+        mean = metric('energy.mean_annual')
+        return (f"本项目拟采用{format_value(dc)}kWp直流（Direct Current，DC）光伏组件及"
+                f"{format_value(ac)}kW交流（Alternating Current，AC）逆变器，"
+                + (f"直交流容配比为{format_value(ratio)}，" if ratio is not None else '')
+                + f"以{format_value(years)}年评价运行表现{energy}。"
+                + (f"评价期年均预测发电{format_value(mean)}kWh。" if mean is not None else '')
+                + "组件侧额定容量与交流侧输出能力"
+                "并不相同，后续发电及收益仍取决于资源、系统损失和接网条件。\n\n"
+                f"目前的规模和电量是合成方案的预测，不是获批装机或保底上网电量；{location}。")
     if item_id == "CH08.02":
         months = metric("energy.monthly.year.1")
         if (not isinstance(months, list) or len(months) != 12 or year1 is None
@@ -1033,11 +1040,13 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
                    if npv > 0 else "本次NPV未为正，不据此下正收益结论")
         payback = (f"静态回收期{format_value(static)}年、动态回收期{format_value(dynamic)}年，"
                    if static is not None and dynamic is not None else "回收期按其独立指标状态核查，")
-        return (f"按合成的{format_value(years)}年项目税后、名义价格及年度期末现金流，"
-                f"使用{pct(discount)}项目折现率得到年度NPV{money(npv)}；{_project_irr_claim(model)}；"
-                f"{payback}{outcome}。"
-                "这不是逐笔日期NPV或实际投资者出资—分红回报：未提供股东现金事件及真实银行流水，"
-                "也未获得现场审批、签署交易与专业复核，不能据此批准投资。")
+        return (f"以{format_value(years)}年名义价格、税后项目年度现金流为基础，按"
+                f"{pct(discount)}折现率计算的项目净现值（NPV）为{money(npv)}。净现值衡量"
+                "预测现金流折现后相对于投资的余额；"
+                f"{_project_irr_claim(model)}。内部收益率（IRR）反映使项目净现值为零的折现率，"
+                f"{payback}{outcome}。\n\n"
+                "这些指标使用年度期末而非逐笔日期现金事件；项目回报不能替代投资者实际出资和分配回报。"
+                "股东现金事件、签署交易条件与现场审批尚未闭合，不能仅凭正的预测净现值批准投资。")
     return ""
 
 
@@ -1087,9 +1096,11 @@ def _settlement_narrative(model: Any, item_id: str, fmt: Callable[[Any], str]) -
             if not price_bound:
                 return "市场价格时序未能绑定结算血缘；虽有收入指标，不能解释采用的售电价路径或代写结算金额。"
             if item_id == 'CH10.04':
-                return (f"按已绑定的逐时市场价格结算路径，集中式上网{energy('export_kwh')}对应预测销售收入"
-                        f"{money('export_sales_revenue')}，交易费用{money('transaction_cost')}另列；"
-                        "交易主体、合同价、结算周期与实收款仍须依据签署合同和计量记录核验。")
+                return (f"地面方案预计将{energy('export_kwh')}送入集中交易，按本次已绑定的"
+                        f"逐时市场价格路径形成首年预测售电收入{money('export_sales_revenue')}。"
+                        f"交易费用{money('transaction_cost')}单独列支，不从销售额中隐藏抵扣。\n\n"
+                        "逐时交易价格变化会改变销售收入，但本次没有独立扰动测算，不能据此量化跌价风险。"
+                        "交易主体、结算周期、计量节点与真实回款仍以有效合同和记录为准。")
             return (f"{path}；该时序参与首年预测上网销售收入"
                     f"{money('export_sales_revenue')}的结算。固定分时表情景价不能冒充实际采用的逐时市场价格，"
                     "其他收益未得到独立执行依据时不追加。")
@@ -1162,11 +1173,15 @@ def _research_finding(model: Any, item_id: str, fmt: Callable[[Any], str]) -> st
         delivered = metric('energy.delivered.year.1')
         if number(delivered) and all(number(details.get(k)) for k in ('self_kwh', 'self_value', 'export_kwh', 'export_sales_revenue')):
             if ground:
-                return (f'集中式项目首年预测交付{fmt(delivered)}kWh，按市场价格时序全额上网预测销售'
-                        f'{fmt(details["export_sales_revenue"])}元；厂区负荷匹配与节费模型不适用。送出计量、交易准入与实收款须另核。')
-            return (f'屋面项目首年交付预测{fmt(delivered)}kWh，其中逐时自用{fmt(details["self_kwh"])}kWh'
-                    f'形成节费{fmt(details["self_value"])}元，余电上网{fmt(details["export_kwh"])}kWh'
-                    f'形成预测售电收入{fmt(details["export_sales_revenue"])}元；节费不是售电回款，负荷及结算边界待实测复核。')
+                return (f'本地面方案以集中送出和市场交易为收益路径，首年预测交付{fmt(delivered)}kWh。'
+                        f'按已绑定的市场价格时序，预计上网销售收入{fmt(details["export_sales_revenue"])}元。'
+                        '厂区负荷匹配不适用于这一方案；实际销售还取决于接网计量、交易准入及结算合同。')
+            return (f'屋面方案拟优先以光伏电量满足厂区日间用电，首年预计交付{fmt(delivered)}kWh。'
+                    f'逐时匹配的自用电量{fmt(details["self_kwh"])}kWh可实现购电节费'
+                    f'{fmt(details["self_value"])}元；其余{fmt(details["export_kwh"])}kWh预测上网，'
+                    f'形成售电收入{fmt(details["export_sales_revenue"])}元。\n\n'
+                    '节省购电费不是电网支付的销售回款。厂区实际日间负荷与余电计量结算条件'
+                    '会改变两类收益的比例，正式投资前须以真实负荷和有效合同复核。')
     if item_id == 'CH03.03':
         expiry, baseline, years = get('site.rights_expiry'), get('project.evaluation_date'), get('project.evaluation_years')
         if isinstance(expiry, str) and isinstance(baseline, str) and type(years) is int:
@@ -1196,8 +1211,10 @@ def _research_finding(model: Any, item_id: str, fmt: Callable[[Any], str]) -> st
                     f'{fmt(factor)}kgCO2e/kWh；两者尚未形成可引用减排量，'
                     '因子地区、适用期间、替代电源及核算边界未得到外部核验，不宣称实际减排。')
     if item_id == 'CH14.03':
-        return ('设备清单不能覆盖地面道路排水、桩基和集中送出专项工程量；须按地勘与接入方案核量询价。'
-                if ground else '组件清单不能覆盖屋面加固、锚固、防水与消防通道专项工程量；须按结构复核结果核量询价。')
+        return ('地面项目的土建投资除设备支架外还可能涉及桩基、道路排水及集中送出。'
+                '当前设备清单不能证明这些专项工程量已纳入报价；地勘与接入方案将直接影响总投资。'
+                if ground else '屋顶项目的土建与安装费用还受锚固、防水、消防通道及可能的结构加固影响。'
+                '当前组件清单不能覆盖这些专项工程量；结构复核后须核量询价，才能确定投资估算的完整性。')
     if item_id in {'CH04.02', 'CH06.01'}:
         total, usable, excluded = (get('site.' + suffix) for suffix in ('total_area', 'usable_area', 'exclusion_area'))
         if all(number(v) for v in (total, usable, excluded)):
@@ -1303,6 +1320,100 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
     finding = _research_finding(model, item_id, fmt)
     if finding is not None:
         return finding
+    if item_id == 'CH01.01':
+        dc = calculated('dc_capacity')
+        years = get('project.evaluation_years')
+        if dc is not None and years is not None:
+            setting = ('以厂房屋面消纳为主、余电上网' if not ground else
+                       '利用地面场址集中送出并参与电力交易')
+            return (f'本项目拟建设{fmt(dc)}kWp光伏系统，{setting}。现阶段以'
+                    f'{fmt(years)}年为评价期，对设备、发电、投资与回报进行初步分析。'
+                    '建设意向及使用条件尚属合成研究资料，不代表已取得真实业主授权或工程审批。')
+    if item_id == 'CH01.03':
+        investment = calculated('financial.capex.total')
+        unit = calculated('financial.unit_investment')
+        npv = calculated('financial.phase3e.project_npv')
+        if investment is not None:
+            outcome = (f'当前项目税后净现值（Net Present Value，NPV）为{fmt(npv)}元，说明在所用折现率及'
+                       '预测现金流假设下形成正的模型净现值。' if npv is not None and npv > 0 else
+                       f'当前项目税后净现值（Net Present Value，NPV）为{fmt(npv)}元，仍须结合折现率判断回报。'
+                       if npv is not None else '项目净现值尚未形成可引用的计算结果。')
+            return (f'评价期资本性支出合计{fmt(investment)}元，包含建设与后续设备更换，'
+                    '不能全部视为建设期一次性付款。' +
+                    (f'按直流装机口径列示的单位投资为{fmt(unit)}元/kWp。' if unit is not None else '') + outcome +
+                    '这是项目现金流而非股东分红的评价，实际投资决定还依赖工程量、价格及权属。')
+    if item_id == 'CH01.05' and (result.get('status') != 'COMPLETE' or
+                                result.get('maturity', {}).get('real_project') != 'VERIFIED'):
+        return ('本阶段建议为“暂缓决策”：已有的项目回报预测可以用于识别下一步研究价值，'
+                '但屋面权属、结构与消防、厂区负荷及余电接入尚未由真实资料闭合。' if not ground else
+                '本阶段建议为“暂缓决策”：已有的项目回报预测可以用于识别下一步研究价值，'
+                '但土地权属、地勘及道路排水、集中接网和交易价格尚未由真实资料闭合。')
+    if item_id == 'CH07.01':
+        count, power = get('system.module_count'), get('system.module_power')
+        dc, ac = calculated('dc_capacity'), calculated('ac_capacity')
+        ratio = calculated('dc_ac_ratio')
+        if all(x is not None for x in (count, power, dc, ac, ratio)):
+            return (f'拟配置{fmt(count)}块、每块额定功率{fmt(power)}W的组件，'
+                    f'形成{fmt(dc)}kWp直流装机；逆变器交流侧额定容量为{fmt(ac)}kW，'
+                    f'直交流容配比为{fmt(ratio)}。组件侧略高于交流侧有助于在非额定辐照条件下'
+                    '利用逆变设备，但高辐照时能否充分输出以及是否出现削峰，须结合资源、温度和逆变器限制判断。\n\n'
+                    + ('屋面结构与防水要求将约束支架及组件布置。' if not ground else
+                       '地块排布、基础与集中送出条件将约束设备布置。') +
+                    '当前型号与容量只是初步配置，设备性能和低温电气安全尚待数据表校核。')
+    if item_id == 'CH07.02':
+        tilt, azimuth, pitch = (get(fid) for fid in ('layout.tilt', 'layout.azimuth', 'layout.row_pitch'))
+        if all(value is not None for value in (tilt, azimuth, pitch)):
+            return (f'当前阵列按倾角{fmt(tilt)}°、方位角{fmt(azimuth)}°与行距{fmt(pitch)}m布置。'
+                    '倾角与方向影响阵列面受光，行距则影响遮挡与通行，不能单凭额定装机确定最终排布。'
+                    + ('屋顶还需核定承载、锚固、防水及消防通道的可用区域。' if not ground else
+                       '地面还需结合坡度、基础位置、检修道路及排水确定可用阵列面积。'))
+    if item_id == 'CH08.04':
+        pr, hours, factor = (calculated(mid) for mid in ('pr_observed.year.1',
+                                                         'equivalent_hours.year.1', 'capacity_factor.year.1'))
+        if all(value is not None for value in (pr, hours, factor)):
+            pr_boundary = (model.metric('pr_observed.year.1') or {}).get('boundary_id')
+            energy_boundary = ('消费分配前的可利用电量' if pr_boundary == 'AVAILABLE_PRE_CONSUMPTION'
+                               else '可送出的预测电量' if pr_boundary == 'GRID_DELIVERABLE'
+                               else '当前指标声明的电量边界')
+            return (f'首年预测性能比（Performance Ratio，PR）为{fmt(Decimal(str(pr)) * 100)}%，'
+                    f'等效利用小时（Equivalent full-load hours）为{fmt(hours)}小时，'
+                    f'容量因子（Capacity Factor，CF_cap）为{fmt(Decimal(str(factor)) * 100)}%。'
+                    f'性能比关注阵列面辐照与{energy_boundary}的关系；等效小时与容量因子分别按'
+                    '装机容量及年度时间口径评价利用水平，三者不能互作现场实测效率证明。'
+                    '其可信度仍取决于资源代表性和系统损失假设。')
+    if item_id == 'CH10.05' and not ground:
+        revenue = calculated('revenue.year.1')
+        if revenue is not None:
+            return (f'屋面项目首年预测经济收益{fmt(revenue)}元来自当前自用节费及余电销售边界，'
+                    '并非另有逐时市场交易或补贴收入。没有合同及执行依据的其他收益不计入基准；'
+                    '购电价格与余电结算价格的变化应分别更新对应收入分项。')
+    if item_id == 'CH14.05' and get('finance.debt_ratio') == 0:
+        return ('当前合成融资方案明确不安排债务，建设期资本支出按项目资金计划列示，'
+                '不能从投资额推算建设期贷款利息，也不能把未列利息当成实际融资条件已落实。'
+                '如后续采用借款，应依据提款时点、利率及还款合同重算资金成本。')
+    if item_id == 'CH16.01':
+        row = model.metric('revenue.year.1') or {}
+        ledger = row.get('details', {}).get('ledger', {}) if row.get('status') == 'CALCULATED' else {}
+        receipts, savings = ledger.get('export_sales_revenue'), ledger.get('self_value')
+        if receipts is not None and savings is not None:
+            return (f'首年预测上网销售收入{fmt(receipts)}元，' +
+                    (f'厂区自用另可避免购电支出{fmt(savings)}元。' if not ground else
+                     '集中式项目没有厂区自用节费。') +
+                    ('' if ground else '减少购电支出不是银行收到的售电款，') +
+                    '实际现金流还须考虑交易费、运营付款及税费。'
+                    '终期账面残值也不能直接作为处置收款。')
+    if item_id == 'CH14.04':
+        rate = get('capex.contingency_rate')
+        total = calculated('financial.capex.total')
+        if rate is not None and total is not None:
+            return (f'现有评价期资本性支出汇总为{fmt(total)}元。输入中设置了'
+                    f'{fmt(Decimal(str(rate)) * 100)}%预备费率，但当前汇总与建设期账簿'
+                    '未再按该比例独立增加费用，也不能据此推定报价已包含预备费。'
+                    '这使未来的结构加固与防水费用仍可能改变投资边界。' if not ground else
+                    f'现有评价期资本性支出汇总为{fmt(total)}元。输入中设置了'
+                    f'{fmt(Decimal(str(rate)) * 100)}%预备费率，但当前汇总与建设期账簿'
+                    '未再按该比例独立增加费用，也不能据此推定报价已包含预备费。'
+                    '地面基础、道路排水及送出工程量的变化可能改变投资边界。')
     if item_id == 'CH06.03':
         dc, ac = calculated('dc_capacity'), calculated('ac_capacity')
         ratio = calculated('dc_ac_ratio')
@@ -1535,7 +1646,7 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
             if not scenario:
                 facts.append({
                     'CH17.01': '资源不确定性仅给出输入边界，未重算辐照、电量及收入扰动，不能报告敏感性斜率',
-                    'CH17.02': '未提供可各自追溯的悲观与乐观方案身份，单一基准现金流不能充作三情景',
+                    'CH17.02': '悲观与乐观组合尚未执行独立测算，单一基准现金流不能充作三情景',
                     'CH17.03': '目标门槛与基准项目回报不同，尚无改变价格或投资后重算的耐受阈值',
                     'CH17.04': '资源、送出、电价和工程投资风险各需来源及应对责任，基准回报不表示风险已消除',
                     'CH17.05': '反向约束需各自改变有来源的输入并重新验证计量和费用边界，不能从基准推断',
@@ -1604,7 +1715,10 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
         irr = calculated('financial.phase3e.project_irr')
         years = get('project.evaluation_years')
         if npv is not None and years is not None:
-            irr_note = _project_irr_claim(model)
+            irr_claim = _project_irr_claim(model)
+            irr_note = (f'项目IRR（Internal Rate of Return，内部收益率）为{fmt(Decimal(str(irr)) * 100)}%，'
+                        '且在声明的搜索范围内为唯一根'
+                        if irr is not None and '唯一已认证根' in irr_claim else irr_claim)
             construction = result.get('evidence', {}).get('financial-ledger', {}).get('annual', ())
             initial = (construction[0].get('capex_cash_paid') if construction
                        and calculated('financial.phase3e.project_cash_flow') is not None else None)
@@ -1613,11 +1727,16 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
             energy = f'首年交付预测{fmt(delivered)}kWh；' if delivered is not None else ''
             payback = calculated('financial.phase3e.static_payback')
             recovery = f'静态回收期{fmt(payback)}年。' if payback is not None else ''
-            return (f'按合成的{fmt(years)}年税后项目现金流，{investment}{energy}'
-                    f'年度期末NPV为{fmt(npv)}元，{irr_note}；{recovery}'
-                    '上述是模型项目回报，不是股东回报或真实投资批准；'
-                    + ('土地权属、地勘道路排水及集中接网意见仍须独立核验。' if ground else
-                       '屋面权属、荷载防水及余电接网意见仍须独立核验。'))
+            decision = ('本阶段建议“暂缓决策”。' if result.get('status') != 'COMPLETE' or
+                        result.get('maturity', {}).get('real_project') != 'VERIFIED' else '')
+            return (decision + f'目前的{fmt(years)}年合成项目方案具有继续研究的价值：{investment}{energy}'
+                    f'按年度期末项目税后现金流计算的净现值（Net Present Value，NPV）为{fmt(npv)}元，'
+                    f'{irr_note}；{recovery}这些结果说明的是当前方案及假设下的项目回报，'
+                    '并非股东回报或实际投资批准。\n\n'
+                    + ('优先取得土地权属、地勘道路排水及集中接网意见，核定工程量和交易价格，'
+                       '再更新测算及设备更换资金安排。' if ground else
+                       '优先取得屋面权属、结构荷载与防水资料，并用真实厂区负荷和余电接网意见'
+                       '复核自用收益及投资边界。'))
     if item_id == 'CH18.03' and ground:
         annual = result.get('evidence', {}).get('financial-ledger', {}).get('annual', ())
         replacement = next((row for row in annual if row.get('period') == 'OPERATING_YEAR_13'), None)
@@ -1629,7 +1748,12 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                     + '；年度净流出不等于某一付款瞬间必然资金不足，但已形成明确的资金安排压力。'
                     '实施前应核对付款计划、可动用现金、准备金或其他合法资金安排；当前没有日期化资金余额，不能宣布付款覆盖已满足。')
     if facts:
-        return '；'.join(facts[:5]) + '。' + judgment
+        # Keep the evidence attached to its authored engineering implication;
+        # four or five label:value pairs separated by semicolons are a table,
+        # not a paragraph. Full detail remains in the source workbook.
+        lead = facts[0].replace('：', '为', 1) if '：' in facts[0] else facts[0]
+        context = facts[1].replace('：', '为', 1) if len(facts) > 1 and '：' in facts[1] else (facts[1] if len(facts) > 1 else '')
+        return (lead.rstrip('。') + ('，' + context.rstrip('。') if context else '') + '。' + judgment)
     missing = [FIELD_LABELS[fid] for fid in fields if fid in FIELD_LABELS and get(fid) is None]
     return judgment + ('须核对' + '、'.join(missing[:3]) + '的原件和适用性。' if missing else '')
 
@@ -1871,7 +1995,7 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
     # A single bounded conclusion is preferable to a repeated research-task
     # paragraph. The distinct next action, gaps and decision live in the
     # checklist; the Word body states only what this snapshot can support.
-    narrative = [claim]
+    narrative = [part for part in claim.split('\n\n') if part]
     return {
         "claim_id": f"CLAIM-{item_id}", "canonical_result_hash": model.result["result_hash"],
         "core_question": question,
@@ -1883,5 +2007,5 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
         "field_instance_ids": field_instance_ids, "source_ids": sources,
         "causal_reasoning": causal_reasoning, "decision": decision,
         "unresolved": unresolved, "next_action": next_action, "state": state,
-        "narrative": narrative, "summary": "".join(narrative),
+        "narrative": narrative, "summary": claim,
     }

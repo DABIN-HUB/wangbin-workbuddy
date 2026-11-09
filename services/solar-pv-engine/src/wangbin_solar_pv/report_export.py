@@ -124,7 +124,7 @@ _D_STYLE = {
 }
 
 REPORT_CONTENT_VERSION = "phase7l-r3-v1-professional-content-and-full-cash-bridge"
-R4_REPORT_CONTENT_VERSION = "phase7l-r4-v2-layout-and-formula-clarification"
+R4_REPORT_CONTENT_VERSION = "phase7l-r4-v4-project-led-narrative"
 
 
 @dataclass(frozen=True)
@@ -1961,9 +1961,25 @@ def _item_evidence(model: ReportModel, pv_type: str, chapter_id: str, title: str
     fields = category_fields(item_id, CHAPTER_FIELDS[chapter_id][item_no - 1], pv_type,
                              model.result["inputs"].get("normalized", {}).get("project.has_storage") is not False)
     metrics = CHAPTER_METRICS[chapter_id][item_no - 1]
+    # Reader-facing findings added beyond the frozen minimum subsection matrix
+    # must carry their own source/metric bindings in the checklist as well.
+    extra_fields = {
+        "CH01.01": ("project.evaluation_years",),
+        "CH07.01": ("system.module_count",),
+        "CH14.05": ("finance.debt_ratio",),
+    }
+    extra_metrics = {
+        "CH01.01": ("dc_capacity",),
+        "CH07.01": ("dc_ac_ratio",),
+        "CH10.05": ("revenue.year.1",),
+        "CH14.04": ("financial.capex.total",),
+    }
+    fields = tuple(dict.fromkeys((*fields, *extra_fields.get(item_id, ()))))
+    metrics = tuple(dict.fromkeys((*metrics, *extra_metrics.get(item_id, ()))))
     if item_id in {"CH01.05", "CH18.01"}:
         fields = tuple(dict.fromkeys((*fields, "site.rights_status", "grid.opinion_status")))
         metrics = (*metrics, "financial.phase3e.project_cash_flow")
+    metrics = tuple(dict.fromkeys(metrics))
     if pv_type == "utility_scale_ground" and item_id in {"CH01.04", "CH10.02"}:
         metrics = tuple(metric for metric in metrics if not metric.startswith("consumption."))
     claim = build_claim(model, item_id, title, f"{title}：{rule.rstrip('。')}？", rule,
@@ -2273,7 +2289,8 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
 
     for chapter_id, chapter_title, items in CHAPTERS:
         document.add_heading(f"{chapter_id} {chapter_title}", level=1)
-        document.add_paragraph(_chapter_intro(chapter_id, chapter_title))
+        # The first subsection supplies the substantive opening. A stock
+        # "本章说明…" paragraph before every chapter adds no project finding.
         if chapter_id == "CH08":
             chart_receipts = _add_canonical_charts(document, chart_specs, source_map, "发电量变化")
         for number, item in enumerate(items, 1):
@@ -2286,12 +2303,6 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 _add_table(document, ["任务", "开始", "结束", "持续时间", "前置任务", "计划性质"],
                            _plan_word_rows(model), "实施计划（中文任务类型由任务ID受控分类；任务ID及原名见来源清单）",
                            widths_cm=(4.8, 2.0, 2.0, 2.7, 2.6, 2.9))
-            if item_id == "CH14.04":
-                rate = model.result["inputs"].get("normalized", {}).get("capex.contingency_rate")
-                if isinstance(rate, (int, float, Decimal)) and not isinstance(rate, bool):
-                    document.add_paragraph(f"预备费率{_word_number(Decimal(str(rate)) * 100)}%已登记为输入，"
-                                           "当前汇总与建设期账簿没有另按该费率单列费用；"
-                                           "能否认定分项报价内含预备费仍须核查。完整分项和期间边界见APP04。")
             checklist.append({"id": item_id, "title": item,
                               "content_summary": evidence["summary"][:600], "input_field_ids": evidence["field_ids"],
                               "metric_ids": evidence["metric_ids"], "source_ids": evidence["source_ids"],
