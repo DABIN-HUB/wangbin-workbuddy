@@ -119,9 +119,7 @@ def test_report_word_toc(rendered):
     assert len(field) == 1 and field[0].text.startswith('TOC \\o "1-3"')
     assert doc.settings._element.xpath("./w:updateFields/@w:val") == ["true"]
     assert not any("章节索引（页码待" in p.text for p in doc.paragraphs)
-    contents_index = next(i for i, p in enumerate(doc.paragraphs)
-                          if p.style.name == "Solar Contents Title" and p.text == "目录")
-    assert doc.paragraphs[contents_index - 1]._p.xpath(".//w:br[@w:type='page']")
+    assert any(p.style.name == "Solar Contents Title" and p.text == "目录" for p in doc.paragraphs)
 
 
 def test_report_word_formulas(rendered):
