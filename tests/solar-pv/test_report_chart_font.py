@@ -32,8 +32,10 @@ def test_embedded_png_uses_a_verified_chinese_font(monkeypatch):
     missing_shape = missing.size, bytes(missing)
     assert all((font.getmask(char).size, bytes(font.getmask(char))) != missing_shape
                for char in set(title) if not char.isspace())
-    assert any(text.startswith("发电量（kWh）") and axis_font is not None
+    assert any(text.startswith("发电量（") and axis_font is not None
                and getattr(axis_font, "path", None) for text, axis_font in rendered)
+    assert any(text == "kWh" and axis_font.getname()[0] == "Times New Roman"
+               for text, axis_font in rendered)
 
 
 def test_missing_chinese_font_fails_instead_of_rendering_boxes(monkeypatch):

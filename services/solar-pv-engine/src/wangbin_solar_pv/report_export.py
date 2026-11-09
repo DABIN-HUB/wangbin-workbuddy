@@ -29,10 +29,11 @@ from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from docx import Document
 from docx.enum.table import WD_TABLE_ALIGNMENT, WD_CELL_VERTICAL_ALIGNMENT
+from docx.enum.section import WD_SECTION_START
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
-from docx.shared import Cm, Mm, Pt, RGBColor
+from docx.shared import Cm, Pt
 from openpyxl.chart import LineChart, Reference
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Alignment, Font, PatternFill
@@ -45,6 +46,7 @@ from .local_files import Workspace
 from .report_narrative import guidance, validate_fixture
 from .report_claims import APPENDIX_RULES, APPENDIX_TITLES, CHAPTER_FIELDS, CHAPTER_METRICS, RESOURCE_MONTHLY_UNITS, build_claim, category_fields, _dataset_rows, _source_value
 from .report_resource_display import prepare_resource_word_rows
+from .report_word_styles import WORD_FORMAT, borders as word_table_borders, configure as configure_word, equation_paragraph, set_run_font
 from .serialization import dumps
 from .source_xlsx import create_source_workbook
 
@@ -416,7 +418,7 @@ def _chart_axis_labels(spec: dict[str, Any]) -> tuple[str, str, str]:
 def _chart_font_candidates() -> tuple[Path, ...]:
     """Use installed local fonts rather than the default font's tofu boxes."""
     windows = Path(os.getenv("WINDIR", "C:/Windows")) / "Fonts"
-    return (windows / "msyh.ttc", windows / "simhei.ttf",
+    return (windows / "simsun.ttc", windows / "msyh.ttc", windows / "simhei.ttf",
             Path("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"),
             Path("/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc"),
             Path("/System/Library/Fonts/PingFang.ttc"))
@@ -430,7 +432,7 @@ def _chart_fonts(labels: tuple[str, str, str]) -> tuple[dict[str, ImageFont.Free
             continue
         try:
             fonts = {name: ImageFont.truetype(str(path), size)
-                     for name, size in (("title", 28), ("label", 20), ("tick", 18))}
+                     for name, size in (("title", 28), ("label", 22), ("tick", 22))}
             title_font = fonts["title"]
             missing = title_font.getmask("\U0010ffff")
             missing_shape = missing.size, bytes(missing)
@@ -451,21 +453,39 @@ def _chart_png(spec: dict[str, Any], *, font_metadata: dict[str, Any] | None = N
     draw = ImageDraw.Draw(image)
     title, x_label, y_label = _chart_axis_labels(spec)
     fonts, selected = _chart_fonts((title, x_label, y_label))
+    western_candidates = (Path(os.getenv("WINDIR", "C:/Windows")) / "Fonts" / "times.ttf",
+                          Path("/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman.ttf"),
+                          Path("/Library/Fonts/Times New Roman.ttf"))
+    western_path = next((candidate for candidate in western_candidates if candidate.is_file()), None)
+    if western_path is None:
+        raise ContractError("REPORT_CHART_WESTERN_FONT_MISSING")
+    western = {name: ImageFont.truetype(str(western_path), font.size)
+               for name, font in fonts.items()}
+    selected["western_path"] = str(western_path)
+    selected["western_family"] = western["title"].getname()[0]
     if font_metadata is not None:
         font_metadata.update(selected)
-    draw.text((86, 15), title, fill=f"#{_D_STYLE['ink']}", font=fonts["title"])
-    draw.text((86, 52), y_label, fill=f"#{_D_STYLE['muted']}", font=fonts["label"])
+    def draw_mixed(xy, text, role):
+        x, y = xy
+        for segment in re.findall(r"[\x00-\x7f]+|[^\x00-\x7f]+", text):
+            font = western[role] if segment.isascii() else fonts[role]
+            draw.text((x, y), segment, fill="#000000", font=font)
+            x += draw.textlength(segment, font=font)
+        return x - xy[0]
+
+    draw_mixed((86, 15), title, "title")
+    draw_mixed((86, 52), y_label, "label")
     left, top, right, bottom = 98, 100, width - 36, height - 68
-    label_width = draw.textbbox((0, 0), x_label, font=fonts["label"])[2]
-    draw.text(((left + right - label_width) // 2, height - 30), x_label,
-              fill=f"#{_D_STYLE['muted']}", font=fonts["label"])
+    label_width = sum(draw.textlength(part, font=western["label"] if part.isascii() else fonts["label"])
+                      for part in re.findall(r"[\x00-\x7f]+|[^\x00-\x7f]+", x_label))
+    draw_mixed(((left + right - label_width) // 2, height - 30), x_label, "label")
     values = spec["values"]
     ticks, y_values = _chart_axis_geometry(values, top=top, bottom=bottom)
     for tick, y in ticks:
-        draw.line((left, y, right, y), fill=f"#{_D_STYLE['line']}", width=1)
-        draw.text((8, y - 9), f"{tick:,.0f}", fill=f"#{_D_STYLE['muted']}", font=fonts["tick"])
-    draw.line((left, top, left, bottom), fill=f"#{_D_STYLE['ink']}", width=2)
-    draw.line((left, bottom, right, bottom), fill=f"#{_D_STYLE['ink']}", width=2)
+        draw.line((left, y, right, y), fill="#D0D0D0", width=1)
+        draw_mixed((8, y - 9), f"{tick:,.0f}", "tick")
+    draw.line((left, top, left, bottom), fill="#000000", width=2)
+    draw.line((left, bottom, right, bottom), fill="#000000", width=2)
     step = (right - left) / max(1, len(values) - 1)
     points = []
     for index, y in enumerate(y_values):
@@ -473,10 +493,10 @@ def _chart_png(spec: dict[str, Any], *, font_metadata: dict[str, Any] | None = N
         points.append((x, y))
         if len(values) <= 12 or index == 0 or (index + 1) % 5 == 0 or index == len(values) - 1:
             label = str(index + 1).zfill(2)
-            draw.text((x - 10, bottom + 12), label, fill=f"#{_D_STYLE['muted']}", font=fonts["tick"])
-    draw.line(points, fill=f"#{_D_STYLE['accent']}", width=4, joint="curve")
+            draw_mixed((x - 10, bottom + 12), label, "tick")
+    draw.line(points, fill="#000000", width=4, joint="curve")
     for x, y in points:
-        draw.ellipse((x - 5, y - 5, x + 5, y + 5), fill=f"#{_D_STYLE['accent']}")
+        draw.ellipse((x - 5, y - 5, x + 5, y + 5), fill="#FFFFFF", outline="#000000", width=2)
     stream = BytesIO()
     image.save(stream, format="PNG", optimize=True)
     stream.seek(0)
@@ -1044,61 +1064,42 @@ def _write_model_xlsx(model: ReportModel, output: Path, pv_type: str) -> dict[st
             "sheets": [name for _, name in MODEL_SHEETS], "mode": "STATIC_SNAPSHOT", "charts": charts}
 
 
-def _set_cell_shading(cell, fill: str) -> None:
-    tc_pr = cell._tc.get_or_add_tcPr()
-    shd = OxmlElement("w:shd")
-    shd.set(qn("w:fill"), fill)
-    tc_pr.append(shd)
-
-
 def _add_table(document: Document, headers: list[str], rows: list[list[Any]], caption: str | None = None,
-               *, widths_cm: tuple[float, ...] | None = None, font_size: float = 8.5) -> None:
+               *, widths_cm: tuple[float, ...] | None = None) -> None:
     if caption:
-        paragraph = document.add_paragraph(caption)
-        paragraph.style = "Caption"
+        paragraph = document.add_paragraph(f"表 {len(document.tables) + 1} {caption}", style="Caption")
         paragraph.paragraph_format.keep_with_next = True
-        for run in paragraph.runs:
-            run.font.color.rgb = RGBColor.from_string(_D_STYLE["muted"])
     table = document.add_table(rows=1, cols=len(headers))
-    table.style = "Table Grid"
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     table.autofit = False
+    widths = (tuple(widths_cm) if widths_cm and len(widths_cm) == len(headers)
+              else (WORD_FORMAT.text_width_cm / len(headers),) * len(headers))
+    scale = min(1.0, WORD_FORMAT.text_width_cm / sum(widths))
+    widths = tuple(width * scale for width in widths)
     tbl_pr = table._tbl.tblPr
     layout = tbl_pr.first_child_found_in("w:tblLayout")
     if layout is None:
         layout = OxmlElement("w:tblLayout")
         tbl_pr.append(layout)
     layout.set(qn("w:type"), "fixed")
-    if widths_cm:
-        for column, width in enumerate(widths_cm):
-            for cell in table.columns[column].cells:
-                cell.width = Cm(width)
-    tbl_width = sum(widths_cm) if widths_cm else 0
-    if tbl_width:
-        tbl_w = tbl_pr.first_child_found_in("w:tblW")
-        if tbl_w is None:
-            tbl_w = OxmlElement("w:tblW")
-            tbl_pr.insert(0, tbl_w)
-        tbl_w.set(qn("w:w"), str(int(tbl_width * 567)))
-        tbl_w.set(qn("w:type"), "dxa")
+    for column, width in enumerate(widths):
+        table.columns[column].width = Cm(width)
+    tbl_w = tbl_pr.first_child_found_in("w:tblW")
+    if tbl_w is None:
+        tbl_w = OxmlElement("w:tblW")
+        tbl_pr.insert(0, tbl_w)
+    tbl_w.set(qn("w:w"), str(int(sum(widths) * 567)))
+    tbl_w.set(qn("w:type"), "dxa")
     for index, header in enumerate(headers):
         cell = table.rows[0].cells[index]
         cell.text = _string(header)
-        _set_cell_shading(cell, _D_STYLE["ink"])
-        cell_pr = cell._tc.get_or_add_tcPr()
-        margins = cell_pr.first_child_found_in("w:tcMar")
-        if margins is None:
-            margins = OxmlElement("w:tcMar")
-            cell_pr.append(margins)
-        for side in ("top", "start", "bottom", "end"):
-            margin = OxmlElement(f"w:{side}")
-            margin.set(qn("w:w"), "72")
-            margin.set(qn("w:type"), "dxa")
-            margins.append(margin)
-        for run in cell.paragraphs[0].runs:
-            run.font.bold = True
-            run.font.color.rgb = RGBColor.from_string(_D_STYLE["white"])
-            run.font.size = Pt(font_size)
+        cell.width = Cm(widths[index])
+        for paragraph in cell.paragraphs:
+            paragraph.style = "Solar Table"
+            paragraph.alignment = WD_ALIGN_PARAGRAPH.LEFT
+            paragraph.paragraph_format.keep_with_next = False
+            for run in paragraph.runs:
+                set_run_font(run, size=WORD_FORMAT.table_pt, bold=True)
 
     header_pr = table.rows[0]._tr.get_or_add_trPr()
     header_pr.append(OxmlElement("w:tblHeader"))
@@ -1106,30 +1107,20 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
     for cell in table.rows[0].cells:
         for paragraph in cell.paragraphs:
             paragraph.paragraph_format.keep_with_next = True
-    for row_index, row in enumerate(rows, 1):
+    for row in rows:
         cells = table.add_row().cells
         for index, value in enumerate(row):
             cells[index].text = _string(value)
+            cells[index].width = Cm(widths[index])
             cells[index].vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.TOP
-            cell_pr = cells[index]._tc.get_or_add_tcPr()
-            margins = cell_pr.first_child_found_in("w:tcMar")
-            if margins is None:
-                margins = OxmlElement("w:tcMar")
-                cell_pr.append(margins)
-            for side in ("top", "start", "bottom", "end"):
-                margin = OxmlElement(f"w:{side}")
-                margin.set(qn("w:w"), "72")
-                margin.set(qn("w:type"), "dxa")
-                margins.append(margin)
-            if row_index % 2 == 0:
-                _set_cell_shading(cells[index], _D_STYLE["surface"])
-            for run in cells[index].paragraphs[0].runs:
-                run.font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
-                run.font.size = Pt(font_size)
-            if widths_cm and index < len(widths_cm):
-                cells[index].width = Cm(widths_cm[index])
+            for paragraph in cells[index].paragraphs:
+                paragraph.style = "Solar Table"
+                paragraph.alignment = WD_ALIGN_PARAGRAPH.LEFT
+                for run in paragraph.runs:
+                    set_run_font(run, size=WORD_FORMAT.table_pt)
         tr_pr = cells[0]._tc.getparent().get_or_add_trPr()
         tr_pr.append(OxmlElement("w:cantSplit"))
+    word_table_borders(table)
 
 
 
@@ -1145,7 +1136,9 @@ def _add_canonical_charts(document: Document, specs: list[dict[str, Any]], sourc
         paragraph = document.add_paragraph()
         paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
         font_metadata: dict[str, Any] = {}
-        paragraph.add_run().add_picture(_chart_png(spec, font_metadata=font_metadata), width=Cm(16.4))
+        paragraph.add_run().add_picture(_chart_png(spec, font_metadata=font_metadata), width=Cm(WORD_FORMAT.text_width_cm))
+        figure_no = len(receipts) + 1
+        document.add_paragraph(f"图 8.{figure_no} {spec['title']}", style="Caption")
         document.add_paragraph(
             f"图示反映{spec.get('title', '本次发电量测算')}。数据来自当前合成测算的已计算序列，"
             f"资料引用 {_word_sources(spec['source_ids'], source_map)}；完整计算绑定见测算模型和资料来源清单。"
@@ -1158,21 +1151,16 @@ def _add_canonical_charts(document: Document, specs: list[dict[str, Any]], sourc
 
 
 def _add_toc(document: Document) -> None:
-    """Cache a readable outline inside a real TOC field; no invented pages."""
-    paragraph = document.add_paragraph()
+    """A real, refreshable Word TOC with no made-up cached page numbers."""
+    paragraph = document.add_paragraph(style="TOC 1")
     paragraph.paragraph_format.space_after = Pt(6)
     run = paragraph.add_run()
     begin = OxmlElement("w:fldChar"); begin.set(qn("w:fldCharType"), "begin"); begin.set(qn("w:dirty"), "true")
     instruction = OxmlElement("w:instrText"); instruction.set(qn("xml:space"), "preserve"); instruction.text = 'TOC \\o "1-3" \\h \\z \\u'
     separate = OxmlElement("w:fldChar"); separate.set(qn("w:fldCharType"), "separate")
     run._r.extend((begin, instruction, separate))
-    document.add_paragraph("章节索引（页码待 Word/渲染器刷新）")
-    for chapter_id, chapter_title, _items in CHAPTERS:
-        document.add_paragraph(f"{chapter_id} {chapter_title}")
-    for app_id, app_title in APPENDICES:
-        document.add_paragraph(f"{app_id} {app_title}")
     end = OxmlElement("w:fldChar"); end.set(qn("w:fldCharType"), "end")
-    document.paragraphs[-1].add_run()._r.append(end)
+    paragraph.add_run()._r.append(end)
     settings = document.settings._element
     update = settings.find(qn("w:updateFields"))
     if update is None:
@@ -2233,93 +2221,34 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     profile = REPORT_PROFILES[pv_type]
     source_map = _source_ref_map(model)
     document = Document()
-    section = document.sections[0]
-    section.page_width = Mm(210)
-    section.page_height = Mm(297)
-    section.top_margin = Mm(18)
-    section.bottom_margin = Mm(18)
-    section.left_margin = Mm(22)
-    section.right_margin = Mm(18)
-    section.header_distance = Mm(8)
-    section.footer_distance = Mm(8)
-    styles = document.styles
-    styles["Normal"].font.name = "等线"
-    styles["Normal"]._element.rPr.rFonts.set(qn("w:eastAsia"), "等线")
-    styles["Normal"].font.size = Pt(10)
-    styles["Normal"].font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
-    styles["Normal"].paragraph_format.line_spacing = 1.15
-    styles["Normal"].paragraph_format.space_after = Pt(4)
-    for heading, size in (("Heading 1", 15), ("Heading 2", 11.5), ("Heading 3", 10.5)):
-        styles[heading].font.name = "黑体"
-        styles[heading]._element.rPr.rFonts.set(qn("w:eastAsia"), "黑体")
-        styles[heading].font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
-        styles[heading].font.size = Pt(size)
-        styles[heading].paragraph_format.space_before = Pt(10 if heading == "Heading 1" else 6)
-        styles[heading].paragraph_format.space_after = Pt(4)
-        styles[heading].paragraph_format.keep_with_next = True
-    header = section.header.paragraphs[0]
-    header.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    header_run = header.add_run(f"{profile['title']} · 阶段性草稿")
-    header_run.font.size = Pt(8)
-    header_run.font.color.rgb = RGBColor.from_string(_D_STYLE["muted"])
-
-    # D-style cover: one restrained page, no audit hashes or raw status table.
-    brand = document.add_paragraph()
-    brand.paragraph_format.space_before = Pt(28)
-    brand_run = brand.add_run("星核实验室  StarCore Lab")
-    brand_run.bold = True
-    brand_run.font.size = Pt(11)
-    brand_run.font.color.rgb = RGBColor.from_string(_D_STYLE["accent"])
-    title = document.add_paragraph()
-    title.paragraph_format.space_before = Pt(36)
-    title_run = title.add_run(profile["title"])
-    title_run.bold = True
-    title_run.font.size = Pt(23)
-    title_run.font.name = "黑体"
-    title_run.font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
-    rule = document.add_paragraph("━━━━━━━━━━━━━━━━━━━━━━━━")
-    rule.paragraph_format.space_after = Pt(14)
-    for run in rule.runs:
-        run.font.color.rgb = RGBColor.from_string(_D_STYLE["accent"])
-        run.font.size = Pt(10)
-    project = document.add_paragraph(display_name)
-    project.paragraph_format.space_after = Pt(16)
-    for run in project.runs:
-        run.bold = True
-        run.font.size = Pt(16)
-        run.font.color.rgb = RGBColor.from_string(_D_STYLE["ink"])
+    configure_word(document)
+    document.core_properties.keywords = WORD_FORMAT.identifier
+    document.add_paragraph("星核实验室 StarCore Lab", style="Solar Cover Info")
+    document.add_paragraph(profile["title"], style="Solar Cover Title")
+    document.add_paragraph(display_name, style="Solar Cover Subtitle")
     synthetic_calculation = (str(model.result["project_id"]).startswith("SYNTHETIC")
                              and model.result["maturity"].get("real_project") != "VERIFIED")
     sample_status = ("合成计算 · 部分结果 · 未经现场核验"
                      if synthetic_calculation else "资料不充分样件 · 阶段性草稿")
     if editorial_fixture:
         sample_status = "合成计算及编辑假设样件 · 结果仍为部分完成"
-    _add_table(document, ["项目类型", "编制状态", "评价日期"],
-               [[profile["boundary"], sample_status, str(model.result["evaluation_date"])]],
-               widths_cm=(5.3, 6.0, 5.7), font_size=9)
+    for label, value in (("项目类型", profile["boundary"]), ("编制状态", sample_status),
+                         ("评价日期", str(model.result["evaluation_date"]))):
+        document.add_paragraph(f"{label}：{value}", style="Solar Cover Info")
     cover_note = document.add_paragraph("本报告为基于本次统一测算结果的预可研开发样件。计算结果、资料成熟度和财务限制均按当前状态呈现，不替代正式可研、设计审查、并网意见、合同审核或投资决策。")
-    cover_note.paragraph_format.space_before = Pt(20)
-    cover_note.paragraph_format.line_spacing = 1.3
+    cover_note.paragraph_format.space_before = Pt(16)
     if editorial_fixture:
         identity_note = document.add_paragraph("资料身份：EDITORIAL_TEST_ASSUMPTION（仅用于合成项目编辑性测试，不作为真实第三方证据，也不进入计算引擎）。")
         identity_note.paragraph_format.space_before = Pt(8)
-        for run in identity_note.runs:
-            run.font.size = Pt(9)
-            run.font.color.rgb = RGBColor.from_string(_D_STYLE["muted"])
     cover_footer = document.add_paragraph("版本状态：阶段性草稿  ·  仅限本地审阅  ·  资料不足，暂不具备决策条件")
-    for run in cover_footer.runs:
-        run.font.size = Pt(9)
-        run.font.color.rgb = RGBColor.from_string(_D_STYLE["muted"])
-    document.add_page_break()
-
-    document.add_paragraph("目录", style="Title")
-    _add_toc(document)
-    document.add_page_break()
-    document.add_heading("执行摘要", level=1)
+    front = document.add_section(WD_SECTION_START.NEW_PAGE)
+    front.header.is_linked_to_previous = False
+    front.footer.is_linked_to_previous = False
+    document.add_paragraph("摘要", style="Solar Abstract Title")
     basis_text = ("本阶段同时使用明确标识的编辑性测试假设，用于检验工程背景与计算结果的衔接；这些假设不进入计算引擎，也不构成第三方证据。"
                   if editorial_fixture else
                   "本次使用当前来源快照及已计算指标；缺失或未核验的真实工程事实不以占位值补足，具体项目收益见下表与初步结论。")
-    document.add_paragraph(f"本项目属于{profile['boundary']}。{basis_text}以下结果按指标实际状态列示，不以整体部分完成状态覆盖已计算项目指标。")
+    document.add_paragraph(f"本项目属于{profile['boundary']}。{basis_text}以下结果按指标实际状态列示，不以整体部分完成状态覆盖已计算项目指标。", style="Solar Abstract")
     key_ids = ("dc_capacity", "ac_capacity", "energy.year.1", "consumption.year.1",
                "energy.delivered.year.1", "revenue.year.1", "financial.capex.total",
                "financial.phase3e.project_npv", "financial.phase3e.project_irr",
@@ -2350,13 +2279,36 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             input_rows.append([_input_label(key), display, state, "详细字段见来源清单"])
     _add_table(document, ["建设及接网关键条件", "展示值", "采用情况", "追溯位置"], input_rows,
                "项目类型专属输入摘要（不展开原始对象）", widths_cm=(4.2, 5.0, 3.0, 5.0))
-    document.add_paragraph("初步结论：" + _project_summary(model))
+    document.add_paragraph("初步结论：" + _project_summary(model), style="Solar Abstract")
+    keywords = ("工商业屋顶光伏；发电量预测；厂区消纳；投资评价" if pv_type == "industrial_rooftop" else
+                "集中式地面光伏；发电量预测；并网送出；投资评价")
+    keyword_line = document.add_paragraph(style="Solar Keywords")
+    set_run_font(keyword_line.add_run("关键词"), chinese="黑体", size=12, bold=True)
+    keyword_line.add_run("：" + keywords)
+    document.add_paragraph("目录", style="Solar Contents Title")
+    _add_toc(document)
+    section = document.add_section(WD_SECTION_START.NEW_PAGE)
+    section.header.is_linked_to_previous = False
+    section.footer.is_linked_to_previous = False
+    header = section.header.paragraphs[0]
+    header.style = "Solar Header"
+    header.add_run(profile["title"])
+    footer = section.footer.paragraphs[0]
+    footer.style = "Solar Footer"
+    field = OxmlElement("w:fldSimple")
+    field.set(qn("w:instr"), "PAGE")
+    footer._p.append(field)
+    page_start = OxmlElement("w:pgNumType")
+    page_start.set(qn("w:start"), "1")
+    section._sectPr.append(page_start)
+    configure_word(document)
     chart_specs = _canonical_chart_specs(model)
     chart_receipts: list[dict[str, Any]] = []
     checklist: list[dict[str, Any]] = []
 
     for chapter_id, chapter_title, items in CHAPTERS:
-        document.add_heading(f"{chapter_id} {chapter_title}", level=1)
+        chapter_heading = document.add_heading(f"{chapter_id} {chapter_title}", level=1)
+        chapter_heading.paragraph_format.page_break_before = chapter_id != "CH01"
         # The first subsection supplies the substantive opening. A stock
         # "本章说明…" paragraph before every chapter adds no project finding.
         if chapter_id == "CH08":
@@ -2407,7 +2359,8 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
         else:
             document.add_paragraph("以下指标按各自阻断理由补证；不能由尚未计算的项目回报或其他指标推断有效收益。")
     for app_id, app_title in APPENDICES:
-        document.add_heading(f"{app_id} {app_title}", level=1)
+        appendix_heading = document.add_heading(f"{app_id} {app_title}", level=1)
+        appendix_heading.paragraph_format.page_break_before = True
         document.add_paragraph(f"{app_id}《{app_title}》提供受控追溯摘要；完整字段、原始精度和来源编号保留在配套 Excel。")
         for item_no in (1, 2):
             item_id = f"{app_id}.{item_no:02d}"
@@ -2631,11 +2584,11 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                     _add_table(document, ["期别", "上网回款（元）", "自用节费（元）", "预计另付交易费（元）",
                                           "运维现金（元）", "项目现金税费（元）", "列示舍入差额（元）", "运营收支净额（元）"],
                                detail_rows, "运营全期收支分项（原值分别显示取整；舍入差额仅为展示，不是现金事件；节费不是银行到账）",
-                               widths_cm=(1.75, 2.35, 2.05, 2.3, 2.15, 2.3, 1.75, 2.35), font_size=9)
+                               widths_cm=(1.75, 2.35, 2.05, 2.3, 2.15, 2.3, 1.75, 2.35))
                     _add_table(document, ["期别", "运营收支净额（元）", "资本支出付款（元）", "营运资金增加（元）",
                                           "营运资金回收（元）", "终期资产现金（元）", "项目净现金流（元）"],
                                bridge_rows, "建设至终期全期现金事件桥（更换已含在资本支出；营运回收不重复计入终期资产现金）",
-                               widths_cm=(2.0, 2.9, 2.65, 2.65, 2.65, 2.4, 2.75), font_size=9)
+                               widths_cm=(2.0, 2.9, 2.65, 2.65, 2.65, 2.4, 2.75))
                     final_ledger = model.result.get("evidence", {}).get("financial-ledger", {}).get("annual", [])
                     final_row = next((row for row in final_ledger if row.get("period") == "OPERATING_YEAR_25"), None)
                     if final_row is not None:
@@ -2691,7 +2644,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 if item_id == "APP11.01" and appendix_rows:
                     _add_table(document, ["正式编号", "中文名称", "本次引用与执行"],
                                [[row[0], row[1], row[5]] for row in appendix_rows],
-                               "公式索引（不等于冻结公式全部执行）", font_size=9)
+                               "公式索引（不等于冻结公式全部执行）")
                     npv_outputs = [m for m in model.metrics if m.get("formula_id") == "F-NPV"]
                     if npv_outputs:
                         statuses = {"CALCULATED": "已计算", "NOT_IMPLEMENTED": "本阶段方法未实现"}
@@ -2709,13 +2662,13 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                         document.add_paragraph("相同契约仅在此处完整定义一次；每条公式在下方注明所适用的组号。逐符号定义及量纲仍逐公式列出。")
                         for label, text, number in shared:
                             document.add_paragraph(f"{label}第{number}组：{text}")
-                    for formula in definitions:
+                    for formula_no, formula in enumerate(definitions, 1):
                         fid = formula["formula_id"]
-                        heading = document.add_heading(f"{fid} {formula.get('chinese_name', '未定义')}", level=3)
+                        document.add_heading(f"{fid} {formula.get('chinese_name', '未定义')}", level=3)
                         equation = formula.get("text_equation") or formula.get("latex") or "未提供"
                         unit = formula.get("unit") or "未定义"
-                        unit_separator = "\n" if fid == "F-EQUITY-AVAILABLE-CASH-FLOW" else ""
-                        document.add_paragraph(f"公式：{equation}{unit_separator}（结果单位：{unit}）")
+                        equation_paragraph(document, equation, f"（11-{formula_no}）")
+                        document.add_paragraph(f"结果单位：{unit}", style="Solar Formula Note")
                         document.add_paragraph("适用边界：" + _reader_text(str(formula.get("calculation_boundary") or "未定义")))
                         document.add_paragraph("本项目状态：" + _formula_status(model, fid))
                         references = [f"{label}第{shared_ids[key, _formula_contract_text(formula[key])]}组"
@@ -2730,13 +2683,13 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                     s.get("unit") or "未定义"] for s in formula.get("every_symbol_definition", ())]
                         if symbols:
                             _add_table(document, ["完整符号", "中文定义", "单位"], symbols,
-                                       "完整符号（仅属于本公式）", widths_cm=(3, 11, 3), font_size=9)
+                                       "完整符号（仅属于本公式）", widths_cm=(3, 11, 3))
                         index_lines = _formula_index_lines(formula)
                         if index_lines:
                             document.add_paragraph("下标、索引、集合与求和范围：" + "；".join(index_lines))
                 elif appendix_rows:
                     _add_table(document, appendix_headers, appendix_rows,
-                               f"{item_id} · 受控编辑词典", font_size=9)
+                               f"{item_id} · 受控编辑词典")
             checklist.append({"id": item_id, "title": item_title,
                               "content_summary": evidence["summary"][:600], "input_field_ids": evidence["field_ids"],
                               "metric_ids": evidence["metric_ids"], "source_ids": evidence["source_ids"],
@@ -2759,13 +2712,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     document.add_heading("版本与质量声明", level=1)
     document.add_paragraph(f"项目边界：{profile['boundary']}。报告内容版本：{content_version}；该版本只表示写作与排版，不修改计算结果身份。配套 Excel 为本次测算快照；修改 Excel 不会使本报告或旧结果自动有效，必须重新运行计算程序生成新的统一身份。PDF 只有在真实转换器可用并成功解析时才生成；本次渲染、页面视觉和目录页码门禁以质量清单实际状态为准。")
     _add_table(document, ["身份字段", "统一测算值"], [[key, str(value)] for key, value in model.identity.items()],
-               "统一测算身份（仅在此处展示一次）", widths_cm=(4.5, 12.5), font_size=8.5)
-    footer = section.footer.paragraphs[0]
-    footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    footer.add_run("合成分析草稿 · 真实项目须经专业核验 · ")
-    fld = OxmlElement("w:fldSimple")
-    fld.set(qn("w:instr"), "PAGE")
-    footer._p.append(fld)
+               "统一测算身份（仅在此处展示一次）", widths_cm=(4.5, 12.5))
     coverage = _validate_checklist_coverage(checklist)
     claim_fields = ("claim_id", "core_question", "central_claim", "claim_status",
                     "causal_reasoning", "decision", "unresolved", "next_action")
@@ -2784,11 +2731,12 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     os.replace(tmp, output)
     return {"path": output.name, "size": output.stat().st_size, "sha256": _sha256(output),
             "report_content_version": content_version,
+            "word_format_version": WORD_FORMAT.identifier,
             **coverage,
             "charts": chart_receipts, "content_checklist": checklist,
             "duplicate_scan": duplicate_scan, "language_scan": language_scan,
             "toc_status": "FIELD_REQUIRES_RENDER_REFRESH",
-            "page_size": "A4", "table_policy": "COMPACT_SUMMARY_AND_XLSX_TRACEABILITY"}
+            "page_size": "A4", "table_policy": "BLACK_WHITE_THREE_LINE_AND_XLSX_TRACEABILITY"}
 
 
 def _sha256(path: Path) -> str:
@@ -2931,7 +2879,8 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
             "PAGE_SIZE_A4": files["F01"].get("page_size", "UNKNOWN"),
             "COVER_STYLE_D": "GENERATED",
             "TOC_VALID": files["F01"].get("toc_status", "UNKNOWN"),
-            "TABLE_LAYOUT": "COMPACT_SUMMARY_AND_XLSX_TRACEABILITY",
+            "WORD_FORMAT_PROFILE": files["F01"].get("word_format_version", "UNKNOWN"),
+            "TABLE_LAYOUT": files["F01"].get("table_policy", "UNKNOWN"),
             "CONTENT_READABILITY": "NOT_TESTED_RENDER",
             "NO_OVERFLOW": "NOT_TESTED_RENDER",
             "NO_DUPLICATE_TEMPLATE_ABUSE": "CONTENT_REVIEW_REQUIRED",

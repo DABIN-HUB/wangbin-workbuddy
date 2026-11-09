@@ -45,7 +45,7 @@ def test_partial_snapshot_keeps_calculated_project_returns_separate_from_blocked
     model, document, _ = exported
     assert model.result["status"] == "PARTIAL"
     paragraphs = [p.text for p in document.paragraphs]
-    begin = paragraphs.index("执行摘要")
+    begin = paragraphs.index("摘要")
     summary = "\n".join(paragraphs[begin:paragraphs.index("CH01 执行摘要与初步结论", begin)])
     assert "项目净现值" in summary and "项目内部收益率" in summary and "回收期" in summary
     assert "营运资金" in summary and "后期更换" in summary and "25年" in summary
@@ -89,7 +89,7 @@ def test_formula_groups_keep_all_symbols_once_and_shared_index_once(exported):
                    *model.result["formula_snapshot"]["financial_definitions"].values()]
     _, symbols = _appendix_rows(model, "APP11.02")
     assert len({p.text.split(" ", 1)[0] for p in document.paragraphs
-                if p.style.name == "Heading 3" and p.text.startswith("F-")}) == 42
+                if p.style.name == "Heading 3" and p.text.startswith("F-")}) == 89
     fid = "F-ANNUAL-OPEX"
     formula = next(f for f in definitions if f["formula_id"] == fid)
     assert {row[1] for row in symbols if row[0] == fid} == {s["symbol"] for s in formula["every_symbol_definition"]}
@@ -215,7 +215,8 @@ def test_delivered_r3_word_workbooks_and_canonical_keep_project_metric_identity(
     assert result["result_hash"] == prior["result_hash"]
     model = ReportModel.from_result(result, Catalog())
     assert manifest["identity"] == model.identity
-    assert manifest["report_content_version"] == REPORT_CONTENT_VERSION
+    # This is an immutable R3 archive, not a fresh export using today's default.
+    assert manifest["report_content_version"] == "phase7l-r3-v1-professional-content-and-full-cash-bridge"
     for key in ("F01", "F03", "F04", "F06"):
         entry = manifest["files"][key]
         artifact = folder / entry.get("path", entry.get("file"))
