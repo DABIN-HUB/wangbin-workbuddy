@@ -2285,6 +2285,11 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     keyword_line = document.add_paragraph(style="Solar Keywords")
     set_run_font(keyword_line.add_run("关键词"), chinese="黑体", size=12, bold=True)
     keyword_line.add_run("：" + keywords)
+    # Keep the contents front matter independent from the abstract's closing
+    # tables and keyword line.  A TOC that starts in the remaining space on
+    # the abstract page is difficult to scan and can split its first entries
+    # away from the contents heading.
+    document.add_page_break()
     document.add_paragraph("目录", style="Solar Contents Title")
     _add_toc(document)
     section = document.add_section(WD_SECTION_START.NEW_PAGE)
