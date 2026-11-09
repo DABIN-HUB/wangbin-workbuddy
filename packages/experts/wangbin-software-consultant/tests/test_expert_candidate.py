@@ -1,8 +1,10 @@
 """Local static/packaging checks; these do not simulate WorkBuddy conversations."""
 from __future__ import annotations
 
+import io
 import json
 import shutil
+import subprocess
 import zipfile
 from decimal import Decimal
 from pathlib import Path
@@ -40,14 +42,37 @@ def test_invalid_agent_name_is_rejected(tmp_path: Path):
 
 
 def test_zip_members_are_exact_and_source_identical():
-    archive_path = ROOT / "dist" / f"{NAME}-{VERSION}-expert-candidate.zip"
-    assert archive_path.is_file(), "build the Phase 5 candidate before running this check"
-    with zipfile.ZipFile(archive_path) as archive:
-        assert archive.testzip() is None
-        assert set(archive.namelist()) == {f"{NAME}/{rel}" for rel in MEMBERS}
-        for rel in MEMBERS:
-            assert archive.read(f"{NAME}/{rel}") == (SOURCE / rel).read_bytes()
-    assert (ROOT / "dist" / f"{archive_path.name}.sha256").is_file()
+    """Replay 1.0.0 source identity from its immutable Git baseline, NOT a historical release ZIP.
+
+    The historical ZIP is absent, and the Phase 5 report describes four members
+    while the committed packager declares five. Never rebuild the old dist name
+    from today's changed Agent, or mistake this in-memory replay for that ZIP.
+    Historical release ZIP byte/hash comparison remains NOT_TESTED.
+    """
+    baseline = "67d0fe8cfa5d71b53cc46d79bbaec620638dd1e0"
+    def old_bytes(rel: str) -> bytes:
+        return subprocess.run(
+            ["git", "show", f"{baseline}:packages/experts/{NAME}/{rel}"],
+            cwd=ROOT, check=True, capture_output=True,
+        ).stdout
+
+    original = {f"{NAME}/{rel}": old_bytes(rel) for rel in MEMBERS}
+    identity = json.loads(original[f"{NAME}/.codebuddy-plugin/plugin.json"])
+    assert (identity["name"], identity["version"], identity["agents"]) == (
+        NAME, VERSION, [f"./agents/{NAME}.md"])
+    assert set(original) == {f"{NAME}/{rel}" for rel in MEMBERS}
+    memory = io.BytesIO()
+    with zipfile.ZipFile(memory, "w", compression=zipfile.ZIP_DEFLATED) as candidate:
+        for member, payload in sorted(original.items()):
+            candidate.writestr(member, payload)
+    with zipfile.ZipFile(io.BytesIO(memory.getvalue())) as candidate:
+        assert candidate.testzip() is None
+        assert candidate.namelist() == sorted(original)
+        for member, payload in original.items():
+            assert candidate.read(member) == payload
+    # Today's Agent changed after the baseline. Comparing it to a 1.0.0 ZIP
+    # would falsely claim historical source identity; preserve both histories.
+    assert original[f"{NAME}/agents/{NAME}.md"] != (SOURCE / "agents" / f"{NAME}.md").read_bytes()
 
 
 def test_pricing_reference_example_recalculates_without_unknown_third_party_cost():
