@@ -50,8 +50,19 @@ def validate():
     versions = entry['versions']
     if [v['version'] for v in versions] != ['0.1.0', '0.1.1', '0.1.2', '0.1.3', '0.1.4', '0.1.5']:
         raise ValueError('history metadata drift')
-    if any(v['candidate'] != 'UNKNOWN' or v['sha256'] != 'UNKNOWN' for v in versions):
+    if any(v['candidate'] != 'UNKNOWN' or v['sha256'] != 'UNKNOWN' or v['published_at'] != 'UNKNOWN' for v in versions[:-1]):
         raise ValueError('excluded historical candidate referenced')
+    current = versions[-1]
+    candidate = f'dist/{NAME}-{version}-skill-candidate.zip'
+    if current['candidate'] != candidate:
+        raise ValueError('current candidate path mismatch')
+    archive = ROOT / candidate
+    if archive.is_symlink() or (hasattr(archive, 'is_junction') and archive.is_junction()):
+        raise ValueError('linked candidate forbidden')
+    if not archive.is_file() or current['sha256'] != sha(archive.read_bytes()):
+        raise ValueError('current candidate SHA-256 mismatch')
+    if current['published_at'] != 'UNKNOWN' or entry['published_at'] != 'UNKNOWN' or entry['review_status'] != 'NOT_TESTED' or entry['status'] != 'DEVELOPING':
+        raise ValueError('unexpected publication or review status')
     return data
 
 
@@ -110,6 +121,8 @@ def main():
         return
     if args.output is None:
         parser.error('--output required for package/verify')
+    if args.action == 'verify' and args.output.absolute() != (ROOT / f'dist/{NAME}-0.1.5-skill-candidate.zip').absolute():
+        raise ValueError('verify output is not the registered candidate')
     result = package(args.output, data) if args.action == 'package' else verify(args.output, data)
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
