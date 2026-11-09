@@ -40,6 +40,33 @@ def _fonts(style):
     return fonts[0]
 
 
+def _page_boundary_between(paragraphs, start_index, end_index):
+    """Return whether a Word page/section boundary separates two paragraphs."""
+    for paragraph in paragraphs[start_index:end_index]:
+        if paragraph._p.xpath(".//w:br[@w:type='page']"):
+            return True
+        if paragraph._p.xpath(".//w:sectPr"):
+            return True
+    return False
+
+
+def _contents_layout(document):
+    paragraphs = document.paragraphs
+    contents_index = next(i for i, paragraph in enumerate(paragraphs)
+                          if paragraph.style.name == "Solar Contents Title"
+                          and paragraph.text == "目录")
+    keyword_index = next(i for i, paragraph in enumerate(paragraphs)
+                         if paragraph.style.name == "Solar Keywords"
+                         and paragraph.text.startswith("关键词："))
+    first_heading_index = next(i for i, paragraph in enumerate(paragraphs)
+                               if paragraph.style.name == "Heading 1"
+                               and paragraph.text.startswith("CH01 "))
+    first_toc_index = next((i for i in range(contents_index + 1, first_heading_index)
+                            if paragraphs[i].style.name.lower().startswith("toc ")
+                            or paragraphs[i].text.startswith("CH01 ")), None)
+    return paragraphs, keyword_index, contents_index, first_toc_index, first_heading_index
+
+
 def test_report_word_styles(rendered):
     _, doc, _ = rendered
     assert WORD_FORMAT.identifier == "SOLAR_PV_WORD_FORMAT_V1"
@@ -120,6 +147,33 @@ def test_report_word_toc(rendered):
     assert doc.settings._element.xpath("./w:updateFields/@w:val") == ["true"]
     assert not any("章节索引（页码待" in p.text for p in doc.paragraphs)
     assert any(p.style.name == "Solar Contents Title" and p.text == "目录" for p in doc.paragraphs)
+
+
+def test_report_word_front_matter_and_contents_boundary(rendered):
+    _, doc, _ = rendered
+    paragraphs, keyword_index, contents_index, first_toc_index, first_heading_index = _contents_layout(doc)
+
+    # The cover has its own section; abstract/keywords precede the contents,
+    # and the body has a separate section after the contents field.
+    assert len(doc.sections) == 3
+    assert any(paragraph._p.xpath(".//w:sectPr")
+               for paragraph in paragraphs[:next(i for i, p in enumerate(paragraphs)
+                                                 if p.style.name == "Solar Abstract Title")])
+    assert keyword_index < contents_index < first_heading_index
+    assert first_toc_index is not None
+    assert first_toc_index > contents_index
+    assert _page_boundary_between(paragraphs, keyword_index + 1, contents_index)
+    assert _page_boundary_between(paragraphs, first_toc_index + 1, first_heading_index)
+
+
+def test_report_word_contents_boundary_negative_control(rendered):
+    _, doc, _ = rendered
+    paragraphs, keyword_index, contents_index, _, _ = _contents_layout(doc)
+    page_break = next(paragraph for paragraph in paragraphs[keyword_index + 1:contents_index]
+                      if paragraph._p.xpath(".//w:br[@w:type='page']"))
+    for node in page_break._p.xpath(".//w:br[@w:type='page']"):
+        node.getparent().remove(node)
+    assert not _page_boundary_between(paragraphs, keyword_index + 1, contents_index)
 
 
 def test_report_word_formulas(rendered):
