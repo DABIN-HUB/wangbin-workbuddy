@@ -13,7 +13,7 @@ examples_en:
   - "Check this tender and draft response for omissions, missing evidence, and inconsistencies."
   - "Recheck the response against the formal amendments and identify sections that still use superseded requirements."
   - "Check the submission against the attachment list and separate listed filenames from evidence that is actually available."
-version: 0.2.15
+version: 0.2.16
 author: wangbin
 allowed-tools: Read, Bash
 ---
@@ -21,7 +21,7 @@ allowed-tools: Read, Bash
 
 ## Preparation / 准备
 
-本候选只按已绑定的同一功能对象聚合当前肯否、未知和未来事实；第二条明确同对象回应即使改编号也进入判定，其他对象同号不得借用。未知/仅计划不当成当前覆盖，明确当前不能运行不被词语交集回升；当前肯否冲突须引用双方并待确认。实际材料已提供与正文支持分开；同文件明示缺正文是该文件文本不足，正反证并存待确认，引用两侧各自限长脱敏正文摘录与真实文件行号供回原件审计，不推断企业现实资质。0.2.13 已通过限定范围的独立本地业务 QA（94/94 旧案及 15/15 新案；详见仓库 `docs/products/wangbin-tender-analyzer/qa-fix6-0213-independent-report.md`）；0.2.14 的独立 QA 业务 ZIP 回放 94/94 + 15/15 + 6/6 + 1/1 通过，但新版文案门禁失败，报告见既有交付归档 `reports/Q06/qa-final6-0214-independent-report.md`，未获整包放行。本 0.2.15 候选仍需就此版本独立复验，且不代表 WorkBuddy 平台安装、运行、审核或发布通过。
+本候选只按已绑定的同一功能对象聚合当前肯否、未知和未来事实；第二条明确同对象回应即使改编号也进入判定，其他对象同号不得借用。未知/仅计划不当成当前覆盖，明确当前不能运行不被词语交集回升；当前肯否冲突须引用双方并待确认。实际材料已提供与正文支持分开；同文件明示缺正文是该文件文本不足，正反证并存待确认，引用两侧各自限长脱敏正文摘录与真实文件行号供回原件审计，不推断企业现实资质。0.2.13 已通过限定范围的独立本地业务 QA（94/94 旧案及 15/15 新案；详见仓库 `docs/products/wangbin-tender-analyzer/qa-fix6-0213-independent-report.md`）；0.2.14 的独立 QA 业务 ZIP 回放 94/94 + 15/15 + 6/6 + 1/1 通过，但新版文案门禁失败，报告见既有交付归档 `reports/Q06/qa-final6-0214-independent-report.md`，未获整包放行。旧 0.2.15 精确 ZIP（SHA-256 `693663927ea3fb4bac5fcbcacc61e172f54412c4062899f03ac2b873d314ba42`）已获限定本地独立 QA PASS，详见交付归档 `reports/Q06/qa-final6-0215-independent-report.md`；该结论不自动适用于后续版本。本版独立本地 QA 结论只以对应精确 ZIP SHA-256 的外部 QA 报告为准；未有该版报告时不得宣称整包通过。本地验证不等于 WorkBuddy 平台安装、运行、审核或发布通过，许可与权利仍须另行核实。
 
 用户用自然语言请求核查时，先确认招标 TXT/MD、响应稿 TXT/MD、是否准备模式、正式补遗、附件目录 CSV/XLSX、实际可读文本材料、项目名与输出目录；不要凭用户对话猜本机路径、读取目录或未经授权上传。仅当输入文件已由用户明确选择且确认授权，并且本地 Python + `openpyxl` 可用，才将路径逐一映射到以下真实 CLI。只说“核查”而缺响应时请求提供响应，不假装漏答；只有招标文本时可进入准备模式，并标“响应未核查”。附件目录只代表登记，实际材料必须以 `--evidence-file` 显式给出。请用户确认真实资格/保证金/版本关系及原件，不能声称已认证或已提交。自然语言路由及 WorkBuddy 宿主 Python/cwd/权限**未在平台实测**。
 
