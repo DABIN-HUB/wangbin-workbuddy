@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import calendar
+from collections import Counter
 from datetime import date
 from decimal import Decimal, ROUND_HALF_UP
 from hashlib import sha256
@@ -127,7 +128,7 @@ _D_STYLE = {
     "white": "FFFFFF",
 }
 
-REPORT_CONTENT_VERSION = "phase7l-r6-decision-facing-deterministic-writing"
+REPORT_CONTENT_VERSION = "phase7l-r7-reader-facing-deterministic-writing"
 
 
 @dataclass(frozen=True)
@@ -651,12 +652,7 @@ def _formula_contract_text(value: Any) -> str:
 
 
 def _formula_dimensional_text(formula: dict[str, Any]) -> str:
-    """Explain each visible operation without changing the frozen formula contract."""
-    text = _formula_contract_text(formula["dimensional_check"])
-    # Retain the exact frozen dimensional wording; it describes only additive
-    # terms, not a proof of quotients or discount factors. Clarify separately.
-    if "同量纲才能相加" in text:
-        text += "（此处同量纲要求针对加减项，不代表其他运算已通过量纲校核。）"
+    """Only explain operations visible in this equation; shared source text is indexed separately."""
     equation = formula.get("text_equation") or formula.get("latex") or ""
     checks = []
     if "×" in equation or "\\cdot" in equation:
@@ -669,7 +665,20 @@ def _formula_dimensional_text(formula: dict[str, Any]) -> str:
         checks.append("求和应核对索引范围及各项结果单位")
     if "{" in equation and "}" in equation:
         checks.append("结果集合应核对元素单位与求根定义域，不当作单个标量")
-    return text + ("；本式另含" + "、".join(checks) + "。" if checks else "。")
+    return "；".join(checks) + "。" if checks else ""
+
+
+def _formula_dimensional_contracts(definitions: list[dict[str, Any]]) -> tuple[list[str], dict[str, int]]:
+    """Index identical effective contracts, without merging formula-local notation."""
+    texts: list[str] = []
+    indices: dict[str, int] = {}
+    for formula in definitions:
+        if formula.get("dimensional_check"):
+            text = _formula_contract_text(formula["dimensional_check"])
+            if text not in indices:
+                indices[text] = len(texts) + 1
+                texts.append(text)
+    return texts, indices
 
 
 def _formula_shared_contracts(definitions: list[dict[str, Any]]) -> tuple[list[tuple[str, str, int]], dict[tuple[str, str], int]]:
@@ -711,6 +720,16 @@ def _formula_status(model: ReportModel, fid: str) -> str:
     return "本次引用；" + "、".join(f"{name}{count}项" for name, count in states if count) + "。"
 
 
+def _glossary_common_boundaries(terms: list[dict[str, Any]]) -> dict[str, str]:
+    counts = Counter(term.get("distinction_and_boundary", "") for term in terms)
+    common: dict[str, str] = {}
+    for term in terms:
+        text = term.get("distinction_and_boundary", "")
+        if text and counts[text] > 1 and text not in common:
+            common[text] = f"B{len(common) + 1:02d}"
+    return common
+
+
 def _appendix_rows(model: ReportModel, app_id: str) -> tuple[list[str], list[list[Any]]]:
     definitions = _appendix_formula_definitions(model) if app_id in {"APP11.01", "APP11.02"} else []
     if app_id == "APP11.01":
@@ -734,10 +753,23 @@ def _appendix_rows(model: ReportModel, app_id: str) -> tuple[list[str], list[lis
         introductory = {"PV": 0, "DC": 1, "AC": 2}
         terms.sort(key=lambda term: (0, introductory[term["abbreviation"]])
                    if term.get("abbreviation") in introductory else (1, 0))
-        return ["中文", "English", "缩写", "定义及适用边界"], [
-            [term["chinese_name"], term["english_name"], term.get("abbreviation") or "无缩写",
-             term["definition_zh"] + "；" + term["distinction_and_boundary"]]
-            for term in terms]
+        common = _glossary_common_boundaries(terms)
+        rows = []
+        for term in terms:
+            definition = term["definition_zh"]
+            if (definition.startswith("该计算方法的定义、符号、输入输出及异常边界见 ")
+                    and "；" in definition):
+                # The full registry definition stays in the versioned JSON; the
+                # individual engineering distinction is easier to read here.
+                definition = definition.split("；", 1)[1]
+            boundary = term.get("distinction_and_boundary", "")
+            if term["term_id"] in {"TERM-HASH", "TERM-BIPV"}:
+                boundary = "原词典历史说明另列"
+            elif boundary in common:
+                boundary = "共通边界" + common[boundary]
+            rows.append([term["chinese_name"], term["english_name"], term.get("abbreviation") or "无缩写",
+                         definition, (term.get("unit_or_dimension") or "—") + "；" + boundary])
+        return ["中文", "English", "缩写", "读者释义", "单位及核查边界"], rows
     if app_id == "APP12.02":
         return ["单位/符号", "含义", "不得混用的边界"], [
             ["kWp", "直流峰值千瓦", "不等于 kWac"], ["kWac", "交流额定千瓦", "不等于 kWh"],
@@ -1076,7 +1108,8 @@ def _write_model_xlsx(model: ReportModel, output: Path, pv_type: str) -> dict[st
 
 
 def _add_table(document: Document, headers: list[str], rows: list[list[Any]], caption: str | None = None,
-               *, widths_cm: tuple[float, ...] | None = None) -> None:
+               *, widths_cm: tuple[float, ...] | None = None,
+               nowrap_columns: tuple[int, ...] = ()) -> None:
     if caption:
         paragraph = document.add_paragraph(f"表{len(document.tables) + 1} {caption.rstrip('。；：,.、 ')}", style="Caption")
         paragraph.paragraph_format.keep_with_next = True
@@ -1123,6 +1156,8 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
         for index, value in enumerate(row):
             cells[index].text = _string(value)
             cells[index].width = Cm(widths[index])
+            if index in nowrap_columns:
+                cells[index]._tc.get_or_add_tcPr().append(OxmlElement("w:noWrap"))
             cells[index].vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.TOP
             for paragraph in cells[index].paragraphs:
                 paragraph.style = "Solar Table"
@@ -1135,7 +1170,51 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
 
 
 
-def _add_canonical_charts(document: Document, specs: list[dict[str, Any]], source_map: dict[str, str],
+def _chart_interpretation(model: ReportModel, spec: dict[str, Any]) -> str:
+    """Explain only patterns supported by this series and its bound inputs."""
+    values = spec["values"]
+    fmt = _word_number
+    if spec["metric_id"] == "energy.monthly.year.1":
+        records = model.result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
+        months = _source_value(model.result["inputs"].get("normalized", {}), records, "resource.monthly")
+        days = ({row.get("fields", {}).get("resource.monthly.month"):
+                 row.get("fields", {}).get("resource.monthly.days") for row in months}
+                if isinstance(months, list) and len(months) == 12 else {})
+        peak, low = max(range(12), key=values.__getitem__), min(range(12), key=values.__getitem__)
+        comparison = (f"首年合成月序列中，第{peak + 1}月为{fmt(values[peak])}kWh，"
+                      f"第{low + 1}月为{fmt(values[low])}kWh。")
+        if len(days) == 12 and all(type(days.get(i)) is int and days[i] > 0 for i in range(1, 13)):
+            daily = [Decimal(str(value)) / days[i] for i, value in enumerate(values, 1)]
+            if max(daily) - min(daily) <= max(abs(max(daily)), Decimal(1)) * Decimal("1e-9"):
+                return comparison + "各月日均预测接近，月合计差异主要来自合成月份的天数，不代表当地资源季节性。"
+        return comparison + "月间差异仍须结合逐月资源、天数与损失输入解释，不推断当地实测季节规律。"
+    peak, low = max(range(len(values)), key=values.__getitem__), min(range(len(values)), key=values.__getitem__)
+    text = (f"年度合成预测从第1年{fmt(values[0])}kWh变化至第{len(values)}年"
+            f"{fmt(values[-1])}kWh；最高在第{peak + 1}年，最低在第{low + 1}年。")
+    records = model.result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
+    normalized = model.result["inputs"].get("normalized", {})
+    degradation = _source_value(normalized, records, "system.annual_degradation")
+    if degradation is not None:
+        text += f"年度变化包含{fmt(Decimal(str(degradation)) * 100)}%的衰减假设。"
+    replacements = _source_value(normalized, records, "assets.replacements")
+    if isinstance(replacements, list):
+        for row in replacements:
+            fields = row.get("fields", {})
+            year = fields.get("assets.replacements.year")
+            if type(year) is not int or not 1 < year < len(values):
+                continue
+            metric = model.metric(f"energy.year.{year}") or {}
+            performance = metric.get("details", {}).get("performance", {}) if metric.get("status") == "CALCULATED" else {}
+            event = performance.get("event") or {}
+            if (event.get("asset_id") == fields.get("assets.replacements.asset_id")
+                    and event.get("downtime_days") == fields.get("assets.replacements.downtime_days")):
+                text += (f"第{year}年计划更换计入{event['downtime_days']}天停机，当年预测{fmt(values[year - 1])}kWh，"
+                         f"第{year + 1}年{fmt(values[year])}kWh；停机结束后的回升不能解释为组件性能恢复。")
+            break
+    return text + "这条曲线不是实际运行记录。"
+
+
+def _add_canonical_charts(document: Document, model: ReportModel, specs: list[dict[str, Any]], source_map: dict[str, str],
                           heading: str | None = None) -> list[dict[str, Any]]:
     """Embed visual evidence only when canonical chart specs are valid."""
     if not specs:
@@ -1150,10 +1229,7 @@ def _add_canonical_charts(document: Document, specs: list[dict[str, Any]], sourc
         paragraph.add_run().add_picture(_chart_png(spec, font_metadata=font_metadata), width=Cm(WORD_FORMAT.text_width_cm))
         figure_no = len([p for p in document.paragraphs if p.style.name == "Caption" and p.text.startswith("图")]) + 1
         document.add_paragraph(f"图{figure_no} {spec['title'].rstrip('。；：,.、 ')}", style="Caption")
-        document.add_paragraph(
-            f"图示反映{spec.get('title', '本次发电量测算')}。数据来自当前合成测算的已计算序列，"
-            f"资料引用 {_word_sources(spec['source_ids'], source_map)}；完整计算绑定见测算模型和资料来源清单。"
-        )
+        document.add_paragraph(_chart_interpretation(model, spec))
         receipts.append({"metric_id": spec["metric_id"], "points": len(spec["values"]),
                          "source": "CANONICAL", "formula_id": spec["formula_id"],
                          "source_ids": list(spec["source_ids"]), "format": "PNG_EMBEDDED",
@@ -1995,6 +2071,7 @@ def _item_evidence(model: ReportModel, pv_type: str, chapter_id: str, title: str
     }
     extra_metrics = {
         "CH01.01": ("dc_capacity",),
+        "CH03.02": ("dc_capacity",),
         "CH03.05": ("dc_capacity", "consumption.year.1"),
         "CH06.01": ("dc_capacity",),
         "CH06.04": ("dc_capacity", "ac_capacity"),
@@ -2003,6 +2080,8 @@ def _item_evidence(model: ReportModel, pv_type: str, chapter_id: str, title: str
         "CH07.01": ("dc_ac_ratio",),
         "CH10.05": ("revenue.year.1",),
         "CH12.01": ("energy.delivered.year.1",),
+        "CH15.03": ("financial.phase3e.project_cash_flow",),
+        "CH15.04": ("financial.phase3e.project_cash_flow",),
         "CH17.01": ("energy.delivered.year.1", "revenue.year.1"),
         "CH14.04": ("financial.capex.total",),
         "CH18.03": ("financial.phase3e.project_cash_flow",),
@@ -2015,6 +2094,8 @@ def _item_evidence(model: ReportModel, pv_type: str, chapter_id: str, title: str
     metrics = tuple(dict.fromkeys(metrics))
     if pv_type == "utility_scale_ground" and item_id in {"CH01.04", "CH03.05", "CH10.02"}:
         metrics = tuple(metric for metric in metrics if not metric.startswith("consumption."))
+    if pv_type == "utility_scale_ground" and item_id == "CH03.04":
+        metrics = (*metrics, "energy.delivered.year.1")
     claim = build_claim(model, item_id, title, f"{title}：{rule.rstrip('。')}？", rule,
                         fields, metrics,
                         pv_type, _word_value, _metric_label)
@@ -2353,7 +2434,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
         # The first subsection supplies the substantive opening. A stock
         # "本章说明…" paragraph before every chapter adds no project finding.
         if chapter_id == "CH08":
-            chart_receipts = _add_canonical_charts(document, chart_specs, source_map, "发电量变化")
+            chart_receipts = _add_canonical_charts(document, model, chart_specs, source_map, "发电量变化")
         for number, item in enumerate(items, 1):
             item_id = f"{chapter_id}.{number:02d}"
             add_numbered_heading(document, heading_number(item_id, item, parent_stable_id=chapter_id,
@@ -2365,7 +2446,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             if item_id == "CH13.02":
                 _add_table(document, ["任务", "开始", "结束", "持续时间", "前置任务", "计划性质"],
                            _plan_word_rows(model), "实施计划（日期为登记的预排日期；计划重点未经关键路径算法验证）",
-                           widths_cm=(6.0, 2.1, 2.1, 2.4, 2.2, 2.2))
+                           widths_cm=(5.2, 2.65, 2.65, 2.2, 2.1, 2.2), nowrap_columns=(1, 2))
             if item_id == "CH18.04":
                 _add_table(document, ["优先级", "待完成事项", "实际影响", "需要取得的资料", "完成条件", "建议协调对象"],
                            _next_stage_rows(model), "下一阶段推进事项（建议协调对象并非已任命责任人）",
@@ -2709,9 +2790,14 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                     shared, shared_ids = _formula_shared_contracts(definitions)
                     if shared:
                         document.add_paragraph("共通记法契约（按原文一致性分组）", style="Solar Formula Title")
-                        document.add_paragraph("相同契约仅在此处完整定义一次；每条公式在下方注明所适用的组号。逐符号定义及量纲仍逐公式列出。")
+                        document.add_paragraph("相同契约仅在此处完整定义一次；各公式注明所适用的组号，逐式符号与运算检查仍独立列出。")
                         for label, text, number in shared:
                             document.add_paragraph(f"{label}第{number}组：{text}")
+                    dimension_texts, dimension_ids = _formula_dimensional_contracts(definitions)
+                    if dimension_texts:
+                        document.add_paragraph("共通量纲约定（按有效定义的完整文本分组）", style="Solar Formula Title")
+                        for number, text in enumerate(dimension_texts, 1):
+                            document.add_paragraph(f"量纲第{number}组：{text}")
                     for formula_no, formula in enumerate(definitions, 1):
                         fid = formula["formula_id"]
                         document.add_paragraph(f"{fid} {formula.get('chinese_name', '未定义')}", style="Solar Formula Title")
@@ -2728,7 +2814,10 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                         if references:
                             document.add_paragraph("本式共通契约：" + "；".join(references))
                         if formula.get("dimensional_check"):
-                            document.add_paragraph("本式量纲校核（原定义并按运算类型提示复核）：" + _formula_dimensional_text(formula))
+                            dimension = dimension_ids[_formula_contract_text(formula["dimensional_check"])]
+                            operation = _formula_dimensional_text(formula)
+                            document.add_paragraph(f"本式量纲校核：量纲第{dimension}组。" +
+                                                   ("方程运算另须核对：" + operation if operation else ""))
                         symbols = [[s.get("symbol") or "未定义", s.get("definition_zh") or "未定义",
                                     s.get("unit") or "未定义"] for s in formula.get("every_symbol_definition", ())]
                         if symbols:
@@ -2739,9 +2828,16 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                             document.add_paragraph("下标、索引、集合与求和范围：" + "；".join(index_lines))
                 elif appendix_rows:
                     if item_id == "APP12.01":
-                        document.add_paragraph("受控词典保留早期方法编制时的历史说明；其中“此任务未生成计算结果哈希”"
-                                               "仅描述当时编制任务，不描述本次项目。本次结果身份和计算状态以本报告版本附录"
-                                               "及配套测算模型为准；词条收录不代表本项目采用该技术。")
+                        terms = json.loads(files("wangbin_solar_pv").joinpath("report-glossary.json")
+                                           .read_text(encoding="utf-8"))["terms"]
+                        document.add_paragraph("读者释义与原词典方法说明分别展示；词条收录不表示本项目实际采用。"
+                                               "原词典完整定义、ID及来源可在随包受控词典核对。")
+                        for text, label in _glossary_common_boundaries(terms).items():
+                            document.add_paragraph(f"共通边界{label}（原词典）：{text}")
+                        for term in terms:
+                            if term["term_id"] in {"TERM-HASH", "TERM-BIPV"}:
+                                document.add_paragraph(f"{term['term_id']} 原词典历史方法说明（非本次运行事实）："
+                                                       + term["distinction_and_boundary"])
                     _add_table(document, appendix_headers, appendix_rows,
                                "受控编辑词典")
             checklist.append({"id": item_id, "title": item_title,

@@ -101,9 +101,11 @@ def test_formula_groups_keep_all_symbols_once_and_shared_index_once(exported):
     assert formula["text_equation"] in group and "本次引用" in group
     assert group.count("逐个下标词素") == 1
     assert "k∈𝒪_y" in group and formula["calculation_boundary"] in group
-    assert formula["dimensional_check"].replace("every_symbol_definition", "本式完整符号表") in group
-    assert "本式共通契约：" in group and "运算符第" in group and "记法与歧义第" in group
+    dimension_ref = next(part for part in group.splitlines() if part.startswith("本式量纲校核："))
+    label = dimension_ref.split("：", 1)[1].split("。", 1)[0]
     full_text = _all_text(document)
+    assert f"{label}：{formula['dimensional_check'].replace('every_symbol_definition', '本式完整符号表')}" in full_text
+    assert "本式共通契约：" in group and "运算符第" in group and "记法与歧义第" in group
     for key in ("operator_definition", "notation_contract"):
         for meaning in formula[key].values():
             assert meaning.replace("every_symbol_definition", "本式完整符号表").replace(
