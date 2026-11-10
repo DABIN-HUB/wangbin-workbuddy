@@ -202,7 +202,7 @@ APPENDIX_TITLES = {
     'APP07.01': '有债务偿债计划',
     'APP07.02': '无债务或零分母说明',
     'APP08.01': '单因素与组合底表',
-    'APP08.02': '阈值与属性验收',
+    'APP08.02': '阈值与变化方向核对',
     'APP09.01': '政策条款与有效期',
     'APP09.02': '核验与限制意见',
     'APP10.01': '待核与冲突清单',
@@ -216,7 +216,7 @@ APPENDIX_TITLES = {
 }
 
 APPENDIX_RULES: dict[str, tuple[str, str, tuple[str, ...], tuple[str, ...]]] = {
-    "APP01.01": ("本次使用的资料是否逐份有身份、授权和可读位置？", "核验来源登记、附件位置与授权，不把来源编号当作已读全文。", (), ()),
+    "APP01.01": ("本次使用的资料是否逐份有身份、授权和可读位置？", "核验来源登记、附件位置与授权，不把资料登记当作已读全文。", (), ()),
     "APP01.02": ("关键输入能否回溯到字段实例与原始来源？", "逐项核对输入血缘，缺少实例位置时保留追溯缺口。", (), ()),
     "APP02.01": ("12个月气象资料的分量、覆盖和单位能否核查？", "取得资源原始月表及授权；月发电量不能倒推辐照分量。", ("resource.monthly", "resource.period_start", "resource.period_end"), ()),
     "APP02.02": ("月度发电、消纳与交付电量能否同边界对账？", "核对时区、月度能量和结算边界，不由发电量代替交付。", ("resource.monthly", "load.series"), ("energy.monthly.year.1", "energy.year.1", "energy.delivered.year.1", "consumption.year.1", "revenue.year.1")),
@@ -230,8 +230,8 @@ APPENDIX_RULES: dict[str, tuple[str, str, tuple[str, ...], tuple[str, ...]]] = {
     "APP06.02": ("资本金全期现金流是否独立包含提款和偿债？", "核实股东出资、提款、本息和分配，不能沿用项目现金流。", ("finance.debt_schedule",), ("financial.phase3e.equity-investor-cash-flow",)),
     "APP07.01": ("有债务时偿债计划与可偿债现金是否逐期匹配？", "取得合同还本付息日程与CFADS定义后计算覆盖倍数。", ("finance.debt_schedule", "finance.cfads_definition"), ("financial.phase3e.dscr",)),
     "APP07.02": ("无债务与偿债零分母是否被正确区分？", "核查债务比例与每期偿债额，零分母不得填零倍。", ("finance.debt_ratio", "finance.debt_schedule"), ("financial.phase3e.dscr",)),
-    "APP08.01": ("单因素和组合情景是否分别独立运行？", "提供各因素变化、控制变量及运行身份后比较结果。", ("scenarios.options",), ()),
-    "APP08.02": ("阈值与反向约束是否经独立数值验收？", "补充门槛目标、重算结果和方向性复核。", ("targets.project_irr", "targets.payback_years"), ("financial.phase3e.break-even-price",)),
+    "APP08.01": ("单因素和组合情景是否分别独立测算？", "分别列明各因素变化、其余条件及对应结果，再比较不同情景。", ("scenarios.options",), ()),
+    "APP08.02": ("阈值与变化方向能否按同一口径核对？", "补充投资目标、重算结果，并核对投资和电量变化对收益的影响方向。", ("targets.project_irr", "targets.payback_years"), ("financial.phase3e.break-even-price",)),
     "APP09.01": ("政策原文、地区及生效日期能否定位？", "取得政策文号、原文条款与有效期，不推定现行适用。", ("policy.applicability",), ()),
     "APP09.02": ("政策适用或冲突是否经过逐条审查？", "按项目地区和类型记录有效、过期、待核和冲突依据。", ("policy.applicability",), ()),
     "APP10.01": ("阻断事项是否逐一具名并给出关闭证据？", "核对当前发现项、责任人及关闭材料，不将未核实项目视为关闭。", ("risk.items",), ()),
@@ -358,7 +358,7 @@ ITEM_JUDGMENTS = {
   '悲观乐观组合须各自定义参数并重算，单一基准不是三情景。',
   '稳健性门槛须现金流和扰动均闭合后检验，不推断耐受区间。',
   '权属、资源、工程和并网风险可分别阻断项目，风险登记不量化概率。',
-  '反向约束须检验来源授权、计量边界和项目类型，单次结果不是验收。'),
+  '变化方向须结合来源授权、计量边界和项目类型复核，单次结果不足以证明稳健性。'),
  'CH18': (
   '当前只能暂缓实质投资决定，先关闭独立否决条件。',
   '权利、结构或地勘及电网意见可各自否决推进，局部财务数值不能覆盖。',
@@ -367,7 +367,7 @@ ITEM_JUDGMENTS = {
   '决策里程碑以具名审批和专业复核为前提，评价日期不是开工承诺。'),
 }
 APPENDIX_JUDGMENTS = {
- 'APP01.01': '来源编号只是索引，原件位置、授权和可读性仍须逐份核查。',
+ 'APP01.01': '资料登记只提供出处线索，原件位置、授权和可读性仍须逐份核查。',
  'APP01.02': '字段实例同时指向来源及原始位置，输入血缘才足以复核。',
  'APP02.01': '月度气象须核单位、覆盖期及授权，不能由发电量倒推辐照。',
  'APP02.02': '月发电、消纳与交付须同月同时区对账，总发电不代替结算。',
@@ -382,7 +382,7 @@ APPENDIX_JUDGMENTS = {
  'APP07.01': '债务覆盖只在确有合同债务服务时计算，无债务不算偿债合格。',
  'APP07.02': '无债务不适用、零分母未定义，两者都不是零倍覆盖。',
  'APP08.01': '单因素及组合情景各需独立运行，基准结果不是情景底表。',
- 'APP08.02': '盈亏门槛需目标口径、重算及方向验收，展示值不证明约束。',
+ 'APP08.02': '保本界限须按同一目标口径重算，并核对变化方向；展示值不足以证明可承受波动。',
  'APP09.01': '政策须定位文号、地区及有效期，适用意向不是现行证明。',
  'APP09.02': '政策冲突须逐条审查，未核验文本不能形成合法性意见。',
  'APP10.01': '阻断事项须关联关闭材料和责任，发现项存在不等于解除。',
@@ -392,7 +392,7 @@ APPENDIX_JUDGMENTS = {
  'APP12.01': '缩写须对应中英全称和首次出现位置，避免同名异义。',
  'APP12.02': '功率、能量及辐照单位不可互换，单位投资须说明装机分母。',
  'APP13.01': '配套文件须指向同次模型、运行、输入、来源及结果，不能拼接历史快照。',
- 'APP13.02': '结构生成、计算成熟度、真实来源及页面审阅是不同门禁。',
+ 'APP13.02': '章节完整、测算充分、来源真实与页面可读须分别判断，不能相互替代。',
 }
 
 # Display only numerical input assumptions with unambiguous local meanings.
@@ -741,8 +741,8 @@ def _task_display_name(name: str) -> str:
         ('title/geotechnical/grid review gate', '用地、地勘及接网待核节点计划'),
         ('rooftop installation', '屋面安装施工计划（须先取得真实许可）'),
         ('ground civil and array', '地面土建与阵列施工计划（须先取得真实许可）'),
-        ('electrical testing and meter', '电气测试与计量方案计划（非投运批准）'),
-        ('grid interface testing', '并网接口测试计划（非接网批准）'),
+        ('electrical testing and meter', '电气调试与计量核查计划（非投运批准）'),
+        ('grid interface testing', '并网接口联调计划（非接网批准）'),
         ('commissioning milestone', '拟投运里程碑（非获准投运）'),
     )
     return next((label for phrase, label in roles if phrase in description.lower()), description)
@@ -1008,7 +1008,7 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
         lifecycle_text = (f"，25年CAPEX合计{money(lifecycle)}" if lifecycle is not None and years == 25
                           else f"，评价期CAPEX合计{money(lifecycle)}" if lifecycle is not None else "")
         civil = [r for r in initial if r.get("capex.items.category") == "construction"]
-        civil_text = (f"，其中土建施工{money(civil[0]['capex.items.amount'])}另列，不能充作设备费"
+        civil_text = (f"，其中工程建设分项{money(civil[0]['capex.items.amount'])}另列，不能充作设备费"
                       if civil and civil[0].get("capex.items.amount") is not None else "")
         return (f"本次设备清单以{equipment[largest['capex.items.category']]}"
                 f"{money(largest['capex.items.amount'])}占已列初始设备分项最大份额："
@@ -1355,7 +1355,7 @@ def _research_finding(model: Any, item_id: str, fmt: Callable[[Any], str]) -> st
     if item_id == 'CH16.08':
         threshold = model.metric('financial.phase3e.break-even-price') or {}
         if threshold.get('status') != 'CALCULATED':
-            return ('基准项目NPV虽可计算，盈亏平衡电价仍缺独立全链价格反向重算；'
+            return ('基准项目NPV虽可计算，盈亏平衡电价仍缺按相同费用和电量口径的反向价格重算；'
                     '不得用基准上网价格推定保本价或目标差距，须固定成本和交付边界逐次重算验证方向。')
     return None
 
@@ -1477,9 +1477,9 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                     '这是项目现金流而非股东分红的评价，实际投资决定还依赖工程量、价格及权属。')
     if item_id == 'CH01.05' and (result.get('status') != 'COMPLETE' or
                                 result.get('maturity', {}).get('real_project') != 'VERIFIED'):
-        return ('本阶段建议：暂缓投资决策，进入专项核验。已有的项目回报预测可以用于识别下一步研究价值，'
+        return ('建议暂缓投资决策，先开展专项核验。已有的项目回报预测可以用于识别下一步研究价值，'
                 '但屋面权属、结构与消防、厂区负荷及余电接入尚未由真实资料闭合。' if not ground else
-                '本阶段建议：暂缓投资决策，进入专项核验。已有的项目回报预测可以用于识别下一步研究价值，'
+                '建议暂缓投资决策，先开展专项核验。已有的项目回报预测可以用于识别下一步研究价值，'
                 '但土地权属、地勘及道路排水、集中接网和交易价格尚未由真实资料闭合。')
     if item_id == 'CH07.01':
         count, power = get('system.module_count'), get('system.module_power')
@@ -1742,10 +1742,10 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
         if isinstance(tasks, list) and tasks:
             return (('地面项目应先落实土地和地勘、道路排水条件，再据此形成阵列和送出初设。' if ground else
                      '屋顶项目应先取得真实负荷、屋面权属与结构复核，再据此确定安装和接网方案。')
-                    + ('采购可与非阻断设计工作衔接，但施工不得越过权属、工程安全和接网前置条件。'
+                    + ('采购可与不依赖前置核验的设计工作衔接，但施工须以权属、工程安全和接网条件落实为前提。'
                        if item_id == 'CH13.01' else
-                       '设备采购时点须与设计冻结及现场施工窗口衔接；并网验收通过后才能转为正式运行。')
-                    + f'现有{len(tasks)}项任务是合成预排，实际日期仍需以相关文件和验收进度调整。')
+                       '设备采购时点须与设计定稿及现场施工窗口衔接；完成并网调试和相应手续后才能正式运行。')
+                    + f'本次合成实施计划列出{len(tasks)}项预排任务，实际日期仍需以相关文件和实际进度调整。')
     if item_id.startswith('CH17.'):
         energy, revenue = calculated('energy.delivered.year.1'), calculated('revenue.year.1')
         npv = calculated('financial.phase3e.project_npv')
@@ -1936,7 +1936,7 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                             '屋面权利、结构消防和余电接网意见')
                     return (f'在这条前置依赖链中，“{first}”是“{following}”的前置任务，'
                             '因为工程条件尚不清楚时，采购数量和施工组织均难以确定。'
-                            f'对本项目而言，{need}仍须落实，施工完成后还需完成电气调试与并网验收，'
+                            f'对本项目而言，{need}仍须落实，施工完成后还需完成电气调试与并网手续，'
                             '才能按计划投运。任务中的关键路径标记不代表已按真实审批和交付时长'
                             '完成进度计算；前置条件未批准时，不能用预排日期承诺投运。')
                 return '任务已提供，但缺少可追溯的前置边，不能推断关键路径。'
@@ -1946,14 +1946,14 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                 if all(isinstance(value, str) and value for value in starts + finishes):
                     baseline = get('project.evaluation_date')
                     chronology = (f'其中部分计划日期早于设定的评价基准日{baseline}（最早{min(starts)}）。'
-                                  '由于没有实际进度和验收记录，本报告不据此判断工程是否已实施；'
+                                  '由于没有实际进度和交付记录，本报告不据此判断工程是否已实施；'
                                   '正式启动前应重新确认前置条件与实施时间。'
                                   if isinstance(baseline, str) and min(starts) <= baseline else '')
                     return (f'现有实施计划属于模型登记的{len(tasks)}项来源绑定的合成任务，均为预排，'
                             f'计划窗口为{min(starts)}至{max(finishes)}；'
                             '各项持续自然日、前置任务和计划标记在下表逐项列明。'
                             + chronology +
-                            '开工、并网及投运须以各前置条件实际批准和验收为准，计划标记不是已验证关键路径。')
+                            '开工、并网及投运须以各前置条件实际落实和相关手续为准，计划标记不是已核定的关键路径。')
             task_facts = []
             for row in tasks:
                 task = row.get('fields', {})
@@ -1985,7 +1985,7 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                     chronology = ('部分前置任务预排日期早于评价日，完成状态没有实证，须重新核定计划后才能据此推进。'
                                   if isinstance(baseline, str) and earliest and earliest <= baseline else '')
                     return (f"拟投运里程碑按合成任务安排为{milestone['schedule.tasks.start_date']}，"
-                            f"前置任务为{predecessor or '无'}。{chronology}里程碑日期不是实际开工、获批并网或验收完成；" + judgment)
+                            f"前置任务为{predecessor or '无'}。{chronology}里程碑日期不是实际开工、获批并网或完成投运手续；" + judgment)
             if item_id == 'CH13.01':
                 facts.append(f'另录入{len(tasks)}项合成实施任务，组织责任仍须在正式文件中落实')
             if item_id == 'CH13.04':
@@ -1997,7 +1997,7 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
     if item_id.startswith('CH14.'):
         items = get('capex.items')
         if isinstance(items, list) and items and item_id in {'CH14.01', 'CH14.03', 'CH14.04', 'CH14.05'}:
-            categories = {'construction': '土建', 'mounting': '支架',
+            categories = {'construction': '工程建设', 'mounting': '支架',
                           'cables': '电缆', 'transformer': '变压器',
                           'electrical': '电气', 'modules': '组件', 'inverters': '逆变器',
                           'land': '用地', 'grid': '送出', 'contingency': '预备'}
@@ -2125,7 +2125,7 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
             energy = f'首年交付预测{decision_number(delivered, "kWh")}kWh；' if delivered is not None else ''
             payback = calculated('financial.phase3e.static_payback')
             recovery = f'静态回收期{decision_number(payback, "year")}年。' if payback is not None else ''
-            decision = ('本阶段建议：暂缓投资决策，进入专项核验。' if result.get('status') != 'COMPLETE' or
+            decision = ('建议暂缓投资决策，先开展专项核验。' if result.get('status') != 'COMPLETE' or
                         result.get('maturity', {}).get('real_project') != 'VERIFIED' else '')
             return (decision + f'目前的{fmt(years)}年合成项目方案具有继续研究的价值：{investment}{energy}'
                     f'按年度期末项目税后现金流计算的净现值（Net Present Value，NPV）为{decision_number(npv, "CNY")}元，'
@@ -2266,7 +2266,7 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
         judgment = "年度项目现金流已按本次预测来源与终期假设计算；它不等于历史银行流水或投资者分红，真实项目收益仍须核验。"
     if item_id == "CH18.01" and (model.result.get("status") == "COMPLETE"
                                  and model.result.get("maturity", {}).get("real_project") == "VERIFIED"):
-        judgment = "即使计算与来源门禁完成，投资建议仍须经过独立专业审查和决策授权。"
+        judgment = "即使测算与资料核对完成，投资建议仍须经过独立专业审查和决策授权。"
     no_storage = _source_value(normalized, records, 'project.has_storage') is False
     no_debt = _source_value(normalized, records, 'finance.debt_ratio') == 0
     not_applicable = ((ground and _source_value(normalized, records, 'project.pv_type') == 'utility_scale_ground'
@@ -2352,8 +2352,8 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
             sources = sorted(set(sources) | {fee_evidence['source_id']})
             fee_notes = {
                 'CH01.05': '本合成测算按交易费当年发生、当年全额预计支付处理，期初无交易费欠款；'
-                           '该安排用于年度预测测试，不代表真实合同或实际付款记录。',
-                'CH10.04': '3C单列交易费的付款期间另由已绑定的合成年度支付假设确定，销售回款仍按毛额列示。',
+                           '这一年度预测约定不代表真实合同或实际付款记录。',
+                'CH10.04': '交易费另列预计付款，期间由本次合成年度支付假设确定，销售收入仍按毛额列示。',
                 'CH15.01': '运维费现金与交易费预计付款分别列账，后者不继承运维付现比例。',
                 'CH16.02': '交易费为合成来源约定的预计支付，不是已付款凭证；税基扣费不等于现金付款。',
                 'CH18.01': '上述回报含有独立的交易费同年支付假设，仅对合成年度项目边界成立。',

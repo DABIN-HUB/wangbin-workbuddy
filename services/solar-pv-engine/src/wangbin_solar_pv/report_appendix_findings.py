@@ -22,7 +22,7 @@ def appendix_finding(model: Any, item_id: str, fmt: Callable[[Any], str], source
     flows = metric('financial.phase3e.project_cash_flow')
     break_even = model.metric('financial.phase3e.break-even-price')
     scenario_id = result.get('scenario_id')
-    has_scenario_evidence = scenario_id != 'BASE' or any(
+    has_scenario_evidence = bool(scenario_id and scenario_id != 'BASE') or any(
         row.get('status') == 'CALCULATED' and row.get('metric_id', '').startswith('sensitivity.')
         for row in result.get('results', {}).get('metrics', ()))
     months = metric('energy.monthly.year.1')
@@ -42,12 +42,11 @@ def appendix_finding(model: Any, item_id: str, fmt: Callable[[Any], str], source
     else:
         month_total, month_note = None, '缺少可对账的十二个月发电指标'
     return {
-        'APP01.01': f'Phase 2字段原子记录中有{len({r.get("source_id") for r in records if r.get("source_id")})}个来源标识；'
-                       '时序数据和交易费等独立来源另见配套来源清单，不能把此计数当作全报告来源总数；'
-                       '来源编号不证明原件授权或可读性，须逐份取回核对。',
-        'APP01.02': f'字段来源快照登记{len(records)}条原子记录；须逐实例核对取值、原件位置和来源身份，数量不证明全部已核验。',
+        'APP01.01': '本次字段资料、时序数据及交易费资料须分别核对；登记内容不是已核实来源的完整清单。'
+                       '各项原件的可读范围和使用授权仍须逐份确认，明细见配套资料来源与假设清单。',
+        'APP01.02': '关键输入须逐项核对取值、原件位置和来源身份；资料登记不能证明这些输入均已核验。',
         'APP02.01': (f'绑定的合成月度气象输入共{len(daily)}个月；须逐月核对GHI/DNI/DHI/POA的kWh/㎡、气温℃、风速m/s及年份时区。'
-                      if isinstance(daily, list) else '月度气象未完成原子来源核对；不能从月发电结果倒推辐照分量。'),
+                      if isinstance(daily, list) else '月度气象的逐月来源与单位尚未核对；不能从月发电结果倒推辐照分量。'),
         'APP02.02': (f'首年12个月发电原值求和{amount(month_total, "kWh")}，'
                       f'年度发电{amount(metric("energy.year.1"), "kWh")}；{month_note}；'
                       + ('屋面自用、余电及交付须逐月在同一计量边界对账。' if not ground else '地面交付与集中上网须逐月对账，不引入自用账。')
@@ -68,13 +67,13 @@ def appendix_finding(model: Any, item_id: str, fmt: Callable[[Any], str], source
                       if get('finance.debt_ratio') == 0 else '须逐期将合同还本付息和可供偿债现金配对后评价DSCR。'),
         'APP07.02': ('债务比例输入为零；零分母使本次DSCR未定义而非零倍，若新增融资应重建本息日程。'
                       if get('finance.debt_ratio') == 0 else '有债务项目逐期核查债务服务分母；零分母期不得填零倍。'),
-        'APP08.01': (f'当前结果登记情景身份{scenario_id}；单个情景不证明单因素及组合扰动已完整执行，'
-                     '须逐次核对运行身份和对照结果。' if has_scenario_evidence else
-                     '本次只有基准测算，没有独立单因素及组合运行身份；资源、价格和造价扰动不得从基准值外推。'),
+        'APP08.01': ('已有不同情景的测算线索，但单个结果不能证明各因素及组合影响均已分别计算；'
+                     '须逐项核对改变的条件与对应结果。' if has_scenario_evidence else
+                     '本次未取得独立的单因素及组合结果；资源、价格和造价变化的影响不得从现有结果外推。'),
         'APP08.02': (f'本次保本电价已计算为{fmt(break_even["value"])}{break_even.get("unit") or ""}；'
-                     '仍须逐次核对同口径目标、重算身份和方向性验收。'
+                     '仍须对照相同口径的投资目标，核对条件变化前后的结果及变化方向。'
                      if break_even and break_even.get('status') == 'CALCULATED' else
-                     '保本电价的全链反向重算仍受阻；须以同口径目标、重算身份和单调方向测试验收。'),
+                     '保本电价尚缺完整的价格变化重算；须按同一投资目标和费用、电量口径核对变化方向。'),
         'APP09.01': '政策登记尚不能代替有文号、原文、地区及生效期的可适用条款；不得称已获项目批准。',
         'APP09.02': '政策适用及潜在冲突没有逐条外部审查意见；应分别核对权属、接网与交易的有效文件。',
         'APP10.01': ('屋顶权属与结构证明缺失会影响合法使用和安全布置；真实负荷及接网资料缺失会改变自用电量和余电收入。'
@@ -85,10 +84,10 @@ def appendix_finding(model: Any, item_id: str, fmt: Callable[[Any], str], source
                        '按实际费用和消纳重新计算项目回报，再提请真实投资决策。' if not ground else
                        '可先开展场址测绘、地勘及送出沟通；取得合法用地、工程量、正式接入与交易条件后，'
                        '重新评估回报及第13年设备更换的资金安排。'),
-        'APP11.01': '本次公式快照仅是正式定义与执行状态的入口；逐公式核对单位、适用条件和绑定输入，不补造计算式。',
+        'APP11.01': '所列公式对应受控定义，是否参与本次测算仍须逐项核对；还须核对单位、适用条件及实际采用的输入。',
         'APP11.02': '公式局部符号须逐个说明定义、单位和求和范围；同名字母在不同公式内不可跨式套用。',
         'APP12.01': '报告术语须分别对应中文、英文全称、缩写和首次释义；IRR根集与NPV币种均不能只列缩写。',
         'APP12.02': '直流kWp、交流kW、交付kWh与辐照kWh/㎡必须分别标注；单位投资以kWp为分母。',
         'APP13.01': '本次报告只绑定同一项目、输入和结果哈希；模型、运行及来源身份须逐文件比对，不得拼接历史导出。',
-        'APP13.02': f'统一计算状态为{dict(PARTIAL="部分计算", COMPLETE="计算完成", BLOCKED="阻断").get(result.get("status"), "待核对")}，真实项目来源另有独立核验门槛；文档结构完整不等于页面审阅或可投资。',
+        'APP13.02': f'本次测算{dict(PARTIAL="尚有未完成指标", COMPLETE="已形成所列指标", BLOCKED="尚缺必要条件").get(result.get("status"), "状态待核对")}；真实项目资料仍须另行核验。章节齐全不等于页面已审阅，更不等于项目可投资。',
     }[item_id]

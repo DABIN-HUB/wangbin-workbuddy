@@ -194,11 +194,13 @@ def test_report_word_formulas(rendered):
     assert all(shape.width.cm <= 16.05 for shape in doc.inline_shapes)
     definitions = _appendix_formula_definitions(model)
     original = [p.text for p in doc.paragraphs if p.style.name == "Solar Formula Note"
-                and p.text.startswith("冻结文本定义：")]
+                and p.text.startswith("文字表达：")]
     assert len(original) == len(definitions) == 89
     for entry, text in zip(definitions, original):
-        assert text == (f"冻结文本定义：{entry.get('text_equation') or entry.get('latex')}；"
-                        f"冻结LaTeX：{entry.get('latex') or '未提供'}")
+        assert text == f"文字表达：{entry.get('text_equation') or entry.get('latex')}"
+    latex_notes = [p.text for p in doc.paragraphs if p.style.name == "Solar Formula Note"
+                   and p.text.startswith("原始公式记法：")]
+    assert latex_notes == [f"原始公式记法：{entry['latex']}" for entry in definitions if entry.get("latex")]
 
 
 def _check_numbering(model, document):

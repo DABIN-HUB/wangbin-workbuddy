@@ -110,8 +110,8 @@ REPORT_PROFILES = {
 def _cover_project_name(pv_type: str) -> str:
     """Keep internal run identifiers out of the reader-facing cover."""
     return {
-        "industrial_rooftop": "工商业屋顶光伏项目（阶段性样件）",
-        "utility_scale_ground": "集中式地面光伏项目（阶段性样件）",
+        "industrial_rooftop": "工商业屋顶光伏项目",
+        "utility_scale_ground": "集中式地面光伏项目",
     }[pv_type]
 
 
@@ -130,7 +130,10 @@ _D_STYLE = {
     "white": "FFFFFF",
 }
 
-REPORT_CONTENT_VERSION = "phase7l-r9-omml-reader-review"
+REPORT_CONTENT_VERSION = "phase7l-r10-reader-review"
+REPORT_DISCLAIMER = "本报告内容仅供参考，正式使用时需根据实际情况调整。"
+READER_FORMULA_IDS = frozenset({"F-NPV", "F-IRR-PROJECT", "F-STATIC-PAYBACK",
+                                "F-DYNAMIC-PAYBACK", "F-LCOE", "F-DSCR"})
 
 
 @dataclass(frozen=True)
@@ -230,6 +233,10 @@ def _word_value(value: Any) -> str:
 
 def _reader_text(text: str) -> str:
     """Translate display-only tokens; canonical and audit identities are untouched."""
+    if re.fullmatch(r"SYNTHETIC-\d+Wp-MODEL-NOT-SUPPLIER", text):
+        return "示例组件型号（非厂家数据表）"
+    if re.fullmatch(r"SYNTHETIC-\d+kW-MODEL", text):
+        return "示例逆变器型号（非厂家选型）"
     for source, label in (("GRID_DELIVERABLE", "电网可交付电量边界"),
                           ("Concept protection only; engineering review pending", "仅为概念性保护方案，待工程审查"),
                           ("FICTIONAL_NOT_APPROVED_METER_NODE", "仅用于合成测算的未审批计量点"),
@@ -706,7 +713,7 @@ def _formula_shared_contracts(definitions: list[dict[str, Any]]) -> tuple[list[t
     return groups, ids
 
 
-def _formula_status(model: ReportModel, fid: str) -> str:
+def _formula_status(model: ReportModel, fid: str, *, reader_language: bool = False) -> str:
     metrics = [m for m in model.metrics if m.get("formula_id") == fid]
     if not metrics:
         return "仅作方法说明；本项目未引用或执行"
@@ -719,9 +726,11 @@ def _formula_status(model: ReportModel, fid: str) -> str:
     unimplemented -= historical_placeholder
     undefined = sum(m.get("status") == "UNDEFINED" for m in metrics)
     unknown = len(metrics) - calculated - blocked - inapplicable - unimplemented - historical_placeholder - undefined
-    states = (("已计算", calculated), ("阻断", blocked), ("不适用", inapplicable),
-              ("早期阶段留置占位", historical_placeholder),
-              ("方法未实现", unimplemented), ("数学未定义", undefined), ("待核对", unknown))
+    states = (("已计算", calculated), ("尚无可用结果" if reader_language else "阻断", blocked),
+              ("不适用", inapplicable),
+              ("其他评价口径未测算" if reader_language else "早期阶段留置占位", historical_placeholder),
+              ("当前方法尚无计算结果" if reader_language else "方法未实现", unimplemented),
+              ("数学未定义", undefined), ("待核对", unknown))
     return "本次引用；" + "、".join(f"{name}{count}项" for name, count in states if count) + "。"
 
 
@@ -781,16 +790,10 @@ def _formula_reader_evaluation(model: ReportModel) -> str:
 
 
 def _npv_instances_note(model: ReportModel, outputs: list[dict[str, Any]]) -> str:
-    statuses = {"CALCULATED": "已计算", "NOT_IMPLEMENTED": "本阶段方法未实现"}
-    npv_calculated = (model.metric("financial.phase3e.project_npv") or {}).get("status") == "CALCULATED"
-    return ("F-NPV 输出实例分别为：" + "；".join(
-        f"{metric['metric_id']}：" +
-        ("3B阶段留置占位，非整条NPV方法未实现" if metric.get("reason") == "OUTSIDE_PHASE3B"
-         and metric["status"] == "NOT_IMPLEMENTED" else
-         statuses.get(metric["status"], _reader_text(metric["status"])))
-        for metric in outputs) +
-        ("。已计算的项目NPV不因其他实例未实现而失效。" if npv_calculated else
-         "。各实例状态独立；本次项目NPV未形成可用数值，不以方法已注册替代项目结果。"))
+    project = model.metric("financial.phase3e.project_npv")
+    if project and project.get("status") == "CALCULATED":
+        return "本项目净现值已按项目税后现金流测算；其他评价口径是否适用，须分别核对现金流和折现条件。"
+    return "本项目净现值尚无可用结果；须补齐项目现金流及折现条件后再评价。"
 
 
 def _reader_term_applicability(model: ReportModel, term_id: str) -> str:
@@ -1226,7 +1229,8 @@ def _write_model_xlsx(model: ReportModel, output: Path, pv_type: str) -> dict[st
 def _add_table(document: Document, headers: list[str], rows: list[list[Any]], caption: str | None = None,
                *, widths_cm: tuple[float, ...] | None = None,
                nowrap_columns: tuple[int, ...] = (),
-               layout_type: str = "TECHNICAL_DETAIL_TABLE") -> None:
+               layout_type: str = "TECHNICAL_DETAIL_TABLE",
+               continuation_identity: bool = False) -> None:
     """Use a bounded portrait layout; never silently squeeze a wide ledger into equal columns."""
     layouts = {"SUMMARY_TABLE", "PLAN_TABLE", "FINANCIAL_TABLE", "ANNUAL_LEDGER_TABLE",
                "TECHNICAL_DETAIL_TABLE", "ISSUE_TABLE"}
@@ -1234,8 +1238,9 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
         raise ContractError("REPORT_WORD_TABLE_LAYOUT")
     if len(headers) > 6 and layout_type in {"FINANCIAL_TABLE", "ANNUAL_LEDGER_TABLE", "ISSUE_TABLE"}:
         raise ContractError("REPORT_WORD_TABLE_TOO_WIDE")
+    table_number = len(document.tables) + 1
     if caption:
-        paragraph = document.add_paragraph(f"表{len(document.tables) + 1} {caption.rstrip('。；：,.、 ')}", style="Caption")
+        paragraph = document.add_paragraph(f"表{table_number} {caption.rstrip('。；：,.、 ')}", style="Caption")
         paragraph.paragraph_format.keep_with_next = True
     table = document.add_table(rows=1, cols=len(headers))
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
@@ -1274,7 +1279,11 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
     tbl_w.set(qn("w:type"), "dxa")
     for index, header in enumerate(headers):
         cell = table.rows[0].cells[index]
-        cell.text = _string(header)
+        # Word/WPS repeats this row on every physical continuation page.
+        # Repeat the table identity with the column label without inventing a
+        # second caption/table or claiming that the first page is a "续表".
+        cell.text = (_string(header) + f"\n表{table_number}"
+                     if index == 0 and continuation_identity else _string(header))
         cell.width = Cm(widths[index])
         if layout_type == "ANNUAL_LEDGER_TABLE" and index > 0:
             cell._tc.get_or_add_tcPr().append(OxmlElement("w:noWrap"))
@@ -2489,7 +2498,8 @@ def _add_evidence_table(document: Document, evidence: dict[str, Any], caption: s
 
 def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: str,
                 editorial_fixture: dict[str, Any] | None = None,
-                content_version: str = REPORT_CONTENT_VERSION) -> dict[str, Any]:
+                content_version: str = REPORT_CONTENT_VERSION,
+                reader_preview: bool = False) -> dict[str, Any]:
     profile = REPORT_PROFILES[pv_type]
     source_map = _source_ref_map(model)
     document = Document()
@@ -2500,24 +2510,34 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     document.add_paragraph(display_name, style="Solar Cover Subtitle")
     synthetic_calculation = (str(model.result["project_id"]).startswith("SYNTHETIC")
                              and model.result["maturity"].get("real_project") != "VERIFIED")
-    sample_status = ("合成计算 · 部分结果 · 未经现场核验"
-                     if synthetic_calculation else "资料不充分样件 · 阶段性草稿")
+    # This abbreviated reader view is approved only for the two synthetic R10
+    # examples. A real project's source and maturity prose needs its own review.
+    if reader_preview and not synthetic_calculation:
+        raise ContractError("REPORT_READER_PREVIEW_SYNTHETIC_ONLY")
+    sample_status = ("示例资料 · 部分指标已测算 · 未经现场核验"
+                     if synthetic_calculation else
+                     "资料已有核验记录 · 本阶段指标已测算"
+                     if model.result.get("status") == "COMPLETE" and model.result["maturity"].get("real_project") == "VERIFIED" else
+                     "资料待核验 · 本阶段指标已测算"
+                     if model.result.get("status") == "COMPLETE" else
+                     "资料待核验 · 部分指标尚无可用结果")
     if editorial_fixture:
-        sample_status = "合成计算及编辑假设样件 · 结果仍为部分完成"
-    for label, value in (("项目类型", profile["boundary"]), ("编制状态", sample_status),
+        sample_status = "示例资料 · 补充背景仅用于方案描述 · 未经现场核验"
+    for label, value in (("项目类型", profile["boundary"]), ("资料情况", sample_status),
                          ("评价日期", str(model.result["evaluation_date"]))):
         document.add_paragraph(f"{label}：{value}", style="Solar Cover Info")
-    cover_note = document.add_paragraph("本报告为基于本次统一测算结果的预可研开发样件。计算结果、资料成熟度和财务限制均按当前状态呈现，不替代正式可研、设计审查、并网意见、合同审核或投资决策。")
+    if model.result.get("status") != "COMPLETE" or model.result.get("maturity", {}).get("real_project") != "VERIFIED":
+        document.add_paragraph("项目判断：资料尚待核验，暂不具备投资决策条件", style="Solar Cover Info")
+    cover_note = document.add_paragraph(REPORT_DISCLAIMER)
     cover_note.paragraph_format.space_before = Pt(16)
     if editorial_fixture:
-        identity_note = document.add_paragraph("资料身份：EDITORIAL_TEST_ASSUMPTION（仅用于合成项目编辑性测试，不作为真实第三方证据，也不进入计算引擎）。")
+        identity_note = document.add_paragraph("部分背景采用单独标注的示例资料，不作为现场实测、第三方证明或测算输入。")
         identity_note.paragraph_format.space_before = Pt(8)
-    cover_footer = document.add_paragraph("版本状态：阶段性草稿  ·  仅限本地审阅  ·  资料不足，暂不具备决策条件")
     front = document.add_section(WD_SECTION_START.NEW_PAGE)
     front.header.is_linked_to_previous = False
     front.footer.is_linked_to_previous = False
     document.add_paragraph("摘要", style="Solar Abstract Title")
-    basis_text = ("本阶段同时使用明确标识的编辑性测试假设，用于检验工程背景与计算结果的衔接；这些假设不进入计算引擎，也不构成第三方证据。"
+    basis_text = ("工程背景中另有明确标识的示例资料，仅用于描述拟议方案；这些资料不参与测算，也不构成第三方证明。"
                   if editorial_fixture else "")
     for paragraph in _project_summary(model).split("\n\n"):
         document.add_paragraph(paragraph, style="Solar Abstract")
@@ -2531,9 +2551,13 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                       "B：使用当前假设资料" if model.result.get("source_snapshot", {}).get("phase2", {}).get("records") else
                       "C：尚缺关键来源资料")
     _add_table(document, ["专业指标", "本阶段结果", "单位", "说明"], key_rows,
-               f"关键预测结果（资料成熟度{material_label}；完整精度见测算模型.xlsx）",
-               widths_cm=(4.0, 4.8, 2.0, 6.2), layout_type="SUMMARY_TABLE")
-    document.add_paragraph("资料成熟度只评价输入证据，不更改指标原有的计算或阻断状态。", style="Solar Abstract")
+               ("关键预测结果（详细数据与原始精度见配套测算模型）" if reader_preview else
+                f"关键预测结果（资料成熟度{material_label}；完整精度见配套测算模型）"),
+               widths_cm=(5.0, 2.8, 2.1, 7.1), layout_type="SUMMARY_TABLE")
+    document.add_paragraph(("本报告使用示例资料，来源仍待核验；表中数值是基于当前条件的预测，"
+                            "不能据此作投资决策。" if reader_preview else
+                            "资料成熟度反映当前证据核验程度，不代表测算结果已具备投资决策条件。"),
+                           style="Solar Abstract")
     normalized = model.result["inputs"].get("normalized", {})
     records = model.result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
     keywords = ("工商业屋顶光伏；发电量预测；厂区消纳；投资评价" if pv_type == "industrial_rooftop" else
@@ -2564,6 +2588,17 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     section._sectPr.append(page_start)
     configure_word(document)
     formal_formulas = _appendix_formula_definitions(model)
+    reader_formulas = ([formula for formula in formal_formulas
+                        if formula["formula_id"] in READER_FORMULA_IDS]
+                       if reader_preview else formal_formulas)
+    if reader_preview and len(reader_formulas) != len(READER_FORMULA_IDS):
+        raise ContractError("REPORT_READER_FORMULA_IDENTITY")
+    reader_appendices = (tuple((app_id, "常用公式与方法索引" if app_id == "APP11" else
+                               "常用术语与单位" if app_id == "APP12" else title)
+                              for app_id, title in APPENDICES) if reader_preview else APPENDICES)
+    reader_appendix_titles = ({**APPENDIX_TITLES, "APP11.01": "公式索引",
+                               "APP11.02": "常用公式与符号", "APP12.01": "常用术语"}
+                              if reader_preview else APPENDIX_TITLES)
     math_objects = convert_equations(formal_formulas)
     chart_specs = _canonical_chart_specs(model)
     chart_receipts: list[dict[str, Any]] = []
@@ -2647,28 +2682,31 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             document.add_paragraph("以下阻断仅适用于各自指标；不撤销已计算的项目净现值。IRR、回收期须以其自身状态为准；股东现金事件与平准化成本边界须独立补证。")
         else:
             document.add_paragraph("以下指标按各自阻断理由补证；不能由尚未计算的项目回报或其他指标推断有效收益。")
-    for app_id, app_title in APPENDICES:
+    for app_id, app_title in reader_appendices:
         appendix_heading = add_numbered_heading(document, heading_number(app_id, app_title), bookmark_index)
         bookmark_index += 1
         appendix_heading.paragraph_format.page_break_before = True
-        document.add_paragraph(f"本附录《{app_title}》提供受控追溯摘要；完整字段、原始精度和来源编号保留在配套 Excel。")
+        document.add_paragraph(f"本附录《{app_title}》列示本项目相关资料；原始精度与来源编号见配套工作簿。")
         for item_no in (1, 2):
             item_id = f"{app_id}.{item_no:02d}"
-            item_title = APPENDIX_TITLES[item_id]
+            item_title = reader_appendix_titles[item_id]
             add_numbered_heading(document, heading_number(item_id, item_title,
                                                           parent_stable_id=app_id, parent_level=1), bookmark_index)
             bookmark_index += 1
             evidence = _appendix_evidence(model, pv_type, app_id, item_no)
             if app_id in {"APP11", "APP12"}:
-                detail = (f"冻结字典共列示{len(_appendix_formula_definitions(model))}条正式定义，"
-                          f"本次结果引用{len(_formula_definitions(model))}条；"
-                          "列示、引用与成功执行不等同。具体符号及边界按公式分组见下一节。"
+                detail = (("全部公式及其原始定义见配套来源工作簿；元/Wp与元/kWp的换算口径尚待专业核验，"
+                           "不得采用未经核实的换算结果。下表仅为索引，不表示本项目逐式执行。" if reader_preview else
+                           f"冻结字典共列示{len(formal_formulas)}条正式定义，本次结果引用{len(_formula_definitions(model))}条；"
+                           "列示、引用与成功执行不等同。具体符号及边界按公式分组见下一节。")
                           if item_id == "APP11.01" else
-                          "各公式的完整符号、下标、集合与适用边界分别列示；定义存在不代表已执行。"
+                          ("下列常用公式按本项目结果状态分别说明；完整公式、逐符号定义与原始记法见配套工作簿。"
+                           if reader_preview else
+                           "各公式的完整符号、下标、集合与适用边界分别列示；定义存在不代表已执行。")
                           if item_id == "APP11.02" else
-                          f"本附录列示受控词典全部{len(_appendix_rows(model, item_id)[1])}条术语及扩展条目；"
-                          "包含本项目未采用的储能等术语，不意味着相关技术已实施或取得专业认可。"
-                          "各条均按原词典的名称、全称、定义及适用边界列示。"
+                          ("本节仅解释本项目常用术语；全部术语原始定义及适用边界见资料来源与假设清单的词典。"
+                           if reader_preview else
+                           "完整术语词典含本项目尚未采用的方法，收录不表示相关技术已实施。")
                           if item_id == "APP12.01" else
                           "功率、能量、辐照与投资单位分开解释，不能混作同一物理量。")
                 evidence["narrative"] = [detail]
@@ -2679,6 +2717,11 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 _headers, resource_rows = _resource_rows(model)
                 resource_intro, irradiance, weather, _mapping = prepare_resource_word_rows(
                     model.result, resource_rows, _word_number)
+                if reader_preview:
+                    timezone = normalized.get("site.timezone")
+                    resource_intro = (f"下表为按月汇总的示例气象资料，采用{timezone}时区；"
+                                      "每行来源索引须与变量列一同使用，逐字段原值、单位、数据集版本及来源号见测算模型 M04。"
+                                      "月度气象资源不是发电量，也不代表场址多年实测。")
                 document.add_paragraph(resource_intro)
                 _add_table(document, ["月份", "GHI (kWh/㎡)", "DNI (kWh/㎡)", "DHI (kWh/㎡)",
                                       "POA (kWh/㎡)", "来源索引"], irradiance,
@@ -2687,28 +2730,32 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 _add_table(document, ["月份", "气温 (°C)", "风速 (m/s)", "覆盖率（%）", "来源索引"], weather,
                            "月度气象资源（覆盖率由原始比值乘100展示）",
                            widths_cm=(1.2, 2.8, 2.8, 2.8, 7.0))
-                document.add_paragraph(
+                resource_note = document.add_paragraph(
                     "辐照物理口径专项说明：本表数值单位为kWh/㎡，表示期间辐照量而非W/m²辐照度；"
                     "GHI是水平面全球辐照量，DNI是法向直射辐照量，DHI是水平面散射辐照量，POA是阵列面辐照量。"
                     "当前合成表若出现GHI=DNI+DHI的逐月数值模式，不应被解释为一般物理恒等式；"
                     "太阳天顶角、法向到水平投影、时间积分和质量控制仍需原始逐时资料证明。"
                     "发电计算沿既有POA/时间积分链消费资源，不以报告表格中的简单相加替代物理转换。"
                 )
+                if reader_preview:
+                    resource_note.paragraph_format.keep_together = True
             if item_id == "APP02.02":
                 document.add_paragraph("下表按已记录的月份顺序对应既有发电与结算月度结果；"
                                        "可用列表示结算前、已计入发电链限发的月度电量；结算截弃是另一边界。"
                                        "未绑定逐月发电链限发损失时不按全年比例分摊，也不把月表的可用列称为限发前电量。"
-                                       "任何月份身份或平衡无法确认时仅列UNKNOWN。")
+                                       "月份身份或电量平衡无法确认时标为待核验。")
                 monthly = _monthly_balance_rows(model)
-                for title, names, columns, widths in (
-                    ("首年月度发电与消纳（kWh；合成预测）",
-                     ("月", "发电", "自用", "上网"), (0, 1, 2, 3), (2.0, 5.0, 5.0, 5.0)),
+                for title, names, columns, widths, repeat_identity in (
+                    (("首年月度发电与上网（kWh；示例预测）" if pv_type == "utility_scale_ground"
+                      else "首年月度发电与消纳（kWh；示例预测）"),
+                     ("月", "发电", "自用", "上网"), (0, 1, 2, 3), (2.0, 5.0, 5.0, 5.0), False),
                     ("首年月度交付与结算边界（kWh；与上表同月）",
                      ("月", "结算截弃", "交付", "可用（结算前）", "性质"),
-                     (0, 4, 5, 6, 7), (1.6, 3.4, 3.4, 4.0, 4.6)),
+                     (0, 4, 5, 6, 7), (1.6, 3.4, 3.4, 4.0, 4.6), True),
                 ):
                     _add_table(document, list(names), [[row[index] for index in columns] for row in monthly],
-                               title, widths_cm=widths, layout_type="TECHNICAL_DETAIL_TABLE")
+                               title, widths_cm=widths, layout_type="TECHNICAL_DETAIL_TABLE",
+                               continuation_identity=reader_preview and repeat_identity)
                 available = model.metric("available_kwh.year.1") or {}
                 energy = model.metric("energy.year.1") or {}
                 loss = (energy.get("details") or {}).get("losses_kwh", {}).get("curtailment")
@@ -2763,15 +2810,16 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                           _word_value(atom.get("system.losses.included_in_source")),
                                           _word_value(atom.get("system.losses.method")),
                                           _word_value(atom.get("system.losses.period"))])
-                for title, names, columns, widths in (
+                for title, names, columns, widths, repeat_identity in (
                     ("系统损失类别及原始比值（顺序与已含标志不可忽略）",
                      ("序", "损失类型", "原始比例", "边界", "来源已含"),
-                     (0, 1, 2, 3, 4), (1.5, 4.2, 3.2, 4.2, 3.9)),
+                     (0, 1, 2, 3, 4), (1.5, 4.2, 3.2, 4.2, 3.9), True),
                     ("系统损失方法与适用期间（同序对应上表）",
-                     ("序", "方法", "期间"), (0, 5, 6), (1.5, 7.7, 7.8)),
+                     ("序", "方法", "期间"), (0, 5, 6), (1.5, 7.7, 7.8), False),
                 ):
                     _add_table(document, list(names), [[row[index] for index in columns] for row in loss_rows],
-                               title, widths_cm=widths, layout_type="TECHNICAL_DETAIL_TABLE")
+                               title, widths_cm=widths, layout_type="TECHNICAL_DETAIL_TABLE",
+                               continuation_identity=reader_preview and repeat_identity)
                 degradation = _source_value(normalized, records, "system.annual_degradation")
                 document.add_paragraph("年度衰减输入为" + (_word_value(degradation) if degradation is not None else "UNKNOWN") +
                                        "（原始比值）；后期设备更换停机见年度发电结果，不由更换事件推定性能恢复增益。")
@@ -2813,7 +2861,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                         _add_table(document, ["运营年", *(name for name, _ in fields)],
                                    [[f"第{index}年", *(_word_value(row.get(key)) for _, key in fields)]
                                     for index, row in enumerate(operations, 1)], title,
-                                   layout_type="ANNUAL_LEDGER_TABLE")
+                                   layout_type="ANNUAL_LEDGER_TABLE", continuation_identity=reader_preview)
                     operating = [row.get("opex_cash_paid") for row in annual[1:]]
                     lifecycle_opex = model.value("financial.opex.cash_lifecycle")
                     if (len(operating) == len(annual) - 1
@@ -2834,7 +2882,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                  _word_number(first["transaction_cost_cash_paid"]),
                                  _word_number(first["transaction_cost_payable_opening"]) + "／" +
                                  _word_number(first["transaction_cost_payable_closing"]),
-                                 fee_source["source_id"] + "；合成年度预测，非实付"]],
+                                 "来源详见配套清单；示例年度预测，非实付"]],
                                "交易费不并入运维费；全期计提、预计付款和应付逐期核对见测算模型 M14。",
                                widths_cm=(2.7, 2.75, 2.75, 3.4, 5.4))
             if item_id == "APP05.02":
@@ -2846,7 +2894,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                     "other_cash_taxes_project")
                         if any(not isinstance(row.get(key), (int, float, Decimal)) or
                                isinstance(row.get(key), bool) for key in required):
-                            return "UNKNOWN", "UNKNOWN"
+                            return "待核验", "待核验"
                         vat = Decimal(str(row[required[0]])) - sum(
                             Decimal(str(row[key])) for key in required[1:])
                         if abs(vat) < Decimal("0.0000001"):
@@ -2858,7 +2906,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                            "所得税预计付款和其他现金税费列示，包含计入账簿的"
                                            "增值税预计支付与退税的净影响；仅是既有结果的展示勾稽，"
                                            "不表示税款已经实际缴纳。各分项独立显示取整产生的分位尾差"
-                                           "单列为舍入差额，不充作真实增值税；建设期缺少税费事件时保留UNKNOWN。")
+                                           "单列为舍入差额，不充作真实增值税；建设期缺少税费事件时标为待核验。")
                     document.add_paragraph("建设期税费记录未闭合时标记未提供，不把空缺解释为零或实缴。")
                     tax_rows = [[f"第{index}年", *(_word_value(row.get(key)) for key in
                                  ("taxable_income_project", "income_tax_accrual_project",
@@ -2873,7 +2921,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                  "其他现金税费", "增值税净现金额", "列示舍入差额", "项目现金税费合计")
                         _add_table(document, [names[index] for index in columns],
                                    [[row[index] for index in columns] for row in tax_rows], title,
-                                   layout_type="ANNUAL_LEDGER_TABLE")
+                                   layout_type="ANNUAL_LEDGER_TABLE", continuation_identity=reader_preview)
                     taxes = [row.get("cash_tax_total_project") for row in annual[1:]]
                     lifecycle = model.value("financial.tax.cash_lifecycle")
                     if (len(taxes) == 25 and all(isinstance(tax, (int, float, Decimal)) and
@@ -2889,12 +2937,12 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             if item_id == "APP06.01":
                 fee_source = model.result.get("evidence", {}).get("financial-ledger", {}).get("trading_fee_payment")
                 if fee_source:
-                    document.add_paragraph("本合成测算按交易费当年发生、当年全额预计支付处理，期初无交易费欠款；"
-                                           "该安排仅用于年度预测测试，不代表真实合同或实际付款记录。"
-                                           f"来源编号：{fee_source['source_id']}。")
+                    document.add_paragraph("示例测算按交易费当年发生、当年全额预计支付处理，期初无交易费欠款；"
+                                           "这仅是年度预测假设，不代表真实合同或实际付款记录；"
+                                           "来源原文及编号见配套资料来源与假设清单。")
                 _add_table(document, ["期别", "项目税后净现金流（元）", "资本支出付款（元）", "营运资金增加（元）", "其中更换付款（元）"],
                            _project_cash_word_rows(model), "建设期及运营全期项目现金流（已计算值，非资本金现金流）",
-                           widths_cm=(2.2, 4.0, 3.6, 3.5, 3.7))
+                           widths_cm=(2.2, 4.0, 3.6, 3.5, 3.7), continuation_identity=reader_preview)
                 annual_bridge = _project_annual_bridge_rows(model)
                 if annual_bridge is not None:
                     detail_rows, bridge_rows = annual_bridge
@@ -2905,7 +2953,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                          ("期别", "运维现金", "项目现金税费", "列示舍入差额", "运营收支净额"), (0, 4, 5, 6, 7)),
                     ):
                         _add_table(document, list(names), [[row[index] for index in columns] for row in detail_rows],
-                                   title, layout_type="ANNUAL_LEDGER_TABLE")
+                                   title, layout_type="ANNUAL_LEDGER_TABLE", continuation_identity=reader_preview)
                     for title, names, columns in (
                         ("建设及年度资本现金事件（元；更换已含在资本支出）",
                          ("期别", "运营收支净额", "资本支出付款", "营运资金增加"), (0, 1, 2, 3)),
@@ -2913,7 +2961,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                          ("期别", "营运资金回收", "终期资产现金", "项目净现金流"), (0, 4, 5, 6)),
                     ):
                         _add_table(document, list(names), [[row[index] for index in columns] for row in bridge_rows],
-                                   title, layout_type="ANNUAL_LEDGER_TABLE")
+                                   title, layout_type="ANNUAL_LEDGER_TABLE", continuation_identity=reader_preview)
                     final_ledger = model.result.get("evidence", {}).get("financial-ledger", {}).get("annual", [])
                     final_row = next((row for row in final_ledger if row.get("period") == "OPERATING_YEAR_25"), None)
                     if final_row is not None:
@@ -2981,28 +3029,36 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                            widths_cm=(3.3, 2.2, 5.3, 6.2), layout_type="ISSUE_TABLE")
             if app_id in {"APP11", "APP12"}:
                 appendix_headers, appendix_rows = _appendix_rows(model, item_id)
+                if reader_preview and item_id == "APP11.01":
+                    appendix_rows = [row[:-1] + [_formula_status(model, row[0], reader_language=True)]
+                                     for row in appendix_rows]
                 if item_id == "APP11.01" and appendix_rows:
-                    document.add_paragraph("公式阅读导航（以下仅解释本报告用到的评价路径；完整89条正式定义、原始文字和逐符号边界见下一节与测算模型 M02，不代表89条均已执行）。",
+                    document.add_paragraph(("公式阅读导航（下文只介绍相关评价方法；完整定义及逐符号说明见配套资料来源与假设清单的变量-术语词典工作表，不代表各方法均已用于本项目）。"
+                                            if reader_preview else
+                                            "公式阅读导航（以下仅解释本报告用到的评价路径；完整89条正式定义、原始文字和逐符号边界见下一节与测算模型 M02，不代表89条均已执行）。"),
                                            style="Solar Formula Title")
                     document.add_paragraph("发电与配置：直流装机、逆变容量和损失链确定预测发电；阵列面资源、设备效率、年度衰减与限发分别核对，不把发电量直接视为实际售电量。")
-                    document.add_paragraph("收益与现金：屋顶自用节费、余电销售及地面全额上网分别建立交易边界；CAPEX、OPEX、税金、更换和营运资金进入项目年度净现金流，后期更换不冒充首期投资。")
+                    document.add_paragraph(
+                        ("收益与现金：厂区自用节费及余电销售分别核对用电和结算边界；" if pv_type == "industrial_rooftop"
+                         else "收益与现金：集中上网销售按送出及交易结算条件核对，不计厂区自用节费；")
+                        + "CAPEX、OPEX、税金、更换和营运资金进入项目年度净现金流，后期更换不冒充首期投资。")
                     document.add_paragraph(_formula_reader_evaluation(model))
                     _add_table(document, ["正式编号", "中文名称", "本次引用与执行"],
                                [[row[0], row[1], row[5]] for row in appendix_rows],
-                               "公式索引（不等于冻结公式全部执行）")
+                               "公式索引（不代表全部方法已执行）", continuation_identity=reader_preview)
                     npv_outputs = [m for m in model.metrics if m.get("formula_id") == "F-NPV"]
                     if npv_outputs:
                         document.add_paragraph(_npv_instances_note(model, npv_outputs))
                 elif item_id == "APP11.02":
-                    definitions = formal_formulas
+                    definitions = reader_formulas
                     shared, shared_ids = _formula_shared_contracts(definitions)
-                    if shared:
+                    if shared and not reader_preview:
                         document.add_paragraph("共通记法契约（按原文一致性分组）", style="Solar Formula Title")
                         document.add_paragraph("相同契约仅在此处完整定义一次；各公式注明所适用的组号，逐式符号与运算检查仍独立列出。")
                         for label, text, number in shared:
                             document.add_paragraph(f"{label}第{number}组：{text}")
                     dimension_texts, dimension_ids = _formula_dimensional_contracts(definitions)
-                    if dimension_texts:
+                    if dimension_texts and not reader_preview:
                         document.add_paragraph("共通量纲约定（按有效定义的完整文本分组）", style="Solar Formula Title")
                         for number, text in enumerate(dimension_texts, 1):
                             document.add_paragraph(f"量纲第{number}组：{text}")
@@ -3012,22 +3068,30 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                         equation = formula.get("text_equation") or formula.get("latex") or "未提供"
                         unit = formula.get("unit") or "未定义"
                         equation_paragraph(document, math_objects[fid], f"（{formula_no}）")
-                        original = document.add_paragraph(f"冻结文本定义：{equation}；冻结LaTeX：{formula.get('latex') or '未提供'}",
-                                                          style="Solar Formula Note")
-                        original.paragraph_format.keep_together = True
+                        if not reader_preview:
+                            original = document.add_paragraph(f"文字表达：{equation}", style="Solar Formula Note")
+                            original.paragraph_format.keep_together = True
+                            if formula.get("latex"):
+                                document.add_paragraph("原始公式记法：" + str(formula["latex"]),
+                                                       style="Solar Formula Note")
                         if fid == CONFLICT_ID:
-                            document.add_paragraph("显示冲突，方法待裁定：冻结LaTeX与冻结文本及单位定义不一致；数学对象依文本定义排版，不得据此判定公式语义验收通过。",
+                            document.add_paragraph(("该单位换算口径尚待专业核验；正式使用前须核对单位与换算关系。"
+                                                    if reader_preview else
+                                                    "显示冲突，方法待裁定：冻结LaTeX与冻结文本及单位定义不一致；数学对象依文本定义排版，不得据此判定公式语义验收通过。"),
                                                    style="Solar Formula Note")
                         document.add_paragraph(f"结果单位：{unit}", style="Solar Formula Note")
-                        document.add_paragraph("适用边界：" + _reader_text(str(formula.get("calculation_boundary") or "未定义")))
-                        document.add_paragraph("本项目状态：" + _formula_status(model, fid))
+                        boundary = str(formula.get("calculation_boundary") or "未定义")
+                        if reader_preview and pv_type == "utility_scale_ground" and fid == "F-AVAILABLE-ENERGY":
+                            boundary = boundary.split("屋顶若计量点不同", 1)[0].rstrip("，；。") + "。"
+                        document.add_paragraph("适用边界：" + _reader_text(boundary))
+                        document.add_paragraph("本项目状态：" + _formula_status(model, fid, reader_language=reader_preview))
                         references = [f"{label}第{shared_ids[key, _formula_contract_text(formula[key])]}组"
                                       for key, label in (("operator_definition", "运算符"),
                                                          ("notation_contract", "记法与歧义"),
                                                          ("unit_convention", "单位约定")) if formula.get(key)]
-                        if references:
+                        if references and not reader_preview:
                             document.add_paragraph("本式共通契约：" + "；".join(references))
-                        if formula.get("dimensional_check"):
+                        if formula.get("dimensional_check") and not reader_preview:
                             dimension = dimension_ids[_formula_contract_text(formula["dimensional_check"])]
                             operation = _formula_dimensional_text(formula)
                             document.add_paragraph(f"本式量纲校核：量纲第{dimension}组。" +
@@ -3045,25 +3109,30 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                         terms = json.loads(files("wangbin_solar_pv").joinpath("report-glossary.json")
                                            .read_text(encoding="utf-8"))["terms"]
                         selected = set(_reader_glossary_ids(pv_type))
+                        reader_definitions = {
+                            "TERM-VAT": "货物和服务增值环节按适用规则计税；实际税率须以项目所在地及业务资料核实。",
+                            "TERM-WORKING-CAPITAL": "经营性流动资产减经营性流动负债的净占用；不含已单列现金、债务、税资产负债或受限储备，除非有明确桥项；不与收款法重复调整。",
+                        }
                         reader_rows = [[term["chinese_name"], term.get("abbreviation") or "—",
-                                        term["definition_zh"], _reader_term_applicability(model, term["term_id"])]
+                                        reader_definitions.get(term["term_id"], term["definition_zh"]),
+                                        _reader_term_applicability(model, term["term_id"])]
                                        for term in sorted(terms, key=lambda term: (0, {"PV": 0, "DC": 1, "AC": 2}[term["abbreviation"]])
                                                           if term.get("abbreviation") in {"PV", "DC", "AC"} else (1, 0))
                                        if term["term_id"] in selected]
                         # The audit dictionary remains complete below; this index is a navigation aid only.
                         _add_table(document, ["中文术语", "缩写", "简明释义", "本项目适用说明"], reader_rows,
-                                   "本项目常用术语速览（完整受控词典见下表）",
-                                   widths_cm=(3.0, 2.2, 5.9, 5.9), layout_type="SUMMARY_TABLE")
-                        document.add_paragraph("读者释义与原词典方法说明分别展示；词条收录不表示本项目实际采用。"
-                                               "原词典完整定义、ID及来源可在随包受控词典核对。")
-                        for text, label in _glossary_common_boundaries(terms).items():
-                            document.add_paragraph(f"共通边界{label}（原词典）：{text}")
-                        for term in terms:
-                            if term["term_id"] in {"TERM-HASH", "TERM-BIPV"}:
-                                document.add_paragraph(f"{term['term_id']} 原词典历史方法说明（非本次运行事实）："
-                                                       + term["distinction_and_boundary"])
-                    _add_table(document, appendix_headers, appendix_rows,
-                               "受控编辑词典" if item_id == "APP12.01" else "单位与符号使用边界")
+                                   ("本项目常用术语（完整原始定义见资料来源工作簿）" if reader_preview else
+                                    "本项目常用术语速览（完整词典见下表）"),
+                                   widths_cm=(3.0, 2.2, 5.9, 5.9), layout_type="SUMMARY_TABLE",
+                                   continuation_identity=reader_preview)
+                        document.add_paragraph("词条用于解释相关概念，不表示本项目已采用该项技术；原始定义及来源见资料来源工作簿。")
+                        if not reader_preview:
+                            for text, label in _glossary_common_boundaries(terms).items():
+                                document.add_paragraph(f"共通使用边界{label}：{text}")
+                    if not reader_preview or item_id == "APP12.02":
+                        _add_table(document, appendix_headers, appendix_rows,
+                                   "完整术语词典" if item_id == "APP12.01" else "单位与符号使用边界",
+                                   widths_cm=(2.3, 4.7, 9.0) if reader_preview and item_id == "APP12.02" else None)
             checklist.append({"id": item_id, "title": item_title,
                               "content_summary": evidence["summary"][:600], "input_field_ids": evidence["field_ids"],
                               "metric_ids": evidence["metric_ids"], "source_ids": evidence["source_ids"],
@@ -3082,18 +3151,18 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                               "final_conclusion": evidence["conclusion"]})
 
     document.add_paragraph("术语与公式说明", style="Solar Unnumbered Title")
-    document.add_paragraph("公式定义、版本、变量、单位、输入字段和完整来源绑定见测算模型.xlsx 的公式说明工作表，以及资料来源与假设清单.xlsx 的公式/方法工作表。正文不复制原始对象或过高精度小数。")
-    document.add_paragraph("版本与质量声明", style="Solar Unnumbered Title")
-    document.add_paragraph(f"项目边界：{profile['boundary']}。报告内容版本：{content_version}；该版本只表示写作与排版，不修改计算结果身份。配套 Excel 为本次测算快照；修改 Excel 不会使本报告或旧结果自动有效，必须重新运行计算程序生成新的统一身份。PDF 只有在真实转换器可用并成功解析时才生成；本次渲染、页面视觉和目录页码门禁以质量清单实际状态为准。")
-    identity_labels = {"model_version": "模型版本", "run_id": "运行ID", "input_hash": "输入哈希",
-                       "source_snapshot_id": "来源快照ID", "result_hash": "结果哈希"}
-    _add_table(document, ["身份字段", "统一测算值"],
-               [[identity_labels.get(key, key), str(value)] for key, value in model.identity.items()],
-               "统一测算身份（仅在此处展示一次）", widths_cm=(3.2, 13.8),
-               nowrap_columns=(1,))
+    document.add_paragraph("完整公式原文、符号、单位、术语定义和来源编号见配套资料来源与假设清单的变量-术语词典工作表；详细计算精度见测算模型。")
+    if not reader_preview:
+        document.add_paragraph("来源与版本记录", style="Solar Unnumbered Title")
+        document.add_paragraph("配套工作簿记录了本次测算使用的输入和计算结果；项目条件变化后须重新核对来源并更新测算，不能直接沿用原评价结论。")
+        identity_labels = {"model_version": "模型版本", "run_id": "运行ID", "input_hash": "输入哈希",
+                           "source_snapshot_id": "来源快照ID", "result_hash": "结果哈希"}
+        _add_table(document, ["身份字段", "统一测算值"],
+                   [[identity_labels.get(key, key), str(value)] for key, value in model.identity.items()],
+                   "统一测算身份", widths_cm=(3.2, 13.8), nowrap_columns=(1,))
     render_script_o_glyph(document)
-    numbering = validate_numbering(document, display_chapters, APPENDICES, APPENDIX_TITLES,
-                                   [formula["formula_id"] for formula in _appendix_formula_definitions(model)])
+    numbering = validate_numbering(document, display_chapters, reader_appendices, reader_appendix_titles,
+                                   [formula["formula_id"] for formula in reader_formulas])
     coverage = _validate_checklist_coverage(checklist)
     claim_fields = ("claim_id", "core_question", "central_claim", "claim_status",
                     "causal_reasoning", "decision", "unresolved", "next_action")
@@ -3112,6 +3181,9 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     os.replace(tmp, output)
     return {"path": output.name, "size": output.stat().st_size, "sha256": _sha256(output),
             "report_content_version": content_version,
+            "reader_preview": reader_preview,
+            "full_word_appendix_contract": "NOT_SATISFIED_READER_PREVIEW" if reader_preview else "FULL_CONTENT_RETAINED",
+            "frozen_word_identity_contract": "NOT_SATISFIED_READER_PREVIEW" if reader_preview else "FULL_CONTENT_RETAINED",
             "word_format_version": WORD_FORMAT.identifier,
             "numbering": numbering,
             **coverage,
@@ -3156,7 +3228,8 @@ def _assert_same_identity(files: dict[str, Any], identity: dict[str, str]) -> No
 def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output_dir: str, *, formula_map: dict[str, Any] | None,
                    expected_pv_type: str, phase: str,
                    editorial_fixture: dict[str, Any] | None = None,
-                   content_version: str = REPORT_CONTENT_VERSION) -> dict[str, Any]:
+                   content_version: str = REPORT_CONTENT_VERSION,
+                   reader_preview: bool = False) -> dict[str, Any]:
     """Generate a bounded DRAFT_PARTIAL report set from one category-bound canonical result."""
     if not isinstance(workspace, Workspace) or not isinstance(output_dir, str) or not output_dir.strip():
         raise ContractError("REPORT_OUTPUT_TARGET")
@@ -3175,9 +3248,12 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
     except ValueError as exc:
         raise ContractError(str(exc)) from exc
     normalized = model.result["inputs"].get("normalized", {})
-    raw_name = normalized.get("project.name") or model.result["project_id"]
-    cover_name = (editorial_fixture.get("project_alias") if editorial_fixture else None) or _cover_project_name(expected_pv_type)
-    display_name, name_mapping = _safe_stem(cover_name if isinstance(raw_name, str) and raw_name.startswith("FICTIONAL") else raw_name)
+    raw_name = _source_value(normalized, model.result.get("source_snapshot", {}).get("phase2", {}).get("records", ()),
+                             "project.name") or model.result["project_id"]
+    cover_name = ((editorial_fixture.get("project_alias") if editorial_fixture else None)
+                  or (_cover_project_name(expected_pv_type) if str(raw_name).startswith(("FICTIONAL", "SYNTHETIC"))
+                      else str(raw_name)))
+    display_name, name_mapping = _safe_stem(cover_name)
     if display_name == cover_name:
         name_mapping = raw_name
     stem = display_name
@@ -3190,7 +3266,8 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
         raise ContractError("REPORT_OUTPUT_EXISTS")
     artifact_started = time.perf_counter()
     files["F01"] = _write_docx(model, docx_path, cover_name, expected_pv_type,
-                                editorial_fixture=editorial_fixture, content_version=content_version)
+                                editorial_fixture=editorial_fixture, content_version=content_version,
+                                reader_preview=reader_preview)
     files["F01"]["generation_seconds"] = round(time.perf_counter() - artifact_started, 6)
     checklist = files["F01"].pop("content_checklist")
     coverage = _validate_checklist_coverage(checklist)
@@ -3251,6 +3328,11 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
         "status": "DRAFT_PARTIAL" if files["F02"].get("status") != "GENERATED" else "DRAFT_PARTIAL",
         "phase": phase,
         "report_content_version": content_version,
+        "reader_preview": reader_preview,
+        "frozen_word_appendix_status": ("NOT_SATISFIED_READER_PREVIEW" if reader_preview else
+                                        "FULL_CONTENT_RETAINED"),
+        "frozen_word_identity_status": ("NOT_SATISFIED_READER_PREVIEW" if reader_preview else
+                                        "FULL_CONTENT_RETAINED"),
         "project_id": model.result["project_id"], "pv_type": model.result["pv_type"],
         "display_name": display_name, "name_mapping": name_mapping,
         "identity": identity, "files": files,
@@ -3307,15 +3389,19 @@ def _export_report(result: dict[str, Any], catalog, workspace: Workspace, output
 
 def export_rooftop_report(result: dict[str, Any], catalog, workspace: Workspace, output_dir: str, *, formula_map: dict[str, Any] | None = None,
                           editorial_fixture: dict[str, Any] | None = None,
-                          content_version: str = REPORT_CONTENT_VERSION) -> dict[str, Any]:
+                          content_version: str = REPORT_CONTENT_VERSION,
+                          reader_preview: bool = False) -> dict[str, Any]:
     return _export_report(result, catalog, workspace, output_dir, formula_map=formula_map,
                           expected_pv_type="industrial_rooftop", phase="PHASE5_INDUSTRIAL_ROOFTOP_REPORT_EXPORT",
-                          editorial_fixture=editorial_fixture, content_version=content_version)
+                          editorial_fixture=editorial_fixture, content_version=content_version,
+                          reader_preview=reader_preview)
 
 
 def export_ground_report(result: dict[str, Any], catalog, workspace: Workspace, output_dir: str, *, formula_map: dict[str, Any] | None = None,
                          editorial_fixture: dict[str, Any] | None = None,
-                         content_version: str = REPORT_CONTENT_VERSION) -> dict[str, Any]:
+                         content_version: str = REPORT_CONTENT_VERSION,
+                         reader_preview: bool = False) -> dict[str, Any]:
     return _export_report(result, catalog, workspace, output_dir, formula_map=formula_map,
                           expected_pv_type="utility_scale_ground", phase="PHASE6_UTILITY_SCALE_GROUND_REPORT_EXPORT",
-                          editorial_fixture=editorial_fixture, content_version=content_version)
+                          editorial_fixture=editorial_fixture, content_version=content_version,
+                          reader_preview=reader_preview)

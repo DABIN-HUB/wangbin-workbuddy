@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+from dataclasses import replace
 from decimal import Decimal
 from pathlib import Path
 import re
@@ -12,6 +13,7 @@ from docx.oxml.ns import qn
 from docx.table import Table
 
 from wangbin_solar_pv.catalog import Catalog
+from wangbin_solar_pv.errors import ContractError
 from wangbin_solar_pv.report_claims import _project_irr_claim, _specific_project_judgment
 from wangbin_solar_pv.report_display_numbers import decision_number, decision_percent
 from wangbin_solar_pv.report_export import (
@@ -100,15 +102,15 @@ def test_each_of_120_tables_is_bound_to_its_caption_and_header(model, tmp_path):
             assert "计提及预计付款不同" not in caption.text
     assert len(document.tables[116].rows) == 25  # 24 reader definitions + header
     assert len(document.tables[117].rows) == 190  # entire frozen 189-term registry
-    note = next(p for p in document.paragraphs if p.text.startswith("冻结文本定义：O_y = Σ(k∈𝒪_y)"))
+    note = next(p for p in document.paragraphs if p.text.startswith("文字表达：O_y = Σ(k∈𝒪_y)"))
     assert any(run.text == "𝒪" and run._r.xpath("./w:rPr/w:rFonts")[0].get(qn("w:hAnsi")) == "Cambria Math"
                for run in note.runs)
-    assert "冻结LaTeX：" in note.text and "Σ(k∈𝒪_y)" in note.text
+    assert "冻结LaTeX：" not in note.text and "Σ(k∈𝒪_y)" in note.text
     evaluation = next(p.text for p in document.paragraphs if p.text.startswith("评价与适用："))
     assert "本项目已有可用NPV计算值" in evaluation
     assert "本次无应偿本息，DSCR无定义而不是0倍" in evaluation
-    npv = next(p.text for p in document.paragraphs if p.text.startswith("F-NPV 输出实例分别为："))
-    assert "已计算的项目NPV不因其他实例未实现而失效" in npv
+    npv = next(p.text for p in document.paragraphs if p.text.startswith("本项目净现值已按"))
+    assert "其他评价口径是否适用" in npv
 
 
 def test_formula_reader_navigation_fragment_respects_blocked_metrics_and_debt(model, tmp_path):
@@ -136,6 +138,48 @@ def test_formula_reader_navigation_fragment_respects_blocked_metrics_and_debt(mo
     assert "本项目IRR尚无可用计算值" in evaluation
     assert "本次有债务假设但DSCR无可用值" in evaluation
     assert "在无债务的本次项目中" not in evaluation
-    npv = next(text for text in paragraphs if text.startswith("F-NPV 输出实例分别为："))
-    assert "本次项目NPV未形成可用数值" in npv
-    assert "已计算的项目NPV不因其他实例未实现而失效" not in npv
+    npv = next(text for text in paragraphs if text.startswith("本项目净现值尚无可用结果"))
+    assert "补齐项目现金流及折现条件" in npv
+    assert "本项目净现值已按" not in npv
+
+
+def test_r10_reader_preview_separates_frozen_word_appendix_contract(model, tmp_path):
+    path = tmp_path / "reader-preview.docx"
+    receipt = _write_docx(model, path, "示例项目", model.result["pv_type"], reader_preview=True)
+    document = Document(path)
+    paragraphs = [p.text for p in document.paragraphs]
+    assert receipt["full_word_appendix_contract"] == "NOT_SATISFIED_READER_PREVIEW"
+    assert receipt["frozen_word_identity_contract"] == "NOT_SATISFIED_READER_PREVIEW"
+    assert receipt["numbering"]["formulas"] == 6
+    assert len(document.tables) == receipt["numbering"]["tables"] == 35
+    assert len(document.tables[-2].rows) == 25
+    for number in (10, 12, 16, 17, 19, 20, 21, 22, 23, 24, 25, 27, 34):
+        header = document.tables[number - 1].rows[0].cells[0].text
+        assert header.endswith(f"\n表{number}") and "跨页" not in header
+        assert document.tables[number - 1].rows[0]._tr.xpath("./w:trPr/w:tblHeader")
+    resource_note = next(p for p in document.paragraphs if p.text.startswith("辐照物理口径专项说明："))
+    assert resource_note.paragraph_format.keep_together is True
+    month_caption = ("表9 首年月度发电与上网（kWh；示例预测）" if model.result["pv_type"] == "utility_scale_ground"
+                     else "表9 首年月度发电与消纳（kWh；示例预测）")
+    assert month_caption in paragraphs
+    assert "项目判断：资料尚待核验，暂不具备投资决策条件" in paragraphs
+    assert any("元/Wp与元/kWp的换算口径尚待专业核验" in text for text in paragraphs)
+    assert sum(p == "本报告内容仅供参考，正式使用时需根据实际情况调整。" for p in paragraphs) == 1
+    assert any("受限储备" in cell.text and "不与收款法重复调整" in cell.text
+               for row in document.tables[-2].rows for cell in row.cells)
+
+    reader_texts = paragraphs + [cell.text for table in document.tables for row in table.rows for cell in row.cells]
+    assert not any(word in text for text in reader_texts for word in (
+        "冻结LaTeX", "阶段性样件", "开发样件", "测试报告", "测试假设", "阶段验收",
+        "SYNTHETIC-", "UNKNOWN", "质量清单门禁"))
+
+
+def test_r10_reader_preview_rejects_verified_real_project(model, tmp_path):
+    result = deepcopy(model.result)
+    result["project_id"] = "REAL-PROJECT"
+    result["maturity"]["real_project"] = "VERIFIED"
+    result["status"] = "COMPLETE"
+    with pytest.raises(ContractError, match="REPORT_READER_PREVIEW_SYNTHETIC_ONLY"):
+        _write_docx(replace(model, result=result), tmp_path / "rejected.docx",
+                    "已核验项目", model.result["pv_type"], reader_preview=True)
+    assert not (tmp_path / "rejected.docx").exists()

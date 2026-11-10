@@ -44,9 +44,10 @@ def exported(request):
         yield category, model, Document(path)
 
 
-def _table(document, header):
+def _table(document, header, secondary=None):
     matches = [table for table in document.tables if table.rows[0].cells[0].text == "期别"
-               and header in [cell.text for cell in table.rows[0].cells]]
+               and header in [cell.text for cell in table.rows[0].cells]
+               and (secondary is None or secondary in [cell.text for cell in table.rows[0].cells])]
     assert len(matches) == 1
     return matches[0]
 
@@ -57,11 +58,19 @@ def _money(value):
 
 def test_app06_construction_ordinary_replacement_terminal_rows_close(exported):
     category, model, document = exported
-    table = _table(document, "营运资金回收（元）")
-    headers = [cell.text for cell in table.rows[0].cells]
-    assert headers == ["期别", "运营收支净额（元）", "资本支出付款（元）", "营运资金增加（元）",
-                       "营运资金回收（元）", "终期资产现金（元）", "项目净现金流（元）"]
-    rows = [[cell.text for cell in row.cells] for row in table.rows[1:]]
+    capital = _table(document, "资本支出付款", "运营收支净额")
+    recovery = _table(document, "营运资金回收")
+    assert [cell.text for cell in capital.rows[0].cells] == [
+        "期别", "运营收支净额", "资本支出付款", "营运资金增加"]
+    assert [cell.text for cell in recovery.rows[0].cells] == [
+        "期别", "营运资金回收", "终期资产现金", "项目净现金流"]
+    assert len(capital.rows) == len(recovery.rows)
+    rows = []
+    for capital_row, recovery_row in zip(capital.rows[1:], recovery.rows[1:]):
+        left = [cell.text for cell in capital_row.cells]
+        right = [cell.text for cell in recovery_row.cells]
+        assert left[0] == right[0]  # Split tables may never silently shift a year.
+        rows.append([*left, *right[1:]])
     assert len(rows) == 26
     flow = model.metric("financial.phase3e.project_cash_flow")["value"]
     for i, row in enumerate(rows):
@@ -84,10 +93,15 @@ def test_app06_construction_ordinary_replacement_terminal_rows_close(exported):
 
 def test_app06_operating_detail_includes_terminal_year_and_no_bank_receipt_for_savings(exported):
     _category, model, document = exported
-    table = _table(document, "上网回款（元）")
-    headers = [cell.text for cell in table.rows[0].cells]
-    assert "自用节费（元）" in headers and "预计另付交易费（元）" in headers
-    rows = [[cell.text for cell in row.cells] for row in table.rows[1:]]
+    income = _table(document, "上网回款")
+    costs = _table(document, "运维现金")
+    assert [cell.text for cell in income.rows[0].cells] == [
+        "期别", "上网回款", "自用节费", "预计另付交易费"]
+    assert [cell.text for cell in costs.rows[0].cells] == [
+        "期别", "运维现金", "项目现金税费", "列示舍入差额", "运营收支净额"]
+    assert len(income.rows) == len(costs.rows)
+    rows = [[cell.text for cell in row.cells] for row in income.rows[1:]]
+    assert [row[0] for row in rows] == [row.cells[0].text for row in costs.rows[1:]]
     assert len(rows) == 25
     assert rows[-1][0] == "第25年"
     if model.result["pv_type"] == "industrial_rooftop":
