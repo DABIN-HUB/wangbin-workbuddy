@@ -30,6 +30,16 @@ def claim(model, item):
                        lambda mid: mid)
 
 
+def test_ch03_site_category_keeps_project_types_separate(model):
+    text = claim(model, 'CH03.02')['central_claim']
+    if model.result['pv_type'] == 'industrial_rooftop':
+        assert '屋面自用' in text or '屋面' in text
+        assert '地面集中送出' not in text
+    else:
+        assert '地面集中送出' in text
+        assert '屋顶自用' not in text
+
+
 def test_ch10_roof_separates_load_savings_export_and_receipts(model):
     if model.result['pv_type'] != 'industrial_rooftop':
         pytest.skip('roof-only')

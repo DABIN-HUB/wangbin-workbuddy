@@ -11,7 +11,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import calendar
 from datetime import date
-from decimal import Decimal
+from decimal import Decimal, ROUND_HALF_UP
 from hashlib import sha256
 from importlib.resources import files
 from io import BytesIO
@@ -45,7 +45,7 @@ from .errors import ContractError
 from .local_files import Workspace
 from .report_narrative import guidance, validate_fixture
 from .report_numbering import heading_number, add_numbered_heading, validate_numbering
-from .report_claims import APPENDIX_RULES, APPENDIX_TITLES, CHAPTER_FIELDS, CHAPTER_METRICS, RESOURCE_MONTHLY_UNITS, build_claim, category_fields, _dataset_rows, _source_value
+from .report_claims import APPENDIX_RULES, APPENDIX_TITLES, CHAPTER_FIELDS, CHAPTER_METRICS, RESOURCE_MONTHLY_UNITS, build_claim, category_fields, _dataset_rows, _source_value, _task_display_name
 from .report_resource_display import prepare_resource_word_rows
 from .report_word_styles import WORD_FORMAT, borders as word_table_borders, configure as configure_word, equation_paragraph, set_run_font
 from .serialization import dumps
@@ -127,7 +127,7 @@ _D_STYLE = {
     "white": "FFFFFF",
 }
 
-REPORT_CONTENT_VERSION = "phase7l-r4-v6-evidence-led-appendix-corrections"
+REPORT_CONTENT_VERSION = "phase7l-r6-decision-facing-deterministic-writing"
 
 
 @dataclass(frozen=True)
@@ -251,6 +251,16 @@ def _word_metric_value(metric: dict[str, Any]) -> str:
         reason = str(metric.get("reason") or "未提供可用数值")
         return f"{metric.get('status', 'UNKNOWN')}：{reason[:180]}"
     return _word_value(metric.get("value"))
+
+def _reader_metric_value(metric: dict[str, Any]) -> str:
+    """Round only a decision-table scalar; XLSX and canonical keep original precision."""
+    value = metric.get("value")
+    if metric.get("status") != "CALCULATED" or isinstance(value, bool) or not isinstance(value, (int, float, Decimal)):
+        return _word_metric_value(metric)
+    unit = _metric_unit(metric)
+    places = 2 if unit in {"year", "年"} else 0 if unit in {"CNY", "元", "kWh", "kWp", "kW", "kWac"} else 4
+    rounded = Decimal(str(value)).quantize(Decimal(1).scaleb(-places), rounding=ROUND_HALF_UP)
+    return f"{rounded:,.{places}f}"
 
 def _irr_presentation(metric: dict[str, Any]) -> tuple[str, str]:
     """Present the reported root set, not an arbitrarily chosen IRR."""
@@ -1390,7 +1400,7 @@ _METRIC_LABELS = {
     "energy.mean_annual": "评价期年均发电量",
     "energy.delivered.year.1": "首年可交付电量",
     "financial.capex.total": "评价期资本支出估算（含更换，须按账簿复核）",
-    "financial.unit_investment": "评价期CAPEX单位直流投资",
+    "financial.unit_investment": "全期含更换CAPEX单位直流投资",
     "financial.opex.cash_lifecycle": "全周期现金运营费用",
     "financial.phase3e.project_npv": "项目净现值",
     "financial.phase3e.project_irr": "项目内部收益率",
@@ -1486,10 +1496,14 @@ def _professional_metric_rows(model: ReportModel, metric_ids: tuple[str, ...]) -
         status = metric.get("status", "UNKNOWN")
         if metric_id == "financial.phase3e.project_irr" and status in {"CALCULATED", "UNDEFINED"}:
             display, roots_note = _irr_presentation(metric)
-            note = f"项目年度税后现金流；{roots_note}；合成测算"
+            note = "项目税后年度口径，非股东回报" if status == "CALCULATED" else f"项目税后年度现金流；{roots_note}"
         elif status == "CALCULATED":
-            display = _word_metric_value(metric)
-            note = "合成参数测算；非实测或合同承诺"
+            display = _reader_metric_value(metric)
+            note = {
+                "financial.capex.total": "含后期更换，不等于建设期付款",
+                "financial.phase3e.project_npv": "项目税后；折现率见正文",
+                "revenue.year.1": "含自用节费与余电销售" if model.result.get("pv_type") == "industrial_rooftop" else "仅上网销售收入",
+            }.get(metric_id, "")
         elif status.startswith("BLOCKED"):
             display = "暂不具备有效评价条件"
             note = (str(metric.get("reason") or "当前评价项未形成有效结果")[:160]
@@ -1521,70 +1535,74 @@ def _professional_metric_rows(model: ReportModel, metric_ids: tuple[str, ...]) -
         rows.append([label, display,
                      "—" if metric_id.endswith("project_irr") and status in {"CALCULATED", "UNDEFINED"} else
                      "—" if status != "CALCULATED" and str(unit).startswith("集合") else
-                     "比值" if unit == "1" else unit,
-                     "按直流kWp计；分子为评价期CAPEX，非仅建设期付款" if metric_id == "financial.unit_investment" and status == "CALCULATED" else note])
+                     "比值" if unit == "1" else "元" if unit == "CNY" else "年" if unit == "year" else unit,
+                     "全期含后期更换；直流kWp为分母，首建金额另列" if metric_id == "financial.unit_investment" and status == "CALCULATED" else note])
     return rows
 
 
 def _project_summary(model: ReportModel) -> str:
-    """Keep calculated project returns separate from real-source and equity gates."""
+    """Decision-facing overview; all amounts come from this canonical snapshot."""
     inputs = model.result["inputs"].get("normalized", {})
-    ledger = model.result.get("evidence", {}).get("financial-ledger", {}).get("annual", [])
-    years = inputs.get("project.evaluation_years")
-    lines = [f"本次采用{years}年评价期的合成项目测算；计算完整度与真实工程资料成熟度分别判断。" if years else
-             "本次为合成项目阶段性测算；评价期须核对输入。"]
-    if ledger:
-        initial = ledger[0].get("capex_cash_paid")
-        working = ledger[0].get("working_capital_increase")
-        if initial is not None:
-            lines.append(f"建设期初始资本支出现金付款 {_word_number(initial)}元；" +
-                         (f"营运资金投入 {_word_number(working)}元。" if working is not None else "营运资金待核对。"))
-        if len(ledger) > 1:
-            receipts = ledger[1].get("revenue_cash_receipts")
-            savings = ledger[1].get("self_use_avoided_expenditure")
-            transaction_fee = ledger[1].get("transaction_cost_cash_paid")
-            project_flow = model.value("financial.phase3e.project_cash_flow")
-            if model.result["pv_type"] == "industrial_rooftop" and receipts is not None and savings is not None:
-                lines.append(f"首年预计余电回款 {_word_number(receipts)}元；自用节费 {_word_number(savings)}元"
-                             "属于避免购电支出，不是售电到账，综合经济收益不能全部列为实际销售收款。")
-                if transaction_fee is not None:
-                    lines.append(f"两者合计经济收益 {_word_number(Decimal(str(receipts)) + Decimal(str(savings)))}元；"
-                                 f"交易费单列预计付款 {_word_number(transaction_fee)}元，不重复并入运维费用。")
-            elif model.result["pv_type"] == "utility_scale_ground" and receipts is not None:
-                lines.append(f"首年预计上网回款 {_word_number(receipts)}元；需以逐时市场价格和计量结算条件复核，"
-                             "不将其写成已签合同或实际到账。")
-                if transaction_fee is not None:
-                    lines.append(f"首年交易费单列预计付款 {_word_number(transaction_fee)}元；该项是合成支付规则下的预计现金事件，"
-                                 "不是已付款凭证。")
-            if isinstance(project_flow, list) and len(project_flow) > 1:
-                lines.append(f"首年项目税后现金流 {_word_number(project_flow[1])}元；该值已在年度项目现金桥中"
-                             "同时反映运维、现金税费和交易费预计支付。")
-        renewals = [(row.get("period", "运营期"), row["replacement_cash_paid"]) for row in ledger[1:]
+    ground = model.result["pv_type"] == "utility_scale_ground"
+
+    def quantity(mid: str, unit: str) -> str | None:
+        metric = model.metric(mid)
+        return f"{_reader_metric_value(metric)} {unit}" if metric and metric.get("status") == "CALCULATED" else None
+
+    dc, generation = quantity("dc_capacity", "kWp"), quantity("energy.year.1", "kWh")
+    delivery = quantity("energy.delivered.year.1", "kWh")
+    lead = (f"本项目拟利用厂房屋面建设{dc or '待定规模的'}光伏系统，发电后优先供厂区使用，余电上网。" if not ground else
+            f"本项目拟建设{dc or '待定规模的'}地面光伏系统，按集中送出、全额上网方案评价。")
+    if generation:
+        lead += f"在当前测算条件下，首年预测发电{generation}。"
+    if delivery and ground:
+        lead += f"预计可交付电量{delivery}；交付预测仍须经电网接入及结算条件确认。"
+
+    revenue = model.metric("revenue.year.1") or {}
+    components = revenue.get("details", {}).get("ledger", {}) if revenue.get("status") == "CALCULATED" else {}
+    if not ground and all(isinstance(components.get(key), (int, float, Decimal)) and not isinstance(components[key], bool)
+                          for key in ("self_kwh", "self_value", "export_kwh", "export_sales_revenue")):
+        value = lambda key, unit: f"{_reader_metric_value({'value': components[key], 'unit': unit, 'status': 'CALCULATED'})} {unit}"
+        benefits = (f"首年预测自用{value('self_kwh', 'kWh')}，可减少购电支出{value('self_value', '元')}；"
+                    f"余电上网{value('export_kwh', 'kWh')}，预计售电收入{value('export_sales_revenue', '元')}。"
+                    "节费不属于售电回款，两项在现金流中分别处理。")
+    elif ground and isinstance(components.get("export_sales_revenue"), (int, float, Decimal)):
+        sales = _reader_metric_value({"value": components["export_sales_revenue"], "unit": "CNY", "status": "CALCULATED"})
+        benefits = f"首年预计上网销售收入{sales} 元，实际回款取决于交易价格、计量与结算协议。"
+    else:
+        benefits = "售电或节费尚缺少可引用的分项结果，不能由预测发电量推算实际收入。"
+
+    npv = quantity("financial.phase3e.project_npv", "元")
+    irr = model.metric("financial.phase3e.project_irr") or {}
+    irr_display, irr_note = _irr_presentation(irr) if irr else ("尚无结果", "")
+    discount = inputs.get("finance.project_discount_rate")
+    basis = (f"、折现率{_word_number(Decimal(str(discount)) * 100)}%" if isinstance(discount, (int, float, Decimal)) else "")
+    if npv:
+        years = inputs.get("project.evaluation_years")
+        returns = f"按{years}年评价期{basis}的项目税后年度现金流测算，项目净现值（NPV）为{npv}。" if years else f"按项目税后年度现金流测算，项目净现值（NPV）为{npv}。"
+        if irr.get("status") == "CALCULATED" and irr_display != "根集待核验":
+            returns += f"内部收益率（IRR）为{irr_display}。"
+        elif irr.get("status") == "UNDEFINED":
+            returns += f"IRR{irr_display}；{irr_note}。"
+        else:
+            returns += "IRR尚未形成可供解读的单一数值。"
+        returns += "这是当前假设下的项目回报，不等于股东回报或投资批准。"
+    else:
+        returns = "项目税后净现值尚未形成可引用结果，应先闭合现金流及对应评价条件。"
+    assumptions = "上述电量、成本和结算均以当前登记的假设资料为基础，并非实际经营业绩；完整计算精度及来源见配套工作簿。"
+    risks = ("厂房屋面权属和使用期限、结构荷载、防水消防、真实日间负荷及余电接入仍待核验。"
+             if not ground else "土地使用条件、地勘与道路排水、集中送出及市场交易价格仍待核验。")
+    if ground:
+        ledger = model.result.get("evidence", {}).get("financial-ledger", {}).get("annual", [])
+        renewals = [(row.get("period"), row.get("replacement_cash_paid")) for row in ledger[1:]
                     if isinstance(row.get("replacement_cash_paid"), (int, float, Decimal)) and row["replacement_cash_paid"]]
         if renewals:
-            lines.append("后期更换 " + "、".join(f"{_reader_text(str(period))} {_word_number(amount)}元"
-                                             for period, amount in renewals) +
-                         "；这部分计入全期CAPEX，但不是初始建设款。")
-    ids = ("financial.phase3e.project_npv", "financial.phase3e.project_irr",
-           "financial.phase3e.static_payback", "financial.phase3e.dynamic_payback")
-    calculated = []
-    for mid in ids:
-        if model.status(mid) == "CALCULATED" or (mid.endswith("project_irr") and model.status(mid) == "UNDEFINED"):
-            label, value, unit, note = _professional_metric_rows(model, (mid,))[0]
-            calculated.append(f"{label} {value}{'' if mid.endswith('project_irr') or value.endswith('%') else unit}"
-                              + (f"（{note}）" if mid.endswith("project_irr") else ""))
-    if calculated:
-        discount = inputs.get("finance.project_discount_rate")
-        basis = f"，项目折现率{_word_number(discount * 100)}%" if isinstance(discount, (int, float, Decimal)) else ""
-        lines.append("按年度项目税后现金流评价" + basis + "：" + "、".join(calculated) +
-                     "。上述是项目而非投资者回报，不构成真实投资批准。")
-    else:
-        lines.append("项目NPV、IRR及回收期须按各自指标状态核验；当前不推断投资回报。")
-    blocked = _professional_metric_rows(model, ("financial.phase3e.equity-investor-cash-flow", "financial.phase3e.lcoe"))
-    if blocked:
-        lines.append("独立限制：" + "；".join(f"{row[0]}：{row[3]}" for row in blocked) + "。")
-    lines.append("阶段性判断仅支持当前合成假设下的方案与项目收益核查；真实产权、现场条件、并网意见及合同证据仍未核验，不构成投资批准。")
-    return "".join(lines)
+            risks += "另需为" + "、".join(f"{_reader_text(str(period))}预计更换支出"
+                                           f"{_reader_metric_value({'value': value, 'unit': 'CNY', 'status': 'CALCULATED'})} 元"
+                                           for period, value in renewals) + "安排资金，不能将其当作首期投资。"
+    advice = ("建议下一阶段先取得屋面权属和结构资料、厂区逐时用电记录及电网接入意见，再更新工程量与收益测算。"
+              if not ground else "建议下一阶段先落实用地与地勘、场区道路排水及接网方案，并以可执行交易价格更新测算。")
+    return "\n\n".join((lead + benefits, returns, assumptions + risks, advice))
 
 
 _CHAPTER_METHOD = {
@@ -2087,9 +2105,6 @@ def _plan_word_rows(model: ReportModel) -> list[list[Any]]:
     tasks = _source_value(normalized, records, "schedule.tasks")
     if not isinstance(tasks, list):
         return [["UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "任务来源尚未闭合"]]
-    labels = {"design": "方案设计及核查", "readiness": "开工前置条件核查",
-              "install": "安装计划", "build": "土建及安装计划", "test": "测试计划",
-              "milestone": "投运里程碑计划"}
     task_labels = {item.get("row_id"): f"任务{index}" for index, item in enumerate(tasks, 1)}
     rows = []
     for index, item in enumerate(tasks, 1):
@@ -2097,7 +2112,8 @@ def _plan_word_rows(model: ReportModel) -> list[list[Any]]:
         task_id = fields.get("schedule.tasks.task_id")
         if not isinstance(task_id, str) or task_id != item.get("row_id"):
             return [["UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "任务身份尚未闭合"]]
-        kind = labels.get(task_id.rsplit("-", 1)[-1], "计划任务（原名见来源清单）")
+        original_name = fields.get("schedule.tasks.name")
+        kind = _task_display_name(original_name) if isinstance(original_name, str) and original_name else "待核对任务（原名见来源清单）"
         start, finish = fields.get("schedule.tasks.start_date"), fields.get("schedule.tasks.finish_date")
         try:
             days = (date.fromisoformat(finish) - date.fromisoformat(start)).days + 1
@@ -2107,8 +2123,13 @@ def _plan_word_rows(model: ReportModel) -> list[list[Any]]:
         predecessors = fields.get("schedule.tasks.predecessor_ids")
         dependency = ("、".join(task_labels.get(predecessor, "未知任务（见来源）") for predecessor in predecessors)
                       if isinstance(predecessors, list) and predecessors else "无")
-        marker = "关键路径输入标记（未作算法核验）" if fields.get("schedule.tasks.critical_path") is True else "一般计划标记"
-        rows.append([f"任务{index} · {kind}", start or "UNKNOWN", finish or "UNKNOWN",
+        marker = "列为计划重点" if fields.get("schedule.tasks.critical_path") is True else "一般任务"
+        def short_date(value: Any) -> str:
+            try:
+                return date.fromisoformat(value).strftime("%Y.%m.%d")
+            except (TypeError, ValueError):
+                return "待确定"
+        rows.append([f"任务{index} · {kind}", short_date(start), short_date(finish),
                      duration, dependency, marker])
     return rows
 
@@ -2136,6 +2157,30 @@ def _capex_word_rows(model: ReportModel) -> list[list[Any]]:
                      _word_number(amount) if amount is not None else "UNKNOWN",
                      fields.get("capex.items.payment_date") or "UNKNOWN", period])
     return rows
+
+
+def _next_stage_rows(model: ReportModel) -> list[list[str]]:
+    """Proposed evidence gates, not assigned owners or promises of completion."""
+    ground = model.result["pv_type"] == "utility_scale_ground"
+    if ground:
+        gates = [
+            ("优先", "用地权利及用途", "决定场区能否合法使用", "土地使用与规划文件", "权利、边界及期限经专业复核", "业主、用地主管部门"),
+            ("优先", "地勘与基础", "影响基础形式和工程费用", "测绘、地勘与基础初设", "形成与场区对应的勘察和核量结果", "业主、勘察设计单位"),
+            ("优先", "集中接网与交易", "决定可交付电量和结算价格", "电网接入意见、计量及交易条款", "确认送出能力和可执行结算边界", "电网企业、交易主体"),
+            ("随后", "道路排水及施工", "影响场区工程量与施工窗口", "道路排水初设与工程量", "形成与地形一致的施工方案", "设计单位、施工单位"),
+        ]
+        ledger = model.result.get("evidence", {}).get("financial-ledger", {}).get("annual", ())
+        if any(row.get("replacement_cash_paid") for row in ledger[1:]):
+            gates.append(("随后", "更换资金安排", "影响更换年度现金需求", "设备更换计划及资金方案",
+                          "核对付款计划和可动用资金", "业主、财务部门"))
+    else:
+        gates = [
+            ("优先", "屋面使用权及期限", "决定建筑使用与运营边界", "权属或租赁文件", "权利及期限经专业复核", "业主、产权主体"),
+            ("优先", "结构、防水与消防", "决定组件能否安全安装", "结构鉴定、荷载与消防资料", "专业复核确认可用屋面及节点", "业主、设计单位"),
+            ("优先", "真实厂区负荷", "影响自用电量与节费", "逐时用电及电费结算记录", "同一计量边界下复核自用比例", "业主、用电管理部门"),
+            ("优先", "并网与余电送出", "影响接入容量及余电收入", "正式接网意见及结算条款", "明确可接入与余电结算边界", "电网企业、业主"),
+        ]
+    return [list(row) for row in gates]
 
 
 def _project_cash_word_rows(model: ReportModel) -> list[list[Any]]:
@@ -2247,40 +2292,23 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     front.footer.is_linked_to_previous = False
     document.add_paragraph("摘要", style="Solar Abstract Title")
     basis_text = ("本阶段同时使用明确标识的编辑性测试假设，用于检验工程背景与计算结果的衔接；这些假设不进入计算引擎，也不构成第三方证据。"
-                  if editorial_fixture else
-                  "本次使用当前来源快照及已计算指标；缺失或未核验的真实工程事实不以占位值补足，具体项目收益见下表与初步结论。")
-    document.add_paragraph(f"本项目属于{profile['boundary']}。{basis_text}以下结果按指标实际状态列示，不以整体部分完成状态覆盖已计算项目指标。", style="Solar Abstract")
-    key_ids = ("dc_capacity", "ac_capacity", "energy.year.1", "consumption.year.1",
-               "energy.delivered.year.1", "revenue.year.1", "financial.capex.total",
-               "financial.phase3e.project_npv", "financial.phase3e.project_irr",
-               "financial.phase3e.static_payback", "financial.phase3e.dynamic_payback")
+                  if editorial_fixture else "")
+    for paragraph in _project_summary(model).split("\n\n"):
+        document.add_paragraph(paragraph, style="Solar Abstract")
+    if basis_text:
+        document.add_paragraph(basis_text, style="Solar Abstract")
+    key_ids = ("dc_capacity", "energy.year.1", "revenue.year.1", "financial.capex.total",
+               "financial.phase3e.project_npv", "financial.phase3e.project_irr")
     key_rows = _professional_metric_rows(model, key_ids)
+    maturity = model.result.get("maturity", {}).get("real_project")
+    material_label = ("A：资料已经核实" if maturity == "VERIFIED" else
+                      "B：使用当前假设资料" if model.result.get("source_snapshot", {}).get("phase2", {}).get("records") else
+                      "C：尚缺关键来源资料")
     _add_table(document, ["专业指标", "本阶段结果", "单位", "说明"], key_rows,
-               "关键结果（完整精度和追溯字段见测算模型.xlsx）", widths_cm=(4.0, 4.8, 2.0, 5.0))
+               f"关键预测结果（资料成熟度{material_label}；完整精度见测算模型.xlsx）", widths_cm=(4.0, 4.8, 2.0, 5.0))
+    document.add_paragraph("资料成熟度只评价输入证据，不更改指标原有的计算或阻断状态。", style="Solar Abstract")
     normalized = model.result["inputs"].get("normalized", {})
-    input_rows = []
     records = model.result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
-    input_sources = {record.get("field_id"): record for record in records if record.get("source_id")}
-    summary_fields = ({"roof.remaining_life", "roof.allowable_additional_load", "roof.design_added_load",
-                       "grid.available_capacity", "grid.export_power_limit", "load.annual_energy"}
-                      if pv_type == "industrial_rooftop" else
-                      {"site.total_area", "site.usable_area", "site.exclusion_area",
-                       "grid.available_capacity", "grid.export_power_limit", "grid.connection_voltage"})
-    for key, value in sorted(normalized.items()):
-        if key in summary_fields:
-            display = _word_value(value)
-            source = input_sources.get(key, {})
-            unit = source.get("unit")
-            if key == "grid.curtailment_assumption" and isinstance(value, (int, float, Decimal)):
-                display = f"{_word_number(Decimal(str(value)) * 100)}%（原值 {_word_number(value)}）"
-            if isinstance(value, (int, float, Decimal)) and not isinstance(value, bool) and unit not in (None, "", "1"):
-                display += " " + {"year": "年", "CNY": "元"}.get(unit, unit)
-            state = "合成假设已提供；未真实核验" if source.get("status") == "ASSUMED" else (
-                "来源已核验" if source.get("status") == "VERIFIED" else "已提供；来源状态待核验")
-            input_rows.append([_input_label(key), display, state, "详细字段见来源清单"])
-    _add_table(document, ["建设及接网关键条件", "展示值", "采用情况", "追溯位置"], input_rows,
-               "项目类型专属输入摘要（不展开原始对象）", widths_cm=(4.2, 5.0, 3.0, 5.0))
-    document.add_paragraph("初步结论：" + _project_summary(model), style="Solar Abstract")
     keywords = ("工商业屋顶光伏；发电量预测；厂区消纳；投资评价" if pv_type == "industrial_rooftop" else
                 "集中式地面光伏；发电量预测；并网送出；投资评价")
     keyword_line = document.add_paragraph(style="Solar Keywords")
@@ -2313,7 +2341,12 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     checklist: list[dict[str, Any]] = []
 
     bookmark_index = 1
-    for chapter_id, chapter_title, items in CHAPTERS:
+    display_chapters = tuple((chapter_id, chapter_title,
+                              tuple(("土地使用权与期限" if pv_type == "utility_scale_ground" else "屋面使用权与期限")
+                                    if chapter_id == "CH04" and index == 3 else name
+                                    for index, name in enumerate(items, 1)))
+                             for chapter_id, chapter_title, items in CHAPTERS)
+    for chapter_id, chapter_title, items in display_chapters:
         chapter_heading = add_numbered_heading(document, heading_number(chapter_id, chapter_title), bookmark_index)
         bookmark_index += 1
         chapter_heading.paragraph_format.page_break_before = chapter_id != "CH01"
@@ -2331,8 +2364,12 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             _add_professional_narrative(document, evidence)
             if item_id == "CH13.02":
                 _add_table(document, ["任务", "开始", "结束", "持续时间", "前置任务", "计划性质"],
-                           _plan_word_rows(model), "实施计划（中文任务类型由任务ID受控分类；任务ID及原名见来源清单）",
-                           widths_cm=(4.8, 2.0, 2.0, 2.7, 2.6, 2.9))
+                           _plan_word_rows(model), "实施计划（日期为登记的预排日期；计划重点未经关键路径算法验证）",
+                           widths_cm=(6.0, 2.1, 2.1, 2.4, 2.2, 2.2))
+            if item_id == "CH18.04":
+                _add_table(document, ["优先级", "待完成事项", "实际影响", "需要取得的资料", "完成条件", "建议协调对象"],
+                           _next_stage_rows(model), "下一阶段推进事项（建议协调对象并非已任命责任人）",
+                           widths_cm=(1.4, 2.8, 3.1, 3.4, 3.5, 2.8))
             checklist.append({"id": item_id, "title": item,
                               "content_summary": evidence["summary"][:600], "input_field_ids": evidence["field_ids"],
                               "metric_ids": evidence["metric_ids"], "source_ids": evidence["source_ids"],
@@ -2701,6 +2738,10 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                         if index_lines:
                             document.add_paragraph("下标、索引、集合与求和范围：" + "；".join(index_lines))
                 elif appendix_rows:
+                    if item_id == "APP12.01":
+                        document.add_paragraph("受控词典保留早期方法编制时的历史说明；其中“此任务未生成计算结果哈希”"
+                                               "仅描述当时编制任务，不描述本次项目。本次结果身份和计算状态以本报告版本附录"
+                                               "及配套测算模型为准；词条收录不代表本项目采用该技术。")
                     _add_table(document, appendix_headers, appendix_rows,
                                "受控编辑词典")
             checklist.append({"id": item_id, "title": item_title,
@@ -2726,7 +2767,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     document.add_paragraph(f"项目边界：{profile['boundary']}。报告内容版本：{content_version}；该版本只表示写作与排版，不修改计算结果身份。配套 Excel 为本次测算快照；修改 Excel 不会使本报告或旧结果自动有效，必须重新运行计算程序生成新的统一身份。PDF 只有在真实转换器可用并成功解析时才生成；本次渲染、页面视觉和目录页码门禁以质量清单实际状态为准。")
     _add_table(document, ["身份字段", "统一测算值"], [[key, str(value)] for key, value in model.identity.items()],
                "统一测算身份（仅在此处展示一次）", widths_cm=(4.5, 12.5))
-    numbering = validate_numbering(document, CHAPTERS, APPENDICES, APPENDIX_TITLES,
+    numbering = validate_numbering(document, display_chapters, APPENDICES, APPENDIX_TITLES,
                                    [formula["formula_id"] for formula in _appendix_formula_definitions(model)])
     coverage = _validate_checklist_coverage(checklist)
     claim_fields = ("claim_id", "core_question", "central_claim", "claim_status",

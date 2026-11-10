@@ -10,6 +10,7 @@ from wangbin_solar_pv.report_export import (
     ReportModel, _capex_word_rows, _formula_status, _input_label, _plan_word_rows,
     _professional_metric_rows, _project_cash_word_rows, _word_number,
 )
+from wangbin_solar_pv.report_claims import _task_display_name
 from wangbin_solar_pv.serialization import loads
 
 
@@ -49,8 +50,12 @@ def test_plan_table_uses_validated_tasks_and_does_not_claim_path_algorithm(categ
     assert len(rows) == 5
     assert rows[0][4] == "无"
     assert rows[1][4] == "任务1"
-    assert all("输入标记" in row[5] or "计划标记" in row[5] for row in rows)
+    assert all(row[5] in {"列为计划重点", "一般任务"} for row in rows)
+    assert all(len(row[1]) == 10 and row[1][4] == row[1][7] == "." for row in rows)
     assert all("SYNTHETIC" not in str(row) for row in rows)
+    tasks = model.result["inputs"]["normalized"]["schedule.tasks"]
+    assert all(_task_display_name(task["fields"]["schedule.tasks.name"]) in row[0]
+               for task, row in zip(tasks, rows))
     model.result["inputs"]["normalized"]["schedule.tasks"][1]["fields"]["schedule.tasks.start_date"] = "2028-01-01"
     assert _plan_word_rows(model)[0][0] == "UNKNOWN"
 

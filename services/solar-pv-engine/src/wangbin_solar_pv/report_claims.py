@@ -1053,7 +1053,7 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
         payback = (f"静态回收期{format_value(static)}年、动态回收期{format_value(dynamic)}年，"
                    if static is not None and dynamic is not None else "回收期按其独立指标状态核查，")
         irr_text = (f"项目IRR（内部收益率）为{pct(irr_metric['value'])}"
-                    if single else "项目IRR尚不能作为单一回报率解释，具体根集见方法附录")
+                    if single else _project_irr_claim(model))
         return (f"以{format_value(years)}年名义价格、税后项目年度现金流为基础，按"
                 f"{pct(discount)}折现率计算的项目净现值（NPV）为{money(npv)}。净现值衡量"
                 "预测现金流折现后相对于投资的余额；"
@@ -1295,9 +1295,9 @@ def _research_finding(model: Any, item_id: str, fmt: Callable[[Any], str]) -> st
                         '合成分项单价未取得供应商报价，' +
                         ('屋面加固和防水工程量须另行核定。' if not ground else '地面道路排水、基础与送出工程量须另行核定。'))
             if number(unit) and number(metric('dc_capacity')):
-                return (f'评价期CAPEX合计{fmt(total)}元对应直流装机{fmt(metric("dc_capacity"))}kWp，'
-                        f'单位投资指标{fmt(unit)}元/kWp；该指标含评价期更换，不等同于建设期'
-                        f'{fmt(initial)}元支出的单位造价，含税及专项范围须核对。')
+                return (f'全期含更换的CAPEX合计{fmt(total)}元，按直流装机{fmt(metric("dc_capacity"))}kWp'
+                        f'列示的全期单位投资为{fmt(unit)}元/kWp；首建计划支出另为{fmt(initial)}元，'
+                        '不是同一单位造价口径。含税及专项工程范围仍须核对。')
     if item_id == 'CH16.03':
         row = model.metric('financial.phase3e.equity-investor-cash-flow') or {}
         debt = get('finance.debt_ratio')
@@ -1428,7 +1428,8 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                        if npv is not None else '项目净现值尚未形成可引用的计算结果。')
             return (f'评价期资本性支出合计{fmt(investment)}元，包含建设与后续设备更换，'
                     '不能全部视为建设期一次性付款。' +
-                    (f'按直流装机口径列示的单位投资为{fmt(unit)}元/kWp。' if unit is not None else '') + outcome +
+                    (f'按直流装机口径列示的全期含更换单位投资为{fmt(unit)}元/kWp。' if unit is not None else '') + outcome +
+                    ('' if '唯一已认证根' in _project_irr_claim(model) else _project_irr_claim(model) + '。') +
                     '这是项目现金流而非股东分红的评价，实际投资决定还依赖工程量、价格及权属。')
     if item_id == 'CH01.05' and (result.get('status') != 'COMPLETE' or
                                 result.get('maturity', {}).get('real_project') != 'VERIFIED'):
@@ -1586,12 +1587,13 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                                 if ground else '屋面可用面积、逆变器配置和余电送出能力共同约束装机，下一阶段可比较不同装机与接线方案。')
                         + '当前没有同一边界的备选方案及其发电、投资结果，不能称已选出经济最优方案。')
             if item_id == 'CH06.05':
-                return (base + ('地面基础、道路排水及集中送出工程量尚未通过现场设计确定；'
+                return ('当前方案作为初步研究基准，并非经多方案技术经济比选后选定。'
+                        + ('地面基础、道路排水及集中送出工程量尚未通过现场设计确定；'
                                 '若改变排布，应同时重估工程费、发电和交易条件。' if ground else
                                 '屋面承载与可利用空间尚未通过现场鉴定；若调整容量，应同时复核组件布置、'
                                 '逆变器、接入余量及自用电量。') + '当前只有基准投资估算，不宜对未测算方案排序。')
-            return (base + ('项目未设置储能，地勘、基础与集中送出仍是需完成的专项设计。' if ground else
-                            '项目未设置储能，屋面结构、防水与消防通道仍是需完成的专项设计。')
+            return (('地面方案需单独落实地勘、基础、场内道路排水与集中送出设计。' if ground else
+                     '屋顶方案需单独落实结构承载、防水修复、消防通道和生产协调。')
                     + '这些工程条件决定方案能否实施，不因基准模型已有发电及财务结果而自动满足。')
     if item_id == 'CH04.05':
         return ('地面设备运输、施工道路和场内排水尚停留在概念方案；实际道路宽度、坡度及排水方向'
@@ -1848,9 +1850,14 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                 starts = [row['fields'].get('schedule.tasks.start_date') for row in tasks]
                 finishes = [row['fields'].get('schedule.tasks.finish_date') for row in tasks]
                 if all(isinstance(value, str) and value for value in starts + finishes):
+                    baseline = get('project.evaluation_date')
+                    chronology = (f'其中{min(starts)}早于评价基准日{baseline}，但没有已完工的进度或验收证明；'
+                                  '这些日期仅是原输入的历史预排，不能作为评价日之后的施工承诺。'
+                                  if isinstance(baseline, str) and min(starts) <= baseline else '')
                     return (f'本项目已登记{len(tasks)}项来源绑定的合成任务，'
                             f'计划窗口为{min(starts)}至{max(finishes)}；'
                             '各项持续自然日、前置任务和计划标记在下表逐项列明。'
+                            + chronology +
                             '开工、并网及投运须以各前置条件实际批准和验收为准，计划标记不是已验证关键路径。')
             task_facts = []
             for row in tasks:
@@ -1878,8 +1885,12 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
                     milestone = milestones[0]['fields']
                     predecessor = '、'.join(names.get(pid, '未核实任务')
                                            for pid in milestone.get('schedule.tasks.predecessor_ids', []))
+                    baseline = get('project.evaluation_date')
+                    earliest = min((r.get('fields', {}).get('schedule.tasks.start_date', '') for r in tasks), default='')
+                    chronology = ('部分前置任务预排日期早于评价日，完成状态没有实证，须重新核定计划后才能据此推进。'
+                                  if isinstance(baseline, str) and earliest and earliest <= baseline else '')
                     return (f"拟投运里程碑按合成任务安排为{milestone['schedule.tasks.start_date']}，"
-                            f"前置任务为{predecessor or '无'}。里程碑日期不是实际开工、获批并网或验收完成；" + judgment)
+                            f"前置任务为{predecessor or '无'}。{chronology}里程碑日期不是实际开工、获批并网或验收完成；" + judgment)
             if item_id == 'CH13.01':
                 facts.append(f'另录入{len(tasks)}项合成实施任务，组织责任仍须在正式文件中落实')
             if item_id == 'CH13.04':
@@ -2142,6 +2153,7 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
                 ITEM_JUDGMENTS[item_id.split(".")[0]][int(item_id.split(".")[1]) - 1])
     if ground:
         judgment = {
+            "CH03.02": "本项目按地面集中送出研究，土地边界和送出线路仍需测绘定位。",
             "CH03.04": "集中式项目按全额上网和交易边界测算，交付预测仍不是已结算上网电量。",
             "CH04.04": "地面阵列遮挡与基础承载依赖地勘、排布和实测，不适用屋面荷载鉴定。",
             "CH06.06": "地面专项以土地、地勘及集中送出为先决条件，未配置储能不能代替这些核验。",
@@ -2150,6 +2162,8 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
             "CH11.03": "地面电站的结构安全取决于地勘、桩基与场区疏散，不采用屋顶荷载判断。",
             "CH12.03": "地面场区的消防、集电线路与施工运行风险须分别审查，不采用屋面疏散结论。",
         }.get(item_id, judgment)
+    elif item_id == "CH03.02":
+        judgment = "本项目按厂房屋面自用及余电上网研究，实际可用屋面范围和接入边界仍需核实。"
     elif item_id == "CH07.06":
         judgment = "未配置储能不意味着屋面结构、防水和消防专项设计已审查；这些边界仍需独立核实。"
     elif item_id == "CH11.02":

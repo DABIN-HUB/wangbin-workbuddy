@@ -196,7 +196,12 @@ def test_report_word_formulas(rendered):
 
 
 def _check_numbering(model, document):
-    return validate_numbering(document, CHAPTERS, APPENDICES, APPENDIX_TITLES,
+    display_chapters = tuple((chapter_id, title,
+                              tuple(("土地使用权与期限" if model.result["pv_type"] == "utility_scale_ground" else "屋面使用权与期限")
+                                    if chapter_id == "CH04" and index == 3 else name
+                                    for index, name in enumerate(items, 1)))
+                             for chapter_id, title, items in CHAPTERS)
+    return validate_numbering(document, display_chapters, APPENDICES, APPENDIX_TITLES,
                               [entry["formula_id"] for entry in _appendix_formula_definitions(model)])
 
 

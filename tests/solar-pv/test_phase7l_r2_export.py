@@ -14,7 +14,7 @@ from openpyxl import load_workbook
 
 
 from wangbin_solar_pv.catalog import Catalog
-from wangbin_solar_pv.report_export import REPORT_CONTENT_VERSION, ReportModel, _appendix_rows, _metric_rows, _professional_metric_rows, _write_docx, _claim_binding_error, _item_evidence
+from wangbin_solar_pv.report_export import REPORT_CONTENT_VERSION, ReportModel, _appendix_rows, _metric_rows, _professional_metric_rows, _word_metric_value, _write_docx, _claim_binding_error, _item_evidence
 from wangbin_solar_pv.serialization import loads
 
 _CASES = Path(__file__).resolve().parents[2] / "reports/solar-pv/phase7l-r1-full-cases"
@@ -47,13 +47,13 @@ def test_partial_snapshot_keeps_calculated_project_returns_separate_from_blocked
     paragraphs = [p.text for p in document.paragraphs]
     begin = paragraphs.index("摘要")
     summary = "\n".join(paragraphs[begin:paragraphs.index("一、执行摘要与初步结论", begin)])
-    assert "项目净现值" in summary and "项目内部收益率" in summary and "回收期" in summary
-    assert "营运资金" in summary and "后期更换" in summary and "25年" in summary
-    assert "股东" in summary and "未核验" in summary
+    assert "项目净现值" in summary and "内部收益率" in summary and "25年" in summary
+    assert "更换支出" in summary and "资料成熟度B" in summary
+    assert "股东" in summary and "待核" in summary
     assert "项目投资收益水平作确定性判断" not in summary
     text = _all_text(document)
     assert "项目净现值" in text and "平准化度电成本" in text
-    assert "合成假设已提供；未真实核验" in text
+    assert "资料成熟度B" in text and "土地使用权与期限" in text
     assert "GRID_DELIVERABLE" not in text and "Concept protection only" not in text
     assert "pending" not in text.lower()
     npv = _professional_metric_rows(model, ("financial.phase3e.project_npv",))[0][1]
@@ -69,7 +69,7 @@ def test_irr_roots_are_percentages_without_silent_selection():
     model_rows = [row for row in _metric_rows(model, prefixes=("financial.phase3e.project_irr",))
                   if row[0] == "financial.phase3e.project_irr"]
     assert len(model_rows) == 1 and model_rows[0][2].endswith("%") and model_rows[0][3] == "—"
-    assert "11.95%" in rows[0][1] and "单根" in rows[0][3]
+    assert "11.95%" in rows[0][1] and "非股东回报" in rows[0][3]
     metric.update(status="UNDEFINED", reason="MULTIPLE_ROOTS", value=None,
                   details={"roots": [0.12, 0.25], "root_count": 2,
                            "domain": {"minimum": 0, "maximum": 0.5}, "unexhausted": False})
@@ -153,11 +153,9 @@ def test_bilingual_glossary_defines_meaning_and_scope(exported):
 
 def test_reader_input_summary_shows_professional_name_value_unit_and_source_state(exported):
     _, document, _ = exported
-    summary = next(table for table in document.tables if table.rows[0].cells[0].text == "建设及接网关键条件")
-    body = "\n".join(cell.text for row in summary.rows[1:] for cell in row.cells)
-    assert "并网条件·可接入容量" in body
-    assert "kWac" in body and "合成假设已提供；未真实核验" in body
-    assert "相关参数" not in body and "GRID_DELIVERABLE" not in body
+    assert not any(table.rows[0].cells[0].text == "建设及接网关键条件" for table in document.tables)
+    assert "资料成熟度B" in _all_text(document)
+    assert "接网" in _all_text(document) and "GRID_DELIVERABLE" not in _all_text(document)
 
 
 def test_known_synthetic_display_markers_are_chinese_without_translating_unknown_text():
@@ -183,7 +181,8 @@ def test_input_display_changes_with_snapshot_and_distinguishes_assumption_from_a
     first = _professional_metric_rows(model, ("financial.phase3e.project_npv",))[0][1]
     model.metric("financial.phase3e.project_npv")["value"] = 1234.5
     second = _professional_metric_rows(model, ("financial.phase3e.project_npv",))[0][1]
-    assert first != second and second == "1,234.5"
+    assert first != second and second == "1,235"
+    assert model.metric("financial.phase3e.project_npv")["value"] == 1234.5
 
 
 def test_actual_r2_formula_text_and_summary_do_not_leak_internal_status():
@@ -194,7 +193,7 @@ def test_actual_r2_formula_text_and_summary_do_not_leak_internal_status():
         result = loads((cases / category / "project/canonical.json").read_bytes())
         model = ReportModel.from_result(result, Catalog())
         summary = _project_summary(model)
-        assert "后期更换 第13年" in summary
+        assert ("更换支出" in summary) if category == "utility_scale_ground" else ("屋面权属和结构资料" in summary)
         assert "OPERATING_YEAR_" not in summary
         assert "NOT_APPLICABLE" not in _reader_text("无融资返回 NOT_APPLICABLE")
         formulas = model.result["formula_snapshot"]
@@ -231,7 +230,7 @@ def test_delivered_r3_word_workbooks_and_canonical_keep_project_metric_identity(
                       "financial.phase3e.static_payback", "financial.phase3e.dynamic_payback"):
         metric = model.metric(metric_id)
         assert metric["status"] == "CALCULATED"
-        displayed = _professional_metric_rows(model, (metric_id,))[0][1]
+        displayed = _word_metric_value(metric)
         assert displayed.split("（", 1)[0] in text
     book = load_workbook(folder / manifest["files"]["F03"]["path"], read_only=True)
     source = load_workbook(folder / manifest["files"]["F04"]["file"], read_only=True)
@@ -280,7 +279,7 @@ def test_delivered_r2_word_workbooks_and_canonical_keep_project_metric_identity(
                       "financial.phase3e.static_payback", "financial.phase3e.dynamic_payback"):
         metric = model.metric(metric_id)
         assert metric["status"] == "CALCULATED"
-        displayed = _professional_metric_rows(model, (metric_id,))[0][1]
+        displayed = _word_metric_value(metric)
         assert displayed.split("（", 1)[0] in text
     book = load_workbook(folder / manifest["files"]["F03"]["path"], read_only=True)
     source = load_workbook(folder / manifest["files"]["F04"]["file"], read_only=True)
