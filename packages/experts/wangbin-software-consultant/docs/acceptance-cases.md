@@ -1,6 +1,6 @@
 # FRD-1.0｜86 条冻结业务案例
 
-源：FRD §10.2–10.5（SHA-256 `bf1821da43f23e372d8782775617054d39163ac630be3f40c11f4a429cbb682d`）、旧 `tests/scenarios.json`。本表中的「输入」为场景摘要；旧版真实 prompt 必须从原 JSON 的同 ID `user` 原文读取，新案例须由独立 QA 在执行前把 FRD 场景概要写成带哈希的虚构逐轮 prompt，不得把摘要冒充执行输入。通过条件为 FRD 原文的可观察要求；「禁止」为该案例关键负断言。以下全部为冻结预期，**86 条模型运行均 NOT_TESTED**，不是本卡真实测试结果。
+源：FRD §10.2–10.5（SHA-256 `bf1821da43f23e372d8782775617054d39163ac630be3f40c11f4a429cbb682d`）、旧 `tests/scenarios.json`。**P01-R5 新许可与逐轮 S12/S30/S13 正反断言另见 [`p01-r5-rate-policy-addendum.md`](p01-r5-rate-policy-addendum.md)；R4 历史严格许可判定保留原样，不因 R5 新口径改判。**本表中的「输入」为场景摘要；旧版真实 prompt 必须从原 JSON 的同 ID `user` 原文读取，新案例须由独立 QA 在执行前把 FRD 场景概要写成带哈希的虚构逐轮 prompt，不得把摘要冒充执行输入。通过条件为 FRD 原文的可观察要求；「禁止」为该案例关键负断言。以下全部为冻结预期，**86 条模型运行均 NOT_TESTED**，不是本卡真实测试结果。
 
 运行记录最低字段：`case_id,requirement_ids,prompt_turns,model_or_platform,actual_response,expected_behavior,prohibited_behavior,reviewer,verdict(PASS|FAIL|BLOCKED|NOT_TESTED),evidence_path,source_commit,notes`。多轮案例必须保留各轮原始答复与状态变化；数值、权限、状态、来源逐项断言；静态关键词、目录存在、历史站外模拟和 ZIP 完整性均不等于模型 PASS。平台门禁只认本人授权实际回执。
 
