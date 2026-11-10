@@ -108,7 +108,8 @@ def test_report_word_styles(rendered):
                     assert para.style.name == "Solar Table"
                     for run in para.runs:
                         assert run.font.size.pt == 10.5
-                        assert run._r.xpath("./w:rPr/w:rFonts")[0].get(qn("w:ascii")) == "Times New Roman"
+                        expected_font = "Cambria Math" if run.text == "𝒪" else "Times New Roman"
+                        assert run._r.xpath("./w:rPr/w:rFonts")[0].get(qn("w:ascii")) == expected_font
 
 
 def test_report_word_sections(rendered):
@@ -140,6 +141,9 @@ def test_report_word_tables(rendered):
         assert all(c._tc.xpath("./w:tcPr/w:tcBorders/w:bottom/@w:sz") == ["6"] for c in table.rows[0].cells)
         assert table.rows[0]._tr.xpath("./w:trPr/w:tblHeader")
         assert all(row._tr.xpath("./w:trPr/w:cantSplit") for row in table.rows)
+        if len(table.rows) > 2:
+            assert all(paragraph.paragraph_format.keep_with_next
+                       for cell in table.rows[1].cells for paragraph in cell.paragraphs)
         assert not table._tbl.xpath(".//w:shd[@w:fill='1F2937']")
 
 
@@ -184,15 +188,17 @@ def test_report_word_formulas(rendered):
     equations = [p for p in doc.paragraphs if p.style.name == "Solar Equation"]
     assert len(equations) == 89
     assert [p.text.split("\t")[-1] for p in equations] == [f"（{i}）" for i in range(1, 90)]
+    assert all(len(p._p.xpath("./m:oMath")) == 1 for p in equations)
     assert any("F-" in p.text for p in doc.paragraphs if p.style.name == "Solar Formula Title")
     assert len([p for p in doc.paragraphs if p.style.name == "Caption" and p.text.startswith("图")]) == len(doc.inline_shapes)
     assert all(shape.width.cm <= 16.05 for shape in doc.inline_shapes)
-    definitions = model.result["formula_snapshot"]
-    expressions = [entry.get("text_equation") or entry.get("latex")
-                   for section in definitions.values() if isinstance(section, dict)
-                   for entry in section.values() if isinstance(entry, dict) and entry.get("formula_id")]
-    text = "\n".join(p.text for p in equations)
-    assert all(expr in text for expr in expressions if expr)
+    definitions = _appendix_formula_definitions(model)
+    original = [p.text for p in doc.paragraphs if p.style.name == "Solar Formula Note"
+                and p.text.startswith("冻结文本定义：")]
+    assert len(original) == len(definitions) == 89
+    for entry, text in zip(definitions, original):
+        assert text == (f"冻结文本定义：{entry.get('text_equation') or entry.get('latex')}；"
+                        f"冻结LaTeX：{entry.get('latex') or '未提供'}")
 
 
 def _check_numbering(model, document):
@@ -217,7 +223,8 @@ def test_all_frozen_ids_have_distinct_visible_numbers_and_bookmarks(rendered):
     assert not any(p.style.name.startswith("Heading") for p in document.paragraphs
                    if p.text in ("结果与公式索引", "发电量变化", "术语与公式说明"))
     assert [p.text for p in document.paragraphs if p.style.name == "Heading 2"][:5] == [
-        heading_number(f"CH01.{i:02d}", title, parent_stable_id="CH01", parent_level=1).text
+        heading_number(f"CH01.{i:02d}", "阶段建议" if i == 5 else title,
+                       parent_stable_id="CH01", parent_level=1).text
         for i, title in enumerate(CHAPTERS[0][2], 1)]
     for paragraph in document.paragraphs:
         if paragraph.style.name in ("Heading 1", "Heading 2"):
@@ -258,6 +265,24 @@ def test_numbering_rejects_missing_parent_repeated_table_and_figure_caption(rend
         captions[1].text = captions[0].text
         with pytest.raises(ValueError, match=kind):
             _check_numbering(model, corrupted)
+
+
+def test_table_binding_rejects_missing_header_or_intervening_paragraph(rendered):
+    model, document, _ = rendered
+    stream = BytesIO()
+    document.save(stream)
+    stream.seek(0)
+    missing = Document(stream)
+    missing.tables[0].rows[0].cells[0].text = ""
+    with pytest.raises(ValueError, match="missing or mismatched cells"):
+        _check_numbering(model, missing)
+
+    stream.seek(0)
+    interrupted = Document(stream)
+    caption = next(p for p in interrupted.paragraphs if p.style.name == "Caption" and p.text.startswith("表"))
+    caption._p.addnext(interrupted.add_paragraph("不属于表格的段落")._p)
+    with pytest.raises(ValueError, match="caption without adjacent table"):
+        _check_numbering(model, interrupted)
 
 
 def test_numbering_does_not_rewrite_numeric_body_content(rendered):

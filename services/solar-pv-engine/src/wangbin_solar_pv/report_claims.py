@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from .report_appendix_findings import appendix_finding
+from .report_display_numbers import decision_number, decision_percent
 
 # Frozen outline field bindings, copied by item ID (not inferred from the title).
 CHAPTER_FIELDS: dict[str, tuple[str, ...]] = {
@@ -848,7 +849,7 @@ def _project_irr_claim(model: Any) -> str:
                 '），非唯一IRR，不据此择优比较折现率')
     if (metric.get('status') == 'CALCULATED' and len(roots) == 1
             and metric.get('value') == roots[0]):
-        return f'项目IRR在{bounds}唯一已认证根为{Decimal(str(roots[0])) * 100:.4f}%'
+        return f'项目IRR在{bounds}唯一已认证根为{decision_percent(roots[0])}'
     return '项目IRR指标状态与根集不一致，不推断单一回报率'
 
 
@@ -867,7 +868,7 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
         return row.get("value") if row and row.get("status") == "CALCULATED" else None
 
     def money(number):
-        return f"{format_value(number)}元"
+        return f"{decision_number(number, 'CNY')}元"
 
     def pct(number):
         return f"{format_value(Decimal(str(number)) * 100)}%"
@@ -881,14 +882,14 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
                     if not ground and inp("roof.remaining_life") is not None else
                     "地面场址的土地权属、地勘与道路排水仍需逐项核验" if ground else
                     "屋面权属与结构条件尚需复核")
-        energy = f"；首年合成资源下预测发电{format_value(year1)}kWh" if year1 is not None else "；首年发电结果尚未形成"
+        energy = f"；首年合成资源下预测发电{decision_number(year1, 'kWh')}kWh" if year1 is not None else "；首年发电结果尚未形成"
         ratio = metric('dc_ac_ratio')
         mean = metric('energy.mean_annual')
         return (f"本项目拟采用{format_value(dc)}kWp直流（Direct Current，DC）光伏组件及"
                 f"{format_value(ac)}kW交流（Alternating Current，AC）逆变器，"
                 + (f"直交流容配比为{format_value(ratio)}，" if ratio is not None else '')
                 + f"以{format_value(years)}年评价运行表现{energy}。"
-                + (f"评价期年均预测发电{format_value(mean)}kWh。" if mean is not None else '')
+                + (f"评价期年均预测发电{decision_number(mean, 'kWh')}kWh。" if mean is not None else '')
                 + "组件侧额定容量与交流侧输出能力"
                 "并不相同，后续发电及收益仍取决于资源、系统损失和接网条件。\n\n"
                 f"目前的规模和电量是合成方案的预测，不是获批装机或保底上网电量；{location}。")
@@ -899,14 +900,14 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
             return "首年月度与年度发电未同时形成可对账结果，暂不推断季节发电。"
         reconciled = abs(sum(Decimal(str(x)) for x in months) - Decimal(str(year1))) < Decimal("0.01")
         displayed_sum = sum(Decimal(format_value(x).replace(',', '')) for x in months)
-        displayed_year = Decimal(format_value(year1).replace(',', ''))
+        displayed_year = Decimal(decision_number(year1, 'kWh').replace(',', ''))
         if reconciled and displayed_sum != displayed_year:
             reconciliation = (f'12个月显示值汇总{format_value(displayed_sum)}kWh，'
-                              f'年度未取整结果列示{format_value(year1)}kWh；'
-                              '差异来自逐月显示取整，不把两者称作相等')
+                              f'年度决策显示为{decision_number(year1, "kWh")}kWh；'
+                              '差异来自月度明细与年度决策显示精度不同，不把两者称作相等')
         elif reconciled:
             reconciliation = (f'12个月显示值汇总{format_value(displayed_sum)}kWh，'
-                              f'与年度指标{format_value(year1)}kWh一致')
+                              f'与年度指标{decision_number(year1, "kWh")}kWh一致')
         else:
             reconciliation = '月度与年度原值未闭合，须先查清口径'
         peak = max(range(12), key=lambda i: months[i])
@@ -953,21 +954,38 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
                 f"{point}还受保护、线路与计量边界约束；正式接网意见{opinion_text}，"
                 "仅属合成条件，正式电网接入与送出限值待批复，不视为已获接入许可。")
     if item_id == "CH14.02":
+        def precise_money(number):
+            text = format(Decimal(str(number)), ",f")
+            return (text.rstrip("0").rstrip(".") if "." in text else text) + "元"
+
+        def item_amount(number):
+            exact, rounded = precise_money(number), money(number)
+            return rounded if exact == rounded else f"{rounded}（原始分项{exact}）"
+
+        def equipment_description(row):
+            category = row["capex.items.category"]
+            name = equipment[category]
+            source_unit = row.get("capex.items.quantity_unit")
+            unit = "件" if source_unit == "unit" else source_unit
+            unit = unit if isinstance(unit, str) and unit.strip() else None
+            count = f"{format_value(row['capex.items.quantity'])}{unit}" if unit else (
+                f"{format_value(row['capex.items.quantity'])}（数量单位待核）")
+            price = f"{precise_money(row['capex.items.unit_price'])}/{unit}" if unit else (
+                f"{precise_money(row['capex.items.unit_price'])}（计价单位待核）")
+            return f"{name}{count}、单价{price}，分项金额{item_amount(row['capex.items.amount'])}"
+
         items = inp("capex.items")
         rows = [r.get("fields", {}) for r in items if isinstance(r, dict)] if isinstance(items, list) else []
         initial = [r for r in rows if str(r.get("capex.items.payment_date", ""))[:4] <= str(result.get("evaluation_date", ""))[:4]]
         later = [r for r in rows if r not in initial]
-        equipment = {"modules": ("组件", "块"), "inverters": ("逆变器", "台"),
-                     "mounting": ("支架", "项"), "cables": ("电缆", "项"),
-                     "transformer": ("变压器", "台"), "electrical": ("电气设备", "项"),
-                     "storage": ("储能设备", "套")}
+        equipment = {"modules": "组件", "inverters": "逆变器", "mounting": "支架",
+                     "cables": "电缆", "transformer_switchgear": "变压器及开关设备",
+                     "grid_export": "并网送出设备", "storage": "储能设备"}
         listed = [r for r in initial if r.get("capex.items.category") in equipment]
         if not listed:
             return "本次未取得可绑定的设备分项数量、单价和税口径，设备费用不能由总额倒推。"
         largest = max(listed, key=lambda r: Decimal(str(r.get("capex.items.amount", 0))))
-        descriptions = [f"{equipment[r['capex.items.category']][0]}{format_value(r['capex.items.quantity'])}"
-                        f"{equipment[r['capex.items.category']][1]}×{money(r['capex.items.unit_price'])}/"
-                        f"{equipment[r['capex.items.category']][1]}={money(r['capex.items.amount'])}"
+        descriptions = [equipment_description(r)
                         for r in listed if all(r.get('capex.items.' + key) is not None for key in ('quantity', 'unit_price', 'amount'))]
         if not descriptions:
             return "设备分项的数量或单价不完整，暂不能形成逐项费用判断。"
@@ -992,7 +1010,7 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
         civil = [r for r in initial if r.get("capex.items.category") == "construction"]
         civil_text = (f"，其中土建施工{money(civil[0]['capex.items.amount'])}另列，不能充作设备费"
                       if civil and civil[0].get("capex.items.amount") is not None else "")
-        return (f"本次设备清单以{equipment[largest['capex.items.category']][0]}"
+        return (f"本次设备清单以{equipment[largest['capex.items.category']]}"
                 f"{money(largest['capex.items.amount'])}占已列初始设备分项最大份额："
                 f"{'、'.join(descriptions)}；上述{tax_note}。{initial_text}{lifecycle_text}{civil_text}{future}。"
                 "这些是合成数量与价格而非供应商签署报价，实际工程量、税额抵扣及采购付款仍须核验。")
@@ -1026,10 +1044,26 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
             if year < len(flow) and flow[year] < 0:
                 renewal += (f"；该年项目年度净现金流{money(flow[year])}，应就更换年度单独安排资金计划"
                             "，年度净流出不能推断具体付款瞬间的资金缺口")
+        display_residual = ""
+        # Only compare separately rounded reader numbers when the first year
+        # has no other capital or working-capital cash event to explain the
+        # difference. The canonical ledger and cash flow remain untouched.
+        other_events = ("capex_cash_paid", "replacement_cash_paid", "working_capital_increase",
+                        "working_capital_release", "terminal_asset_cash")
+        if (transaction is not None and (ground or savings is not None)
+                and not any(first.get(key) for key in other_events)):
+            def rounded_yuan(value):
+                return Decimal(decision_number(value, "CNY").replace(",", ""))
+            shown_sum = (rounded_yuan(receipts) + rounded_yuan(savings or 0)
+                         - rounded_yuan(transaction) - rounded_yuan(opex) - rounded_yuan(tax))
+            difference = shown_sum - rounded_yuan(flow[1])
+            if difference:
+                direction = "多" if difference > 0 else "少"
+                display_residual = f"；分项整数相减比未取整账簿净额{direction}{money(abs(difference))}，仅为列示尾差"
         return (f"项目税后年度现金流建设期为{money(flow[0])}，由建设期计划资本支出{money(start)}"
                 f"和营运资金投入{money(wc)}构成；运营首年{benefit}，"
                 f"{fee_note}再扣运维现金{money(opex)}与项目现金税费{money(tax)}后，"
-                f"对应首年净流入{money(flow[1])}{renewal}。"
+                f"对应首年净流入{money(flow[1])}{display_residual}{renewal}。"
                 "本项是合成年度项目收支预测，不是实际银行流水、已收回款或投资者分红；"
                 "股东出资及分配事件未闭合，不能由项目净流量替代。")
     if item_id == "CH16.04":
@@ -1050,9 +1084,9 @@ def _specific_project_judgment(model: Any, item_id: str, format_value: Callable[
                    if single and npv > 0 and Decimal(str(irr_metric['value'])) > Decimal(str(discount)) else
                    "NPV为正，但IRR非唯一或未高于同口径折现率，不据此下单根回报结论"
                    if npv > 0 else "本次NPV未为正，不据此下正收益结论")
-        payback = (f"静态回收期{format_value(static)}年、动态回收期{format_value(dynamic)}年，"
+        payback = (f"静态回收期{decision_number(static, 'year')}年、动态回收期{decision_number(dynamic, 'year')}年，"
                    if static is not None and dynamic is not None else "回收期按其独立指标状态核查，")
-        irr_text = (f"项目IRR（内部收益率）为{pct(irr_metric['value'])}"
+        irr_text = (f"项目IRR（内部收益率）为{decision_percent(irr_metric['value'])}"
                     if single else _project_irr_claim(model))
         return (f"以{format_value(years)}年名义价格、税后项目年度现金流为基础，按"
                 f"{pct(discount)}折现率计算的项目净现值（NPV）为{money(npv)}。净现值衡量"
@@ -1432,20 +1466,20 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
         unit = calculated('financial.unit_investment')
         npv = calculated('financial.phase3e.project_npv')
         if investment is not None:
-            outcome = (f'当前项目税后净现值（Net Present Value，NPV）为{fmt(npv)}元，说明在所用折现率及'
+            outcome = (f'当前项目税后净现值（Net Present Value，NPV）为{decision_number(npv, "CNY")}元，说明在所用折现率及'
                        '预测现金流假设下形成正的模型净现值。' if npv is not None and npv > 0 else
-                       f'当前项目税后净现值（Net Present Value，NPV）为{fmt(npv)}元，仍须结合折现率判断回报。'
+                       f'当前项目税后净现值（Net Present Value，NPV）为{decision_number(npv, "CNY")}元，仍须结合折现率判断回报。'
                        if npv is not None else '项目净现值尚未形成可引用的计算结果。')
-            return (f'评价期资本性支出合计{fmt(investment)}元，包含建设与后续设备更换，'
+            return (f'评价期资本性支出合计{decision_number(investment, "CNY")}元，包含建设与后续设备更换，'
                     '不能全部视为建设期一次性付款。' +
                     (f'按直流装机口径列示的全期含更换单位投资为{fmt(unit)}元/kWp。' if unit is not None else '') + outcome +
                     ('' if '唯一已认证根' in _project_irr_claim(model) else _project_irr_claim(model) + '。') +
                     '这是项目现金流而非股东分红的评价，实际投资决定还依赖工程量、价格及权属。')
     if item_id == 'CH01.05' and (result.get('status') != 'COMPLETE' or
                                 result.get('maturity', {}).get('real_project') != 'VERIFIED'):
-        return ('本阶段建议为“暂缓决策”：已有的项目回报预测可以用于识别下一步研究价值，'
+        return ('本阶段建议：暂缓投资决策，进入专项核验。已有的项目回报预测可以用于识别下一步研究价值，'
                 '但屋面权属、结构与消防、厂区负荷及余电接入尚未由真实资料闭合。' if not ground else
-                '本阶段建议为“暂缓决策”：已有的项目回报预测可以用于识别下一步研究价值，'
+                '本阶段建议：暂缓投资决策，进入专项核验。已有的项目回报预测可以用于识别下一步研究价值，'
                 '但土地权属、地勘及道路排水、集中接网和交易价格尚未由真实资料闭合。')
     if item_id == 'CH07.01':
         count, power = get('system.module_count'), get('system.module_power')
@@ -1489,7 +1523,7 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
     if item_id == 'CH08.01':
         energy = calculated('energy.year.1')
         if energy is not None:
-            return (f'本次以合成阵列面资源、组件规模及已有损失参数形成首年预测发电{fmt(energy)}kWh。'
+            return (f'本次以合成阵列面资源、组件规模及已有损失参数形成首年预测发电{decision_number(energy, "kWh")}kWh。'
                     '这个结果反映设备在当前气象与系统效率假设下的输出，'
                     + ('厂区自用和余电结算尚需在此后按负荷与计量边界分配。' if not ground else
                        '地面项目的集中送出与结算电量还需按电网和交易限制另行区分。')
@@ -2081,20 +2115,20 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
         years = get('project.evaluation_years')
         if npv is not None and years is not None:
             irr_claim = _project_irr_claim(model)
-            irr_note = (f'项目IRR（内部收益率）为{fmt(Decimal(str(irr)) * 100)}%'
+            irr_note = (f'项目IRR（内部收益率）为{decision_percent(irr)}'
                         if irr is not None and '唯一已认证根' in irr_claim else irr_claim)
             construction = result.get('evidence', {}).get('financial-ledger', {}).get('annual', ())
             initial = (construction[0].get('capex_cash_paid') if construction
                        and calculated('financial.phase3e.project_cash_flow') is not None else None)
-            investment = (f'建设期计划资本支出{fmt(initial)}元，' if initial is not None else '')
+            investment = (f'建设期计划资本支出{decision_number(initial, "CNY")}元，' if initial is not None else '')
             delivered = calculated('energy.delivered.year.1')
-            energy = f'首年交付预测{fmt(delivered)}kWh；' if delivered is not None else ''
+            energy = f'首年交付预测{decision_number(delivered, "kWh")}kWh；' if delivered is not None else ''
             payback = calculated('financial.phase3e.static_payback')
-            recovery = f'静态回收期{fmt(payback)}年。' if payback is not None else ''
-            decision = ('本阶段建议“暂缓决策”。' if result.get('status') != 'COMPLETE' or
+            recovery = f'静态回收期{decision_number(payback, "year")}年。' if payback is not None else ''
+            decision = ('本阶段建议：暂缓投资决策，进入专项核验。' if result.get('status') != 'COMPLETE' or
                         result.get('maturity', {}).get('real_project') != 'VERIFIED' else '')
             return (decision + f'目前的{fmt(years)}年合成项目方案具有继续研究的价值：{investment}{energy}'
-                    f'按年度期末项目税后现金流计算的净现值（Net Present Value，NPV）为{fmt(npv)}元，'
+                    f'按年度期末项目税后现金流计算的净现值（Net Present Value，NPV）为{decision_number(npv, "CNY")}元，'
                     f'{irr_note}；{recovery}这些结果说明的是当前方案及假设下的项目回报，'
                     '并非股东回报或实际投资批准。\n\n'
                     + ('优先取得土地权属、地勘道路排水及集中接网意见，核定工程量和交易价格，'
@@ -2107,8 +2141,8 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
         if replacement and replacement.get('replacement_cash_paid') is not None:
             cashflow = calculated('financial.phase3e.project_cash_flow')
             value = cashflow[13] if isinstance(cashflow, list) and len(cashflow) > 13 else None
-            return (f"第13年设备更换预计付款{fmt(replacement['replacement_cash_paid'])}元"
-                    + (f"，该年项目净现金流约{fmt(value)}元" if value is not None else '')
+            return (f"第13年设备更换预计付款{decision_number(replacement['replacement_cash_paid'], 'CNY')}元"
+                    + (f"，该年项目净现金流约{decision_number(value, 'CNY')}元" if value is not None else '')
                     + '；年度净流出不等于某一付款瞬间必然资金不足，但已形成明确的资金安排压力。'
                     '实施前应核对付款计划、可动用现金、准备金或其他合法资金安排；当前没有日期化资金余额，不能宣布付款覆盖已满足。')
     if item_id == 'CH18.03' and not ground:

@@ -4,6 +4,7 @@ All dimensions are Word points or centimetres; no calculation data lives here.
 """
 from __future__ import annotations
 
+from copy import deepcopy
 from dataclasses import dataclass
 
 from docx.enum.style import WD_STYLE_TYPE
@@ -11,6 +12,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_TAB_ALIGNMENT
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Cm, Pt, RGBColor
+from docx.text.run import Run
 
 
 @dataclass(frozen=True)
@@ -64,6 +66,41 @@ def set_run_font(run, *, chinese: str = "宋体", size: float = 12,
                  bold: bool | None = None) -> None:
     font_pair(run.font, run._r.get_or_add_rPr(), chinese=chinese,
               western=WORD_FORMAT.western, size=size, bold=bold)
+
+
+def render_script_o_glyph(document) -> None:
+    """Use a real math-capable font for the frozen script-O *text* in WPS.
+
+    Keep every original Unicode character in its Word run. Substituting an
+    ASCII O or editing the formula registry would change the source meaning.
+    """
+    paragraphs = list(document.paragraphs)
+    paragraphs.extend(paragraph for table in document.tables for row in table.rows
+                      for cell in row.cells for paragraph in cell.paragraphs)
+    seen = set()
+    for paragraph in paragraphs:
+        if paragraph._p in seen:
+            continue
+        seen.add(paragraph._p)
+        for run in tuple(paragraph.runs):
+            if "𝒪" not in run.text:
+                continue
+            parts = run.text.split("𝒪")
+            run.text = parts[0]
+            previous = run._r
+            for suffix in parts[1:]:
+                glyph = Run(deepcopy(run._r), paragraph)
+                glyph.text = "𝒪"
+                font_pair(glyph.font, glyph._r.get_or_add_rPr(),
+                          chinese=WORD_FORMAT.chinese, western="Cambria Math",
+                          size=run.font.size.pt if run.font.size else WORD_FORMAT.body_pt)
+                previous.addnext(glyph._r)
+                previous = glyph._r
+                if suffix:
+                    remaining = Run(deepcopy(run._r), paragraph)
+                    remaining.text = suffix
+                    previous.addnext(remaining._r)
+                    previous = remaining._r
 
 
 def _style(document, name: str, *, size: float, chinese: str = "宋体",
@@ -181,16 +218,17 @@ def borders(table, profile: SolarWordFormat = WORD_FORMAT) -> None:
         tcpr.append(cell_edges)
 
 
-def equation_paragraph(document, equation: str, number: str):
-    """Editable text equation; centered expression/right-aligned number via tabs."""
+def equation_paragraph(document, math, number: str):
+    """Editable Office Math expression, centered with a right-aligned number."""
     paragraph = document.add_paragraph(style="Solar Equation")
     stops = paragraph.paragraph_format.tab_stops
     stops.add_tab_stop(Cm(WORD_FORMAT.text_width_cm / 2), WD_TAB_ALIGNMENT.CENTER)
     stops.add_tab_stop(Cm(WORD_FORMAT.text_width_cm), WD_TAB_ALIGNMENT.RIGHT)
+    paragraph.paragraph_format.keep_with_next = True
     paragraph.add_run("\t")
-    expression_run = paragraph.add_run(equation)
-    font_pair(expression_run.font, expression_run._r.get_or_add_rPr(),
-              chinese=WORD_FORMAT.chinese, western="Cambria Math", size=12)
+    if math.tag != qn("m:oMath"):
+        raise ValueError("equation must contain an editable OMML math object")
+    paragraph._p.append(math)
     paragraph.add_run("\t")
     set_run_font(paragraph.add_run(number), size=12)
     return paragraph

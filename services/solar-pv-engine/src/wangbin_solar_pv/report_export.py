@@ -12,7 +12,7 @@ from dataclasses import dataclass
 import calendar
 from collections import Counter
 from datetime import date
-from decimal import Decimal, ROUND_HALF_UP
+from decimal import Decimal
 from hashlib import sha256
 from importlib.resources import files
 from io import BytesIO
@@ -47,8 +47,10 @@ from .local_files import Workspace
 from .report_narrative import guidance, validate_fixture
 from .report_numbering import heading_number, add_numbered_heading, validate_numbering
 from .report_claims import APPENDIX_RULES, APPENDIX_TITLES, CHAPTER_FIELDS, CHAPTER_METRICS, RESOURCE_MONTHLY_UNITS, build_claim, category_fields, _dataset_rows, _source_value, _task_display_name
+from .report_display_numbers import decision_number, decision_percent
+from .report_equations import CONFLICT_ID, convert_equations
 from .report_resource_display import prepare_resource_word_rows
-from .report_word_styles import WORD_FORMAT, borders as word_table_borders, configure as configure_word, equation_paragraph, set_run_font
+from .report_word_styles import WORD_FORMAT, borders as word_table_borders, configure as configure_word, equation_paragraph, render_script_o_glyph, set_run_font
 from .serialization import dumps
 from .source_xlsx import create_source_workbook
 
@@ -128,7 +130,7 @@ _D_STYLE = {
     "white": "FFFFFF",
 }
 
-REPORT_CONTENT_VERSION = "phase7l-r8-reader-facing-layout"
+REPORT_CONTENT_VERSION = "phase7l-r9-omml-reader-review"
 
 
 @dataclass(frozen=True)
@@ -254,14 +256,17 @@ def _word_metric_value(metric: dict[str, Any]) -> str:
     return _word_value(metric.get("value"))
 
 def _reader_metric_value(metric: dict[str, Any]) -> str:
-    """Round only a decision-table scalar; XLSX and canonical keep original precision."""
+    """Format a decision metric by its declared unit, never by its magnitude."""
     value = metric.get("value")
     if metric.get("status") != "CALCULATED" or isinstance(value, bool) or not isinstance(value, (int, float, Decimal)):
         return _word_metric_value(metric)
-    unit = _metric_unit(metric)
-    places = 2 if unit in {"year", "年"} else 0 if unit in {"CNY", "元", "kWh", "kWp", "kW", "kWac"} else 4
-    rounded = Decimal(str(value)).quantize(Decimal(1).scaleb(-places), rounding=ROUND_HALF_UP)
-    return f"{rounded:,.{places}f}"
+    return decision_number(value, _metric_unit(metric))
+
+def _decision_metric_text(metric: dict[str, Any]) -> str:
+    """Keep certified IRR roots and all other decision metrics on one display policy."""
+    if metric.get("metric_id") == "financial.phase3e.project_irr":
+        return _irr_presentation(metric)[0]
+    return _reader_metric_value(metric)
 
 def _irr_presentation(metric: dict[str, Any]) -> tuple[str, str]:
     """Present the reported root set, not an arbitrarily chosen IRR."""
@@ -291,7 +296,7 @@ def _irr_presentation(metric: dict[str, Any]) -> tuple[str, str]:
     if (status == "CALCULATED" and len(roots) == 1
             and isinstance(metric.get("value"), (int, float, Decimal))
             and not isinstance(metric["value"], bool) and metric["value"] == roots[0]):
-        return f"{Decimal(str(roots[0])) * 100:.2f}%", f"单根；{bounds}唯一已认证根；年度项目税后口径"
+        return decision_percent(roots[0]), f"单根；{bounds}唯一已认证根；年度项目税后口径"
     return "根集待核验", "指标状态与所列根不一致；不选取单个根"
 
 
@@ -741,6 +746,105 @@ def _reader_glossary_ids(pv_type: str) -> tuple[str, ...]:
               "TERM-LEVERED", "TERM-DSCR")
     return common + (rooftop if pv_type == "industrial_rooftop" else ground)
 
+def _debt_source_state(model: ReportModel) -> str:
+    normalized = model.result.get("inputs", {}).get("normalized", {})
+    records = model.result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
+    ratio = _source_value(normalized, records, "finance.debt_ratio")
+    if type(ratio) not in {int, float, Decimal}:
+        return "UNKNOWN"
+    value = Decimal(str(ratio))
+    return "NO_DEBT" if value == 0 else "HAS_DEBT" if value > 0 else "UNKNOWN"
+
+
+def _dscr_reader_note(model: ReportModel, debt_state: str) -> str:
+    if (model.metric("financial.phase3e.dscr") or {}).get("status") == "CALCULATED":
+        return "DSCR已有计算值，仍须逐期核对可偿债现金与应偿本息。"
+    if debt_state == "NO_DEBT":
+        return "本次无应偿本息，DSCR无定义而不是0倍。"
+    if debt_state == "HAS_DEBT":
+        return "本次有债务假设但DSCR无可用值，须核对偿债计划与零分母期。"
+    return "债务比例与偿债日程尚未闭合，不推定DSCR为0倍或已达标。"
+
+
+def _formula_reader_evaluation(model: ReportModel) -> str:
+    npv_calculated = (model.metric("financial.phase3e.project_npv") or {}).get("status") == "CALCULATED"
+    irr_calculated = (model.metric("financial.phase3e.project_irr") or {}).get("status") == "CALCULATED"
+    return ("评价与适用：NPV（F-NPV）按声明折现率汇总项目税后现金流；本项目"
+            + ("已有可用NPV计算值" if npv_calculated else "NPV尚无可用计算值")
+            + "。IRR（F-IRR-PROJECT）仅按搜索域内认证根呈现；本项目"
+            + ("已有IRR计算结果" if irr_calculated else "IRR尚无可用计算值")
+            + "。静态与动态回收期（F-STATIC-PAYBACK、F-DYNAMIC-PAYBACK）是不同评价方法，"
+              "各自是否取得数值以指标状态为准。LCOE（F-LCOE）："
+            + _reader_term_applicability(model, "TERM-LCOE")
+            + "DSCR（F-DSCR）：" + _dscr_reader_note(model, _debt_source_state(model))
+            + "项目回报不等于股东回报。")
+
+
+def _npv_instances_note(model: ReportModel, outputs: list[dict[str, Any]]) -> str:
+    statuses = {"CALCULATED": "已计算", "NOT_IMPLEMENTED": "本阶段方法未实现"}
+    npv_calculated = (model.metric("financial.phase3e.project_npv") or {}).get("status") == "CALCULATED"
+    return ("F-NPV 输出实例分别为：" + "；".join(
+        f"{metric['metric_id']}：" +
+        ("3B阶段留置占位，非整条NPV方法未实现" if metric.get("reason") == "OUTSIDE_PHASE3B"
+         and metric["status"] == "NOT_IMPLEMENTED" else
+         statuses.get(metric["status"], _reader_text(metric["status"])))
+        for metric in outputs) +
+        ("。已计算的项目NPV不因其他实例未实现而失效。" if npv_calculated else
+         "。各实例状态独立；本次项目NPV未形成可用数值，不以方法已注册替代项目结果。"))
+
+
+def _reader_term_applicability(model: ReportModel, term_id: str) -> str:
+    """Reader navigation only; never claim that a listed method was executed."""
+    def calculated(metric_id: str) -> bool:
+        return (model.metric(metric_id) or {}).get("status") == "CALCULATED"
+
+    common = {
+        "TERM-PV": "本报告评价光伏方案，不代表工程设计已获批。",
+        "TERM-DC": "本项目直流装机与交流送出容量分别列示。",
+        "TERM-AC": "逆变输出与电网接入条件仍须分别校核。",
+        "TERM-KWP": "本项目直流装机按峰值容量列示。",
+        "TERM-POWER": "设备额定功率与实际发电量分列。",
+        "TERM-ENERGY": "发电量、可交付电量与上网电量按边界分列。",
+        "TERM-POA-IRRADIATION": "本次阵列面资源为合成输入，尚待站址核验。",
+        "TERM-PR": "首年性能比是模型结果，尚无实测运行值。",
+        "TERM-CAPEX": "首期投资与后续设备更换分别列账，非已付款。",
+        "TERM-OPEX": "年度运维支出与非现金折旧分别列账。",
+        "TERM-NPV": ("项目税后净现值仅在本次输入与折现假设边界下成立。" if calculated("financial.phase3e.project_npv")
+                     else "项目净现值尚未形成可用结果，不将方法定义当作已计算值。"),
+        "TERM-IRR": ("项目IRR已有计算结果，根集唯一性须单独核对；不等于股东回报。"
+                     if calculated("financial.phase3e.project_irr") else
+                     "项目IRR尚无可用计算值，不能据此推定项目或股东回报。"),
+        "TERM-PROJECT-CASH-FLOW": "建设与运营年度项目收支见现金流附录。",
+        "TERM-EQUITY-CASH-FLOW": ("投资者现金流已有计算值，仍须核对出资、融资与分配事件。"
+                                  if calculated("financial.phase3e.equity-investor-cash-flow") else
+                                  "投资者现金流尚无可用计算值，不以项目现金流替代股东回报。"),
+        "TERM-LCOE": ("LCOE已有计算值，仍须核对全期成本与可交付电量边界。"
+                      if calculated("financial.phase3e.lcoe") else
+                      "LCOE尚无可用数值，须核对全期成本、电量与折现边界。"),
+        "TERM-WORKING-CAPITAL": "本项目现金流分别列示占用与终期回收。",
+        "TERM-DEPRECIATION": "折旧影响税基，不当作第二次现金付款。",
+        "TERM-VAT": "税金计提与现金付款分别列示，实际适用税率待核。",
+        "TERM-TMY": "本报告涉及气象方法，不表示已取得完整实测典型年。",
+        "TERM-EXPORT-LIMIT": "接入与可送出限额仍须正式电网意见核定。",
+        "TERM-GHI-IRRADIATION": "本次资源为合成输入，真实站址资料仍待核。",
+    }
+    rooftop = {
+        "TERM-SELF-CONSUMPTION": "屋顶方案按合成厂区负荷预测自用，真实比例待核。",
+        "TERM-PPA": "本项目仍缺真实签署的购售电和结算协议。",
+        "TERM-LOAD": "厂区负荷为合成模型，不是实际计量记录。",
+    }
+    ground = {"TERM-CURTAILMENT": "地面方案的送出约束为合成假设，须电网核定。"}
+    if term_id in {"TERM-LEVERED", "TERM-DSCR"}:
+        debt_state = _debt_source_state(model)
+        ground.update({
+            "TERM-LEVERED": ("本次登记无债务，不将项目回报写成融资后股东回报。" if debt_state == "NO_DEBT" else
+                             "本次有债务假设，须核对提款和本息；项目回报不能替代股东回报。" if debt_state == "HAS_DEBT" else
+                             "债务比例尚未获得来源绑定，不能推定无债务或融资后回报。"),
+            "TERM-DSCR": _dscr_reader_note(model, debt_state),
+        })
+    category = rooftop if model.result["pv_type"] == "industrial_rooftop" else ground
+    return category.get(term_id) or common[term_id]
+
 
 def _appendix_rows(model: ReportModel, app_id: str) -> tuple[list[str], list[list[Any]]]:
     definitions = _appendix_formula_definitions(model) if app_id in {"APP11.01", "APP11.02"} else []
@@ -1187,7 +1291,7 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
     for cell in table.rows[0].cells:
         for paragraph in cell.paragraphs:
             paragraph.paragraph_format.keep_with_next = True
-    for row in rows:
+    for row_index, row in enumerate(rows):
         cells = table.add_row().cells
         for index, value in enumerate(row):
             cells[index].text = _string(value)
@@ -1201,6 +1305,8 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
                 paragraph.style = "Solar Table"
                 paragraph.alignment = WD_ALIGN_PARAGRAPH.RIGHT if numeric and layout_type in {
                     "FINANCIAL_TABLE", "ANNUAL_LEDGER_TABLE", "SUMMARY_TABLE"} else WD_ALIGN_PARAGRAPH.LEFT
+                if row_index == 0 and len(rows) > 1:
+                    paragraph.paragraph_format.keep_with_next = True
                 for run in paragraph.runs:
                     set_run_font(run, size=WORD_FORMAT.table_pt)
         tr_pr = cells[0]._tc.getparent().get_or_add_trPr()
@@ -1613,7 +1719,7 @@ def _professional_metric_rows(model: ReportModel, metric_ids: tuple[str, ...]) -
             display, roots_note = _irr_presentation(metric)
             note = "项目税后年度口径，非股东回报" if status == "CALCULATED" else f"项目税后年度现金流；{roots_note}"
         elif status == "CALCULATED":
-            display = _reader_metric_value(metric)
+            display = _decision_metric_text(metric)
             note = {
                 "financial.capex.total": "含后期更换，不等于建设期付款",
                 "financial.phase3e.project_npv": "项目税后；折现率见正文",
@@ -1662,7 +1768,7 @@ def _project_summary(model: ReportModel) -> str:
 
     def quantity(mid: str, unit: str) -> str | None:
         metric = model.metric(mid)
-        return f"{_reader_metric_value(metric)} {unit}" if metric and metric.get("status") == "CALCULATED" else None
+        return f"{_decision_metric_text(metric)} {unit}" if metric and metric.get("status") == "CALCULATED" else None
 
     dc, generation = quantity("dc_capacity", "kWp"), quantity("energy.year.1", "kWh")
     delivery = quantity("energy.delivered.year.1", "kWh")
@@ -2000,7 +2106,7 @@ def _item_rule(pv_type: str, chapter_id: str, title: str) -> tuple[tuple[str, ..
         return ("financial.capex.total", "financial.phase3e.project_npv"), (), "CAPEX可读，但项目现金流和NPV仍需按上游状态展示。"
     if chapter_id == "CH01" and title == "消纳售电与资料成熟度":
         return (("revenue.year.1", "energy.delivered.year.1") if ground else ("consumption.year.1", "revenue.year.1")), (), ""
-    if chapter_id == "CH01" and title == "阻断风险和四态建议":
+    if chapter_id == "CH01" and title in {"阻断风险和四态建议", "阶段建议"}:
         return (), (), "当前为PARTIAL/SYNTHETIC；请按finding和来源缺口关闭后再形成建议。"
     if chapter_id == "CH18":
         return (), (), "需基于已关闭的来源、专业审查和上游计算门禁形成结论；本样件不提供投资建议。"
@@ -2457,6 +2563,8 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     page_start.set(qn("w:start"), "1")
     section._sectPr.append(page_start)
     configure_word(document)
+    formal_formulas = _appendix_formula_definitions(model)
+    math_objects = convert_equations(formal_formulas)
     chart_specs = _canonical_chart_specs(model)
     chart_receipts: list[dict[str, Any]] = []
     checklist: list[dict[str, Any]] = []
@@ -2465,7 +2573,8 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     display_chapters = tuple((chapter_id, chapter_title,
                               tuple(("土地使用权与期限" if pv_type == "utility_scale_ground" else "屋面使用权与期限")
                                     if chapter_id == "CH04" and index == 3 else
-                                    "阶段建议" if chapter_id == "CH18" and index == 1 else name
+                                    "阶段建议" if (chapter_id == "CH18" and index == 1) or
+                                    (chapter_id == "CH01" and index == 5) else name
                                     for index, name in enumerate(items, 1)))
                              for chapter_id, chapter_title, items in CHAPTERS)
     for chapter_id, chapter_title, items in display_chapters:
@@ -2757,7 +2866,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                  *tax_display(row), _word_value(row.get("cash_tax_total_project"))]
                                 for index, row in enumerate(annual[1:], 1)]
                     for title, columns in (
-                        ("税基与所得税（元；计提及预计付款不同）", (0, 1, 2, 3)),
+                        ("税基与所得税（元；计提与预计付款分别列示）", (0, 1, 2, 3)),
                         ("增值税与其他现金税费（元；净额和舍入差额分列）", (0, 4, 5, 6, 7)),
                     ):
                         names = ("运营年", "应税所得", "所得税计提", "所得税预计付款",
@@ -2873,20 +2982,19 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             if app_id in {"APP11", "APP12"}:
                 appendix_headers, appendix_rows = _appendix_rows(model, item_id)
                 if item_id == "APP11.01" and appendix_rows:
+                    document.add_paragraph("公式阅读导航（以下仅解释本报告用到的评价路径；完整89条正式定义、原始文字和逐符号边界见下一节与测算模型 M02，不代表89条均已执行）。",
+                                           style="Solar Formula Title")
+                    document.add_paragraph("发电与配置：直流装机、逆变容量和损失链确定预测发电；阵列面资源、设备效率、年度衰减与限发分别核对，不把发电量直接视为实际售电量。")
+                    document.add_paragraph("收益与现金：屋顶自用节费、余电销售及地面全额上网分别建立交易边界；CAPEX、OPEX、税金、更换和营运资金进入项目年度净现金流，后期更换不冒充首期投资。")
+                    document.add_paragraph(_formula_reader_evaluation(model))
                     _add_table(document, ["正式编号", "中文名称", "本次引用与执行"],
                                [[row[0], row[1], row[5]] for row in appendix_rows],
                                "公式索引（不等于冻结公式全部执行）")
                     npv_outputs = [m for m in model.metrics if m.get("formula_id") == "F-NPV"]
                     if npv_outputs:
-                        statuses = {"CALCULATED": "已计算", "NOT_IMPLEMENTED": "本阶段方法未实现"}
-                        document.add_paragraph("F-NPV 输出实例分别为：" + "；".join(
-                            f"{metric['metric_id']}：" +
-                            ("3B阶段留置占位，非整条NPV方法未实现" if metric.get("reason") == "OUTSIDE_PHASE3B"
-                             and metric["status"] == "NOT_IMPLEMENTED" else
-                             statuses.get(metric["status"], _reader_text(metric["status"])))
-                            for metric in npv_outputs) + "。已计算的项目NPV不因其他实例未实现而失效。")
+                        document.add_paragraph(_npv_instances_note(model, npv_outputs))
                 elif item_id == "APP11.02":
-                    definitions = _appendix_formula_definitions(model)
+                    definitions = formal_formulas
                     shared, shared_ids = _formula_shared_contracts(definitions)
                     if shared:
                         document.add_paragraph("共通记法契约（按原文一致性分组）", style="Solar Formula Title")
@@ -2903,7 +3011,13 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                         document.add_paragraph(f"{fid} {formula.get('chinese_name', '未定义')}", style="Solar Formula Title")
                         equation = formula.get("text_equation") or formula.get("latex") or "未提供"
                         unit = formula.get("unit") or "未定义"
-                        equation_paragraph(document, equation, f"（{formula_no}）")
+                        equation_paragraph(document, math_objects[fid], f"（{formula_no}）")
+                        original = document.add_paragraph(f"冻结文本定义：{equation}；冻结LaTeX：{formula.get('latex') or '未提供'}",
+                                                          style="Solar Formula Note")
+                        original.paragraph_format.keep_together = True
+                        if fid == CONFLICT_ID:
+                            document.add_paragraph("显示冲突，方法待裁定：冻结LaTeX与冻结文本及单位定义不一致；数学对象依文本定义排版，不得据此判定公式语义验收通过。",
+                                                   style="Solar Formula Note")
                         document.add_paragraph(f"结果单位：{unit}", style="Solar Formula Note")
                         document.add_paragraph("适用边界：" + _reader_text(str(formula.get("calculation_boundary") or "未定义")))
                         document.add_paragraph("本项目状态：" + _formula_status(model, fid))
@@ -2931,14 +3045,15 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                         terms = json.loads(files("wangbin_solar_pv").joinpath("report-glossary.json")
                                            .read_text(encoding="utf-8"))["terms"]
                         selected = set(_reader_glossary_ids(pv_type))
-                        reader_rows = [row[:3] for term, row in zip(
-                            sorted(terms, key=lambda term: (0, {"PV": 0, "DC": 1, "AC": 2}[term["abbreviation"]])
-                                   if term.get("abbreviation") in {"PV", "DC", "AC"} else (1, 0)),
-                            appendix_rows) if term["term_id"] in selected]
+                        reader_rows = [[term["chinese_name"], term.get("abbreviation") or "—",
+                                        term["definition_zh"], _reader_term_applicability(model, term["term_id"])]
+                                       for term in sorted(terms, key=lambda term: (0, {"PV": 0, "DC": 1, "AC": 2}[term["abbreviation"]])
+                                                          if term.get("abbreviation") in {"PV", "DC", "AC"} else (1, 0))
+                                       if term["term_id"] in selected]
                         # The audit dictionary remains complete below; this index is a navigation aid only.
-                        _add_table(document, ["本项目常用术语", "英文全称", "缩写"], reader_rows,
+                        _add_table(document, ["中文术语", "缩写", "简明释义", "本项目适用说明"], reader_rows,
                                    "本项目常用术语速览（完整受控词典见下表）",
-                                   widths_cm=(4.8, 9.0, 3.2), layout_type="SUMMARY_TABLE")
+                                   widths_cm=(3.0, 2.2, 5.9, 5.9), layout_type="SUMMARY_TABLE")
                         document.add_paragraph("读者释义与原词典方法说明分别展示；词条收录不表示本项目实际采用。"
                                                "原词典完整定义、ID及来源可在随包受控词典核对。")
                         for text, label in _glossary_common_boundaries(terms).items():
@@ -2948,7 +3063,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                 document.add_paragraph(f"{term['term_id']} 原词典历史方法说明（非本次运行事实）："
                                                        + term["distinction_and_boundary"])
                     _add_table(document, appendix_headers, appendix_rows,
-                               "受控编辑词典")
+                               "受控编辑词典" if item_id == "APP12.01" else "单位与符号使用边界")
             checklist.append({"id": item_id, "title": item_title,
                               "content_summary": evidence["summary"][:600], "input_field_ids": evidence["field_ids"],
                               "metric_ids": evidence["metric_ids"], "source_ids": evidence["source_ids"],
@@ -2976,6 +3091,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                [[identity_labels.get(key, key), str(value)] for key, value in model.identity.items()],
                "统一测算身份（仅在此处展示一次）", widths_cm=(3.2, 13.8),
                nowrap_columns=(1,))
+    render_script_o_glyph(document)
     numbering = validate_numbering(document, display_chapters, APPENDICES, APPENDIX_TITLES,
                                    [formula["formula_id"] for formula in _appendix_formula_definitions(model)])
     coverage = _validate_checklist_coverage(checklist)

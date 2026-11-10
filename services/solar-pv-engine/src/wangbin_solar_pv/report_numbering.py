@@ -7,6 +7,8 @@ import re
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Pt
+from docx.table import Table
+from docx.text.paragraph import Paragraph
 
 
 _CHINESE_DIGITS = ("", "一", "二", "三", "四", "五", "六", "七", "八", "九")
@@ -98,6 +100,35 @@ def add_numbered_heading(document, number: HeadingNumber, bookmark_index: int):
     return paragraph
 
 
+def _validate_table_bindings(document) -> None:
+    """A numbered caption must immediately own one nonempty, rectangular table."""
+    pending = None
+    number = 0
+    for element in document.element.body.iterchildren():
+        if element.tag == qn("w:p"):
+            paragraph = Paragraph(element, document)
+            if pending is not None:
+                raise ValueError(f"table caption without adjacent table: {pending}")
+            if paragraph.style.name == "Caption" and paragraph.text.startswith("表"):
+                number += 1
+                if not paragraph.text.startswith(f"表{number} "):
+                    raise ValueError("table caption number mismatch")
+                pending = number
+        elif element.tag == qn("w:tbl"):
+            if pending is None:
+                raise ValueError("table without adjacent numbered caption")
+            table = Table(element, document)
+            if not table.rows or not table.rows[0]._tr.xpath("./w:trPr/w:tblHeader"):
+                raise ValueError(f"table {pending} has no repeating header")
+            columns = len(table.rows[0].cells)
+            if (not columns or any(not cell.text.strip() for cell in table.rows[0].cells)
+                    or any(len(row.cells) != columns for row in table.rows)):
+                raise ValueError(f"table {pending} has missing or mismatched cells")
+            pending = None
+    if pending is not None or number != len(document.tables):
+        raise ValueError("table captions are not bound one-to-one")
+
+
 def validate_numbering(document, chapters, appendices, appendix_titles, formula_ids) -> dict[str, int]:
     """Check the delivered Word structure against frozen identities, not sampled titles."""
     expected = []
@@ -122,8 +153,8 @@ def validate_numbering(document, chapters, appendices, appendix_titles, formula_
         # CH18.01 retains its frozen identity; the reader-facing title may
         # replace the internal four-state design term without renumbering it.
         titles = {number.text}
-        if number.stable_id == "CH18.01":
-            titles.add(heading_number("CH18.01", "阶段建议", parent_stable_id="CH18",
+        if number.stable_id in {"CH01.05", "CH18.01"}:
+            titles.add(heading_number(number.stable_id, "阶段建议", parent_stable_id=number.parent_stable_id,
                                       parent_level=1).text)
         if (paragraph.style.name != number.word_style or paragraph.text not in titles
                 or len(matched) != 1 or matched[0] not in ends or
@@ -137,6 +168,7 @@ def validate_numbering(document, chapters, appendices, appendix_titles, formula_
                                          caption.rstrip("。；：,.、 ") != caption
                                          for index, caption in enumerate(captions, 1)):
             raise ValueError(f"{kind} caption sequence mismatch")
+    _validate_table_bindings(document)
     for paragraph in document.paragraphs:
         if paragraph.style.name == "Caption":
             continue

@@ -8,8 +8,9 @@ import pytest
 
 from wangbin_solar_pv.report_export import (
     ReportModel, _chart_axis_geometry, _chart_axis_labels, _item_evidence, _professional_metric_rows,
-    _sheet_data, _appendix_content,
+    _sheet_data, _appendix_content, _reader_term_applicability,
 )
+from wangbin_solar_pv.report_claims import _specific_project_judgment
 
 
 def _model():
@@ -188,6 +189,43 @@ def test_equipment_section_lists_actual_component_categories_not_civil_costs():
     assert "组件" in text and "支架" in text and "逆变器" in text
 
 
+def test_equipment_fractional_unit_price_does_not_fake_a_rounded_product():
+    model = _model()
+    module = model.result["inputs"]["normalized"]["capex.items"][0]["fields"]
+    module.update({"capex.items.quantity": 2, "capex.items.unit_price": Decimal("12.49"),
+                   "capex.items.amount": Decimal("24.98"), "capex.items.quantity_unit": "unit"})
+    text = _specific_project_judgment(model, "CH14.02", str)
+    assert "组件2件、单价12.49元/件，分项金额25元（原始分项24.98元）" in text
+    assert "2件×12元" not in text
+    model.result["inputs"]["normalized"]["capex.items"].append({"row_id": "cables", "fields": {
+        "capex.items.category": "cables", "capex.items.quantity": 100,
+        "capex.items.quantity_unit": "米", "capex.items.unit_price": Decimal("12.49"),
+        "capex.items.amount": Decimal("1249"), "capex.items.payment_date": "2026-12-01"}})
+    text = _specific_project_judgment(model, "CH14.02", str)
+    assert "电缆100米、单价12.49元/米，分项金额1,249元" in text
+
+
+def test_reader_glossary_does_not_invent_zero_debt_or_calculated_returns():
+    model = _model()
+    model.result["pv_type"] = "utility_scale_ground"
+    normalized = model.result["inputs"]["normalized"]
+    normalized["finance.debt_ratio"] = Decimal("0.4")
+    model.result["source_snapshot"]["phase2"]["records"].append({
+        "field_id": "finance.debt_ratio", "value": normalized["finance.debt_ratio"],
+        "source_id": "SYNTH-1", "field_instance_id": "finance.debt_ratio", "unit": "ratio",
+    })
+    model.metric_by_id["financial.phase3e.project_npv"]["status"] = "BLOCKED_MISSING_INPUT"
+    model.metric_by_id["financial.phase3e.project_irr"]["status"] = "UNDEFINED"
+    assert "有债务假设" in _reader_term_applicability(model, "TERM-LEVERED")
+    assert "有债务假设但DSCR无可用值" in _reader_term_applicability(model, "TERM-DSCR")
+    assert "尚未形成可用结果" in _reader_term_applicability(model, "TERM-NPV")
+    assert "尚无可用计算值" in _reader_term_applicability(model, "TERM-IRR")
+    model.metric_by_id["financial.phase3e.dscr"] = {"status": "CALCULATED", "value": [Decimal("1.2")]}
+    assert "DSCR已有计算值" in _reader_term_applicability(model, "TERM-DSCR")
+    model.result["source_snapshot"]["phase2"]["records"].pop()
+    assert "债务比例尚未获得来源绑定" in _reader_term_applicability(model, "TERM-LEVERED")
+
+
 def test_equipment_excludes_civil_construction_and_valued_cash_flow_is_not_called_blocked():
     model = _model()
     model.result["inputs"]["normalized"].pop("system.dc_capacity")
@@ -257,14 +295,19 @@ def _section(model, category, item_id):
 
 
 @pytest.mark.parametrize("category,capacity,energy,grid,initial,replacement,year1,npv", [
-    ("industrial_rooftop", "165", "245,313", "110", "467,000", "72,000", "116,942", "679,601"),
-    ("utility_scale_ground", "330", "486,426", "290", "950,000", "135,000", "153,206", "321,667"),
+    ("industrial_rooftop", "165", "245,313", "110", "467,000", "72,000", "116,943", "679,602"),
+    ("utility_scale_ground", "330", "486,427", "290", "950,000", "135,000", "153,206", "321,668"),
 ])
 @pytest.mark.parametrize("item_id", _TARGETS)
 def test_sealed_25y_six_conclusions_use_project_specific_canonical_evidence(
         category, capacity, energy, grid, initial, replacement, year1, npv, item_id):
     model = _sealed_model(category)
     text = _section(model, category, item_id)
+    from wangbin_solar_pv.report_display_numbers import decision_number
+    assert energy == decision_number(model.metric("energy.year.1")["value"], "kWh")
+    assert npv == decision_number(model.metric("financial.phase3e.project_npv")["value"], "CNY")
+    if item_id == "CH16.02":
+        assert year1 == decision_number(model.metric("financial.phase3e.project_cash_flow")["value"][1], "CNY")
     assert "本项目本次输入与计算的直接事实为" not in text
     assert "其他直接计算结果" not in text
     assert "合成" in text or "假设" in text
@@ -290,8 +333,8 @@ def test_sealed_25y_six_conclusions_use_project_specific_canonical_evidence(
 
 
 @pytest.mark.parametrize("category,foreign,forbidden", [
-    ("industrial_rooftop", "utility_scale_ground", ("地勘", "集中送出", "土地权属", "486,426", "135,000", "321,667")),
-    ("utility_scale_ground", "industrial_rooftop", ("屋面", "防水", "厂区负荷", "245,313", "72,000", "679,601")),
+    ("industrial_rooftop", "utility_scale_ground", ("地勘", "集中送出", "土地权属", "486,427", "135,000", "321,668")),
+    ("utility_scale_ground", "industrial_rooftop", ("屋面", "防水", "厂区负荷", "245,313", "72,000", "679,602")),
 ])
 def test_sealed_25y_sections_reject_cross_category_evidence(category, foreign, forbidden):
     model = _sealed_model(category)
