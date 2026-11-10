@@ -292,11 +292,21 @@ def _files(source: Path, kind: str) -> list[Path]:
         "Expert": {".codebuddy-plugin", "agents", "avatars", "README.md", "LICENSE", "tests"},
         "Connector": {"connector-meta.json", "cli.json", "mcp.json", "icon.svg", "README.md", "LICENSE", "skills"},
     }[kind]
+    # This product's frozen acceptance documents are source/evidence, not
+    # installable Expert assets. Keep the exception narrow for other Experts.
+    approved_docs: set[str] = set()
+    if kind == "Expert" and source.name == "wangbin-software-consultant":
+        allowed = allowed | {"docs"}
+        approved_docs = {"requirements.md", "traceability.csv", "acceptance-cases.md",
+                         "input-output-contract.md", "p01-r5-rate-policy-addendum.md",
+                         "p01-r7-s29-acceptance.md", "p01-r8-s10-s31-acceptance.md"}
     for path in source.rglob("*"):
         rel = path.relative_to(source)
         if source.is_symlink() or any((source / parent).is_symlink() for parent in path.relative_to(source).parents):
             raise ValueError(f"symlink ancestor: {rel}")
         if rel.parts[0] not in allowed:
+            raise ValueError(f"unapproved source path: {rel}")
+        if rel.parts[0] == "docs" and len(rel.parts) > 1 and (len(rel.parts) != 2 or rel.name not in approved_docs):
             raise ValueError(f"unapproved source path: {rel}")
         if path.is_symlink():
             raise ValueError(f"symlink forbidden: {rel}")
@@ -421,7 +431,9 @@ def package_product(root: Path, product_id: str) -> dict:
     version = _version_entry(item)
     # Read the complete payload once. The archive and manifest are both derived
     # from this immutable in-memory snapshot, never from a second source walk.
-    content = {f"{product_id}/{p.relative_to(source).as_posix()}": p.read_bytes() for p in _files(source, item["type"])}
+    content = {f"{product_id}/{p.relative_to(source).as_posix()}": p.read_bytes()
+               for p in _files(source, item["type"])
+               if not (item["type"] == "Expert" and p.relative_to(source).parts[0] == "docs")}
     out = io.BytesIO()
     with zipfile.ZipFile(out, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zipped:
         for name, payload in sorted(content.items()):
@@ -494,7 +506,9 @@ def verify_package(root: Path, product_id: str) -> dict:
                 or sidecar.read_bytes() != f"{digest}  {archive.name}\n".encode("ascii")):
             raise ValueError("manifest or sidecar hash mismatch")
         source = _source(root, item)
-        expected = {f"{product_id}/{p.relative_to(source).as_posix()}": p.read_bytes() for p in _files(source, item["type"])}
+        expected = {f"{product_id}/{p.relative_to(source).as_posix()}": p.read_bytes()
+                    for p in _files(source, item["type"])
+                    if not (item["type"] == "Expert" and p.relative_to(source).parts[0] == "docs")}
         with zipfile.ZipFile(io.BytesIO(raw)) as zipped:
             if zipped.testzip() is not None or set(zipped.namelist()) != set(expected) or len(zipped.namelist()) != len(expected):
                 raise ValueError("archive member mismatch")
