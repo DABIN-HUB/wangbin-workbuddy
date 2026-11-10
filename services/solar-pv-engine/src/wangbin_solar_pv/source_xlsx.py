@@ -7,6 +7,8 @@ from __future__ import annotations
 
 from collections import defaultdict
 from hashlib import sha256
+from importlib.resources import files
+import json
 import os
 from pathlib import Path
 import tempfile
@@ -117,6 +119,21 @@ def _rows(result, catalog, formula_map):
         rows_by_sheet["变量-术语词典"].append(["FORMULA", fid, formula.get("chinese_name"),
             _display(formula.get("unit")), _display(formula.get("report_chapter_ids")),
             result["formula_snapshot"]["definition_version"]])
+        rows_by_sheet["变量-术语词典"].append([
+            "FORMULA_SPEC", fid, formula.get("chinese_name"), _display(formula.get("unit")),
+            _display(formula.get("report_chapter_ids")), dumps(formula)])
+    # S09 is the existing technical index; preserve formal definitions here
+    # rather than adding a second glossary or changing the frozen registry.
+    terms = json.loads(files("wangbin_solar_pv").joinpath("report-glossary.json")
+                       .read_text(encoding="utf-8"))["terms"]
+    if len(terms) != 189 or len({term["term_id"] for term in terms}) != 189:
+        raise ContractError("SOURCE_XLSX_GLOSSARY_REGISTRY")
+    for term in terms:
+        rows_by_sheet["变量-术语词典"].append([
+            "GLOSSARY", term["term_id"], term["chinese_name"],
+            term.get("unit_or_dimension") or "—", term["english_name"],
+            dumps({key: value for key, value in term.items() if key not in {
+                "term_id", "chinese_name", "english_name", "unit_or_dimension"}})])
     sources = defaultdict(list)
     for record in records + candidates:
         sources[record.get("source_id") or "UNKNOWN"].append(record)

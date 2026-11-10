@@ -119,7 +119,13 @@ def validate_numbering(document, chapters, appendices, appendix_titles, formula_
                      for node in paragraph._p.xpath("./w:bookmarkStart")]
         matched = [id_value for name, id_value in bookmarks if name == number.bookmark_id]
         ends = paragraph._p.xpath("./w:bookmarkEnd/@w:id")
-        if (paragraph.style.name != number.word_style or paragraph.text != number.text
+        # CH18.01 retains its frozen identity; the reader-facing title may
+        # replace the internal four-state design term without renumbering it.
+        titles = {number.text}
+        if number.stable_id == "CH18.01":
+            titles.add(heading_number("CH18.01", "阶段建议", parent_stable_id="CH18",
+                                      parent_level=1).text)
+        if (paragraph.style.name != number.word_style or paragraph.text not in titles
                 or len(matched) != 1 or matched[0] not in ends or
                 number.bookmark_id in stable_names):
             raise ValueError(f"heading identity/number mismatch: {number.stable_id}")

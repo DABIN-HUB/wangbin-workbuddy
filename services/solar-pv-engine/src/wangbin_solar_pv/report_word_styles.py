@@ -188,7 +188,9 @@ def equation_paragraph(document, equation: str, number: str):
     stops.add_tab_stop(Cm(WORD_FORMAT.text_width_cm / 2), WD_TAB_ALIGNMENT.CENTER)
     stops.add_tab_stop(Cm(WORD_FORMAT.text_width_cm), WD_TAB_ALIGNMENT.RIGHT)
     paragraph.add_run("\t")
-    set_run_font(paragraph.add_run(equation), size=12)
+    expression_run = paragraph.add_run(equation)
+    font_pair(expression_run.font, expression_run._r.get_or_add_rPr(),
+              chinese=WORD_FORMAT.chinese, western="Cambria Math", size=12)
     paragraph.add_run("\t")
     set_run_font(paragraph.add_run(number), size=12)
     return paragraph

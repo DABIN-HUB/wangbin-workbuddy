@@ -128,7 +128,7 @@ _D_STYLE = {
     "white": "FFFFFF",
 }
 
-REPORT_CONTENT_VERSION = "phase7l-r7-reader-facing-deterministic-writing"
+REPORT_CONTENT_VERSION = "phase7l-r8-reader-facing-layout"
 
 
 @dataclass(frozen=True)
@@ -730,6 +730,18 @@ def _glossary_common_boundaries(terms: list[dict[str, Any]]) -> dict[str, str]:
     return common
 
 
+def _reader_glossary_ids(pv_type: str) -> tuple[str, ...]:
+    """Reader index only; the frozen complete glossary still follows it in APP12."""
+    common = ("TERM-PV", "TERM-DC", "TERM-AC", "TERM-KWP", "TERM-POWER", "TERM-ENERGY",
+              "TERM-POA-IRRADIATION", "TERM-PR", "TERM-CAPEX", "TERM-OPEX", "TERM-NPV",
+              "TERM-IRR", "TERM-PROJECT-CASH-FLOW", "TERM-EQUITY-CASH-FLOW", "TERM-LCOE",
+              "TERM-WORKING-CAPITAL", "TERM-DEPRECIATION", "TERM-VAT", "TERM-TMY")
+    rooftop = ("TERM-SELF-CONSUMPTION", "TERM-EXPORT-LIMIT", "TERM-PPA", "TERM-LOAD", "TERM-GHI-IRRADIATION")
+    ground = ("TERM-CURTAILMENT", "TERM-EXPORT-LIMIT", "TERM-GHI-IRRADIATION",
+              "TERM-LEVERED", "TERM-DSCR")
+    return common + (rooftop if pv_type == "industrial_rooftop" else ground)
+
+
 def _appendix_rows(model: ReportModel, app_id: str) -> tuple[list[str], list[list[Any]]]:
     definitions = _appendix_formula_definitions(model) if app_id in {"APP11.01", "APP11.02"} else []
     if app_id == "APP11.01":
@@ -1109,17 +1121,39 @@ def _write_model_xlsx(model: ReportModel, output: Path, pv_type: str) -> dict[st
 
 def _add_table(document: Document, headers: list[str], rows: list[list[Any]], caption: str | None = None,
                *, widths_cm: tuple[float, ...] | None = None,
-               nowrap_columns: tuple[int, ...] = ()) -> None:
+               nowrap_columns: tuple[int, ...] = (),
+               layout_type: str = "TECHNICAL_DETAIL_TABLE") -> None:
+    """Use a bounded portrait layout; never silently squeeze a wide ledger into equal columns."""
+    layouts = {"SUMMARY_TABLE", "PLAN_TABLE", "FINANCIAL_TABLE", "ANNUAL_LEDGER_TABLE",
+               "TECHNICAL_DETAIL_TABLE", "ISSUE_TABLE"}
+    if layout_type not in layouts or any(len(row) != len(headers) for row in rows):
+        raise ContractError("REPORT_WORD_TABLE_LAYOUT")
+    if len(headers) > 6 and layout_type in {"FINANCIAL_TABLE", "ANNUAL_LEDGER_TABLE", "ISSUE_TABLE"}:
+        raise ContractError("REPORT_WORD_TABLE_TOO_WIDE")
     if caption:
         paragraph = document.add_paragraph(f"表{len(document.tables) + 1} {caption.rstrip('。；：,.、 ')}", style="Caption")
         paragraph.paragraph_format.keep_with_next = True
     table = document.add_table(rows=1, cols=len(headers))
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     table.autofit = False
-    widths = (tuple(widths_cm) if widths_cm and len(widths_cm) == len(headers)
-              else (WORD_FORMAT.text_width_cm / len(headers),) * len(headers))
+    if widths_cm is not None and len(widths_cm) != len(headers):
+        raise ContractError("REPORT_WORD_TABLE_WIDTHS")
+    if widths_cm is None:
+        weights = [max(4, min(18, len(str(header)))) for header in headers]
+        for column in range(len(headers)):
+            if layout_type == "ANNUAL_LEDGER_TABLE" and column == 0:
+                weights[column] = 7
+            elif layout_type in {"FINANCIAL_TABLE", "ANNUAL_LEDGER_TABLE"}:
+                weights[column] = max(weights[column], 12 if column else 9)
+            elif layout_type == "ISSUE_TABLE":
+                weights[column] = max(weights[column], 12)
+        widths = tuple(WORD_FORMAT.text_width_cm * weight / sum(weights) for weight in weights)
+    else:
+        widths = tuple(widths_cm)
     scale = min(1.0, WORD_FORMAT.text_width_cm / sum(widths))
     widths = tuple(width * scale for width in widths)
+    if min(widths) < 1.35 and layout_type != "TECHNICAL_DETAIL_TABLE":
+        raise ContractError("REPORT_WORD_TABLE_NARROW_COLUMN")
     tbl_pr = table._tbl.tblPr
     layout = tbl_pr.first_child_found_in("w:tblLayout")
     if layout is None:
@@ -1138,6 +1172,8 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
         cell = table.rows[0].cells[index]
         cell.text = _string(header)
         cell.width = Cm(widths[index])
+        if layout_type == "ANNUAL_LEDGER_TABLE" and index > 0:
+            cell._tc.get_or_add_tcPr().append(OxmlElement("w:noWrap"))
         for paragraph in cell.paragraphs:
             paragraph.style = "Solar Table"
             paragraph.alignment = WD_ALIGN_PARAGRAPH.LEFT
@@ -1156,12 +1192,15 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
         for index, value in enumerate(row):
             cells[index].text = _string(value)
             cells[index].width = Cm(widths[index])
-            if index in nowrap_columns:
+            numeric = (isinstance(value, (int, float, Decimal)) and not isinstance(value, bool)) or bool(
+                re.fullmatch(r"[−-]?[\d,]+(?:\.\d+)?%?", str(value).strip()))
+            if index in nowrap_columns or (numeric and layout_type in {"FINANCIAL_TABLE", "ANNUAL_LEDGER_TABLE"}):
                 cells[index]._tc.get_or_add_tcPr().append(OxmlElement("w:noWrap"))
             cells[index].vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.TOP
             for paragraph in cells[index].paragraphs:
                 paragraph.style = "Solar Table"
-                paragraph.alignment = WD_ALIGN_PARAGRAPH.LEFT
+                paragraph.alignment = WD_ALIGN_PARAGRAPH.RIGHT if numeric and layout_type in {
+                    "FINANCIAL_TABLE", "ANNUAL_LEDGER_TABLE", "SUMMARY_TABLE"} else WD_ALIGN_PARAGRAPH.LEFT
                 for run in paragraph.runs:
                     set_run_font(run, size=WORD_FORMAT.table_pt)
         tr_pr = cells[0]._tc.getparent().get_or_add_trPr()
@@ -2386,7 +2425,8 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                       "B：使用当前假设资料" if model.result.get("source_snapshot", {}).get("phase2", {}).get("records") else
                       "C：尚缺关键来源资料")
     _add_table(document, ["专业指标", "本阶段结果", "单位", "说明"], key_rows,
-               f"关键预测结果（资料成熟度{material_label}；完整精度见测算模型.xlsx）", widths_cm=(4.0, 4.8, 2.0, 5.0))
+               f"关键预测结果（资料成熟度{material_label}；完整精度见测算模型.xlsx）",
+               widths_cm=(4.0, 4.8, 2.0, 6.2), layout_type="SUMMARY_TABLE")
     document.add_paragraph("资料成熟度只评价输入证据，不更改指标原有的计算或阻断状态。", style="Solar Abstract")
     normalized = model.result["inputs"].get("normalized", {})
     records = model.result.get("source_snapshot", {}).get("phase2", {}).get("records", ())
@@ -2424,7 +2464,8 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     bookmark_index = 1
     display_chapters = tuple((chapter_id, chapter_title,
                               tuple(("土地使用权与期限" if pv_type == "utility_scale_ground" else "屋面使用权与期限")
-                                    if chapter_id == "CH04" and index == 3 else name
+                                    if chapter_id == "CH04" and index == 3 else
+                                    "阶段建议" if chapter_id == "CH18" and index == 1 else name
                                     for index, name in enumerate(items, 1)))
                              for chapter_id, chapter_title, items in CHAPTERS)
     for chapter_id, chapter_title, items in display_chapters:
@@ -2446,11 +2487,15 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             if item_id == "CH13.02":
                 _add_table(document, ["任务", "开始", "结束", "持续时间", "前置任务", "计划性质"],
                            _plan_word_rows(model), "实施计划（日期为登记的预排日期；计划重点未经关键路径算法验证）",
-                           widths_cm=(5.2, 2.65, 2.65, 2.2, 2.1, 2.2), nowrap_columns=(1, 2))
+                           widths_cm=(5.2, 2.65, 2.65, 2.2, 2.1, 2.2), nowrap_columns=(1, 2),
+                           layout_type="PLAN_TABLE")
             if item_id == "CH18.04":
-                _add_table(document, ["优先级", "待完成事项", "实际影响", "需要取得的资料", "完成条件", "建议协调对象"],
-                           _next_stage_rows(model), "下一阶段推进事项（建议协调对象并非已任命责任人）",
-                           widths_cm=(1.4, 2.8, 3.1, 3.4, 3.5, 2.8))
+                gates = _next_stage_rows(model)
+                _add_table(document, ["顺序", "核验事项", "影响", "所需材料", "完成标准"],
+                           [row[:5] for row in gates], "下一阶段推进事项（建议顺序，不表示风险等级）",
+                           widths_cm=(1.8, 3.2, 3.5, 4.2, 4.3), layout_type="ISSUE_TABLE")
+                document.add_paragraph("建议协调对象并非已任命责任人：" + "；".join(
+                    f"{row[1]}—{row[5]}" for row in gates) + "。")
             checklist.append({"id": item_id, "title": item,
                               "content_summary": evidence["summary"][:600], "input_field_ids": evidence["field_ids"],
                               "metric_ids": evidence["metric_ids"], "source_ids": evidence["source_ids"],
@@ -2478,9 +2523,16 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                  "financial.phase3e.dynamic_payback", "financial.phase3e.equity-investor-cash-flow",
                  "financial.phase3e.cfads", "financial.phase3e.dscr", "financial.phase3e.lcoe",
                  "financial.phase3e.break-even-price", "financial.phase3e.investment-hurdle-gap")
-    index_rows = _professional_metric_rows(model, index_ids)
-    _add_table(document, ["专业指标", "本阶段结果", "单位", "说明"], index_rows,
-               "财务与项目指标摘要", widths_cm=(4.0, 4.8, 2.0, 5.0))
+    groups = (
+        ("投资与项目收益", index_ids[:9]),
+        ("融资与资本金评价", index_ids[9:12]),
+        ("尚未具备评价条件的指标", index_ids[12:]),
+    )
+    for title, ids in groups:
+        selected = _professional_metric_rows(model, ids)
+        _add_table(document, ["专业指标", "本阶段结果", "单位", "说明"], selected,
+                   title + "（完整精度见测算模型 M16）", widths_cm=(4.1, 4.5, 1.6, 6.8),
+                   layout_type="FINANCIAL_TABLE")
     if blocked:
         if model.status("financial.phase3e.project_npv") == "CALCULATED":
             document.add_paragraph("以下阻断仅适用于各自指标；不撤销已计算的项目净现值。IRR、回收期须以其自身状态为准；股东现金事件与平准化成本边界须独立补证。")
@@ -2538,9 +2590,16 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                        "可用列表示结算前、已计入发电链限发的月度电量；结算截弃是另一边界。"
                                        "未绑定逐月发电链限发损失时不按全年比例分摊，也不把月表的可用列称为限发前电量。"
                                        "任何月份身份或平衡无法确认时仅列UNKNOWN。")
-                _add_table(document, ["月", "发电", "自用", "上网", "结算截弃", "交付", "可用（结算前）", "性质"],
-                           _monthly_balance_rows(model), "首年月度电量平衡（均为kWh；合成预测）",
-                           widths_cm=(0.8, 2.2, 2.1, 2.1, 2.3, 2.1, 2.1, 3.1))
+                monthly = _monthly_balance_rows(model)
+                for title, names, columns, widths in (
+                    ("首年月度发电与消纳（kWh；合成预测）",
+                     ("月", "发电", "自用", "上网"), (0, 1, 2, 3), (2.0, 5.0, 5.0, 5.0)),
+                    ("首年月度交付与结算边界（kWh；与上表同月）",
+                     ("月", "结算截弃", "交付", "可用（结算前）", "性质"),
+                     (0, 4, 5, 6, 7), (1.6, 3.4, 3.4, 4.0, 4.6)),
+                ):
+                    _add_table(document, list(names), [[row[index] for index in columns] for row in monthly],
+                               title, widths_cm=widths, layout_type="TECHNICAL_DETAIL_TABLE")
                 available = model.metric("available_kwh.year.1") or {}
                 energy = model.metric("energy.year.1") or {}
                 loss = (energy.get("details") or {}).get("losses_kwh", {}).get("curtailment")
@@ -2595,9 +2654,15 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                           _word_value(atom.get("system.losses.included_in_source")),
                                           _word_value(atom.get("system.losses.method")),
                                           _word_value(atom.get("system.losses.period"))])
-                _add_table(document, ["序", "损失类型", "原始比例", "边界", "来源已含", "方法", "期间"], loss_rows,
-                           "系统损失原子链（原始比值；顺序与已含标志不可忽略）",
-                           widths_cm=(1, 2.4, 2.1, 1.4, 1.7, 4.2, 4.2))
+                for title, names, columns, widths in (
+                    ("系统损失类别及原始比值（顺序与已含标志不可忽略）",
+                     ("序", "损失类型", "原始比例", "边界", "来源已含"),
+                     (0, 1, 2, 3, 4), (1.5, 4.2, 3.2, 4.2, 3.9)),
+                    ("系统损失方法与适用期间（同序对应上表）",
+                     ("序", "方法", "期间"), (0, 5, 6), (1.5, 7.7, 7.8)),
+                ):
+                    _add_table(document, list(names), [[row[index] for index in columns] for row in loss_rows],
+                               title, widths_cm=widths, layout_type="TECHNICAL_DETAIL_TABLE")
                 degradation = _source_value(normalized, records, "system.annual_degradation")
                 document.add_paragraph("年度衰减输入为" + (_word_value(degradation) if degradation is not None else "UNKNOWN") +
                                        "（原始比值）；后期设备更换停机见年度发电结果，不由更换事件推定性能恢复增益。")
@@ -2622,16 +2687,24 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 annual = (ledger.get("annual", ()) if
                           model.status("financial.phase3e.project_cash_flow") == "CALCULATED" else ())
                 if annual:
-                    _add_table(document, ["期别", "运维计提", "运维预计付款", "非现金折旧", "更换预计付款",
-                                          "交易费计提", "交易费预计付款"],
-                               [[row["period"].replace("OPERATING_YEAR_", "第") +
-                                 ("年" if row["period"].startswith("OPERATING_YEAR_") else ""),
-                                 *(_word_value(row.get(key)) for key in
-                                   ("opex_accrued", "opex_cash_paid", "depreciation", "replacement_cash_paid",
-                                    "transaction_cost_accrued", "transaction_cost_cash_paid"))]
-                                for row in annual],
-                               "逐年运营及更换账簿（元；均为预测，不是实付款记录）",
-                               widths_cm=(2.8, 2.4, 2.4, 2.4, 2.4, 2.4, 2.4))
+                    document.add_paragraph("建设期不作为运营年：" + "；".join(
+                        f"{name}：{_word_value(annual[0].get(key)) if key in annual[0] else '未提供'}"
+                        for name, key in (("运维计提", "opex_accrued"), ("运维预计付款", "opex_cash_paid"),
+                                          ("非现金折旧", "depreciation"), ("更换预计付款", "replacement_cash_paid"))) +
+                        "。缺失记录不作零值处理。")
+                    operations = annual[1:]
+                    for title, fields in (
+                        ("年度运维、折旧与更换（元；均为预测）",
+                         (("运维计提", "opex_accrued"), ("运维预计付款", "opex_cash_paid"),
+                          ("非现金折旧", "depreciation"), ("更换预计付款", "replacement_cash_paid"))),
+                        ("年度交易费计提及预计付款（元；与运维费分开）",
+                         (("交易费计提", "transaction_cost_accrued"),
+                          ("交易费预计付款", "transaction_cost_cash_paid"))),
+                    ):
+                        _add_table(document, ["运营年", *(name for name, _ in fields)],
+                                   [[f"第{index}年", *(_word_value(row.get(key)) for _, key in fields)]
+                                    for index, row in enumerate(operations, 1)], title,
+                                   layout_type="ANNUAL_LEDGER_TABLE")
                     operating = [row.get("opex_cash_paid") for row in annual[1:]]
                     lifecycle_opex = model.value("financial.opex.cash_lifecycle")
                     if (len(operating) == len(annual) - 1
@@ -2677,17 +2750,21 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                            "增值税预计支付与退税的净影响；仅是既有结果的展示勾稽，"
                                            "不表示税款已经实际缴纳。各分项独立显示取整产生的分位尾差"
                                            "单列为舍入差额，不充作真实增值税；建设期缺少税费事件时保留UNKNOWN。")
-                    _add_table(document, ["期别", "应税所得", "所得税计提", "所得税预计付款",
-                                          "其他现金税费", "增值税净现金额", "列示舍入差额", "项目现金税费合计"],
-                               [[row["period"].replace("OPERATING_YEAR_", "第") +
-                                 ("年" if row["period"].startswith("OPERATING_YEAR_") else ""),
-                                 *(_word_value(row.get(key)) for key in
-                                   ("taxable_income_project", "income_tax_accrual_project",
-                                    "income_tax_cash_paid_project", "other_cash_taxes_project")),
+                    document.add_paragraph("建设期税费记录未闭合时标记未提供，不把空缺解释为零或实缴。")
+                    tax_rows = [[f"第{index}年", *(_word_value(row.get(key)) for key in
+                                 ("taxable_income_project", "income_tax_accrual_project",
+                                  "income_tax_cash_paid_project", "other_cash_taxes_project")),
                                  *tax_display(row), _word_value(row.get("cash_tax_total_project"))]
-                                for row in annual],
-                               "逐年税费账簿（元；计提与预计现金支出区分；舍入差额仅为展示）",
-                               widths_cm=(1.8, 2.1, 2.1, 2.35, 2.2, 2.15, 1.6, 2.7))
+                                for index, row in enumerate(annual[1:], 1)]
+                    for title, columns in (
+                        ("税基与所得税（元；计提及预计付款不同）", (0, 1, 2, 3)),
+                        ("增值税与其他现金税费（元；净额和舍入差额分列）", (0, 4, 5, 6, 7)),
+                    ):
+                        names = ("运营年", "应税所得", "所得税计提", "所得税预计付款",
+                                 "其他现金税费", "增值税净现金额", "列示舍入差额", "项目现金税费合计")
+                        _add_table(document, [names[index] for index in columns],
+                                   [[row[index] for index in columns] for row in tax_rows], title,
+                                   layout_type="ANNUAL_LEDGER_TABLE")
                     taxes = [row.get("cash_tax_total_project") for row in annual[1:]]
                     lifecycle = model.value("financial.tax.cash_lifecycle")
                     if (len(taxes) == 25 and all(isinstance(tax, (int, float, Decimal)) and
@@ -2712,14 +2789,22 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 annual_bridge = _project_annual_bridge_rows(model)
                 if annual_bridge is not None:
                     detail_rows, bridge_rows = annual_bridge
-                    _add_table(document, ["期别", "上网回款（元）", "自用节费（元）", "预计另付交易费（元）",
-                                          "运维现金（元）", "项目现金税费（元）", "列示舍入差额（元）", "运营收支净额（元）"],
-                               detail_rows, "运营全期收支分项（原值分别显示取整；舍入差额仅为展示，不是现金事件；节费不是银行到账）",
-                               widths_cm=(1.75, 2.35, 2.05, 2.3, 2.15, 2.3, 1.75, 2.35))
-                    _add_table(document, ["期别", "运营收支净额（元）", "资本支出付款（元）", "营运资金增加（元）",
-                                          "营运资金回收（元）", "终期资产现金（元）", "项目净现金流（元）"],
-                               bridge_rows, "建设至终期全期现金事件桥（更换已含在资本支出；营运回收不重复计入终期资产现金）",
-                               widths_cm=(2.0, 2.9, 2.65, 2.65, 2.65, 2.4, 2.75))
+                    for title, names, columns in (
+                        ("运营收益及交易费（元；自用节费不是银行到账）",
+                         ("期别", "上网回款", "自用节费", "预计另付交易费"), (0, 1, 2, 3)),
+                        ("运营支出及收支净额（元；尾差仅为显示）",
+                         ("期别", "运维现金", "项目现金税费", "列示舍入差额", "运营收支净额"), (0, 4, 5, 6, 7)),
+                    ):
+                        _add_table(document, list(names), [[row[index] for index in columns] for row in detail_rows],
+                                   title, layout_type="ANNUAL_LEDGER_TABLE")
+                    for title, names, columns in (
+                        ("建设及年度资本现金事件（元；更换已含在资本支出）",
+                         ("期别", "运营收支净额", "资本支出付款", "营运资金增加"), (0, 1, 2, 3)),
+                        ("营运资金回收与项目现金流（元；终期资产现金单列）",
+                         ("期别", "营运资金回收", "终期资产现金", "项目净现金流"), (0, 4, 5, 6)),
+                    ):
+                        _add_table(document, list(names), [[row[index] for index in columns] for row in bridge_rows],
+                                   title, layout_type="ANNUAL_LEDGER_TABLE")
                     final_ledger = model.result.get("evidence", {}).get("financial-ledger", {}).get("annual", [])
                     final_row = next((row for row in final_ledger if row.get("period") == "OPERATING_YEAR_25"), None)
                     if final_row is not None:
@@ -2756,6 +2841,20 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                     "PHASE3E_PARTIAL_MISSING_FROZEN_INPUTS": ("部分经济评价指标仍受阻", "补齐各指标专属的现金事件与依据"),
                     "SOURCED_PROJECT_NPV_SYNTHETIC_ONLY": ("项目净现值不代表实际投资批准", "取得工程报价、业主权利及真实交易资料"),
                 }
+                titles = {
+                    "NO_REAL_PROJECT_VERIFICATION": "真实项目条件", "INTERVAL_MEAN_NOT_SUBINTERVAL_CLIPPING": "时段削峰限制",
+                    "REPEATED_RESOURCE_YEAR_NOT_MULTIPLE_OBSERVED_YEARS": "多年资源代表性",
+                    "REPLACEMENT_YEAR_START_AND_UNIFORM_DOWNTIME_NOT_REAL_DATES": "更换停机日期",
+                    "INTERVAL_MEAN_SAME_GRID_NOT_INSTANTANEOUS_LOAD_MATCH": "负荷匹配粒度",
+                    "ECONOMIC_BASIS_NOT_TAX_PAYMENT_OR_CURRENCY_CONVERSION": "经济收益与付款口径",
+                    "REPEATED_LOAD_AND_BASE_PERIOD_PRICES_ARE_EXPLICIT_SCENARIOS_NOT_OBSERVED_FUTURE_YEARS": "负荷价格情景",
+                    "GRID_ACCEPTANCE_UNCONFIRMED_SCENARIO_NOT_APPROVAL": "接网认可条件",
+                    "TRANSACTION_FEE_PAYMENT_SYNTHETIC_ASSUMPTION": "交易费计划付款",
+                    "PHASE3E_PARTIAL_MISSING_FROZEN_INPUTS": "部分评价指标受阻",
+                    "SOURCED_PROJECT_NPV_SYNTHETIC_ONLY": "合成项目净现值",
+                }
+                statuses = {"BLOCKED": "阻断", "KNOWN_LIMITATION": "已知限制", "DECLARED_SCENARIO": "声明情景",
+                            "CONDITIONAL": "待条件核验", "ASSUMED": "合成假设", "PARTIAL": "部分完成"}
                 if pv_type == "utility_scale_ground":
                     explanations["REPEATED_LOAD_AND_BASE_PERIOD_PRICES_ARE_EXPLICIT_SCENARIOS_NOT_OBSERVED_FUTURE_YEARS"] = (
                         "后续年份市场价格仍为情景", "取得有效的市场结算价格资料")
@@ -2764,12 +2863,13 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 findings = [row for row in model.result.get("findings", ())
                             if not (pv_type == "utility_scale_ground" and row.get("code") ==
                                     "INTERVAL_MEAN_SAME_GRID_NOT_INSTANTANEOUS_LOAD_MATCH")]
-                _add_table(document, ["发现项索引", "状态", "影响判断", "所需材料"],
-                           [[_word_value(row.get("code")), _word_value(row.get("status")),
+                _add_table(document, ["核验事项", "状态", "影响判断", "所需材料"],
+                           [[titles.get(row.get("code"), "其他待核事项"),
+                             statuses.get(row.get("status"), "状态待核"),
                              *explanations.get(row.get("code"), ("影响待专业复核", "取得该项发现的原始证明材料"))]
                             for row in findings],
-                           "待复核发现项（合成登记不代表已有真实责任人或完成期限）",
-                           widths_cm=(5.2, 2.1, 4.9, 4.8))
+                           "待复核发现项（原始编码及身份见测算模型 M03；非真实责任人签收）",
+                           widths_cm=(3.3, 2.2, 5.3, 6.2), layout_type="ISSUE_TABLE")
             if app_id in {"APP11", "APP12"}:
                 appendix_headers, appendix_rows = _appendix_rows(model, item_id)
                 if item_id == "APP11.01" and appendix_rows:
@@ -2830,6 +2930,15 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                     if item_id == "APP12.01":
                         terms = json.loads(files("wangbin_solar_pv").joinpath("report-glossary.json")
                                            .read_text(encoding="utf-8"))["terms"]
+                        selected = set(_reader_glossary_ids(pv_type))
+                        reader_rows = [row[:3] for term, row in zip(
+                            sorted(terms, key=lambda term: (0, {"PV": 0, "DC": 1, "AC": 2}[term["abbreviation"]])
+                                   if term.get("abbreviation") in {"PV", "DC", "AC"} else (1, 0)),
+                            appendix_rows) if term["term_id"] in selected]
+                        # The audit dictionary remains complete below; this index is a navigation aid only.
+                        _add_table(document, ["本项目常用术语", "英文全称", "缩写"], reader_rows,
+                                   "本项目常用术语速览（完整受控词典见下表）",
+                                   widths_cm=(4.8, 9.0, 3.2), layout_type="SUMMARY_TABLE")
                         document.add_paragraph("读者释义与原词典方法说明分别展示；词条收录不表示本项目实际采用。"
                                                "原词典完整定义、ID及来源可在随包受控词典核对。")
                         for text, label in _glossary_common_boundaries(terms).items():
@@ -2861,8 +2970,12 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     document.add_paragraph("公式定义、版本、变量、单位、输入字段和完整来源绑定见测算模型.xlsx 的公式说明工作表，以及资料来源与假设清单.xlsx 的公式/方法工作表。正文不复制原始对象或过高精度小数。")
     document.add_paragraph("版本与质量声明", style="Solar Unnumbered Title")
     document.add_paragraph(f"项目边界：{profile['boundary']}。报告内容版本：{content_version}；该版本只表示写作与排版，不修改计算结果身份。配套 Excel 为本次测算快照；修改 Excel 不会使本报告或旧结果自动有效，必须重新运行计算程序生成新的统一身份。PDF 只有在真实转换器可用并成功解析时才生成；本次渲染、页面视觉和目录页码门禁以质量清单实际状态为准。")
-    _add_table(document, ["身份字段", "统一测算值"], [[key, str(value)] for key, value in model.identity.items()],
-               "统一测算身份（仅在此处展示一次）", widths_cm=(4.5, 12.5))
+    identity_labels = {"model_version": "模型版本", "run_id": "运行ID", "input_hash": "输入哈希",
+                       "source_snapshot_id": "来源快照ID", "result_hash": "结果哈希"}
+    _add_table(document, ["身份字段", "统一测算值"],
+               [[identity_labels.get(key, key), str(value)] for key, value in model.identity.items()],
+               "统一测算身份（仅在此处展示一次）", widths_cm=(3.2, 13.8),
+               nowrap_columns=(1,))
     numbering = validate_numbering(document, display_chapters, APPENDICES, APPENDIX_TITLES,
                                    [formula["formula_id"] for formula in _appendix_formula_definitions(model)])
     coverage = _validate_checklist_coverage(checklist)
