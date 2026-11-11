@@ -18,3 +18,4 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 wangbin_solar_pv = ["baseline-lock.json", "definition-errata.json", "definition-lock.json", "report-glossary.json", "scenarios/*/contract.json", "calculation/schema/*.json", "calculation/execution-evidence.json"]
+"wangbin_solar_pv.reporting" = ["specs/*.json"]
