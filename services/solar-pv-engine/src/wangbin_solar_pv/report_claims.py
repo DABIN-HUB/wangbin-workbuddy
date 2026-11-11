@@ -1301,8 +1301,9 @@ def _research_finding(model: Any, item_id: str, fmt: Callable[[Any], str],
         count, voc, limit = (get(x) for x in ('system.modules_per_string', 'system.module_voc', 'system.inverter_max_dc_voltage'))
         if all(number(v) for v in (count, voc, limit)):
             nominal = Decimal(str(count)) * Decimal(str(voc))
-            return (f'每串{fmt(count)}块、组件标称开路电压{fmt(voc)}V形成标称串电压'
-                    f'{fmt(nominal)}V，对照逆变器直流上限{fmt(limit)}V；'
+            unit_gap = ' ' if reader_preview else ''
+            return (f'每串{fmt(count)}块、组件标称开路电压{fmt(voc)}{unit_gap}V形成标称串电压'
+                    f'{fmt(nominal)}{unit_gap}V，对照逆变器直流上限{fmt(limit)}{unit_gap}V；'
                     '低温Voc上浮、MPPT工作电压和各路输入电流仍须依据实际设备数据表与场址极值逐项验算，'
                     '本次标称对照不证明电气安全。')
     if item_id == 'CH09.03':
@@ -1489,7 +1490,8 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
         dc, ac = calculated('dc_capacity'), calculated('ac_capacity')
         ratio = calculated('dc_ac_ratio')
         if all(x is not None for x in (count, power, dc, ac, ratio)):
-            return (f'拟配置{fmt(count)}块、每块额定功率{fmt(power)}W的组件，'
+            unit_gap = ' ' if reader_preview else ''
+            return (f'拟配置{fmt(count)}块、每块额定功率{fmt(power)}{unit_gap}W的组件，'
                     f'形成{fmt(dc)}kWp直流装机；逆变器交流侧额定容量为{fmt(ac)}kW，'
                     f'直交流容配比为{fmt(ratio)}。组件侧略高于交流侧有助于在非额定辐照条件下'
                     '利用逆变设备，但高辐照时能否充分输出以及是否出现削峰，须结合资源、温度和逆变器限制判断。\n\n'

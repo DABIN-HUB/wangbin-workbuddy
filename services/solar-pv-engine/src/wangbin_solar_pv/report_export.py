@@ -3266,6 +3266,8 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                        "完整符号（仅属于本公式）", widths_cm=(3, 11, 3))
                         index_lines = _formula_index_lines(formula)
                         if index_lines:
+                            if reader_preview:
+                                index_lines = [line.rstrip("。；") for line in index_lines]
                             document.add_paragraph("下标、索引、集合与求和范围：" + "；".join(index_lines))
                 elif appendix_rows:
                     if item_id == "APP12.01":
