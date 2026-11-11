@@ -1193,7 +1193,8 @@ def _settlement_narrative(model: Any, item_id: str, fmt: Callable[[Any], str]) -
     return None
 
 
-def _research_finding(model: Any, item_id: str, fmt: Callable[[Any], str]) -> str | None:
+def _research_finding(model: Any, item_id: str, fmt: Callable[[Any], str],
+                      *, reader_preview: bool = False) -> str | None:
     """Project-bound comparisons; no conclusion from an unbound input or blocked metric."""
     result = model.result
     normalized = result['inputs'].get('normalized', {})
@@ -1342,8 +1343,9 @@ def _research_finding(model: Any, item_id: str, fmt: Callable[[Any], str]) -> st
     if item_id == 'CH16.05':
         static, dynamic = metric('financial.phase3e.static_payback'), metric('financial.phase3e.dynamic_payback')
         if number(static) and number(dynamic):
-            return (f'按本次已计算的项目年度净流量，静态回收{fmt(static)}年、折现后动态回收'
-                    f'{fmt(dynamic)}年；折现推迟收回时点，不是实际银行回款日，'
+            shown = lambda value: decision_number(value, 'year') if reader_preview else fmt(value)
+            return (f'按本次已计算的项目年度净流量，静态回收{shown(static)}年、折现后动态回收'
+                    f'{shown(dynamic)}年；折现推迟收回时点，不是实际银行回款日，'
                     '须保留期末现金流和折现率口径。')
     if item_id == 'CH16.06':
         lcoe = model.metric('financial.phase3e.lcoe') or {}
@@ -1362,7 +1364,8 @@ def _research_finding(model: Any, item_id: str, fmt: Callable[[Any], str]) -> st
 
 def _project_narrative(model: Any, item_id: str, judgment: str,
                        fields: tuple[str, ...], metrics: tuple[str, ...],
-                       fmt: Callable[[Any], str], label_metric: Callable[[str], str]) -> str:
+                       fmt: Callable[[Any], str], label_metric: Callable[[str], str],
+                       *, reader_preview: bool = False) -> str:
     """Compose evidence and consequence for the actual item's fixed research object.
 
     No title keyword classifier: only explicitly bound fields, metrics and the
@@ -1375,7 +1378,7 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
     calculated = lambda mid: (row.get('value') if (row := model.metric(mid))
                               and row.get('status') == 'CALCULATED' else None)
     ground = result.get('pv_type') == 'utility_scale_ground'
-    finding = _research_finding(model, item_id, fmt)
+    finding = _research_finding(model, item_id, fmt, reader_preview=reader_preview)
     if finding is not None:
         return finding
     if item_id == 'CH02.01':
@@ -2162,7 +2165,8 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
 
 def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_rule: str,
                 field_ids: tuple[str, ...], metric_ids: tuple[str, ...], pv_type: str,
-                format_value: Callable[[Any], str], label_metric: Callable[[str], str]) -> dict[str, Any]:
+                format_value: Callable[[Any], str], label_metric: Callable[[str], str],
+                *, reader_preview: bool = False) -> dict[str, Any]:
     """Bind an independently scoped question to only its own canonical evidence."""
     normalized = model.result["inputs"].get("normalized", {})
     used_sources = model.result["inputs"].get("used_sources", {})
@@ -2344,8 +2348,8 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
         specific = _specific_project_judgment(model, item_id, format_value) if item_id in specific_items else ''
         claim = (specific if item_id in specific_items
                  else _project_narrative(model, item_id, judgment, field_ids, metric_ids,
-                                         format_value, label_metric) if item_id.startswith('CH')
-                 else appendix_finding(model, item_id, format_value, _source_value))
+                                         format_value, label_metric, reader_preview=reader_preview) if item_id.startswith('CH')
+                 else appendix_finding(model, item_id, format_value, _source_value, reader_preview=reader_preview))
         fee_evidence = model.result.get('evidence', {}).get('financial-ledger', {}).get('trading_fee_payment')
         if fee_evidence and item_id in {'CH01.05', 'CH10.04', 'CH15.01', 'CH16.02',
                                         'CH18.01', 'APP05.01', 'APP06.01'}:
@@ -2354,7 +2358,8 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
                 'CH01.05': '本合成测算按交易费当年发生、当年全额预计支付处理，期初无交易费欠款；'
                            '这一年度预测约定不代表真实合同或实际付款记录。',
                 'CH10.04': '交易费另列预计付款，期间由本次合成年度支付假设确定，销售收入仍按毛额列示。',
-                'CH15.01': '运维费现金与交易费预计付款分别列账，后者不继承运维付现比例。',
+                'CH15.01': ('交易费与运维费分别列账、分别预测付款，不以运维付款安排推算交易费支付。'
+                            if reader_preview else '运维费现金与交易费预计付款分别列账，后者不继承运维付现比例。'),
                 'CH16.02': '交易费为合成来源约定的预计支付，不是已付款凭证；税基扣费不等于现金付款。',
                 'CH18.01': '上述回报含有独立的交易费同年支付假设，仅对合成年度项目边界成立。',
                 'APP05.01': '交易费预计付款另列，不作为运维费第二次扣减。',

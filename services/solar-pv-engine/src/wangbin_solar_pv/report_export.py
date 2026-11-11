@@ -12,7 +12,7 @@ from dataclasses import dataclass
 import calendar
 from collections import Counter
 from datetime import date
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from hashlib import sha256
 from importlib.resources import files
 from io import BytesIO
@@ -131,9 +131,40 @@ _D_STYLE = {
 }
 
 REPORT_CONTENT_VERSION = "phase7l-r10-reader-review"
+READER_REPORT_CONTENT_VERSION = "phase7l-r11-reader-review"
 REPORT_DISCLAIMER = "本报告内容仅供参考，正式使用时需根据实际情况调整。"
 READER_FORMULA_IDS = frozenset({"F-NPV", "F-IRR-PROJECT", "F-STATIC-PAYBACK",
                                 "F-DYNAMIC-PAYBACK", "F-LCOE", "F-DSCR"})
+# Display aliases only: the frozen outline, stable IDs, and full export stay unchanged.
+READER_ITEM_TITLES = {
+    "CH05.06": "资源不确定性与资料比对",
+    "CH14.06": "投资税费口径与单位造价",
+    "CH15.05": "折旧、税费与年度汇总",
+    "CH17.05": "敏感性方向与约束",
+    "CH18.02": "结论依据与关键限制",
+    "CH18.05": "后续决策节点与适用范围",
+    "APP01.02": "重要输入与来源对照",
+    "APP04.02": "投资范围与付款依据",
+    "APP07.02": "无债务项目的偿债指标",
+    "APP08.02": "情景阈值及影响方向",
+    "APP13.01": "版本与测算身份",
+    "APP13.02": "资料成熟度与适用范围",
+}
+READER_APPENDIX_LEADS = {
+    "APP01": "示例输入及资料来源对照见下文和配套清单；权属、接网原件仍待核验。",
+    "APP02": "十二个月的资源和电量按各自边界列示；气象资料的原始分量及授权仍须核实。",
+    "APP03": "组件、逆变器和阵列布置采用示例参数；损失率按记录的顺序和适用边界列示。",
+    "APP04": "投资分项区分建设期采购与后续更换；示例单价不是供应商正式报价。",
+    "APP05": "运营付款、交易费用、折旧及税费分别列示；折旧不作为现金支出。",
+    "APP06": "建设期和运营期的项目现金流逐期列示，不把项目净流量当成股东分配。",
+    "APP07": "偿债指标须与实际融资和本息安排对照；无债务时不填造偿债比率。",
+    "APP08": "尚无独立的单因素与组合情景结果，本节仅说明后续分析所需的资料。",
+    "APP09": "适用的政策条款和有效期尚待逐项确认，不能据此推定项目已经获批。",
+    "APP10": "权属、接网、工程量与报价等前提未闭合，所列事项不表示已经完成验收。",
+    "APP11": "本节列示六项核心方法的可编辑公式；完整原始定义仍保留在配套词典。",
+    "APP12": "此处只解释报告中常见的技术与财务术语，完整词典保留在配套清单。",
+    "APP13": "本示例的测算身份可在配套工作簿逐项复核；资料成熟度仍不足以支持投资决定。",
+}
 
 
 @dataclass(frozen=True)
@@ -209,6 +240,16 @@ def _word_number(value: Any) -> str:
             text = f"{value:.6f}"
         return text.rstrip("0").rstrip(".")
     return str(value)
+
+
+def _word_money(value: Any) -> str:
+    """Format CNY at two decimals without changing ledger values."""
+    try:
+        amount = Decimal(str(value).replace(",", ""))
+        return (f"{amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP):,.2f}"
+                if amount.is_finite() else _word_value(value))
+    except InvalidOperation:
+        return _word_value(value)
 
 
 def _word_value(value: Any) -> str:
@@ -1232,6 +1273,7 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
                layout_type: str = "TECHNICAL_DETAIL_TABLE",
                continuation_identity: bool = False) -> None:
     """Use a bounded portrait layout; never silently squeeze a wide ledger into equal columns."""
+    reader_preview = getattr(document, "_solar_reader_preview", False)
     layouts = {"SUMMARY_TABLE", "PLAN_TABLE", "FINANCIAL_TABLE", "ANNUAL_LEDGER_TABLE",
                "TECHNICAL_DETAIL_TABLE", "ISSUE_TABLE"}
     if layout_type not in layouts or any(len(row) != len(headers) for row in rows):
@@ -1279,11 +1321,8 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
     tbl_w.set(qn("w:type"), "dxa")
     for index, header in enumerate(headers):
         cell = table.rows[0].cells[index]
-        # Word/WPS repeats this row on every physical continuation page.
-        # Repeat the table identity with the column label without inventing a
-        # second caption/table or claiming that the first page is a "续表".
-        cell.text = (_string(header) + f"\n表{table_number}"
-                     if index == 0 and continuation_identity else _string(header))
+        # The repeating header must contain only the actual column label.
+        cell.text = _string(header)
         cell.width = Cm(widths[index])
         if layout_type == "ANNUAL_LEDGER_TABLE" and index > 0:
             cell._tc.get_or_add_tcPr().append(OxmlElement("w:noWrap"))
@@ -1303,18 +1342,25 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
     for row_index, row in enumerate(rows):
         cells = table.add_row().cells
         for index, value in enumerate(row):
-            cells[index].text = _string(value)
+            monetary = reader_preview and ((layout_type == "ANNUAL_LEDGER_TABLE" and index > 0)
+                                           or "（元）" in headers[index])
+            cells[index].text = (_word_money(value) if monetary and re.fullmatch(
+                r"[−-]?[\d,]+(?:\.\d+)?", str(value).strip()) else _string(value))
             cells[index].width = Cm(widths[index])
             numeric = (isinstance(value, (int, float, Decimal)) and not isinstance(value, bool)) or bool(
                 re.fullmatch(r"[−-]?[\d,]+(?:\.\d+)?%?", str(value).strip()))
-            if index in nowrap_columns or (numeric and layout_type in {"FINANCIAL_TABLE", "ANNUAL_LEDGER_TABLE"}):
+            if index in nowrap_columns or (numeric and
+                                           (monetary or layout_type in {"FINANCIAL_TABLE", "ANNUAL_LEDGER_TABLE"})):
                 cells[index]._tc.get_or_add_tcPr().append(OxmlElement("w:noWrap"))
             cells[index].vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.TOP
             for paragraph in cells[index].paragraphs:
                 paragraph.style = "Solar Table"
-                paragraph.alignment = WD_ALIGN_PARAGRAPH.RIGHT if numeric and layout_type in {
-                    "FINANCIAL_TABLE", "ANNUAL_LEDGER_TABLE", "SUMMARY_TABLE"} else WD_ALIGN_PARAGRAPH.LEFT
-                if row_index == 0 and len(rows) > 1:
+                paragraph.alignment = (WD_ALIGN_PARAGRAPH.RIGHT if numeric and
+                                       (monetary or layout_type in {"FINANCIAL_TABLE", "ANNUAL_LEDGER_TABLE", "SUMMARY_TABLE"})
+                                       else WD_ALIGN_PARAGRAPH.LEFT)
+                if (row_index == 0 and len(rows) > 1 or
+                        reader_preview and layout_type == "FINANCIAL_TABLE" and
+                        len(rows) <= 10 and row_index < len(rows) - 1):
                     paragraph.paragraph_format.keep_with_next = True
                 for run in paragraph.runs:
                     set_run_font(run, size=WORD_FORMAT.table_pt)
@@ -1716,7 +1762,8 @@ def _input_label(field_id: str) -> str:
     return "项目专属输入"
 
 
-def _professional_metric_rows(model: ReportModel, metric_ids: tuple[str, ...]) -> list[list[str]]:
+def _professional_metric_rows(model: ReportModel, metric_ids: tuple[str, ...],
+                              *, reader_preview: bool = False) -> list[list[str]]:
     """Show only explicitly selected, named decision metrics; keep the full ledger in Excel."""
     rows = []
     for metric_id in metric_ids:
@@ -1728,7 +1775,9 @@ def _professional_metric_rows(model: ReportModel, metric_ids: tuple[str, ...]) -
             display, roots_note = _irr_presentation(metric)
             note = "项目税后年度口径，非股东回报" if status == "CALCULATED" else f"项目税后年度现金流；{roots_note}"
         elif status == "CALCULATED":
-            display = _decision_metric_text(metric)
+            display = ("逐期详见附录F及测算模型 M14（含建设期）"
+                       if reader_preview and metric_id == "financial.phase3e.project_cash_flow"
+                       else _decision_metric_text(metric))
             note = {
                 "financial.capex.total": "含后期更换，不等于建设期付款",
                 "financial.phase3e.project_npv": "项目税后；折现率见正文",
@@ -1744,6 +1793,7 @@ def _professional_metric_rows(model: ReportModel, metric_ids: tuple[str, ...]) -
                     "缺可供偿债现金的定义与控制" if metric_id == "financial.phase3e.cfads" else
                     "缺终期成本现金边界" if metric_id == "financial.phase3e.lcoe" else
                     "缺同边界价格情景重算" if metric_id == "financial.phase3e.break-even-price" else
+                    "缺投资门槛及其计量单位" if reader_preview and metric_id == "financial.phase3e.investment-hurdle-gap" else
                     "缺用户投资门槛" if metric_id == "financial.phase3e.investment-hurdle-gap" else
                     str(metric.get("reason") or "必要现金事件或方法依据尚未闭合")[:160])
         elif status == "NOT_APPLICABLE":
@@ -1759,9 +1809,13 @@ def _professional_metric_rows(model: ReportModel, metric_ids: tuple[str, ...]) -
         else:
             display, note = "状态待核对", "当前结果状态未知；不可当作不适用"
         unit = _metric_unit(metric)
+        if reader_preview and metric_id == "financial.phase3e.investment-hurdle-gap" and status != "CALCULATED":
+            unit = "待确定"
         label = (_metric_label(metric_id) if metric_id != "revenue.year.1" else
                  "首年预测上网销售收入" if model.result.get("pv_type") == "utility_scale_ground" else
                  "首年预测综合经济收益（自用节费＋余电销售）")
+        if reader_preview and metric_id == "financial.capex.total":
+            label = "全期资本支出（含更换）"
         rows.append([label, display,
                      "—" if metric_id.endswith("project_irr") and status in {"CALCULATED", "UNDEFINED"} else
                      "—" if status != "CALCULATED" and str(unit).startswith("集合") else
@@ -2203,7 +2257,8 @@ def _topic_missing(title: str, chapter_id: str, pv_type: str, fallback: str) -> 
 
 
 def _item_evidence(model: ReportModel, pv_type: str, chapter_id: str, title: str, *, item_no: int = 1,
-                   editorial_fixture: dict[str, Any] | None = None) -> dict[str, Any]:
+                   editorial_fixture: dict[str, Any] | None = None,
+                   reader_preview: bool = False) -> dict[str, Any]:
     items = next(items for cid, _chapter_title, items in CHAPTERS if cid == chapter_id)
     item_id = f"{chapter_id}.{item_no:02d}"
     rule = guidance(item_id, items)
@@ -2252,7 +2307,7 @@ def _item_evidence(model: ReportModel, pv_type: str, chapter_id: str, title: str
         metrics = (*metrics, "energy.delivered.year.1")
     claim = build_claim(model, item_id, title, f"{title}：{rule.rstrip('。')}？", rule,
                         fields, metrics,
-                        pv_type, _word_value, _metric_label)
+                        pv_type, _word_value, _metric_label, reader_preview=reader_preview)
     cited_metrics = tuple(dict.fromkeys((*metrics, *claim["supporting_metric_ids"])))
     cited_fields = tuple(dict.fromkeys((*fields, *claim["supporting_input_field_ids"])))
     return {**claim, "field_ids": list(cited_fields), "metric_ids": list(cited_metrics),
@@ -2319,14 +2374,15 @@ def _appendix_rule(app_id: str, pv_type: str) -> tuple[tuple[str, ...], tuple[st
     return (), (), "记录版本、运行身份、数据质量轴、静态快照和复核状态。"
 
 
-def _appendix_evidence(model: ReportModel, pv_type: str, app_id: str, item_no: int) -> dict[str, Any]:
+def _appendix_evidence(model: ReportModel, pv_type: str, app_id: str, item_no: int,
+                       *, reader_preview: bool = False) -> dict[str, Any]:
     item_id = f"{app_id}.{item_no:02d}"
     question, rule, field_ids, metric_ids = APPENDIX_RULES[item_id]
     title = APPENDIX_TITLES[item_id]
     field_ids = category_fields(item_id, field_ids, pv_type,
                                 model.result["inputs"].get("normalized", {}).get("project.has_storage") is not False)
     claim = build_claim(model, item_id, title, question, rule, field_ids, metric_ids,
-                        pv_type, _word_value, _metric_label)
+                        pv_type, _word_value, _metric_label, reader_preview=reader_preview)
     cited_fields = tuple(dict.fromkeys((*field_ids, *claim["supporting_input_field_ids"])))
     cited_metrics = tuple(dict.fromkeys((*metric_ids, *claim["supporting_metric_ids"])))
     return {**claim, "field_ids": list(cited_fields), "metric_ids": list(cited_metrics),
@@ -2439,7 +2495,7 @@ def _project_cash_word_rows(model: ReportModel) -> list[list[Any]]:
     return rows
 
 
-def _project_annual_bridge_rows(model: ReportModel) -> tuple[list[list[str]], list[list[str]]] | None:
+def _project_annual_bridge_rows(model: ReportModel, *, reader_preview: bool = False) -> tuple[list[list[str]], list[list[str]]] | None:
     """Display the ledger's annual events against the sourced 3E project flow."""
     annual = model.result.get("evidence", {}).get("financial-ledger", {}).get("annual")
     metric = model.metric("financial.phase3e.project_cash_flow") or {}
@@ -2450,6 +2506,7 @@ def _project_annual_bridge_rows(model: ReportModel) -> tuple[list[list[str]], li
             or annual[0].get("period") != "CONSTRUCTION"):
         return None
     detail, bridge = [], []
+    format_amount = _word_money if reader_preview else _word_number
     operating_fields = ("revenue_cash_receipts", "self_use_avoided_expenditure", "transaction_cost_cash_paid",
                         "opex_cash_paid", "cash_tax_total_project")
     for index, (ledger, amount, terminal_cash) in enumerate(zip(annual, values, terminal)):
@@ -2471,11 +2528,11 @@ def _project_annual_bridge_rows(model: ReportModel) -> tuple[list[list[str]], li
             receipts, savings, fee, opex, tax = (Decimal(str(ledger[key])) for key in operating_fields)
             operating = receipts + savings - fee - opex - tax
             release = Decimal(str(ledger["working_capital_release"]))
-            shown = lambda value: Decimal(_word_number(value).replace(",", ""))
+            shown = lambda value: Decimal(format_amount(value).replace(",", ""))
             display_difference = (shown(operating) - shown(receipts) - shown(savings) + shown(fee)
                                   + shown(opex) + shown(tax))
-            detail.append([_reader_text(period), *(_word_number(ledger[key]) for key in operating_fields),
-                           _word_number(display_difference), _word_number(operating)])
+            detail.append([_reader_text(period), *(format_amount(ledger[key]) for key in operating_fields),
+                           format_amount(display_difference), format_amount(operating)])
         # Reconcile at ledger precision; never make an incomplete or inconsistent bridge look complete.
         reconstructed = (operating - Decimal(str(ledger["capex_cash_paid"]))
                          - Decimal(str(ledger["working_capital_increase"])) + release
@@ -2483,10 +2540,10 @@ def _project_annual_bridge_rows(model: ReportModel) -> tuple[list[list[str]], li
         if abs(reconstructed - Decimal(str(amount))) > Decimal("0.00000001"):
             return None
         bridge.append(["建设期" if index == 0 else _reader_text(period),
-                       "不适用（建设期）" if index == 0 else _word_number(operating),
-                       _word_number(ledger["capex_cash_paid"]), _word_number(ledger["working_capital_increase"]),
-                       "不适用（建设期）" if index == 0 else _word_number(release),
-                       _word_number(terminal_cash), _word_number(amount)])
+                       "不适用（建设期）" if index == 0 else format_amount(operating),
+                       format_amount(ledger["capex_cash_paid"]), format_amount(ledger["working_capital_increase"]),
+                       "不适用（建设期）" if index == 0 else format_amount(release),
+                       format_amount(terminal_cash), format_amount(amount)])
     return detail, bridge
 
 
@@ -2498,11 +2555,15 @@ def _add_evidence_table(document: Document, evidence: dict[str, Any], caption: s
 
 def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: str,
                 editorial_fixture: dict[str, Any] | None = None,
-                content_version: str = REPORT_CONTENT_VERSION,
+                content_version: str | None = None,
                 reader_preview: bool = False) -> dict[str, Any]:
     profile = REPORT_PROFILES[pv_type]
     source_map = _source_ref_map(model)
+    if content_version is None:
+        content_version = READER_REPORT_CONTENT_VERSION if reader_preview else REPORT_CONTENT_VERSION
     document = Document()
+    document._solar_reader_preview = reader_preview
+    format_amount = _word_money if reader_preview else _word_number
     configure_word(document)
     document.core_properties.keywords = WORD_FORMAT.identifier
     document.add_paragraph("星核实验室 StarCore Lab", style="Solar Cover Info")
@@ -2545,7 +2606,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
         document.add_paragraph(basis_text, style="Solar Abstract")
     key_ids = ("dc_capacity", "energy.year.1", "revenue.year.1", "financial.capex.total",
                "financial.phase3e.project_npv", "financial.phase3e.project_irr")
-    key_rows = _professional_metric_rows(model, key_ids)
+    key_rows = _professional_metric_rows(model, key_ids, reader_preview=reader_preview)
     maturity = model.result.get("maturity", {}).get("real_project")
     material_label = ("A：资料已经核实" if maturity == "VERIFIED" else
                       "B：使用当前假设资料" if model.result.get("source_snapshot", {}).get("phase2", {}).get("records") else
@@ -2597,7 +2658,9 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                "常用术语与单位" if app_id == "APP12" else title)
                               for app_id, title in APPENDICES) if reader_preview else APPENDICES)
     reader_appendix_titles = ({**APPENDIX_TITLES, "APP11.01": "公式索引",
-                               "APP11.02": "常用公式与符号", "APP12.01": "常用术语"}
+                               "APP11.02": "常用公式与符号", "APP12.01": "常用术语",
+                               **{item_id: title for item_id, title in READER_ITEM_TITLES.items()
+                                  if item_id.startswith("APP")}}
                               if reader_preview else APPENDIX_TITLES)
     math_objects = convert_equations(formal_formulas)
     chart_specs = _canonical_chart_specs(model)
@@ -2609,7 +2672,8 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                               tuple(("土地使用权与期限" if pv_type == "utility_scale_ground" else "屋面使用权与期限")
                                     if chapter_id == "CH04" and index == 3 else
                                     "阶段建议" if (chapter_id == "CH18" and index == 1) or
-                                    (chapter_id == "CH01" and index == 5) else name
+                                    (chapter_id == "CH01" and index == 5) else
+                                    READER_ITEM_TITLES.get(f"{chapter_id}.{index:02d}", name) if reader_preview else name
                                     for index, name in enumerate(items, 1)))
                              for chapter_id, chapter_title, items in CHAPTERS)
     for chapter_id, chapter_title, items in display_chapters:
@@ -2626,7 +2690,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                                           parent_level=1), bookmark_index)
             bookmark_index += 1
             evidence = _item_evidence(model, pv_type, chapter_id, item, item_no=number,
-                                       editorial_fixture=editorial_fixture)
+                                       editorial_fixture=editorial_fixture, reader_preview=reader_preview)
             _add_professional_narrative(document, evidence)
             if item_id == "CH13.02":
                 _add_table(document, ["任务", "开始", "结束", "持续时间", "前置任务", "计划性质"],
@@ -2673,9 +2737,12 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
         ("尚未具备评价条件的指标", index_ids[12:]),
     )
     for title, ids in groups:
-        selected = _professional_metric_rows(model, ids)
+        selected = _professional_metric_rows(model, ids, reader_preview=reader_preview)
         _add_table(document, ["专业指标", "本阶段结果", "单位", "说明"], selected,
-                   title + "（完整精度见测算模型 M16）", widths_cm=(4.1, 4.5, 1.6, 6.8),
+                   title + "（完整精度见测算模型 M16）",
+                   widths_cm=((4.1, 4.5, 2.0, 6.4) if reader_preview and title == "尚未具备评价条件的指标"
+                              else (4.1, 4.5, 1.6, 6.8)),
+                   nowrap_columns=(2,) if reader_preview and title == "尚未具备评价条件的指标" else (),
                    layout_type="FINANCIAL_TABLE")
     if blocked:
         if model.status("financial.phase3e.project_npv") == "CALCULATED":
@@ -2686,14 +2753,15 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
         appendix_heading = add_numbered_heading(document, heading_number(app_id, app_title), bookmark_index)
         bookmark_index += 1
         appendix_heading.paragraph_format.page_break_before = True
-        document.add_paragraph(f"本附录《{app_title}》列示本项目相关资料；原始精度与来源编号见配套工作簿。")
+        document.add_paragraph(READER_APPENDIX_LEADS[app_id] if reader_preview else
+                               f"本附录《{app_title}》列示本项目相关资料；原始精度与来源编号见配套工作簿。")
         for item_no in (1, 2):
             item_id = f"{app_id}.{item_no:02d}"
             item_title = reader_appendix_titles[item_id]
             add_numbered_heading(document, heading_number(item_id, item_title,
                                                           parent_stable_id=app_id, parent_level=1), bookmark_index)
             bookmark_index += 1
-            evidence = _appendix_evidence(model, pv_type, app_id, item_no)
+            evidence = _appendix_evidence(model, pv_type, app_id, item_no, reader_preview=reader_preview)
             if app_id in {"APP11", "APP12"}:
                 detail = (("全部公式及其原始定义见配套来源工作簿；元/Wp与元/kWp的换算口径尚待专业核验，"
                            "不得采用未经核实的换算结果。下表仅为索引，不表示本项目逐式执行。" if reader_preview else
@@ -2713,6 +2781,22 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 evidence["summary"] = detail
             for text in evidence["narrative"]:
                 document.add_paragraph(_reader_text(text))
+            if reader_preview and item_id == "APP01.02":
+                source_index = (
+                    "1. 气象与场址：资料来源与假设清单 S02「气象与地理来源」；逐月输入见测算模型 M04，多年实测与授权待核。",
+                    "2. 设备、造价与更换：清单 S04「设备与成本来源」；设备及资本支出分别见模型 M05、M10，正式报价待核。",
+                    f"3. 权属、接入与交易：清单 S01「输入台账」和 S07「冲突与缺口」；"
+                    f"{'屋顶权属' if pv_type == 'industrial_rooftop' else '土地权利'}、正式接网及交易原件待补。",
+                    "4. 政策与资料授权：清单 S03「政策适用性」和 S10「资料授权说明」；适用条款、有效期及授权待核。",
+                )
+                for entry in source_index:
+                    document.add_paragraph(entry)
+            if reader_preview and item_id == "APP13.01":
+                document.add_paragraph(
+                    "本读者预览版不在正文列示五项测算身份原值。可在同套测算模型的 M01「项目参数」"
+                    "第2—6行及资料来源与假设清单的 S01「输入台账」第3—7行分别核对"
+                    "model_version、run_id、input_hash、source_snapshot_id、result_hash；"
+                    "两处须逐项相同。完整版的正文身份条款不能由本预览版替代。")
             if item_id == "APP02.01":
                 _headers, resource_rows = _resource_rows(model)
                 resource_intro, irradiance, weather, _mapping = prepare_resource_word_rows(
@@ -2794,25 +2878,48 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 for fid in equipment_fields:
                     value = _source_value(normalized, records, fid)
                     if value is not None:
-                        equipment_rows.append([equipment_labels[fid.rsplit(".", 1)[-1]], _word_value(value), fid])
-                _add_table(document, ["设备／布置输入", "合成方案值", "字段索引"], equipment_rows,
-                           "设备原子参数（不代表供货商数据表或电气专项校核）", widths_cm=(5.0, 4.0, 8.0))
+                        group = ("组件与组串" if fid.startswith("system.module") or fid == "system.parallel_strings" else
+                                 "逆变器" if fid.startswith("system.inverter") else "阵列与安全布置")
+                        equipment_rows.append([equipment_labels[fid.rsplit(".", 1)[-1]], _word_value(value),
+                                               group if reader_preview else fid])
+                _add_table(document, (["设备／布置输入", "合成方案值", "参数类别"] if reader_preview else
+                                      ["设备／布置输入", "合成方案值", "字段索引"]),
+                           equipment_rows,
+                           "设备参数（示例值；原字段和来源见测算模型 M05）" if reader_preview else
+                           "设备原子参数（不代表供货商数据表或电气专项校核）",
+                           widths_cm=(7.0, 6.0, 4.0) if reader_preview else (5.0, 4.0, 8.0))
             if item_id == "APP03.02":
                 loss_rows = []
                 losses = _source_value(normalized, records, "system.losses")
+                loss_names = {"shading": "遮挡", "soiling": "积尘", "snow": "积雪",
+                              "mismatch": "组件失配", "dc_cable": "直流线缆", "ac_cable": "交流线缆",
+                              "transformer": "变压器", "export_line": "送出线路", "curtailment": "限发"}
+                boundaries = {"DC": "直流侧", "AC": "交流侧", "GRID": "电网送出侧"}
+                methods = {"INDEPENDENT_CONSTANT_RATE": "按顺序独立应用的固定损失率"}
+                periods = {"ALL_OPERATING_YEARS": "全部运营年度"}
                 if isinstance(losses, list):
                     for row in losses:
                         atom = row.get("fields", {})
+                        kind = atom.get("system.losses.kind")
+                        boundary = atom.get("system.losses.boundary")
+                        method = atom.get("system.losses.method")
+                        period = atom.get("system.losses.period")
+                        ratio = atom.get("system.losses.value")
+                        included = atom.get("system.losses.included_in_source")
                         loss_rows.append([_word_value(atom.get("system.losses.sequence")),
-                                          _word_value(atom.get("system.losses.kind")),
-                                          _word_value(atom.get("system.losses.value")),
-                                          _word_value(atom.get("system.losses.boundary")),
-                                          _word_value(atom.get("system.losses.included_in_source")),
-                                          _word_value(atom.get("system.losses.method")),
-                                          _word_value(atom.get("system.losses.period"))])
+                                          loss_names.get(kind, "类别待核验") if reader_preview else _word_value(kind),
+                                          (f"{_word_money(Decimal(str(ratio)) * 100)}%" if reader_preview and
+                                           isinstance(ratio, (int, float, Decimal)) and not isinstance(ratio, bool)
+                                           else _word_value(ratio)),
+                                          boundaries.get(boundary, "边界待核验") if reader_preview else _word_value(boundary),
+                                          ("是" if included else "否") if reader_preview and isinstance(included, bool)
+                                          else _word_value(included),
+                                          methods.get(method, "方法待核验") if reader_preview else _word_value(method),
+                                          periods.get(period, "期间待核验") if reader_preview else _word_value(period)])
                 for title, names, columns, widths, repeat_identity in (
-                    ("系统损失类别及原始比值（顺序与已含标志不可忽略）",
-                     ("序", "损失类型", "原始比例", "边界", "来源已含"),
+                    ("系统损失类别及显示百分比（按原始比值乘100；顺序与已含标志不可忽略）" if reader_preview else
+                     "系统损失类别及原始比值（顺序与已含标志不可忽略）",
+                     ("序", "损失类型", "损失率（%）" if reader_preview else "原始比例", "边界", "来源已含"),
                      (0, 1, 2, 3, 4), (1.5, 4.2, 3.2, 4.2, 3.9), True),
                     ("系统损失方法与适用期间（同序对应上表）",
                      ("序", "方法", "期间"), (0, 5, 6), (1.5, 7.7, 7.8), False),
@@ -2825,8 +2932,12 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                        "（原始比值）；后期设备更换停机见年度发电结果，不由更换事件推定性能恢复增益。")
             if item_id == "APP04.01":
                 _add_table(document, ["投资分项", "数量", "金额（元）", "付款日期", "期间及性质"],
-                           _capex_word_rows(model), "CAPEX分项：建设期与后期更换分开列示；行ID、原金额、税口径与来源见测算模型 M10。",
+                           _capex_word_rows(model),
+                           "资本支出分项" if reader_preview else
+                           "CAPEX分项：建设期与后期更换分开列示；行ID、原金额、税口径与来源见测算模型 M10。",
                            widths_cm=(5.0, 2.5, 3.0, 2.6, 3.9))
+                if reader_preview:
+                    document.add_paragraph("建设期与后期更换分别列示；原始金额、税费口径与来源见测算模型 M10。")
                 rate = model.result["inputs"].get("normalized", {}).get("capex.contingency_rate")
                 if isinstance(rate, (int, float, Decimal)) and not isinstance(rate, bool):
                     document.add_paragraph(f"预备费率输入为{_word_number(Decimal(str(rate)) * 100)}%；"
@@ -2867,12 +2978,12 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                     if (len(operating) == len(annual) - 1
                             and all(isinstance(value, (int, float, Decimal)) and not isinstance(value, bool)
                                     for value in operating + [lifecycle_opex])):
-                        displayed = sum(Decimal(_word_number(value).replace(",", "")) for value in operating)
-                        discrepancy = Decimal(_word_number(lifecycle_opex).replace(",", "")) - displayed
+                        displayed = sum(Decimal(format_amount(value).replace(",", "")) for value in operating)
+                        discrepancy = Decimal(format_amount(lifecycle_opex).replace(",", "")) - displayed
                         document.add_paragraph(
-                            f"{len(operating)}个运营年度运维预计付款显示值合计{_word_number(displayed)}元，"
-                            f"全期现金运维指标为{_word_number(lifecycle_opex)}元；"
-                            f"两者展示差额（全期指标减年度显示值之和）为{_word_number(discrepancy)}元。"
+                            f"{len(operating)}个运营年度运维预计付款显示值合计{format_amount(displayed)}{' ' if reader_preview else ''}元，"
+                            f"全期现金运维指标为{format_amount(lifecycle_opex)}{' ' if reader_preview else ''}元；"
+                            f"两者展示差额（全期指标减年度显示值之和）为{format_amount(discrepancy)}{' ' if reader_preview else ''}元。"
                             "年度与全期分别按未取整账簿计算后列示，展示差额不是新增付款。")
                 fee_source = ledger.get("trading_fee_payment")
                 if fee_source and len(ledger.get("annual", ())) > 1:
@@ -2883,8 +2994,12 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                  _word_number(first["transaction_cost_payable_opening"]) + "／" +
                                  _word_number(first["transaction_cost_payable_closing"]),
                                  "来源详见配套清单；示例年度预测，非实付"]],
+                               "首年交易费" if reader_preview else
                                "交易费不并入运维费；全期计提、预计付款和应付逐期核对见测算模型 M14。",
-                               widths_cm=(2.7, 2.75, 2.75, 3.4, 5.4))
+                               widths_cm=(3.25, 2.75, 2.75, 3.4, 4.85) if reader_preview else
+                               (2.7, 2.75, 2.75, 3.4, 5.4))
+                    if reader_preview:
+                        document.add_paragraph("交易费不并入运维费；全期计提、预计付款和应付逐期核对见测算模型 M14。")
             if item_id == "APP05.02":
                 annual = (model.result.get("evidence", {}).get("financial-ledger", {}).get("annual", ())
                           if model.status("financial.phase3e.project_cash_flow") == "CALCULATED" else ())
@@ -2899,9 +3014,9 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                             Decimal(str(row[key])) for key in required[1:])
                         if abs(vat) < Decimal("0.0000001"):
                             vat = Decimal(0)  # Remove binary-source noise only from presentation.
-                        shown = lambda value: Decimal(_word_number(value).replace(",", ""))
+                        shown = lambda value: Decimal(format_amount(value).replace(",", ""))
                         rounding = shown(row[required[0]]) - shown(row[required[1]]) - shown(row[required[2]]) - shown(vat)
-                        return _word_number(vat), _word_number(rounding)
+                        return format_amount(vat), format_amount(rounding)
                     document.add_paragraph("增值税净现金额按本次年度账簿中的项目现金税费合计扣除"
                                            "所得税预计付款和其他现金税费列示，包含计入账簿的"
                                            "增值税预计支付与退税的净影响；仅是既有结果的展示勾稽，"
@@ -2927,12 +3042,12 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                     if (len(taxes) == 25 and all(isinstance(tax, (int, float, Decimal)) and
                                                   not isinstance(tax, bool) for tax in taxes)
                             and isinstance(lifecycle, (int, float, Decimal)) and not isinstance(lifecycle, bool)):
-                        displayed = sum(Decimal(_word_number(tax).replace(",", "")) for tax in taxes)
-                        discrepancy = Decimal(_word_number(lifecycle).replace(",", "")) - displayed
+                        displayed = sum(Decimal(format_amount(tax).replace(",", "")) for tax in taxes)
+                        discrepancy = Decimal(format_amount(lifecycle).replace(",", "")) - displayed
                         document.add_paragraph(
-                            f"25个运营年度显示值合计{_word_number(displayed)}元，"
-                            f"全期现金税费指标为{_word_number(lifecycle)}元；"
-                            f"两者展示差额（全期指标减年度显示值之和）为{_word_number(discrepancy)}元。"
+                            f"25个运营年度显示值合计{format_amount(displayed)}{' ' if reader_preview else ''}元，"
+                            f"全期现金税费指标为{format_amount(lifecycle)}{' ' if reader_preview else ''}元；"
+                            f"两者展示差额（全期指标减年度显示值之和）为{format_amount(discrepancy)}{' ' if reader_preview else ''}元。"
                             "年度与全期分别由未取整账簿计算后列示，不把此差额填作税款。")
             if item_id == "APP06.01":
                 fee_source = model.result.get("evidence", {}).get("financial-ledger", {}).get("trading_fee_payment")
@@ -2943,7 +3058,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 _add_table(document, ["期别", "项目税后净现金流（元）", "资本支出付款（元）", "营运资金增加（元）", "其中更换付款（元）"],
                            _project_cash_word_rows(model), "建设期及运营全期项目现金流（已计算值，非资本金现金流）",
                            widths_cm=(2.2, 4.0, 3.6, 3.5, 3.7), continuation_identity=reader_preview)
-                annual_bridge = _project_annual_bridge_rows(model)
+                annual_bridge = _project_annual_bridge_rows(model, reader_preview=reader_preview)
                 if annual_bridge is not None:
                     detail_rows, bridge_rows = annual_bridge
                     for title, names, columns in (
@@ -2966,8 +3081,11 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                     final_row = next((row for row in final_ledger if row.get("period") == "OPERATING_YEAR_25"), None)
                     if final_row is not None:
                         document.add_paragraph(
-                            f"终期勾稽：第25年营运资金回收{_word_number(final_row.get('working_capital_release'))}元，"
-                            "终期资产现金按当前canonical为0元；因此第25年净现金流与运营收支的差额由营运资金回收解释，"
+                            f"终期勾稽：第25年营运资金回收{_word_number(final_row.get('working_capital_release'))}"
+                            f"{' ' if reader_preview else ''}元，" +
+                            ("终期资产现金按本次测算为 0 元；" if reader_preview
+                             else "终期资产现金按当前canonical为0元；")
+                            + "因此第25年净现金流与运营收支的差额由营运资金回收解释，"
                             "不是未列示的残值或其他未知收款。"
                         )
                 else:
@@ -3064,7 +3182,10 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                             document.add_paragraph(f"量纲第{number}组：{text}")
                     for formula_no, formula in enumerate(definitions, 1):
                         fid = formula["formula_id"]
-                        document.add_paragraph(f"{fid} {formula.get('chinese_name', '未定义')}", style="Solar Formula Title")
+                        formula_title = document.add_paragraph(
+                            f"{fid} {formula.get('chinese_name', '未定义')}", style="Solar Formula Title")
+                        if reader_preview and fid == "F-STATIC-PAYBACK":
+                            formula_title.paragraph_format.page_break_before = True
                         equation = formula.get("text_equation") or formula.get("latex") or "未提供"
                         unit = formula.get("unit") or "未定义"
                         equation_paragraph(document, math_objects[fid], f"（{formula_no}）")

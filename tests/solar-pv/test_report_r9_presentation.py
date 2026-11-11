@@ -153,16 +153,26 @@ def test_r10_reader_preview_separates_frozen_word_appendix_contract(model, tmp_p
     assert receipt["numbering"]["formulas"] == 6
     assert len(document.tables) == receipt["numbering"]["tables"] == 35
     assert len(document.tables[-2].rows) == 25
-    for number in (10, 12, 16, 17, 19, 20, 21, 22, 23, 24, 25, 27, 34):
-        header = document.tables[number - 1].rows[0].cells[0].text
-        assert header.endswith(f"\n表{number}") and "跨页" not in header
-        assert document.tables[number - 1].rows[0]._tr.xpath("./w:trPr/w:tblHeader")
+    static_title = next(p for p in document.paragraphs if p.text.startswith("F-STATIC-PAYBACK "))
+    assert static_title.paragraph_format.page_break_before is True
+    for number, table in enumerate(document.tables, 1):
+        assert table.rows[0]._tr.xpath("./w:trPr/w:tblHeader")
+        assert all("\n表" not in cell.text and f"表{number}" not in cell.text
+                   for cell in table.rows[0].cells)
+        assert all(len(row.cells) == len(table.rows[0].cells) for row in table.rows)
+    equipment = document.tables[10]
+    assert len(equipment.columns) == 3
+    assert [cell.text for cell in equipment.rows[0].cells] == ["设备／布置输入", "合成方案值", "参数类别"]
+    assert all(cell.text in {"组件与组串", "逆变器", "阵列与安全布置"}
+               for row in equipment.rows[1:] for cell in row.cells[2:])
     resource_note = next(p for p in document.paragraphs if p.text.startswith("辐照物理口径专项说明："))
     assert resource_note.paragraph_format.keep_together is True
     month_caption = ("表9 首年月度发电与上网（kWh；示例预测）" if model.result["pv_type"] == "utility_scale_ground"
                      else "表9 首年月度发电与消纳（kWh；示例预测）")
     assert month_caption in paragraphs
     assert "项目判断：资料尚待核验，暂不具备投资决策条件" in paragraphs
+    assert sum(p.startswith(("1. 气象与场址：", "2. 设备、造价与更换：",
+                             "3. 权属、接入与交易：", "4. 政策与资料授权：")) for p in paragraphs) == 4
     assert any("元/Wp与元/kWp的换算口径尚待专业核验" in text for text in paragraphs)
     assert sum(p == "本报告内容仅供参考，正式使用时需根据实际情况调整。" for p in paragraphs) == 1
     assert any("受限储备" in cell.text and "不与收款法重复调整" in cell.text
@@ -171,7 +181,7 @@ def test_r10_reader_preview_separates_frozen_word_appendix_contract(model, tmp_p
     reader_texts = paragraphs + [cell.text for table in document.tables for row in table.rows for cell in row.cells]
     assert not any(word in text for text in reader_texts for word in (
         "冻结LaTeX", "阶段性样件", "开发样件", "测试报告", "测试假设", "阶段验收",
-        "SYNTHETIC-", "UNKNOWN", "质量清单门禁"))
+        "SYNTHETIC-", "UNKNOWN", "质量清单门禁", "canonical"))
 
 
 def test_r10_reader_preview_rejects_verified_real_project(model, tmp_path):

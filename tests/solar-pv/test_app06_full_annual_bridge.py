@@ -20,14 +20,14 @@ _HASHES = {
 }
 # Independently specified CNY cash events: construction, ordinary, replacement, terminal.
 _CASE_EVENTS = {
-    "industrial_rooftop": (("建设期", "467,000", "12,000", "-479,000"),
-                           ("第1年", "0", "0", "115,926.33"),
-                           ("第13年", "72,000", "0", "23,990.24"),
-                           ("第25年", "0", "12,000", "100,095.56")),
-    "utility_scale_ground": (("建设期", "950,000", "12,000", "-962,000"),
-                             ("第1年", "0", "0", "147,369.34"),
-                             ("第13年", "135,000", "0", "-31,954.21"),
-                             ("第25年", "0", "12,000", "85,310.9")),
+    "industrial_rooftop": (("建设期", "467,000.00", "12,000.00", "-479,000.00"),
+                           ("第1年", "0.00", "0.00", "115,926.33"),
+                           ("第13年", "72,000.00", "0.00", "23,990.24"),
+                           ("第25年", "0.00", "12,000.00", "100,095.56")),
+    "utility_scale_ground": (("建设期", "950,000.00", "12,000.00", "-962,000.00"),
+                             ("第1年", "0.00", "0.00", "147,369.34"),
+                             ("第13年", "135,000.00", "0.00", "-31,954.21"),
+                             ("第25年", "0.00", "12,000.00", "85,310.90")),
 }
 
 
@@ -40,7 +40,7 @@ def exported(request):
     assert model.result["source_snapshot"]["phase3e_terminal"]["phase3d_result_hash"] == upstream["result_hash"]
     with TemporaryDirectory(prefix="app06-bridge-", dir=os.getenv("TMPDIR")) as folder:
         path = Path(folder) / "report.docx"
-        _write_docx(model, path, category, category)
+        _write_docx(model, path, category, category, reader_preview=True)
         yield category, model, Document(path)
 
 
@@ -85,10 +85,10 @@ def test_app06_construction_ordinary_replacement_terminal_rows_close(exported):
         row = rows[i]
         assert row[0] == period and row[2] == capex and row[6] == net
         assert row[3 if i == 0 else 4] == capital
-        assert row[4 if i == 0 else 3] == ("不适用（建设期）" if i == 0 else "0")
-        assert row[5] == "0"  # sourced no-disposition, never residual book value
+        assert row[4 if i == 0 else 3] == ("不适用（建设期）" if i == 0 else "0.00")
+        assert row[5] == "0.00"  # sourced no-disposition, never residual book value
     assert rows[0][1] == "不适用（建设期）"
-    assert rows[13][4] == "0" and rows[25][4] == "12,000"
+    assert rows[13][4] == "0.00" and rows[25][4] == "12,000.00"
 
 
 def test_app06_operating_detail_includes_terminal_year_and_no_bank_receipt_for_savings(exported):
@@ -105,9 +105,9 @@ def test_app06_operating_detail_includes_terminal_year_and_no_bank_receipt_for_s
     assert len(rows) == 25
     assert rows[-1][0] == "第25年"
     if model.result["pv_type"] == "industrial_rooftop":
-        assert rows[-1][2] == "122,056" and rows[-1][1] != rows[-1][2]
+        assert rows[-1][2] == "122,056.00" and rows[-1][1] != rows[-1][2]
     else:
-        assert rows[-1][2] == "0"
+        assert rows[-1][2] == "0.00"
 
 
 @pytest.mark.parametrize("field,year", (("working_capital_release", 25), ("capex_cash_paid", 13)))

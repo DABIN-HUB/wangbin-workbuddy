@@ -5,7 +5,8 @@ from decimal import Decimal
 from typing import Any, Callable
 
 
-def appendix_finding(model: Any, item_id: str, fmt: Callable[[Any], str], source_value: Callable) -> str:
+def appendix_finding(model: Any, item_id: str, fmt: Callable[[Any], str], source_value: Callable,
+                     *, reader_preview: bool = False) -> str:
     result = model.result
     n = result['inputs'].get('normalized', {})
     records = result.get('source_snapshot', {}).get('phase2', {}).get('records', ())
@@ -13,8 +14,9 @@ def appendix_finding(model: Any, item_id: str, fmt: Callable[[Any], str], source
     def metric(mid):
         row = model.metric(mid)
         return row.get('value') if row and row.get('status') == 'CALCULATED' else None
+    spacing = ' ' if reader_preview else ''
     def amount(value, unit):
-        return f'{fmt(value)}{unit}' if isinstance(value, (int, float, Decimal)) and not isinstance(value, bool) else '未形成有效计算值'
+        return f'{fmt(value)}{spacing}{unit}' if isinstance(value, (int, float, Decimal)) and not isinstance(value, bool) else '未形成有效计算值'
     ground = result.get('pv_type') == 'utility_scale_ground'
     annual = result.get('evidence', {}).get('financial-ledger', {}).get('annual', ())
     build = annual[0] if annual and annual[0].get('period') == 'CONSTRUCTION' else {}
@@ -53,8 +55,8 @@ def appendix_finding(model: Any, item_id: str, fmt: Callable[[Any], str], source
                       if month_total is not None else '月度发电与年度指标未同时闭合；不把发电代替交付结算。'),
         'APP03.01': f'设备额定直流{amount(metric("dc_capacity"), "kWp")}、交流{amount(metric("ac_capacity"), "kWac")}；须与组件和逆变器型号数据表、行距逐项复核。',
         'APP03.02': f'首年发电{amount(metric("energy.year.1"), "kWh")}；年度曲线须逐年核查衰减与更换停机，损失不得重复扣减。',
-        'APP04.01': f'评价期CAPEX{amount(metric("financial.capex.total"), "元")}包含计划更换；专项工程量与税价口径须逐项对账。',
-        'APP04.02': f'建设期账簿计划支付{amount(build.get("capex_cash_paid"), "元")}，评价期CAPEX{amount(metric("financial.capex.total"), "元")}；报价、应付与实付分别核验。',
+        'APP04.01': f'评价期CAPEX{spacing}{amount(metric("financial.capex.total"), "元")}包含计划更换；专项工程量与税价口径须逐项对账。',
+        'APP04.02': f'建设期账簿计划支付{amount(build.get("capex_cash_paid"), "元")}，评价期CAPEX{spacing}{amount(metric("financial.capex.total"), "元")}；报价、应付与实付分别核验。',
         'APP05.01': f'全期现金运维{amount(metric("financial.opex.cash_lifecycle"), "元")}；首年折旧{amount(first.get("depreciation"), "元")}为非现金，更换与交易费预计支付另列。',
         'APP05.02': f'首年项目现金税费{amount(first.get("cash_tax_total_project"), "元")}；须逐年勾稽税基、应计、应付和现金支付，不以税率替代税单。',
         'APP06.01': (f'项目建设期年度净流量{amount(flows[0], "元")}、第1年{amount(flows[1], "元")}；'
