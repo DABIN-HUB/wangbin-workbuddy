@@ -1,0 +1,3000 @@
+[
+  {
+    "requirement_id": "V2-CH01.01",
+    "chapter_id": "CH01",
+    "section_id": "CH01.01",
+    "input_fields": [
+      "project.name",
+      "project.pv_type",
+      "site.address"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH01.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH01.02",
+    "chapter_id": "CH01",
+    "section_id": "CH01.02",
+    "input_fields": [
+      "system.dc_capacity",
+      "system.ac_capacity",
+      "project.evaluation_years",
+      "roof.remaining_life",
+      "site.rights_status",
+      "site.land_classification"
+    ],
+    "metric_ids": [
+      "dc_capacity",
+      "ac_capacity",
+      "dc_ac_ratio",
+      "energy.year.1",
+      "energy.mean_annual"
+    ],
+    "formula_ids": [
+      "F-DC-CAPACITY",
+      "F-AC-CAPACITY",
+      "F-AVERAGE-ANNUAL-ENERGY"
+    ],
+    "table_ids": [
+      "CH01.02-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH01.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH01.03",
+    "chapter_id": "CH01",
+    "section_id": "CH01.03",
+    "input_fields": [
+      "capex.items",
+      "finance.project_discount_rate",
+      "finance.equity_discount_rate"
+    ],
+    "metric_ids": [
+      "financial.capex.total",
+      "financial.unit_investment",
+      "financial.phase3e.project_irr",
+      "financial.phase3e.project_npv",
+      "financial.phase3e.lcoe"
+    ],
+    "formula_ids": [
+      "F-CAPEX-TOTAL",
+      "F-NPV",
+      "F-IRR-PROJECT"
+    ],
+    "table_ids": [
+      "CH01.03-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH01.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH01.04",
+    "chapter_id": "CH01",
+    "section_id": "CH01.04",
+    "input_fields": [
+      "project.sales_mode",
+      "load.series",
+      "tariff.periods"
+    ],
+    "metric_ids": [
+      "consumption.year.1",
+      "revenue.year.1",
+      "energy.delivered.year.1"
+    ],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH01.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH01.05",
+    "chapter_id": "CH01",
+    "section_id": "CH01.05",
+    "input_fields": [
+      "risk.items",
+      "targets.project_irr",
+      "targets.payback_years"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH01.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH02.01",
+    "chapter_id": "CH02",
+    "section_id": "CH02.01",
+    "input_fields": [
+      "project.owner",
+      "project.developer"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH02.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH02.02",
+    "chapter_id": "CH02",
+    "section_id": "CH02.02",
+    "input_fields": [
+      "project.evaluation_date",
+      "project.evaluation_years",
+      "project.currency",
+      "project.price_basis",
+      "project.cashflow_tax_basis"
+    ],
+    "metric_ids": [
+      "financial.phase3e.project_cash_flow",
+      "financial.phase3e.equity-investor-cash-flow"
+    ],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH02.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH02.03",
+    "chapter_id": "CH02",
+    "section_id": "CH02.03",
+    "input_fields": [
+      "policy.applicability"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH02.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH02.04",
+    "chapter_id": "CH02",
+    "section_id": "CH02.04",
+    "input_fields": [
+      "attachments.register",
+      "resource.period_start",
+      "resource.period_end"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH02.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH02.05",
+    "chapter_id": "CH02",
+    "section_id": "CH02.05",
+    "input_fields": [
+      "scenarios.options",
+      "risk.items"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH02.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH03.01",
+    "chapter_id": "CH03",
+    "section_id": "CH03.01",
+    "input_fields": [
+      "project.owner",
+      "project.investor",
+      "project.operator"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH03.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH03.02",
+    "chapter_id": "CH03",
+    "section_id": "CH03.02",
+    "input_fields": [
+      "project.pv_type",
+      "site.address",
+      "site.latitude",
+      "site.longitude"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH03.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH03.03",
+    "chapter_id": "CH03",
+    "section_id": "CH03.03",
+    "input_fields": [
+      "project.ownership_mode",
+      "site.rights_holder",
+      "site.rights_document_id",
+      "site.rights_expiry",
+      "project.evaluation_date",
+      "project.evaluation_years"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH03.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH03.04",
+    "chapter_id": "CH03",
+    "section_id": "CH03.04",
+    "input_fields": [
+      "project.sales_mode",
+      "load.monthly_bills",
+      "tariff.contract_id"
+    ],
+    "metric_ids": [
+      "consumption.year.1",
+      "revenue.year.1"
+    ],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH03.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH03.05",
+    "chapter_id": "CH03",
+    "section_id": "CH03.05",
+    "input_fields": [
+      "system.dc_capacity",
+      "targets.budget_ceiling",
+      "targets.project_irr"
+    ],
+    "metric_ids": [
+      "dc_capacity"
+    ],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH03.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH04.01",
+    "chapter_id": "CH04",
+    "section_id": "CH04.01",
+    "input_fields": [
+      "site.address",
+      "site.latitude",
+      "site.longitude",
+      "site.crs",
+      "site.boundary_vertices"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH04.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH04.02",
+    "chapter_id": "CH04",
+    "section_id": "CH04.02",
+    "input_fields": [
+      "site.elevation",
+      "site.terrain_slope",
+      "site.total_area",
+      "site.usable_area",
+      "site.exclusion_area"
+    ],
+    "metric_ids": [],
+    "formula_ids": [
+      "F-USABLE-AREA"
+    ],
+    "table_ids": [
+      "CH04.02-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH04.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH04.03",
+    "chapter_id": "CH04",
+    "section_id": "CH04.03",
+    "input_fields": [
+      "site.rights_holder",
+      "site.land_classification",
+      "site.rights_status",
+      "site.rights_expiry"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH04.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH04.04",
+    "chapter_id": "CH04",
+    "section_id": "CH04.04",
+    "input_fields": [
+      "site.shading_fraction",
+      "roof.allowable_additional_load",
+      "roof.design_added_load",
+      "roof.remaining_life"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH04.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH04.05",
+    "chapter_id": "CH04",
+    "section_id": "CH04.05",
+    "input_fields": [
+      "site.transport_access",
+      "site.ecology_reference",
+      "site.disaster_reference",
+      "site.local_restrictions"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH04.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH04.06",
+    "chapter_id": "CH04",
+    "section_id": "CH04.06",
+    "input_fields": [
+      "site.geotechnical_reference",
+      "site.flood_reference",
+      "risk.items"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH04.06",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH05.01",
+    "chapter_id": "CH05",
+    "section_id": "CH05.01",
+    "input_fields": [
+      "resource.dataset_id",
+      "resource.version",
+      "resource.provider",
+      "resource.license_id",
+      "resource.period_start",
+      "resource.period_end",
+      "site.timezone"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH05.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH05.02",
+    "chapter_id": "CH05",
+    "section_id": "CH05.02",
+    "input_fields": [
+      "resource.monthly.ghi",
+      "resource.monthly.dni",
+      "resource.monthly.dhi",
+      "resource.monthly.poa"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [
+      "CH05.02-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH05.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH05.03",
+    "chapter_id": "CH05",
+    "section_id": "CH05.03",
+    "input_fields": [
+      "resource.monthly.ambient_temperature",
+      "resource.monthly.wind_speed",
+      "resource.monthly.month"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [
+      "CH05.03-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH05.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH05.04",
+    "chapter_id": "CH05",
+    "section_id": "CH05.04",
+    "input_fields": [
+      "resource.annual_comparison",
+      "resource.is_tmy",
+      "resource.tmy_method"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH05.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH05.05",
+    "chapter_id": "CH05",
+    "section_id": "CH05.05",
+    "input_fields": [
+      "resource.model_method",
+      "resource.poa_boundary",
+      "layout.tilt",
+      "layout.azimuth"
+    ],
+    "metric_ids": [],
+    "formula_ids": [
+      "F-POA-IRRADIATION"
+    ],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH05.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH05.06",
+    "chapter_id": "CH05",
+    "section_id": "CH05.06",
+    "input_fields": [
+      "resource.uncertainty_fraction",
+      "resource.uncertainty_basis",
+      "resource.timeseries"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH05.06",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH06.01",
+    "chapter_id": "CH06",
+    "section_id": "CH06.01",
+    "input_fields": [
+      "site.usable_area",
+      "layout.fire_setback",
+      "layout.ground_coverage_ratio"
+    ],
+    "metric_ids": [
+      "dc_capacity"
+    ],
+    "formula_ids": [
+      "F-USABLE-AREA"
+    ],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH06.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH06.02",
+    "chapter_id": "CH06",
+    "section_id": "CH06.02",
+    "input_fields": [
+      "system.module_count",
+      "system.module_length",
+      "system.module_width",
+      "layout.row_pitch"
+    ],
+    "metric_ids": [
+      "dc_capacity"
+    ],
+    "formula_ids": [
+      "F-DC-CAPACITY"
+    ],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH06.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH06.03",
+    "chapter_id": "CH06",
+    "section_id": "CH06.03",
+    "input_fields": [
+      "system.dc_capacity",
+      "system.ac_capacity",
+      "system.dc_ac_ratio"
+    ],
+    "metric_ids": [
+      "dc_capacity",
+      "ac_capacity",
+      "dc_ac_ratio"
+    ],
+    "formula_ids": [
+      "F-DC-CAPACITY",
+      "F-AC-CAPACITY",
+      "F-DC-AC-RATIO"
+    ],
+    "table_ids": [
+      "CH06.03-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH06.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH06.04",
+    "chapter_id": "CH06",
+    "section_id": "CH06.04",
+    "input_fields": [
+      "scenarios.options"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH06.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH06.05",
+    "chapter_id": "CH06",
+    "section_id": "CH06.05",
+    "input_fields": [
+      "targets.budget_ceiling",
+      "grid.available_capacity",
+      "risk.items"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH06.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH06.06",
+    "chapter_id": "CH06",
+    "section_id": "CH06.06",
+    "input_fields": [
+      "storage.base_pv_type",
+      "storage.energy_capacity",
+      "agri.minimum_light_transmission"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH06.06",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH07.01",
+    "chapter_id": "CH07",
+    "section_id": "CH07.01",
+    "input_fields": [
+      "system.module_model",
+      "system.module_power",
+      "system.module_efficiency",
+      "system.inverter_model",
+      "system.inverter_unit_ac"
+    ],
+    "metric_ids": [
+      "dc_capacity",
+      "ac_capacity"
+    ],
+    "formula_ids": [
+      "F-DC-CAPACITY",
+      "F-AC-CAPACITY"
+    ],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH07.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH07.02",
+    "chapter_id": "CH07",
+    "section_id": "CH07.02",
+    "input_fields": [
+      "system.mounting_type",
+      "layout.azimuth",
+      "layout.tilt",
+      "layout.row_pitch"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH07.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH07.03",
+    "chapter_id": "CH07",
+    "section_id": "CH07.03",
+    "input_fields": [
+      "system.modules_per_string",
+      "system.parallel_strings",
+      "system.module_voc",
+      "system.inverter_max_dc_voltage",
+      "system.inverter_max_input_current"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH07.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH07.04",
+    "chapter_id": "CH07",
+    "section_id": "CH07.04",
+    "input_fields": [
+      "system.losses"
+    ],
+    "metric_ids": [],
+    "formula_ids": [
+      "F-LOSS-COMPOSITE"
+    ],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH07.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH07.05",
+    "chapter_id": "CH07",
+    "section_id": "CH07.05",
+    "input_fields": [
+      "system.topology",
+      "system.capacity_boundary",
+      "grid.connection_point"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH07.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH07.06",
+    "chapter_id": "CH07",
+    "section_id": "CH07.06",
+    "input_fields": [
+      "storage.coupling",
+      "storage.soc_min",
+      "storage.soc_max",
+      "storage.fire_safety_reference",
+      "project.has_storage"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH07.06",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH08.01",
+    "chapter_id": "CH08",
+    "section_id": "CH08.01",
+    "input_fields": [
+      "resource.model_method",
+      "resource.poa_boundary",
+      "system.capacity_boundary"
+    ],
+    "metric_ids": [
+      "energy.year.1"
+    ],
+    "formula_ids": [
+      "F-DC-TIME-POWER",
+      "F-AC-INVERTER-POWER",
+      "F-AVAILABLE-ENERGY"
+    ],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH08.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH08.02",
+    "chapter_id": "CH08",
+    "section_id": "CH08.02",
+    "input_fields": [
+      "resource.monthly",
+      "system.losses",
+      "system.first_year_degradation",
+      "system.annual_degradation"
+    ],
+    "metric_ids": [
+      "energy.monthly.year.1",
+      "energy.year.1"
+    ],
+    "formula_ids": [
+      "F-ENERGY-AGGREGATION"
+    ],
+    "table_ids": [
+      "CH08.02-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH08.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH08.03",
+    "chapter_id": "CH08",
+    "section_id": "CH08.03",
+    "input_fields": [
+      "system.degradation_segments",
+      "system.annual_degradation",
+      "assets.replacements"
+    ],
+    "metric_ids": [
+      "energy.annual_array"
+    ],
+    "formula_ids": [
+      "F-ANNUAL-DEGRADATION",
+      "F-PIECEWISE-DEGRADATION"
+    ],
+    "table_ids": [
+      "CH08.03-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH08.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH08.04",
+    "chapter_id": "CH08",
+    "section_id": "CH08.04",
+    "input_fields": [
+      "system.dc_capacity",
+      "system.ac_capacity",
+      "system.losses"
+    ],
+    "metric_ids": [
+      "pr_observed.year.1",
+      "equivalent_hours.year.1",
+      "capacity_factor.year.1"
+    ],
+    "formula_ids": [
+      "F-PR-OBSERVED",
+      "F-EQUIVALENT-HOURS",
+      "F-CAPACITY-FACTOR"
+    ],
+    "table_ids": [
+      "CH08.04-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH08.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH08.05",
+    "chapter_id": "CH08",
+    "section_id": "CH08.05",
+    "input_fields": [
+      "system.unavailability",
+      "grid.curtailment_assumption"
+    ],
+    "metric_ids": [
+      "available_kwh.year.1",
+      "energy.delivered.year.1"
+    ],
+    "formula_ids": [
+      "F-AVAILABLE-ENERGY",
+      "F-CURTAILED-ENERGY",
+      "F-DELIVERED-ENERGY"
+    ],
+    "table_ids": [
+      "CH08.05-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH08.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH08.06",
+    "chapter_id": "CH08",
+    "section_id": "CH08.06",
+    "input_fields": [
+      "resource.uncertainty_basis",
+      "risk.items"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH08.06",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH09.01",
+    "chapter_id": "CH09",
+    "section_id": "CH09.01",
+    "input_fields": [
+      "grid.connection_point",
+      "grid.connection_voltage",
+      "grid.metering_boundary"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH09.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH09.02",
+    "chapter_id": "CH09",
+    "section_id": "CH09.02",
+    "input_fields": [
+      "grid.transformer_capacity",
+      "grid.power_factor",
+      "grid.available_capacity",
+      "grid.line_length",
+      "grid.export_power_limit",
+      "grid.opinion_status"
+    ],
+    "metric_ids": [
+      "ac_capacity"
+    ],
+    "formula_ids": [
+      "F-TRANSFORMER-ACTIVE-LIMIT",
+      "F-EXPORT-LIMIT-ENERGY"
+    ],
+    "table_ids": [
+      "CH09.02-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH09.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH09.03",
+    "chapter_id": "CH09",
+    "section_id": "CH09.03",
+    "input_fields": [
+      "grid.upgrade_plan",
+      "grid.protection_plan",
+      "capex.items"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH09.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH09.04",
+    "chapter_id": "CH09",
+    "section_id": "CH09.04",
+    "input_fields": [
+      "grid.opinion_status",
+      "grid.opinion_attachment_id",
+      "grid.opinion_valid_until",
+      "grid.transaction_opinion"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH09.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH09.05",
+    "chapter_id": "CH09",
+    "section_id": "CH09.05",
+    "input_fields": [
+      "grid.export_power_limit",
+      "grid.curtailment_basis",
+      "risk.items"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH09.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH10.01",
+    "chapter_id": "CH10",
+    "section_id": "CH10.01",
+    "input_fields": [
+      "load.monthly_bills",
+      "load.series",
+      "load.timezone"
+    ],
+    "metric_ids": [
+      "consumption.year.1"
+    ],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH10.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH10.02",
+    "chapter_id": "CH10",
+    "section_id": "CH10.02",
+    "input_fields": [
+      "project.sales_mode",
+      "grid.export_power_limit",
+      "load.series"
+    ],
+    "metric_ids": [
+      "consumption.year.1",
+      "energy.delivered.year.1"
+    ],
+    "formula_ids": [
+      "F-SELF-CONSUMPTION",
+      "F-EXPORTED-ENERGY",
+      "F-CURTAILED-ENERGY",
+      "F-ENERGY-BALANCE"
+    ],
+    "table_ids": [
+      "CH10.02-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH10.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH10.03",
+    "chapter_id": "CH10",
+    "section_id": "CH10.03",
+    "input_fields": [
+      "tariff.periods",
+      "tariff.non_avoidable_charges"
+    ],
+    "metric_ids": [
+      "revenue.year.1"
+    ],
+    "formula_ids": [
+      "F-ENERGY-REVENUE"
+    ],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH10.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH10.04",
+    "chapter_id": "CH10",
+    "section_id": "CH10.04",
+    "input_fields": [
+      "tariff.contract_id",
+      "tariff.ppa_price",
+      "tariff.revenue_share",
+      "tariff.transaction_fee"
+    ],
+    "metric_ids": [
+      "revenue.year.1"
+    ],
+    "formula_ids": [
+      "F-PPA-REVENUE",
+      "F-CASH-RECEIPTS"
+    ],
+    "table_ids": [
+      "CH10.04-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH10.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH10.05",
+    "chapter_id": "CH10",
+    "section_id": "CH10.05",
+    "input_fields": [
+      "tariff.market_series",
+      "revenue.other_items"
+    ],
+    "metric_ids": [],
+    "formula_ids": [
+      "F-ENERGY-REVENUE"
+    ],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH10.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH10.06",
+    "chapter_id": "CH10",
+    "section_id": "CH10.06",
+    "input_fields": [
+      "storage.dispatch",
+      "storage.charge_efficiency",
+      "storage.discharge_efficiency",
+      "storage.grid_charging",
+      "project.has_storage"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH10.06",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH11.01",
+    "chapter_id": "CH11",
+    "section_id": "CH11.01",
+    "input_fields": [
+      "site.boundary_vertices",
+      "layout.row_pitch",
+      "layout.fire_setback"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH11.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH11.02",
+    "chapter_id": "CH11",
+    "section_id": "CH11.02",
+    "input_fields": [
+      "site.geotechnical_reference",
+      "system.mounting_type",
+      "fishery.foundation_method"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH11.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH11.03",
+    "chapter_id": "CH11",
+    "section_id": "CH11.03",
+    "input_fields": [
+      "roof.structure_report_id",
+      "roof.design_added_load",
+      "roof.fire_access_reference"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH11.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH11.04",
+    "chapter_id": "CH11",
+    "section_id": "CH11.04",
+    "input_fields": [
+      "site.transport_access",
+      "site.flood_reference",
+      "roof.waterproof_plan"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH11.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH11.05",
+    "chapter_id": "CH11",
+    "section_id": "CH11.05",
+    "input_fields": [
+      "risk.items",
+      "capex.items"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH11.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH12.01",
+    "chapter_id": "CH12",
+    "section_id": "CH12.01",
+    "input_fields": [
+      "environment.grid_emission_factor",
+      "environment.factor_period"
+    ],
+    "metric_ids": [],
+    "formula_ids": [
+      "F-EMISSIONS-AVOIDED"
+    ],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH12.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH12.02",
+    "chapter_id": "CH12",
+    "section_id": "CH12.02",
+    "input_fields": [
+      "site.ecology_reference",
+      "environment.approval_reference"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH12.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH12.03",
+    "chapter_id": "CH12",
+    "section_id": "CH12.03",
+    "input_fields": [
+      "environment.fire_reference",
+      "roof.fire_access_reference",
+      "storage.fire_safety_reference"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH12.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH12.04",
+    "chapter_id": "CH12",
+    "section_id": "CH12.04",
+    "input_fields": [
+      "site.rights_holder",
+      "public.asset_authorization",
+      "residential.property_consent"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH12.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH12.05",
+    "chapter_id": "CH12",
+    "section_id": "CH12.05",
+    "input_fields": [
+      "policy.applicability",
+      "risk.items"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH12.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH13.01",
+    "chapter_id": "CH13",
+    "section_id": "CH13.01",
+    "input_fields": [
+      "project.developer",
+      "project.operator",
+      "schedule.tasks"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH13.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH13.02",
+    "chapter_id": "CH13",
+    "section_id": "CH13.02",
+    "input_fields": [
+      "schedule.tasks",
+      "schedule.construction_start",
+      "schedule.commissioning_date"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH13.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH13.03",
+    "chapter_id": "CH13",
+    "section_id": "CH13.03",
+    "input_fields": [
+      "schedule.tasks.predecessor_ids",
+      "schedule.tasks.critical_path"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH13.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH13.04",
+    "chapter_id": "CH13",
+    "section_id": "CH13.04",
+    "input_fields": [
+      "risk.items",
+      "site.transport_access"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH13.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH13.05",
+    "chapter_id": "CH13",
+    "section_id": "CH13.05",
+    "input_fields": [
+      "targets.risk_preference",
+      "risk.items"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH13.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH14.01",
+    "chapter_id": "CH14",
+    "section_id": "CH14.01",
+    "input_fields": [
+      "capex.estimate_basis",
+      "capex.user_budget",
+      "project.currency"
+    ],
+    "metric_ids": [
+      "financial.capex.total"
+    ],
+    "formula_ids": [
+      "F-CAPEX-TOTAL"
+    ],
+    "table_ids": [
+      "CH14.01-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH14.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH14.02",
+    "chapter_id": "CH14",
+    "section_id": "CH14.02",
+    "input_fields": [
+      "capex.items"
+    ],
+    "metric_ids": [
+      "financial.capex.total"
+    ],
+    "formula_ids": [
+      "F-CAPEX-ITEM-AMOUNT",
+      "F-CAPEX-TOTAL"
+    ],
+    "table_ids": [
+      "CH14.02-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH14.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH14.03",
+    "chapter_id": "CH14",
+    "section_id": "CH14.03",
+    "input_fields": [
+      "capex.items.category",
+      "site.geotechnical_reference"
+    ],
+    "metric_ids": [
+      "financial.capex.total"
+    ],
+    "formula_ids": [
+      "F-CAPEX-TOTAL"
+    ],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH14.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH14.04",
+    "chapter_id": "CH14",
+    "section_id": "CH14.04",
+    "input_fields": [
+      "capex.items.category",
+      "capex.contingency_rate"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH14.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH14.05",
+    "chapter_id": "CH14",
+    "section_id": "CH14.05",
+    "input_fields": [
+      "capex.includes_construction_interest",
+      "finance.debt_schedule",
+      "schedule.tasks"
+    ],
+    "metric_ids": [],
+    "formula_ids": [
+      "F-DEBT-INTEREST",
+      "F-CAPEX-PAYMENT-BALANCE"
+    ],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH14.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH14.06",
+    "chapter_id": "CH14",
+    "section_id": "CH14.06",
+    "input_fields": [
+      "capex.items.tax_included",
+      "capex.items.vat_rate",
+      "capex.includes_storage",
+      "capex.includes_land"
+    ],
+    "metric_ids": [
+      "financial.unit_investment"
+    ],
+    "formula_ids": [
+      "F-UNIT-INVESTMENT",
+      "F-TAX-EXCLUSIVE-AMOUNT"
+    ],
+    "table_ids": [
+      "CH14.06-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH14.06",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH15.01",
+    "chapter_id": "CH15",
+    "section_id": "CH15.01",
+    "input_fields": [
+      "opex.items"
+    ],
+    "metric_ids": [
+      "financial.opex.cash_lifecycle"
+    ],
+    "formula_ids": [
+      "F-ANNUAL-OPEX",
+      "F-OPEX-ESCALATION"
+    ],
+    "table_ids": [
+      "CH15.01-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH15.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH15.02",
+    "chapter_id": "CH15",
+    "section_id": "CH15.02",
+    "input_fields": [
+      "assets.depreciation"
+    ],
+    "metric_ids": [
+      "financial.asset.ending_book_value"
+    ],
+    "formula_ids": [
+      "F-STRAIGHT-LINE-DEPRECIATION",
+      "F-ASSET-BOOK-VALUE"
+    ],
+    "table_ids": [
+      "CH15.02-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH15.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH15.03",
+    "chapter_id": "CH15",
+    "section_id": "CH15.03",
+    "input_fields": [
+      "assets.replacements",
+      "storage.replacement_rule"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH15.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH15.04",
+    "chapter_id": "CH15",
+    "section_id": "CH15.04",
+    "input_fields": [
+      "tax.regime_reference",
+      "tax.corporate_income_rate",
+      "tax.vat_recovery_timing",
+      "tax.surcharge_basis"
+    ],
+    "metric_ids": [
+      "financial.tax.cash_lifecycle"
+    ],
+    "formula_ids": [
+      "F-TAXABLE-INCOME-PROJECT",
+      "F-TAX-CASH-BRIDGE",
+      "F-CASH-TAX-TOTAL"
+    ],
+    "table_ids": [
+      "CH15.04-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH15.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH15.05",
+    "chapter_id": "CH15",
+    "section_id": "CH15.05",
+    "input_fields": [
+      "opex.items",
+      "assets.depreciation",
+      "assets.replacements"
+    ],
+    "metric_ids": [
+      "financial.opex.cash_lifecycle"
+    ],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH15.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH16.01",
+    "chapter_id": "CH16",
+    "section_id": "CH16.01",
+    "input_fields": [
+      "tariff.periods",
+      "tariff.market_series",
+      "revenue.other_items",
+      "assets.depreciation.residual_value"
+    ],
+    "metric_ids": [
+      "revenue.year.1"
+    ],
+    "formula_ids": [
+      "F-CASH-RECEIPTS"
+    ],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH16.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH16.02",
+    "chapter_id": "CH16",
+    "section_id": "CH16.02",
+    "input_fields": [
+      "capex.items",
+      "opex.items",
+      "tax.regime_reference",
+      "finance.working_capital",
+      "project.sales_mode",
+      "project.evaluation_date",
+      "project.evaluation_years"
+    ],
+    "metric_ids": [
+      "financial.phase3e.project_cash_flow"
+    ],
+    "formula_ids": [
+      "F-PROJECT-CASH-FLOW"
+    ],
+    "table_ids": [
+      "CH16.02-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH16.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH16.03",
+    "chapter_id": "CH16",
+    "section_id": "CH16.03",
+    "input_fields": [
+      "finance.debt_schedule",
+      "finance.debt_ratio",
+      "finance.loan_rate"
+    ],
+    "metric_ids": [
+      "financial.phase3e.equity-investor-cash-flow"
+    ],
+    "formula_ids": [
+      "F-EQUITY-INVESTOR-CASH-FLOW"
+    ],
+    "table_ids": [
+      "CH16.03-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH16.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH16.04",
+    "chapter_id": "CH16",
+    "section_id": "CH16.04",
+    "input_fields": [
+      "finance.project_discount_rate",
+      "finance.equity_discount_rate",
+      "project.price_basis",
+      "project.evaluation_years",
+      "finance.cashflow_timing",
+      "project.cashflow_tax_basis"
+    ],
+    "metric_ids": [
+      "financial.phase3e.project_npv",
+      "financial.phase3e.project_irr",
+      "financial.phase3e.static_payback",
+      "financial.phase3e.dynamic_payback"
+    ],
+    "formula_ids": [
+      "F-NPV",
+      "F-IRR-PROJECT"
+    ],
+    "table_ids": [
+      "CH16.04-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH16.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH16.05",
+    "chapter_id": "CH16",
+    "section_id": "CH16.05",
+    "input_fields": [
+      "targets.payback_years",
+      "targets.payback_basis",
+      "project.evaluation_date",
+      "project.evaluation_years",
+      "finance.project_discount_rate",
+      "finance.cashflow_timing",
+      "assets.replacements"
+    ],
+    "metric_ids": [
+      "financial.phase3e.static_payback",
+      "financial.phase3e.dynamic_payback"
+    ],
+    "formula_ids": [
+      "F-STATIC-PAYBACK",
+      "F-DYNAMIC-PAYBACK"
+    ],
+    "table_ids": [
+      "CH16.05-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH16.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH16.06",
+    "chapter_id": "CH16",
+    "section_id": "CH16.06",
+    "input_fields": [
+      "system.capacity_boundary",
+      "grid.export_power_limit",
+      "project.cashflow_tax_basis"
+    ],
+    "metric_ids": [
+      "financial.phase3e.lcoe",
+      "energy.delivered.year.1"
+    ],
+    "formula_ids": [
+      "F-LCOE"
+    ],
+    "table_ids": [
+      "CH16.06-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH16.06",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH16.07",
+    "chapter_id": "CH16",
+    "section_id": "CH16.07",
+    "input_fields": [
+      "finance.cfads_definition",
+      "finance.debt_schedule.dscr_covenant",
+      "finance.debt_ratio"
+    ],
+    "metric_ids": [
+      "financial.phase3e.dscr",
+      "financial.phase3e.cfads"
+    ],
+    "formula_ids": [
+      "F-CFADS",
+      "F-DSCR"
+    ],
+    "table_ids": [
+      "CH16.07-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH16.07",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH16.08",
+    "chapter_id": "CH16",
+    "section_id": "CH16.08",
+    "input_fields": [
+      "targets.project_irr",
+      "targets.equity_irr",
+      "targets.budget_ceiling"
+    ],
+    "metric_ids": [
+      "financial.phase3e.break-even-price",
+      "financial.phase3e.investment-hurdle-gap"
+    ],
+    "formula_ids": [
+      "F-BREAK-EVEN-PRICE",
+      "F-INVESTMENT-HURDLE-GAP"
+    ],
+    "table_ids": [
+      "CH16.08-T01"
+    ],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH16.08",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH17.01",
+    "chapter_id": "CH17",
+    "section_id": "CH17.01",
+    "input_fields": [
+      "scenarios.options",
+      "capex.items",
+      "tariff.periods",
+      "resource.uncertainty_fraction"
+    ],
+    "metric_ids": [],
+    "formula_ids": [
+      "F-SINGLE-FACTOR-SENSITIVITY",
+      "F-SENSITIVITY-ELASTICITY"
+    ],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH17.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH17.02",
+    "chapter_id": "CH17",
+    "section_id": "CH17.02",
+    "input_fields": [
+      "scenarios.options"
+    ],
+    "metric_ids": [],
+    "formula_ids": [
+      "F-SCENARIO-METRIC"
+    ],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH17.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH17.03",
+    "chapter_id": "CH17",
+    "section_id": "CH17.03",
+    "input_fields": [
+      "targets.project_irr",
+      "targets.equity_irr",
+      "targets.payback_years"
+    ],
+    "metric_ids": [],
+    "formula_ids": [
+      "F-INVESTMENT-HURDLE-GAP"
+    ],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH17.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH17.04",
+    "chapter_id": "CH17",
+    "section_id": "CH17.04",
+    "input_fields": [
+      "risk.items",
+      "policy.applicability"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH17.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH17.05",
+    "chapter_id": "CH17",
+    "section_id": "CH17.05",
+    "input_fields": [
+      "scenarios.options"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH17.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH18.01",
+    "chapter_id": "CH18",
+    "section_id": "CH18.01",
+    "input_fields": [
+      "risk.items",
+      "targets.project_irr",
+      "targets.payback_years"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH18.01",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH18.02",
+    "chapter_id": "CH18",
+    "section_id": "CH18.02",
+    "input_fields": [
+      "site.rights_status",
+      "grid.opinion_status",
+      "risk.items"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH18.02",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH18.03",
+    "chapter_id": "CH18",
+    "section_id": "CH18.03",
+    "input_fields": [
+      "targets.risk_preference",
+      "scenarios.options"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH18.03",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH18.04",
+    "chapter_id": "CH18",
+    "section_id": "CH18.04",
+    "input_fields": [
+      "risk.items",
+      "attachments.register"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH18.04",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-CH18.05",
+    "chapter_id": "CH18",
+    "section_id": "CH18.05",
+    "input_fields": [
+      "schedule.tasks",
+      "project.evaluation_date"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [],
+    "source_requirements": [
+      "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
+      "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
+    ],
+    "output_contract": "chapter-result/2.0#sections",
+    "test_id": "T-V2-CH18.05",
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+  },
+  {
+    "requirement_id": "V2-APP01.01",
+    "chapter_id": "APP01",
+    "section_id": "APP01.01",
+    "input_fields": [],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [
+      "APP01.01-T01"
+    ],
+    "source_requirements": [
+      "核验来源登记、附件位置与授权，不把资料登记当作已读全文。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP01.01",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP01.02",
+    "chapter_id": "APP01",
+    "section_id": "APP01.02",
+    "input_fields": [],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [
+      "APP01.02-T01"
+    ],
+    "source_requirements": [
+      "逐项核对输入血缘，缺少实例位置时保留追溯缺口。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP01.02",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP02.01",
+    "chapter_id": "APP02",
+    "section_id": "APP02.01",
+    "input_fields": [
+      "resource.monthly",
+      "resource.period_start",
+      "resource.period_end"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [
+      "APP02.01-T01"
+    ],
+    "source_requirements": [
+      "取得资源原始月表及授权；月发电量不能倒推辐照分量。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP02.01",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP02.02",
+    "chapter_id": "APP02",
+    "section_id": "APP02.02",
+    "input_fields": [
+      "resource.monthly",
+      "load.series"
+    ],
+    "metric_ids": [
+      "energy.monthly.year.1",
+      "energy.year.1",
+      "energy.delivered.year.1",
+      "consumption.year.1",
+      "revenue.year.1"
+    ],
+    "formula_ids": [],
+    "table_ids": [
+      "APP02.02-T01"
+    ],
+    "source_requirements": [
+      "核对时区、月度能量和结算边界，不由发电量代替交付。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP02.02",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP03.01",
+    "chapter_id": "APP03",
+    "section_id": "APP03.01",
+    "input_fields": [
+      "system.module_model",
+      "system.module_count",
+      "system.module_power",
+      "system.module_voc",
+      "system.module_vmp",
+      "system.module_isc",
+      "system.module_imp",
+      "system.modules_per_string",
+      "system.inverter_model",
+      "system.inverter_count",
+      "system.inverter_unit_ac",
+      "system.inverter_mppt_min",
+      "system.inverter_mppt_max",
+      "system.inverter_max_dc_voltage",
+      "system.inverter_max_input_current",
+      "layout.tilt",
+      "layout.azimuth",
+      "layout.row_pitch",
+      "layout.fire_setback"
+    ],
+    "metric_ids": [
+      "dc_capacity",
+      "ac_capacity"
+    ],
+    "formula_ids": [],
+    "table_ids": [
+      "APP03.01-T01"
+    ],
+    "source_requirements": [
+      "取得组件、逆变器和支架数据表并逐字段复核。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP03.01",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP03.02",
+    "chapter_id": "APP03",
+    "section_id": "APP03.02",
+    "input_fields": [
+      "system.losses",
+      "system.annual_degradation"
+    ],
+    "metric_ids": [
+      "energy.annual_array"
+    ],
+    "formula_ids": [],
+    "table_ids": [
+      "APP03.02-T01"
+    ],
+    "source_requirements": [
+      "核查损失顺序、已含标志与衰减时点。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP03.02",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP04.01",
+    "chapter_id": "APP04",
+    "section_id": "APP04.01",
+    "input_fields": [
+      "capex.items",
+      "capex.includes_land",
+      "capex.includes_storage"
+    ],
+    "metric_ids": [
+      "financial.capex.total"
+    ],
+    "formula_ids": [],
+    "table_ids": [
+      "APP04.01-T01"
+    ],
+    "source_requirements": [
+      "逐项核实工程量、数量单价、税与分类专项范围。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP04.01",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP04.02",
+    "chapter_id": "APP04",
+    "section_id": "APP04.02",
+    "input_fields": [
+      "capex.items",
+      "finance.debt_schedule"
+    ],
+    "metric_ids": [
+      "financial.capex.total"
+    ],
+    "formula_ids": [],
+    "table_ids": [
+      "APP04.02-T01"
+    ],
+    "source_requirements": [
+      "补充报价有效期及付款时点，避免应付替代实付。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP04.02",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP05.01",
+    "chapter_id": "APP05",
+    "section_id": "APP05.01",
+    "input_fields": [
+      "opex.items",
+      "assets.depreciation",
+      "assets.replacements"
+    ],
+    "metric_ids": [
+      "financial.opex.cash_lifecycle",
+      "financial.phase3e.project_cash_flow"
+    ],
+    "formula_ids": [],
+    "table_ids": [
+      "APP05.01-T01"
+    ],
+    "source_requirements": [
+      "核对全期运维、更换与残值计划，折旧不作为现金支出。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP05.01",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP05.02",
+    "chapter_id": "APP05",
+    "section_id": "APP05.02",
+    "input_fields": [
+      "tax.regime_reference",
+      "tax.vat_recovery_timing"
+    ],
+    "metric_ids": [
+      "financial.tax.cash_lifecycle",
+      "financial.phase3e.project_cash_flow"
+    ],
+    "formula_ids": [],
+    "table_ids": [
+      "APP05.02-T01"
+    ],
+    "source_requirements": [
+      "取得税制与现金支付依据，对账应计、应付及实付。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP05.02",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP06.01",
+    "chapter_id": "APP06",
+    "section_id": "APP06.01",
+    "input_fields": [
+      "finance.working_capital"
+    ],
+    "metric_ids": [
+      "financial.phase3e.project_cash_flow"
+    ],
+    "formula_ids": [],
+    "table_ids": [
+      "APP06.01-T01"
+    ],
+    "source_requirements": [
+      "取得有日期的投资、税、营运资金和终期收付记录。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP06.01",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP06.02",
+    "chapter_id": "APP06",
+    "section_id": "APP06.02",
+    "input_fields": [
+      "finance.debt_schedule"
+    ],
+    "metric_ids": [
+      "financial.phase3e.equity-investor-cash-flow"
+    ],
+    "formula_ids": [],
+    "table_ids": [
+      "APP06.02-T01"
+    ],
+    "source_requirements": [
+      "核实股东出资、提款、本息和分配，不能沿用项目现金流。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP06.02",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP07.01",
+    "chapter_id": "APP07",
+    "section_id": "APP07.01",
+    "input_fields": [
+      "finance.debt_schedule",
+      "finance.cfads_definition"
+    ],
+    "metric_ids": [
+      "financial.phase3e.dscr"
+    ],
+    "formula_ids": [],
+    "table_ids": [
+      "APP07.01-T01"
+    ],
+    "source_requirements": [
+      "取得合同还本付息日程与CFADS定义后计算覆盖倍数。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP07.01",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP07.02",
+    "chapter_id": "APP07",
+    "section_id": "APP07.02",
+    "input_fields": [
+      "finance.debt_ratio",
+      "finance.debt_schedule"
+    ],
+    "metric_ids": [
+      "financial.phase3e.dscr"
+    ],
+    "formula_ids": [],
+    "table_ids": [
+      "APP07.02-T01"
+    ],
+    "source_requirements": [
+      "核查债务比例与每期偿债额，零分母不得填零倍。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP07.02",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP08.01",
+    "chapter_id": "APP08",
+    "section_id": "APP08.01",
+    "input_fields": [
+      "scenarios.options"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [
+      "APP08.01-T01"
+    ],
+    "source_requirements": [
+      "分别列明各因素变化、其余条件及对应结果，再比较不同情景。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP08.01",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP08.02",
+    "chapter_id": "APP08",
+    "section_id": "APP08.02",
+    "input_fields": [
+      "targets.project_irr",
+      "targets.payback_years"
+    ],
+    "metric_ids": [
+      "financial.phase3e.break-even-price"
+    ],
+    "formula_ids": [],
+    "table_ids": [
+      "APP08.02-T01"
+    ],
+    "source_requirements": [
+      "补充投资目标、重算结果，并核对投资和电量变化对收益的影响方向。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP08.02",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP09.01",
+    "chapter_id": "APP09",
+    "section_id": "APP09.01",
+    "input_fields": [
+      "policy.applicability"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [
+      "APP09.01-T01"
+    ],
+    "source_requirements": [
+      "取得政策文号、原文条款与有效期，不推定现行适用。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP09.01",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP09.02",
+    "chapter_id": "APP09",
+    "section_id": "APP09.02",
+    "input_fields": [
+      "policy.applicability"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [
+      "APP09.02-T01"
+    ],
+    "source_requirements": [
+      "按项目地区和类型记录有效、过期、待核和冲突依据。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP09.02",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP10.01",
+    "chapter_id": "APP10",
+    "section_id": "APP10.01",
+    "input_fields": [
+      "risk.items"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [
+      "APP10.01-T01"
+    ],
+    "source_requirements": [
+      "核对当前发现项、责任人及关闭材料，不将未核实项目视为关闭。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP10.01",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP10.02",
+    "chapter_id": "APP10",
+    "section_id": "APP10.02",
+    "input_fields": [
+      "schedule.tasks",
+      "targets.risk_preference"
+    ],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [
+      "APP10.02-T01"
+    ],
+    "source_requirements": [
+      "核对权属、工程、并网及现金流门槛与重启条件。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP10.02",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP11.01",
+    "chapter_id": "APP11",
+    "section_id": "APP11.01",
+    "input_fields": [],
+    "metric_ids": [],
+    "formula_ids": [
+      "F-DC-CAPACITY",
+      "F-AC-CAPACITY",
+      "F-DC-AC-RATIO",
+      "F-POA-IRRADIATION",
+      "F-FIRST-YEAR-ENERGY",
+      "F-LOSS-COMPOSITE",
+      "F-DC-TIME-POWER",
+      "F-AC-INVERTER-POWER",
+      "F-AVAILABLE-ENERGY",
+      "F-ENERGY-AGGREGATION",
+      "F-INITIAL-DEGRADATION",
+      "F-ANNUAL-DEGRADATION",
+      "F-PIECEWISE-DEGRADATION",
+      "F-EQUIVALENT-HOURS",
+      "F-CAPACITY-FACTOR",
+      "F-PR-OBSERVED",
+      "F-EXPORT-LIMIT-ENERGY",
+      "F-SELF-CONSUMPTION",
+      "F-EXPORTED-ENERGY",
+      "F-CURTAILED-ENERGY",
+      "F-ENERGY-BALANCE",
+      "F-DELIVERED-ENERGY",
+      "F-SELF-CONSUMPTION-RATIO",
+      "F-LOAD-COVERAGE-RATIO",
+      "F-ENERGY-REVENUE",
+      "F-PPA-REVENUE",
+      "F-TAX-EXCLUSIVE-AMOUNT",
+      "F-CASH-RECEIPTS",
+      "F-CAPEX-TOTAL",
+      "F-UNIT-INVESTMENT",
+      "F-ANNUAL-OPEX",
+      "F-OPEX-ESCALATION",
+      "F-STRAIGHT-LINE-DEPRECIATION",
+      "F-ASSET-BOOK-VALUE",
+      "F-TAXABLE-INCOME-PROJECT",
+      "F-TAXABLE-INCOME-EQUITY",
+      "F-INCOME-TAX-ACCRUAL",
+      "F-TAX-LOSS-BALANCE",
+      "F-TAX-CASH-BRIDGE",
+      "F-VAT-CREDIT-BALANCE",
+      "F-OTHER-CASH-TAXES",
+      "F-PROJECT-CASH-FLOW",
+      "F-PROJECT-PRETAX-CASH-FLOW",
+      "F-EQUITY-AVAILABLE-CASH-FLOW",
+      "F-EQUITY-INVESTOR-CASH-FLOW",
+      "F-CASH-FUNDING-BALANCE",
+      "F-DEBT-BALANCE",
+      "F-DEBT-INTEREST",
+      "F-INTEREST-BALANCE",
+      "F-NPV",
+      "F-DATED-NPV",
+      "F-NOMINAL-REAL-RATE",
+      "F-IRR-PROJECT",
+      "F-IRR-EQUITY",
+      "F-CUMULATIVE-CASH-FLOW",
+      "F-STATIC-PAYBACK",
+      "F-DISCOUNTED-CUMULATIVE-CASH",
+      "F-DYNAMIC-PAYBACK",
+      "F-LIFECYCLE-COST",
+      "F-LCOE",
+      "F-CFADS",
+      "F-DEBT-SERVICE",
+      "F-DSCR",
+      "F-BREAK-EVEN-PRICE",
+      "F-SINGLE-FACTOR-SENSITIVITY",
+      "F-SENSITIVITY-ELASTICITY",
+      "F-SCENARIO-METRIC",
+      "F-WORST-CASH-YEAR",
+      "F-CAPEX-PAYMENT-BALANCE",
+      "F-INVESTMENT-HURDLE-GAP",
+      "F-CASH-TAX-TOTAL",
+      "F-UNIT-KW-MW",
+      "F-UNIT-KWH-MWH",
+      "F-UNIT-IRRADIANCE-W-KW",
+      "F-UNIT-COST-WP-KWP",
+      "F-UNIT-DC-CAPACITY",
+      "F-UNIT-AC-CAPACITY",
+      "F-STORAGE-ENERGY-UPDATE",
+      "F-STORAGE-SOC",
+      "F-STORAGE-CHARGE-LIMIT",
+      "F-STORAGE-DISCHARGE-LIMIT",
+      "F-STORAGE-PV-BALANCE",
+      "F-STORAGE-LOAD-BALANCE",
+      "F-STORAGE-CYCLE-COUNT",
+      "F-USABLE-AREA",
+      "F-AVERAGE-ANNUAL-ENERGY",
+      "F-EMISSIONS-AVOIDED",
+      "F-TRANSFORMER-ACTIVE-LIMIT",
+      "F-CAPEX-ITEM-AMOUNT"
+    ],
+    "table_ids": [
+      "APP11.01-T01"
+    ],
+    "source_requirements": [
+      "从正式公式快照核验名称、输入、边界及验证记录，不在报告中补造公式。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP11.01",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP11.02",
+    "chapter_id": "APP11",
+    "section_id": "APP11.02",
+    "input_fields": [],
+    "metric_ids": [],
+    "formula_ids": [
+      "F-DC-CAPACITY",
+      "F-AC-CAPACITY",
+      "F-DC-AC-RATIO",
+      "F-POA-IRRADIATION",
+      "F-FIRST-YEAR-ENERGY",
+      "F-LOSS-COMPOSITE",
+      "F-DC-TIME-POWER",
+      "F-AC-INVERTER-POWER",
+      "F-AVAILABLE-ENERGY",
+      "F-ENERGY-AGGREGATION",
+      "F-INITIAL-DEGRADATION",
+      "F-ANNUAL-DEGRADATION",
+      "F-PIECEWISE-DEGRADATION",
+      "F-EQUIVALENT-HOURS",
+      "F-CAPACITY-FACTOR",
+      "F-PR-OBSERVED",
+      "F-EXPORT-LIMIT-ENERGY",
+      "F-SELF-CONSUMPTION",
+      "F-EXPORTED-ENERGY",
+      "F-CURTAILED-ENERGY",
+      "F-ENERGY-BALANCE",
+      "F-DELIVERED-ENERGY",
+      "F-SELF-CONSUMPTION-RATIO",
+      "F-LOAD-COVERAGE-RATIO",
+      "F-ENERGY-REVENUE",
+      "F-PPA-REVENUE",
+      "F-TAX-EXCLUSIVE-AMOUNT",
+      "F-CASH-RECEIPTS",
+      "F-CAPEX-TOTAL",
+      "F-UNIT-INVESTMENT",
+      "F-ANNUAL-OPEX",
+      "F-OPEX-ESCALATION",
+      "F-STRAIGHT-LINE-DEPRECIATION",
+      "F-ASSET-BOOK-VALUE",
+      "F-TAXABLE-INCOME-PROJECT",
+      "F-TAXABLE-INCOME-EQUITY",
+      "F-INCOME-TAX-ACCRUAL",
+      "F-TAX-LOSS-BALANCE",
+      "F-TAX-CASH-BRIDGE",
+      "F-VAT-CREDIT-BALANCE",
+      "F-OTHER-CASH-TAXES",
+      "F-PROJECT-CASH-FLOW",
+      "F-PROJECT-PRETAX-CASH-FLOW",
+      "F-EQUITY-AVAILABLE-CASH-FLOW",
+      "F-EQUITY-INVESTOR-CASH-FLOW",
+      "F-CASH-FUNDING-BALANCE",
+      "F-DEBT-BALANCE",
+      "F-DEBT-INTEREST",
+      "F-INTEREST-BALANCE",
+      "F-NPV",
+      "F-DATED-NPV",
+      "F-NOMINAL-REAL-RATE",
+      "F-IRR-PROJECT",
+      "F-IRR-EQUITY",
+      "F-CUMULATIVE-CASH-FLOW",
+      "F-STATIC-PAYBACK",
+      "F-DISCOUNTED-CUMULATIVE-CASH",
+      "F-DYNAMIC-PAYBACK",
+      "F-LIFECYCLE-COST",
+      "F-LCOE",
+      "F-CFADS",
+      "F-DEBT-SERVICE",
+      "F-DSCR",
+      "F-BREAK-EVEN-PRICE",
+      "F-SINGLE-FACTOR-SENSITIVITY",
+      "F-SENSITIVITY-ELASTICITY",
+      "F-SCENARIO-METRIC",
+      "F-WORST-CASH-YEAR",
+      "F-CAPEX-PAYMENT-BALANCE",
+      "F-INVESTMENT-HURDLE-GAP",
+      "F-CASH-TAX-TOTAL",
+      "F-UNIT-KW-MW",
+      "F-UNIT-KWH-MWH",
+      "F-UNIT-IRRADIANCE-W-KW",
+      "F-UNIT-COST-WP-KWP",
+      "F-UNIT-DC-CAPACITY",
+      "F-UNIT-AC-CAPACITY",
+      "F-STORAGE-ENERGY-UPDATE",
+      "F-STORAGE-SOC",
+      "F-STORAGE-CHARGE-LIMIT",
+      "F-STORAGE-DISCHARGE-LIMIT",
+      "F-STORAGE-PV-BALANCE",
+      "F-STORAGE-LOAD-BALANCE",
+      "F-STORAGE-CYCLE-COUNT",
+      "F-USABLE-AREA",
+      "F-AVERAGE-ANNUAL-ENERGY",
+      "F-EMISSIONS-AVOIDED",
+      "F-TRANSFORMER-ACTIVE-LIMIT",
+      "F-CAPEX-ITEM-AMOUNT"
+    ],
+    "table_ids": [
+      "APP11.02-T01"
+    ],
+    "source_requirements": [
+      "对照公式工作表复核上下标、求和范围和每个输入来源。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP11.02",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP12.01",
+    "chapter_id": "APP12",
+    "section_id": "APP12.01",
+    "input_fields": [],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [
+      "APP12.01-T01"
+    ],
+    "source_requirements": [
+      "核对术语索引、首次定义与使用位置，不把缩写当定义。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP12.01",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP12.02",
+    "chapter_id": "APP12",
+    "section_id": "APP12.02",
+    "input_fields": [],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [
+      "APP12.02-T01"
+    ],
+    "source_requirements": [
+      "检查DC/AC、辐照度/辐照量和单位投资的口径。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP12.02",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP13.01",
+    "chapter_id": "APP13",
+    "section_id": "APP13.01",
+    "input_fields": [],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [
+      "APP13.01-T01"
+    ],
+    "source_requirements": [
+      "比对模型、运行、输入、来源和结果哈希，不沿用历史附件。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP13.01",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  },
+  {
+    "requirement_id": "V2-APP13.02",
+    "chapter_id": "APP13",
+    "section_id": "APP13.02",
+    "input_fields": [],
+    "metric_ids": [],
+    "formula_ids": [],
+    "table_ids": [
+      "APP13.02-T01"
+    ],
+    "source_requirements": [
+      "区分合成资料、未验证来源、静态快照与页面审阅状态。"
+    ],
+    "output_contract": "legacy-full-appendix",
+    "test_id": "T-V2-APP13.02",
+    "acceptance_status": "PRESERVE_EXISTING_VERIFY_IN_PHASE_F"
+  }
+]

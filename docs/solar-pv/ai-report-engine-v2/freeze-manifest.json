@@ -1,0 +1,10 @@
+{
+  "report_spec_version": "SOLAR-PV-AI-REPORT-ENGINE-2.0.0",
+  "status": "REQUIREMENTS_FROZEN",
+  "hash_normalization": "UTF-8 without BOM; CRLF to LF; SHA-256",
+  "files": {
+    "docs/solar-pv/40-ai-report-engine-2.0-requirements-frozen.md": "5b538c5deb84ef31ded60216ed5bb6222ba4bbfe44d8d6a4928905d7db6e5732",
+    "services/solar-pv-engine/src/wangbin_solar_pv/reporting/specs/report-spec.json": "885b92420ee3bbfd9b6ce473ed764584a224d9c246e0d294be638a549fd85f91",
+    "docs/solar-pv/ai-report-engine-v2/acceptance-matrix.json": "fb9e987cff8246b857bdea2d6f8aa3474df98e229a292ab89e40e14fd1022bb4"
+  }
+}
