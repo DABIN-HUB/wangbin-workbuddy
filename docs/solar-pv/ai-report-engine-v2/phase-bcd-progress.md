@@ -14,7 +14,7 @@
 
 每个pytest进程180秒上限，独立log/JUnit/exit receipt。失败证据不覆盖。原197项仅历史基线。原PDF/真实资料/专业及发布门禁保持独立。
 
-当前状态：IN_PROGRESS；尚不能宣布Phase B/C/D通过。
+当前状态：PARTIAL / MODEL_INTEGRATION_BLOCKED。基础适配已提交并验证；Phase C仍有非模型能力缺口，Phase D未执行。不得宣布完整B/C/D或2.0通过。
 
 ## 规格补充结果
 EXC-003已经实现；新hash `59e379906f6b83d91a76179f14fdc00e5c0dc9346ef5d272bbcf04da90df7532`。104项规格专项通过，exit 0，93.445秒；回执exc003-receipt.json。首次规格自动补丁因重复上下文失败且无修改，扩大稳定小节上下文后成功；冻结40号文档未改。表格数据适配仍在后续阶段，不以规格PASS替代运行。
@@ -32,3 +32,10 @@ EXC-003已经实现；新hash `59e379906f6b83d91a76179f14fdc00e5c0dc9346ef5d272b
 上游已accept结果在prepare/accept/resume时递归重验，绑定原身份、引用、摘要与依赖hash；新上游或改动使下游失效。语义待审的上游文字只能作为待审分析，不能成为工程事实。CH01/CH18在专业审阅未闭合时仅DEFER；不声明实现了正式四态裁决。
 新增claim对象（七类主张、事实/来源、条件、段落范围、支持状态、判断效应），有引用不等于达标。工程准入、收益改善与目标通过等强判断目前拒绝自动提升；自然语言语义审核仍未通过。受控term槽仅允许公式名称/真实单位，不放开裸数字。通过compat集中标明保留的结构/格式工具依赖，不删旧模块或固定文案；这不是彻底拆分report_export。
 18项依赖/claim/术语专项通过；新框架两类完整分组36及35通过。模型状态详见host-orchestration-review.md，真实宿主仍未核验。
+
+## Phase C 确定性适配与边界
+章节依赖提交：2dbc7822dbfe322fa4f89062a2895dc41abe8a26。
+新增六类评价适配、执行情景校验/比较、evaluate/compare公开CLI及scenario-bundle缓存绑定。两案各实际重算一个合成运维压力候选，保留独立身份；双案CH17协议经prepare/accept/resume及现有样式DOCX实际验证，但不是AI正文。
+会计净利润、独立经营现金和股东回收尚无足够生产者/口径；候选缺同身份终期及交易费用现金绑定，不能比较NPV或宣布优化完成。正式状态为Phase C PARTIAL，详见phase-c-financial-contract.md。
+最终选定JUnit分组去重共251项通过：规格104、typed22、依赖18、评价13、新框架36+35、原财务kernel17、旧Word样式/表格/公式3+3；全部选定进程exit0、零失败/错误/跳过。中间失败与重跑不重复计数；全仓未重跑，历史R12终止门禁未关闭。最终摘要在final-verification-summary.json。
+模型真实调用、八章双类型AI样本、R13与真实AI内容对照、独立专业QA均未执行；本轮保留阻断，不进入E/F/G，不push、不发布。

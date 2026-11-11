@@ -35,13 +35,20 @@ def source_ids(result):
     return found
 
 
-def build_pack(model, registry, chapter_id, allowed_source_ids):
+def build_pack(model, registry, chapter_id, allowed_source_ids, scenario_bundle=None):
     # Revalidate at the trust boundary, including callers constructing ReportModel directly.
     model = ReportModel.from_result(model.result, model.catalog)
     if model.result['pv_type'] not in registry.spec['project_types']:
         raise ContractError('REPORT_PROJECT_TYPE_UNSUPPORTED')
+    from .scenario_comparison import compare_scenarios
+    comparison = compare_scenarios(model, scenario_bundle) if scenario_bundle is not None else None
+    known_sources = source_ids(model.result)
+    if comparison:
+        known_sources |= {s for row in comparison['rows'] for s in row['source_ids']}
+        for entry in scenario_bundle['entries']:
+            known_sources |= source_ids(entry['results']['3E'])
     allowed = set(allowed_source_ids)
-    if not all(isinstance(s, str) for s in allowed) or allowed - source_ids(model.result):
+    if not all(isinstance(s, str) for s in allowed) or allowed - known_sources:
         raise ContractError('REPORT_SOURCE_AUTHORIZATION')
     chapter = registry.chapter(chapter_id)
     normalized = model.result['inputs'].get('normalized', {})
@@ -168,6 +175,46 @@ def build_pack(model, registry, chapter_id, allowed_source_ids):
         section_sources = sorted({source for fact in scoped for source in facts[fact]['source_ids']})
         for table in sec['tables']:
             tables[table['table_id']] = controlled_table(table, facts, scoped)
+        for definition in sec['tables']:
+            if definition['renderer'] != 'scenario_comparison' or comparison is None:
+                continue
+            table = tables[definition['table_id']]
+            for row in comparison['rows']:
+                if not row['source_ids'] or not set(row['source_ids']) <= allowed:
+                    missing.append('SCENARIO_SOURCES_NOT_AUTHORIZED:' + row['identity']['result_hash'])
+                    continue
+                if sid == 'CH17.01' and row['scenario_id'] != 'BASE' and not row.get('single_factor'):
+                    continue
+                cells = {'scenario_id': row['scenario_id'], 'identity': row['identity']['run_id'],
+                         'capital': '未形成独立初始资金需求结果', 'status': '；'.join(row['reasons']) or '指标可用，工程条件待核'}
+                bindings = {}
+                for key, metric in row['metrics'].items():
+                    if not metric:
+                        cells[key] = '没有生产者结果'
+                        bindings[key] = []
+                        continue
+                    fact_id = 'scenario:' + row['identity']['result_hash'] + ':' + metric['metric_id']
+                    facts[fact_id] = {'kind': 'metric', 'metric_id': metric['metric_id'],
+                                     'label': row['scenario_id'] + ' ' + _metric_label(metric['metric_id']),
+                                     'value': metric['value'], 'display': _decision_metric_text(metric),
+                                     'unit': metric['unit'], 'display_unit': '' if key == 'irr' else _metric_unit(metric),
+                                     'status': metric['status'], 'reason': metric['reason'], 'period': metric['period'],
+                                     'source_ids': row['source_ids'], 'boundary': 'INDEPENDENT_CANDIDATE_NOT_APPROVAL',
+                                     'formula_id': metric['formula_id'],
+                                     'provenance': {'result_identity': row['identity'], 'comparison_hash': comparison['comparison_hash']}}
+                    if metric['status'] != 'CALCULATED' and key != 'irr':
+                        facts[fact_id]['display'] = '尚无可用结果'
+                    cells[key] = facts[fact_id]['display']
+                    bindings[key] = [fact_id]
+                    if fact_id not in scoped:
+                        scoped.append(fact_id)
+                    if metric['metric_id'] not in metric_ids:
+                        metric_ids.append(metric['metric_id'])
+                table['rows'].append({'row_id': row['identity']['result_hash'], 'cells': cells, 'bindings': bindings})
+            table['status'] = (comparison['status'] if len(table['rows']) == len(comparison['rows']) else
+                               'PARTIAL_AUTHORIZATION_OR_FILTER_NO_COMPARISON' if table['rows'] else 'NO_AUTHORIZED_ROWS')
+            table['comparison_hash'] = comparison['comparison_hash']
+        section_sources = sorted({source for fact in scoped for source in facts[fact]['source_ids']})
         na = ('集中式地面不采用屋顶负荷及自用节费模型' if model.result['pv_type'] == 'utility_scale_ground'
               and sid in {'CH10.01', 'CH10.03'} else
               '本版不执行储能调度计算' if sid == 'CH10.06' else None)

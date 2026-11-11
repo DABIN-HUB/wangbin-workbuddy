@@ -51,13 +51,13 @@ def _upstream(store, state, chapter, model, registry, config, cache):
     return dependencies
 
 
-def prepare(workspace, run_name, model, registry, chapter_id, config, allowed_source_ids):
+def prepare(workspace, run_name, model, registry, chapter_id, config, allowed_source_ids, scenario_bundle=None):
     _id(run_name)
     cfg = config.to_dict()
-    pack = build_pack(model, registry, chapter_id, allowed_source_ids)
+    pack = build_pack(model, registry, chapter_id, allowed_source_ids, scenario_bundle)
     chapter = registry.chapter(chapter_id)
     binding = {'identity': model.identity, 'spec_hash': registry.hash, 'model_config': cfg,
-               'authorized_sources': sorted(set(allowed_source_ids))}
+               'authorized_sources': sorted(set(allowed_source_ids)), 'scenario_bundle_hash': digest(scenario_bundle)}
     root = workspace.path(run_name, json_only=False)
     if not root.exists():
         root.mkdir(mode=0o700)
@@ -71,6 +71,8 @@ def prepare(workspace, run_name, model, registry, chapter_id, config, allowed_so
         else:
             state = {'binding': binding, 'generation_run_id': str(uuid4()), 'requests': []}
             old_hash = None
+        if scenario_bundle is not None and not store.path('scenario-evidence.json').exists():
+            store.create('scenario-evidence.json', scenario_bundle)
         attempts = sum(r['chapter_id'] == chapter_id for r in state['requests'])
         if attempts >= cfg['max_attempts_per_chapter'] or len(state['requests']) >= cfg['max_requests']:
             raise ContractError('MODEL_REQUEST_BUDGET_EXHAUSTED')
@@ -113,7 +115,10 @@ def _request(store, request_id, model, registry, config, _cache=None):
     if (request['binding']['identity'] != model.identity or request['binding']['spec_hash'] != registry.hash
             or request['binding']['model_config'] != config.to_dict()):
         raise ContractError('GENERATION_CACHE_IDENTITY_CHANGED')
-    pack = build_pack(model, registry, request['chapter_id'], request['binding']['authorized_sources'])
+    bundle = store.read('scenario-evidence.json')[0] if store.path('scenario-evidence.json').exists() else None
+    if digest(bundle) != request['binding'].get('scenario_bundle_hash'):
+        raise ContractError('CHAPTER_SCENARIO_EVIDENCE_CHANGED')
+    pack = build_pack(model, registry, request['chapter_id'], request['binding']['authorized_sources'], bundle)
     if pack != request['evidence_pack'] or request['chapter_spec'] != registry.chapter(request['chapter_id']):
         raise ContractError('CHAPTER_EVIDENCE_CHANGED')
     upstream = _upstream(store, state, registry.chapter(request['chapter_id']), model, registry, config,

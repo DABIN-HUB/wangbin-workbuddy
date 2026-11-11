@@ -17,7 +17,7 @@ from .report_planner import plan
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=['spec-check', 'schema', 'plan', 'status', 'prepare', 'accept', 'resume'])
+    parser.add_argument('command', choices=['spec-check', 'schema', 'plan', 'status', 'prepare', 'accept', 'resume', 'evaluate', 'compare'])
     parser.add_argument('--canonical', type=Path)
     parser.add_argument('--workspace', type=Path)
     parser.add_argument('--run')
@@ -32,6 +32,7 @@ def main(argv=None):
     parser.add_argument('--max-attempts', type=int, default=2)
     parser.add_argument('--max-requests', type=int, default=24)
     parser.add_argument('--authorized-source', action='append', default=[])
+    parser.add_argument('--scenario-bundle', type=Path, help='Explicit local executed scenario evidence; never sent raw to model')
     parser.add_argument('--docx', help='New DOCX filename inside selected run; partial review only')
     args = parser.parse_args(argv)
     try:
@@ -45,17 +46,28 @@ def main(argv=None):
                 'status': 'REQUIREMENTS_FROZEN', 'spec_hash': registry.hash,
                 'counts': registry.spec['protected_counts']}
         else:
-            if not all((args.canonical, args.workspace, args.run, args.model)):
+            if args.canonical is None:
+                raise ContractError('CHAPTER_ARGUMENTS_REQUIRED')
+            if args.command not in {'evaluate', 'compare'} and not all((args.canonical, args.workspace, args.run, args.model)):
                 raise ContractError('CHAPTER_ARGUMENTS_REQUIRED')
             canonical = args.canonical.absolute()
             result_data, _ = Workspace(canonical.parent).read(canonical.name)
             model = ReportModel.from_result(result_data, catalog)
+            bundle = None
+            if args.scenario_bundle:
+                path = args.scenario_bundle.absolute()
+                bundle, _ = Workspace(path.parent).read(path.name)
+            if args.command in {'evaluate', 'compare'}:
+                from .financial_evaluation import evaluate_financial
+                from .scenario_comparison import compare_scenarios
+                print(dumps(evaluate_financial(model) if args.command == 'evaluate' else compare_scenarios(model, bundle)))
+                return 0
             workspace = Workspace(args.workspace)
             config = ModelConfig(args.model, args.reasoning_level, args.timeout_seconds,
                                  args.max_request_bytes, args.max_output_bytes, args.max_attempts, args.max_requests)
             config.to_dict()
             if args.command == 'prepare':
-                result = prepare(workspace, args.run, model, registry, args.chapter, config, args.authorized_source)
+                result = prepare(workspace, args.run, model, registry, args.chapter, config, args.authorized_source, bundle)
                 result = {k: result[k] for k in ('request_id', 'request_hash', 'generation_run_id', 'execution_state')}
             else:
                 store = Workspace(workspace.path(args.run, json_only=False))
