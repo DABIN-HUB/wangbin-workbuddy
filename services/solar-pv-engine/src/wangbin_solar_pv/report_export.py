@@ -1326,6 +1326,8 @@ def _add_table(document: Document, headers: list[str], rows: list[list[Any]], ca
         cell.width = Cm(widths[index])
         if layout_type == "ANNUAL_LEDGER_TABLE" and index > 0:
             cell._tc.get_or_add_tcPr().append(OxmlElement("w:noWrap"))
+        if index in nowrap_columns:
+            cell._tc.get_or_add_tcPr().append(OxmlElement("w:noWrap"))
         for paragraph in cell.paragraphs:
             paragraph.style = "Solar Table"
             paragraph.alignment = WD_ALIGN_PARAGRAPH.LEFT
@@ -1425,6 +1427,7 @@ def _add_canonical_charts(document: Document, model: ReportModel, specs: list[di
     for spec in specs:
         paragraph = document.add_paragraph()
         paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        paragraph.paragraph_format.keep_with_next = True
         font_metadata: dict[str, Any] = {}
         paragraph.add_run().add_picture(_chart_png(spec, font_metadata=font_metadata), width=Cm(WORD_FORMAT.text_width_cm))
         figure_no = len([p for p in document.paragraphs if p.style.name == "Caption" and p.text.startswith("图")]) + 1
@@ -1654,6 +1657,32 @@ def _add_professional_narrative(document: Document, evidence: dict[str, Any]) ->
     for text in evidence.get("narrative", ()):
         paragraph = document.add_paragraph(_reader_text(text))
         paragraph.paragraph_format.keep_together = True
+
+
+def _format_reader_inline(document: Document) -> None:
+    """Keep reader-facing magnitudes with their units; leave source values alone."""
+    number_unit = re.compile(
+        r"(?<![第\d.,])([\d][\d,]*(?:\.\d+)?)[ \t]*(kWh/㎡|W/㎡|元/kWh|元/kWp|kWac|kWp|kWh|kW|㎡|元|年|件|小时|m/s|°C|℃|m(?![A-Za-z]))"
+    )
+    percent = re.compile(r"(?<![\d.])(\d+(?:\.\d{3,}))%")
+    paragraphs = [(p, False) for p in document.paragraphs]
+    paragraphs.extend((p, True) for table in document.tables for row in table.rows
+                      for cell in row.cells for p in cell.paragraphs)
+    for paragraph, in_table in paragraphs:
+        if paragraph.style.name.startswith(("Heading", "TOC ", "toc ")) or paragraph.style.name == "Caption" or paragraph._p.xpath("./m:oMath"):
+            continue
+        for run in paragraph.runs:
+            original = run.text
+            if not original:
+                continue
+            text = number_unit.sub(lambda match: match.group(1) + "\u00a0" + match.group(2), original)
+            if not in_table:
+                text = re.sub(r"(?<!\d)(\d{4})-(\d{2})-(\d{2})(?!\d)",
+                              lambda match: f"{match.group(1)}年{match.group(2)}月{match.group(3)}日", text)
+            if "根" not in original and "搜索域" not in original:
+                text = percent.sub(lambda match: decision_percent(Decimal(match.group(1)) / 100), text)
+            if text != original:
+                run.text = text
 
 
 def _word_metric_rows(model: ReportModel, source_map: dict[str, str], prefixes: tuple[str, ...] = ()) -> list[list[str]]:
@@ -2679,7 +2708,9 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     for chapter_id, chapter_title, items in display_chapters:
         chapter_heading = add_numbered_heading(document, heading_number(chapter_id, chapter_title), bookmark_index)
         bookmark_index += 1
-        chapter_heading.paragraph_format.page_break_before = chapter_id != "CH01"
+        # A preview's short final subsection should flow into the next chapter;
+        # the heading style already keeps each chapter title with its opening.
+        chapter_heading.paragraph_format.page_break_before = chapter_id != "CH01" and not reader_preview
         # The first subsection supplies the substantive opening. A stock
         # "本章说明…" paragraph before every chapter adds no project finding.
         if chapter_id == "CH08":
@@ -2695,7 +2726,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             if item_id == "CH13.02":
                 _add_table(document, ["任务", "开始", "结束", "持续时间", "前置任务", "计划性质"],
                            _plan_word_rows(model), "实施计划（日期为登记的预排日期；计划重点未经关键路径算法验证）",
-                           widths_cm=(5.2, 2.65, 2.65, 2.2, 2.1, 2.2), nowrap_columns=(1, 2),
+                           widths_cm=(5.1, 2.65, 2.65, 2.55, 2.05, 2.0), nowrap_columns=(1, 2),
                            layout_type="PLAN_TABLE")
             if item_id == "CH18.04":
                 gates = _next_stage_rows(model)
@@ -2752,7 +2783,9 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
     for app_id, app_title in reader_appendices:
         appendix_heading = add_numbered_heading(document, heading_number(app_id, app_title), bookmark_index)
         bookmark_index += 1
-        appendix_heading.paragraph_format.page_break_before = True
+        # Keep the appendix boundary, but do not strand the final formula page
+        # ahead of the short glossary and unit appendices in the preview.
+        appendix_heading.paragraph_format.page_break_before = not reader_preview or app_id not in {"APP12", "APP13"}
         document.add_paragraph(READER_APPENDIX_LEADS[app_id] if reader_preview else
                                f"本附录《{app_title}》列示本项目相关资料；原始精度与来源编号见配套工作簿。")
         for item_no in (1, 2):
@@ -2807,9 +2840,11 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                       "每行来源索引须与变量列一同使用，逐字段原值、单位、数据集版本及来源号见测算模型 M04。"
                                       "月度气象资源不是发电量，也不代表场址多年实测。")
                 document.add_paragraph(resource_intro)
-                _add_table(document, ["月份", "GHI (kWh/㎡)", "DNI (kWh/㎡)", "DHI (kWh/㎡)",
-                                      "POA (kWh/㎡)", "来源索引"], irradiance,
-                           "月度辐照资源（来源索引须结合变量列读取）",
+                _add_table(document, ["月份", "GHI", "DNI", "DHI", "POA", "来源索引"] if reader_preview else
+                           ["月份", "GHI (kWh/㎡)", "DNI (kWh/㎡)", "DHI (kWh/㎡)", "POA (kWh/㎡)", "来源索引"],
+                           irradiance,
+                           "月度辐照资源（GHI/DNI/DHI/POA 均为 kWh/㎡；来源索引须结合变量列读取）"
+                           if reader_preview else "月度辐照资源（来源索引须结合变量列读取）",
                            widths_cm=(1.2, 2.4, 2.4, 2.4, 2.4, 5.8))
                 _add_table(document, ["月份", "气温 (°C)", "风速 (m/s)", "覆盖率（%）", "来源索引"], weather,
                            "月度气象资源（覆盖率由原始比值乘100展示）",
@@ -2827,7 +2862,7 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 document.add_paragraph("下表按已记录的月份顺序对应既有发电与结算月度结果；"
                                        "可用列表示结算前、已计入发电链限发的月度电量；结算截弃是另一边界。"
                                        "未绑定逐月发电链限发损失时不按全年比例分摊，也不把月表的可用列称为限发前电量。"
-                                       "月份身份或电量平衡无法确认时标为待核验。")
+                                       "月份身份或电量平衡无法确认时标为待核验。以下逐月结果是合成预测，并非实际计量。")
                 monthly = _monthly_balance_rows(model)
                 for title, names, columns, widths, repeat_identity in (
                     (("首年月度发电与上网（kWh；示例预测）" if pv_type == "utility_scale_ground"
@@ -2837,7 +2872,9 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                      ("月", "结算截弃", "交付", "可用（结算前）", "性质"),
                      (0, 4, 5, 6, 7), (1.6, 3.4, 3.4, 4.0, 4.6), True),
                 ):
-                    _add_table(document, list(names), [[row[index] for index in columns] for row in monthly],
+                    _add_table(document, list(names), [[("合成预测" if reader_preview and index == 7 and
+                                                     row[index] == "合成月度结果；非实际计量" else row[index])
+                                                    for index in columns] for row in monthly],
                                title, widths_cm=widths, layout_type="TECHNICAL_DETAIL_TABLE",
                                continuation_identity=reader_preview and repeat_identity)
                 available = model.metric("available_kwh.year.1") or {}
@@ -2932,10 +2969,13 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                                        "（原始比值）；后期设备更换停机见年度发电结果，不由更换事件推定性能恢复增益。")
             if item_id == "APP04.01":
                 _add_table(document, ["投资分项", "数量", "金额（元）", "付款日期", "期间及性质"],
-                           _capex_word_rows(model),
+                           [[*row[:3], date.fromisoformat(row[3]).strftime("%Y.%m.%d"), row[4]]
+                            if reader_preview and isinstance(row[3], str) and
+                            re.fullmatch(r"\d{4}-\d{2}-\d{2}", row[3]) else row
+                            for row in _capex_word_rows(model)],
                            "资本支出分项" if reader_preview else
                            "CAPEX分项：建设期与后期更换分开列示；行ID、原金额、税口径与来源见测算模型 M10。",
-                           widths_cm=(5.0, 2.5, 3.0, 2.6, 3.9))
+                           widths_cm=(5.0, 2.5, 3.0, 2.6, 3.9), nowrap_columns=(3,) if reader_preview else ())
                 if reader_preview:
                     document.add_paragraph("建设期与后期更换分别列示；原始金额、税费口径与来源见测算模型 M10。")
                 rate = model.result["inputs"].get("normalized", {}).get("capex.contingency_rate")
@@ -3095,7 +3135,9 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
                 equity = model.metric("financial.phase3e.equity-investor-cash-flow")
                 if equity and equity.get("status") != "CALCULATED":
                     document.add_paragraph("资本金现金流尚未形成可列示的逐期序列；该缺口仅限资本金口径，"
-                                           "不撤销APP06.01已计算的项目全期现金流。具体阻断实例和原因见测算模型 M15。")
+                                           + ("不撤销附录F第一节已计算的项目全期现金流。" if reader_preview else
+                                              "不撤销APP06.01已计算的项目全期现金流。")
+                                           + "具体阻断实例和原因见测算模型 M15。")
             if item_id == "APP07.02":
                 dscr = model.metric("financial.phase3e.dscr")
                 if dscr and dscr.get("status") == "UNDEFINED" and dscr.get("reason") == "ZERO_DEBT_SERVICE":
@@ -3281,6 +3323,8 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
         _add_table(document, ["身份字段", "统一测算值"],
                    [[identity_labels.get(key, key), str(value)] for key, value in model.identity.items()],
                    "统一测算身份", widths_cm=(3.2, 13.8), nowrap_columns=(1,))
+    if reader_preview:
+        _format_reader_inline(document)
     render_script_o_glyph(document)
     numbering = validate_numbering(document, display_chapters, reader_appendices, reader_appendix_titles,
                                    [formula["formula_id"] for formula in reader_formulas])
