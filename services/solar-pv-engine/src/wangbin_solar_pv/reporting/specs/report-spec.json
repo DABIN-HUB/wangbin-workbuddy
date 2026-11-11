@@ -1,6 +1,6 @@
 {
   "report_spec_version": "SOLAR-PV-AI-REPORT-ENGINE-2.0.0",
-  "prompt_version": "2.0.0",
+  "prompt_version": "2.0.0-exc003",
   "status": "REQUIREMENTS_FROZEN",
   "project_types": [
     "industrial_rooftop",
@@ -3326,7 +3326,65 @@
           ],
           "metric_ids": [],
           "formula_ids": [],
-          "tables": [],
+          "tables": [
+            {
+              "table_id": "CH06.04-T01",
+              "purpose": "基准及替代方案：独立结果、约束及口径",
+              "columns": [
+                {
+                  "key": "scenario_id",
+                  "title": "已执行方案",
+                  "unit": null
+                },
+                {
+                  "key": "identity",
+                  "title": "独立运行身份",
+                  "unit": null
+                },
+                {
+                  "key": "npv",
+                  "title": "项目税后NPV",
+                  "unit": "currency"
+                },
+                {
+                  "key": "irr",
+                  "title": "项目IRR完整根集",
+                  "unit": "1"
+                },
+                {
+                  "key": "static_payback",
+                  "title": "静态回收期",
+                  "unit": "year"
+                },
+                {
+                  "key": "dynamic_payback",
+                  "title": "动态回收期",
+                  "unit": "year"
+                },
+                {
+                  "key": "capital",
+                  "title": "初始资金需求",
+                  "unit": "currency"
+                },
+                {
+                  "key": "status",
+                  "title": "可比状态与工程限制",
+                  "unit": null
+                }
+              ],
+              "row_granularity": "每个原始任务/风险row_id或每个独立计算候选一行；evidence_rows按原子事实",
+              "source_binding": {
+                "input_fields": [
+                  "scenarios.options"
+                ],
+                "metric_ids": [],
+                "executed_bundle": "verified_scenario_comparison"
+              },
+              "applicability": "仅已授权、已核验输入或独立结果；缺失时输出明确不可用原因，不生成数值",
+              "sort_rule": "保持原始行顺序；候选保持执行清单顺序，不按模型偏好重排",
+              "renderer": "scenario_comparison"
+            }
+          ],
           "figure_requirements": [],
           "figure_ids": [],
           "analysis_tasks": [
@@ -3343,10 +3401,17 @@
           "output_acceptance": [
             "至少一基准一有约束依据的可行替代；不可只换标题或比较不可建方案。",
             "自然中文，项目事实与解释分开；每个事实用允许的引用；数字只能通过受控绑定呈现",
-            "不得复制旧固定正文或将资料登记当作审批；专业语义待独立审核"
+            "不得复制旧固定正文或将资料登记当作审批；专业语义待独立审核",
+            "必须解释条件表的实际可用状态；无实算或未授权时不宣称比较、达标或完成。"
           ],
           "output_contract": "chapter-result/2.0#sections",
-          "review_state": "SPEC_COMPILED_NOT_CONTENT_ACCEPTED"
+          "review_state": "SPEC_COMPILED_NOT_CONTENT_ACCEPTED",
+          "scenario_bindings": {
+            "kind": "EXECUTED_CANDIDATES",
+            "identity": "control + prepared input + validated 3E result + sealed scenario receipt",
+            "minimum_for_comparison": 2,
+            "missing_behavior": "NO_EXECUTED_COMPARISON; scenarios.options仅输入，不代表执行"
+          }
         },
         {
           "section_id": "CH06.05",
@@ -3402,7 +3467,67 @@
           ],
           "metric_ids": [],
           "formula_ids": [],
-          "tables": [],
+          "tables": [
+            {
+              "table_id": "CH06.05-T01",
+              "purpose": "同边界有效候选的收益、资金及限制比较",
+              "columns": [
+                {
+                  "key": "scenario_id",
+                  "title": "已执行方案",
+                  "unit": null
+                },
+                {
+                  "key": "identity",
+                  "title": "独立运行身份",
+                  "unit": null
+                },
+                {
+                  "key": "npv",
+                  "title": "项目税后NPV",
+                  "unit": "currency"
+                },
+                {
+                  "key": "irr",
+                  "title": "项目IRR完整根集",
+                  "unit": "1"
+                },
+                {
+                  "key": "static_payback",
+                  "title": "静态回收期",
+                  "unit": "year"
+                },
+                {
+                  "key": "dynamic_payback",
+                  "title": "动态回收期",
+                  "unit": "year"
+                },
+                {
+                  "key": "capital",
+                  "title": "初始资金需求",
+                  "unit": "currency"
+                },
+                {
+                  "key": "status",
+                  "title": "可比状态与工程限制",
+                  "unit": null
+                }
+              ],
+              "row_granularity": "每个原始任务/风险row_id或每个独立计算候选一行；evidence_rows按原子事实",
+              "source_binding": {
+                "input_fields": [
+                  "targets.budget_ceiling",
+                  "grid.available_capacity",
+                  "risk.items"
+                ],
+                "metric_ids": [],
+                "executed_bundle": "verified_scenario_comparison"
+              },
+              "applicability": "仅已授权、已核验输入或独立结果；缺失时输出明确不可用原因，不生成数值",
+              "sort_rule": "保持原始行顺序；候选保持执行清单顺序，不按模型偏好重排",
+              "renderer": "scenario_comparison"
+            }
+          ],
           "figure_requirements": [],
           "figure_ids": [],
           "analysis_tasks": [
@@ -3419,10 +3544,17 @@
           "output_acceptance": [
             "相同边界比较技术/投资/收益/风险；门槛缺失不宣称最优。",
             "自然中文，项目事实与解释分开；每个事实用允许的引用；数字只能通过受控绑定呈现",
-            "不得复制旧固定正文或将资料登记当作审批；专业语义待独立审核"
+            "不得复制旧固定正文或将资料登记当作审批；专业语义待独立审核",
+            "必须解释条件表的实际可用状态；无实算或未授权时不宣称比较、达标或完成。"
           ],
           "output_contract": "chapter-result/2.0#sections",
-          "review_state": "SPEC_COMPILED_NOT_CONTENT_ACCEPTED"
+          "review_state": "SPEC_COMPILED_NOT_CONTENT_ACCEPTED",
+          "scenario_bindings": {
+            "kind": "EXECUTED_CANDIDATES",
+            "identity": "control + prepared input + validated 3E result + sealed scenario receipt",
+            "minimum_for_comparison": 2,
+            "missing_behavior": "NO_EXECUTED_COMPARISON; scenarios.options仅输入，不代表执行"
+          }
         },
         {
           "section_id": "CH06.06",
@@ -7051,7 +7183,62 @@
           ],
           "metric_ids": [],
           "formula_ids": [],
-          "tables": [],
+          "tables": [
+            {
+              "table_id": "CH13.02-T01",
+              "purpose": "建设计划与前置依赖；日历跨度不是关键路径工期",
+              "columns": [
+                {
+                  "key": "name",
+                  "title": "任务",
+                  "unit": null,
+                  "field_id": "schedule.tasks.name"
+                },
+                {
+                  "key": "start",
+                  "title": "开始日期",
+                  "unit": null,
+                  "field_id": "schedule.tasks.start_date"
+                },
+                {
+                  "key": "finish",
+                  "title": "结束日期",
+                  "unit": null,
+                  "field_id": "schedule.tasks.finish_date"
+                },
+                {
+                  "key": "duration",
+                  "title": "日历跨度（结束减开始）",
+                  "unit": "day"
+                },
+                {
+                  "key": "predecessors",
+                  "title": "前置任务",
+                  "unit": null,
+                  "field_id": "schedule.tasks.predecessor_ids"
+                },
+                {
+                  "key": "owner",
+                  "title": "拟议责任",
+                  "unit": null,
+                  "field_id": "schedule.tasks.owner"
+                }
+              ],
+              "row_granularity": "每个原始任务/风险row_id或每个独立计算候选一行；evidence_rows按原子事实",
+              "source_binding": {
+                "input_fields": [
+                  "schedule.tasks",
+                  "schedule.construction_start",
+                  "schedule.commissioning_date"
+                ],
+                "metric_ids": [],
+                "executed_bundle": null
+              },
+              "applicability": "仅已授权、已核验输入或独立结果；缺失时输出明确不可用原因，不生成数值",
+              "sort_rule": "保持原始行顺序；候选保持执行清单顺序，不按模型偏好重排",
+              "renderer": "schedule_rows"
+            }
+          ],
           "figure_requirements": [],
           "figure_ids": [],
           "analysis_tasks": [
@@ -7070,7 +7257,8 @@
           "output_acceptance": [
             "阶段任务、起止时间、招采和验收接口完整。",
             "自然中文，项目事实与解释分开；每个事实用允许的引用；数字只能通过受控绑定呈现",
-            "不得复制旧固定正文或将资料登记当作审批；专业语义待独立审核"
+            "不得复制旧固定正文或将资料登记当作审批；专业语义待独立审核",
+            "必须解释条件表的实际可用状态；无实算或未授权时不宣称比较、达标或完成。"
           ],
           "output_contract": "chapter-result/2.0#sections",
           "review_state": "SPEC_COMPILED_NOT_CONTENT_ACCEPTED"
@@ -8831,7 +9019,8 @@
           "figure_ids": [],
           "analysis_tasks": [
             "解释建设到终期无杠杆项目净流量，区分年度转正与累计回收；利润指标缺失明确不可判",
-            "围绕本研究对象说明事实如何影响后续工程或财务判断，不计算或补写数值"
+            "围绕本研究对象说明事实如何影响后续工程或财务判断，不计算或补写数值",
+            "分别核验会计净利润、年度经营现金净流量及累计经营现金；税基或项目现金流不替代净利润，节费不冒充销售收款。"
           ],
           "professional_meaning": "建立项目资金回收的完整现金依据",
           "decision_contribution": "建立项目资金回收的完整现金依据",
@@ -8954,7 +9143,8 @@
           "figure_ids": [],
           "analysis_tasks": [
             "核对股东实际出资分配退出及融资事件，缺少独立事件不得套用项目回本",
-            "围绕本研究对象说明事实如何影响后续工程或财务判断，不计算或补写数值"
+            "围绕本研究对象说明事实如何影响后续工程或财务判断，不计算或补写数值",
+            "股东出资、分配、退出与偿债事件独立核验；无债务不等于已知股东现金。"
           ],
           "professional_meaning": "保护股东回报与项目回报的边界",
           "decision_contribution": "保护股东回报与项目回报的边界",
@@ -9117,7 +9307,8 @@
           "figure_ids": [],
           "analysis_tasks": [
             "按同现金流税价口径解释NPV和IRR根集，不能挑选有利根或以正NPV忽略工程风险",
-            "围绕本研究对象说明事实如何影响后续工程或财务判断，不计算或补写数值"
+            "围绕本研究对象说明事实如何影响后续工程或财务判断，不计算或补写数值",
+            "核对全部IRR根及求解域、NPV折现率与用户目标；缺目标或多根时不宣布达标。"
           ],
           "professional_meaning": "判断生命周期投资回报与目标差距",
           "decision_contribution": "判断生命周期投资回报与目标差距",
@@ -9287,7 +9478,8 @@
           "figure_ids": [],
           "analysis_tasks": [
             "解释静态动态回收起点、建设期、折现、更换及插值精度，期内未回收不得外推日历日期",
-            "围绕本研究对象说明事实如何影响后续工程或财务判断，不计算或补写数值"
+            "围绕本研究对象说明事实如何影响后续工程或财务判断，不计算或补写数值",
+            "静态和动态回收分别引用原指标与累计轨迹；无回本不填零，检查更换后再次负累计。"
           ],
           "professional_meaning": "评价资本占用与回收风险",
           "decision_contribution": "评价资本占用与回收风险",
@@ -9808,7 +10000,68 @@
             "F-SINGLE-FACTOR-SENSITIVITY",
             "F-SENSITIVITY-ELASTICITY"
           ],
-          "tables": [],
+          "tables": [
+            {
+              "table_id": "CH17.01-T01",
+              "purpose": "实际单因素重算结果；组合变化不得充作独立敏感性",
+              "columns": [
+                {
+                  "key": "scenario_id",
+                  "title": "已执行方案",
+                  "unit": null
+                },
+                {
+                  "key": "identity",
+                  "title": "独立运行身份",
+                  "unit": null
+                },
+                {
+                  "key": "npv",
+                  "title": "项目税后NPV",
+                  "unit": "currency"
+                },
+                {
+                  "key": "irr",
+                  "title": "项目IRR完整根集",
+                  "unit": "1"
+                },
+                {
+                  "key": "static_payback",
+                  "title": "静态回收期",
+                  "unit": "year"
+                },
+                {
+                  "key": "dynamic_payback",
+                  "title": "动态回收期",
+                  "unit": "year"
+                },
+                {
+                  "key": "capital",
+                  "title": "初始资金需求",
+                  "unit": "currency"
+                },
+                {
+                  "key": "status",
+                  "title": "可比状态与工程限制",
+                  "unit": null
+                }
+              ],
+              "row_granularity": "每个原始任务/风险row_id或每个独立计算候选一行；evidence_rows按原子事实",
+              "source_binding": {
+                "input_fields": [
+                  "scenarios.options",
+                  "capex.items",
+                  "tariff.periods",
+                  "resource.uncertainty_fraction"
+                ],
+                "metric_ids": [],
+                "executed_bundle": "verified_scenario_comparison"
+              },
+              "applicability": "仅已授权、已核验输入或独立结果；缺失时输出明确不可用原因，不生成数值",
+              "sort_rule": "保持原始行顺序；候选保持执行清单顺序，不按模型偏好重排",
+              "renderer": "scenario_comparison"
+            }
+          ],
           "figure_requirements": [],
           "figure_ids": [],
           "analysis_tasks": [
@@ -9825,10 +10078,17 @@
           "output_acceptance": [
             "投资、电价、发电、利用率/自用率、限发、运维、利率逐项独立；其他保持不变。",
             "自然中文，项目事实与解释分开；每个事实用允许的引用；数字只能通过受控绑定呈现",
-            "不得复制旧固定正文或将资料登记当作审批；专业语义待独立审核"
+            "不得复制旧固定正文或将资料登记当作审批；专业语义待独立审核",
+            "必须解释条件表的实际可用状态；无实算或未授权时不宣称比较、达标或完成。"
           ],
           "output_contract": "chapter-result/2.0#sections",
-          "review_state": "SPEC_COMPILED_NOT_CONTENT_ACCEPTED"
+          "review_state": "SPEC_COMPILED_NOT_CONTENT_ACCEPTED",
+          "scenario_bindings": {
+            "kind": "SINGLE_FACTOR",
+            "identity": "control + prepared input + validated 3E result + sealed scenario receipt",
+            "minimum_for_comparison": 2,
+            "missing_behavior": "NO_EXECUTED_COMPARISON; scenarios.options仅输入，不代表执行"
+          }
         },
         {
           "section_id": "CH17.02",
@@ -9866,7 +10126,65 @@
           "formula_ids": [
             "F-SCENARIO-METRIC"
           ],
-          "tables": [],
+          "tables": [
+            {
+              "table_id": "CH17.02-T01",
+              "purpose": "已计算候选的经济指标；单基准不称优化",
+              "columns": [
+                {
+                  "key": "scenario_id",
+                  "title": "已执行方案",
+                  "unit": null
+                },
+                {
+                  "key": "identity",
+                  "title": "独立运行身份",
+                  "unit": null
+                },
+                {
+                  "key": "npv",
+                  "title": "项目税后NPV",
+                  "unit": "currency"
+                },
+                {
+                  "key": "irr",
+                  "title": "项目IRR完整根集",
+                  "unit": "1"
+                },
+                {
+                  "key": "static_payback",
+                  "title": "静态回收期",
+                  "unit": "year"
+                },
+                {
+                  "key": "dynamic_payback",
+                  "title": "动态回收期",
+                  "unit": "year"
+                },
+                {
+                  "key": "capital",
+                  "title": "初始资金需求",
+                  "unit": "currency"
+                },
+                {
+                  "key": "status",
+                  "title": "可比状态与工程限制",
+                  "unit": null
+                }
+              ],
+              "row_granularity": "每个原始任务/风险row_id或每个独立计算候选一行；evidence_rows按原子事实",
+              "source_binding": {
+                "input_fields": [
+                  "scenarios.options"
+                ],
+                "metric_ids": [],
+                "executed_bundle": "verified_scenario_comparison"
+              },
+              "applicability": "仅已授权、已核验输入或独立结果；缺失时输出明确不可用原因，不生成数值",
+              "sort_rule": "保持原始行顺序；候选保持执行清单顺序，不按模型偏好重排",
+              "renderer": "scenario_comparison"
+            }
+          ],
           "figure_requirements": [],
           "figure_ids": [],
           "analysis_tasks": [
@@ -9883,10 +10201,17 @@
           "output_acceptance": [
             "组合假设有来源和相关性说明；不是自造发生概率。",
             "自然中文，项目事实与解释分开；每个事实用允许的引用；数字只能通过受控绑定呈现",
-            "不得复制旧固定正文或将资料登记当作审批；专业语义待独立审核"
+            "不得复制旧固定正文或将资料登记当作审批；专业语义待独立审核",
+            "必须解释条件表的实际可用状态；无实算或未授权时不宣称比较、达标或完成。"
           ],
           "output_contract": "chapter-result/2.0#sections",
-          "review_state": "SPEC_COMPILED_NOT_CONTENT_ACCEPTED"
+          "review_state": "SPEC_COMPILED_NOT_CONTENT_ACCEPTED",
+          "scenario_bindings": {
+            "kind": "EXECUTED_CANDIDATES",
+            "identity": "control + prepared input + validated 3E result + sealed scenario receipt",
+            "minimum_for_comparison": 2,
+            "missing_behavior": "NO_EXECUTED_COMPARISON; scenarios.options仅输入，不代表执行"
+          }
         },
         {
           "section_id": "CH17.03",
@@ -9940,11 +10265,57 @@
             "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
             "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
           ],
-          "metric_ids": [],
+          "metric_ids": [
+            "financial.phase3e.break-even-price",
+            "financial.phase3e.investment-hurdle-gap"
+          ],
           "formula_ids": [
             "F-INVESTMENT-HURDLE-GAP"
           ],
-          "tables": [],
+          "tables": [
+            {
+              "table_id": "CH17.03-T01",
+              "purpose": "已执行阈值及目标差距；缺算不外推稳健区间",
+              "columns": [
+                {
+                  "key": "label",
+                  "title": "指标",
+                  "unit": null
+                },
+                {
+                  "key": "value",
+                  "title": "结果或不可计算状态",
+                  "unit": null
+                },
+                {
+                  "key": "unit",
+                  "title": "单位",
+                  "unit": null
+                },
+                {
+                  "key": "status",
+                  "title": "证据状态",
+                  "unit": null
+                }
+              ],
+              "row_granularity": "每个原始任务/风险row_id或每个独立计算候选一行；evidence_rows按原子事实",
+              "source_binding": {
+                "input_fields": [
+                  "targets.project_irr",
+                  "targets.equity_irr",
+                  "targets.payback_years"
+                ],
+                "metric_ids": [
+                  "financial.phase3e.break-even-price",
+                  "financial.phase3e.investment-hurdle-gap"
+                ],
+                "executed_bundle": null
+              },
+              "applicability": "仅已授权、已核验输入或独立结果；缺失时输出明确不可用原因，不生成数值",
+              "sort_rule": "保持原始行顺序；候选保持执行清单顺序，不按模型偏好重排",
+              "renderer": "evidence_rows"
+            }
+          ],
           "figure_requirements": [],
           "figure_ids": [],
           "analysis_tasks": [
@@ -9961,7 +10332,8 @@
           "output_acceptance": [
             "门槛临界值/失效边界/无法求解原因，保守条件和备选方案相容。",
             "自然中文，项目事实与解释分开；每个事实用允许的引用；数字只能通过受控绑定呈现",
-            "不得复制旧固定正文或将资料登记当作审批；专业语义待独立审核"
+            "不得复制旧固定正文或将资料登记当作审批；专业语义待独立审核",
+            "必须解释条件表的实际可用状态；无实算或未授权时不宣称比较、达标或完成。"
           ],
           "output_contract": "chapter-result/2.0#sections",
           "review_state": "SPEC_COMPILED_NOT_CONTENT_ACCEPTED"
@@ -10429,7 +10801,60 @@
           ],
           "metric_ids": [],
           "formula_ids": [],
-          "tables": [],
+          "tables": [
+            {
+              "table_id": "CH18.04-T01",
+              "purpose": "下一阶段专项核查与材料关闭清单",
+              "columns": [
+                {
+                  "key": "condition",
+                  "title": "核验条件",
+                  "unit": null,
+                  "field_id": "risk.items.trigger"
+                },
+                {
+                  "key": "issue",
+                  "title": "具体问题",
+                  "unit": null,
+                  "field_id": "risk.items.description"
+                },
+                {
+                  "key": "materials",
+                  "title": "所需材料（未登记则待补）",
+                  "unit": null
+                },
+                {
+                  "key": "method",
+                  "title": "核验动作",
+                  "unit": null,
+                  "field_id": "risk.items.mitigation"
+                },
+                {
+                  "key": "owner",
+                  "title": "责任建议",
+                  "unit": null,
+                  "field_id": "risk.items.owner"
+                },
+                {
+                  "key": "completion",
+                  "title": "完成标准（未登记则待补）",
+                  "unit": null
+                }
+              ],
+              "row_granularity": "每个原始任务/风险row_id或每个独立计算候选一行；evidence_rows按原子事实",
+              "source_binding": {
+                "input_fields": [
+                  "risk.items",
+                  "attachments.register"
+                ],
+                "metric_ids": [],
+                "executed_bundle": null
+              },
+              "applicability": "仅已授权、已核验输入或独立结果；缺失时输出明确不可用原因，不生成数值",
+              "sort_rule": "保持原始行顺序；候选保持执行清单顺序，不按模型偏好重排",
+              "renderer": "action_rows"
+            }
+          ],
           "figure_requirements": [],
           "figure_ids": [],
           "analysis_tasks": [
@@ -10451,7 +10876,8 @@
           "output_acceptance": [
             "缺口逐项ID、影响、责任方、核查方式及关闭证据，禁止只写泛化建议。",
             "自然中文，项目事实与解释分开；每个事实用允许的引用；数字只能通过受控绑定呈现",
-            "不得复制旧固定正文或将资料登记当作审批；专业语义待独立审核"
+            "不得复制旧固定正文或将资料登记当作审批；专业语义待独立审核",
+            "必须解释条件表的实际可用状态；无实算或未授权时不宣称比较、达标或完成。"
           ],
           "output_contract": "chapter-result/2.0#sections",
           "review_state": "SPEC_COMPILED_NOT_CONTENT_ACCEPTED"
@@ -11083,5 +11509,13 @@
     "06-glossary-extensions.json": "108f2a0fc11e07286a571bdf4a9a1c2ba63e1e9deae81558c4407bb1f9b85b61",
     "07-category-boundaries.md": "ee935418c0a7ef55544f6f97fddf71bcb62f6b906d0c19256b871f8d02b086a8",
     "08-baseline-contract.json": "b3616e8ca7deab31b41118f0ffd0a8202c763c54371a9a6949e5d97bdecb140c"
-  }
+  },
+  "amendments": [
+    {
+      "exception_id": "V2-EXC-003",
+      "original_spec_sha256": "885b92420ee3bbfd9b6ce473ed764584a224d9c246e0d294be638a549fd85f91",
+      "kind": "A_NECESSARY_IMPLEMENTATION_OMISSION",
+      "scope": "Conditional tables and executed evidence bindings only"
+    }
+  ]
 }

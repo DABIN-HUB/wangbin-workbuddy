@@ -691,14 +691,23 @@
     ],
     "metric_ids": [],
     "formula_ids": [],
-    "table_ids": [],
+    "table_ids": [
+      "CH06.04-T01"
+    ],
     "source_requirements": [
       "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
       "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
     ],
     "output_contract": "chapter-result/2.0#sections",
     "test_id": "T-V2-CH06.04",
-    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED",
+    "amendment": "V2-EXC-003",
+    "scenario_bindings": {
+      "kind": "EXECUTED_CANDIDATES",
+      "identity": "control + prepared input + validated 3E result + sealed scenario receipt",
+      "minimum_for_comparison": 2,
+      "missing_behavior": "NO_EXECUTED_COMPARISON; scenarios.options仅输入，不代表执行"
+    }
   },
   {
     "requirement_id": "V2-CH06.05",
@@ -711,14 +720,23 @@
     ],
     "metric_ids": [],
     "formula_ids": [],
-    "table_ids": [],
+    "table_ids": [
+      "CH06.05-T01"
+    ],
     "source_requirements": [
       "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
       "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
     ],
     "output_contract": "chapter-result/2.0#sections",
     "test_id": "T-V2-CH06.05",
-    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED",
+    "amendment": "V2-EXC-003",
+    "scenario_bindings": {
+      "kind": "EXECUTED_CANDIDATES",
+      "identity": "control + prepared input + validated 3E result + sealed scenario receipt",
+      "minimum_for_comparison": 2,
+      "missing_behavior": "NO_EXECUTED_COMPARISON; scenarios.options仅输入，不代表执行"
+    }
   },
   {
     "requirement_id": "V2-CH06.06",
@@ -1517,14 +1535,17 @@
     ],
     "metric_ids": [],
     "formula_ids": [],
-    "table_ids": [],
+    "table_ids": [
+      "CH13.02-T01"
+    ],
     "source_requirements": [
       "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
       "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
     ],
     "output_contract": "chapter-result/2.0#sections",
     "test_id": "T-V2-CH13.02",
-    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED",
+    "amendment": "V2-EXC-003"
   },
   {
     "requirement_id": "V2-CH13.03",
@@ -2091,14 +2112,23 @@
       "F-SINGLE-FACTOR-SENSITIVITY",
       "F-SENSITIVITY-ELASTICITY"
     ],
-    "table_ids": [],
+    "table_ids": [
+      "CH17.01-T01"
+    ],
     "source_requirements": [
       "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
       "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
     ],
     "output_contract": "chapter-result/2.0#sections",
     "test_id": "T-V2-CH17.01",
-    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED",
+    "amendment": "V2-EXC-003",
+    "scenario_bindings": {
+      "kind": "SINGLE_FACTOR",
+      "identity": "control + prepared input + validated 3E result + sealed scenario receipt",
+      "minimum_for_comparison": 2,
+      "missing_behavior": "NO_EXECUTED_COMPARISON; scenarios.options仅输入，不代表执行"
+    }
   },
   {
     "requirement_id": "V2-CH17.02",
@@ -2111,14 +2141,23 @@
     "formula_ids": [
       "F-SCENARIO-METRIC"
     ],
-    "table_ids": [],
+    "table_ids": [
+      "CH17.02-T01"
+    ],
     "source_requirements": [
       "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
       "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
     ],
     "output_contract": "chapter-result/2.0#sections",
     "test_id": "T-V2-CH17.02",
-    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED",
+    "amendment": "V2-EXC-003",
+    "scenario_bindings": {
+      "kind": "EXECUTED_CANDIDATES",
+      "identity": "control + prepared input + validated 3E result + sealed scenario receipt",
+      "minimum_for_comparison": 2,
+      "missing_behavior": "NO_EXECUTED_COMPARISON; scenarios.options仅输入，不代表执行"
+    }
   },
   {
     "requirement_id": "V2-CH17.03",
@@ -2129,18 +2168,24 @@
       "targets.equity_irr",
       "targets.payback_years"
     ],
-    "metric_ids": [],
+    "metric_ids": [
+      "financial.phase3e.break-even-price",
+      "financial.phase3e.investment-hurdle-gap"
+    ],
     "formula_ids": [
       "F-INVESTMENT-HURDLE-GAP"
     ],
-    "table_ids": [],
+    "table_ids": [
+      "CH17.03-T01"
+    ],
     "source_requirements": [
       "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
       "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
     ],
     "output_contract": "chapter-result/2.0#sections",
     "test_id": "T-V2-CH17.03",
-    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED",
+    "amendment": "V2-EXC-003"
   },
   {
     "requirement_id": "V2-CH17.04",
@@ -2248,14 +2293,17 @@
     ],
     "metric_ids": [],
     "formula_ids": [],
-    "table_ids": [],
+    "table_ids": [
+      "CH18.04-T01"
+    ],
     "source_requirements": [
       "原始来源ID、字段实例、页/节/单元格定位、状态、许可与有效期；附件正文不默认发送",
       "只引用本节证据包内来源；时序只使用已绑定数据集或计算指标"
     ],
     "output_contract": "chapter-result/2.0#sections",
     "test_id": "T-V2-CH18.04",
-    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED"
+    "acceptance_status": "SPEC_FROZEN_IMPLEMENTATION_NOT_TESTED",
+    "amendment": "V2-EXC-003"
   },
   {
     "requirement_id": "V2-CH18.05",
