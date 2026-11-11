@@ -33,12 +33,13 @@ def evidence_schema():
     identity = {"type": "object", "additionalProperties": False,
                 "required": ["model_version", "run_id", "input_hash", "source_snapshot_id", "result_hash"],
                 "properties": {k: text for k in ("model_version", "run_id", "input_hash", "source_snapshot_id", "result_hash")}}
-    fact_properties = {"kind": {"enum": ["input", "metric"]}, "field_id": text, "metric_id": text,
+    fact_properties = {"kind": {"enum": ["input", "metric", "ledger"]}, "field_id": text, "metric_id": text,
                        "label": text, "value": {"type": ["string", "number", "boolean", "null"]},
                        "display": text, "unit": {"type": ["string", "null"]}, "display_unit": text,
                        "status": text, "reason": {"type": ["string", "null"]}, "source_ids": refs,
                        "source_location": text, "period": {"type": ["string", "object", "null"]},
-                       "boundary": {"type": ["string", "object"]}, "formula_id": text}
+                       "boundary": {"type": ["string", "object"]}, "formula_id": text,
+                       "provenance": {"type": "object"}}
     fact = {"type": "object", "additionalProperties": False,
             "required": ["kind", "label", "value", "display", "unit", "status", "source_ids", "period", "boundary"],
             "properties": fact_properties}

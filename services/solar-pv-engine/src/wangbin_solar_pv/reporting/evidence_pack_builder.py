@@ -9,6 +9,7 @@ from ..report_export import ReportModel, _metric_label, _decision_metric_text, _
 from ..report_display_numbers import decision_number
 from ..serialization import digest
 from .chapter_result_schema import validate_evidence
+from .evidence_adapters import group_for, input_facts, series_periods, controlled_table, RAW_SERIES, producer_facts
 
 _SECRET = re.compile(r"(?i)(?:bearer\s+\S+|(?:api[_-]?key|password|secret|token)\s*[:=]\s*\S+)")
 
@@ -50,6 +51,16 @@ def build_pack(model, registry, chapter_id, allowed_source_ids):
         scoped, missing = [], []
         fields = sec['project_type_fields'][model.result['pv_type']]
         for fid in fields:
+            if fid in RAW_SERIES:
+                missing.append(fid + ': RAW_SERIES_WITHHELD_USE_VALIDATED_SUMMARY')
+                continue
+            if group_for(fid):
+                bound_facts, reason = input_facts(model, fid, allowed, safe_text)
+                facts.update(bound_facts)
+                scoped.extend(k for k in bound_facts if k not in scoped)
+                if reason:
+                    missing.append(fid + ': ' + reason)
+                continue
             selected = [r for r in records if r.get('field_id') == fid]
             # A parent list is not authority for otherwise unbound children.
             bound = _source_value(normalized, records, fid)
@@ -126,18 +137,28 @@ def build_pack(model, registry, chapter_id, allowed_source_ids):
                     missing.append(mid + ': STRUCTURED_METRIC_REQUIRES_TYPED_ADAPTER')
                     continue
                 template = facts.pop(fact_id)
+                periods = series_periods(model, metric)
                 for index, value in enumerate(values):
                     item_id = fact_id + ':item:' + str(index)
                     facts[item_id] = {**template, 'value': value,
                                       'label': template['label'] + '（原始序列位置' + str(index) + '）',
                                       'display': decision_number(value, metric['unit']),
                                       'period': {'series_period': metric['period'], 'index': index,
-                                                 'index_basis': 'ZERO_BASED_CANONICAL_ARRAY'}}
+                                                 'index_basis': 'ZERO_BASED_CANONICAL_ARRAY',
+                                                 'named_period': periods[index] if periods else None},
+                                      'provenance': {'metric_id': mid, 'array_index': index,
+                                                     'result_identity': model.identity,
+                                                     'synthetic_or_assumed': model.result['source_snapshot'].get('methods', {}).get('data_mode') == 'SYNTHETIC'}}
                     scoped.append(item_id)
             else:
                 scoped.append(fact_id)
             if metric['status'] != 'CALCULATED':
                 missing.append(mid + ': ' + metric['status'])
+        ledger_facts, ledger_reason = producer_facts(model, sid, allowed)
+        facts.update(ledger_facts)
+        scoped.extend(ledger_facts)
+        if ledger_reason:
+            missing.append(ledger_reason)
         for fid in sec['formula_ids']:
             formula = model.catalog.formulas[fid]
             formulas[fid] = {key: deepcopy(formula[key]) for key in (
@@ -145,7 +166,7 @@ def build_pack(model, registry, chapter_id, allowed_source_ids):
                 'unit', 'calculation_boundary', 'assumptions', 'review_status')}
         section_sources = sorted({source for fact in scoped for source in facts[fact]['source_ids']})
         for table in sec['tables']:
-            tables[table['table_id']] = {'definition': deepcopy(table), 'fact_ids': list(scoped)}
+            tables[table['table_id']] = controlled_table(table, facts, scoped)
         na = ('集中式地面不采用屋顶负荷及自用节费模型' if model.result['pv_type'] == 'utility_scale_ground'
               and sid in {'CH10.01', 'CH10.03'} else
               '本版不执行储能调度计算' if sid == 'CH10.06' else None)

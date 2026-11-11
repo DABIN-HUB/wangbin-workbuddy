@@ -45,14 +45,16 @@ def assemble_chapter(store, request_id, model, registry, config, output_name):
             table = pack['tables'][tid]
             definition = table['definition']
             rows = []
-            for fid in table['fact_ids']:
+            for fid in table['fact_ids'] if definition['renderer'] == 'evidence_rows' else []:
                 fact = pack['facts'][fid]
                 row = {'label': fact['label'], 'value': fact['display'], 'unit': fact.get('display_unit', fact['unit']) or '—',
                        'status': {'CALCULATED': '已计算，来源性质另核', 'ASSUMED': '登记假设',
                                   'VERIFIED': '输入已核验', 'NOT_APPLICABLE': '不适用'}.get(fact['status'], '尚无可用结果')}
                 rows.append([row[col['key']] for col in definition['columns']])
+            if definition['renderer'] != 'evidence_rows':
+                rows = [[row['cells'][col['key']] for col in definition['columns']] for row in table['rows']]
             if not rows:
-                rows = [['暂无获授权的可用事实', '未填零', '—', '待补充']]
+                rows = [['暂无获授权的可用结果；不填零'] + ['待核验'] * (len(definition['columns']) - 1)]
             _add_table(document, [c['title'] for c in definition['columns']], rows,
                        caption=definition['purpose'])
         for fid in section['formula_refs']:
