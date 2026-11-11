@@ -13,9 +13,22 @@ def result_schema():
                   "review_state": {"const": "PENDING_REVIEW"}}
     for key in ("metric_refs", "formula_refs", "table_refs", "figure_refs", "claim_ids", "fact_refs", "source_refs"):
         properties[key] = refs
+    claim_properties = {
+        "claim_id": text,
+        "kind": {"enum": ["INPUT_FACT", "CALCULATED_METRIC", "CONDITIONAL_JUDGMENT", "EXPLANATION", "UNVERIFIED_ASSUMPTION", "RISK", "RECOMMENDATION"]},
+        "text": text, "fact_refs": refs, "source_refs": refs,
+        "conditions": texts,
+        "paragraph_indexes": {"type": "array", "minItems": 1, "uniqueItems": True,
+                              "items": {"type": "integer", "minimum": 0, "maximum": 23}},
+        "effect": {"enum": ["DESCRIPTIVE", "IMPROVES_RETURN", "LOWER_COST", "ENGINEERING_READY", "TARGET_MET", "PROCEED"]},
+        "basis_status": {"enum": ["SUPPORTED", "LIMITED", "UNVERIFIED"]}}
+    properties["claims"] = {"type": "array", "minItems": 1, "maxItems": 24,
+                            "items": {"type": "object", "additionalProperties": False,
+                                      "required": list(claim_properties), "properties": claim_properties}}
     section = {"type": "object", "additionalProperties": False,
                "required": list(properties), "properties": properties}
     top = {"chapter_id": text, "chapter_intro": text,
+           "decision_state": {"enum": ["NOT_EVALUATED", "DEFER"]},
            "sections": {"type": "array", "items": section, "minItems": 1, "maxItems": 8},
            "chapter_findings": {**texts, "minItems": 1}, "decision_implications": {**texts, "minItems": 1}}
     return {"$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -52,6 +65,7 @@ def evidence_schema():
                 "sections": {"type": "object", "minProperties": 1, "maxProperties": 8, "additionalProperties": section},
                 "facts": {"type": "object", "maxProperties": 4000, "additionalProperties": fact},
                 "formulas": {"type": "object"}, "tables": {"type": "object"}, "figures": {"type": "object"},
+                "terms": {"type": "object", "additionalProperties": text},
                 "constraints": refs, "authorization_source_ids": refs})
     return {"$schema": "https://json-schema.org/draft/2020-12/schema", "type": "object",
             "additionalProperties": False, "required": list(top), "properties": top}

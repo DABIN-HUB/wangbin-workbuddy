@@ -4,8 +4,7 @@ from hashlib import sha256
 from importlib.resources import files
 
 from ..errors import ContractError
-from ..report_export import CHAPTERS, APPENDICES
-from ..report_claims import APPENDIX_TITLES
+from .compat import CHAPTERS, APPENDICES, APPENDIX_TITLES
 from ..serialization import loads
 
 

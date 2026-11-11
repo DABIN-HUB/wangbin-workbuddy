@@ -8,7 +8,7 @@ from docx import Document
 
 from ..errors import ContractError
 from ..report_equations import convert_equations
-from ..report_export import _add_table
+from .compat import add_table as _add_table
 from ..report_numbering import add_numbered_heading, heading_number
 from ..report_word_styles import configure, equation_paragraph
 from ..serialization import digest

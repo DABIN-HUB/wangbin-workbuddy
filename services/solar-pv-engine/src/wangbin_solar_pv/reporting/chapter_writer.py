@@ -7,7 +7,7 @@ from ..errors import ContractError
 from ..local_files import Workspace
 from ..serialization import digest, dumps
 from .chapter_result_schema import result_schema
-from .claim_validator import validate_chapter
+from .claim_validator import validate_chapter, SLOT
 from .evidence_pack_builder import build_pack
 from .llm_provider import ModelConfig
 
@@ -20,6 +20,35 @@ def _id(value):
     if not isinstance(value, str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,95}', value):
         raise ContractError('GENERATION_RUN_ID')
     return value
+
+
+def _upstream(store, state, chapter, model, registry, config, cache):
+    dependencies = {}
+    for cid in chapter['dependencies']:
+        candidates = [r for r in state['requests'] if r['chapter_id'] == cid
+                      and store.path(r['request_id'] + '-result.json').exists()]
+        if not candidates:
+            dependencies[cid] = {'status': 'NOT_SUPPLIED_DO_NOT_INVENT'}
+            continue
+        rid = candidates[-1]['request_id']
+        if rid not in cache:
+            cache[rid] = resume(store, rid, model, registry, config, _cache=cache)
+        accepted, evidence = cache[rid]
+        used = {ref for section in accepted['output']['sections'] for ref in section['fact_refs']}
+        for text in [accepted['output']['chapter_intro'], *accepted['output']['chapter_findings'], *accepted['output']['decision_implications']]:
+            used.update(SLOT.findall(text))
+        dependencies[cid] = {
+            'status': 'REFERENCES_VALID_SEMANTICS_PENDING_NOT_ENGINEERING_FACT',
+            'request_id': rid, 'identity': accepted['identity'],
+            'chapter_output_hash': accepted['chapter_output_hash'],
+            'evidence_hash': accepted['evidence_hash'],
+            'findings': accepted['output']['chapter_findings'],
+            'decision_implications': accepted['output']['decision_implications'],
+            'claims': [claim for section in accepted['output']['sections'] for claim in section['claims']],
+            'facts': {ref: evidence['facts'][ref] for ref in sorted(used)},
+            'professional_review': accepted['professional_review'],
+            'decision_state': accepted['output']['decision_state']}
+    return dependencies
 
 
 def prepare(workspace, run_name, model, registry, chapter_id, config, allowed_source_ids):
@@ -46,6 +75,7 @@ def prepare(workspace, run_name, model, registry, chapter_id, config, allowed_so
         if attempts >= cfg['max_attempts_per_chapter'] or len(state['requests']) >= cfg['max_requests']:
             raise ContractError('MODEL_REQUEST_BUDGET_EXHAUSTED')
         request_id = f'{chapter_id}-{attempts + 1}'
+        upstream = _upstream(store, state, chapter, model, registry, config, {})
         request = {'schema_version': 'chapter-request/2.0', 'request_id': request_id,
                    'generation_run_id': state['generation_run_id'], 'binding': binding,
                    'chapter_id': chapter_id, 'report_spec_version': pack['report_spec_version'],
@@ -54,7 +84,9 @@ def prepare(workspace, run_name, model, registry, chapter_id, config, allowed_so
                    'expires_at': (_now() + timedelta(seconds=cfg['timeout_seconds'])).isoformat(),
                    'instructions': registry.spec['global_rules'], 'chapter_spec': chapter,
                    'evidence_pack': pack, 'output_schema': result_schema(),
-                   'upstream_status': {cid: 'NOT_SUPPLIED_DO_NOT_INVENT' for cid in chapter['dependencies']},
+                   'upstream': upstream, 'dependency_hash': digest(upstream),
+                   'upstream_status': {cid: item['status'] for cid, item in upstream.items()},
+                   'decision_gate': 'DEFER_ONLY_PENDING_PROFESSIONAL_REVIEW',
                    'execution_state': 'AWAITING_AUTHORIZED_HOST',
                    'semantic_review': 'PENDING_REVIEW'}
         request['request_hash'] = digest(request)
@@ -68,7 +100,7 @@ def prepare(workspace, run_name, model, registry, chapter_id, config, allowed_so
     return request
 
 
-def _request(store, request_id, model, registry, config):
+def _request(store, request_id, model, registry, config, _cache=None):
     _id(request_id)
     request, _ = store.read(request_id + '-request.json')
     if request['request_hash'] != digest({k: v for k, v in request.items() if k != 'request_hash'}):
@@ -84,6 +116,10 @@ def _request(store, request_id, model, registry, config):
     pack = build_pack(model, registry, request['chapter_id'], request['binding']['authorized_sources'])
     if pack != request['evidence_pack'] or request['chapter_spec'] != registry.chapter(request['chapter_id']):
         raise ContractError('CHAPTER_EVIDENCE_CHANGED')
+    upstream = _upstream(store, state, registry.chapter(request['chapter_id']), model, registry, config,
+                         {} if _cache is None else _cache)
+    if request.get('upstream') != upstream or request.get('dependency_hash') != digest(upstream):
+        raise ContractError('CHAPTER_DEPENDENCY_CHANGED')
     return request, pack
 
 
@@ -109,6 +145,10 @@ def accept(store, request_id, response, model, registry, config):
                         'prompt_version': pack['prompt_version'], 'model_id': config.model_id,
                         'host_call_id': response['host_call_id'], 'chapter_id': request['chapter_id'],
                         'output': response['output'], **validation,
+                        'dependency_hash': request['dependency_hash'],
+                        'model_execution': ('PROTOCOL_FIXTURE' if config.model_id == 'protocol-fixture-only' else
+                                            'HERMES_ASSISTED_UNVERIFIED' if config.model_id.startswith('hermes-assisted-') else
+                                            'HOST_DECLARED_UNVERIFIED'),
                         'llm_integration': 'HOST_DECLARED_NOT_INDEPENDENTLY_VERIFIED'}
             store._write(request_id + '-result.json', accepted)
             return accepted
@@ -119,10 +159,10 @@ def accept(store, request_id, response, model, registry, config):
             raise
 
 
-def resume(store, request_id, model, registry, config):
-    request, pack = _request(store, request_id, model, registry, config)
+def resume(store, request_id, model, registry, config, _cache=None):
+    request, pack = _request(store, request_id, model, registry, config, _cache)
     accepted, _ = store.read(request_id + '-result.json')
-    keys = ('request_hash', 'generation_run_id', 'report_spec_version', 'prompt_version', 'model_id', 'chapter_id')
+    keys = ('request_hash', 'generation_run_id', 'report_spec_version', 'prompt_version', 'model_id', 'chapter_id', 'dependency_hash')
     if (any(accepted.get(key) != request[key] for key in keys) or accepted['identity'] != model.identity
             or accepted.get('llm_integration') != 'HOST_DECLARED_NOT_INDEPENDENTLY_VERIFIED'):
         raise ContractError('CHAPTER_CACHE_IDENTITY')

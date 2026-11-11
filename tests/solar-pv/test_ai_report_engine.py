@@ -50,12 +50,15 @@ def protocol_fixture(pack):
         sections.append({'section_id': sid, 'paragraphs': [text],
                          'metric_refs': [pack['facts'][f]['metric_id'] for f in facts if pack['facts'][f]['kind'] == 'metric'],
                          'formula_refs': [], 'table_refs': scope['table_refs'], 'figure_refs': [],
-                         'claim_ids': scope['claim_ids'], 'fact_refs': facts,
+                         'claim_ids': scope['claim_ids'][:1], 'fact_refs': facts,
+                         'claims': [{'claim_id': scope['claim_ids'][0], 'kind': 'EXPLANATION', 'text': text,
+                                     'fact_refs': facts, 'source_refs': sorted({s for f in facts for s in pack['facts'][f]['source_ids']}),
+                                     'conditions': [], 'paragraph_indexes': [0], 'effect': 'DESCRIPTIVE', 'basis_status': 'LIMITED'}],
                          'source_refs': sorted({s for f in facts for s in pack['facts'][f]['source_ids']}),
                          'decision_impact': '本协议样本不能作为投资评价。',
                          'missing_evidence': ['来源、适用性及缺失事项须按本节证据包逐项复核。'],
                          'review_state': 'PENDING_REVIEW'})
-    return {'chapter_id': pack['chapter_id'], 'chapter_intro': '局部协议样本用于检查证据引用与文档装配，并非模型分析成果。',
+    return {'chapter_id': pack['chapter_id'], 'decision_state': 'DEFER' if pack['chapter_id'] in {'CH01', 'CH18'} else 'NOT_EVALUATED', 'chapter_intro': '局部协议样本用于检查证据引用与文档装配，并非模型分析成果。',
             'sections': sections, 'chapter_findings': ['专业解释尚未执行。'],
             'decision_implications': ['不得据此作投资决策。']}
 

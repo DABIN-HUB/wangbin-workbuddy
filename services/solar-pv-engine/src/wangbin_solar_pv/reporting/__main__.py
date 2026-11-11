@@ -5,7 +5,7 @@ from pathlib import Path
 from ..catalog import Catalog
 from ..errors import ContractError
 from ..local_files import Workspace
-from ..report_export import ReportModel
+from .compat import ReportModel
 from ..serialization import dumps
 from .chapter_registry import Registry
 from .chapter_result_schema import evidence_schema, result_schema

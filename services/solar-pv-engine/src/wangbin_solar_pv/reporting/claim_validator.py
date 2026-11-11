@@ -7,16 +7,19 @@ from .chapter_result_schema import validate_schema
 from .evidence_pack_builder import safe_text
 
 SLOT = re.compile(r'\[\[fact:([^\[\]\s]+)\]\]')
+TERM = re.compile(r'\[\[term:([^\[\]\s]+)\]\]')
 FORBIDDEN = re.compile(r'<[^>]+>|(?:https?|file)://|```|[\x00-\x08\x0b\x0c\x0e-\x1f]')
 REF_KEYS = ('metric_refs', 'formula_refs', 'table_refs', 'figure_refs', 'claim_ids', 'fact_refs', 'source_refs')
 
 
-def check_text(text, allowed):
+def check_text(text, allowed, terms=()):
     safe_text(text)
     refs = SLOT.findall(text)
     if set(refs) - set(allowed):
         raise ContractError('CHAPTER_FACT_REFERENCE')
-    remainder = SLOT.sub('', text)
+    if set(TERM.findall(text)) - set(terms):
+        raise ContractError('CHAPTER_TERM_REFERENCE')
+    remainder = TERM.sub('', SLOT.sub('', text))
     if '[[' in remainder or ']]' in remainder or FORBIDDEN.search(remainder):
         raise ContractError('CHAPTER_UNSAFE_MARKUP')
     if any(ch.isdigit() for ch in remainder):
@@ -33,10 +36,12 @@ def validate_chapter(output, pack, chapter):
     expected = [s['section_id'] for s in chapter['sections']]
     if [s['section_id'] for s in output['sections']] != expected:
         raise ContractError('CHAPTER_SECTION_COVERAGE')
+    if output['chapter_id'] in {'CH01', 'CH18'} and output['decision_state'] != 'DEFER':
+        raise ContractError('CHAPTER_DECISION_REQUIRES_REVIEW')
     global_texts = [output['chapter_intro'], *output['chapter_findings'], *output['decision_implications']]
     used = set()
     for text in global_texts:
-        used |= check_text(text, pack['facts'])
+        used |= check_text(text, pack['facts'], pack['terms'])
     for sec in output['sections']:
         scope = pack['sections'][sec['section_id']]
         for key in REF_KEYS:
@@ -46,9 +51,44 @@ def validate_chapter(output, pack, chapter):
             raise ContractError('CHAPTER_REQUIRED_TABLE_MISSING')
         if not sec['claim_ids']:
             raise ContractError('CHAPTER_CLAIM_REQUIRED')
+        claims = sec['claims']
+        if [c['claim_id'] for c in claims] != sec['claim_ids']:
+            raise ContractError('CHAPTER_CLAIM_IDENTITY')
+        covered = set()
+        for claim in claims:
+            refs = set(claim['fact_refs'])
+            if refs - set(sec['fact_refs']) or set(claim['source_refs']) - set(sec['source_refs']):
+                raise ContractError('CHAPTER_CLAIM_LINEAGE')
+            if {s for f in refs for s in pack['facts'][f]['source_ids']} - set(claim['source_refs']):
+                raise ContractError('CHAPTER_CLAIM_LINEAGE')
+            if claim['kind'] in {'INPUT_FACT', 'CALCULATED_METRIC'}:
+                kinds = {'input'} if claim['kind'] == 'INPUT_FACT' else {'metric', 'ledger'}
+                if not refs or any(pack['facts'][f]['kind'] not in kinds for f in refs):
+                    raise ContractError('CHAPTER_CLAIM_BASIS')
+                if claim['kind'] == 'CALCULATED_METRIC' and any(pack['facts'][f]['status'] != 'CALCULATED' for f in refs):
+                    raise ContractError('CHAPTER_CLAIM_BASIS')
+            if claim['kind'] in {'CONDITIONAL_JUDGMENT', 'RECOMMENDATION'} and not claim['conditions']:
+                raise ContractError('CHAPTER_CLAIM_CONDITIONS')
+            # No engineering/target pass or causal benefit is established by a legal reference alone.
+            if claim['effect'] != 'DESCRIPTIVE':
+                raise ContractError('CHAPTER_CLAIM_DETERMINATION_NOT_VERIFIED')
+            if claim['basis_status'] == 'SUPPORTED' and (not refs or any(pack['facts'][f]['status'] not in {'CALCULATED', 'VERIFIED'} for f in refs)):
+                raise ContractError('CHAPTER_CLAIM_SUPPORT_STATE')
+            if check_text(claim['text'], refs, pack['terms']) - refs:
+                raise ContractError('CHAPTER_CLAIM_LINEAGE')
+            for condition in claim['conditions']:
+                check_text(condition, refs, pack['terms'])
+            if any(i >= len(sec['paragraphs']) for i in claim['paragraph_indexes']):
+                raise ContractError('CHAPTER_CLAIM_PARAGRAPH')
+            for i in claim['paragraph_indexes']:
+                if set(SLOT.findall(sec['paragraphs'][i])) - refs:
+                    raise ContractError('CHAPTER_CLAIM_PARAGRAPH_LINEAGE')
+            covered.update(claim['paragraph_indexes'])
+        if covered != set(range(len(sec['paragraphs']))):
+            raise ContractError('CHAPTER_CLAIM_COVERAGE')
         scoped_used = set()
         for text in [*sec['paragraphs'], sec['decision_impact'], *sec['missing_evidence']]:
-            scoped_used |= check_text(text, scope['fact_refs'])
+            scoped_used |= check_text(text, scope['fact_refs'], pack['terms'])
         if scoped_used - set(sec['fact_refs']):
             raise ContractError('CHAPTER_UNDECLARED_FACT')
         used |= scoped_used
@@ -72,11 +112,11 @@ def validate_chapter(output, pack, chapter):
 
 
 def render_text(text, pack):
-    check_text(text, pack['facts'])
+    check_text(text, pack['facts'], pack['terms'])
     def replace(match):
         fact = pack['facts'][match.group(1)]
         # UNKNOWN/BLOCKED display never uses a numeric default.
         value = fact['display']
         unit = fact.get('display_unit', fact.get('unit'))
         return str(value) + (' ' + unit if unit and fact['value'] is not None else '')
-    return SLOT.sub(replace, text)
+    return SLOT.sub(replace, TERM.sub(lambda match: pack['terms'][match.group(1)], text))
