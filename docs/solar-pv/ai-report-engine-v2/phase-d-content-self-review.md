@@ -1,5 +1,7 @@
 # Phase D 重点章节内容自审
 
+> 历史记录：本文对应8b2bd3a基线前的初次六章试点。用户随后指出真实Word中的原始单位、业务指标遗漏和空公式引用，本记录不作为整改完成证明。新六章、40节复核、实际Word和仍保留的问题见`phase-d-quality-delivery.md`及`phase-d-quality-review-matrix.md`；独立专业签审仍未取得。
+
 状态：真实Hermes辅助正文已生成并通过本地Schema/事实引用接受；专业内容门禁 `PARTIAL / USER_REVIEW_REQUIRED`。本轮仅同一模型自审，不冒充独立专家。逐项记录在运行目录 `content-self-review.json`，绑定各章节JSON的SHA。
 
 两类项目各CH08/CH10/CH16，共40小节。动态引言、分析、决策贡献、具体缺口已实际阅读；所有数值来自事实槽。对照Word按同canonical重新运行未改的旧正文链，逐段读回核对新文；不把不同输入的历史R13实物当作同输入比较。
