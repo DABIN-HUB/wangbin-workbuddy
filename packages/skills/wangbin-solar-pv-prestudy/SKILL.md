@@ -28,7 +28,9 @@ license_status: REQUIRES_MANUAL_REVIEW
 
 用户明确请求AI2.0章节研究时，先读 `@references/host-orchestration.md`。你（当前WorkBuddy宿主模型）负责读取本次请求、研究证据并撰写新的结构化章节；Python不调用隐藏LLM、不替你从旧稿拼出正文。本轮只开放CH08；真实宿主双案CH08通过前不得扩展CH10/CH16或Phase E。
 
-通过 `@scripts/run_ai_chapter.py` 调用已安装引擎的授权/prepare/accept/checkpoint/resume协议。不得读取authored、历史draft、旧Word或过去的完整章节作为新写作输入。缺宿主权限、正确解释器、内部wheel或实际执行证据时如实停止；不能用Hermes作者会话、协议fixture或本地UUID替代。
+本轮区分两条路径：用户显式选择“手动文件交接的宿主写作试验”时，当前WorkBuddy模型仅依据用户上传或授权读取的新CH08 request开展研究并返回符合其中Schema的新章节JSON；这一步不依赖Python或Connector，不因缺少它们而拒绝写作。无法实际读取完整请求时停止，不猜测被截断的事实或Schema。此路径只观察宿主写作，不代表CLI、Word或自动工具编排通过。
+
+完整CLI路径通过 `@scripts/run_ai_chapter.py` 调用已安装引擎的授权/prepare/accept/checkpoint/resume协议；缺正确解释器、内部wheel或工具授权时仅阻断这条路径，不暗中切换开发源码。两条路径均不得读取authored、历史draft、旧Word或过去的完整章节作为新写作输入，不能用Hermes作者会话、协议fixture或本地UUID替代。来源、数值和专业边界不因手动交接而放宽。
 
 下文report/project-report是保留的**legacy确定性报告导出**，不代表AI2.0运行时生成。不要将旧入口外层SUCCESS转述成模型研究或四文件通过。当前原生路径仍是本地候选，实际WorkBuddy专家安装、连接器环境继承和无旧稿生成均未验证。
 
