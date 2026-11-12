@@ -63,6 +63,8 @@ python scripts/run_ai_chapter.py cancel --workspace <授权根> --grant authoriz
 
 checkpoint重验授权、规格、canonical、模型、证据和上游，只返回状态与cursor，不生成正文。AWAITING_AUTHORIZED_HOST不是模型已运行；EXPIRED需要新请求；ACCEPT_RECOVERY_REQUIRED表示结果保存后来源回执未闭合，只可同一原response/provenance重试accept。授权或来源变更须新run。cancel仅阻止后续本地提交，不声称取消宿主正在执行的远程请求；宿主会话取消须使用平台实际功能。
 
+原生run的`.host-lock`是保留的内核锁文件，不要删除；进程结束会释放锁，不依赖文件删除。遇到旧`.lock`返回HOST_LEGACY_LOCK_REQUIRES_REVIEW，须人工核实所有者，不能自动清锁。不要在同一run混用legacy写入口。接受前的host-intent固定来源摘要，恢复时不能换origin或会话引用。REQUEST_PUBLICATION_INTERRUPTED表示预算已预留但请求未落盘，可在剩余预算内重新prepare，不补造丢失请求。
+
 脚本硬超时与模型时间/上下文/token/费用不同；平台未暴露则明确UNKNOWN或NOT_EXPOSED_BY_HOST。无真实WorkBuddy会话和工具记录，不宣布运行时新内容或平台E2E通过。
 
 ## 四项分别交付
