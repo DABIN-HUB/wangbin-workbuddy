@@ -1,0 +1,13 @@
+{
+  "label": "SYNTHETIC/FICTITIOUS: not a customer project or R5 transcription",
+  "scope_version": "fiction-v1",
+  "work_packages": [
+    {"id":"F-M1","function":"fictional intake","source":"fictional fixture","tier":"MVP","new":true,"scope_version":"fiction-v1","roles":{"FE":{"low":"2","high":"3"},"BE":{"low":"3","high":"5"},"DB":{"low":"1","high":"2"},"QA":{"low":"1","high":"2"}}},
+    {"id":"F-S1","function":"fictional warehouse","source":"fictional fixture","tier":"Standard","new":true,"scope_version":"fiction-v1","roles":{"FE":{"low":"1","high":"2"},"BE":{"low":"2","high":"3"},"DB":{"low":"1","high":"2"},"QA":{"low":"1","high":"2"}}},
+    {"id":"F-A1","function":"fictional audit","source":"fictional fixture","tier":"FullA","new":true,"scope_version":"fiction-v1","roles":{"FE":{"low":"1","high":"2"},"BE":{"low":"2","high":"3"},"DB":{"low":"1","high":"2"},"QA":{"low":"2","high":"3"}}},
+    {"id":"F-B1","function":"fictional conditional interface","source":"fictional fixture; not authorized interface","tier":"FullB","new":true,"scope_version":"fiction-v1","roles":{"FE":{"low":"0","high":"0"},"BE":{"low":"3","high":"5"},"DB":{"low":"2","high":"3"},"QA":{"low":"2","high":"3"}}}
+  ],
+  "buffers":{"low":"0.10","high":"0.20","source":"fictitious illustrative assumption"},
+  "pricing":{"mode":"reference"},
+  "outside_fees":{"status":"unknown"}
+}
