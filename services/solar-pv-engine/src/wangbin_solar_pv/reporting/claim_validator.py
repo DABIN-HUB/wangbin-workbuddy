@@ -6,6 +6,7 @@ from ..serialization import digest
 from .chapter_result_schema import validate_schema
 from .evidence_pack_builder import safe_text
 from .reader_display import inline
+from .semantic_risks import validate_risk_assertions
 
 SLOT = re.compile(r'\[\[fact:([^\[\]\s]+)\]\]')
 TERM = re.compile(r'\[\[term:([^\[\]\s]+)\]\]')
@@ -62,6 +63,7 @@ def validate_chapter(output, pack, chapter):
                 raise ContractError('CHAPTER_CLAIM_LINEAGE')
             if {s for f in refs for s in pack['facts'][f]['source_ids']} - set(claim['source_refs']):
                 raise ContractError('CHAPTER_CLAIM_LINEAGE')
+            validate_risk_assertions(claim, pack['facts'])
             if claim['kind'] in {'INPUT_FACT', 'CALCULATED_METRIC'}:
                 kinds = {'input'} if claim['kind'] == 'INPUT_FACT' else {'metric', 'ledger'}
                 if not refs or any(pack['facts'][f]['kind'] not in kinds for f in refs):

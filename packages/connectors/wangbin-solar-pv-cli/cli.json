@@ -5,10 +5,20 @@
     "linux": "python -m pip install --no-input --disable-pip-version-check --only-binary=:all: jsonschema==4.26.0 wangbin-document-cli==1.2.0 wangbin-solar-pv-input==0.3.1 openpyxl==3.1.5 python-docx==1.2.0 pdfminer.six==20260107 defusedxml==0.7.1 tzdata==2026.5 \"markitdown[pdf,docx,xlsx,pptx]==0.1.9\"",
     "win32": "python -m pip install --no-input --disable-pip-version-check --only-binary=:all: jsonschema==4.26.0 wangbin-document-cli==1.2.0 wangbin-solar-pv-input==0.3.1 openpyxl==3.1.5 python-docx==1.2.0 pdfminer.six==20260107 defusedxml==0.7.1 tzdata==2026.5 \"markitdown[pdf,docx,xlsx,pptx]==0.1.9\""
   },
+  "auth": {
+    "darwin": "python -m wangbin_solar_pv.reporting.connector_runtime ready",
+    "linux": "python -m wangbin_solar_pv.reporting.connector_runtime ready",
+    "win32": "python -m wangbin_solar_pv.reporting.connector_runtime ready"
+  },
+  "unAuth": {
+    "darwin": "python -m wangbin_solar_pv.reporting.connector_runtime disconnect",
+    "linux": "python -m wangbin_solar_pv.reporting.connector_runtime disconnect",
+    "win32": "python -m wangbin_solar_pv.reporting.connector_runtime disconnect"
+  },
   "status": {
-    "darwin": "python -c \"import wangbin_solar_pv, wangbin_document_engine; print('LOCAL_READY')\"",
-    "linux": "python -c \"import wangbin_solar_pv, wangbin_document_engine; print('LOCAL_READY')\"",
-    "win32": "python -c \"import wangbin_solar_pv, wangbin_document_engine; print('LOCAL_READY')\""
+    "darwin": "python -m wangbin_solar_pv.reporting.connector_runtime ready",
+    "linux": "python -m wangbin_solar_pv.reporting.connector_runtime ready",
+    "win32": "python -m wangbin_solar_pv.reporting.connector_runtime ready"
   },
   "statusMatch": "^LOCAL_READY$"
 }

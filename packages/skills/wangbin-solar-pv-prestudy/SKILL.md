@@ -24,6 +24,14 @@ license_status: REQUIRES_MANUAL_REVIEW
 
 ## 运行方式和依赖边界
 
+### AI Report Engine 2.0：原生宿主研究试点
+
+用户明确请求AI2.0章节研究时，先读 `@references/host-orchestration.md`。你（当前WorkBuddy宿主模型）负责读取本次请求、研究证据并撰写新的结构化章节；Python不调用隐藏LLM、不替你从旧稿拼出正文。本轮只开放CH08；真实宿主双案CH08通过前不得扩展CH10/CH16或Phase E。
+
+通过 `@scripts/run_ai_chapter.py` 调用已安装引擎的授权/prepare/accept/checkpoint/resume协议。不得读取authored、历史draft、旧Word或过去的完整章节作为新写作输入。缺宿主权限、正确解释器、内部wheel或实际执行证据时如实停止；不能用Hermes作者会话、协议fixture或本地UUID替代。
+
+下文report/project-report是保留的**legacy确定性报告导出**，不代表AI2.0运行时生成。不要将旧入口外层SUCCESS转述成模型研究或四文件通过。当前原生路径仍是本地候选，实际WorkBuddy专家安装、连接器环境继承和无旧稿生成均未验证。
+
 本 Skill ZIP 是提示词、契约、冻结定义和路由脚本包，不会自动安装 Python、pip 依赖或光伏计算引擎。推荐在 WorkBuddy 中同时安装配套 CLI Connector `wangbin-solar-pv-cli`；Connector 使用 WorkBuddy 托管的 Python runtime 和隔离虚拟环境安装已审阅的 `wangbin-solar-pv-input==0.3.1` 与 `wangbin-document-cli==1.2.0`。如果 Connector 未安装或状态不是 `LOCAL_READY`，不得声称已完成计算。
 
 普通 Skill 独立运行只在宿主环境已经提供 `wangbin_solar_pv`、`wangbin_document_engine` 及下述依赖时成立；Skill 不依赖开发者 Git 仓库、IDE 或本地 `PYTHONPATH`。WorkBuddy 平台安装、依赖解析和 Connector 获取来源在本候选中仍为 `NOT_TESTED`。

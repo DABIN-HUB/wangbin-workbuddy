@@ -61,7 +61,7 @@ def prepare(workspace, run_name, model, registry, chapter_id, config, allowed_so
     root = workspace.path(run_name, json_only=False)
     if not root.exists():
         root.mkdir(mode=0o700)
-    store = Workspace(root)
+    store = type(workspace)(root)
     # Shared run lock covers initialization, reservation and request publication.
     with store.lock('state.json'):
         if store.path('state.json').exists():

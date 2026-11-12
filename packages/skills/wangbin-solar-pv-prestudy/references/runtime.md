@@ -39,6 +39,9 @@ python -m pip install --no-input --disable-pip-version-check --only-binary=:all:
 
 ## 引擎入口
 
+- AI2.0原生研究试点：`python scripts/run_ai_chapter.py prepare|accept|resume|checkpoint|cancel ...`，详见host-orchestration.md。脚本以当前解释器的隔离模式启动已安装的 `wangbin_solar_pv.reporting.host_session`，显式传入包内冻结基线；不注入开发仓库/PYTHONPATH。命令默认180秒硬超时，不等于远程模型超时。
+- 当前Skill解释器是否等于Connector托管解释器必须现场验证；未验证或入口未安装则阻断。普通用户无需也不应填写开发者绝对路径。
+
 - `python -m wangbin_solar_pv.cli ... project`：Phase 3G 统一项目计算。
 - `python -m wangbin_solar_pv.cli ... report`：工商业屋顶报告导出。
 - `python -m wangbin_solar_pv.cli ... ground-report`：集中式地面报告导出。

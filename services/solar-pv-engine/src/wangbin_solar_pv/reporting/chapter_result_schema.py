@@ -1,6 +1,7 @@
 """Bounded structured text; no model-authored tables or Office XML."""
 from ..errors import ContractError
 from ..schemas import StrictValidator
+from .semantic_risks import MEANINGS
 
 
 def result_schema():
@@ -22,9 +23,17 @@ def result_schema():
                               "items": {"type": "integer", "minimum": 0, "maximum": 23}},
         "effect": {"enum": ["DESCRIPTIVE", "IMPROVES_RETURN", "LOWER_COST", "ENGINEERING_READY", "TARGET_MET", "PROCEED"]},
         "basis_status": {"enum": ["SUPPORTED", "LIMITED", "UNVERIFIED"]}}
+    required_claims = list(claim_properties)
+    claim_properties["risk_assertions"] = {
+        "type": "array", "maxItems": 12,
+        "items": {"type": "object", "additionalProperties": False,
+                  "required": ["meaning", "basis", "fact_refs"],
+                  "properties": {"meaning": {"enum": list(MEANINGS)},
+                                 "basis": {"enum": ["FORECAST", "ACTUAL"]},
+                                 "fact_refs": {**refs, "minItems": 1}}}}
     properties["claims"] = {"type": "array", "minItems": 1, "maxItems": 24,
                             "items": {"type": "object", "additionalProperties": False,
-                                      "required": list(claim_properties), "properties": claim_properties}}
+                                      "required": required_claims, "properties": claim_properties}}
     section = {"type": "object", "additionalProperties": False,
                "required": list(properties), "properties": properties}
     top = {"chapter_id": text, "chapter_intro": text,
