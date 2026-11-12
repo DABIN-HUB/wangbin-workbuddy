@@ -1,6 +1,12 @@
-# 原生宿主编排核验（本轮）
+# 原生宿主编排核验
 
-状态：MODEL_INTEGRATION_BLOCKED / Phase D NOT_EXECUTED。没有真实AI样本。
+## 最新状态（2026-11-12）
+
+WorkBuddy正式集成仍MODEL_INTEGRATION_BLOCKED；但双类型CH08/CH10/CH16已由当前Hermes会话真实撰写、accept/resume并生成局部Word，标记HERMES_ASSISTED_UNVERIFIED，不是协议fixture，也不证明WorkBuddy运行。最新私有试验步骤见phase-d-host-private-verification.md，实际内容自审见phase-d-content-self-review.md，交付见phase-cd-delivery.md。
+
+## 2026-11-11历史记录（不代表最新Hermes内容状态）
+
+当时状态：MODEL_INTEGRATION_BLOCKED / Phase D NOT_EXECUTED。当时没有真实AI样本。
 
 ## 实际检索
 2026-11-11使用urllib取得官方页面HTTP 200，解析正文留在本轮忽略目录official-skill.txt和official-expert.txt。web_extract不支持当前后端，失败未算已读取。
