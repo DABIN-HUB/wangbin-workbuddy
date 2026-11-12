@@ -300,7 +300,7 @@ def _trusted_original_settlement(result, original_export, original_methods, cata
 
 def run_scenario(prepared, original_export, original_methods, *, catalog, budget, workspace,
                  original_bundle=None, generation_dir=None, generation_result_hash=None,
-                 original_settlement=None):
+                 original_settlement=None, original_trading_fee_source_bytes=None):
     """Execute affected 3B→3E producers, reusing only a pinned unaffected 3C.
 
     The common Phase 3E producer remains partial without terminal cash. A
@@ -316,6 +316,8 @@ def run_scenario(prepared, original_export, original_methods, *, catalog, budget
     from .energy_yield import calculate_ground as generate_ground, calculate_rooftop as generate_rooftop
     from .financial_ledger import calculate_financial_ledger, write_financial_bundle
     from .phase3e import calculate_phase3e, write_phase3e_bundle
+    from .scenario_cash_sources import rebind_opex_fee
+    from ..serialization import loads
     from .revenue import calculate_ground as settle_ground, calculate_rooftop as settle_rooftop
     from .sensitivity import scenario_calculation_graph
 
@@ -344,6 +346,14 @@ def run_scenario(prepared, original_export, original_methods, *, catalog, budget
     if "finance.project_discount_rate" in prepared.changed_field_ids:
         raise ContractError("BLOCKED_MISSING_INPUT", "scenario.project_npv_terminal_binding")
     finance_only = not set(affected).intersection({"3B", "3C"})
+    sourced = original_trading_fee_source_bytes is not None
+    if sourced and (set(prepared.changed_field_ids) != {"opex.items.base_amount"}
+                    or prepared.changed_method_ids or prepared.methods.hash != original_methods.hash):
+        raise ContractError("SCENARIO_CASH_SOURCE_SCOPE_CHANGED")
+    if sourced:
+        if original_settlement is None:
+            raise ContractError("SCENARIO_SETTLEMENT_REQUIRED")
+        _trusted_original_settlement(original_settlement, original, original_methods, catalog)
     reused = None
     if finance_only and original_settlement is not None and prepared.methods.hash == original_methods.hash:
         reused = _trusted_original_settlement(original_settlement, original, original_methods, catalog)
@@ -384,10 +394,20 @@ def run_scenario(prepared, original_export, original_methods, *, catalog, budget
         settlement = results.get("3C", reused)
         if settlement is None:
             raise ContractError("SCENARIO_SETTLEMENT_REQUIRED")
+        fee_bytes, fee_binding = None, None
+        if original_trading_fee_source_bytes is not None:
+            fee_bytes, fee_binding = rebind_opex_fee(
+                original_trading_fee_source_bytes, original, prepared.input_export,
+                prepared.methods, original_settlement, settlement, prepared.scenario_id)
         results["3D"] = calculate_financial_ledger(prepared.input_export, prepared.methods,
                                                      settlement, catalog=catalog,
-                                                     scenario_id=prepared.scenario_id)
+                                                     scenario_id=prepared.scenario_id,
+                                                     trading_fee_source_bytes=fee_bytes)
         results["3E"] = calculate_phase3e(results["3D"], prepared.methods, catalog)
+
+        if fee_binding is not None:
+            Workspace(root).create("fee-source-rebinding.json", fee_binding)
+            Workspace(root).create("candidate-fee-source.json", loads(fee_bytes))
         receipt = seal_scenario_run(prepared, results, catalog)
         receipt["affected_stages"] = affected
         receipt["reused_settlement_result_hash"] = None if reused is None else reused["result_hash"]
