@@ -61,8 +61,8 @@ def assemble_chapter(store, request_id, model, registry, config, output_name):
                        caption=definition['purpose'])
         for fid in section['formula_refs']:
             definition = pack['formulas'][fid]
-            document.add_paragraph(definition['chinese_name'], style='Solar Formula Title')
-            equation_paragraph(document, deepcopy(math[fid]), fid)
+            document.add_paragraph(definition['chinese_name'] + '（' + fid + '）', style='Solar Formula Title')
+            equation_paragraph(document, deepcopy(math[fid]), '')
             _add_table(document, ['符号', '含义', '单位'],
                        [[s['symbol'], s['definition_zh'],
                          '无量纲' if s['unit'] == '1' else s['unit']]
