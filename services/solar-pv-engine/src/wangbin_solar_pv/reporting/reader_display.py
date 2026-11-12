@@ -20,6 +20,13 @@ PERCENT_METRICS = ('pr_observed.', 'capacity_factor.', 'consumption.self_ratio.'
 UNITS = {'CNY': '元', 'currency': '元', 'currency/kWh': '元/kWh', 'year': '年',
          'day': '天', 'hour': '小时', 'h': '小时', 'minute': '分钟', 'min': '分钟',
          '1': '', 'date': '', 'boolean': '', 'kWh/year': 'kWh/年'}
+FIELD_TEXT = {
+    'project.price_basis': {'nominal': '名义价格'},
+    'project.cashflow_tax_basis': {'post_tax': '项目税后现金流'},
+    'finance.cashflow_timing': {'PERIOD_END': '评价期间期末'},
+    'resource.uncertainty_basis': {
+        'Not quantified as a meteorological confidence interval': '未量化为气象置信区间'},
+}
 
 
 def number(value, places=2, trim=True):
@@ -82,6 +89,9 @@ def fact_display(fact, currency=None, metric=None):
     if unit.startswith('currency') and currency not in {'CNY', '元'}:
         display_unit = (currency or '币种待核验') + unit.removeprefix('currency')
     if isinstance(value, str):
+        translated = FIELD_TEXT.get(fact.get('field_id'), {}).get(value)
+        if translated is not None:
+            return translated, ''
         if unit == 'date' or re.fullmatch(r'\d{4}-\d{2}-\d{2}', value):
             try:
                 d = date.fromisoformat(value)

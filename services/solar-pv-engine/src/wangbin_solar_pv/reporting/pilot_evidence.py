@@ -2,6 +2,7 @@
 from decimal import Decimal
 
 from ..errors import ContractError
+from ..serialization import digest
 from .reader_display import period_label
 
 SETTLEMENT = {
@@ -21,6 +22,51 @@ METHOD_NAMES = {'settlement.price_source': '收入采用的价格路径', 'settl
 METHOD_TEXT = {'PERIOD_TABLE': '分时价格表', 'MARKET_SERIES': '逐时市场价格时序',
                'SEPARATE_LEDGER': '交易费独立计提', 'EMBEDDED_IN_PRICE': '交易费已含价格',
                'OWNER_AVOIDED_COST': '自用避免支出与上网售电分别计量', 'EXPORT_ONLY': '全额上网售电'}
+TERMINAL_TEXT = {'NO_DISPOSITION': '声明终期不处置资产、不另行取得处置回款',
+                 'LEDGER_ALREADY_RECOVERED': '声明营运资金已在原台账回收，不另行重复计入',
+                 'SOURCE_AND_LEDGER_RECONCILED': '基准已有同身份终期调节记录，非真实回款证明'}
+
+
+def terminal_declaration(model, allowed):
+    """Project the sealed baseline declaration, never calculate terminal cash."""
+    result = model.result
+    snapshot = result['source_snapshot'].get('phase3e_terminal')
+    if not snapshot:
+        return {}, ['终期声明未提供，不能以账面残值替代处置现金。']
+    source, binding = snapshot['source'], snapshot['binding']
+    if source.get('mode') != 'NO_DISPOSITION':
+        return {}, ['当前终期声明模式没有只读展示适配，不能补算处置现金。']
+    atom = source['no_disposition']['source']
+    if (atom.get('license_status') != 'AUTHORIZED' or
+            atom.get('source_status') not in {'ASSUMED', 'VERIFIED'} or
+            not atom.get('source_section_or_cell') or atom.get('source_id') not in allowed):
+        return {}, ['终期声明来源未获授权或未核验。']
+    cash = model.metric('financial.phase3e.project_cash_flow')
+    if not cash:
+        return {}, ['同身份项目现金结果未提供，终期声明不代替现金结果。']
+    boundary = result['boundaries'].get(cash['boundary_id'], {})
+    normalized = result['inputs']['normalized']
+    identity = {'project_id': result['project_id'], 'pv_type': result['pv_type'],
+                'scenario_id': result['scenario_id'], 'currency': normalized['project.currency'],
+                'evaluation_date': normalized['project.evaluation_date']}
+    if (snapshot.get('source_content_hash') != digest(source) or
+            snapshot.get('binding_hash') != digest(binding) or
+            any(binding.get(k) != v for k, v in identity.items()) or
+            any(source.get(k) != v for k, v in identity.items() if k != 'scenario_id') or
+            binding.get('phase3d_result_hash') != snapshot.get('phase3d_result_hash') or
+            binding.get('phase3d_result_hash') != boundary.get('upstream_financial_result_hash')):
+        raise ContractError('PILOT_TERMINAL_IDENTITY')
+    values = {'mode': source['mode'],
+              'working_capital_treatment': source['no_disposition']['working_capital_treatment']}
+    reconciliation = result['evidence'].get('phase3e-terminal-reconciliation', {})
+    if (cash['status'] == 'CALCULATED' and
+            boundary.get('terminal_cash_policy') == 'SOURCE_AND_LEDGER_RECONCILED' and
+            reconciliation.get('binding_hash') == snapshot['binding_hash'] and
+            reconciliation.get('source_content_hash') == snapshot['source_content_hash'] and
+            reconciliation.get('periods') == result['evidence'].get('financial-ledger', {}).get('periods')):
+        values['availability'] = boundary['terminal_cash_policy']
+    return {key: {'value': value, 'source': atom} for key, value in values.items()}, (
+        [] if 'availability' in values else ['同身份终期调节记录未核验，不得填零或借用其他情景金额。'])
 
 
 def pilot_facts(model, sid, allowed):
@@ -91,6 +137,21 @@ def pilot_facts(model, sid, allowed):
                         cash['source_ids'], f'evidence/financial-ledger/annual/{i}/{key}', period=row['period'])
                     if key == 'transaction_cost_cash_paid' and row.get(key) is None:
                         missing.append('交易费预计支付尚未在当前基准台账独立绑定，不能按零或按计提金额替代。')
+    if sid == 'CH16.01':
+        declarations, reasons = terminal_declaration(model, allowed)
+        missing.extend(reasons)
+        for key, item in declarations.items():
+            atom = item['source']
+            label, pointer = {
+                'mode': ('终期处置政策声明', 'source_snapshot/phase3e_terminal/source/mode'),
+                'working_capital_treatment': ('营运资金回收声明',
+                    'source_snapshot/phase3e_terminal/source/no_disposition/working_capital_treatment'),
+                'availability': ('基准终期记录可用性', 'boundaries/' +
+                    model.metric('financial.phase3e.project_cash_flow')['boundary_id'] + '/terminal_cash_policy'),
+            }[key]
+            add('terminal.' + key, label, item['value'], '',
+                [atom['source_id']], pointer, period='TERMINAL',
+                status=atom['source_status'], boundary='DECLARATION_AND_EXISTING_RECORD_NOT_ACTUAL_RECEIPT')
     return facts, sorted(set(missing))
 
 

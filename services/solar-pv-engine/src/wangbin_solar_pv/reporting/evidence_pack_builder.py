@@ -12,7 +12,7 @@ from ..serialization import digest
 from .chapter_result_schema import validate_evidence
 from .evidence_adapters import group_for, input_facts, series_periods, controlled_table, RAW_SERIES, producer_facts
 from .reader_display import fact_display, period_label
-from .pilot_evidence import pilot_facts, pilot_table_facts, METHOD_TEXT
+from .pilot_evidence import pilot_facts, pilot_table_facts, METHOD_TEXT, TERMINAL_TEXT
 
 _SECRET = re.compile(r"(?i)(?:bearer\s+\S+|(?:api[_-]?key|password|secret|token)\s*[:=]\s*\S+)")
 
@@ -187,6 +187,8 @@ def build_pack(model, registry, chapter_id, allowed_source_ids, scenario_bundle=
             fact['display'], fact['display_unit'] = fact_display(fact, normalized.get('project.currency'), metric)
             if ref.startswith('pilot:method.'):
                 fact['display'] = METHOD_TEXT.get(fact['value'], '未支持的价格或结算路径，待核验')
+            elif ref.startswith('pilot:terminal.'):
+                fact['display'] = TERMINAL_TEXT.get(fact['value'], '终期声明含义待核验')
         section_sources = sorted({source for fact in scoped for source in facts[fact]['source_ids']})
         for table in sec['tables']:
             tables[table['table_id']] = controlled_table(table, facts, scoped)
