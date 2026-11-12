@@ -11,7 +11,8 @@ from ..report_display_numbers import decision_number
 from ..serialization import digest
 from .chapter_result_schema import validate_evidence
 from .evidence_adapters import group_for, input_facts, series_periods, controlled_table, RAW_SERIES, producer_facts
-from .reader_display import fact_display
+from .reader_display import fact_display, period_label
+from .pilot_evidence import pilot_facts, pilot_table_facts, METHOD_TEXT
 
 _SECRET = re.compile(r"(?i)(?:bearer\s+\S+|(?:api[_-]?key|password|secret|token)\s*[:=]\s*\S+)")
 
@@ -60,6 +61,8 @@ def build_pack(model, registry, chapter_id, allowed_source_ids, scenario_bundle=
         scoped, missing = [], []
         fields = sec['project_type_fields'][model.result['pv_type']]
         for fid in fields:
+            if model.result['pv_type'] == 'utility_scale_ground' and fid.startswith('load.'):
+                continue
             if fid in RAW_SERIES:
                 missing.append(fid + ': RAW_SERIES_WITHHELD_USE_VALIDATED_SUMMARY')
                 continue
@@ -150,7 +153,8 @@ def build_pack(model, registry, chapter_id, allowed_source_ids, scenario_bundle=
                 for index, value in enumerate(values):
                     item_id = fact_id + ':item:' + str(index)
                     facts[item_id] = {**template, 'value': value,
-                                      'label': template['label'] + '（原始序列位置' + str(index) + '）',
+                                      'label': (period_label(periods[index]) + template['label'] if periods else
+                                                template['label'] + '（原始序列位置' + str(index) + '）'),
                                       'display': decision_number(value, metric['unit']),
                                       'period': {'series_period': metric['period'], 'index': index,
                                                  'index_basis': 'ZERO_BASED_CANONICAL_ARRAY',
@@ -168,6 +172,10 @@ def build_pack(model, registry, chapter_id, allowed_source_ids, scenario_bundle=
         scoped.extend(ledger_facts)
         if ledger_reason:
             missing.append(ledger_reason)
+        pilot, pilot_missing = pilot_facts(model, sid, allowed)
+        facts.update(pilot)
+        scoped.extend(pilot)
+        missing.extend(pilot_missing)
         for fid in sec['formula_ids']:
             formula = model.catalog.formulas[fid]
             formulas[fid] = {key: deepcopy(formula[key]) for key in (
@@ -177,9 +185,13 @@ def build_pack(model, registry, chapter_id, allowed_source_ids, scenario_bundle=
             fact = facts[ref]
             metric = model.metric(fact['metric_id']) if fact.get('metric_id') else None
             fact['display'], fact['display_unit'] = fact_display(fact, normalized.get('project.currency'), metric)
+            if ref.startswith('pilot:method.'):
+                fact['display'] = METHOD_TEXT.get(fact['value'], '未支持的价格或结算路径，待核验')
         section_sources = sorted({source for fact in scoped for source in facts[fact]['source_ids']})
         for table in sec['tables']:
             tables[table['table_id']] = controlled_table(table, facts, scoped)
+            if table['renderer'] == 'evidence_rows':
+                tables[table['table_id']]['fact_ids'] = pilot_table_facts(sid, facts, scoped)
         for definition in sec['tables']:
             if definition['renderer'] != 'scenario_comparison' or comparison is None:
                 continue
