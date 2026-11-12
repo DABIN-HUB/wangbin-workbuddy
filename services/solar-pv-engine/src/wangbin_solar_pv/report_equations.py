@@ -78,13 +78,20 @@ def pandoc_executable() -> str:
     return str(executable)
 
 
-def convert_equations(definitions: list[dict]) -> dict[str, object]:
+def convert_equations(definitions: list[dict], *, formula_ids=None) -> dict[str, object]:
     """Return one detached OMML node per formal ID; fail closed on any mismatch."""
     ids = [row["formula_id"] for row in definitions]
     if len(ids) != len(set(ids)) or len(ids) != 89:
         raise ContractError("REPORT_OMML_FORMULA_IDENTITY")
     if not set(DISPLAY_LATEX) <= set(ids):
         raise ContractError("REPORT_OMML_DISPLAY_MAPPING_UNKNOWN_ID")
+    if formula_ids is not None:
+        if not set(formula_ids) <= set(ids):
+            raise ContractError("REPORT_OMML_FORMULA_IDENTITY")
+        definitions = [row for row in definitions if row['formula_id'] in formula_ids]
+        ids = [row['formula_id'] for row in definitions]
+        if not ids:
+            return {}
     lines: list[str] = []
     for row in definitions:
         expression = DISPLAY_LATEX.get(row["formula_id"], row.get("latex"))

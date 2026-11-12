@@ -11,6 +11,7 @@ from ..report_display_numbers import decision_number
 from ..serialization import digest
 from .chapter_result_schema import validate_evidence
 from .evidence_adapters import group_for, input_facts, series_periods, controlled_table, RAW_SERIES, producer_facts
+from .reader_display import fact_display
 
 _SECRET = re.compile(r"(?i)(?:bearer\s+\S+|(?:api[_-]?key|password|secret|token)\s*[:=]\s*\S+)")
 
@@ -172,6 +173,10 @@ def build_pack(model, registry, chapter_id, allowed_source_ids, scenario_bundle=
             formulas[fid] = {key: deepcopy(formula[key]) for key in (
                 'formula_id', 'chinese_name', 'latex', 'text_equation', 'every_symbol_definition',
                 'unit', 'calculation_boundary', 'assumptions', 'review_status')}
+        for ref in scoped:
+            fact = facts[ref]
+            metric = model.metric(fact['metric_id']) if fact.get('metric_id') else None
+            fact['display'], fact['display_unit'] = fact_display(fact, normalized.get('project.currency'), metric)
         section_sources = sorted({source for fact in scoped for source in facts[fact]['source_ids']})
         for table in sec['tables']:
             tables[table['table_id']] = controlled_table(table, facts, scoped)

@@ -7,7 +7,7 @@ import os
 from docx import Document
 
 from ..errors import ContractError
-from ..report_equations import convert_equations
+from ..report_equations import convert_equations, CONFLICT_ID
 from .compat import add_table as _add_table
 from ..report_numbering import add_numbered_heading, heading_number
 from ..report_word_styles import configure, equation_paragraph
@@ -26,7 +26,9 @@ def assemble_chapter(store, request_id, model, registry, config, output_name):
     chapter = registry.chapter(accepted['chapter_id'])
     output = accepted['output']
     used_formulas = {fid for sec in output['sections'] for fid in sec['formula_refs']}
-    math = convert_equations(list(model.catalog.formulas.values())) if used_formulas else {}
+    if CONFLICT_ID in used_formulas:
+        raise ContractError('PILOT_FORMULA_METHOD_CONFLICT')
+    math = convert_equations(list(model.catalog.formulas.values()), formula_ids=used_formulas) if used_formulas else {}
     document = Document()
     configure(document)
     document.core_properties.title = chapter['chapter_title'] + '（局部待审稿）'
@@ -61,6 +63,11 @@ def assemble_chapter(store, request_id, model, registry, config, output_name):
             definition = pack['formulas'][fid]
             document.add_paragraph(definition['chinese_name'], style='Solar Formula Title')
             equation_paragraph(document, deepcopy(math[fid]), fid)
+            _add_table(document, ['符号', '含义', '单位'],
+                       [[s['symbol'], s['definition_zh'],
+                         '无量纲' if s['unit'] == '1' else s['unit']]
+                        for s in definition['every_symbol_definition']],
+                       caption=definition['chinese_name'] + '：符号与单位')
         for text in section['missing_evidence']:
             document.add_paragraph(render_text(text, pack))
     for text in [*output['chapter_findings'], *output['decision_implications']]:
@@ -79,5 +86,6 @@ def assemble_chapter(store, request_id, model, registry, config, output_name):
                'spec_hash': registry.hash, 'scope': 'PARTIAL_CHAPTER_REVIEW_ONLY',
                'professional_review': 'PENDING_REVIEW', 'visual_review': 'NOT_TESTED',
                'llm_integration': accepted['llm_integration'], 'four_files': 'NOT_GENERATED'}
+    receipt['formula_sections'] = {s['section_id']: s['formula_refs'] for s in output['sections']}
     store.create(target.name + '.json', receipt)
     return receipt

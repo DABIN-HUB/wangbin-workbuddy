@@ -5,6 +5,7 @@ from ..errors import ContractError
 from ..serialization import digest
 from .chapter_result_schema import validate_schema
 from .evidence_pack_builder import safe_text
+from .reader_display import inline
 
 SLOT = re.compile(r'\[\[fact:([^\[\]\s]+)\]\]')
 TERM = re.compile(r'\[\[term:([^\[\]\s]+)\]\]')
@@ -115,8 +116,6 @@ def render_text(text, pack):
     check_text(text, pack['facts'], pack['terms'])
     def replace(match):
         fact = pack['facts'][match.group(1)]
-        # UNKNOWN/BLOCKED display never uses a numeric default.
-        value = fact['display']
-        unit = fact.get('display_unit', fact.get('unit'))
-        return str(value) + (' ' + unit if unit and fact['value'] is not None else '')
+        # A single controlled formatter owns both body and table presentation.
+        return inline(fact)
     return SLOT.sub(replace, TERM.sub(lambda match: pack['terms'][match.group(1)], text))
