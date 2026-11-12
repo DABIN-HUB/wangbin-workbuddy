@@ -1,0 +1,9 @@
+id,capability,document_status,runtime_status,official_url,evidence,limit
+A,Expert roles/tools,DOCUMENTED_SUPPORTED,RUNTIME_BLOCKED,https://open.workbuddy.cn/docs/expert,h0/expert.txt:209-281,No installed solar Expert proof
+B,Skill resources/scripts,DOCUMENTED_SUPPORTED,RUNTIME_BLOCKED,https://open.workbuddy.cn/docs/skill,h0/skill.txt,allowed-tools is not permission
+C,Connector dependency IDs,DOCUMENTED_SUPPORTED,UNKNOWN,https://open.workbuddy.cn/docs/expert,h0/expert.txt:290-312,No platform ID resolution observed
+D,CLI Python/auth/unAuth,DOCUMENTED_SUPPORTED,RUNTIME_BLOCKED,https://open.workbuddy.cn/docs/connector,h0/connector.txt:1716-1789,Client5.5.2; missing unAuth
+E,Wheel distribution,DOCUMENTED_SUPPORTED,RUNTIME_BLOCKED,https://pypi.org/pypi/wangbin-solar-pv-input/0.3.1/json,h0/*-distribution.json,Both exact public versions404; no approved private index
+F,OpenAPI/third-party,REQUIRES_APPROVAL,NOT_USED,https://open.workbuddy.cn/docs/openapi,h0/openapi.txt:35-39,Not a native Expert model SDK
+G,Runtime budgets/cost,UNKNOWN,UNKNOWN,https://open.workbuddy.cn/docs/expert,h0/expert.txt:261-263,maxTurns is not execution timeout or cost evidence
+H,Truthfulness/privacy,DOCUMENTED_SUPPORTED,LOCAL_SCOPE_ONLY,https://open.workbuddy.cn/docs/developer-agreement,h0/developer-agreement.txt:43-68,No external model/data transfer or account registration
