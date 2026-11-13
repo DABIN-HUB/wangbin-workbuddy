@@ -49,4 +49,4 @@ No cross-task contradiction found. User-selected runtime replaces generic skill 
 ## Status ledger
 
 - Preflight complete: live git/remote, existing env modules and protection inventories recorded in commands/manager-preflight.* (20.720157700125128s).
-- Execution pending developer dispatch. Exact historical gate values in user task and prior RESULT must be carried into this round RESULT verbatim; new NOT_AI/NOT_HOST_E2E gates separate.
+- Developer candidate44c26c9 and tests-only remediationa7dbe7c frozen. R1 quality PARTIAL retained; R2 quality PASS_LOCAL_QA_NOT_AI_NOT_HOST_E2E closes QAI-R1-01, seven non-test source files unchanged. Reports/commands in independent-qa and independent-qa-r2, original failures/timeouts retained. Final docs and fixed payload are separately reviewed before deterministic ZIP sealing; no production/test edits after R2 review. Exact historical gate values remain verbatim in RESULT.
