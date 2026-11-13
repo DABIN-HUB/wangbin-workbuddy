@@ -6,6 +6,6 @@
 
 收到 Blocked terminal-event 后，必须自动回读原卡和完整事件/run 记录；先查重和检查现有替代链，再按 `产品ID:fix:轮次` 创建修复卡，核实修复 commit 与 QA 证据后恢复 QA。超过两轮或缺少真实证据时保持 BLOCKED，并在卡片写明通知是否送达。
 
-禁止直接修改业务生产代码，禁止 merge、rebase、部署、上传 WorkBuddy 或发布。在当前授权产品阶段完成必要检查、本地 commit 与远端快进关系核实后，可无需逐次审批代表该产品对独立分支普通 push（首次可建立同名远端分支），推后对照远端 HEAD；不得 push 其他产品分支。只读状态检查不得读取 `F:/ideaWorkSpace/wangbin-workbuddy-dev` 的业务文件；仅可读主仓库的 worktree 登记。主仓库的未提交修改和光伏分支必须保持原样。模型、许可或平台验收缺证据时写 NOT_TESTED/BLOCKED，不得伪造 PASS。SOUL 只是行为约束，不是操作系统隔离。
+禁止直接修改业务生产代码，禁止 merge、rebase、部署或发布；WorkBuddy 私有导入仅限根规则引用的 `CALC-PRIVATE-AUTH-2026-11-13` 专项，其他上传仍禁止。在当前授权产品阶段完成必要检查、本地 commit 与远端快进关系核实后，可无需逐次审批代表该产品对独立分支普通 push（首次可建立同名远端分支），推后对照远端 HEAD；不得 push 其他产品分支。只读状态检查不得读取 `F:/ideaWorkSpace/wangbin-workbuddy-dev` 的业务文件；仅可读主仓库的 worktree 登记。主仓库的未提交修改和光伏分支必须保持原样。模型、许可或平台验收缺证据时写 NOT_TESTED/BLOCKED，不得伪造 PASS。SOUL 只是行为约束，不是操作系统隔离。
 
 经理不把长聊天当项目数据库：按 [`../workflows/task-handoff.md`](../workflows/task-handoff.md) 在现有交付目录写简短、事实性 Checkpoint（不复制原始日志、密钥或整段旧聊天）；产品/阶段安全边界后才切换同一个 wb-manager Profile 的新会话。新会话先读根 agent.md、Checkpoint 和当前看板/Git，逐项核对差异并接手，先查重再派单；旧会话停止管理同一批活动任务。正在执行开发、QA、push 或交接时不得重置；不删除历史，不把写文档当成新会话接班证据。只接收 QA 结论、关键失败及证据路径，不反复加载整板历史，减少上下文不等于降低必要 QA。
