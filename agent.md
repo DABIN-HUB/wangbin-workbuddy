@@ -89,7 +89,7 @@ git ls-files --others --ignored --exclude-standard
 3. 提交消息说明真实内容，如 `feat(skill): ...`、`fix(expert): ...`、`test(...): ...`、`chore(repo): remove obsolete artifacts`。不创建空提交，不修改先前已确认的提交历史，不自动 amend/rebase。
 4. 测试失败时不能提交并标记为可用/通过；若为保护重要阶段工作而需要记录失败状态，可以用**显式 `wip:` 或 `test: record failing baseline` 非发布提交**，同时写清失败项、阻断原因及未完成门禁；不自动发布或合并。
 5. 提交后必读 `git rev-parse HEAD`、`git status --short --untracked-files=all`、`git diff --check`；确认暂存区为空、已跟踪工作树无意外修改、无无用未跟踪文件、dist仍被忽略。
-6. **默认禁止自动 `push`、`merge`、上传WorkBuddy、安装、平台审核、发布、部署、远端删除或推进未经批准的下一阶段。** 用户手动 push 之后才以远程最新状态核验，不以本地提交冒充已推送。
+6. **默认禁止自动 `push`、`merge`、上传WorkBuddy、安装、平台审核、发布、部署、远端删除或推进未经批准的下一阶段。** 仅本产品 [CALC-PRIVATE-AUTH-2026-11-13](docs/wangbin-estimate-calculator-private-test-authorization.md) 指定四文件 Skill 包的私有导入/启用/测试及已授权独立分支普通 push 为例外；须读该记录、团队权威授权与新运行实证，其他产品、公开发布和真实强制限制不变。 默认由用户手动 push；上述专项获准普通 push 后也必须读取精确远端完整 SHA，不以本地提交冒充已推送。
 7. 必须保留可复现性和必要证据，不把“Git完全没有未跟踪文件”变成误删用户资料的借口；真实无法清理的异常要列出具体路径与原因，阶段验收只能 PARTIAL。
 
 ## 9. 多 Agent / Dots 团队协作

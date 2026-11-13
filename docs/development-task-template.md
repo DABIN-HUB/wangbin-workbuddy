@@ -26,7 +26,7 @@
 | 本地提交 | 仅显式暂存、提交 SHA、最终 HEAD、暂存区和 `git status --short --untracked-files=all` 原始结果 |
 | 平台/发布 | 无真实安装与运行则 NOT_TESTED/BLOCKED；许可/人工签审各自独立，不自动升级 |
 
-**边界**：不得自动 push、merge、上传 WorkBuddy、安装、审核、发布或启动未经批准的新阶段。无变更不制造空提交；失败阶段若需保留工作只能标为非发布 WIP。
+**边界**：默认不得自动 push、merge、上传 WorkBuddy、安装、审核、发布或启动未经批准的新阶段；仅 [CALC-PRIVATE-AUTH-2026-11-13](wangbin-estimate-calculator-private-test-authorization.md) 允许本产品指定 Skill 私测和已授权分支普通 push，不扩大其他权限。无变更不制造空提交；失败阶段若需保留工作只能标为非发布 WIP。
 
 ## Hermes Dots 四 Bot 接入边界
 
