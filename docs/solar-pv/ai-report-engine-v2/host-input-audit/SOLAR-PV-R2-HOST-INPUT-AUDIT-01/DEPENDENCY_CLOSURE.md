@@ -55,6 +55,8 @@ Document 1.2.0 wheel METADATA 另外声明 `markitdown[docx,pdf,pptx,xlsx]==0.1.
 
 没有读取 Token/Cookie/models.json、索引凭据、私有会话库或环境秘密；metadata 中仅记录 direct_url 是否存在，不读取其中路径或敏感内容。历史开发离线安装失败仍保留在旧记录，不用本轮只读 metadata 改写它。
 
+官方规则已通过本轮实际GET核验：Skill references供上下文、scripts经Bash；Connector CLI runtime的Python最低标注v5.0.0并描述托管venv/pip隔离，但不能据此证明普通Skill Bash共用解释器或本机已安装。精确URL/时间/原文SHA与版本界限见HOST文档和RUN/official/support-index.json。本次独立QA总裁定PARTIAL，安装门禁不因此提升。
+
 ## 5. 后续可信安装的独立批准项（不执行）
 
 1. 权利人提供唯一可追溯的 R2 wheel：新唯一版本/构建身份、原 SHA、源码提交、必要模块/入口/包数据及许可证。不能覆盖旧 0.3.1 实物来制造同名升级。

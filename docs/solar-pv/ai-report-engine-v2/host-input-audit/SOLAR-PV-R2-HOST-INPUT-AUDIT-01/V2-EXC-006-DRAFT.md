@@ -40,11 +40,13 @@
 
 ## 4. 待批验收要求
 
-1. 生产实现前，独立 QA 按冻结作者快照运行标准库 experiment/verify，重新测量、比较全部字段、数字词法、五身份/规格和六节权限。此阶段 QA = NOT_RUN_PENDING。
+1. 独立 QA 已完成冻结作者快照的测量、可逆性与当前双案权限另查，**总裁定 PARTIAL**；原文见 QA_INDEX.md。QA-F01/F02仅由 developer 实施文档边界/共享隐私整改，不是 quality 重新验收。审计脚本和实验快照不改；未来生产验收仍须独立执行。
 2. 生产专项后续另批：兼容旧 prepare/prepare-r2 与历史请求；新模式授权、两案、错身份/旧视图、取消/并发/no-clobber/崩溃、unknown key、引用/列映射、原 request 与 view 双预算、期限和缓存失效。严格 validator/risk_assertions 原规则不得削弱。
 3. 全部用户列举负例已在离线原型覆盖：删事实/少来源/换状态/数字单位期间/错项目/跨节/重复悬空索引/缺表行/未知键/篡改/错误版本映射/风险不足/旧视图冒用；其中无风险覆盖明确返回 COVERAGE_INSUFFICIENT，不伪装专业审核。
 4. 独立证明受信 wheel、依赖、普通 Skill Bash/Connector 的各自环境；当前旧 wheel 不含 R2，文档/版本名不替代实物。
 5. 用户分别批准生产接口、依赖安装、精确 Skill 替换、一次新 CH08 宿主试验；保留官方支持安全边界与停止门。若原敏感返回重现，保存证据即停止，不用备选模式自动重试绕过。
+
+补充权限验收边界：原型 `closure()` 只是部分引用一致性 helper，不能独立识别 UNKNOWN metric/claim、duplicate source 或同来源跨节事实，不能将其 VALID 标签当完整授权 PASS。当前两案权限有独立 QA 另查；decoder 依赖受信原件全树精确比较拒绝被重seal的篡改。未来拟议生产接口必须另验完整 metric/claim/source 唯一性与节级事实权限，不能直接照搬 helper 作为完整权限门禁。本轮不应用这一生产补丁。
 
 ## 5. 不解决事项与审批问题
 

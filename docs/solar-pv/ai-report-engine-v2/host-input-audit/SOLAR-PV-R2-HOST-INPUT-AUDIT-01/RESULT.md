@@ -1,8 +1,8 @@
-# SOLAR-PV-R2-HOST-INPUT-AUDIT-01 · 作者审计快照
+# SOLAR-PV-R2-HOST-INPUT-AUDIT-01 · 输入审计与离线方案
 
 **限定结果：原件核验、请求负担分析、整章透明表示和标准库自检已形成可复核作者快照；没有生产修改。**
 
-本阶段状态 `AUTHOR_SNAPSHOT_READY_FOR_QA`。本轮独立 QA 为 `NOT_RUN_PENDING`；官方文档逐条证据为 `PENDING_MANAGER_EVIDENCE`。manager 新增现场 UI 已如实收录。尚未生成最终审计 ZIP，待独立复核与资料补齐后由同一唯一 writer 第二阶段收尾，不能提前宣布整个任务/宿主/发布通过。
+本轮独立 QA **PARTIAL**，原裁定不改写为 PASS；五个官方入口已实际 GET 并保留完整原文、查询时间和 SHA。最终状态与审计 ZIP 身份以 RUN/final-state.json、RUN/final-delivery.json 实际读回为准；这只是输入审计与离线方案，不是宿主/专业/发布验收。独立 QA 原文及整改证据定位见 QA_INDEX.md。
 
 ## 1. 真实基线与保护
 
@@ -54,6 +54,8 @@ CH08.02独立数字仅作热点归因，包含关系不能相加，也**不是�
 - `CH08_COVERAGE.csv` 24任务行覆盖双案六节，连任务—事实—来源定位—许可公式—表—风险—输出要求，附原JSON pointer和原缺证。详细周期/边界/status/source实例在RUN完整明细，core CSV为精简索引。公式许可池不是全部必填，claims许可池不是配额。
 - 本次request没有完整携带每个source descriptor的许可/有效期字段，视图不能凭授权名单重造这些信息。来源有效性/专业完备性继续是缺证，不靠引用闭包PASS掩盖。
 
+**QA-F01边界：** `closure()` 仅为部分引用一致性 helper，`REFERENCE_CLOSURE_VALID` 不独立证明完整权限；UNKNOWN metric/claim、duplicate source、同来源跨节事实不能由它独立识别。当前双案完整权限来自独立 QA 另查，视图篡改另受 decoder 对可信原请求完整树精确比较与规范重编码约束。独立 QA 的132项重seal拒绝是离线自造负向诊断，不是产品 tests。本轮仅补文档和机器回执边界，审计脚本、experiment-final、author-snapshot 不变；两项整改为 developer 落实，不是 quality 重新验收，总裁定仍 PARTIAL。
+
 作者先运行缺实现的标准库RED（预期exit1），再运行真实两案GREEN；最终源码又通过纯只读readonly入口完整复算。原始退出、输入hash、解释器、开始结束、stdout/stderr都在RUN/commands。没有JUnit，因为没有运行pytest。累计验证以RUN/author-final-state.json/时间账本实际求和为准，单项均未达到120秒。本轮没有新的产品专项或章节PASS，作者多轮重复执行不累计成独立通过数。
 
 ## 4. 停止事件与安装链新增事实
@@ -86,7 +88,7 @@ TRUSTED_ENGINE_INSTALL = BLOCKED_UNVERIFIED
 WORKBUDDY_INSTALLED_HOST_E2E = BLOCKED
 ```
 
-`THIS_AUDIT_INDEPENDENT_QA = NOT_RUN_PENDING` 与历史PARTIAL单独列。没有draft，Schema/strict及宿主章节通过数均不新增。历史205/149/125不重新累计；历史180秒session超时及其他既有失败/超时完整保留，不借本轮作者离线PASS清零。
+`THIS_AUDIT_INDEPENDENT_QA = PARTIAL` 与上列17个历史门禁逐值分开。没有draft，Schema/strict及宿主章节通过数均不新增。历史205/149/125不重新累计；历史180秒session超时及其他既有失败/超时完整保留，不借本轮作者离线PASS清零。
 
 以下门禁独立不关闭：
 
@@ -104,8 +106,8 @@ WORKBUDDY_INSTALLED_HOST_E2E = BLOCKED
 
 ## 6. 文件、卫生与停止点
 
-核心十文件加本目录PLAN.md；所有tracked新增仅此目录，原件/实验views/大回执/图片均在独立ignored RUN。tracked历史资产净删除0文件/0B，原件未移动；没有清理未知缓存或别的产品。只运行卫生工具`--check`，其历史日志提示不作为删除授权。dist仍忽略，当前Skill/Connector候选被保留；包完整性不等于安装/发布。
+核心十文件加本目录PLAN.md及简短QA_INDEX.md；所有tracked新增仅此目录，原件/实验views/大回执/图片均在独立ignored RUN。tracked历史资产净删除0文件/0B，原件未移动；没有清理未知缓存或别的产品。只运行卫生工具`--check`，其历史日志提示不作为删除授权。dist仍忽略，当前Skill/Connector候选被保留；包完整性不等于安装/发布。
 
-阶段本地提交采用显式11文件allowlist、非发布`wip:`消息；实际提交SHA/状态/保护读回和新文件数/字节不在此自引用，以RUN/author-final-state.json为准。未push/merge/rebase/reset。独立QA和官方资料待补时，不声称最终审计包或TASK_COMPLETE。
+作者冻结阶段11文件及其原回执保持历史身份；收尾仅修改本目录授权文档/机器回执并新增简短 QA_INDEX.md，显式allowlist本地提交。最终提交SHA/状态/diff、旧tracked1242/原件170/历史metadata2638/原安装21保护、dist忽略、净删除0及预算由RUN/final-state.json实证，归档SHA/成员数由RUN/final-delivery.json实证，不在文档自引用未来提交。未push/merge/rebase/reset。共享回执只纳脱敏衍生副本，未脱敏git fuller/全量截图/AX树不入包；大原件外置hash且明确非全审计自包含。
 
 `V2-EXC-006-DRAFT.md` 是 **PROPOSED_NOT_APPROVED**，列真实拟改接口、旧协议兼容、无循环hash绑定、授权/cache/恢复、验收和不解决事项，未应用。后续生产、依赖、精确Skill替换、单次新CH08分别审批；遇缺证/敏感返回/不完整输入停止，不自动切备用表示重试。

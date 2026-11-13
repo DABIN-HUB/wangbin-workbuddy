@@ -1,6 +1,6 @@
-# 下一步与恢复（作者冻结快照）
+# 下一步与恢复（最终输入审计）
 
-本轮只是输入审计与离线方案。当前待办：manager 官方资料摘录/适用范围、独立 quality 复核、必要截图隐私裁剪，然后同一唯一 writer 第二阶段收尾。**尚未生成最终审计 ZIP**，也未改生产。
+本轮只是输入审计与离线方案。五个官方原文已实际GET并保留完整HTML/时间/SHA；独立quality已完成，总裁定PARTIAL原样保留；截图最小裁剪及Git邮箱脱敏由developer落实，不是quality重新验收。QA原文与索引见QA_INDEX.md。最终commit/保护/预算、审计ZIP/Manifest/外SHA分别以RUN/final-state.json、RUN/final-delivery.json真实读回为准，不以本文预填未来SHA；未改生产。
 
 ## 1. 精确路径与输入身份
 
@@ -31,7 +31,7 @@ python -B docs/solar-pv/ai-report-engine-v2/host-input-audit/SOLAR-PV-R2-HOST-IN
 python -B docs/solar-pv/ai-report-engine-v2/host-input-audit/SOLAR-PV-R2-HOST-INPUT-AUDIT-01/offline_view_audit.py readonly --original-root .runtime/solar-pv/r2-client-552-20261113-132354
 ```
 
-该命令逐案重算两种视图、每字节/每数字词法、request/evidence hash、六节权限闭包、可读副本及全部负例；stdout 含实际 executable、版本、脚本SHA、每案度量、负例结果和耗时。`writes=false`；`-B` 不写 bytecode。quality 用外部 terminal 120秒上限保存实际开始结束/退出/stdout/stderr，并将原结果交唯一 writer，不覆盖作者报告。脚本状态不自称“独立”，独立性来自真正另一 quality 执行与职责，不是函数名。作者已运行同入口验证新增入口，但这仍只是作者自检。
+该命令逐案重算两种视图、字节/数字词法、request/evidence hash、部分引用一致性helper、可读副本及负例，`writes=false`、`-B`不写bytecode。**closure()只检查部分关系，UNKNOWN metric/claim、duplicate source、同源跨节事实不能由它独立识别，不能仅凭此命令的VALID标签证明完整六节权限**。当前完整权限结论依赖可信原件完整树精确比较和本次独立QA另查。QA已实际执行并另写独立展开/权限/132项内存负向，原裁定PARTIAL；这些是离线诊断，不是产品tests。原完整stdout未从截断live log恢复，48106B/SHA只记QA报告值，绝不合成stdout或内存程序。源码未变，收尾不重复跑30秒readonly凑通过。
 
 按已保存视图只读解码（屋顶共享模式示例；地面/类型行应各自复核）：
 
@@ -46,22 +46,24 @@ python -B docs/solar-pv/ai-report-engine-v2/host-input-audit/SOLAR-PV-R2-HOST-IN
 ## 3. 冻结与证据索引
 
 - `RUN/author-snapshot.json`：本目录所有冻结文件、关键实验/命令/输入索引的原字节 SHA 和大小；无需在已提交文件中自引用自己的最终提交 SHA。
-- `RUN/author-final-state.json`：提交后实际 HEAD、状态、diff、保护比对、计数/字节和累计验证时间。它才是本地 commit 的最终读回，文档不预填未来 SHA。
+- `RUN/author-final-state.json`：作者冻结提交的原读回，原件含git fuller邮箱不可入共享包；另有redacted-receipts/author-final-state.json及原/新SHA。最终收尾读回是RUN/final-state.json，原作者回执不覆写。
 - `RUN/commands/*.json` 与同前缀 stdout/stderr：真实录制命令、开始结束、输入 hash、解释器、退出码；RED 预期 exit1 保留，其余作者验证以实际回执为准。没有 JUnit，因为未运行pytest。
 - `RUN/experiment-final/`：四个 whole-chapter view；每案 leaf bytes、重复结构、每个共享点和类型列映射、完整源定位/周期/边界/状态覆盖明细。core CSV 是精简任务索引，完整明细仍在本RUN，不删语义。
 - `RUN/protected-tracked-before.json`：1242个旧 tracked 文件、613683280 B，全部逐字节hash；原件/dist另表，R8–R13单列元信息索引2638项（不是全内容hash证明）。旧隔离worktree只列路径，未遍历/操作。
-- `RUN/manager-ui-index.json`：manager 六张原截图hash；仅三张必要图私下保留为 ignored 原件，尚未获准入最终包，需裁剪/隐私复核。无全量 UI 树或全量审计导出。
+- `RUN/manager-ui-index.json`：六张原截图索引，三张私下原件不变；新share-preparation/cropped-ui仅保留审计标题及两零搜索panel，源/新SHA、坐标和像素对应见cropped-ui-index.json。原图/全量capture/AX树不入包；developer结构裁剪不称quality再验收。
 - `experiment-01/02` 是作者早期实现的真实结果/回执阶段，不作为当前冻结源码结果，也不累加通过数；后续若移除重复 payload 必须先列SHA与保留回执，仅清本任务所有权明确的内容。
 
 这不是独立全仓备份。旧 ZIP、canonical 和大型历史资产继续在其原位置；只依赖 Git 文档或本地忽略目录不能冒充云备份。
 
-## 4. 交还 manager/quality 的核对清单
+最终审计包按精确allowlist保留仓库相对路径，可恢复两个精确request、两个readable、四view及完整mapping/coverage用于只读复算；大reviewZIP/wheel/完整官方HTML/canonical外置精确hash，故仅对本次codec输入自包含、对历史全材料非自包含。先验证外SHA/Manifest每成员size/SHA/CRC/唯一性/安全路径，再在独立空目录解压，不覆盖现有run；不执行旧包脚本。author-snapshot与原脚本/experiment-final不变；后改core只为说明/隐私收尾，QA未审最终文档或ZIP。
+
+## 4. 独立复核结果与交还 manager 的核对定位
 
 1. 核验本地 commit 与 snapshot；只允许本审计目录新增，生产/冻结/原件/候选/安装成员原hash不变。
 2. quality 独立执行只读命令并核对两案343018/343904 B、267事实、11公式、4表、22术语、12075行；共享228621/229291 B，类型行143143/143289 B；两种模式都完整还原本次原字节（含末尾LF），不是推广到任意JSON序列化。
 3. 复核每案45个负向结果（含风险覆盖不足），以及风险自然语言本来未被证明的范围。全字段相等不是专业结论相等；formula许可不代表强制全部使用。
-4. 核对 manager 官方资料原文/时间/准确URL/版本范围并补入本目录。已转交现场说明只证明5.5.2有审计UI、两搜索零匹配；provider覆盖及根因UNKNOWN。
-5. 同一 writer 保存 QA 原文（不得改写结论）、更新状态/必要简要索引、第二阶段本地 commit，最后才按真实文件集合生成独名审计ZIP + Manifest + SHA，并逐成员CRC/hash/readback。不能拿它当Skill安装包或发布物。
+4. 官方原文/时间/准确URL/版本支持边界已由实际GET补齐HOST文档，完整HTML在official/；5.5.2审计UI存在已证，两搜索零匹配不证明无事件，provider覆盖及根因UNKNOWN。
+5. QA原文UTF8/LF保存于RUN/independent-qa/QUALITY_REPORT.verbatim.md，来自delegation完成返回，不是provider传输字节。QA-F01仅补边界、F02使用脱敏衍生，落实者为developer，总裁定仍PARTIAL。最终commit及独名审计ZIP以final-state/final-delivery实际回执为准；不能当Skill安装包或发布物，需要重新质量验收由manager另排。
 
 ## 5. 后续动作分项审批与停止条件（均未执行）
 

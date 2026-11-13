@@ -4,7 +4,7 @@
 
 ## 1. 证据等级与本轮新增现场观察
 
-### A. manager 直接只读现场（本轮用户转交；不是 provider log）
+### A. manager 本轮直接工具操作后转交 developer（不是用户转述或 provider log）
 
 manager 在已有屋顶 R2 任务中观察 `WorkBuddyAI.exe`，PID `219384`、window `16267348`，UI 显示 `5.5.2`。未提交输入、未创建新模型任务。
 
@@ -16,7 +16,7 @@ manager 在已有屋顶 R2 任务中观察 `WorkBuddyAI.exe`，PID `219384`、wi
 
 结论：**5.5.2 本机存在安全/审计 UI，已不再 UNKNOWN；该 UI 是否覆盖 provider 敏感返回仍 UNKNOWN。** 零搜索结果仅说明这两项查询在当前可见列表无匹配，不证明后台没有事件。没有可确认本次事件的独立日志；`PARTIAL_TRACE`、后台原因 `UNKNOWN` 保留。原始交互事件属于 manager 现场会话，developer 不冒充亲自操作或 provider 原始记录。manager 未给出逐点击绝对时间，不能补造。
 
-截图原件位于 `C:/Users/wangbin/AppData/Local/hermes/cache/images/`；本轮 runtime 的 `manager-ui-index.json` 仅保存准确路径、字节与 SHA。最终归档前仅挑必要且隐私复核通过的图片，不能把全量 UI 树或无关审计记录入包。此阶段没有最终审计 ZIP。
+截图原件位于 `C:/Users/wangbin/AppData/Local/hermes/cache/images/`，三个选定原件在ignored runtime私下保留且不变；manager-ui-index.json保存准确原路径/字节/SHA。归档仅用新的最小裁剪衍生，全量UI树/原截图/无关审计记录不入包；最终ZIP实际身份见RUN/final-delivery.json，developer裁剪不冒称独立QA隐私验收。
 
 ### B. 历史本机原始材料（已读真实文件并重新核验）
 
@@ -36,17 +36,21 @@ manager 在已有屋顶 R2 任务中观察 `WorkBuddyAI.exe`，PID `219384`、wi
 
 ## 2. 官方资料边界
 
-官方文档本轮 manager/analyst 的可溯源摘录、查询时间及适用范围仍为 `PENDING_MANAGER_EVIDENCE`。以下只是用户指定待核对入口，不把补充背景中的转述当成本轮官方新证据：
+五个指定入口已由现有Python3.14.9标准库urllib.request实际GET并落盘完整HTML，不执行网页脚本；每入口20秒timeout、五路并行，HTTP均200/exit0。查询日2026-11-13、时区UTC+08:00，逐URL真实起止/正文SHA/支持范围在RUN/official/sources.json和support-index.json；命令解释器、脚本SHA、URL集inputhash、实际exit/stdout/stderr在fetch-command.json。必要摘取是标行号的独立衍生，完整原文保留本地，不能拿文本SHA当HTML原SHA。
 
-| 入口 | 需要确认 | 当前审计状态 |
+| 入口 | 当前文档真实支持与版本界限 | 完整HTML SHA-256 / 实际查询起止（UTC+08） |
 |---|---|---|
-| `https://open.workbuddy.cn/docs/skill` | Skill references/scripts/Bash、依赖与受信执行边界 | PENDING_MANAGER_EVIDENCE |
-| `https://open.workbuddy.cn/en/docs/connector` | 托管 Python、隔离安装、适用版本、与 Skill Bash 关系 | PENDING_MANAGER_EVIDENCE |
-| `https://www.workbuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Permission-Modes` | 安全/审计能力及导出范围 | 本机存在 UI 已证实；provider 事件覆盖 UNKNOWN；官网版本支持待补 |
-| `https://www.workbuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Model` | 当前模型上下文/压缩说明及 5.5.2 适用性 | PENDING_MANAGER_EVIDENCE；Hy4 tokenizer/capacity UNKNOWN |
-| `https://www.workbuddy.cn/docs/cli/tools-reference` | CodeBuddy CLI Read 限制 | 仅旁证；不得套用为 WorkBuddy AI 5.5.2 实测 |
+| `https://open.workbuddy.cn/docs/skill` | references作为上下文、scripts经Bash调用（text77–89行）；不证明本次Skill Bash解释器/依赖或持续持有 | `6ac24dbdbe0d7f8bf907e30b9c71909c0f87499561ee87de011a0a818041c68c`；15:32:22.878442—15:32:23.228737 |
+| `https://open.workbuddy.cn/en/docs/connector` | CLI runtime中Python最低版本标注v5.0.0，托管Python/venv/pip隔离（text569、578–592）；不证明普通Skill Bash共用解释器。勿把stdio MCP的Node-only字段当Python证据 | `c251ffbcd0ecb0d15490bc8bbae0bf076d1e66fec5cfca9976868615c0d724eb`；15:32:22.879704—15:32:23.397156 |
+| `https://www.workbuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Permission-Modes` | 安全中心、运行时、审计拦截/放行及导出/清空（text225–229、245–246）；本机5.5.2 UI另有manager实证，provider本次覆盖/原因UNKNOWN | `0135246b8198a468572a192ff2db9572d32fc0473f302b2269c92a3d0583f51d`；15:32:22.880666—15:32:23.334382 |
+| `https://www.workbuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Model` | 当前经济模式/上下文压缩选项（text137–140）不倒推历史5.5.2/Hy4实际设置或容量；未改设置 | `21385d3152774fe22083bdd492ecfe02cedc63aca063135cd974565647129240`；15:32:22.881584—15:32:23.289769 |
+| `https://www.workbuddy.cn/docs/cli/tools-reference` | CodeBuddy CLI Read单行2000字符、默认20000 token及PARTIAL说明（text543–554）仅旁证；不能套为WorkBuddy AI5.5.2实测阈值，不据此重投 | `24d582058bd879a3885b4bf2af9a2d58a5046930f350bdc30003bb0971ec36e7`；15:32:22.882393—15:32:23.428782 |
 
 未公开的工具返回字节上限、token、截断标志、安全错误精确定义及恢复机制均 UNKNOWN。当前官网说明不能自动推出 5.5.2 的 provider 实现。现场审计 UI 可见也不证明它收录所有工具返回。
+
+实际渠道：analyst/manager前期标准库GET、manager公开搜索降级索引及本阶段重新落盘的标准库GET。manager已说明web_extract在当前backend为search-only而失败；公开索引覆盖Skill/Connector/security/Model，CLI索引空但实际GET200，不能将搜索0当文档不存在。五个原文hash与manager早期GET转交值一致，但本阶段原文来自上述新GET，不冒充早期响应体。不声称成功web_extract/web.run或伪造引用句柄；analyst live log是长消息截断预览，不补造其完整历史hash/内存程序。
+
+三个必要截图已在RUN/share-preparation/cropped-ui/另存新身份；cropped-ui-index.json记录原SHA、新SHA、半开坐标、源图尺寸和像素精确对应。审计存在只保留标题区，两项零搜索仅保留panel，排除左账号/任务侧栏、背景正文和无关记录。原图/全量capture/AX树不入包。此为developer整改，不是quality重新验收。
 
 ## 3. 未发送的官方询证稿
 
@@ -60,8 +64,12 @@ manager 在已有屋顶 R2 任务中观察 `WorkBuddyAI.exe`，PID `219384`、wi
 4. 本版本是否有受支持、透明且不绕过防护的完整整章输入通道？需什么能力证据才能保证文件所有字段和完整 Schema 在生成时可用？
 5. 普通 Skill Bash 与 Connector Python runtime 的解释器选择、环境隔离、依赖安装和版本读回分别如何证明？内置 Python 开关的确切语义是什么？
 
+6. 当前Model文档压缩选项最早适用哪些客户端版本？如何仅由已有无正文事件标识确认历史5.5.2设置，而不读取models.json/私有会话库或重发受阻内容？
+
 最小拟发送范围（仍未发送）：版本/可见模型名、事件时间范围、脱敏错误原句、文件字节/行数与 hashes、无正文的 run 标识、必要裁剪截图。**不发送** canonical、全部请求内容、合同、来源附件、Token/Cookie、models.json、私有会话库、全量审计日志或账号侧栏。若需要正文/更广日志，必须另行取得用户范围批准。
 
 ## 4. 结论约束
+
+独立QA原文总裁定PARTIAL，见QA_INDEX.md与RUN/independent-qa/QUALITY_REPORT.verbatim.md，仅覆盖原作者快照。`closure()`仅部分引用一致性helper，UNKNOWN metric/claim、duplicate source和同源跨节事实不能由它独立识别，VALID不等于完整授权PASS。当前双案权限来自独立QA另查；decoder另以可信原请求完整树精确比较拒绝重seal篡改。本轮仅补文档/机器回执与共享隐私，审计脚本/实验不改；developer落实不冒称quality复验文档或ZIP。
 
 缩小输入不等于解除安全返回。不得把离线视图重新投递为试探，不改名/换工具/编码/移位内容绕过防护。只有官方支持路径和单独的新请求/候选/会话授权闭合后，才讨论一次新的 CH08 试验；此轮不执行。

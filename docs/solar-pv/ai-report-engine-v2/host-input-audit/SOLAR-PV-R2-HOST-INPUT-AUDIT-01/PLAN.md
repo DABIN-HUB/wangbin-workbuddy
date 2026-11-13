@@ -17,7 +17,7 @@
 - Never mutate source, freeze, canonical, installed Skill, old requests/deadlines/hashes, model budgets or validators.
 - Every timed analysis command <=120 seconds; aggregate validation <=900 seconds including subsequent QA. Receipts capture argv, interpreter, input hashes, start/end, exit, stdout/stderr.
 - NOT_FOR_HOST / NOT_AI / PROPOSED. No section splitting, encoding obfuscation, publishing/accept/resume/Word, push or release.
-- Missing manager official/UI evidence remains `PENDING_MANAGER_EVIDENCE`; independent QA remains `NOT_RUN_PENDING` until the actual independent result.
+- Official source review completed through five actual stdlib HTTP GETs with original bodies and hashes retained; independent QA completed with unchanged verdict PARTIAL. Historical script/experiment outputs retain their original author-only labels, not current top-level status.
 
 ## Task 1 — Baseline and originals
 - [x] Read root policy and complete task.
@@ -27,16 +27,16 @@
 
 ## Task 2 — Runnable offline audit
 - [x] First write standard-library self-check expectations; exercise missing codec as RED without adding a tests directory.
-- [x] Implement `offline_view_audit.py` with `run`, `verify`, `readonly`, strict shared-object and independent typed-row codecs, per-path bytes/duplication/share reasons, section permission closure and coverage output.
+- [x] Implement `offline_view_audit.py` with `run`, `verify`, `readonly`, strict shared-object and independent typed-row codecs, per-path bytes/duplication/share reasons, partial reference-consistency helper and coverage output; never complete authorization from the helper alone.
 - [x] Run both real requests; record request/file/view hashes, versions, original-number lexical preservation, complete schema/research retention and CH08.02 hotspot.
 - [x] Exercise all requested negative mutations, including rehashed tampering, wrong mappings/old bindings, semantic and risk insufficiency. Never claim byte identity unless proven.
 - Files: REQUEST_PROFILE.json, CH08_COVERAGE.csv, OFFLINE_VALIDATION.json, offline_view_audit.py; large views and detailed path inventories in runtime.
 
 ## Task 3 — Reviewable decision and freeze
-- [x] Write RESULT.md with exact inherited gates; HOST_EVIDENCE_AND_OFFICIAL_RULES.md with manager live-UI attribution and unsent inquiry; DEPENDENCY_CLOSURE.md; EXC006 DRAFT; NEXT_ACTION_AND_RECOVERY.md. Official source excerpts still PENDING_MANAGER_EVIDENCE.
+- [x] Write RESULT.md with exact inherited gates; HOST_EVIDENCE_AND_OFFICIAL_RULES.md with manager live-UI attribution, five original official sources and unsent inquiry; DEPENDENCY_CLOSURE.md; EXC006 DRAFT; NEXT_ACTION_AND_RECOVERY.md.
 - [x] Interface draft references actual symbols and explains legacy compatibility, new-request-only binding, cache/cancel/recovery and acceptance without application.
-- [ ] Read-only hygiene, original-protection readback, explicit staging allowlist, non-release local commit and post-commit git readback.
-- [ ] Freeze a runtime file-hash snapshot and exact independent QA command. Do not build final audit ZIP before manager evidence and independent QA.
+- [x] Author read-only hygiene, original-protection readback and explicit 11-file non-release local commit/readback retained. Final closeout protection, explicit reviewed staging and archive readback are recorded in runtime final-state.json/final-delivery.json, not implied by this checklist.
+- [x] Preserve frozen author-snapshot, experiment-final and offline_view_audit.py unchanged. Independent QA returned PARTIAL; document helper scope and redact sharing receipts without claiming quality reacceptance. Preserve original QA text, partial-trace provenance and missing raw stdout honestly.
 
 ## Acceptance and honest limits
 
