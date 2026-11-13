@@ -1,0 +1,1150 @@
+{
+  "schema": "local-offline-wheel-build-provenance/1",
+  "sourceHead": "94ce5f04b72937a205c194d55005bddd4ce6bd90",
+  "tools": {
+    "executable": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Scripts\\python.exe",
+    "python": "3.14.9 (main, Oct 21 2026, 17:48:58) [MSC v.1944 64 bit (AMD64)]",
+    "setuptools": "84.1.0",
+    "setuptools_path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Lib\\site-packages\\setuptools\\__init__.py",
+    "backend_path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Lib\\site-packages\\setuptools\\build_meta.py",
+    "backend_sha256": "6f4a583e1b6bb0d5ef3af2ac0a6e9a033d06f364e4a550e3b112812674b38419",
+    "bdist_wheel_path": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\installs\\dff2a7c1aa1d2670\\environments\\3d191065334546e08496a64b86fa12ed\\venv\\Lib\\site-packages\\setuptools\\command\\bdist_wheel.py",
+    "bdist_wheel_sha256": "01a4a09b8eee28489843418682fd640b72da58d6c89f044d0b02c08861789ee4",
+    "standalone_wheel_distribution": null,
+    "build_frontend": "direct setuptools.build_meta.build_wheel; no frontend dependency resolution",
+    "requires_backend": [
+      "setuptools>=68"
+    ]
+  },
+  "backend_elapsed_seconds": 1.9162649996578693,
+  "wheel": {
+    "path": ".runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01/candidate-wheels/wangbin_solar_pv_input-0.3.2-py3-none-any.whl",
+    "bytes": 557392,
+    "sha256": "cd7be44ca5350da87c4760898ddeb46b8a73646d8f2f8de6be61e48cca9f7808"
+  },
+  "snapshot_files": {
+    "pyproject.toml": {
+      "source_path": "services/solar-pv-engine/pyproject.toml",
+      "bytes": 956,
+      "sha256": "2b141056f4c45b9b67df4b9e80dedd6b4ac30da8089229466987f7ea56047191",
+      "baseline_git_blob": "ed609ccb7eda33f9e3bd85566334efbcd64480e7",
+      "intentional_version_diff": true
+    },
+    "src/wangbin_solar_pv/__init__.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/__init__.py",
+      "bytes": 153,
+      "sha256": "8ba2a1761cfd434f5b136fdd3f2152bda5161d57da20490793668e929cb7a84a",
+      "baseline_git_blob": "3fc27ab7682144ba7e0eb7c987d2745436f80248",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/__main__.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/__main__.py",
+      "bytes": 155,
+      "sha256": "817a2e35d419d841e9586b97f591027c8b3d204bbe5b23e86881926f169eb09a",
+      "baseline_git_blob": "e29575f6e3109a2c744a76589c39a3aa037ce251",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/applicability.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/applicability.py",
+      "bytes": 3877,
+      "sha256": "d65721d4d0fcacebac16fdf3e407a3ddd6fc198e40d76681fdafc212f861e2c4",
+      "baseline_git_blob": "ca694ba78f215160613d1a641768e98bf4c3ea95",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/attachment_security.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/attachment_security.py",
+      "bytes": 10520,
+      "sha256": "e7abad9498a590150988e610c984195eb83378a5e949a28edc3f57cd67dc95db",
+      "baseline_git_blob": "a85e76edaad8c0f54dd61fa8272d147d43260761",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/baseline-lock.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/baseline-lock.json",
+      "bytes": 1350,
+      "sha256": "2ea6be9f9e66b0c0d40ae15dba0c3ac5226e5e1909b686e1cc4668fd360db833",
+      "baseline_git_blob": "4bc1817e9aa3227e25e1ea5ce764e3e143e87acb",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/__init__.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/__init__.py",
+      "bytes": 242,
+      "sha256": "c75e4d65c5a59532a94831497e5cce3908039e0151a884de0f4fd392bcb3f21a",
+      "baseline_git_blob": "ac663fc7776beb4707da9a0e11ff384cf4916dfe",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/accounting_ledger.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/accounting_ledger.py",
+      "bytes": 3290,
+      "sha256": "1094a3b480228081db14b09be75769127b17603e2725f012f0ab4aaf430adb28",
+      "baseline_git_blob": "379f1c18ac3cbfde5e9fd771a7f06c2acac9f179",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/break_even_certification.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/break_even_certification.py",
+      "bytes": 4721,
+      "sha256": "86b837b5775af5c14b0b436a24c4ebb91dbd4a32f3bc9c1fefbb2389385027f4",
+      "baseline_git_blob": "dd9ddbd3857f63da344b941b778f5b6a0415f4f1",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/break_even_execution.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/break_even_execution.py",
+      "bytes": 8832,
+      "sha256": "d95b9d447912837a7514af9edd5ad40575470d4b937478687b9db633504316fa",
+      "baseline_git_blob": "ffbcda98641706e852bb9315d89e4a67236b4b84",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/break_even_financial_replay.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/break_even_financial_replay.py",
+      "bytes": 6727,
+      "sha256": "9119fbd3cced4a5961412257d83db2d9277b91f988d27d16d215c58ac6a689ed",
+      "baseline_git_blob": "9d1e01e09d3897721ac82515cc97528ddcfd2f59",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/break_even_project_npv.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/break_even_project_npv.py",
+      "bytes": 8633,
+      "sha256": "6c050a2912e403fb844a78bd8a731f626f55d868506fe9b1b2a988fa30d9c140",
+      "baseline_git_blob": "670e08d520854dbc73b0a14233faff6ced3a9778",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/break_even_project_session.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/break_even_project_session.py",
+      "bytes": 16526,
+      "sha256": "1b4e1a27b96de385cafd7d945b52d44a4e8c2f96b17e97f123f57e33385f691b",
+      "baseline_git_blob": "3ba0eb93e619f99ac13b833948dbbf8cda170047",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/break_even_replay.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/break_even_replay.py",
+      "bytes": 13633,
+      "sha256": "e64ccbc843c12c731e2e329a2e5649bc2f4cc62a8871829f93dbe78714afac42",
+      "baseline_git_blob": "35da31d141b9ff25331176b827cbd5b20a22b363",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/calculation_graph.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/calculation_graph.py",
+      "bytes": 3608,
+      "sha256": "83251543e0d59e7e8a286cd795f78d3fe46429e3136b77b1cb6fba78a4e47581",
+      "baseline_git_blob": "8093594c86b37be547d137e46d5097bded37f3a4",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/capacity.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/capacity.py",
+      "bytes": 6663,
+      "sha256": "bd90d43240fe2fb7f3810fdaa3b6ebf7eb2035117a0eedd335044a4f94118bd2",
+      "baseline_git_blob": "616285a3d216445019f3af39a7f74d7370a0ccc5",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/common.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/common.py",
+      "bytes": 4262,
+      "sha256": "f41c33f34ed3ddb4e40841727282a331128a52a438a9ba18bf2a7d6850234c64",
+      "baseline_git_blob": "06259899efcb8a827ca8e4c0dd2a53fe285cd8f7",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/consumption.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/consumption.py",
+      "bytes": 9273,
+      "sha256": "8697c65aa4d8f7c343f96f7f2c086deab50c1d4d31b99928471417eb9a554158",
+      "baseline_git_blob": "2d6a34140fa7275ef54ddc963dd871f4091d47ee",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/costs.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/costs.py",
+      "bytes": 11010,
+      "sha256": "1df30bbc0903a07c1f9f6599c2f5b45a0033da5bcc51963e80ae041cba4371a3",
+      "baseline_git_blob": "69958ba82ea4e4128a3e02bc2267fb258ff1a032",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/degradation.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/degradation.py",
+      "bytes": 6072,
+      "sha256": "225ce35365d20ef14db480b3169fc75e8807c17c273f6189c557f7b3fc7a273b",
+      "baseline_git_blob": "3c37ecb9cadd076de1906347122a8b722351f90e",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/energy_inputs.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/energy_inputs.py",
+      "bytes": 3837,
+      "sha256": "4e4eb98bf65c8ab99e99f8a4b7b005f606e65cb234c3fa2e691f7d10fa56409b",
+      "baseline_git_blob": "b6d3739c2ee0003f93bf75db1c1c400dfb91cb29",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/energy_yield.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/energy_yield.py",
+      "bytes": 31327,
+      "sha256": "8520fab85b3db20e325026fbe133f7ac8498261b679d68867d45ce999225c8c4",
+      "baseline_git_blob": "d687f1117a544583e33ffd8cd92f87566f03baf5",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/engineering.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/engineering.py",
+      "bytes": 19635,
+      "sha256": "0282aa1f246dc5d09bb8e7f57c72ce02497fb460c3c70c34aed3201c078419fd",
+      "baseline_git_blob": "ad3c699f7e83e06cf78d374c67812357accc6412",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/execution-evidence.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/execution-evidence.json",
+      "bytes": 37870,
+      "sha256": "e15ddff829757159078b042d7d97aa39d39b30367cce2aa00014598ee74c9124",
+      "baseline_git_blob": "5b2994ebab2335808bdcf6d592494a554fda219d",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/execution_registry.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/execution_registry.py",
+      "bytes": 4764,
+      "sha256": "5ffead49b4e32364b6aeea559cb37eb457b9af1b0e7a5d6c3f1f14c06e0eac9a",
+      "baseline_git_blob": "67583793abecb9f5d21be6eb44655f37c767ef33",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/financial_ledger.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_ledger.py",
+      "bytes": 41560,
+      "sha256": "0292205ee1e3798053b9efe49539305706c33c05d53cc1176789d0ac51f67fae",
+      "baseline_git_blob": "c86393fbe476e2add8f5de5eea8b887487e93b3c",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/financial_metrics.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py",
+      "bytes": 30041,
+      "sha256": "861fd39468ed1676ddfd09456d9466c3ed6c85739e96aa568d5c613a340c3c94",
+      "baseline_git_blob": "a826fa87a71b8a151e3395f18f818d057ca1f4ed",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/formula_execution.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/formula_execution.py",
+      "bytes": 3272,
+      "sha256": "1e7ed5dd9913319d181f4c39cde325c430e94268c224fa1de4cf9456788cdb8f",
+      "baseline_git_blob": "0cf730bfa11b29ab58d3fe6e45479ccd2fe7efb0",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/generation_evidence.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/generation_evidence.py",
+      "bytes": 14676,
+      "sha256": "b507c26a5aa980a6fe06193bc5ef876851aa15db224cd23d51211f4b707b2683",
+      "baseline_git_blob": "5a44ddef1bdc40fd5531bab7fc9331627c98c203",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/input_contract.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/input_contract.py",
+      "bytes": 7461,
+      "sha256": "b5ce5258fd497a794b4fa8d359430dc94f6badd1ceb1f780c709e1c8565ab03c",
+      "baseline_git_blob": "032c873e0f5dd2b232e24fade08d608062a2ae45",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/losses.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/losses.py",
+      "bytes": 6107,
+      "sha256": "2baf14e443fec481fbecf2ae0b1bedc1639a1d4210569e42788c25c7fe0fe514",
+      "baseline_git_blob": "ac1da3455985d13f6f5d8ec85b7a235013e9e41f",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/method_config.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/method_config.py",
+      "bytes": 25800,
+      "sha256": "3beccfc6ab03a9d6c21d020819eb2d30422e83daa4245e7167ab7428e17c6001",
+      "baseline_git_blob": "a4b6d7eeaa5be6ae5c6163a4fe8f16756edae731",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/phase3e.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py",
+      "bytes": 32170,
+      "sha256": "6db9ba0399bae1a999e7a2910f8959f3d4026bc2b873e64cfd220f43de21f71a",
+      "baseline_git_blob": "738fba35e137ed9076731b6bb2cc036056c7e554",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/project_runner.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/project_runner.py",
+      "bytes": 15457,
+      "sha256": "74df9e7d60aef1c9ff99d83d27950a96e91a89a00f309f25c6cea64bdd86ec60",
+      "baseline_git_blob": "e39c506bc8f6022ec9871fc068629325fb6234cb",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/result_contract.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/result_contract.py",
+      "bytes": 10082,
+      "sha256": "0a4cb4a5df645066b9fcbd44799f8934e4545bf3d0199633b1d3357fc65eba0c",
+      "baseline_git_blob": "2266f64f8220f78abc53cb90f33ee53eb2b6f2fc",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/revenue.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/revenue.py",
+      "bytes": 23835,
+      "sha256": "c0d7159cf59079fbd92546856e1d310de97c0a9568cd54ee518e7a7d74fc5928",
+      "baseline_git_blob": "e2ad425bc244bd49f566b6a59557f99af716ac5d",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/scenario_cash_sources.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/scenario_cash_sources.py",
+      "bytes": 2296,
+      "sha256": "0b740e71231f1228b221039e87cace0132783a0d181a443b27979a68ce26b510",
+      "baseline_git_blob": "5cf20c6b1ebbc77d9d2d189ec11457f54ad078d7",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/scenario_runner.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/scenario_runner.py",
+      "bytes": 26226,
+      "sha256": "cdbc17e81e8c06e55d3bffd7fe446d586d86d4caa23d59320eea0a9f75ea5c9f",
+      "baseline_git_blob": "b6833727b25298c94352ac3bf2f6f77f383469ce",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/schema/break-even-execution.schema.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/schema/break-even-execution.schema.json",
+      "bytes": 3128,
+      "sha256": "66f4e7f0488080765692cf70a06f43479796f80bd21e8a37100c6b0a8a748d0c",
+      "baseline_git_blob": "f26a1103f86efec54dab3f549dec772b7aef8621",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/schema/calculation-result.schema.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/schema/calculation-result.schema.json",
+      "bytes": 4518,
+      "sha256": "f9f188a924e1c040697a09d7a97d88800bcee8756a453f7a2efe56ca2fc55fe6",
+      "baseline_git_blob": "ec237f0bafe4850bc1f19b3033f7dbe490c726e0",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/schema/method-config.schema.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/schema/method-config.schema.json",
+      "bytes": 97108,
+      "sha256": "f8d8aa861269bc44af0eb302e56457f6d5b7edac9f2b7f5903dc6440df8eae14",
+      "baseline_git_blob": "c9fb76d1a1906eb9f2dbfb945b8438790a11fd42",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/schema/trading-fee-payment.schema.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/schema/trading-fee-payment.schema.json",
+      "bytes": 3915,
+      "sha256": "45007ef2f65c3bf21b1f3ff0939ed29190fb08d74ba077b24063a0762264588c",
+      "baseline_git_blob": "3cd83bab7966b598db44c5d33f39c642439b063c",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/sensitivity.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/sensitivity.py",
+      "bytes": 6366,
+      "sha256": "3d253aba60f330c42be942ce3cb37a08f579a67cb4650ce7966a35267953869c",
+      "baseline_git_blob": "8cfbbb62258074ed07363b5430826ce64d6187b9",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/solar_resource.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/solar_resource.py",
+      "bytes": 7911,
+      "sha256": "ed49903fff0bbd2f624f0f579f0ab334dadd37bffc2e53572785d3ce526e7e9c",
+      "baseline_git_blob": "be96ec3853f57d2eb521c6e3e8a5f433d9394d08",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/tariffs.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/tariffs.py",
+      "bytes": 13960,
+      "sha256": "9bbc53ccdee0a789c800197813e5225561a8078c7124dc5d2dc708dbce49dbce",
+      "baseline_git_blob": "1900c65744d202bf932b450e87e1e737a7a908e3",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/temperature.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/temperature.py",
+      "bytes": 8434,
+      "sha256": "df174a2a4407243b6b345f9beeae0c5edf9dad98c0eb78488d9f85c544f22709",
+      "baseline_git_blob": "0c899f834dcc1019c5df4296cee5fc445ddab838",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/terminal_binding.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/terminal_binding.py",
+      "bytes": 12535,
+      "sha256": "1ee841a0590b8cd9fcc77b278818aa364e0ba8e584db7536ef2186b3efbe580b",
+      "baseline_git_blob": "a7c54070d66fd8187a610666e523262c1868c738",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/terminal_disposition.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/terminal_disposition.py",
+      "bytes": 12084,
+      "sha256": "85585fb51ef0c1204c9a414a5d4584b4864b3514383bf5c14396ea87dd446fc0",
+      "baseline_git_blob": "9e9e1650b41baa9d46ec8ed7286e9f48afc9f08d",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/calculation/trading_fee_payment.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/trading_fee_payment.py",
+      "bytes": 3957,
+      "sha256": "d93f62efb130ddb8ad9420283f2e91a4b19a731f2e7a8d6fa750a6161523940a",
+      "baseline_git_blob": "f7d667f93ff400a2ecc5191687eff4716a39553a",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/catalog.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/catalog.py",
+      "bytes": 4260,
+      "sha256": "9a2675f00c60631016dd72ea9a9046ab9b31ee1d0cce5ccab60ef59479ba7623",
+      "baseline_git_blob": "1c3211ab2c409264f633337c3e4cd97e31dc5f40",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/categories.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/categories.py",
+      "bytes": 8838,
+      "sha256": "d1c012445aab90c656fedcbe0901e1ee213ea73090a02e34fbebccca0bedab24",
+      "baseline_git_blob": "732e1bedd9f0b9b1977435bb1bbe2edd9aadd86c",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/cli.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/cli.py",
+      "bytes": 26786,
+      "sha256": "d1070d80f83ec7911fe0ac1722990760f2d5197b28397dec3ee5ff6a1043d871",
+      "baseline_git_blob": "d96f9c07d2fb9c4c98314d0c3746bd5432c974b3",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/completeness.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/completeness.py",
+      "bytes": 14533,
+      "sha256": "dfa41ddd5f54fd3bf6c8cc13efbc5fa424abcc75034eb986abfb90ef2f273f9c",
+      "baseline_git_blob": "ae13b466f14b52a2b418c27b0d0a8be3c941c93a",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/conditions.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/conditions.py",
+      "bytes": 11620,
+      "sha256": "0690411309b8e7c01d385d917a9fd41194d71a275218cef7301b9a7375ab8363",
+      "baseline_git_blob": "1516a0abad86504691cfaf4e0b4289e004ecd3c1",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/consistency.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/consistency.py",
+      "bytes": 8140,
+      "sha256": "4ee5433c468b038b2c5f0be62e4baa3e18fb69bfecf11080bad6768f9fccf748",
+      "baseline_git_blob": "8ba4d3d38bcd4165cacdf9efa429790e1fb8cd8c",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/data_adaptation.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/data_adaptation.py",
+      "bytes": 18434,
+      "sha256": "1214f87ba2f4ac6c8cb6664a3cc90d79231260a07936a774f8089a575002ca8c",
+      "baseline_git_blob": "4d4ea94889a81206cf67430d97f4e2f83080a0dd",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/definition-errata.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/definition-errata.json",
+      "bytes": 5788,
+      "sha256": "bee7fc4e737a3f8e40befa272a842ce1ad0454b8437590089e090e32031b15e0",
+      "baseline_git_blob": "3097057636686465415b10a3a3a1f6b25d5e7dea",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/definition-lock.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/definition-lock.json",
+      "bytes": 1801,
+      "sha256": "728ccb42a5d5f78cc9252f61070dd5eb2c1a426b8e727423d113bb2f79d170b6",
+      "baseline_git_blob": "dec3898e29d49b961dae662f4714a3b8f4661126",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/definition_versions.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/definition_versions.py",
+      "bytes": 10181,
+      "sha256": "9d50c04fb815fe1160ff43ec1fb7141492bf0acaa8ae264b0480e47fd68b5b43",
+      "baseline_git_blob": "03fbeb90a3c8abc1d66fe4c8dd4799cf787ad756",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/errors.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/errors.py",
+      "bytes": 555,
+      "sha256": "b7364ae5c1a533b0d770f7a3b1cb650f6b8b044a68de4fec7538ec562ff4d72b",
+      "baseline_git_blob": "738c1728a43d7342662fc414285db1a1cd5d8153",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/fixtures/solar_pv_calculation/industrial_rooftop.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_calculation/industrial_rooftop.json",
+      "bytes": 3188,
+      "sha256": "146a1cf8ec92b035746ffcfd9c02b9dbb59103440a46d58b8ad05bbc06b78b00",
+      "baseline_git_blob": "b321ca0d121d8494e503ff9f90f4319266db5682",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/fixtures/solar_pv_calculation/method_values.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_calculation/method_values.json",
+      "bytes": 3105,
+      "sha256": "65fdaa53fd7c1cca4203d1c46649e832a4395cdf5cf3e8a35cd0f39e501d64b0",
+      "baseline_git_blob": "1b8dac8019ffa14ef544ad535eb4945f1fe72228",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/fixtures/solar_pv_calculation/utility_scale_ground.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_calculation/utility_scale_ground.json",
+      "bytes": 2613,
+      "sha256": "02ab1af30b4e2835a142c17c3f2f0673e92fb93a2f5d3812ffa67b83308215da",
+      "baseline_git_blob": "5be7c089bfde3be9d77a3ab2250f41c74cae1c19",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/fixtures/solar_pv_editorial/industrial_rooftop.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_editorial/industrial_rooftop.json",
+      "bytes": 7285,
+      "sha256": "c5303d5658920f8d9c812550149591ce9f48bcb5b26731b09b5b808822edd0e8",
+      "baseline_git_blob": "0577aa7405e0048ed38c8a661d0d893d212712dc",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/fixtures/solar_pv_editorial/phase7l/industrial_rooftop.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_editorial/phase7l/industrial_rooftop.json",
+      "bytes": 8197,
+      "sha256": "1584deab6dd11fc7d15379433590c7e81bc56840ec390293f2cd76efaa0fa6f4",
+      "baseline_git_blob": "25a0e8a8d0cee16d1f2a4cac861aa84f2fce4943",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/fixtures/solar_pv_editorial/phase7l/utility_scale_ground.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_editorial/phase7l/utility_scale_ground.json",
+      "bytes": 8167,
+      "sha256": "acb08d4b680b4d35d50a25bbef771f6e04cfaeda4bc8a8f446510a47bae90c70",
+      "baseline_git_blob": "5bd983627722c58ef83b630bfd6c1568c88967e5",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/fixtures/solar_pv_editorial/utility_scale_ground.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_editorial/utility_scale_ground.json",
+      "bytes": 7326,
+      "sha256": "6f57fe9c2d977c269aa8d2351f865d1c1d45f1bf12471a1ed48a66da751c1bd8",
+      "baseline_git_blob": "55cdf857f7bb33ebd6cf73f9b8d7635e78f36790",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/fixtures/solar_pv_phase7l_full_cases/industrial_rooftop.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_phase7l_full_cases/industrial_rooftop.json",
+      "bytes": 1692,
+      "sha256": "8e5574ab17d37124121b1fd8eb84b12b7881b3ce583358111539673f22cf9d28",
+      "baseline_git_blob": "1b15496dc6756b9eb4eeccdb275cf7779ba4fdf1",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/fixtures/solar_pv_phase7l_full_cases/utility_scale_ground.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_phase7l_full_cases/utility_scale_ground.json",
+      "bytes": 1749,
+      "sha256": "9b4a482e3446622f11d0ab6078388585d24eb8b52ef6dbab0ab31c7f495e01d5",
+      "baseline_git_blob": "b382e0ffbe981873482561912a97e22a81773975",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/fixtures/solar_pv_phase7l_r2_inputs/industrial_rooftop.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_phase7l_r2_inputs/industrial_rooftop.json",
+      "bytes": 3111,
+      "sha256": "2296279f98d96d83ae61eeb9a385d7ac4f9dcf411d26bf5a3fc4c071962ef682",
+      "baseline_git_blob": "cecdef8a71551595c5627e49b867357962987fb3",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/fixtures/solar_pv_phase7l_r2_inputs/utility_scale_ground.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_phase7l_r2_inputs/utility_scale_ground.json",
+      "bytes": 3120,
+      "sha256": "6b50abecf88347462f6694ca73b3c3ce55df8918880b881335cee7ef4e68dadc",
+      "baseline_git_blob": "abfe52a94f1b6a05fa01be8b0476e854af02ebd1",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/formula_bindings.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/formula_bindings.py",
+      "bytes": 9672,
+      "sha256": "7942a602f14c0952dd7dc700b86bb88664484bc4dd3ce1f299c53bb63a1171d4",
+      "baseline_git_blob": "3bddd75ae9f8fc2889195cab2b9b7d13ae911001",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/intake.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/intake.py",
+      "bytes": 18620,
+      "sha256": "661b0848d068a7f86060ecbea53c6d215ea40630eb19510d4b6043078777685e",
+      "baseline_git_blob": "bfe480a53db68fad65c50a1027bb899b5d45bcd3",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/local_files.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/local_files.py",
+      "bytes": 6974,
+      "sha256": "69bfc09f24b8f2697d3fb7e42573f702546af63e3abb3f3254cbc89d935da010",
+      "baseline_git_blob": "ac447f44f840c73058cecbbff703711b6df44c8a",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/models.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/models.py",
+      "bytes": 1486,
+      "sha256": "14e4def8f6e8e6b5bea31fe1439df96dea337b9ab59a0d1adba1f242c7b8148c",
+      "baseline_git_blob": "368c7edda690799a906d0dad9db5d60d1c2f49f0",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/parsers.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/parsers.py",
+      "bytes": 24915,
+      "sha256": "0c2676a17bc9dd8adc2645fdbe85df986d64d5c9af75abbd68bcef68873febd8",
+      "baseline_git_blob": "d6ad50d97cb37bc00080a51d82280aebb120ef7d",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/provenance.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/provenance.py",
+      "bytes": 9904,
+      "sha256": "b02b01ad2ccc03fd5967ab010a3bde908cf5f71e9e2d578cd755e52fbd5f9bc5",
+      "baseline_git_blob": "94ab484a7bac35c2da01ae3e1197a8e31b2fb8d9",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/quality.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/quality.py",
+      "bytes": 10312,
+      "sha256": "83a5d24fd5e37810afdb22b4aae0f3b710ef317b83689c295df5ae7724d29784",
+      "baseline_git_blob": "0486482ddc24c649250276139a76baf63e00d7da",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/report-glossary.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report-glossary.json",
+      "bytes": 170704,
+      "sha256": "7aa659db2134e14e5f000dd2e6dd65767a9898daaf9decedd00bac29fa8f8474",
+      "baseline_git_blob": "01bd3e68a26a7086dcbb223d42d62301940fa60b",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/report_appendix_findings.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_appendix_findings.py",
+      "bytes": 9814,
+      "sha256": "d6072a048cd5d514cf5e33d7f006ae0a4d4a9c85a04274e9b6b408ef3990b7f4",
+      "baseline_git_blob": "5dfad23e52946a0968199cdc27e5c101ab8d2868",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/report_claims.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_claims.py",
+      "bytes": 188435,
+      "sha256": "55bc23fad8ca2a2ebcef0b9e51a4b0b278bf398793911feb405f1ce187cea423",
+      "baseline_git_blob": "f2a63e3ddb95a538636b301ce7e5b8e13cc3afc0",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/report_display_numbers.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_display_numbers.py",
+      "bytes": 1376,
+      "sha256": "5b96891e044264dfd8586a1098467286caad1e03848ff90430dbc010773e3849",
+      "baseline_git_blob": "56c0f3fccb945a9bb10dfb30b5b4a97625dcc3ae",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/report_equations.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_equations.py",
+      "bytes": 7746,
+      "sha256": "8fa4628d2477b363a6feef1bc9b4a32945ca8fd418bf062993c133e8cd83806e",
+      "baseline_git_blob": "954310ee58e286faf12ceff38b69f4534b49b66d",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/report_export.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_export.py",
+      "bytes": 247484,
+      "sha256": "077fb71f200a033cb2947b48ef4d72eed03af47df6a57dcb8439dd0ab4a8065a",
+      "baseline_git_blob": "a19bb12cf180907e36ea1d273e3f2f28dcca4c75",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/report_narrative.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_narrative.py",
+      "bytes": 12402,
+      "sha256": "a955159b4b081117fed2066f90d754cffe701dab925fb6a562158b8d9c9222c9",
+      "baseline_git_blob": "5eff826dea9c76c654b5c8b85e53d2cc60afb952",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/report_numbering.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_numbering.py",
+      "bytes": 9842,
+      "sha256": "6dd6c9f4094a8ffd767e8616a8edd6d67e8ee2cce80790d5d1c77f445be6d6b7",
+      "baseline_git_blob": "97d61c02a4f98b617d6d64ebca3a71973229b050",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/report_resource_display.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_resource_display.py",
+      "bytes": 4175,
+      "sha256": "5bf4b45b8354160f67358f2350daa9d49a5f947a382d0e09413e974717e03968",
+      "baseline_git_blob": "f65a2f6506cb98ceaffd21474c9ef250535080c0",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/report_word_styles.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_word_styles.py",
+      "bytes": 10711,
+      "sha256": "80691948326a8fa48c5e49ad03167343cd3b2c3764bc9fd2d173077925a6b9e2",
+      "baseline_git_blob": "dc925ecd18b2af679306062c787e194161482331",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/__init__.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/__init__.py",
+      "bytes": 125,
+      "sha256": "6d3f33c54d364118c122241e3e176a5cd67863b3172454a55ce890577f6511e5",
+      "baseline_git_blob": "2a80524874b0f0b4835a74d193cee58bbd2288ed",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/__main__.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/__main__.py",
+      "bytes": 5521,
+      "sha256": "2204dafc3da7a9f35dcc4454f2f081c575236bc4f3f4587e7064b0fa0bae9bb7",
+      "baseline_git_blob": "475875ad33d9153afcfad27818741e6963bf32e0",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/chapter_registry.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/chapter_registry.py",
+      "bytes": 2111,
+      "sha256": "0144e2dafebe325023c3a3a14546efbe095fdc49db8bf5f0d25631ed1359db9a",
+      "baseline_git_blob": "10b9ecc9e3d816969eecdad98f058ef750b80c0b",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/chapter_result_schema.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/chapter_result_schema.py",
+      "bytes": 5890,
+      "sha256": "fb9b23023b1e39d08beb5d9a9aae961d188ec144e2e7bd6b12cbd28557554c88",
+      "baseline_git_blob": "71220c42bf6cefcdae4990eda5ab17bad041a399",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/chapter_writer.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/chapter_writer.py",
+      "bytes": 14570,
+      "sha256": "d3e29e5482299fd22f45098f047d4d1ba11fac481d9b4d3817024405c35b1b6c",
+      "baseline_git_blob": "f8447968da3684fe62f4e57744b5c9624103a09a",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/claim_validator.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/claim_validator.py",
+      "bytes": 7214,
+      "sha256": "96d183b205908bcfcdd7552c9b51128cf8a8392412d0744708f0c20773c33117",
+      "baseline_git_blob": "ef423996889b201d98464aab976b86a17563f9c3",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/compat.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/compat.py",
+      "bytes": 594,
+      "sha256": "41520e5ecb636d3a0c4831b1fc36efc5984c9d8d7ba9c0ab24763b0c1c8bf91e",
+      "baseline_git_blob": "fddd3fac6355a706c37028bcec197dbc746828c4",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/connector_runtime.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/connector_runtime.py",
+      "bytes": 1048,
+      "sha256": "930b454e5ae06a28a85e111f2113b89e0170cdff89f3465880636c6dc2fc82ba",
+      "baseline_git_blob": "7725a4b02254efea6bf0b47164cab4354ce1f5bf",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/evidence_adapters.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/evidence_adapters.py",
+      "bytes": 11655,
+      "sha256": "451152ae344298c6ac765597b03dece0ea1e22b4f9f9e0a7bc6b0d63a3e82a71",
+      "baseline_git_blob": "cc532509ae3bb32dcc8a8c7908c4e195dccc6e4d",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/evidence_pack_builder.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/evidence_pack_builder.py",
+      "bytes": 16651,
+      "sha256": "5cb49b25f22c27fb45ce3a086922e9d462fbd5cd2c4d8093703df5da36aea9e6",
+      "baseline_git_blob": "0ef8bd3da5ee31015b385c02c6ad4756671bad78",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/financial_evaluation.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/financial_evaluation.py",
+      "bytes": 8324,
+      "sha256": "8bddb4b205f81c0fee765e2914c49a2bcba116962cca3e690b2c2d82b0a45598",
+      "baseline_git_blob": "11d07e5e7d81dd4577738104cccfc9edbd9fc2e1",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/host_input_view.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/host_input_view.py",
+      "bytes": 14227,
+      "sha256": "b2ba9a20bd33a02851355b9f90f08d45f25505704166d61e933fddd577e9a1f6",
+      "baseline_git_blob": "4e840f94ff3359fc67d2588dccc91cf8f064a6cb",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/host_output.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/host_output.py",
+      "bytes": 8395,
+      "sha256": "0c73983b2fd49adadf448f79f61a89165a87ab727566d4e8f06ea37916ee040b",
+      "baseline_git_blob": "a825256b7a6f4a11d9d4d5a38dbeca0adbd61fb9",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/host_session.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/host_session.py",
+      "bytes": 16220,
+      "sha256": "0aff147c87e5b96894d5547681837537c0da3cf06761acea64d71fdf50674917",
+      "baseline_git_blob": "47aeddf54bbe75dc23ebec82ac4439f06da6e908",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/host_workspace.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/host_workspace.py",
+      "bytes": 1836,
+      "sha256": "f46f61010c4735eb65cb20890db87d84efb3c891c3c08387fd0762163b9e6c93",
+      "baseline_git_blob": "667f0e2d0b912dcacc02855d80ed94a781d71180",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/llm_provider.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/llm_provider.py",
+      "bytes": 1458,
+      "sha256": "d11cd6130ab9d209a650d85f5d2400db81aa9d92bbd7706fef509640abf24e80",
+      "baseline_git_blob": "d6f772d2e2f398b02f7917369515d03581704a82",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/pilot_evidence.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/pilot_evidence.py",
+      "bytes": 12176,
+      "sha256": "432de10c632b983a30ac6ed1a3131e840c2c0627d605506cea7e0f3061fd4103",
+      "baseline_git_blob": "4cb00389340fe56bdb667b11c040ebd495cf0b75",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/reader_display.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/reader_display.py",
+      "bytes": 6120,
+      "sha256": "626d48f77fc858f0eb6dec8b54c04957dbb54dadcb9b2ef9fc7aac7308bc6f87",
+      "baseline_git_blob": "e9389b73efadbd937e5bf43e9cd7d82b377531e7",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/report_assembler.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/report_assembler.py",
+      "bytes": 5655,
+      "sha256": "1b2e878c67996dcac7d66065c338b9008535e9f025419f994853fcfbb671882d",
+      "baseline_git_blob": "801119609d4f02fd80b17e0ce364a405f98cb7eb",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/report_planner.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/report_planner.py",
+      "bytes": 772,
+      "sha256": "2581a9f9711f88c25a27f5417518b9aa0231d68501b1306960097d27109a16a9",
+      "baseline_git_blob": "3899b1d8a08d8121737e2156bc27d077308dace7",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/scenario_comparison.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/scenario_comparison.py",
+      "bytes": 7862,
+      "sha256": "b206b4cc48d7f405c14c8574c2a7546d66510964490675339b3050e667cfd7d7",
+      "baseline_git_blob": "ff3ef33cd99a01bccc5a2e3c1d0ffa2854af9816",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/semantic_risks.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/semantic_risks.py",
+      "bytes": 1923,
+      "sha256": "cdc349fe868a879df71452d0f966481b8e54329aa81bf254910f167a46ce8b6f",
+      "baseline_git_blob": "e250e3ea1f942cd16a2aa7d7d5293186ede096df",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/specs/report-spec.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/specs/report-spec.json",
+      "bytes": 565867,
+      "sha256": "52ef2a761294ce4a01768da44b42b3be8f258ba02c488e331f16face397fe78b",
+      "baseline_git_blob": "994723cda3c54e934a00f1417a6a4a640f277e1b",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/reporting/specs/spec-lock.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/specs/spec-lock.json",
+      "bytes": 135,
+      "sha256": "253b93ad0aa3fd8768f7b844c45c1d8613e487daab1a8f8b07463e2425d9af11",
+      "baseline_git_blob": "def55944d26fccb866fbf13b39eaa120bb0dfdb0",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/scenarios/agri_pv/contract.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/agri_pv/contract.json",
+      "bytes": 1171,
+      "sha256": "b7c7107f308db57f5429b0ea001d818aa5ec53d8b7f3dddc919e08110966f21c",
+      "baseline_git_blob": "6b71295ea316bd003f107326ec83b06adb710e33",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/scenarios/desert_mining/contract.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/desert_mining/contract.json",
+      "bytes": 1235,
+      "sha256": "e32ba3c762f26394fc456806650215149dc472286c0df70c925a5fe4b7f9cb38",
+      "baseline_git_blob": "bfb77904facae8deb1a6477f16ef06a77259dc54",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/scenarios/fishery_pv/contract.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/fishery_pv/contract.json",
+      "bytes": 1192,
+      "sha256": "ff72191933d9cb1bbe89fb8a61cf51a0a558db3dca7130e5a66a736147d1f5d5",
+      "baseline_git_blob": "6cdd45c426980d78c82b81386360b09022def3d2",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/scenarios/industrial_rooftop/contract.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/industrial_rooftop/contract.json",
+      "bytes": 1215,
+      "sha256": "32e98be287989672eadd3898bf3e9eba39fb02dffd73efb617bc08f5c19cf888",
+      "baseline_git_blob": "086047ddee5604f0f9cf0ce3de4bf93d4ee64c09",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/scenarios/public_rooftop/contract.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/public_rooftop/contract.json",
+      "bytes": 1347,
+      "sha256": "f634d794ace8fb45adbe912b3ccb9a002f6803485868286d4acdc9dea13e5acb",
+      "baseline_git_blob": "5e6918314529449a086cd418fa697d31bfa70a7a",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/scenarios/pv_carport_bipv/contract.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/pv_carport_bipv/contract.json",
+      "bytes": 1582,
+      "sha256": "04b0bce147b8e268ca024cb3d0456032344a891e5fc2d24f019008a6f2298f67",
+      "baseline_git_blob": "12bd47326bae97c5a0216369ddf1bc45dd31da4d",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/scenarios/pv_storage/contract.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/pv_storage/contract.json",
+      "bytes": 2153,
+      "sha256": "7e6a9ce7b66f9fa23e7902259be050e94aa421b2314876b3f8303be36df8d4ad",
+      "baseline_git_blob": "5d892184fb2ec205cc4318cf42cdc3602bb100f0",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/scenarios/residential_pv/contract.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/residential_pv/contract.json",
+      "bytes": 1362,
+      "sha256": "dd2fe107cc70cbab2029f2d5aca1f4eafb120897d2c462ec1c2ccb1433b3c5df",
+      "baseline_git_blob": "d5756dbc4115bb1e48653c8950555ba4535565a2",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/scenarios/utility_scale_ground/contract.json": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/utility_scale_ground/contract.json",
+      "bytes": 1598,
+      "sha256": "c80d5fe30d1e4a3953703929416762303d81eb23ec8b8b49f2416c116c20460e",
+      "baseline_git_blob": "cd105561f5cf467f0079e0f123053e1e4eb5d1d1",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/schemas.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/schemas.py",
+      "bytes": 9095,
+      "sha256": "3bb5c8f4ae59e88c31fc6305000c0304e127ecc31d0a399a5d1a22dfda322e19",
+      "baseline_git_blob": "b616885c0fc25eb44fb09df0b1096287b51c93d9",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/serialization.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/serialization.py",
+      "bytes": 3032,
+      "sha256": "198444210200e243f9ffa515613bafeed695e4c56f07c25193feb30b2ae3618f",
+      "baseline_git_blob": "8f3220373a9d4f46af50451982628a9495e53899",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/source_xlsx.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/source_xlsx.py",
+      "bytes": 15094,
+      "sha256": "54852c2eddae7fc73617553ecb0f6ab003f49e32fd4d9140529349ff61dd15b9",
+      "baseline_git_blob": "d3e01d4b8460432d230d3c4fad2703add964d7f1",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/timeseries_bundle.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/timeseries_bundle.py",
+      "bytes": 28033,
+      "sha256": "2518080881cd1803a21668b2dbf108970c7790ba36320fd00c30c38617baaf44",
+      "baseline_git_blob": "2fcd55e78ab1f7ab4f2c6183201d50c3a17ac267",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/timeseries_private.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/timeseries_private.py",
+      "bytes": 8787,
+      "sha256": "1900080dad800102b15ffc5fdda4d2effcd13c810605885e838f1d2e2b42fff6",
+      "baseline_git_blob": "fe156b07e146d0cbe846d0207ffc9b14f73f761b",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/timeseries_tokens.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/timeseries_tokens.py",
+      "bytes": 1669,
+      "sha256": "ae38af8fb855394833e914396ea3816001bcdbf8e3d1c49a14a04166c52a0077",
+      "baseline_git_blob": "3915530433bf167d6324918f4e2672dd0a9b0631",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/units.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/units.py",
+      "bytes": 11982,
+      "sha256": "010f5c3afe64f7375d259d64ebc47490c78c51c0e33fbf79db426be00c77be90",
+      "baseline_git_blob": "fc3d14047cc5ea779d433882e0e9a70a7732d4bb",
+      "intentional_version_diff": false
+    },
+    "src/wangbin_solar_pv/validation.py": {
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/validation.py",
+      "bytes": 19687,
+      "sha256": "48312752dada7abb2a143c9953f8c6bf3d04632ca5b907c6b4a6bd4528ebe37c",
+      "baseline_git_blob": "f71d19c43c15a456a4fb8997e154569fd0c1d26a",
+      "intentional_version_diff": false
+    }
+  },
+  "snapshot_index_sha256": "570af5d44d2e0117a4f3cd912c26fc7ca16c555a5063910ec23de6ec40d83523",
+  "build_source": ".runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01/build-source",
+  "source_project": {
+    "name": "wangbin-solar-pv-input",
+    "version": "0.3.2",
+    "description": "Local solar PV input contracts and versioned deterministic calculation layer",
+    "requires-python": ">=3.12,<3.15",
+    "authors": [
+      {
+        "name": "wangbin"
+      }
+    ],
+    "dependencies": [
+      "jsonschema==4.26.0",
+      "wangbin-document-cli==1.2.0",
+      "openpyxl==3.1.5",
+      "python-docx==1.2.0",
+      "Pillow>=10,<13",
+      "pdfminer.six==20260107",
+      "defusedxml==0.7.1",
+      "tzdata==2026.5; sys_platform == 'win32'"
+    ],
+    "scripts": {
+      "wangbin-solar-pv-input": "wangbin_solar_pv.cli:main"
+    }
+  },
+  "offline_environment": {
+    "PIP_NO_INDEX": "1",
+    "PIP_CONFIG_FILE": "nul",
+    "PIP_NO_BUILD_ISOLATION": "1",
+    "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+    "UV_OFFLINE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "SOURCE_DATE_EPOCH": "1794564157"
+  },
+  "audit_hook": "reject socket connect/getaddrinfo/bind and subprocess/os.system; reject setuptools dependency fetch; NOT_OS_SANDBOX",
+  "state": "WHEEL_BUILT_LOCAL",
+  "not_installed": true,
+  "version_metadata_diff": "diff --git a/services/solar-pv-engine/pyproject.toml b/services/solar-pv-engine/pyproject.toml\nindex ed609cc..96f24da 100644\n--- a/services/solar-pv-engine/pyproject.toml\n+++ b/services/solar-pv-engine/pyproject.toml\n@@ -4,7 +4,7 @@ build-backend = \"setuptools.build_meta\"\n \n [project]\n name = \"wangbin-solar-pv-input\"\n-version = \"0.3.1\"\n+version = \"0.3.2\"\n description = \"Local solar PV input contracts and versioned deterministic calculation layer\"\n requires-python = \">=3.12,<3.15\"\n authors = [{name = \"wangbin\"}]\n",
+  "build_command_receipt": {
+    "schema": "offline-engine-artifact-command/1",
+    "task": "SOLAR-PV-R2-ENGINE-ARTIFACT-01",
+    "role": "developer",
+    "label": "build-wheel",
+    "command": [
+      "C:/Users/wangbin/AppData/Local/hermes/installs/dff2a7c1aa1d2670/environments/3d191065334546e08496a64b86fa12ed/venv/Scripts/python.exe",
+      "-I",
+      "-B",
+      ".runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01/build_candidate.py"
+    ],
+    "explicit_environment": {
+      "PIP_NO_INDEX": "1",
+      "PIP_CONFIG_FILE": "nul",
+      "PIP_NO_BUILD_ISOLATION": "1",
+      "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+      "UV_OFFLINE": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONNOUSERSITE": "1",
+      "SOURCE_DATE_EPOCH": "1794564157"
+    },
+    "recorder_interpreter": "C:\\Users\\wangbin\\AppData\\Local\\hermes\\tools\\python-3.14.9+20261021-win32-x64\\python3.exe",
+    "recorder_python": "3.14.9 (main, Oct 21 2026, 17:48:58) [MSC v.1944 64 bit (AMD64)]",
+    "cwd": "F:\\ideaWorkSpace\\wangbin-workbuddy",
+    "start": "2026-11-13T19:00:27.888672+08:00",
+    "end": "2026-11-13T19:00:39.515370+08:00",
+    "elapsed_seconds": 11.623812300153077,
+    "timeout_seconds": 90,
+    "exit_code": 0,
+    "timed_out": false,
+    "child_actual_exit_code": 0,
+    "exception": null,
+    "inputs": [
+      {
+        "path": ".runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01/build_candidate.py",
+        "bytes": 4398,
+        "sha256": "c227e83be91a684d88f4ede37073c5bfae4e032e6621ac60f51683cc6a9aa3a0"
+      },
+      {
+        "path": "services/solar-pv-engine/pyproject.toml",
+        "bytes": 956,
+        "sha256": "2b141056f4c45b9b67df4b9e80dedd6b4ac30da8089229466987f7ea56047191"
+      }
+    ],
+    "prior_recorded_seconds": 24.83482759911567,
+    "other_pending_reserved_seconds": 0,
+    "stdout": {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\.runtime\\solar-pv\\SOLAR-PV-R2-ENGINE-ARTIFACT-01\\commands\\developer-build-wheel.stdout",
+      "bytes": 38244,
+      "sha256": "05df133524a147445fff5e4962451a4438f5f88dfb863e5bfe35fd922d881ee1"
+    },
+    "stderr": {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\.runtime\\solar-pv\\SOLAR-PV-R2-ENGINE-ARTIFACT-01\\commands\\developer-build-wheel.stderr",
+      "bytes": 123,
+      "sha256": "54fc2c6bccb2fa29b92d8bf3cd072ecfde72461d335cce1056642d2cd22ae3d9"
+    },
+    "not_ai": true,
+    "not_installed": true,
+    "not_host_e2e": true
+  },
+  "snapshot_tree_sha256": "d4662f988413fcfecb7024db3c418887c680239ca51aa2b887f47930d0eb743c",
+  "core_files": {
+    "packages/skills/wangbin-solar-pv-prestudy/SKILL.md": {
+      "bytes": 11639,
+      "sha256": "eb38f396e02dc02053a3c836083806468aa6c2498437d01ffdad5b63e8f3b8d8"
+    },
+    "packages/skills/wangbin-solar-pv-prestudy/references/host-orchestration.md": {
+      "bytes": 15014,
+      "sha256": "846fb4e6114133bd1dfad52ccf0d87d67ad256303b4d3d77f2ec05bea075fe1b"
+    },
+    "packages/skills/wangbin-solar-pv-prestudy/scripts/run_ai_chapter.py": {
+      "bytes": 2437,
+      "sha256": "0e67cdf6d2bd6b6b23f782a01ec1025e59d4784fbb802114302195e9a1bc2323"
+    },
+    "services/solar-pv-engine/src/wangbin_solar_pv/reporting/chapter_writer.py": {
+      "bytes": 14570,
+      "sha256": "d3e29e5482299fd22f45098f047d4d1ba11fac481d9b4d3817024405c35b1b6c"
+    },
+    "services/solar-pv-engine/src/wangbin_solar_pv/reporting/host_input_view.py": {
+      "bytes": 14227,
+      "sha256": "b2ba9a20bd33a02851355b9f90f08d45f25505704166d61e933fddd577e9a1f6"
+    },
+    "services/solar-pv-engine/src/wangbin_solar_pv/reporting/host_output.py": {
+      "bytes": 8395,
+      "sha256": "0c73983b2fd49adadf448f79f61a89165a87ab727566d4e8f06ea37916ee040b"
+    },
+    "services/solar-pv-engine/src/wangbin_solar_pv/reporting/host_session.py": {
+      "bytes": 16220,
+      "sha256": "0aff147c87e5b96894d5547681837537c0da3cf06761acea64d71fdf50674917"
+    },
+    "tests/solar-pv/test_ai_host_input_view.py": {
+      "bytes": 20899,
+      "sha256": "67e4b6ca0c0f3996839cc9eb4f0ccbf780f169868f0498670713ca0b1e6193a1"
+    }
+  },
+  "core_set_sha256": "3b41751eb36a632e38c0aab123e25eb66a271e84d2de1ee42d0b06a5f92993c4",
+  "source_version_metadata": {
+    "distribution": "0.3.2",
+    "legacy_input_module_version": "0.3.0",
+    "connector_readiness_pin": "0.3.1",
+    "report_contract": "SOLAR-PV-AI-REPORT-ENGINE-2.0.0",
+    "legacy_versions_unchanged": true
+  },
+  "generated_metadata_files": {
+    "src/wangbin_solar_pv_input.egg-info/dependency_links.txt": {
+      "path": ".runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01/build-source/src/wangbin_solar_pv_input.egg-info/dependency_links.txt",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    "src/wangbin_solar_pv_input.egg-info/entry_points.txt": {
+      "path": ".runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01/build-source/src/wangbin_solar_pv_input.egg-info/entry_points.txt",
+      "bytes": 69,
+      "sha256": "0dd00229b21a460cf3be352df306649cc608b0a03ac37f6c3484cf5778dd7104"
+    },
+    "src/wangbin_solar_pv_input.egg-info/PKG-INFO": {
+      "path": ".runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01/build-source/src/wangbin_solar_pv_input.egg-info/PKG-INFO",
+      "bytes": 510,
+      "sha256": "2c5fd52d2a725e4d91be79e3f6926e907b53d3c409cbac3f20c93362ecab23c1"
+    },
+    "src/wangbin_solar_pv_input.egg-info/requires.txt": {
+      "path": ".runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01/build-source/src/wangbin_solar_pv_input.egg-info/requires.txt",
+      "bytes": 181,
+      "sha256": "cff15439117e1958b6e0d49f59331316646e4ea0218df865885a469e1dff8e2a"
+    },
+    "src/wangbin_solar_pv_input.egg-info/SOURCES.txt": {
+      "path": ".runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01/build-source/src/wangbin_solar_pv_input.egg-info/SOURCES.txt",
+      "bytes": 5898,
+      "sha256": "64ed154039286808979427d8d3b7842e9b1dfb38249c39c4d3e231e9a742fe19"
+    },
+    "src/wangbin_solar_pv_input.egg-info/top_level.txt": {
+      "path": ".runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01/build-source/src/wangbin_solar_pv_input.egg-info/top_level.txt",
+      "bytes": 17,
+      "sha256": "f18e4edd0a400e74f559819597d2a1d3629428832676f8c2c13a201ea4a751e9"
+    }
+  },
+  "historical_egginfo_excluded_and_preserved": {
+    "services/solar-pv-engine/src/wangbin_solar_pv_input.egg-info/dependency_links.txt": {
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    "services/solar-pv-engine/src/wangbin_solar_pv_input.egg-info/entry_points.txt": {
+      "bytes": 69,
+      "sha256": "0dd00229b21a460cf3be352df306649cc608b0a03ac37f6c3484cf5778dd7104"
+    },
+    "services/solar-pv-engine/src/wangbin_solar_pv_input.egg-info/PKG-INFO": {
+      "bytes": 510,
+      "sha256": "ac28fd43d5e42252ef3f0f155a4c27200baee674ff4643c643a14417c5968bcd"
+    },
+    "services/solar-pv-engine/src/wangbin_solar_pv_input.egg-info/requires.txt": {
+      "bytes": 181,
+      "sha256": "cff15439117e1958b6e0d49f59331316646e4ea0218df865885a469e1dff8e2a"
+    },
+    "services/solar-pv-engine/src/wangbin_solar_pv_input.egg-info/SOURCES.txt": {
+      "bytes": 4474,
+      "sha256": "65f1d324ba4bf9f791b1a5be93163afee5f61ef4dfc43993ca419be6ba6bcf88"
+    },
+    "services/solar-pv-engine/src/wangbin_solar_pv_input.egg-info/top_level.txt": {
+      "bytes": 17,
+      "sha256": "f18e4edd0a400e74f559819597d2a1d3629428832676f8c2c13a201ea4a751e9"
+    }
+  },
+  "manifest": {
+    "path": "docs/solar-pv/ai-report-engine-v2/engine-artifact/SOLAR-PV-R2-ENGINE-ARTIFACT-01/WHEEL_CONTENT_MANIFEST.json",
+    "bytes": 106600,
+    "sha256": "1abe5c3c53e0fb88b1d39e3df60af906b8477a2c983cc02d23f1a1fa636a77bb"
+  },
+  "independent_qa": "PENDING",
+  "reproducibility": "NOT_TESTED; one actual build; SOURCE_DATE_EPOCH alone does not prove reproducibility",
+  "public_source_ownership": "NOT_ASSERTED; only local version reservation evidence",
+  "not_host_e2e": true,
+  "approved_git_source_readback": {
+    "path": ".runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01/approved-git-source-readback.json",
+    "bytes": 61263,
+    "sha256": "54accbeb448586abca367cbf62d1980514a9ed6747b03fb51d9ce980e79c208a"
+  },
+  "classification_correction_receipt": {
+    "path": ".runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01/developer-protection-final.json",
+    "bytes": 2854,
+    "sha256": "ab2f1b7c7170ada678bb7d0fb29a36f7be31a41335bc786916c6fb9847c8e2cb"
+  }
+}

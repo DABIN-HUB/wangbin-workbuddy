@@ -1,0 +1,2489 @@
+{
+  "schema": "wheel-content-manifest/1",
+  "sourceHead": "94ce5f04b72937a205c194d55005bddd4ce6bd90",
+  "wheel": {
+    "path": ".runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01/candidate-wheels/wangbin_solar_pv_input-0.3.2-py3-none-any.whl",
+    "bytes": 557392,
+    "sha256": "cd7be44ca5350da87c4760898ddeb46b8a73646d8f2f8de6be61e48cca9f7808"
+  },
+  "member_count": 122,
+  "members": [
+    {
+      "path": "wangbin_solar_pv/__init__.py",
+      "bytes": 153,
+      "sha256": "8ba2a1761cfd434f5b136fdd3f2152bda5161d57da20490793668e929cb7a84a",
+      "crc32": "55d13275",
+      "compressed_bytes": 135,
+      "record_hash": "sha256=i6Khdhz9Q09bE2_dPyFSvaUWHVfaIEkHk2aOkpy3qEo",
+      "record_size": "153",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/__main__.py",
+      "bytes": 155,
+      "sha256": "817a2e35d419d841e9586b97f591027c8b3d204bbe5b23e86881926f169eb09a",
+      "crc32": "c3745851",
+      "compressed_bytes": 127,
+      "record_hash": "sha256=gXouNdQZ2EHpWGuX9ZECfIs9IEu-WyPoaIGSbxaesJo",
+      "record_size": "155",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/applicability.py",
+      "bytes": 3877,
+      "sha256": "d65721d4d0fcacebac16fdf3e407a3ddd6fc198e40d76681fdafc212f861e2c4",
+      "crc32": "28606f4b",
+      "compressed_bytes": 1370,
+      "record_hash": "sha256=1lch1ND8rOusFv3z5Aej3db8GY5A12aB_a_CEvhh4sQ",
+      "record_size": "3877",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/attachment_security.py",
+      "bytes": 10520,
+      "sha256": "e7abad9498a590150988e610c984195eb83378a5e949a28edc3f57cd67dc95db",
+      "crc32": "ab1856c8",
+      "compressed_bytes": 3689,
+      "record_hash": "sha256=56utlJilkBUJiOYQyYQZXrgzeKXpSaKO3D9XzWfclds",
+      "record_size": "10520",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/baseline-lock.json",
+      "bytes": 1350,
+      "sha256": "2ea6be9f9e66b0c0d40ae15dba0c3ac5226e5e1909b686e1cc4668fd360db833",
+      "crc32": "b70b5991",
+      "compressed_bytes": 761,
+      "record_hash": "sha256=Lqa-n55msMDUCuFdugw6xSJuXhkJtobhzEZo_TYNuDM",
+      "record_size": "1350",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/catalog.py",
+      "bytes": 4260,
+      "sha256": "9a2675f00c60631016dd72ea9a9046ab9b31ee1d0cce5ccab60ef59479ba7623",
+      "crc32": "8639a120",
+      "compressed_bytes": 1462,
+      "record_hash": "sha256=miZ18AxgYxAW3XLqmpBGq5sx7h0MzlzKtg71lHm6diM",
+      "record_size": "4260",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/categories.py",
+      "bytes": 8838,
+      "sha256": "d1c012445aab90c656fedcbe0901e1ee213ea73090a02e34fbebccca0bedab24",
+      "crc32": "87aa0830",
+      "compressed_bytes": 3093,
+      "record_hash": "sha256=0cASRFqrkMZW_ty-CQHh7iE-pzCQoC40--vMygvtqyQ",
+      "record_size": "8838",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/cli.py",
+      "bytes": 26786,
+      "sha256": "d1070d80f83ec7911fe0ac1722990760f2d5197b28397dec3ee5ff6a1043d871",
+      "crc32": "c43ce67a",
+      "compressed_bytes": 6837,
+      "record_hash": "sha256=0QcNgPg-x5Ef4KwXIpkHYPLVGXsoOX3sPuX_ahBD2HE",
+      "record_size": "26786",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/completeness.py",
+      "bytes": 14533,
+      "sha256": "dfa41ddd5f54fd3bf6c8cc13efbc5fa424abcc75034eb986abfb90ef2f273f9c",
+      "crc32": "cdf2621f",
+      "compressed_bytes": 5190,
+      "record_hash": "sha256=36Qd3V9U_Tv2yMwT77xfpCSrzHUDTrmGq_uQ7y8nP5w",
+      "record_size": "14533",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/conditions.py",
+      "bytes": 11620,
+      "sha256": "0690411309b8e7c01d385d917a9fd41194d71a275218cef7301b9a7375ab8363",
+      "crc32": "a53dd30a",
+      "compressed_bytes": 3278,
+      "record_hash": "sha256=BpBBEwm458AdOF2Rep_UEZTXGidSGM73MBuac3Wrg2M",
+      "record_size": "11620",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/consistency.py",
+      "bytes": 8140,
+      "sha256": "4ee5433c468b038b2c5f0be62e4baa3e18fb69bfecf11080bad6768f9fccf748",
+      "crc32": "b6a764aa",
+      "compressed_bytes": 3187,
+      "record_hash": "sha256=TuVDPEaLA4ssXwvmLkuqPhj7ab_s8RCAutZ2j5_M90g",
+      "record_size": "8140",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/data_adaptation.py",
+      "bytes": 18434,
+      "sha256": "1214f87ba2f4ac6c8cb6664a3cc90d79231260a07936a774f8089a575002ca8c",
+      "crc32": "52953e0f",
+      "compressed_bytes": 4694,
+      "record_hash": "sha256=EhT4e6L0rGyMtmZKPMkNeSMSYKB5Nqd0-AiaV1ACyow",
+      "record_size": "18434",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/definition-errata.json",
+      "bytes": 5788,
+      "sha256": "bee7fc4e737a3f8e40befa272a842ce1ad0454b8437590089e090e32031b15e0",
+      "crc32": "5912b7ac",
+      "compressed_bytes": 2024,
+      "record_hash": "sha256=vuf8TnN6P45AvvonKoQs4a0EVLhDdZAIngkOMgMbFeA",
+      "record_size": "5788",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/definition-lock.json",
+      "bytes": 1801,
+      "sha256": "728ccb42a5d5f78cc9252f61070dd5eb2c1a426b8e727423d113bb2f79d170b6",
+      "crc32": "bad33c18",
+      "compressed_bytes": 949,
+      "record_hash": "sha256=cozLQqXV94zJJS9hBw3V6ywaQmuOcnQj0RO7L3nRcLY",
+      "record_size": "1801",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/definition_versions.py",
+      "bytes": 10181,
+      "sha256": "9d50c04fb815fe1160ff43ec1fb7141492bf0acaa8ae264b0480e47fd68b5b43",
+      "crc32": "43f9d56b",
+      "compressed_bytes": 3270,
+      "record_hash": "sha256=nVDAT7gV_hFg_0PsH7cUFJK_CsqoriZLBIDkf9aLW0M",
+      "record_size": "10181",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/errors.py",
+      "bytes": 555,
+      "sha256": "b7364ae5c1a533b0d770f7a3b1cb650f6b8b044a68de4fec7538ec562ff4d72b",
+      "crc32": "634a17bf",
+      "compressed_bytes": 291,
+      "record_hash": "sha256=tzZK5cGlM7DXcPejsctlD2uLBEpo3k_sdTjsVi_01ys",
+      "record_size": "555",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/formula_bindings.py",
+      "bytes": 9672,
+      "sha256": "7942a602f14c0952dd7dc700b86bb88664484bc4dd3ce1f299c53bb63a1171d4",
+      "crc32": "e48deaa9",
+      "compressed_bytes": 3024,
+      "record_hash": "sha256=eUKmAvFMCVLdfccAuGu4hmRIS8TdPOHymcU7tjoRcdQ",
+      "record_size": "9672",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/intake.py",
+      "bytes": 18620,
+      "sha256": "661b0848d068a7f86060ecbea53c6d215ea40630eb19510d4b6043078777685e",
+      "crc32": "e149bfdb",
+      "compressed_bytes": 4995,
+      "record_hash": "sha256=ZhsISNBop_hgYOy-pTxtIV6kBjDrGVENS2BDB4d3aF4",
+      "record_size": "18620",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/local_files.py",
+      "bytes": 6974,
+      "sha256": "69bfc09f24b8f2697d3fb7e42573f702546af63e3abb3f3254cbc89d935da010",
+      "crc32": "8567c54d",
+      "compressed_bytes": 2250,
+      "record_hash": "sha256=ab_AnyS48ml9P7fkJXP3AlRq9j46uz8yVMvInZNdoBA",
+      "record_size": "6974",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/models.py",
+      "bytes": 1486,
+      "sha256": "14e4def8f6e8e6b5bea31fe1439df96dea337b9ab59a0d1adba1f242c7b8148c",
+      "crc32": "3c68ec89",
+      "compressed_bytes": 622,
+      "record_hash": "sha256=FOTe-Pbo5rW-ox_hQ535beoze5q1mg0a26HyQse4FIw",
+      "record_size": "1486",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/parsers.py",
+      "bytes": 24915,
+      "sha256": "0c2676a17bc9dd8adc2645fdbe85df986d64d5c9af75abbd68bcef68873febd8",
+      "crc32": "7304d951",
+      "compressed_bytes": 7784,
+      "record_hash": "sha256=DCZ2oXvJ3YrcJkX9voXfmG1k1cmvdau9aLzvaIc_69g",
+      "record_size": "24915",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/provenance.py",
+      "bytes": 9904,
+      "sha256": "b02b01ad2ccc03fd5967ab010a3bde908cf5f71e9e2d578cd755e52fbd5f9bc5",
+      "crc32": "8d77ba61",
+      "compressed_bytes": 3161,
+      "record_hash": "sha256=sCsBrSzMA_1ZZ6sBCjvekIz19x6eLVeM11XlL71fm8U",
+      "record_size": "9904",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/quality.py",
+      "bytes": 10312,
+      "sha256": "83a5d24fd5e37810afdb22b4aae0f3b710ef317b83689c295df5ae7724d29784",
+      "crc32": "ed63244e",
+      "compressed_bytes": 4198,
+      "record_hash": "sha256=g6XST9XjeBCv2yK0quDztxDvMXuDaJwpXfWudyTSl4Q",
+      "record_size": "10312",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/report-glossary.json",
+      "bytes": 170704,
+      "sha256": "7aa659db2134e14e5f000dd2e6dd65767a9898daaf9decedd00bac29fa8f8474",
+      "crc32": "32969a31",
+      "compressed_bytes": 24624,
+      "record_hash": "sha256=eqZZ2yE04U5fAA3S5t1ldnqYmNqvnezt0AusKfqPhHQ",
+      "record_size": "170704",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/report_appendix_findings.py",
+      "bytes": 9814,
+      "sha256": "d6072a048cd5d514cf5e33d7f006ae0a4d4a9c85a04274e9b6b408ef3990b7f4",
+      "crc32": "cc115b18",
+      "compressed_bytes": 4465,
+      "record_hash": "sha256=1gcqBIzV1RTPXjPX8AauCk1KnIWgQnTptrQI7zmQt_Q",
+      "record_size": "9814",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/report_claims.py",
+      "bytes": 188435,
+      "sha256": "55bc23fad8ca2a2ebcef0b9e51a4b0b278bf398793911feb405f1ce187cea423",
+      "crc32": "c1e4c83d",
+      "compressed_bytes": 58439,
+      "record_hash": "sha256=Vbwj-tjKKi687wueUaSwsni_OYeTkR_rQF8c4YfOpCM",
+      "record_size": "188435",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/report_display_numbers.py",
+      "bytes": 1376,
+      "sha256": "5b96891e044264dfd8586a1098467286caad1e03848ff90430dbc010773e3849",
+      "crc32": "83324677",
+      "compressed_bytes": 598,
+      "record_hash": "sha256=W5aJHgRCZN_YWGoQmEZyhsqtHgOEj_kEMNvAEHc-OEk",
+      "record_size": "1376",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/report_equations.py",
+      "bytes": 7746,
+      "sha256": "8fa4628d2477b363a6feef1bc9b4a32945ca8fd418bf062993c133e8cd83806e",
+      "crc32": "d4179f0c",
+      "compressed_bytes": 2966,
+      "record_hash": "sha256=j6RijSR3s2Om_u8bybSjKUXKj9QYvwYpk8Ez6M2DgG4",
+      "record_size": "7746",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/report_export.py",
+      "bytes": 247484,
+      "sha256": "077fb71f200a033cb2947b48ef4d72eed03af47df6a57dcb8439dd0ab4a8065a",
+      "crc32": "8a91eb04",
+      "compressed_bytes": 73307,
+      "record_hash": "sha256=B3-3HyAKAzyylHtI701y7tA69H32pX3LhDndCrSoBlo",
+      "record_size": "247484",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/report_narrative.py",
+      "bytes": 12402,
+      "sha256": "a955159b4b081117fed2066f90d754cffe701dab925fb6a562158b8d9c9222c9",
+      "crc32": "edc15e01",
+      "compressed_bytes": 5867,
+      "record_hash": "sha256=qVUVm0sIERf-0gZvkNdUz_5wHauSX7alYhWLjZySIsk",
+      "record_size": "12402",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/report_numbering.py",
+      "bytes": 9842,
+      "sha256": "6dd6c9f4094a8ffd767e8616a8edd6d67e8ee2cce80790d5d1c77f445be6d6b7",
+      "crc32": "67aecba2",
+      "compressed_bytes": 3219,
+      "record_hash": "sha256=bdbJ9AlKj_12foYWqO3W1n6O4szoB5DV0cd_RFvm1rc",
+      "record_size": "9842",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/report_resource_display.py",
+      "bytes": 4175,
+      "sha256": "5bf4b45b8354160f67358f2350daa9d49a5f947a382d0e09413e974717e03968",
+      "crc32": "1c535002",
+      "compressed_bytes": 1801,
+      "record_hash": "sha256=W_S0W4NUFg9nNY8jUNqp1JpflHo4LQ4JQT6XRxfgOWg",
+      "record_size": "4175",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/report_word_styles.py",
+      "bytes": 10711,
+      "sha256": "80691948326a8fa48c5e49ad03167343cd3b2c3764bc9fd2d173077925a6b9e2",
+      "crc32": "c1d72b02",
+      "compressed_bytes": 3085,
+      "record_hash": "sha256=gGkZSDJqj6SMXkmtAxZzQ807LDdkvJ_S0XMHeSWmueI",
+      "record_size": "10711",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/schemas.py",
+      "bytes": 9095,
+      "sha256": "3bb5c8f4ae59e88c31fc6305000c0304e127ecc31d0a399a5d1a22dfda322e19",
+      "crc32": "c762d7b5",
+      "compressed_bytes": 2807,
+      "record_hash": "sha256=O7XI9K5Z6Iwx_GMFAAwDBOEn7MMdCjmaXRoi39oyLhk",
+      "record_size": "9095",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/serialization.py",
+      "bytes": 3032,
+      "sha256": "198444210200e243f9ffa515613bafeed695e4c56f07c25193feb30b2ae3618f",
+      "crc32": "62f5d84c",
+      "compressed_bytes": 1037,
+      "record_hash": "sha256=GYREIQIA4kP5_6UVYTuv7taV5MVvB8JRk_6zCyrjYY8",
+      "record_size": "3032",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/source_xlsx.py",
+      "bytes": 15094,
+      "sha256": "54852c2eddae7fc73617553ecb0f6ab003f49e32fd4d9140529349ff61dd15b9",
+      "crc32": "b88490db",
+      "compressed_bytes": 4909,
+      "record_hash": "sha256=VIUsLt2uf8c2F1U-yw9qsAP0njL9TZFAUpNJ_2HdFbk",
+      "record_size": "15094",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/timeseries_bundle.py",
+      "bytes": 28033,
+      "sha256": "2518080881cd1803a21668b2dbf108970c7790ba36320fd00c30c38617baaf44",
+      "crc32": "5ec4f10b",
+      "compressed_bytes": 7797,
+      "record_hash": "sha256=JRgICIHNGAOiFmiy2_EIlwx3kLo2Mg_QDDDDhhe6r0Q",
+      "record_size": "28033",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/timeseries_private.py",
+      "bytes": 8787,
+      "sha256": "1900080dad800102b15ffc5fdda4d2effcd13c810605885e838f1d2e2b42fff6",
+      "crc32": "d9c4a837",
+      "compressed_bytes": 3129,
+      "record_hash": "sha256=GQAIDa2AAQKxX_xf3aTS7_zRPIEGBYheg48dLitC__Y",
+      "record_size": "8787",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/timeseries_tokens.py",
+      "bytes": 1669,
+      "sha256": "ae38af8fb855394833e914396ea3816001bcdbf8e3d1c49a14a04166c52a0077",
+      "crc32": "b3c7d3b2",
+      "compressed_bytes": 740,
+      "record_hash": "sha256=rjivj7hVOUgz6RQ5bqOBYAG82_jj0cSaFKBBZsUqAHc",
+      "record_size": "1669",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/units.py",
+      "bytes": 11982,
+      "sha256": "010f5c3afe64f7375d259d64ebc47490c78c51c0e33fbf79db426be00c77be90",
+      "crc32": "2823fd7d",
+      "compressed_bytes": 3684,
+      "record_hash": "sha256=AQ9cOv5k9zddJZ1k68R0kMeMUcDjP79520Jr4Ax3vpA",
+      "record_size": "11982",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/validation.py",
+      "bytes": 19687,
+      "sha256": "48312752dada7abb2a143c9953f8c6bf3d04632ca5b907c6b4a6bd4528ebe37c",
+      "crc32": "492122bd",
+      "compressed_bytes": 6551,
+      "record_hash": "sha256=SDEnUtraersqFDyZU_jGvz0EYyyluQfGtKa9RSjr43w",
+      "record_size": "19687",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/__init__.py",
+      "bytes": 242,
+      "sha256": "c75e4d65c5a59532a94831497e5cce3908039e0151a884de0f4fd392bcb3f21a",
+      "crc32": "37083e1b",
+      "compressed_bytes": 166,
+      "record_hash": "sha256=x15NZcWllTKpSDFJflzOOQgDngFRqITeD0_Tkryz8ho",
+      "record_size": "242",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/accounting_ledger.py",
+      "bytes": 3290,
+      "sha256": "1094a3b480228081db14b09be75769127b17603e2725f012f0ab4aaf430adb28",
+      "crc32": "f000ffbc",
+      "compressed_bytes": 1151,
+      "record_hash": "sha256=EJSjtIAigIHbFLCb51dpEnsXYD4nJfAS8KtKr0MK2yg",
+      "record_size": "3290",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/break_even_certification.py",
+      "bytes": 4721,
+      "sha256": "86b837b5775af5c14b0b436a24c4ebb91dbd4a32f3bc9c1fefbb2389385027f4",
+      "crc32": "75acd1ad",
+      "compressed_bytes": 1710,
+      "record_hash": "sha256=hrg3tXda9cFLC0NqJMTruR29SjLzvJwf77sjiThQJ_Q",
+      "record_size": "4721",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/break_even_execution.py",
+      "bytes": 8832,
+      "sha256": "d95b9d447912837a7514af9edd5ad40575470d4b937478687b9db633504316fa",
+      "crc32": "5138e5f5",
+      "compressed_bytes": 2963,
+      "record_hash": "sha256=2VudRHkSg3p1FK-e3VrUBXVHDUuTdHhoe522M1BDFvo",
+      "record_size": "8832",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/break_even_financial_replay.py",
+      "bytes": 6727,
+      "sha256": "9119fbd3cced4a5961412257d83db2d9277b91f988d27d16d215c58ac6a689ed",
+      "crc32": "aa6fa834",
+      "compressed_bytes": 1556,
+      "record_hash": "sha256=kRn708ztSllhQSJX2D2y2Sd7kfmI0n0W0hXFisamie0",
+      "record_size": "6727",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/break_even_project_npv.py",
+      "bytes": 8633,
+      "sha256": "6c050a2912e403fb844a78bd8a731f626f55d868506fe9b1b2a988fa30d9c140",
+      "crc32": "06c6b671",
+      "compressed_bytes": 2155,
+      "record_hash": "sha256=bAUKKRLkA_uESni9inMfYm9V2GhQb-mxsqmI-jDZwUA",
+      "record_size": "8633",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/break_even_project_session.py",
+      "bytes": 16526,
+      "sha256": "1b4e1a27b96de385cafd7d945b52d44a4e8c2f96b17e97f123f57e33385f691b",
+      "crc32": "bcb79fcf",
+      "compressed_bytes": 3894,
+      "record_hash": "sha256=G04aJ7lt44XK_X2UW1LUSk6ML5axfpfxI_V-MzhfaRs",
+      "record_size": "16526",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/break_even_replay.py",
+      "bytes": 13633,
+      "sha256": "e64ccbc843c12c731e2e329a2e5649bc2f4cc62a8871829f93dbe78714afac42",
+      "crc32": "5b3037f6",
+      "compressed_bytes": 3995,
+      "record_hash": "sha256=5kzLyEPBLHMeLjKaLlZJvC9MxiqIcYKfk9vnhxSvrEI",
+      "record_size": "13633",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/calculation_graph.py",
+      "bytes": 3608,
+      "sha256": "83251543e0d59e7e8a286cd795f78d3fe46429e3136b77b1cb6fba78a4e47581",
+      "crc32": "5720c174",
+      "compressed_bytes": 1168,
+      "record_hash": "sha256=gyUVQ-DVnn6KKGzXlfeNP-RkKeMTa3exy2-6eKTkdYE",
+      "record_size": "3608",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/capacity.py",
+      "bytes": 6663,
+      "sha256": "bd90d43240fe2fb7f3810fdaa3b6ebf7eb2035117a0eedd335044a4f94118bd2",
+      "crc32": "ba374fcd",
+      "compressed_bytes": 2144,
+      "record_hash": "sha256=vZDUMkD-L7fzgQ_ao7br9-sgNRF6Du3TNQRKT5QRi9I",
+      "record_size": "6663",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/common.py",
+      "bytes": 4262,
+      "sha256": "f41c33f34ed3ddb4e40841727282a331128a52a438a9ba18bf2a7d6850234c64",
+      "crc32": "1e66f0af",
+      "compressed_bytes": 1555,
+      "record_hash": "sha256=9Bwz807T3bTkCEFycoKjMRKKUqQ4qboYvyp9aFAjTGQ",
+      "record_size": "4262",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/consumption.py",
+      "bytes": 9273,
+      "sha256": "8697c65aa4d8f7c343f96f7f2c086deab50c1d4d31b99928471417eb9a554158",
+      "crc32": "40c2cec8",
+      "compressed_bytes": 2516,
+      "record_hash": "sha256=hpfGWqTY98ND-W9_LAht6rUMHU0xuZkoRxQX65pVQVg",
+      "record_size": "9273",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/costs.py",
+      "bytes": 11010,
+      "sha256": "1df30bbc0903a07c1f9f6599c2f5b45a0033da5bcc51963e80ae041cba4371a3",
+      "crc32": "e73a3462",
+      "compressed_bytes": 2748,
+      "record_hash": "sha256=HfMLvAkDoHwfn2WZwvW0WgAz2lvMUZY-gK4EHLpDcaM",
+      "record_size": "11010",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/degradation.py",
+      "bytes": 6072,
+      "sha256": "225ce35365d20ef14db480b3169fc75e8807c17c273f6189c557f7b3fc7a273b",
+      "crc32": "b33b8338",
+      "compressed_bytes": 1904,
+      "record_hash": "sha256=IlzjU2XSDvFNtICzFp_HXogHwXwnP2GJxVf3s_x6Jzs",
+      "record_size": "6072",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/energy_inputs.py",
+      "bytes": 3837,
+      "sha256": "4e4eb98bf65c8ab99e99f8a4b7b005f606e65cb234c3fa2e691f7d10fa56409b",
+      "crc32": "263aa66b",
+      "compressed_bytes": 1276,
+      "record_hash": "sha256=Tk65i_Zcirmemfikt7AF9gbmXLI0w_ouaR99EPpWQJs",
+      "record_size": "3837",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/energy_yield.py",
+      "bytes": 31327,
+      "sha256": "8520fab85b3db20e325026fbe133f7ac8498261b679d68867d45ce999225c8c4",
+      "crc32": "e03788c1",
+      "compressed_bytes": 8959,
+      "record_hash": "sha256=hSD6uFs9sg4yUCb74TP3rISYJhtnnWiGfUXOmZIlyMQ",
+      "record_size": "31327",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/engineering.py",
+      "bytes": 19635,
+      "sha256": "0282aa1f246dc5d09bb8e7f57c72ce02497fb460c3c70c34aed3201c078419fd",
+      "crc32": "9c3763d8",
+      "compressed_bytes": 4462,
+      "record_hash": "sha256=AoKqHyRtxdCbuOf1fHLOAkl_tGDDxww0rtMgHAeEGf0",
+      "record_size": "19635",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/execution-evidence.json",
+      "bytes": 37870,
+      "sha256": "e15ddff829757159078b042d7d97aa39d39b30367cce2aa00014598ee74c9124",
+      "crc32": "836151a0",
+      "compressed_bytes": 2596,
+      "record_hash": "sha256=4V3f-Cl1cVkHiwQtfZeqOdObMDZ8ziqgABRZjudMkSQ",
+      "record_size": "37870",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/execution_registry.py",
+      "bytes": 4764,
+      "sha256": "5ffead49b4e32364b6aeea559cb37eb457b9af1b0e7a5d6c3f1f14c06e0eac9a",
+      "crc32": "e65d71c7",
+      "compressed_bytes": 1808,
+      "record_hash": "sha256=X_6tSbTjI2S2rupVnLN-tFe5rxsOel1sPx8UwG4OrJo",
+      "record_size": "4764",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/financial_ledger.py",
+      "bytes": 41560,
+      "sha256": "0292205ee1e3798053b9efe49539305706c33c05d53cc1176789d0ac51f67fae",
+      "crc32": "1c5fa14f",
+      "compressed_bytes": 10443,
+      "record_hash": "sha256=ApIgXuHjeYBTue_klTkwVwbDPAXVPMEXZ4nQrFH2f64",
+      "record_size": "41560",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/financial_metrics.py",
+      "bytes": 30041,
+      "sha256": "861fd39468ed1676ddfd09456d9466c3ed6c85739e96aa568d5c613a340c3c94",
+      "crc32": "304a4b1d",
+      "compressed_bytes": 7043,
+      "record_hash": "sha256=hh_TlGjtFnbd_QlFbZRmw-1shXOelqpWjVxhOjQMPJQ",
+      "record_size": "30041",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/formula_execution.py",
+      "bytes": 3272,
+      "sha256": "1e7ed5dd9913319d181f4c39cde325c430e94268c224fa1de4cf9456788cdb8f",
+      "crc32": "e9ad490d",
+      "compressed_bytes": 1093,
+      "record_hash": "sha256=Hn7V3ZkTMZ0YH0w5zeMlxDDpQmjCJPod5M-UVniM248",
+      "record_size": "3272",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/generation_evidence.py",
+      "bytes": 14676,
+      "sha256": "b507c26a5aa980a6fe06193bc5ef876851aa15db224cd23d51211f4b707b2683",
+      "crc32": "f74786db",
+      "compressed_bytes": 4398,
+      "record_hash": "sha256=tQfCalqpgKb-Bhk7xe-HaFGqFdsiTNI9USEfS3B7JoM",
+      "record_size": "14676",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/input_contract.py",
+      "bytes": 7461,
+      "sha256": "b5ce5258fd497a794b4fa8d359430dc94f6badd1ceb1f780c709e1c8565ab03c",
+      "crc32": "517cc48c",
+      "compressed_bytes": 2449,
+      "record_hash": "sha256=tc5SWP1JenlLT6jTWUMNyU9rrdHOsfeAxwnhyFZasDw",
+      "record_size": "7461",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/losses.py",
+      "bytes": 6107,
+      "sha256": "2baf14e443fec481fbecf2ae0b1bedc1639a1d4210569e42788c25c7fe0fe514",
+      "crc32": "5ed9bf33",
+      "compressed_bytes": 1884,
+      "record_hash": "sha256=K68U5EP-xIH77PKuCxvtwWOaHUIQVp5CeIwlx_4P5RQ",
+      "record_size": "6107",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/method_config.py",
+      "bytes": 25800,
+      "sha256": "3beccfc6ab03a9d6c21d020819eb2d30422e83daa4245e7167ab7428e17c6001",
+      "crc32": "089c92b4",
+      "compressed_bytes": 9624,
+      "record_hash": "sha256=O-zPxqsDqdbCHQIIGestMEIug9qkJF5xZ6t0KOF8YAE",
+      "record_size": "25800",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/phase3e.py",
+      "bytes": 32170,
+      "sha256": "6db9ba0399bae1a999e7a2910f8959f3d4026bc2b873e64cfd220f43de21f71a",
+      "crc32": "dba1641b",
+      "compressed_bytes": 7971,
+      "record_hash": "sha256=bbm6A5m64amZ56KRD4lZ89QCa8K4c-ZM_SIPQ94h9xo",
+      "record_size": "32170",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/project_runner.py",
+      "bytes": 15457,
+      "sha256": "74df9e7d60aef1c9ff99d83d27950a96e91a89a00f309f25c6cea64bdd86ec60",
+      "crc32": "89bd59b3",
+      "compressed_bytes": 3747,
+      "record_hash": "sha256=dN-efWCu8cn_mdg9J5UKlukaiaAPMJ8lxs6mS92G7GA",
+      "record_size": "15457",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/result_contract.py",
+      "bytes": 10082,
+      "sha256": "0a4cb4a5df645066b9fcbd44799f8934e4545bf3d0199633b1d3357fc65eba0c",
+      "crc32": "3dca878c",
+      "compressed_bytes": 2805,
+      "record_hash": "sha256=Cky0pd9kUGa5_L1EeZ-JNORUW_PQGZYzsdM1f8Zeugw",
+      "record_size": "10082",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/revenue.py",
+      "bytes": 23835,
+      "sha256": "c0d7159cf59079fbd92546856e1d310de97c0a9568cd54ee518e7a7d74fc5928",
+      "crc32": "c0fd090c",
+      "compressed_bytes": 6811,
+      "record_hash": "sha256=wNcVnPWQefvZJUaFbh0xDel8CpVozVTuUY56fXT8WSg",
+      "record_size": "23835",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/scenario_cash_sources.py",
+      "bytes": 2296,
+      "sha256": "0b740e71231f1228b221039e87cace0132783a0d181a443b27979a68ce26b510",
+      "crc32": "712ed525",
+      "compressed_bytes": 898,
+      "record_hash": "sha256=C3QOcSMfEiiyIQOeh8rOATJ4Og0YGkQ7J5eaaM4mtRA",
+      "record_size": "2296",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/scenario_runner.py",
+      "bytes": 26226,
+      "sha256": "cdbc17e81e8c06e55d3bffd7fe446d586d86d4caa23d59320eea0a9f75ea5c9f",
+      "crc32": "da52418f",
+      "compressed_bytes": 6323,
+      "record_hash": "sha256=zbwX6B6MBuVdO__X_kRtWG2G1MqiPVkyDuoKn3XqXJ8",
+      "record_size": "26226",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/sensitivity.py",
+      "bytes": 6366,
+      "sha256": "3d253aba60f330c42be942ce3cb37a08f579a67cb4650ce7966a35267953869c",
+      "crc32": "c10c6847",
+      "compressed_bytes": 2111,
+      "record_hash": "sha256=PSU6umDzMMQr6ULOPLN6CPV5pny0ZQznlmo1JnlThpw",
+      "record_size": "6366",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/solar_resource.py",
+      "bytes": 7911,
+      "sha256": "ed49903fff0bbd2f624f0f579f0ab334dadd37bffc2e53572785d3ce526e7e9c",
+      "crc32": "1c87c7b7",
+      "compressed_bytes": 2541,
+      "record_hash": "sha256=7UmQP_8LvS9iTw9XnwqzNNrdN7_8LlNXJ4XTzlJufpw",
+      "record_size": "7911",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/tariffs.py",
+      "bytes": 13960,
+      "sha256": "9bbc53ccdee0a789c800197813e5225561a8078c7124dc5d2dc708dbce49dbce",
+      "crc32": "892607b5",
+      "compressed_bytes": 4358,
+      "record_hash": "sha256=m7xTzN7gp4nIABl4E-UiVWGoB4xxJNxdLccI285J284",
+      "record_size": "13960",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/temperature.py",
+      "bytes": 8434,
+      "sha256": "df174a2a4407243b6b345f9beeae0c5edf9dad98c0eb78488d9f85c544f22709",
+      "crc32": "53dd24f9",
+      "compressed_bytes": 2237,
+      "record_hash": "sha256=3xdKKkQHJDtrNF-b7q4MXt-drZjA63hIjZ-FxUTyJwk",
+      "record_size": "8434",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/terminal_binding.py",
+      "bytes": 12535,
+      "sha256": "1ee841a0590b8cd9fcc77b278818aa364e0ba8e584db7536ef2186b3efbe580b",
+      "crc32": "949fb244",
+      "compressed_bytes": 3830,
+      "record_hash": "sha256=HuhBoFkLjNn8x3sniBiqNk4LqOWE23U27yGGs---WAs",
+      "record_size": "12535",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/terminal_disposition.py",
+      "bytes": 12084,
+      "sha256": "85585fb51ef0c1204c9a414a5d4584b4864b3514383bf5c14396ea87dd446fc0",
+      "crc32": "ee6d902f",
+      "compressed_bytes": 3784,
+      "record_hash": "sha256=hVhftR7wwSBMmkFKXUWEtIZLNRQ4O_XBQ5bqh91Eb8A",
+      "record_size": "12084",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/trading_fee_payment.py",
+      "bytes": 3957,
+      "sha256": "d93f62efb130ddb8ad9420283f2e91a4b19a731f2e7a8d6fa750a6161523940a",
+      "crc32": "c1571ffd",
+      "compressed_bytes": 1489,
+      "record_hash": "sha256=2T9i77Ew3bitlCAoPy6RpLGacx8ueo1vp1CmFhUjlAo",
+      "record_size": "3957",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/schema/break-even-execution.schema.json",
+      "bytes": 3128,
+      "sha256": "66f4e7f0488080765692cf70a06f43479796f80bd21e8a37100c6b0a8a748d0c",
+      "crc32": "5400b166",
+      "compressed_bytes": 926,
+      "record_hash": "sha256=ZvTn8EiAgHZWks9woG9DR5eW-AvSHoo3EAxrCop0jQw",
+      "record_size": "3128",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/schema/calculation-result.schema.json",
+      "bytes": 4518,
+      "sha256": "f9f188a924e1c040697a09d7a97d88800bcee8756a453f7a2efe56ca2fc55fe6",
+      "crc32": "8e88c867",
+      "compressed_bytes": 1064,
+      "record_hash": "sha256=-fGIqSThwEBpegnXqX2IgAvO6HVqRT96Lv5Wyi_FX-Y",
+      "record_size": "4518",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/schema/method-config.schema.json",
+      "bytes": 97108,
+      "sha256": "f8d8aa861269bc44af0eb302e56457f6d5b7edac9f2b7f5903dc6440df8eae14",
+      "crc32": "2e51a300",
+      "compressed_bytes": 9057,
+      "record_hash": "sha256=-NiqhhJpvESvDrMC5WRX9tW37ayfK39ZA9xkQN-OrhQ",
+      "record_size": "97108",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/calculation/schema/trading-fee-payment.schema.json",
+      "bytes": 3915,
+      "sha256": "45007ef2f65c3bf21b1f3ff0939ed29190fb08d74ba077b24063a0762264588c",
+      "crc32": "c945107d",
+      "compressed_bytes": 1099,
+      "record_hash": "sha256=RQB-8vZcO_IbHz_wk57SkZD7CNdLoHeyQGOgdiJkWIw",
+      "record_size": "3915",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/__init__.py",
+      "bytes": 125,
+      "sha256": "6d3f33c54d364118c122241e3e176a5cd67863b3172454a55ce890577f6511e5",
+      "crc32": "e0441104",
+      "compressed_bytes": 116,
+      "record_hash": "sha256=bT8zxU02QRjBIiQePhdqXNZ4Y7MXJFSlXOiQV39lEeU",
+      "record_size": "125",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/__main__.py",
+      "bytes": 5521,
+      "sha256": "2204dafc3da7a9f35dcc4454f2f081c575236bc4f3f4587e7064b0fa0bae9bb7",
+      "crc32": "0cddebc0",
+      "compressed_bytes": 1696,
+      "record_hash": "sha256=IgTa_D2nqfNdzERU8vCBxXUja8Tz9Fh-cGSw-guum7c",
+      "record_size": "5521",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/chapter_registry.py",
+      "bytes": 2111,
+      "sha256": "0144e2dafebe325023c3a3a14546efbe095fdc49db8bf5f0d25631ed1359db9a",
+      "crc32": "f8e4be33",
+      "compressed_bytes": 773,
+      "record_hash": "sha256=AUTi2v6-MlAjw6OhRUbvvglf3Enbi_Xw0lYx7RNZ25o",
+      "record_size": "2111",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/chapter_result_schema.py",
+      "bytes": 5890,
+      "sha256": "fb9b23023b1e39d08beb5d9a9aae961d188ec144e2e7bd6b12cbd28557554c88",
+      "crc32": "25b1ab4e",
+      "compressed_bytes": 1653,
+      "record_hash": "sha256=-5sjAjseOdCL612amq6WHRiOwUTi571rEsvShVdVTIg",
+      "record_size": "5890",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/chapter_writer.py",
+      "bytes": 14570,
+      "sha256": "d3e29e5482299fd22f45098f047d4d1ba11fac481d9b4d3817024405c35b1b6c",
+      "crc32": "b05a276e",
+      "compressed_bytes": 3711,
+      "record_hash": "sha256=0-KeVIIpn9IvRQmPBH1NG6EfrEgdm004FwJEBcNbG2w",
+      "record_size": "14570",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/claim_validator.py",
+      "bytes": 7214,
+      "sha256": "96d183b205908bcfcdd7552c9b51128cf8a8392412d0744708f0c20773c33117",
+      "crc32": "f1e90f30",
+      "compressed_bytes": 2211,
+      "record_hash": "sha256=ltGDsgWQi8_N11Usm1ESjPioOSQS0HRHCPDCB3PDMRc",
+      "record_size": "7214",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/compat.py",
+      "bytes": 594,
+      "sha256": "41520e5ecb636d3a0c4831b1fc36efc5984c9d8d7ba9c0ab24763b0c1c8bf91e",
+      "crc32": "6befc12b",
+      "compressed_bytes": 320,
+      "record_hash": "sha256=QVIOXstjbToMSDGx_DbvxZhMnY17qcCrJHY7DByL-R4",
+      "record_size": "594",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/connector_runtime.py",
+      "bytes": 1048,
+      "sha256": "930b454e5ae06a28a85e111f2113b89e0170cdff89f3465880636c6dc2fc82ba",
+      "crc32": "c82b176d",
+      "compressed_bytes": 549,
+      "record_hash": "sha256=kwtFTlrgaiioXhEfIRO4ngFwzf-J80ZYgGNsbcL8gro",
+      "record_size": "1048",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/evidence_adapters.py",
+      "bytes": 11655,
+      "sha256": "451152ae344298c6ac765597b03dece0ea1e22b4f9f9e0a7bc6b0d63a3e82a71",
+      "crc32": "36d8c09b",
+      "compressed_bytes": 4042,
+      "record_hash": "sha256=RRFSrjRCmMasdlWXsD3s4OoeIrT5-eCnvGsNY6PoKnE",
+      "record_size": "11655",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/evidence_pack_builder.py",
+      "bytes": 16651,
+      "sha256": "5cb49b25f22c27fb45ce3a086922e9d462fbd5cd2c4d8093703df5da36aea9e6",
+      "crc32": "d036d6b1",
+      "compressed_bytes": 5021,
+      "record_hash": "sha256=XLSbJfIsJ_tFzjoIaSLp1GL71c0sTYCTcD312jauqeY",
+      "record_size": "16651",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/financial_evaluation.py",
+      "bytes": 8324,
+      "sha256": "8bddb4b205f81c0fee765e2914c49a2bcba116962cca3e690b2c2d82b0a45598",
+      "crc32": "db289700",
+      "compressed_bytes": 3288,
+      "record_hash": "sha256=i920sgX4HA_udl4pFMSaK8uhFpYsyj5pCywtgrCkVZg",
+      "record_size": "8324",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/host_input_view.py",
+      "bytes": 14227,
+      "sha256": "b2ba9a20bd33a02851355b9f90f08d45f25505704166d61e933fddd577e9a1f6",
+      "crc32": "55172ee4",
+      "compressed_bytes": 4206,
+      "record_hash": "sha256=srqaIL0zoChRNVufkPCNRfJVBXBBZtYekz_d1XfpofY",
+      "record_size": "14227",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/host_output.py",
+      "bytes": 8395,
+      "sha256": "0c73983b2fd49adadf448f79f61a89165a87ab727566d4e8f06ea37916ee040b",
+      "crc32": "3e4d06e2",
+      "compressed_bytes": 3152,
+      "record_hash": "sha256=DHOYOy_UmtrfRI959hqJFlqHq3J1ZtTo8G6jeRbuBAs",
+      "record_size": "8395",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/host_session.py",
+      "bytes": 16220,
+      "sha256": "0aff147c87e5b96894d5547681837537c0da3cf06761acea64d71fdf50674917",
+      "crc32": "3b0d7107",
+      "compressed_bytes": 4209,
+      "record_hash": "sha256=Cv8UfIfluWiU1VR2gYN1N8DaPPBnYazqZNcf31BnSRc",
+      "record_size": "16220",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/host_workspace.py",
+      "bytes": 1836,
+      "sha256": "f46f61010c4735eb65cb20890db87d84efb3c891c3c08387fd0762163b9e6c93",
+      "crc32": "8a308ac4",
+      "compressed_bytes": 811,
+      "record_hash": "sha256=9G9hAQxHNetlyyCJDbh9hO-zyJHDwIOH_QdiFjuebJM",
+      "record_size": "1836",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/llm_provider.py",
+      "bytes": 1458,
+      "sha256": "d11cd6130ab9d209a650d85f5d2400db81aa9d92bbd7706fef509640abf24e80",
+      "crc32": "66696865",
+      "compressed_bytes": 696,
+      "record_hash": "sha256=0RzWEwq50gmmUNhfXSQA24GqnZK713Bv71CWQKvyToA",
+      "record_size": "1458",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/pilot_evidence.py",
+      "bytes": 12176,
+      "sha256": "432de10c632b983a30ac6ed1a3131e840c2c0627d605506cea7e0f3061fd4103",
+      "crc32": "21f4ded3",
+      "compressed_bytes": 4218,
+      "record_hash": "sha256=Qy3hDGMrmDowrG7RoxMehAwsBifWBVBs6n4PMGH9QQM",
+      "record_size": "12176",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/reader_display.py",
+      "bytes": 6120,
+      "sha256": "626d48f77fc858f0eb6dec8b54c04957dbb54dadcb9b2ef9fc7aac7308bc6f87",
+      "crc32": "29cc6625",
+      "compressed_bytes": 2672,
+      "record_hash": "sha256=Ym1I93_IWPDrbeyLVMBJV9u1Ta3Lmy75_Hqscwi8b4c",
+      "record_size": "6120",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/report_assembler.py",
+      "bytes": 5655,
+      "sha256": "1b2e878c67996dcac7d66065c338b9008535e9f025419f994853fcfbb671882d",
+      "crc32": "a29b7cf3",
+      "compressed_bytes": 2261,
+      "record_hash": "sha256=Gy6HjGeZbcrH1mBlwzi5AIU16fAlQZ-ZSFP8-7ZxiC0",
+      "record_size": "5655",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/report_planner.py",
+      "bytes": 772,
+      "sha256": "2581a9f9711f88c25a27f5417518b9aa0231d68501b1306960097d27109a16a9",
+      "crc32": "651c3257",
+      "compressed_bytes": 424,
+      "record_hash": "sha256=JYGp-XEfiMJaJ_VBdRi5qgIx1oUBsTBpYAl9JxCaFqk",
+      "record_size": "772",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/scenario_comparison.py",
+      "bytes": 7862,
+      "sha256": "b206b4cc48d7f405c14c8574c2a7546d66510964490675339b3050e667cfd7d7",
+      "crc32": "07178502",
+      "compressed_bytes": 2866,
+      "record_hash": "sha256=sga0zEjX9AXBTIV0wqdUbWZRCWRJBnUzmzBQ5mfP19c",
+      "record_size": "7862",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/semantic_risks.py",
+      "bytes": 1923,
+      "sha256": "cdc349fe868a879df71452d0f966481b8e54329aa81bf254910f167a46ce8b6f",
+      "crc32": "f7912f1f",
+      "compressed_bytes": 711,
+      "record_hash": "sha256=zcNJ_oaKh533FFLQ-WZIG45UMpqoG_JUkQ8WekbOi28",
+      "record_size": "1923",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/specs/report-spec.json",
+      "bytes": 565867,
+      "sha256": "52ef2a761294ce4a01768da44b42b3be8f258ba02c488e331f16face397fe78b",
+      "crc32": "36122c21",
+      "compressed_bytes": 52322,
+      "record_hash": "sha256=Uu8qdhKUzkoBdo2kS0Kzvo8li6AsSI4zHxb6zjl_54s",
+      "record_size": "565867",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/reporting/specs/spec-lock.json",
+      "bytes": 135,
+      "sha256": "253b93ad0aa3fd8768f7b844c45c1d8613e487daab1a8f8b07463e2425d9af11",
+      "crc32": "e8b3a5a4",
+      "compressed_bytes": 126,
+      "record_hash": "sha256=JTuTrQqj_Ydo97hExFwdhhPkh9qrGo-LB0Y-JCXZrxE",
+      "record_size": "135",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/scenarios/agri_pv/contract.json",
+      "bytes": 1171,
+      "sha256": "b7c7107f308db57f5429b0ea001d818aa5ec53d8b7f3dddc919e08110966f21c",
+      "crc32": "6be8e8c2",
+      "compressed_bytes": 695,
+      "record_hash": "sha256=t8cQfzCNtX9UKbDqAB2BiqXsU9i3893ckZ4IEQlm8hw",
+      "record_size": "1171",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/scenarios/desert_mining/contract.json",
+      "bytes": 1235,
+      "sha256": "e32ba3c762f26394fc456806650215149dc472286c0df70c925a5fe4b7f9cb38",
+      "crc32": "7805153e",
+      "compressed_bytes": 675,
+      "record_hash": "sha256=4yujx2LyY5T8RWgGZQIVFJ3EcihsDfcMklpf5Lf5yzg",
+      "record_size": "1235",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/scenarios/fishery_pv/contract.json",
+      "bytes": 1192,
+      "sha256": "ff72191933d9cb1bbe89fb8a61cf51a0a558db3dca7130e5a66a736147d1f5d5",
+      "crc32": "7044d148",
+      "compressed_bytes": 690,
+      "record_hash": "sha256=_3IZGTPZyxu-ifuKYc9RoKVY2z3KcTDlpmpzYUfR9dU",
+      "record_size": "1192",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/scenarios/industrial_rooftop/contract.json",
+      "bytes": 1215,
+      "sha256": "32e98be287989672eadd3898bf3e9eba39fb02dffd73efb617bc08f5c19cf888",
+      "crc32": "9e06fdf7",
+      "compressed_bytes": 722,
+      "record_hash": "sha256=MumL4oeYlnLq3TiYvz6eujn7At_9c--2F7wI9cGc-Ig",
+      "record_size": "1215",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/scenarios/public_rooftop/contract.json",
+      "bytes": 1347,
+      "sha256": "f634d794ace8fb45adbe912b3ccb9a002f6803485868286d4acdc9dea13e5acb",
+      "crc32": "90e4312a",
+      "compressed_bytes": 743,
+      "record_hash": "sha256=9jTXlKzo-0WtvpErPMuaAC9oA0hYaChtSs3J3qE-Wss",
+      "record_size": "1347",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/scenarios/pv_carport_bipv/contract.json",
+      "bytes": 1582,
+      "sha256": "04b0bce147b8e268ca024cb3d0456032344a891e5fc2d24f019008a6f2298f67",
+      "crc32": "e2dc7d37",
+      "compressed_bytes": 807,
+      "record_hash": "sha256=BLC84Ue44mjKAkyz0EVgMjRKiR5fwtJPAZAIpvIpj2c",
+      "record_size": "1582",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/scenarios/pv_storage/contract.json",
+      "bytes": 2153,
+      "sha256": "7e6a9ce7b66f9fa23e7902259be050e94aa421b2314876b3f8303be36df8d4ad",
+      "crc32": "1cef0264",
+      "compressed_bytes": 1066,
+      "record_hash": "sha256=fmqc57Zvn6I-eQIlm-BQ6UqkIbIxSHaz-DA742341K0",
+      "record_size": "2153",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/scenarios/residential_pv/contract.json",
+      "bytes": 1362,
+      "sha256": "dd2fe107cc70cbab2029f2d5aca1f4eafb120897d2c462ec1c2ccb1433b3c5df",
+      "crc32": "0bcc1659",
+      "compressed_bytes": 734,
+      "record_hash": "sha256=3S_hB8xwy6sgKfLVrKH06vsSCJfSxGLsHCzLFDOzxd8",
+      "record_size": "1362",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv/scenarios/utility_scale_ground/contract.json",
+      "bytes": 1598,
+      "sha256": "c80d5fe30d1e4a3953703929416762303d81eb23ec8b8b49f2416c116c20460e",
+      "crc32": "16c15540",
+      "compressed_bytes": 958,
+      "record_hash": "sha256=yA1f4w0eSjlTcDkpQWdiMD2B6yPsi4tJ8kFsEWwgRg4",
+      "record_size": "1598",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv_input-0.3.2.dist-info/METADATA",
+      "bytes": 510,
+      "sha256": "2c5fd52d2a725e4d91be79e3f6926e907b53d3c409cbac3f20c93362ecab23c1",
+      "crc32": "3743a177",
+      "compressed_bytes": 292,
+      "record_hash": "sha256=LF_VLSpyXk2Rvnnj9pJukHtT08QJy6w_IMkzYuyrI8E",
+      "record_size": "510",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv_input-0.3.2.dist-info/WHEEL",
+      "bytes": 91,
+      "sha256": "d7a7dcffd469f39e122dc761683123af4bbae69d1edc5859c6284d81c9c213df",
+      "crc32": "52a3851e",
+      "compressed_bytes": 92,
+      "record_hash": "sha256=16fc_9Rp854SLcdhaDEjr0u65p0e3FhZxihNgcnCE98",
+      "record_size": "91",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv_input-0.3.2.dist-info/entry_points.txt",
+      "bytes": 69,
+      "sha256": "0dd00229b21a460cf3be352df306649cc608b0a03ac37f6c3484cf5778dd7104",
+      "crc32": "aa5d7ba8",
+      "compressed_bytes": 62,
+      "record_hash": "sha256=DdACKbIaRgzzvjUt8wZknMYIsKA6w39sNITPV3jdcQQ",
+      "record_size": "69",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv_input-0.3.2.dist-info/top_level.txt",
+      "bytes": 17,
+      "sha256": "f18e4edd0a400e74f559819597d2a1d3629428832676f8c2c13a201ea4a751e9",
+      "crc32": "5f323a97",
+      "compressed_bytes": 19,
+      "record_hash": "sha256=8Y5O3QpADnT1WYGVl9Kh02KUKIMmdvjCwTogHqSnUek",
+      "record_size": "17",
+      "record_verified": true
+    },
+    {
+      "path": "wangbin_solar_pv_input-0.3.2.dist-info/RECORD",
+      "bytes": 12173,
+      "sha256": "eb2c6a37aff5e26add23d2fa5299387852be0f7da7331440eb0bb97ac7d7dc4b",
+      "crc32": "298e4b58",
+      "compressed_bytes": 5882,
+      "record_hash": "",
+      "record_size": "",
+      "record_verified": true
+    }
+  ],
+  "record": {
+    "status": "PASS_ALL_MEMBERS_HASH_SIZE_SET; SELF_EMPTY",
+    "row_count": 122
+  },
+  "source_mapping": [
+    {
+      "wheel_member": "wangbin_solar_pv/__init__.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/__init__.py",
+      "snapshot_path": "src/wangbin_solar_pv/__init__.py",
+      "bytes": 153,
+      "sha256": "8ba2a1761cfd434f5b136fdd3f2152bda5161d57da20490793668e929cb7a84a",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/__main__.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/__main__.py",
+      "snapshot_path": "src/wangbin_solar_pv/__main__.py",
+      "bytes": 155,
+      "sha256": "817a2e35d419d841e9586b97f591027c8b3d204bbe5b23e86881926f169eb09a",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/applicability.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/applicability.py",
+      "snapshot_path": "src/wangbin_solar_pv/applicability.py",
+      "bytes": 3877,
+      "sha256": "d65721d4d0fcacebac16fdf3e407a3ddd6fc198e40d76681fdafc212f861e2c4",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/attachment_security.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/attachment_security.py",
+      "snapshot_path": "src/wangbin_solar_pv/attachment_security.py",
+      "bytes": 10520,
+      "sha256": "e7abad9498a590150988e610c984195eb83378a5e949a28edc3f57cd67dc95db",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/baseline-lock.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/baseline-lock.json",
+      "snapshot_path": "src/wangbin_solar_pv/baseline-lock.json",
+      "bytes": 1350,
+      "sha256": "2ea6be9f9e66b0c0d40ae15dba0c3ac5226e5e1909b686e1cc4668fd360db833",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/catalog.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/catalog.py",
+      "snapshot_path": "src/wangbin_solar_pv/catalog.py",
+      "bytes": 4260,
+      "sha256": "9a2675f00c60631016dd72ea9a9046ab9b31ee1d0cce5ccab60ef59479ba7623",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/categories.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/categories.py",
+      "snapshot_path": "src/wangbin_solar_pv/categories.py",
+      "bytes": 8838,
+      "sha256": "d1c012445aab90c656fedcbe0901e1ee213ea73090a02e34fbebccca0bedab24",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/cli.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/cli.py",
+      "snapshot_path": "src/wangbin_solar_pv/cli.py",
+      "bytes": 26786,
+      "sha256": "d1070d80f83ec7911fe0ac1722990760f2d5197b28397dec3ee5ff6a1043d871",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/completeness.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/completeness.py",
+      "snapshot_path": "src/wangbin_solar_pv/completeness.py",
+      "bytes": 14533,
+      "sha256": "dfa41ddd5f54fd3bf6c8cc13efbc5fa424abcc75034eb986abfb90ef2f273f9c",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/conditions.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/conditions.py",
+      "snapshot_path": "src/wangbin_solar_pv/conditions.py",
+      "bytes": 11620,
+      "sha256": "0690411309b8e7c01d385d917a9fd41194d71a275218cef7301b9a7375ab8363",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/consistency.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/consistency.py",
+      "snapshot_path": "src/wangbin_solar_pv/consistency.py",
+      "bytes": 8140,
+      "sha256": "4ee5433c468b038b2c5f0be62e4baa3e18fb69bfecf11080bad6768f9fccf748",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/data_adaptation.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/data_adaptation.py",
+      "snapshot_path": "src/wangbin_solar_pv/data_adaptation.py",
+      "bytes": 18434,
+      "sha256": "1214f87ba2f4ac6c8cb6664a3cc90d79231260a07936a774f8089a575002ca8c",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/definition-errata.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/definition-errata.json",
+      "snapshot_path": "src/wangbin_solar_pv/definition-errata.json",
+      "bytes": 5788,
+      "sha256": "bee7fc4e737a3f8e40befa272a842ce1ad0454b8437590089e090e32031b15e0",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/definition-lock.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/definition-lock.json",
+      "snapshot_path": "src/wangbin_solar_pv/definition-lock.json",
+      "bytes": 1801,
+      "sha256": "728ccb42a5d5f78cc9252f61070dd5eb2c1a426b8e727423d113bb2f79d170b6",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/definition_versions.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/definition_versions.py",
+      "snapshot_path": "src/wangbin_solar_pv/definition_versions.py",
+      "bytes": 10181,
+      "sha256": "9d50c04fb815fe1160ff43ec1fb7141492bf0acaa8ae264b0480e47fd68b5b43",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/errors.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/errors.py",
+      "snapshot_path": "src/wangbin_solar_pv/errors.py",
+      "bytes": 555,
+      "sha256": "b7364ae5c1a533b0d770f7a3b1cb650f6b8b044a68de4fec7538ec562ff4d72b",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/formula_bindings.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/formula_bindings.py",
+      "snapshot_path": "src/wangbin_solar_pv/formula_bindings.py",
+      "bytes": 9672,
+      "sha256": "7942a602f14c0952dd7dc700b86bb88664484bc4dd3ce1f299c53bb63a1171d4",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/intake.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/intake.py",
+      "snapshot_path": "src/wangbin_solar_pv/intake.py",
+      "bytes": 18620,
+      "sha256": "661b0848d068a7f86060ecbea53c6d215ea40630eb19510d4b6043078777685e",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/local_files.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/local_files.py",
+      "snapshot_path": "src/wangbin_solar_pv/local_files.py",
+      "bytes": 6974,
+      "sha256": "69bfc09f24b8f2697d3fb7e42573f702546af63e3abb3f3254cbc89d935da010",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/models.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/models.py",
+      "snapshot_path": "src/wangbin_solar_pv/models.py",
+      "bytes": 1486,
+      "sha256": "14e4def8f6e8e6b5bea31fe1439df96dea337b9ab59a0d1adba1f242c7b8148c",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/parsers.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/parsers.py",
+      "snapshot_path": "src/wangbin_solar_pv/parsers.py",
+      "bytes": 24915,
+      "sha256": "0c2676a17bc9dd8adc2645fdbe85df986d64d5c9af75abbd68bcef68873febd8",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/provenance.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/provenance.py",
+      "snapshot_path": "src/wangbin_solar_pv/provenance.py",
+      "bytes": 9904,
+      "sha256": "b02b01ad2ccc03fd5967ab010a3bde908cf5f71e9e2d578cd755e52fbd5f9bc5",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/quality.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/quality.py",
+      "snapshot_path": "src/wangbin_solar_pv/quality.py",
+      "bytes": 10312,
+      "sha256": "83a5d24fd5e37810afdb22b4aae0f3b710ef317b83689c295df5ae7724d29784",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/report-glossary.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report-glossary.json",
+      "snapshot_path": "src/wangbin_solar_pv/report-glossary.json",
+      "bytes": 170704,
+      "sha256": "7aa659db2134e14e5f000dd2e6dd65767a9898daaf9decedd00bac29fa8f8474",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/report_appendix_findings.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_appendix_findings.py",
+      "snapshot_path": "src/wangbin_solar_pv/report_appendix_findings.py",
+      "bytes": 9814,
+      "sha256": "d6072a048cd5d514cf5e33d7f006ae0a4d4a9c85a04274e9b6b408ef3990b7f4",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/report_claims.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_claims.py",
+      "snapshot_path": "src/wangbin_solar_pv/report_claims.py",
+      "bytes": 188435,
+      "sha256": "55bc23fad8ca2a2ebcef0b9e51a4b0b278bf398793911feb405f1ce187cea423",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/report_display_numbers.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_display_numbers.py",
+      "snapshot_path": "src/wangbin_solar_pv/report_display_numbers.py",
+      "bytes": 1376,
+      "sha256": "5b96891e044264dfd8586a1098467286caad1e03848ff90430dbc010773e3849",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/report_equations.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_equations.py",
+      "snapshot_path": "src/wangbin_solar_pv/report_equations.py",
+      "bytes": 7746,
+      "sha256": "8fa4628d2477b363a6feef1bc9b4a32945ca8fd418bf062993c133e8cd83806e",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/report_export.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_export.py",
+      "snapshot_path": "src/wangbin_solar_pv/report_export.py",
+      "bytes": 247484,
+      "sha256": "077fb71f200a033cb2947b48ef4d72eed03af47df6a57dcb8439dd0ab4a8065a",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/report_narrative.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_narrative.py",
+      "snapshot_path": "src/wangbin_solar_pv/report_narrative.py",
+      "bytes": 12402,
+      "sha256": "a955159b4b081117fed2066f90d754cffe701dab925fb6a562158b8d9c9222c9",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/report_numbering.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_numbering.py",
+      "snapshot_path": "src/wangbin_solar_pv/report_numbering.py",
+      "bytes": 9842,
+      "sha256": "6dd6c9f4094a8ffd767e8616a8edd6d67e8ee2cce80790d5d1c77f445be6d6b7",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/report_resource_display.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_resource_display.py",
+      "snapshot_path": "src/wangbin_solar_pv/report_resource_display.py",
+      "bytes": 4175,
+      "sha256": "5bf4b45b8354160f67358f2350daa9d49a5f947a382d0e09413e974717e03968",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/report_word_styles.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/report_word_styles.py",
+      "snapshot_path": "src/wangbin_solar_pv/report_word_styles.py",
+      "bytes": 10711,
+      "sha256": "80691948326a8fa48c5e49ad03167343cd3b2c3764bc9fd2d173077925a6b9e2",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/schemas.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/schemas.py",
+      "snapshot_path": "src/wangbin_solar_pv/schemas.py",
+      "bytes": 9095,
+      "sha256": "3bb5c8f4ae59e88c31fc6305000c0304e127ecc31d0a399a5d1a22dfda322e19",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/serialization.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/serialization.py",
+      "snapshot_path": "src/wangbin_solar_pv/serialization.py",
+      "bytes": 3032,
+      "sha256": "198444210200e243f9ffa515613bafeed695e4c56f07c25193feb30b2ae3618f",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/source_xlsx.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/source_xlsx.py",
+      "snapshot_path": "src/wangbin_solar_pv/source_xlsx.py",
+      "bytes": 15094,
+      "sha256": "54852c2eddae7fc73617553ecb0f6ab003f49e32fd4d9140529349ff61dd15b9",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/timeseries_bundle.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/timeseries_bundle.py",
+      "snapshot_path": "src/wangbin_solar_pv/timeseries_bundle.py",
+      "bytes": 28033,
+      "sha256": "2518080881cd1803a21668b2dbf108970c7790ba36320fd00c30c38617baaf44",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/timeseries_private.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/timeseries_private.py",
+      "snapshot_path": "src/wangbin_solar_pv/timeseries_private.py",
+      "bytes": 8787,
+      "sha256": "1900080dad800102b15ffc5fdda4d2effcd13c810605885e838f1d2e2b42fff6",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/timeseries_tokens.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/timeseries_tokens.py",
+      "snapshot_path": "src/wangbin_solar_pv/timeseries_tokens.py",
+      "bytes": 1669,
+      "sha256": "ae38af8fb855394833e914396ea3816001bcdbf8e3d1c49a14a04166c52a0077",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/units.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/units.py",
+      "snapshot_path": "src/wangbin_solar_pv/units.py",
+      "bytes": 11982,
+      "sha256": "010f5c3afe64f7375d259d64ebc47490c78c51c0e33fbf79db426be00c77be90",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/validation.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/validation.py",
+      "snapshot_path": "src/wangbin_solar_pv/validation.py",
+      "bytes": 19687,
+      "sha256": "48312752dada7abb2a143c9953f8c6bf3d04632ca5b907c6b4a6bd4528ebe37c",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/__init__.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/__init__.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/__init__.py",
+      "bytes": 242,
+      "sha256": "c75e4d65c5a59532a94831497e5cce3908039e0151a884de0f4fd392bcb3f21a",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/accounting_ledger.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/accounting_ledger.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/accounting_ledger.py",
+      "bytes": 3290,
+      "sha256": "1094a3b480228081db14b09be75769127b17603e2725f012f0ab4aaf430adb28",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/break_even_certification.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/break_even_certification.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/break_even_certification.py",
+      "bytes": 4721,
+      "sha256": "86b837b5775af5c14b0b436a24c4ebb91dbd4a32f3bc9c1fefbb2389385027f4",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/break_even_execution.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/break_even_execution.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/break_even_execution.py",
+      "bytes": 8832,
+      "sha256": "d95b9d447912837a7514af9edd5ad40575470d4b937478687b9db633504316fa",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/break_even_financial_replay.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/break_even_financial_replay.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/break_even_financial_replay.py",
+      "bytes": 6727,
+      "sha256": "9119fbd3cced4a5961412257d83db2d9277b91f988d27d16d215c58ac6a689ed",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/break_even_project_npv.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/break_even_project_npv.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/break_even_project_npv.py",
+      "bytes": 8633,
+      "sha256": "6c050a2912e403fb844a78bd8a731f626f55d868506fe9b1b2a988fa30d9c140",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/break_even_project_session.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/break_even_project_session.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/break_even_project_session.py",
+      "bytes": 16526,
+      "sha256": "1b4e1a27b96de385cafd7d945b52d44a4e8c2f96b17e97f123f57e33385f691b",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/break_even_replay.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/break_even_replay.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/break_even_replay.py",
+      "bytes": 13633,
+      "sha256": "e64ccbc843c12c731e2e329a2e5649bc2f4cc62a8871829f93dbe78714afac42",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/calculation_graph.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/calculation_graph.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/calculation_graph.py",
+      "bytes": 3608,
+      "sha256": "83251543e0d59e7e8a286cd795f78d3fe46429e3136b77b1cb6fba78a4e47581",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/capacity.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/capacity.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/capacity.py",
+      "bytes": 6663,
+      "sha256": "bd90d43240fe2fb7f3810fdaa3b6ebf7eb2035117a0eedd335044a4f94118bd2",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/common.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/common.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/common.py",
+      "bytes": 4262,
+      "sha256": "f41c33f34ed3ddb4e40841727282a331128a52a438a9ba18bf2a7d6850234c64",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/consumption.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/consumption.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/consumption.py",
+      "bytes": 9273,
+      "sha256": "8697c65aa4d8f7c343f96f7f2c086deab50c1d4d31b99928471417eb9a554158",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/costs.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/costs.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/costs.py",
+      "bytes": 11010,
+      "sha256": "1df30bbc0903a07c1f9f6599c2f5b45a0033da5bcc51963e80ae041cba4371a3",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/degradation.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/degradation.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/degradation.py",
+      "bytes": 6072,
+      "sha256": "225ce35365d20ef14db480b3169fc75e8807c17c273f6189c557f7b3fc7a273b",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/energy_inputs.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/energy_inputs.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/energy_inputs.py",
+      "bytes": 3837,
+      "sha256": "4e4eb98bf65c8ab99e99f8a4b7b005f606e65cb234c3fa2e691f7d10fa56409b",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/energy_yield.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/energy_yield.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/energy_yield.py",
+      "bytes": 31327,
+      "sha256": "8520fab85b3db20e325026fbe133f7ac8498261b679d68867d45ce999225c8c4",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/engineering.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/engineering.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/engineering.py",
+      "bytes": 19635,
+      "sha256": "0282aa1f246dc5d09bb8e7f57c72ce02497fb460c3c70c34aed3201c078419fd",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/execution-evidence.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/execution-evidence.json",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/execution-evidence.json",
+      "bytes": 37870,
+      "sha256": "e15ddff829757159078b042d7d97aa39d39b30367cce2aa00014598ee74c9124",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/execution_registry.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/execution_registry.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/execution_registry.py",
+      "bytes": 4764,
+      "sha256": "5ffead49b4e32364b6aeea559cb37eb457b9af1b0e7a5d6c3f1f14c06e0eac9a",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/financial_ledger.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_ledger.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/financial_ledger.py",
+      "bytes": 41560,
+      "sha256": "0292205ee1e3798053b9efe49539305706c33c05d53cc1176789d0ac51f67fae",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/financial_metrics.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/financial_metrics.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/financial_metrics.py",
+      "bytes": 30041,
+      "sha256": "861fd39468ed1676ddfd09456d9466c3ed6c85739e96aa568d5c613a340c3c94",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/formula_execution.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/formula_execution.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/formula_execution.py",
+      "bytes": 3272,
+      "sha256": "1e7ed5dd9913319d181f4c39cde325c430e94268c224fa1de4cf9456788cdb8f",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/generation_evidence.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/generation_evidence.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/generation_evidence.py",
+      "bytes": 14676,
+      "sha256": "b507c26a5aa980a6fe06193bc5ef876851aa15db224cd23d51211f4b707b2683",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/input_contract.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/input_contract.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/input_contract.py",
+      "bytes": 7461,
+      "sha256": "b5ce5258fd497a794b4fa8d359430dc94f6badd1ceb1f780c709e1c8565ab03c",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/losses.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/losses.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/losses.py",
+      "bytes": 6107,
+      "sha256": "2baf14e443fec481fbecf2ae0b1bedc1639a1d4210569e42788c25c7fe0fe514",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/method_config.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/method_config.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/method_config.py",
+      "bytes": 25800,
+      "sha256": "3beccfc6ab03a9d6c21d020819eb2d30422e83daa4245e7167ab7428e17c6001",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/phase3e.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/phase3e.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/phase3e.py",
+      "bytes": 32170,
+      "sha256": "6db9ba0399bae1a999e7a2910f8959f3d4026bc2b873e64cfd220f43de21f71a",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/project_runner.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/project_runner.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/project_runner.py",
+      "bytes": 15457,
+      "sha256": "74df9e7d60aef1c9ff99d83d27950a96e91a89a00f309f25c6cea64bdd86ec60",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/result_contract.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/result_contract.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/result_contract.py",
+      "bytes": 10082,
+      "sha256": "0a4cb4a5df645066b9fcbd44799f8934e4545bf3d0199633b1d3357fc65eba0c",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/revenue.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/revenue.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/revenue.py",
+      "bytes": 23835,
+      "sha256": "c0d7159cf59079fbd92546856e1d310de97c0a9568cd54ee518e7a7d74fc5928",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/scenario_cash_sources.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/scenario_cash_sources.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/scenario_cash_sources.py",
+      "bytes": 2296,
+      "sha256": "0b740e71231f1228b221039e87cace0132783a0d181a443b27979a68ce26b510",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/scenario_runner.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/scenario_runner.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/scenario_runner.py",
+      "bytes": 26226,
+      "sha256": "cdbc17e81e8c06e55d3bffd7fe446d586d86d4caa23d59320eea0a9f75ea5c9f",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/sensitivity.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/sensitivity.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/sensitivity.py",
+      "bytes": 6366,
+      "sha256": "3d253aba60f330c42be942ce3cb37a08f579a67cb4650ce7966a35267953869c",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/solar_resource.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/solar_resource.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/solar_resource.py",
+      "bytes": 7911,
+      "sha256": "ed49903fff0bbd2f624f0f579f0ab334dadd37bffc2e53572785d3ce526e7e9c",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/tariffs.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/tariffs.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/tariffs.py",
+      "bytes": 13960,
+      "sha256": "9bbc53ccdee0a789c800197813e5225561a8078c7124dc5d2dc708dbce49dbce",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/temperature.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/temperature.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/temperature.py",
+      "bytes": 8434,
+      "sha256": "df174a2a4407243b6b345f9beeae0c5edf9dad98c0eb78488d9f85c544f22709",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/terminal_binding.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/terminal_binding.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/terminal_binding.py",
+      "bytes": 12535,
+      "sha256": "1ee841a0590b8cd9fcc77b278818aa364e0ba8e584db7536ef2186b3efbe580b",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/terminal_disposition.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/terminal_disposition.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/terminal_disposition.py",
+      "bytes": 12084,
+      "sha256": "85585fb51ef0c1204c9a414a5d4584b4864b3514383bf5c14396ea87dd446fc0",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/trading_fee_payment.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/trading_fee_payment.py",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/trading_fee_payment.py",
+      "bytes": 3957,
+      "sha256": "d93f62efb130ddb8ad9420283f2e91a4b19a731f2e7a8d6fa750a6161523940a",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/schema/break-even-execution.schema.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/schema/break-even-execution.schema.json",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/schema/break-even-execution.schema.json",
+      "bytes": 3128,
+      "sha256": "66f4e7f0488080765692cf70a06f43479796f80bd21e8a37100c6b0a8a748d0c",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/schema/calculation-result.schema.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/schema/calculation-result.schema.json",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/schema/calculation-result.schema.json",
+      "bytes": 4518,
+      "sha256": "f9f188a924e1c040697a09d7a97d88800bcee8756a453f7a2efe56ca2fc55fe6",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/schema/method-config.schema.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/schema/method-config.schema.json",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/schema/method-config.schema.json",
+      "bytes": 97108,
+      "sha256": "f8d8aa861269bc44af0eb302e56457f6d5b7edac9f2b7f5903dc6440df8eae14",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/calculation/schema/trading-fee-payment.schema.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/calculation/schema/trading-fee-payment.schema.json",
+      "snapshot_path": "src/wangbin_solar_pv/calculation/schema/trading-fee-payment.schema.json",
+      "bytes": 3915,
+      "sha256": "45007ef2f65c3bf21b1f3ff0939ed29190fb08d74ba077b24063a0762264588c",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/__init__.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/__init__.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/__init__.py",
+      "bytes": 125,
+      "sha256": "6d3f33c54d364118c122241e3e176a5cd67863b3172454a55ce890577f6511e5",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/__main__.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/__main__.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/__main__.py",
+      "bytes": 5521,
+      "sha256": "2204dafc3da7a9f35dcc4454f2f081c575236bc4f3f4587e7064b0fa0bae9bb7",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/chapter_registry.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/chapter_registry.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/chapter_registry.py",
+      "bytes": 2111,
+      "sha256": "0144e2dafebe325023c3a3a14546efbe095fdc49db8bf5f0d25631ed1359db9a",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/chapter_result_schema.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/chapter_result_schema.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/chapter_result_schema.py",
+      "bytes": 5890,
+      "sha256": "fb9b23023b1e39d08beb5d9a9aae961d188ec144e2e7bd6b12cbd28557554c88",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/chapter_writer.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/chapter_writer.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/chapter_writer.py",
+      "bytes": 14570,
+      "sha256": "d3e29e5482299fd22f45098f047d4d1ba11fac481d9b4d3817024405c35b1b6c",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/claim_validator.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/claim_validator.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/claim_validator.py",
+      "bytes": 7214,
+      "sha256": "96d183b205908bcfcdd7552c9b51128cf8a8392412d0744708f0c20773c33117",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/compat.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/compat.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/compat.py",
+      "bytes": 594,
+      "sha256": "41520e5ecb636d3a0c4831b1fc36efc5984c9d8d7ba9c0ab24763b0c1c8bf91e",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/connector_runtime.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/connector_runtime.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/connector_runtime.py",
+      "bytes": 1048,
+      "sha256": "930b454e5ae06a28a85e111f2113b89e0170cdff89f3465880636c6dc2fc82ba",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/evidence_adapters.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/evidence_adapters.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/evidence_adapters.py",
+      "bytes": 11655,
+      "sha256": "451152ae344298c6ac765597b03dece0ea1e22b4f9f9e0a7bc6b0d63a3e82a71",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/evidence_pack_builder.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/evidence_pack_builder.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/evidence_pack_builder.py",
+      "bytes": 16651,
+      "sha256": "5cb49b25f22c27fb45ce3a086922e9d462fbd5cd2c4d8093703df5da36aea9e6",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/financial_evaluation.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/financial_evaluation.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/financial_evaluation.py",
+      "bytes": 8324,
+      "sha256": "8bddb4b205f81c0fee765e2914c49a2bcba116962cca3e690b2c2d82b0a45598",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/host_input_view.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/host_input_view.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/host_input_view.py",
+      "bytes": 14227,
+      "sha256": "b2ba9a20bd33a02851355b9f90f08d45f25505704166d61e933fddd577e9a1f6",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/host_output.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/host_output.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/host_output.py",
+      "bytes": 8395,
+      "sha256": "0c73983b2fd49adadf448f79f61a89165a87ab727566d4e8f06ea37916ee040b",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/host_session.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/host_session.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/host_session.py",
+      "bytes": 16220,
+      "sha256": "0aff147c87e5b96894d5547681837537c0da3cf06761acea64d71fdf50674917",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/host_workspace.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/host_workspace.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/host_workspace.py",
+      "bytes": 1836,
+      "sha256": "f46f61010c4735eb65cb20890db87d84efb3c891c3c08387fd0762163b9e6c93",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/llm_provider.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/llm_provider.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/llm_provider.py",
+      "bytes": 1458,
+      "sha256": "d11cd6130ab9d209a650d85f5d2400db81aa9d92bbd7706fef509640abf24e80",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/pilot_evidence.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/pilot_evidence.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/pilot_evidence.py",
+      "bytes": 12176,
+      "sha256": "432de10c632b983a30ac6ed1a3131e840c2c0627d605506cea7e0f3061fd4103",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/reader_display.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/reader_display.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/reader_display.py",
+      "bytes": 6120,
+      "sha256": "626d48f77fc858f0eb6dec8b54c04957dbb54dadcb9b2ef9fc7aac7308bc6f87",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/report_assembler.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/report_assembler.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/report_assembler.py",
+      "bytes": 5655,
+      "sha256": "1b2e878c67996dcac7d66065c338b9008535e9f025419f994853fcfbb671882d",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/report_planner.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/report_planner.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/report_planner.py",
+      "bytes": 772,
+      "sha256": "2581a9f9711f88c25a27f5417518b9aa0231d68501b1306960097d27109a16a9",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/scenario_comparison.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/scenario_comparison.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/scenario_comparison.py",
+      "bytes": 7862,
+      "sha256": "b206b4cc48d7f405c14c8574c2a7546d66510964490675339b3050e667cfd7d7",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/semantic_risks.py",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/semantic_risks.py",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/semantic_risks.py",
+      "bytes": 1923,
+      "sha256": "cdc349fe868a879df71452d0f966481b8e54329aa81bf254910f167a46ce8b6f",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/specs/report-spec.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/specs/report-spec.json",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/specs/report-spec.json",
+      "bytes": 565867,
+      "sha256": "52ef2a761294ce4a01768da44b42b3be8f258ba02c488e331f16face397fe78b",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/reporting/specs/spec-lock.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/reporting/specs/spec-lock.json",
+      "snapshot_path": "src/wangbin_solar_pv/reporting/specs/spec-lock.json",
+      "bytes": 135,
+      "sha256": "253b93ad0aa3fd8768f7b844c45c1d8613e487daab1a8f8b07463e2425d9af11",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/scenarios/agri_pv/contract.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/agri_pv/contract.json",
+      "snapshot_path": "src/wangbin_solar_pv/scenarios/agri_pv/contract.json",
+      "bytes": 1171,
+      "sha256": "b7c7107f308db57f5429b0ea001d818aa5ec53d8b7f3dddc919e08110966f21c",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/scenarios/desert_mining/contract.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/desert_mining/contract.json",
+      "snapshot_path": "src/wangbin_solar_pv/scenarios/desert_mining/contract.json",
+      "bytes": 1235,
+      "sha256": "e32ba3c762f26394fc456806650215149dc472286c0df70c925a5fe4b7f9cb38",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/scenarios/fishery_pv/contract.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/fishery_pv/contract.json",
+      "snapshot_path": "src/wangbin_solar_pv/scenarios/fishery_pv/contract.json",
+      "bytes": 1192,
+      "sha256": "ff72191933d9cb1bbe89fb8a61cf51a0a558db3dca7130e5a66a736147d1f5d5",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/scenarios/industrial_rooftop/contract.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/industrial_rooftop/contract.json",
+      "snapshot_path": "src/wangbin_solar_pv/scenarios/industrial_rooftop/contract.json",
+      "bytes": 1215,
+      "sha256": "32e98be287989672eadd3898bf3e9eba39fb02dffd73efb617bc08f5c19cf888",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/scenarios/public_rooftop/contract.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/public_rooftop/contract.json",
+      "snapshot_path": "src/wangbin_solar_pv/scenarios/public_rooftop/contract.json",
+      "bytes": 1347,
+      "sha256": "f634d794ace8fb45adbe912b3ccb9a002f6803485868286d4acdc9dea13e5acb",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/scenarios/pv_carport_bipv/contract.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/pv_carport_bipv/contract.json",
+      "snapshot_path": "src/wangbin_solar_pv/scenarios/pv_carport_bipv/contract.json",
+      "bytes": 1582,
+      "sha256": "04b0bce147b8e268ca024cb3d0456032344a891e5fc2d24f019008a6f2298f67",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/scenarios/pv_storage/contract.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/pv_storage/contract.json",
+      "snapshot_path": "src/wangbin_solar_pv/scenarios/pv_storage/contract.json",
+      "bytes": 2153,
+      "sha256": "7e6a9ce7b66f9fa23e7902259be050e94aa421b2314876b3f8303be36df8d4ad",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/scenarios/residential_pv/contract.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/residential_pv/contract.json",
+      "snapshot_path": "src/wangbin_solar_pv/scenarios/residential_pv/contract.json",
+      "bytes": 1362,
+      "sha256": "dd2fe107cc70cbab2029f2d5aca1f4eafb120897d2c462ec1c2ccb1433b3c5df",
+      "mapping": "EXACT_RAW_BYTES"
+    },
+    {
+      "wheel_member": "wangbin_solar_pv/scenarios/utility_scale_ground/contract.json",
+      "source_path": "services/solar-pv-engine/src/wangbin_solar_pv/scenarios/utility_scale_ground/contract.json",
+      "snapshot_path": "src/wangbin_solar_pv/scenarios/utility_scale_ground/contract.json",
+      "bytes": 1598,
+      "sha256": "c80d5fe30d1e4a3953703929416762303d81eb23ec8b8b49f2416c116c20460e",
+      "mapping": "EXACT_RAW_BYTES"
+    }
+  ],
+  "source_mapped_count": 117,
+  "python_modules": 97,
+  "declared_data_count": 20,
+  "missing_declared_members": [],
+  "unexpected_members": [],
+  "generated_metadata": {
+    "METADATA": "setuptools PEP621 rendering of snapshot pyproject (matches generated egg-info/PKG-INFO)",
+    "WHEEL": "setuptools bundled bdist_wheel; purelib and py3-none-any verified",
+    "entry_points.txt": "generated from project.scripts; console script exact",
+    "top_level.txt": "setuptools package discovery of wangbin_solar_pv",
+    "RECORD": "backend-generated CSV; complete exact membership, URL-safe unpadded SHA256 and decimal sizes; its own row empty"
+  },
+  "metadata": {
+    "Name": "wangbin-solar-pv-input",
+    "Version": "0.3.2",
+    "Requires-Python": "<3.15,>=3.12",
+    "Requires-Dist": [
+      "jsonschema==4.26.0",
+      "wangbin-document-cli==1.2.0",
+      "openpyxl==3.1.5",
+      "python-docx==1.2.0",
+      "Pillow<13,>=10",
+      "pdfminer.six==20260107",
+      "defusedxml==0.7.1",
+      "tzdata==2026.5; sys_platform == \"win32\""
+    ],
+    "Wheel": {
+      "Wheel-Version": "1.0",
+      "Generator": "setuptools (84.1.0)",
+      "Root-Is-Purelib": "true",
+      "Tag": "py3-none-any"
+    }
+  },
+  "entries": [
+    {
+      "entry": "console_script",
+      "module": "wangbin_solar_pv.cli",
+      "object": "main",
+      "resolved": "wangbin_solar_pv.cli:main",
+      "status": "AST_STATIC_TARGET_RESOLVED_NOT_EXECUTED"
+    },
+    {
+      "entry": "host_session",
+      "module": "wangbin_solar_pv.reporting.host_session",
+      "object": "main",
+      "resolved": "wangbin_solar_pv.reporting.host_session:main",
+      "status": "AST_STATIC_TARGET_RESOLVED_NOT_EXECUTED"
+    },
+    {
+      "entry": "reporting_module",
+      "module": "wangbin_solar_pv.reporting.__main__",
+      "object": "main",
+      "resolved": "wangbin_solar_pv.reporting.__main__:main",
+      "status": "AST_STATIC_TARGET_RESOLVED_NOT_EXECUTED"
+    },
+    {
+      "entry": "package_module",
+      "module": "wangbin_solar_pv.__main__",
+      "object": "main",
+      "resolved": "wangbin_solar_pv.cli:main",
+      "status": "AST_STATIC_TARGET_RESOLVED_NOT_EXECUTED"
+    }
+  ],
+  "syntax_only": "ALL_PACKAGED_PY_AST_PARSE_PASS; no imports or installation",
+  "formal_specs": {
+    "members": [
+      "wangbin_solar_pv/reporting/specs/report-spec.json",
+      "wangbin_solar_pv/reporting/specs/spec-lock.json"
+    ],
+    "raw_byte_mapping": "PASS",
+    "normalized_contract_sha256": "59e379906f6b83d91a76179f14fdc00e5c0dc9346ef5d272bbcf04da90df7532",
+    "version": "SOLAR-PV-AI-REPORT-ENGINE-2.0.0"
+  },
+  "excluded_existing_source_data": [
+    {
+      "path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_calculation/industrial_rooftop.json",
+      "bytes": 3188,
+      "sha256": "146a1cf8ec92b035746ffcfd9c02b9dbb59103440a46d58b8ad05bbc06b78b00",
+      "classification": "EXISTING_TRACKED_SYNTHETIC_FIXTURE_NOT_DECLARED_AS_PACKAGE_DATA",
+      "included_in_source_snapshot": true,
+      "in_wheel": false
+    },
+    {
+      "path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_calculation/method_values.json",
+      "bytes": 3105,
+      "sha256": "65fdaa53fd7c1cca4203d1c46649e832a4395cdf5cf3e8a35cd0f39e501d64b0",
+      "classification": "EXISTING_TRACKED_SYNTHETIC_FIXTURE_NOT_DECLARED_AS_PACKAGE_DATA",
+      "included_in_source_snapshot": true,
+      "in_wheel": false
+    },
+    {
+      "path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_calculation/utility_scale_ground.json",
+      "bytes": 2613,
+      "sha256": "02ab1af30b4e2835a142c17c3f2f0673e92fb93a2f5d3812ffa67b83308215da",
+      "classification": "EXISTING_TRACKED_SYNTHETIC_FIXTURE_NOT_DECLARED_AS_PACKAGE_DATA",
+      "included_in_source_snapshot": true,
+      "in_wheel": false
+    },
+    {
+      "path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_editorial/industrial_rooftop.json",
+      "bytes": 7285,
+      "sha256": "c5303d5658920f8d9c812550149591ce9f48bcb5b26731b09b5b808822edd0e8",
+      "classification": "EXISTING_TRACKED_SYNTHETIC_FIXTURE_NOT_DECLARED_AS_PACKAGE_DATA",
+      "included_in_source_snapshot": true,
+      "in_wheel": false
+    },
+    {
+      "path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_editorial/phase7l/industrial_rooftop.json",
+      "bytes": 8197,
+      "sha256": "1584deab6dd11fc7d15379433590c7e81bc56840ec390293f2cd76efaa0fa6f4",
+      "classification": "EXISTING_TRACKED_SYNTHETIC_FIXTURE_NOT_DECLARED_AS_PACKAGE_DATA",
+      "included_in_source_snapshot": true,
+      "in_wheel": false
+    },
+    {
+      "path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_editorial/phase7l/utility_scale_ground.json",
+      "bytes": 8167,
+      "sha256": "acb08d4b680b4d35d50a25bbef771f6e04cfaeda4bc8a8f446510a47bae90c70",
+      "classification": "EXISTING_TRACKED_SYNTHETIC_FIXTURE_NOT_DECLARED_AS_PACKAGE_DATA",
+      "included_in_source_snapshot": true,
+      "in_wheel": false
+    },
+    {
+      "path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_editorial/utility_scale_ground.json",
+      "bytes": 7326,
+      "sha256": "6f57fe9c2d977c269aa8d2351f865d1c1d45f1bf12471a1ed48a66da751c1bd8",
+      "classification": "EXISTING_TRACKED_SYNTHETIC_FIXTURE_NOT_DECLARED_AS_PACKAGE_DATA",
+      "included_in_source_snapshot": true,
+      "in_wheel": false
+    },
+    {
+      "path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_phase7l_full_cases/industrial_rooftop.json",
+      "bytes": 1692,
+      "sha256": "8e5574ab17d37124121b1fd8eb84b12b7881b3ce583358111539673f22cf9d28",
+      "classification": "EXISTING_TRACKED_SYNTHETIC_FIXTURE_NOT_DECLARED_AS_PACKAGE_DATA",
+      "included_in_source_snapshot": true,
+      "in_wheel": false
+    },
+    {
+      "path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_phase7l_full_cases/utility_scale_ground.json",
+      "bytes": 1749,
+      "sha256": "9b4a482e3446622f11d0ab6078388585d24eb8b52ef6dbab0ab31c7f495e01d5",
+      "classification": "EXISTING_TRACKED_SYNTHETIC_FIXTURE_NOT_DECLARED_AS_PACKAGE_DATA",
+      "included_in_source_snapshot": true,
+      "in_wheel": false
+    },
+    {
+      "path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_phase7l_r2_inputs/industrial_rooftop.json",
+      "bytes": 3111,
+      "sha256": "2296279f98d96d83ae61eeb9a385d7ac4f9dcf411d26bf5a3fc4c071962ef682",
+      "classification": "EXISTING_TRACKED_SYNTHETIC_FIXTURE_NOT_DECLARED_AS_PACKAGE_DATA",
+      "included_in_source_snapshot": true,
+      "in_wheel": false
+    },
+    {
+      "path": "services/solar-pv-engine/src/wangbin_solar_pv/fixtures/solar_pv_phase7l_r2_inputs/utility_scale_ground.json",
+      "bytes": 3120,
+      "sha256": "6b50abecf88347462f6694ca73b3c3ce55df8918880b881335cee7ef4e68dadc",
+      "classification": "EXISTING_TRACKED_SYNTHETIC_FIXTURE_NOT_DECLARED_AS_PACKAGE_DATA",
+      "included_in_source_snapshot": true,
+      "in_wheel": false
+    }
+  ],
+  "external_runtime_baseline": [
+    {
+      "path": "docs/solar-pv/00-original-user-baseline.md",
+      "bytes": 35790,
+      "sha256": "4af609040ca4e800b16d561b86a8a33c54226d175581b54aa00110158c5d09f2",
+      "lock_normalized_sha256": "4af609040ca4e800b16d561b86a8a33c54226d175581b54aa00110158c5d09f2",
+      "wheel_member": null,
+      "runtime_requirement": "EXPLICIT_BASELINE_DIR_REQUIRED; existing Skill wrapper supplies baseline separately"
+    },
+    {
+      "path": "docs/solar-pv/00-baseline-manifest.json",
+      "bytes": 977,
+      "sha256": "33845de976ec13345320b79ff7045e86a39bf2194a427b5cd28169238d1defec",
+      "lock_normalized_sha256": "33845de976ec13345320b79ff7045e86a39bf2194a427b5cd28169238d1defec",
+      "wheel_member": null,
+      "runtime_requirement": "EXPLICIT_BASELINE_DIR_REQUIRED; existing Skill wrapper supplies baseline separately"
+    },
+    {
+      "path": "docs/solar-pv/01-product-requirements.md",
+      "bytes": 9273,
+      "sha256": "2bbda5ab6d34e2b21c8b8806335986522d75de3a90e8c2e677d4c2ae8075357c",
+      "lock_normalized_sha256": "2bbda5ab6d34e2b21c8b8806335986522d75de3a90e8c2e677d4c2ae8075357c",
+      "wheel_member": null,
+      "runtime_requirement": "EXPLICIT_BASELINE_DIR_REQUIRED; existing Skill wrapper supplies baseline separately"
+    },
+    {
+      "path": "docs/solar-pv/03-input-data-dictionary.md",
+      "bytes": 215547,
+      "sha256": "fcc1eac5641f941adbd6fd4fab216050344b2ae4e0590d8e9549682117ab8148",
+      "lock_normalized_sha256": "fcc1eac5641f941adbd6fd4fab216050344b2ae4e0590d8e9549682117ab8148",
+      "wheel_member": null,
+      "runtime_requirement": "EXPLICIT_BASELINE_DIR_REQUIRED; existing Skill wrapper supplies baseline separately"
+    },
+    {
+      "path": "docs/solar-pv/03-input-fields.json",
+      "bytes": 593148,
+      "sha256": "393140cc57b5934041c3fece2c9c185c03c7876afaa3403ce317d795d6112a1b",
+      "lock_normalized_sha256": "393140cc57b5934041c3fece2c9c185c03c7876afaa3403ce317d795d6112a1b",
+      "wheel_member": null,
+      "runtime_requirement": "EXPLICIT_BASELINE_DIR_REQUIRED; existing Skill wrapper supplies baseline separately"
+    },
+    {
+      "path": "docs/solar-pv/05-formulas.json",
+      "bytes": 490989,
+      "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331",
+      "lock_normalized_sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331",
+      "wheel_member": null,
+      "runtime_requirement": "EXPLICIT_BASELINE_DIR_REQUIRED; existing Skill wrapper supplies baseline separately"
+    },
+    {
+      "path": "docs/solar-pv/05-formula-extensions.json",
+      "bytes": 40985,
+      "sha256": "14bb789c908f4f883910fd517fd2cf55cf0719739f9fdd84e4dc61b111252007",
+      "lock_normalized_sha256": "14bb789c908f4f883910fd517fd2cf55cf0719739f9fdd84e4dc61b111252007",
+      "wheel_member": null,
+      "runtime_requirement": "EXPLICIT_BASELINE_DIR_REQUIRED; existing Skill wrapper supplies baseline separately"
+    },
+    {
+      "path": "docs/solar-pv/05-field-bindings.json",
+      "bytes": 222309,
+      "sha256": "4ef6171f063f402963d61edc9647c7565c9ec9338099f62424a77e3507521533",
+      "lock_normalized_sha256": "4ef6171f063f402963d61edc9647c7565c9ec9338099f62424a77e3507521533",
+      "wheel_member": null,
+      "runtime_requirement": "EXPLICIT_BASELINE_DIR_REQUIRED; existing Skill wrapper supplies baseline separately"
+    },
+    {
+      "path": "docs/solar-pv/06-glossary.json",
+      "bytes": 157126,
+      "sha256": "fa29129d43f54a9b84ef6915e7bca99baa7a2a9a16ddab16beb3edec2e4d3ea5",
+      "lock_normalized_sha256": "fa29129d43f54a9b84ef6915e7bca99baa7a2a9a16ddab16beb3edec2e4d3ea5",
+      "wheel_member": null,
+      "runtime_requirement": "EXPLICIT_BASELINE_DIR_REQUIRED; existing Skill wrapper supplies baseline separately"
+    },
+    {
+      "path": "docs/solar-pv/06-glossary-extensions.json",
+      "bytes": 14387,
+      "sha256": "108f2a0fc11e07286a571bdf4a9a1c2ba63e1e9deae81558c4407bb1f9b85b61",
+      "lock_normalized_sha256": "108f2a0fc11e07286a571bdf4a9a1c2ba63e1e9deae81558c4407bb1f9b85b61",
+      "wheel_member": null,
+      "runtime_requirement": "EXPLICIT_BASELINE_DIR_REQUIRED; existing Skill wrapper supplies baseline separately"
+    },
+    {
+      "path": "docs/solar-pv/07-category-boundaries.md",
+      "bytes": 31298,
+      "sha256": "ee935418c0a7ef55544f6f97fddf71bcb62f6b906d0c19256b871f8d02b086a8",
+      "lock_normalized_sha256": "ee935418c0a7ef55544f6f97fddf71bcb62f6b906d0c19256b871f8d02b086a8",
+      "wheel_member": null,
+      "runtime_requirement": "EXPLICIT_BASELINE_DIR_REQUIRED; existing Skill wrapper supplies baseline separately"
+    },
+    {
+      "path": "docs/solar-pv/08-baseline-contract.json",
+      "bytes": 11331,
+      "sha256": "b3616e8ca7deab31b41118f0ffd0a8202c763c54371a9a6949e5d97bdecb140c",
+      "lock_normalized_sha256": "b3616e8ca7deab31b41118f0ffd0a8202c763c54371a9a6949e5d97bdecb140c",
+      "wheel_member": null,
+      "runtime_requirement": "EXPLICIT_BASELINE_DIR_REQUIRED; existing Skill wrapper supplies baseline separately"
+    }
+  ],
+  "limitations": [
+    "Eleven existing tracked synthetic/editorial fixture JSON files are copied in the source snapshot but undeclared as package data and absent from wheel; optional load_editorial_fixture default path lacks demo data. No R2 automatic loading or all-demo-runtime PASS is asserted.",
+    "Catalog needs 12 external frozen baseline files via explicit --baseline-dir; wheel alone is not a self-contained runtime.",
+    "Legacy __version__=0.3.0 is input_module_version used by intake; deliberately unchanged, not distribution identity.",
+    "connector_runtime readiness still pins solar distribution 0.3.1; future 0.3.2 installation would report unavailable unless separately authorized metadata alignment occurs. No READY claimed."
+  ],
+  "historical_wheels_readback": [
+    {
+      "path": ".runtime/solar-pv/ai-v2-host-20261112-144349/candidate-wheels/wangbin_document_cli-1.2.0-py3-none-any.whl",
+      "bytes": 20077,
+      "sha256": "8f2ef2ab31c0f058612884ddf36a797b2dded4fc8ffdd5781453901e98a86bbd",
+      "Name": "wangbin-document-cli",
+      "Version": "1.2.0",
+      "shared_input_module_present": false,
+      "host_output_module_present": false
+    },
+    {
+      "path": ".runtime/solar-pv/ai-v2-host-20261112-144349/candidate-wheels/wangbin_solar_pv_input-0.3.1-py3-none-any.whl",
+      "bytes": 548537,
+      "sha256": "9c0abf6597c6b444c646eaafc3a802fa2e78cddcfe720633c6b65b2463f8a64b",
+      "Name": "wangbin-solar-pv-input",
+      "Version": "0.3.1",
+      "shared_input_module_present": false,
+      "host_output_module_present": false
+    },
+    {
+      "path": "dist/wangbin_document_cli-1.1.0-py3-none-any.whl",
+      "bytes": 15287,
+      "sha256": "51071474a8668d5c4ba153896a5cde4d4233881f6042d7b16f305259fda702f9",
+      "Name": "wangbin-document-cli",
+      "Version": "1.1.0",
+      "shared_input_module_present": false,
+      "host_output_module_present": false
+    },
+    {
+      "path": "dist/wangbin_document_cli-1.2.0-py3-none-any.whl",
+      "bytes": 20970,
+      "sha256": "999251868e5d9679860eb8f0c753fc3358dccf0b96dce05edea01a2501cae4aa",
+      "Name": "wangbin-document-cli",
+      "Version": "1.2.0",
+      "shared_input_module_present": false,
+      "host_output_module_present": false
+    }
+  ],
+  "gates": {
+    "TRUSTED_WHEEL_SOURCE": "PASS_LOCAL_APPROVED_RAW_SOURCE",
+    "WHEEL_BUILD": "WHEEL_BUILT_LOCAL",
+    "WHEEL_CONTENT": "PASS_DECLARED_PACKAGE_SCOPE_WITH_EXPLICIT_RUNTIME_LIMITATIONS",
+    "WHEEL_INTEGRITY": "PASS",
+    "ISOLATED_INSTALLATION": "NOT_TESTED",
+    "DEPENDENCY_CLOSURE": "PENDING_ANALYST_AND_QA",
+    "PLATFORM_RUN": "NOT_TESTED"
+  },
+  "classification_correction": "Explicit ls-files readback supersedes initial audit generator label UNTRACKED; no payload/source/wheel bytes changed."
+}
