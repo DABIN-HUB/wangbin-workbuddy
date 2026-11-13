@@ -1,4 +1,4 @@
-# 依赖来源审核结果（候选冻结，待独立 QA）
+# 依赖来源审核结果（独立候选 QA 通过；最终 payload 待限定复审）
 
 结论：**SOURCE_RESEARCH_COMPLETE / ARTIFACT_ACQUISITION_NOT_AUTHORIZED / DEPENDENCY_CLOSURE_BLOCKED**。
 数据完整性自检与可分发性是两个门禁；来源已研究不意味着可安装或许可放行。
@@ -18,8 +18,18 @@
 完整锁包含 43 节点/12 targets/全部声明边及 marker/extras/115 文件/URL/SHA/tags/许可状态/所属父链和取得状态，不是空占位。
 首目标逐项文件表见 WHEELHOUSE_AND_INSTALL_PLAN.md；504 行跨平台表见 DEPENDENCY_SOURCE_MATRIX.csv。
 
-开发自检与提交/冻结索引的最终实数在 RUN/developer-final-state.json 和 RUN/developer-freeze-index.json；文档不嵌入自身未来 commit SHA。
-QUALITY_REPORT.md 目前是审核入口和待验清单，不是作者自签独立 QA。没有封 ZIP；下一轮独立 QA 后的文档收口和分享 payload 还需限定复审。
+原开发自检/冻结实数保留在 RUN/developer-final-state.json 和 RUN/developer-freeze-index.json，不改写历史。此次文档提交和新payload身份另见 RUN/final-docs-state.json、RUN/final-payload-index.json；文档不嵌入自身未来commit/hash。
+
+## 真正独立的候选 QA（仅原冻结范围）
+
+QUALITY_REPORT.md 为独立审查员原文，8635 B，SHA-256 `5b15278cf0149a7247ed8dd93201b17ab74f839039778b9e329b2675f621ef79`，未附加作者说明。独立 provenance SHA `3fd2943670dbffbcad3e5ca61abb748c16b0e9ab745e1471c3a71cb52ec73a01`；candidate-quality-confirmation SHA `00510622d4bb0a71ce6d3a16aceabd39712f8d96f734d42224c20e8ea911dd6c`。
+
+- 裁定 PASS_LIMITED_DEPENDENCY_SOURCE_CANDIDATE_QA_WITH_LIMITATIONS；只对应原451件/19381431 B、原index SHA `58dece4fc2903572776786076f70388273ec85bf8c601c265befe789588f5bab`、原tree SHA `35f9d78d3305462c02f6249691f8f27bf6514954f5cbac3f416bf11ad66f4afd`，不是未来payload批准。
+- 独立12图×44节点，2496 declared/754 active边；4360主要predicate、313支持predicate、504 CSV行有交叉覆盖，不相加当唯一测试数。
+- 16互异负向全部实际exit1拒绝，1正常接受；负向17次调用含同版本不同SHA案例8秒超时后同输入retry，另支持wrapper35秒超时后完整重算通过，全部原件保留。QA-OBS-01的21行specifier字面顺序/空格差异语义等价，CLOSED且CSV不改；QA-EXEC-01/02为CLOSED_WITH_RETAINED_TIMEOUT，产品缺陷0。
+- 仍OPEN：18文件分配缺口、beautifulsoup4/cobble/protobuf三项精确许可文本关联、42名称再分发及wheel内NOTICE、document双SHA、WorkBuddy解释器UNKNOWN、PEP658期望摘要和所有旧门禁；未以QA提升这些状态。
+
+本轮仅原字节纳入候选QA并冻结新的文档/分享payload，最终payload QA为PENDING_INDEPENDENT_LIMITED_REVIEW。新allowlist逐项扫描来源与分享字节；发现的home路径只做另外标记的分享派生，原stdout/stderr/输入/失败证据保留本地。胶囊及commands/inputs中的原胶囊、raw官方元数据/联系人和历史wheel绝不入包，不能声称全部原始执行输入都包含在未来ZIP。分享索引逐件记录原/新size/SHA。最终独立复审、manager保护/封包/独立读回/总预算接口见DELIVERY.md；作者没有封ZIP、未代签最终QA。
 
 ## 43 精确发行来源
 
