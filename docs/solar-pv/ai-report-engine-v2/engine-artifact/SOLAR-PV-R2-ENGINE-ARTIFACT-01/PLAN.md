@@ -25,3 +25,9 @@ RUN = `.runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01`。现有 manager 版本
 ## analyst完成后的writer续阶段
 
 原构建步骤/原freeze保持历史身份；source/wheel不重建。新增final-wheel-binding将实际METADATA对齐analyst原12×44观察图，只在独立overlay把43 pending/missing减去新root得到42缺第三方wheel；原graph不追改，来源/许可闭包仍BLOCKED。整合依赖、Python/runtime、Connector/Skill边界与NEXT_GATE正式材料，保留QUALITY_REPORT供独立QA。随后精确提交九件当前docs（八正式加PLAN）及唯一pyproject版本差异，冻结review-payload+逐成员index、必要METADATA原证/明确脱敏件与全部截至冻结的command originals；candidatewheel单独外置。此时不封最终reviewZIP、不调用新宿主、不扩生产范围。
+
+## 独立 QA 后正式收口（当前续写授权）
+
+THIS_TASK_INDEPENDENT_QA = PASS_LOCAL_ARTIFACT_STATIC_QA_WITH_LIMITATIONS；首次quality已独立完成，报告原字节复制，原阶段PENDING仅属历史。QEA-01 HIGH依赖受信分发/binary/完整许可/公共来源BLOCKED、QEA-02 MEDIUM旧0.3.1 readiness、QEA-03 MEDIUM外置12基线/缺11可选默认fixture、QEA-04 MEDIUM历史成功输入/HTTP原body NOT_REPLAYABLE均未闭合。QEA-04是5条成功receipt引用4个不同输入缺recordedSHA精确原版；原HTTP只有digest/长度，脱敏正文不是原body。所有失败receipt及变化失败脚本匹配原版保留，不补造原输入或旧HTTP，不宣称完整历史重放。
+
+本续写仅DOC文档、本地docs commit及忽略RUN新审阅材料/封包脚本；核心八/129snapshot/版本/wheel/Connector/Skill/测试/旧保护原件不改。实际执行新增累计<=100s，每命令<=120s，经record_command roledeveloper新label保留原证，失败计入。复核diff仅DOC、source/wheel/保护与卫生/secret/citation，精确暂存提交后外置final-docs-state。九正式要求+PLAN齐全；原387件payload/index/首次确认不动，新finalpayload以prefix保留旧树，完整新index冻结后不再改。新文档和封包脚本必须限定独立复审；不沿用首次确认、不代签独立PASS、不封最终ZIP、不安装/运行产品/模型/Office/pytest，不推进后续门禁。

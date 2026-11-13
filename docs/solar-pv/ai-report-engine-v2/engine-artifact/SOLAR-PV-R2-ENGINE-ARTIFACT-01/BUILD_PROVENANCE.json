@@ -1133,7 +1133,22 @@
     "bytes": 106600,
     "sha256": "1abe5c3c53e0fb88b1d39e3df60af906b8477a2c983cc02d23f1a1fa636a77bb"
   },
-  "independent_qa": "PENDING",
+  "independent_qa_at_build_freeze": "PENDING",
+  "independent_qa": "PASS_LOCAL_ARTIFACT_STATIC_QA_WITH_LIMITATIONS",
+  "current_independent_qa_binding": {
+    "gate": "THIS_TASK_INDEPENDENT_QA",
+    "reviewed_head": "27aa7d37d2eae1b4e82198ce5898bc8e4f58f494",
+    "report_original_path": ".runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01/independent-qa/QUALITY_REPORT.md",
+    "report_bytes": 20247,
+    "report_sha256": "7c1f7b4727b9740dc27a6e5be291ec106d0b3b8a3f7806a4d0165a90b4bf2d32",
+    "provenance_sha256": "8afdf3e3d0155561e32f5400ac45996357f777eb6d49bb180beaf57916c841b3",
+    "original_confirmation_sha256": "df87db15c1cda56123a5e6c0154e96a946525ae8ec7c51e7efa456d4158d6bbb",
+    "scope": "Original source/wheel and 387-member frozen payload only; new final docs/payload require independent limited re-review",
+    "historical_successful_inputs_and_http_raw": "NOT_REPLAYABLE; QEA-04 MEDIUM; 5 successful references/4 inputs lack exact originals; HTTP body only digest/length; redacted text is not raw body",
+    "findings_unclosed": ["QEA-01 HIGH", "QEA-02 MEDIUM", "QEA-03 MEDIUM", "QEA-04 MEDIUM"],
+    "original_build_commands_and_times_not_rewritten": true,
+    "historical_qa_partial_and_frozen_pending_preserved": true
+  },
   "reproducibility": "NOT_TESTED; one actual build; SOURCE_DATE_EPOCH alone does not prove reproducibility",
   "public_source_ownership": "NOT_ASSERTED; only local version reservation evidence",
   "not_host_e2e": true,

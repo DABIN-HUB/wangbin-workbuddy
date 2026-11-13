@@ -1,4 +1,6 @@
-# 构建阶段验证 — NOT_INSTALLED / NOT_HOST_E2E
+# 本地构件与独立静态验证 — NOT_INSTALLED / NOT_HOST_E2E
+
+**THIS_TASK_INDEPENDENT_QA = PASS_LOCAL_ARTIFACT_STATIC_QA_WITH_LIMITATIONS。** 原字节 QUALITY_REPORT.md 绑定原 HEAD `27aa7d37d2eae1b4e82198ce5898bc8e4f58f494`、原 387 件 payload；本次新 docs/final payload 必须限定独立复审，首次 confirmation 不自动批准新集合。下列原构建命令与时间是历史事实，不追改。
 
 RUN = `.runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01`。全部实际验证由该 RUN/record_command.py，role=developer 录制；完整命令数组、输入 SHA、解释器、cwd、开始/结束、timeout、退出码及原始 stdout/stderr 在 `RUN/commands/developer-*.{json,stdout,stderr}`。下表不是 pytest 用例统计。
 
@@ -38,6 +40,17 @@ RUN = `.runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01`。全部实际验证由
 
 1929 保护项中1928 原字节相同，唯一变化为批准 pyproject 版本；installed22（21载荷+1metadata）全部原 SHA 不变；R8–R13 2638 项仅元信息不变，不能升级为全内容 hash。旧 dist/历史 wheel/旧QA/原 canonical/request 不修改。现成 secret scanner 限定对完整 snapshot src 与当前正式任务文档运行，发现0；不将其称为全仓秘密完备性证明。
 
-本轮净删除0文件/0B、释放0B；115 历史 tracked logs 因本轮历史保护而留存，不做未授权清理。构建产生 build/egg-info 只在 RUN/build-source 内，作为可追溯唯一构建证据保留；wheel/sidecar/命令/源快照均留忽略 RUN，不入 Git。当前正式材料八项加PLAN共九文件；QUALITY_REPORT保留待独立QA，精确 allowlist 随 Git receipt。
+本轮净删除0文件/0B、释放0B；115 历史 tracked logs 因本轮历史保护而留存，不做未授权清理。构建产生 build/egg-info 只在 RUN/build-source 内，作为可追溯唯一构建证据保留；wheel/sidecar/命令/源快照均留忽略 RUN，不入 Git。九项正式材料加 PLAN 共十文件，QUALITY_REPORT 原字节复制独立原件。本次仅 docs allowlist 本地提交；实际最终身份与计时见 RUN/final-docs-state.json，后续封包前仍需新独立确认。
 
-没有新增或改动测试/Mock/fixture，没有 pytest、财务重算、Office/PDF/全仓回归，没有下载/安装、Connector/Skill修改或安装、宿主模型、push、上传或发布。DEPENDENCY_CLOSURE = BLOCKED（最终12矩阵各42第三方独立wheel缺失/来源许可未闭合），本轮独立QA = PENDING；安装 = NOT_TESTED；平台/专业/财务/四文件/发布门禁继承，不用旧136身份或纯静态映射冒充当前 runtime PASS。
+没有新增或改动测试/Mock/fixture，没有 pytest、财务重算、Office/PDF/全仓回归，没有下载/安装、Connector/Skill修改或安装、宿主模型、push、上传或发布。DEPENDENCY_CLOSURE = BLOCKED（最终12矩阵各42第三方独立wheel缺失/来源许可未闭合）；安装/Skill runtime = NOT_TESTED，HOST = BLOCKED，professional = NOT_TESTED；历史 INDEPENDENT_QA PARTIAL 与全部平台/财务/四文件/发布门禁继承，不用旧136身份或纯静态映射冒充当前 runtime PASS。
+
+## 独立 QA 与证据重放边界
+
+独立 quality 四条实际命令含一条失败，累计 41.1291454s；各命令完整 receipt/stdout/stderr 在 RUN/commands/quality-independent-*，原 provenance 不预填其自身封口命令的未来 elapsed。独立重算了129 source/八核心、122 wheel 成员与 RECORD、50 metadata、12×44 observed 图及387件 payload 集合；没有运行产品或重建 wheel。本次文档续写另设新增执行预算100s、每命令<=120s，实际（含失败）从全部新 developer receipt 求和外置，不借旧角色预算。
+
+- QEA-01 HIGH：受信分发、binary、完整许可/公共来源未闭合，BLOCKED。
+- QEA-02 MEDIUM：旧0.3.1 readiness/Connector，0.3.2不能自动READY。
+- QEA-03 MEDIUM：12外置基线、11缺可选默认fixture；R2核心/specs/声明data不是全功能自包含证明。
+- QEA-04 MEDIUM：5条成功 receipt 输入引用、4不同历史输入缺 recorded SHA 原版（dependency_audit.py、metadata-catalog.json两引用、ANALYST_REPORT.md、旧freeze）；HTTP原body仅digest/长度，脱敏正文不是原body。明确 NOT_REPLAYABLE，不补造或重建。所有失败 receipt/变化失败脚本精确原版仍保留；成功输入缺口不能写成失败原证丢失。禁止“完整历史原输入/所有raw全保留”承诺。
+
+当前独立字节/元数据审计在上述限制下有效。原冻结 payload 的 PENDING/旧作者 freeze 状态不改；新根文档与历史 frozen-candidate/ 分离。新 final index/tree 与脚本需独立限定复核；不能由 developer 签独立 PASS。

@@ -1,19 +1,21 @@
-# Next gate — 独立审阅，非安装/发布
+# Next gate — 静态审计已完成；新交付树限定复审，非安装/发布
 
 ## 当前可移交范围
 
 唯一0.3.2 wheel及sidecar在RUN/candidate-wheels；精确source snapshot、版本diff、静态ZIP/RECORD/源码映射、analyst原图与final-wheel-binding已完成。SOURCE_BUILD/WHEEL_CONTENT的本地静态结论不能关闭DEPENDENCY_CLOSURE=BLOCKED。
 
-本轮正式九项交付要求中的QUALITY_REPORT由独立quality产生，writer不伪造占位PASS：当前交付八项正式材料加开工PLAN共九文件，QUALITY_REPORT有意缺席，状态PENDING。quality完成后仅按其冻结身份原字节复制或精确绑定；不得回写旧QA原结论。
+**THIS_TASK_INDEPENDENT_QA = PASS_LOCAL_ARTIFACT_STATIC_QA_WITH_LIMITATIONS。** 首次独立静态审计已完成，不再等待首次 QA；独立 QUALITY_REPORT 以原字节加入 DOC，九项正式文件加 PLAN 共十文件。其有效身份为原 HEAD `27aa7d37d2eae1b4e82198ce5898bc8e4f58f494`、原387件树，而非本次新文档/final payload 自动许可。旧审计 PARTIAL 和冻结作者 PENDING 不覆写。
 
-## 独立quality的精确输入
+## 新 limited QA 的精确输入
 
 - RUN/developer-candidate-freeze.json冻结全部129源文件/八核心/wheel原SHA；approved-git-source-readback说明Git CRLF/LF，不替代wheel原字节对照。
 - RUN/review-payload及固定payload-index.json：精确allowlist、每成员size/SHA、来源/脱敏派生身份、全部截至冻结的任务命令原回执和选定依赖元数据；唯一candidatewheel单独外置，不在payload复制。
-- 正式PLAN、RESULT、BUILD_PROVENANCE、WHEEL_CONTENT_MANIFEST、DEPENDENCY_CLOSURE、PYTHON_RUNTIME_COMPATIBILITY、CONNECTOR_SKILL_RUNTIME_BOUNDARY、VALIDATION、NEXT_GATE。
+- 新 RUN/final-review-payload 根部正式九件文件及 PLAN；frozen-candidate/ 完整原字节保留旧387件、FROZEN-CANDIDATE-INDEX.json 保留原index；新 final-payload-index.json 逐件 size/SHA/source/derivation，包含原QA证据与选定原命令三件套/脚本、manager读回、final-docs-state和最终diff。实际新 HEAD 以外置 final-docs-state 为准。
 - 原analyst 12×44 observed graph不改；final-wheel-binding只把43 pending/missing更新为42第三方缺wheel，不生成依赖lock。document1.2.0同名异SHA与candidate缺LICENSE继续显式未闭合。
 
-quality应直接读source/wheel/payload字节，独立复核版本门禁、唯一生产差异、核心/正式spec映射、ZIP路径/CRC/SHA/RECORD、完整数据分类、边/extras/markers/Python/tags及隐私allowlist；不只接受developer总结。保持每批<=120s和角色预算，不安装/下载/新增测试，不执行财务/Office/宿主。发现实质结论或payload问题需明确补正范围并重新绑定；仅后续QA原证/确定性归档记录可按明确排除规则追加，不暗改已审source/wheel。
+limited QA 应读回新正式结论、QEA01–04披露、docs-only commit、原387件的prefix集合/字节保留、最终source/wheel未变、新完整index/tree、隐私allowlist及 scripts/seal_final_review.py。原确认不自动批准此集合，developer不能代签独立PASS。保持每批<=120s和角色预算，不安装/下载/新增测试，不执行财务/Office/宿主。新确认必须绑定最终 index SHA/tree/source HEAD/核心/wheel，方可由manager封包；任何实质改动都需新index及限定复审。
+
+QEA-01 HIGH（来源/binary/完整许可/公共分发BLOCKED）、QEA-02 MEDIUM（旧0.3.1 readiness）、QEA-03 MEDIUM（12外置基线/11缺可选默认演示）及 QEA-04 MEDIUM（历史成功输入与HTTP原body NOT_REPLAYABLE）均未闭合。QEA-04精确为5条成功receipt引用4个不同输入缺recordedSHA原版：dependency_audit.py、metadata-catalog.json两引用、ANALYST_REPORT.md、旧freeze；HTTP仅digest/长度，不以脱敏正文替代。失败receipt及变化失败脚本原版保留，不补造丢失输入或旧HTTP。当前quality重新计算source/wheel/50metadata/12×44图与原payload有效，不承诺完整历史重放。
 
 ## QA后仍需另行授权的门
 
@@ -25,6 +27,6 @@ quality应直接读source/wheel/payload字节，独立复核版本门禁、唯�
 
 ## 封包与恢复
 
-现在只冻结可审payload，**不生成最终review ZIP，不称Skill安装包，不宣布独立QA通过**。后续manager以quality批准的allowlist和原SHA封SOURCE/REVIEW ONLY归档，明确manifest/QA确认/最终archive identity的自引用排除，并验证已批准payload未变、完整ZIP成员/CRC/SHA与外部wheel sidecar。保护原canonical/request/installed22/R8–R13/history/dist，不复制整个env/cache、测试全文或email秘密。
+现在只冻结新可审payload和待确认封包脚本，**不生成最终review ZIP、不称Skill安装包**。唯一wheel不复制进payload/ZIP；根WHEEL-IDENTITY.json与说明给外置路径/SHA/size。原387树、原index、首次确认一字节不动。后续仅manager在新独立确认及最终保护复核后运行 RUN/seal_final_review.py；该脚本拒绝旧确认，逐件校验新集合/source/wheel，no-clobber创建 SOURCE-REVIEW-ONLY.zip，且只追加新的confirmation、确定性FINAL-ARCHIVE-IDENTITY及MANIFEST（manifest不hash自身），再读回唯一安全路径、CRC/SHA/manifest集合与外部ASCII/LF sidecar。不得追加未经审阅的docs/evidence。保护原canonical/request/installed22/R8–R13/history/dist，不复制整个env/cache、测试全文或email秘密，无Git bundle/私人Git配置；此包不是完整仓库备份。
 
-本地提交与实际最终status、命令耗时/保护复核在RUN/developer-final-state.json和原command receipts；源码候选的commit不能嵌入其自己的未来SHA，故不制造自引用补交循环。禁止push/sync/reset/发布。构件只是本地候选，不是公众名称/版本所有权或可安装销售承诺。
+原构建阶段身份仍在RUN/developer-final-state.json；本次本地docs提交与最终status/实际计时在RUN/final-docs-state.json。最终封包身份由脚本在未来确认后产生，不把未来commit写回其自身文档。禁止push/sync/reset/发布；任何安装、Connector/Skill调整、模型或后续阶段仍需另行授权。构件只是本地候选，不是公众名称/版本所有权或可安装销售承诺。

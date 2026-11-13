@@ -1,6 +1,6 @@
-# SOLAR-PV-R2-ENGINE-ARTIFACT-01 — 构建阶段结果
+# SOLAR-PV-R2-ENGINE-ARTIFACT-01 — 本地构件与独立静态 QA 结果
 
-**WHEEL_BUILT_LOCAL；静态完整性通过，尚非受信安装或发布。** 唯一候选：
+**THIS_TASK_INDEPENDENT_QA = PASS_LOCAL_ARTIFACT_STATIC_QA_WITH_LIMITATIONS；WHEEL_BUILT_LOCAL，尚非依赖闭包、受信安装或发布通过。** 独立结论仅绑定原候选及原 387 件冻结树；本次正式文档和新 final payload 须另作限定独立复审，不能自动沿用原确认。唯一候选：
 
 - `.runtime/solar-pv/SOLAR-PV-R2-ENGINE-ARTIFACT-01/candidate-wheels/wangbin_solar_pv_input-0.3.2-py3-none-any.whl`
 - 557392 bytes；SHA-256 `cd7be44ca5350da87c4760898ddeb46b8a73646d8f2f8de6be61e48cca9f7808`；同目录 ASCII/LF `.sha256`。
@@ -18,14 +18,14 @@
 | WHEEL_CONTENT | PASS_DECLARED_PACKAGE_SCOPE_WITH_EXPLICIT_RUNTIME_LIMITATIONS；117原字节映射=97模块+20声明data，正式specs两件完整 |
 | ENTRY_REACHABILITY | AST_STATIC_TARGET_RESOLVED_NOT_EXECUTED；不是import、help、安装或业务运行 |
 | DEPENDENCY_CLOSURE | BLOCKED_DEPENDENCY_DISTRIBUTION_NOT_CLOSED；analyst原12×44图不改，新wheel独立绑定43→42第三方缺wheel；observed metadata consistent不等于lock/closure |
-| THIS_TASK_INDEPENDENT_QA | PENDING；developer不代写QUALITY_REPORT或签自己独立PASS |
+| THIS_TASK_INDEPENDENT_QA | PASS_LOCAL_ARTIFACT_STATIC_QA_WITH_LIMITATIONS；独立 quality 原报告原字节复制，限定原候选/387 件树；新 final payload 待另行独立确认 |
 | ISOLATED_INSTALLATION | NOT_TESTED（本轮禁止） |
 | WORKBUDDY_SKILL_RUNTIME | NOT_TESTED |
 | WORKBUDDY_HOST_E2E | BLOCKED |
 | PROFESSIONAL_SEMANTIC_REVIEW | NOT_TESTED |
 | RELEASE_READY | BLOCKED |
 
-完整命令、失败原证、限制见 VALIDATION.md；完整映射见 WHEEL_CONTENT_MANIFEST.json；源/版本diff/backend绝对路径与版本/环境/时间/stdoutstderr索引/快照全hash/构件身份见 BUILD_PROVENANCE.json。原始大回执留 RUN。当前候选由 `RUN/developer-candidate-freeze.json` 冻结，含全部源与core/wheel身份；文件身份以实际文件和命令回执为准。后续独立审查必须读真实文件，不只读本总结。
+命令回执、失败原证及历史成功输入重放限制见 VALIDATION.md；完整映射见 WHEEL_CONTENT_MANIFEST.json；构建来源与原始时间见 BUILD_PROVENANCE.json，不追改已发生的命令。独立 QUALITY_REPORT.md 为 20247 B，SHA-256 `7c1f7b4727b9740dc27a6e5be291ec106d0b3b8a3f7806a4d0165a90b4bf2d32`；原 provenance SHA `8afdf3e3d0155561e32f5400ac45996357f777eb6d49bb180beaf57916c841b3`，原 payload confirmation SHA `df87db15c1cda56123a5e6c0154e96a946525ae8ec7c51e7efa456d4158d6bbb`。其审阅 HEAD 为 `27aa7d37d2eae1b4e82198ce5898bc8e4f58f494`，不是本次未来文档提交。独立重新计算 source/wheel、50 metadata、12×44 图及原 payload 身份有效；不等于完整历史原输入重放。
 
 ## 不扩大本轮成功范围
 
@@ -35,7 +35,16 @@
 - 构建只实际做一次，SOURCE_DATE_EPOCH不等于reproducibility；现有3.14.9位于声明范围也不证明各OS或3.12托管环境。未安装wheel、不注入PYTHONPATH、不声称installedimportPASS。
 - 首轮静态工具因错误codec名称exit1，修正后新独名批次exit0；原receipt/stdout/stderr及匹配原input SHA脚本完整保留。初版manifest将11演示数据误标UNTRACKED，实际ls-files封口修正为TRACKED；源码/wheel不变，不覆盖原命令事实。
 
-保护实读：1929项中1928不变，1项批准版本变更；installed22全部SHA不变，R8–R13metadata2638不变（非全内容hash）。现成卫生exit0、无删除，净删除0文件/0B/释放0B。当前八项正式材料加PLAN共九文件（QUALITY_REPORT留给独立QA）与pyproject精确allowlist本地提交，最终提交/状态/计数外置 `RUN/developer-final-state.json`，避免文档包含自己的未来commit。analyst依赖/运行时原证已整合，42项独立wheel、来源与许可仍阻断；独立QA和最终reviewZIP由后续闭合。本阶段冻结 `RUN/review-payload` / `RUN/payload-index.json`，不封ZIP、不代写QUALITY_REPORT。
+保护实读：1929项中1928不变，1项批准版本变更；installed22全部SHA不变，R8–R13metadata2638不变（非全内容hash）。无删除，净删除0文件/0B/释放0B。本次只提交 DOC 文档；九项正式交付文件及 PLAN 共十文件齐全。最终实际 HEAD/clean/index、计数与已完成命令计时外置 `RUN/final-docs-state.json`，不自引用未来 commit。原 `review-payload` 387 件/9226577 B、原 index 与首次 confirmation 均不改；新 `final-review-payload` 以 frozen-candidate/ 前缀原字节保留原树，根 RESULT 为当前入口，外置 `final-payload-index.json` 冻结新集合。唯一 wheel 继续外置；源码审阅包不是 Skill 安装包、不是完整仓库备份，不含 Git bundle/私人 Git 配置。待新独立确认及 manager 最后保护复核前不封 ZIP；详见 NEXT_GATE。
+
+## 独立 findings — 原级、均未闭合
+
+| ID | 严重性 | 当前限制 |
+|---|---|---|
+| QEA-01 | HIGH | 依赖受信分发/binary/完整许可/公共不可变来源仍 BLOCKED；12 目标矩阵每格缺 42 第三方独立 wheel，observed 图不是 lock。 |
+| QEA-02 | MEDIUM | readiness 与 Connector 仍钉旧 0.3.1；0.3.2 分发元数据不能自动 LOCAL_READY，未改 Connector/Skill。 |
+| QEA-03 | MEDIUM | 12 外置冻结基线与 11 缺失可选默认演示 fixture；R2 核心/specs/声明 data 通过不代表全功能自包含。 |
+| QEA-04 | MEDIUM | 5 条历史成功 receipt 输入引用涉及 4 个不同输入，缺 recorded SHA 精确原版：analyst dependency_audit.py、metadata-catalog.json（两次引用）、ANALYST_REPORT.md、旧 developer-candidate-freeze.json。原 HTTP body 仅存 digest/长度，保留脱敏正文不是原 body。上述链为 NOT_REPLAYABLE，不得声称完整历史重放或所有 raw 全保留，不补造丢失输入或重建旧 HTTP。所有失败 receipt 及已变化失败脚本的匹配原版保留；本项不是失败原证缺失。 |
 
 ## 历史门禁逐值保留
 
