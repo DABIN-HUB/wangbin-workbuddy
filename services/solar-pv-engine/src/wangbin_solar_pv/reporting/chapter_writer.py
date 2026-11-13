@@ -11,6 +11,7 @@ from .claim_validator import validate_chapter, SLOT
 from .evidence_pack_builder import build_pack
 from .llm_provider import ModelConfig
 from .host_output import PROTOCOL as DELIVERY_PROTOCOL, GUIDANCE, verify_publication, require_active
+from . import host_input_view as input_view
 
 
 def _now():
@@ -34,6 +35,9 @@ def _upstream(store, state, chapter, model, registry, config, cache):
         rid = candidates[-1]['request_id']
         if rid not in cache:
             cache[rid] = resume(store, rid, model, registry, config, _cache=cache)
+        else:
+            # Cached findings never cache away request or shared-input integrity checks.
+            _request(store, rid, model, registry, config, _cache=cache)
         accepted, evidence = cache[rid]
         used = {ref for section in accepted['output']['sections'] for ref in section['fact_refs']}
         for text in [accepted['output']['chapter_intro'], *accepted['output']['chapter_findings'], *accepted['output']['decision_implications']]:
@@ -53,15 +57,21 @@ def _upstream(store, state, chapter, model, registry, config, cache):
 
 
 def prepare(workspace, run_name, model, registry, chapter_id, config, allowed_source_ids, scenario_bundle=None,
-            *, host_delivery=None):
+            *, host_delivery=None, input_view_policy=None):
     _id(run_name)
     if host_delivery not in (None, DELIVERY_PROTOCOL):
         raise ContractError('HOST_DELIVERY_PROTOCOL_REQUIRED')
+    if input_view_policy is not None:
+        input_view.policy(input_view_policy)
+        if host_delivery != DELIVERY_PROTOCOL:
+            raise ContractError('HOST_INPUT_POLICY')
     cfg = config.to_dict()
     pack = build_pack(model, registry, chapter_id, allowed_source_ids, scenario_bundle)
     chapter = registry.chapter(chapter_id)
     binding = {'identity': model.identity, 'spec_hash': registry.hash, 'model_config': cfg,
                'authorized_sources': sorted(set(allowed_source_ids)), 'scenario_bundle_hash': digest(scenario_bundle)}
+    if input_view_policy is not None:
+        binding['input_view_policy'] = dict(input_view_policy)
     root = workspace.path(run_name, json_only=False)
     if not root.exists():
         root.mkdir(mode=0o700)
@@ -99,6 +109,8 @@ def prepare(workspace, run_name, model, registry, chapter_id, config, allowed_so
                    'semantic_review': 'PENDING_REVIEW'}
         if host_delivery is not None:
             request.update(host_delivery=host_delivery, writing_guidance=list(GUIDANCE))
+        if input_view_policy is not None:
+            request['input_view_policy'] = dict(input_view_policy)
         request['request_hash'] = digest(request)
         if len(dumps(request).encode('utf-8')) > cfg['max_request_bytes']:
             raise ContractError('MODEL_CONTEXT_BUDGET_EXCEEDED')
@@ -107,16 +119,26 @@ def prepare(workspace, run_name, model, registry, chapter_id, config, allowed_so
         # A crash consumes the reservation, not an unbounded retry opportunity.
         store._write('state.json', state, expected_digest=old_hash)
         store.create(request_id + '-request.json', request)
+        if input_view_policy is not None:
+            # Internal bootstrap only: validate the trusted originals before deriving files.
+            _request_base(store, request_id, model, registry, config)
+            input_view.create_files(store, request, config.max_request_bytes)
+            input_view.verify_files(store, request, config.max_request_bytes)
     return request
 
 
-def _request(store, request_id, model, registry, config, _cache=None):
+def _request_base(store, request_id, model, registry, config, _cache=None):
     _id(request_id)
     request, _ = store.read(request_id + '-request.json')
     if request['request_hash'] != digest({k: v for k, v in request.items() if k != 'request_hash'}):
         raise ContractError('CHAPTER_REQUEST_HASH')
     if request.get('host_delivery') not in (None, DELIVERY_PROTOCOL):
         raise ContractError('HOST_DELIVERY_PROTOCOL_REQUIRED')
+    if 'input_view_policy' in request or 'input_view_policy' in request['binding']:
+        input_view.policy(request.get('input_view_policy'))
+        if (request['binding'].get('input_view_policy') != request['input_view_policy']
+                or request.get('host_delivery') != DELIVERY_PROTOCOL):
+            raise ContractError('HOST_INPUT_POLICY')
     state, _ = store.read('state.json')
     if (request['binding'] != state['binding'] or request['generation_run_id'] != state['generation_run_id']
             or not any(r['request_id'] == request_id and r['request_hash'] == request['request_hash']
@@ -135,6 +157,21 @@ def _request(store, request_id, model, registry, config, _cache=None):
                          {} if _cache is None else _cache)
     if request.get('upstream') != upstream or request.get('dependency_hash') != digest(upstream):
         raise ContractError('CHAPTER_DEPENDENCY_CHANGED')
+    if 'input_view_policy' in request:
+        if (request['instructions'] != registry.spec['global_rules']
+                or request['output_schema'] != result_schema()
+                or request['writing_guidance'] != list(GUIDANCE)
+                or request['prompt_version'] != pack['prompt_version']
+                or request['report_spec_version'] != pack['report_spec_version']
+                or request['model_id'] != config.model_id
+                or request['upstream_status'] != {cid: item['status'] for cid, item in upstream.items()}):
+            raise ContractError('CHAPTER_EVIDENCE_CHANGED')
+    return request, pack
+
+
+def _request(store, request_id, model, registry, config, _cache=None):
+    request, pack = _request_base(store, request_id, model, registry, config, _cache)
+    input_view.verify_files(store, request, config.max_request_bytes)
     return request, pack
 
 

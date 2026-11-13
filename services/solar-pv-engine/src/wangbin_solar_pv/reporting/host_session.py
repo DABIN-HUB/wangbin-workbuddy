@@ -14,6 +14,7 @@ from .llm_provider import ModelConfig, integration_status
 from .report_assembler import assemble_chapter
 from .host_workspace import HostWorkspace
 from .host_output import PROTOCOL as DELIVERY_PROTOCOL, publish_response, publication_state
+from . import host_input_view as input_view
 
 PROTOCOL_VERSION = 'native-host-session/2.0'
 NOT_EXPOSED = 'NOT_EXPOSED_BY_HOST'
@@ -32,11 +33,13 @@ def open_session(workspace, run_name, grant_name, catalog, *, create=False):
     grant, _ = workspace.read(_relative(workspace, grant_name))
     required = {'schema_version', 'canonical', 'canonical_sha256', 'pv_type',
                 'authorized_source_ids', 'host_processing_authorized', 'model_config'}
-    if (not isinstance(grant, dict) or set(grant) != required
+    if (not isinstance(grant, dict) or set(grant) not in (required, required | {'input_view_policy'})
             or grant['schema_version'] != 'host-authorization/2.0'
             or grant['host_processing_authorized'] is not True
             or grant['pv_type'] not in {'industrial_rooftop', 'utility_scale_ground'}):
         raise ContractError('HOST_AUTHORIZATION_REQUIRED')
+    if 'input_view_policy' in grant:
+        input_view.policy(grant['input_view_policy'])
     sources = grant['authorized_source_ids']
     if (not isinstance(sources, list) or any(not isinstance(s, str) or not s for s in sources)
             or len(set(sources)) != len(sources)):
@@ -56,6 +59,8 @@ def open_session(workspace, run_name, grant_name, catalog, *, create=False):
     store = HostWorkspace(target)
     binding = {'protocol_version': PROTOCOL_VERSION, 'grant_hash': digest(grant),
                'identity': model.identity, 'spec_hash': registry.hash, 'model_config': config.to_dict()}
+    if 'input_view_policy' in grant:
+        binding['input_view_policy'] = dict(grant['input_view_policy'])
     with store.lock('host-authorization.json'):
         if store.path('host-authorization.json').exists():
             if store.read('host-authorization.json')[0] != binding:
@@ -113,11 +118,14 @@ def _provenance(store, request_id, accepted=None):
     return response, record
 
 
-def checkpoint(store, model, registry, config, allowed_sources):
+def checkpoint(store, model, registry, config, allowed_sources, *, input_view_policy=None):
     state = store.read('state.json')[0] if store.path('state.json').exists() else {'requests': []}
-    if 'binding' in state and state['binding'] != {
+    expected_binding = {
             'identity': model.identity, 'spec_hash': registry.hash, 'model_config': config.to_dict(),
-            'authorized_sources': sorted(set(allowed_sources)), 'scenario_bundle_hash': digest(None)}:
+            'authorized_sources': sorted(set(allowed_sources)), 'scenario_bundle_hash': digest(None)}
+    if input_view_policy is not None:
+        expected_binding['input_view_policy'] = input_view.policy(input_view_policy)
+    if 'binding' in state and state['binding'] != expected_binding:
         raise ContractError('HOST_AUTHORIZATION_CHANGED')
     items = []
     for row in state['requests']:
@@ -163,10 +171,10 @@ def checkpoint(store, model, registry, config, allowed_sources):
 
 
 def execute(action, workspace, run_name, grant_name, catalog, request_id=None, docx=None):
-    if action not in {'prepare', 'prepare-r2', 'publish', 'accept', 'resume', 'checkpoint', 'cancel'}:
+    if action not in {'prepare', 'prepare-r2', 'prepare-r2-shared', 'publish', 'accept', 'resume', 'checkpoint', 'cancel'}:
         raise ContractError('HOST_ACTION_INVALID')
     store, grant, model, registry, config = open_session(
-        workspace, run_name, grant_name, catalog, create=action in {'prepare', 'prepare-r2'})
+        workspace, run_name, grant_name, catalog, create=action in {'prepare', 'prepare-r2', 'prepare-r2-shared'})
     # Serializes local host actions; core state/result locks remain unchanged.
     with store.lock('host-operation.json'):
         if action == 'cancel':
@@ -176,21 +184,30 @@ def execute(action, workspace, run_name, grant_name, catalog, request_id=None, d
             return {'status': 'CANCELLED_LOCALLY', 'remote_cancellation': NOT_EXPOSED}
         if action != 'checkpoint' and store.path('host-cancelled.json').exists():
             raise ContractError('HOST_RUN_CANCELLED')
-        current = checkpoint(store, model, registry, config, grant['authorized_source_ids'])
+        if action in {'prepare', 'prepare-r2', 'prepare-r2-shared'} and (
+                (action == 'prepare-r2-shared') != ('input_view_policy' in grant)):
+            raise ContractError('HOST_INPUT_POLICY')
+        current = checkpoint(store, model, registry, config, grant['authorized_source_ids'],
+                             input_view_policy=grant.get('input_view_policy'))
         if action == 'checkpoint':
             return current
         if docx:
             if action not in {'accept', 'resume'} or not docx.endswith('.docx') or any(c in docx for c in '/\\:'):
                 raise ContractError('HOST_RELATIVE_PATH_REQUIRED')
             store.path(docx, json_only=False)
-        if action in {'prepare', 'prepare-r2'}:
+        if action in {'prepare', 'prepare-r2', 'prepare-r2-shared'}:
             req = prepare(HostWorkspace(workspace.root), run_name, model, registry, 'CH08', config,
                           grant['authorized_source_ids'],
-                          host_delivery=DELIVERY_PROTOCOL if action == 'prepare-r2' else None)
-            return {'request_id': req['request_id'], 'request_hash': req['request_hash'],
+                          host_delivery=DELIVERY_PROTOCOL if action != 'prepare' else None,
+                          input_view_policy=grant.get('input_view_policy'))
+            result = {'request_id': req['request_id'], 'request_hash': req['request_hash'],
                     'execution_state': req['execution_state'],
                     'request_file': run_name + '/' + req['request_id'] + '-request.json',
                     'model_invoked': False}
+            if action == 'prepare-r2-shared':
+                result['input_view_file'] = run_name + '/' + req['request_id'] + '-input-view.json'
+                result['input_manifest_file'] = run_name + '/' + req['request_id'] + '-input-manifest.json'
+            return result
         if not isinstance(request_id, str) or not re.fullmatch(r'CH08-[1-3]', request_id):
             raise ContractError('HOST_CHAPTER_GATE')
         if action == 'publish':
@@ -229,7 +246,7 @@ def execute(action, workspace, run_name, grant_name, catalog, request_id=None, d
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=['status', 'prepare', 'prepare-r2', 'publish', 'accept',
+    parser.add_argument('action', choices=['status', 'prepare', 'prepare-r2', 'prepare-r2-shared', 'publish', 'accept',
                                         'resume', 'checkpoint', 'cancel'])
     parser.add_argument('--workspace')
     parser.add_argument('--grant')

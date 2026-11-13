@@ -34,6 +34,8 @@ license_status: REQUIRES_MANUAL_REVIEW
 
 R2先保持完整六节Schema：claims的许可ID不是必须填满的配额，每条claim覆盖所指段落全部事实及真实来源；假设不能标SUPPORTED；技术ID留元数据，正文用读者语言和合法槽。模型只写本请求的全新draft，引擎严格校验后原子发布response/完成回执，禁止修补旧失败JSON。具体边界见上述指引。新版Skill不含或安装引擎，动作不可用仍须停止CLI，不能将开发机验证冒充宿主成功。
 
+源码候选另提供显式 `prepare-r2-shared`（不是已安装能力或本轮试验授权）。它需要新授权的严格 `input_view_policy`，仅返回同run完整共享视图供阅读；先读host-orchestration的共享阅读语法。pool/tree必须完整持有，数字词法包装与内部共享索引不能充当正式引用；缺段、未知版本、过期或不能完整读取即停止，不自动切换旧模式或追加调用。本轮不打包、安装、替换Skill或投递客户端。
+
 下文report/project-report是保留的**legacy确定性报告导出**，不代表AI2.0运行时生成。不要将旧入口外层SUCCESS转述成模型研究或四文件通过。当前原生路径仍是本地候选，实际WorkBuddy专家安装、连接器环境继承和无旧稿生成均未验证。
 
 本 Skill ZIP 是提示词、契约、冻结定义和路由脚本包，不会自动安装 Python、pip 依赖或光伏计算引擎。推荐在 WorkBuddy 中同时安装配套 CLI Connector `wangbin-solar-pv-cli`；Connector 使用 WorkBuddy 托管的 Python runtime 和隔离虚拟环境安装已审阅的 `wangbin-solar-pv-input==0.3.1` 与 `wangbin-document-cli==1.2.0`。如果 Connector 未安装或状态不是 `LOCAL_READY`，不得声称已完成计算。

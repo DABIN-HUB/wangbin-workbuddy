@@ -5,6 +5,7 @@ from hashlib import sha256
 from ..errors import ContractError
 from ..serialization import digest, dumps
 from .claim_validator import validate_chapter
+from .host_input_view import verify_files
 
 PROTOCOL = 'host-draft-publication/2.0-r2'
 NOT_EXPOSED = 'NOT_EXPOSED_BY_HOST'
@@ -38,8 +39,11 @@ def require_active(store):
 
 
 def _intent(request, raw_hash, response):
-    return {'protocol': PROTOCOL, 'request_hash': request['request_hash'],
-            'raw_draft_sha256': raw_hash, 'response_hash': digest(response)}
+    result = {'protocol': PROTOCOL, 'request_hash': request['request_hash'],
+              'raw_draft_sha256': raw_hash, 'response_hash': digest(response)}
+    if 'input_view_policy' in request:
+        result['input_view_policy'] = request['input_view_policy']
+    return result
 
 
 def _receipt(request, raw_hash, response, response_hash):
@@ -57,6 +61,7 @@ def _receipt(request, raw_hash, response, response_hash):
 def verify_publication(store, request):
     """Read-back verification; never repairs a receipt or trusts a status string."""
     _require(request)
+    verify_files(store, request)
     rid = request['request_id']
     try:
         draft, raw_hash = store.read(rid + '-draft.json')
@@ -75,6 +80,7 @@ def publish_response(store, request, pack, chapter, config):
     """Caller holds host-operation lock and has revalidated request/authorization."""
     _require(request)
     require_active(store)
+    verify_files(store, request, config.max_request_bytes)
     rid = request['request_id']
     if store.path(rid + '-failure.json').exists():
         raise ContractError('CHAPTER_ATTEMPT_ALREADY_CLOSED')

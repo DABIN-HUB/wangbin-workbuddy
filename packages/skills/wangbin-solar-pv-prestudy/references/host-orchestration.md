@@ -47,6 +47,14 @@ python scripts/run_ai_chapter.py prepare-r2 --workspace <用户授权根> --gran
 
 R2请求包含`host_delivery=host-draft-publication/2.0-r2`及参与request_hash的writing_guidance。旧prepare仍保留兼容，但不能将旧request改成R2；新试验必须新run、prepare-r2。已安装引擎不支持该动作时保持依赖阻断，不能靠此Skill ZIP自动升级引擎。
 
+### 显式整章共享视图（源码候选，尚未安装）
+
+只有用户另行批准新试验、已安装引擎支持新动作且新run授权额外包含精确policy时，才可运行 `prepare-r2-shared`。policy为 `{"mode":"shared-objects","version":"host-input-shared/1","mapping":"flat-exact-containers/1"}`。旧授权不变；不能在旧run上加字段升级。wrapper透传该动作且继续使用sys.executable -I和环境清理，不注入开发源码。
+
+返回的 `input_view_file` 是唯一完整宿主研究输入（同一JSON内有reading、pool、tree、binding、policy）；`input_manifest_file` 是引擎校验材料，不是模型可写文件。原request/canonical/授权仍是事实/权限真源，不将其中来源路径当额外Read许可。view内仅 `{"$shared":"S0001"}` 表示pool中完全相同的原对象/数组，pool平坦且没有共享链；`{"$number":"1e+02"}` 表示原JSON数字词法，不是新的字符串事实。S索引不是fact/source/formula ID，禁止输出至报告引用。全部条目与tree必须在同一视图内，不取外部字典或URL。Schema内部也可共享编码，但这是视图语法而非JSON Schema的$ref；响应仍遵守展开后原Schema与四键draft，不输出视图编码。
+
+必须完整读取并持续持有pool/tree、六节任务、全部事实/来源状态/许可、风险指引、原Schema和上游未完成状态。缺段/缺池/未知policy或mapping/不能完整持有时立即停止，不摘要补全、不自动退回旧请求或类型行、不增加模型预算。hash只绑定字节，不是宿主已读证明或认证。新视图失败、半写或缺失不自动补文件；原attempt已预留，重新生成仍受原预算与另行授权约束。合法已接受结果过期后可只读重验/恢复；过期不能开始新的publish/accept，取消仍阻断本地后续提交。本轮只是SOURCE/REVIEW ONLY，没有受信wheel或新Skill安装包，没有客户端投递授权。
+
 ### 紧凑而完整的输出
 
 - 正文中用“本章”“上游章节”“待审公式”等读者语言，不写CH08/CH07.01、表格ID或PHASE1_METHOD_REVIEW_REQUIRED。这些ID只放现有元数据字段；正文只可使用本请求已注册term槽。不要把数字换成中文数词绕过数值规则。
