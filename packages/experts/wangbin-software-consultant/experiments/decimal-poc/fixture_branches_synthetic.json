@@ -1,0 +1,16 @@
+{
+  "label": "SYNTHETIC/ASSUMED conditional interface; no customer facts",
+  "scope_version": "synthetic-v1",
+  "work_packages": [
+    {"id":"M1","function":"SYNTHETIC purchase","source":"SYNTHETIC fixture M1","scope_version":"synthetic-v1","membership":["MVP","StandardA","StandardB","FullA","FullB"],"roles":{"FE":{"low":"2","high":"3"},"BE":{"low":"3","high":"5"},"DB":{"low":"1","high":"2"},"QA":{"low":"1","high":"2"}}},
+    {"id":"M2","function":"SYNTHETIC inventory","source":"SYNTHETIC fixture M2","scope_version":"synthetic-v1","membership":["MVP","StandardA","StandardB","FullA","FullB"],"roles":{"FE":{"low":"2","high":"3"},"BE":{"low":"3","high":"5"},"DB":{"low":"2","high":"3"},"QA":{"low":"2","high":"3"}}},
+    {"id":"S1","function":"SYNTHETIC warehouses","source":"SYNTHETIC fixture S1","scope_version":"synthetic-v1","membership":["StandardA","StandardB","FullA","FullB"],"roles":{"FE":{"low":"1","high":"2"},"BE":{"low":"2","high":"3"},"DB":{"low":"1","high":"2"},"QA":{"low":"1","high":"2"}}},
+    {"id":"S2","function":"SYNTHETIC approval","source":"SYNTHETIC fixture S2","scope_version":"synthetic-v1","membership":["StandardA","StandardB","FullA","FullB"],"roles":{"FE":{"low":"1","high":"2"},"BE":{"low":"2","high":"4"},"DB":{"low":"1","high":"2"},"QA":{"low":"1","high":"2"}}},
+    {"id":"F1","function":"SYNTHETIC finance mapping preparation without integration","source":"SYNTHETIC fixture F1","scope_version":"synthetic-v1","membership":["StandardA","StandardB","FullA","FullB"],"roles":{"FE":{"low":"0","high":"0"},"BE":{"low":"2","high":"3"},"DB":{"low":"1","high":"2"},"QA":{"low":"1","high":"2"}}},
+    {"id":"I1","function":"ASSUMED_CONDITIONAL finance interface; authorization and docs unknown","source":"ASSUMED_CONDITIONAL fixture I1; not an opened interface","scope_version":"synthetic-v1","membership":["StandardB","FullB"],"roles":{"FE":{"low":"0","high":"0"},"BE":{"low":"3","high":"5"},"DB":{"low":"2","high":"3"},"QA":{"low":"2","high":"3"}}},
+    {"id":"C1","function":"SYNTHETIC extended reconciliation","source":"SYNTHETIC fixture C1","scope_version":"synthetic-v1","membership":["FullA","FullB"],"roles":{"FE":{"low":"1","high":"2"},"BE":{"low":"2","high":"3"},"DB":{"low":"1","high":"2"},"QA":{"low":"2","high":"3"}}}
+  ],
+  "buffers":{"low":"0.10","high":"0.20","source":"SYNTHETIC illustrative assumption, not approved customer buffer"},
+  "pricing":{"mode":"fixed","unit_price":"1200","source":"SYNTHETIC illustrative user parameter"},
+  "outside_fees":{"status":"unknown"}
+}
