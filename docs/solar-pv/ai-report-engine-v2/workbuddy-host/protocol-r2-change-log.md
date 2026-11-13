@@ -11,6 +11,7 @@
 ## 身份、冻结及原件
 
 - 原基线：`9faf44b86f4bb99a8a1021e1b35c70a4a49571e9`；R2-0诊断/计划提交：`c4eda89e8a44d4a8b84b1003403ad6a62d65e566`。后续阶段及最终HEAD由下述`final-state.json`读回记录，本文件不自引用自己的提交SHA。
+- R2源码/专项/候选说明阶段已提交：`f4578bdd02ff4c8cc4561bffda52a4dc24b2445e`，显式wip非发布提交；随后只补充本页的真实清理与提交后验证记录。
 - 本轮目录：`.runtime/solar-pv/ai-v2-host-protocol-r2-20261113-101239/`（下称RUN）。全部详细回执、错误原件和临时协议案例在此；不改旧运行。
 - 原99成员审阅ZIP SHA：`09b81e392bb07da74f4c83191925c33f7a5d78d1ab41f3e7604f19f5e05f6aaf`。98项载荷的成员集合、逐项哈希及CRC已核验。
 - 原失败map：`diagnosis/original-failure-map.json`，SHA `938973ae3970d60183157cd170f48fd6144fabae9178d2f000022935fc3f5747`。脚本及负向复现不补括号、不执行accept、不生成新专业正文。
@@ -58,6 +59,8 @@
 
 以上按实际JUnit用例ID去重为**205项通过、零失败/错误/跳过**，不是把多轮重复执行累加，也不是全模块或全仓通过。最终来源匹配及提交后再验证记录在`verification-summary.json`、`final-state.json`；不同源码版本的旧结果不替代最终对应路径验证。
 
+源码提交后再次执行`r22-postcommit-r2-core`（112通过，2个native正向用例未选，使用前述最终双案回执）及`r22-postcommit-display`（37通过）。该149项是上述205项的重复验证，不新增计数。全部所采信回执绑定的生产及测试文件SHA已逐项与最终工作区比较一致。
+
 必须同时保留的非通过记录：
 
 - `r20-host-baseline`：180秒TIMEOUT，无完整JUnit，不推定通过数。
@@ -102,6 +105,8 @@ SHA-256：`7054c670e66ad3caeab73a1ad8e9b35fd3c85f340b345aa9976e501b3250bbc9`
 
 最终交付索引为RUN下`final-state.json`、`verification-summary.json`、`source-diff.patch`及Git增量bundle；审阅ZIP和MANIFEST逐项核验另在`archive-readback.json`。增量bundle需要原基线9faf44b，**不是独立全仓备份**。受保护大包及旧运行以路径/大小/SHA索引保留，审阅包不等于安装包或云备份。
 
-本轮无已证实废弃的历史资产删除：净删除0文件、释放0字节。旧已安装候选、正式旧Skill/Connector及历史失败证据继续保留；测试输出放已忽略RUN，作为此次真实验收/失败及恢复材料保留。卫生工具--check为只读且不能把历史日志标记自动解释为可删除；未执行全仓清理。dist和runtime均忽略，不提交ZIP/JUnit/原始大JSON；只提交明确生产、测试和必要文档。最终文件数/字节、Git状态、dist和保护验证以final-state读回为准。
+已跟踪历史资产净删除0文件、0字节。仅清理本轮自行生成、被最终测试产物替代的6个成功中间案例目录：先逐文件审核/哈希，移入独名直接子目录并标记，再通过既有卫生工具--check/--clean删除；532个临时载荷共23122409字节，含本次新增97字节标记的清理回执为533文件/23122506字节。见cleanup-selection.json、cleanup-receipt.json及r22-scoped-cleanup回执。全部JUnit、命令回执、失败/超时原件、最终双案协议产物、qa和历史运行保留。未清理未知来源缓存或其他产品。
+
+旧已安装候选、正式旧Skill/Connector继续保留；最终测试输出放已忽略RUN作为验收及恢复材料。卫生工具的历史日志提示不解释为可删除；未执行全仓清理。dist和runtime均忽略，不提交ZIP/JUnit/原始大JSON；只提交明确生产、测试和必要文档。最终文件数/字节、Git状态、dist和保护验证以final-state读回为准。
 
 后续须解决正式独立QA与可信隔离安装条件，并由用户对上述精确候选明确批准新的客户端试验；若提示覆盖同ID，仍须暂停确认。新会话只能读本次新request及授权事实，不能读旧authored/draft/Word。双案严格接受前不得解锁其他章节或Phase E。当前停止于本地候选审阅，不再用改写旧正文追求PASS。
