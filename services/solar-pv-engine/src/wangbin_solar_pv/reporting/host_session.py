@@ -13,6 +13,7 @@ from .chapter_writer import prepare, accept, resume, _request
 from .llm_provider import ModelConfig, integration_status
 from .report_assembler import assemble_chapter
 from .host_workspace import HostWorkspace
+from .host_output import PROTOCOL as DELIVERY_PROTOCOL, publish_response, publication_state
 
 PROTOCOL_VERSION = 'native-host-session/2.0'
 NOT_EXPOSED = 'NOT_EXPOSED_BY_HOST'
@@ -132,7 +133,7 @@ def checkpoint(store, model, registry, config, allowed_sources):
         request, _ = _request(store, rid, model, registry, config)
         item = {'request_id': rid, 'chapter_id': request['chapter_id'], 'request_hash': request['request_hash']}
         if store.path(rid + '-result.json').exists():
-            accepted, _ = resume(store, rid, model, registry, config)
+            accepted, _ = resume(store, rid, model, registry, config, _inspection=True)
             _, record = _provenance(store, rid, accepted)
             if store.read(rid + '-host-intent.json')[0] != record:
                 raise ContractError('HOST_PROVENANCE_CHANGED')
@@ -146,11 +147,14 @@ def checkpoint(store, model, registry, config, allowed_sources):
             item.update(status='FAILED', code=store.read(rid + '-failure.json')[0]['code'])
         else:
             expired = datetime.now(timezone.utc) > datetime.fromisoformat(request['expires_at'])
-            item['status'] = 'EXPIRED' if expired else 'AWAITING_AUTHORIZED_HOST'
+            item['status'] = ('EXPIRED' if expired else publication_state(store, request)
+                              if request.get('host_delivery') else 'AWAITING_AUTHORIZED_HOST')
         items.append(item)
     cancelled = store.path('host-cancelled.json').exists()
     cursor = next((r['request_id'] for r in reversed(items)
-                   if r['status'] in {'AWAITING_AUTHORIZED_HOST', 'ACCEPT_RECOVERY_REQUIRED'}), None)
+                   if r['status'] in {'AWAITING_AUTHORIZED_HOST', 'ACCEPT_RECOVERY_REQUIRED',
+                                      'INCOMPLETE_OUTPUT', 'OUTPUT_PUBLICATION_INTERRUPTED',
+                                      'OUTPUT_PUBLISHED_NOT_ACCEPTED'}), None)
     return {'schema_version': PROTOCOL_VERSION, 'requests': items,
             'cursor': None if cancelled else cursor,
             'status': 'CANCELLED_LOCALLY' if cancelled else 'CHECKPOINT_REVALIDATED',
@@ -159,10 +163,10 @@ def checkpoint(store, model, registry, config, allowed_sources):
 
 
 def execute(action, workspace, run_name, grant_name, catalog, request_id=None, docx=None):
-    if action not in {'prepare', 'accept', 'resume', 'checkpoint', 'cancel'}:
+    if action not in {'prepare', 'prepare-r2', 'publish', 'accept', 'resume', 'checkpoint', 'cancel'}:
         raise ContractError('HOST_ACTION_INVALID')
     store, grant, model, registry, config = open_session(
-        workspace, run_name, grant_name, catalog, create=action == 'prepare')
+        workspace, run_name, grant_name, catalog, create=action in {'prepare', 'prepare-r2'})
     # Serializes local host actions; core state/result locks remain unchanged.
     with store.lock('host-operation.json'):
         if action == 'cancel':
@@ -179,15 +183,19 @@ def execute(action, workspace, run_name, grant_name, catalog, request_id=None, d
             if action not in {'accept', 'resume'} or not docx.endswith('.docx') or any(c in docx for c in '/\\:'):
                 raise ContractError('HOST_RELATIVE_PATH_REQUIRED')
             store.path(docx, json_only=False)
-        if action == 'prepare':
+        if action in {'prepare', 'prepare-r2'}:
             req = prepare(HostWorkspace(workspace.root), run_name, model, registry, 'CH08', config,
-                          grant['authorized_source_ids'])
+                          grant['authorized_source_ids'],
+                          host_delivery=DELIVERY_PROTOCOL if action == 'prepare-r2' else None)
             return {'request_id': req['request_id'], 'request_hash': req['request_hash'],
                     'execution_state': req['execution_state'],
                     'request_file': run_name + '/' + req['request_id'] + '-request.json',
                     'model_invoked': False}
         if not isinstance(request_id, str) or not re.fullmatch(r'CH08-[1-3]', request_id):
             raise ContractError('HOST_CHAPTER_GATE')
+        if action == 'publish':
+            request, pack = _request(store, request_id, model, registry, config)
+            return publish_response(store, request, pack, registry.chapter('CH08'), config)
         if action == 'accept':
             response, record = _provenance(store, request_id)
             intent = request_id + '-host-intent.json'
@@ -221,7 +229,8 @@ def execute(action, workspace, run_name, grant_name, catalog, request_id=None, d
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=['status', 'prepare', 'accept', 'resume', 'checkpoint', 'cancel'])
+    parser.add_argument('action', choices=['status', 'prepare', 'prepare-r2', 'publish', 'accept',
+                                        'resume', 'checkpoint', 'cancel'])
     parser.add_argument('--workspace')
     parser.add_argument('--grant')
     parser.add_argument('--run')

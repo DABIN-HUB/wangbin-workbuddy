@@ -30,7 +30,9 @@ license_status: REQUIRES_MANUAL_REVIEW
 
 本轮区分两条路径：用户显式选择“手动文件交接的宿主写作试验”时，当前WorkBuddy模型仅依据用户上传或授权读取的新CH08 request开展研究并返回符合其中Schema的新章节JSON；这一步不依赖Python或Connector，不因缺少它们而拒绝写作。无法实际读取完整请求时停止，不猜测被截断的事实或Schema。此路径只观察宿主写作，不代表CLI、Word或自动工具编排通过。
 
-完整CLI路径通过 `@scripts/run_ai_chapter.py` 调用已安装引擎的授权/prepare/accept/checkpoint/resume协议；缺正确解释器、内部wheel或工具授权时仅阻断这条路径，不暗中切换开发源码。两条路径均不得读取authored、历史draft、旧Word或过去的完整章节作为新写作输入，不能用Hermes作者会话、协议fixture或本地UUID替代。来源、数值和专业边界不因手动交接而放宽。
+完整CLI路径通过 `@scripts/run_ai_chapter.py` 调用已安装引擎的授权/prepare-r2/publish/accept/checkpoint/resume协议；缺正确解释器、内部wheel或工具授权时仅阻断这条路径，不暗中切换开发源码。两条路径均不得读取authored、历史draft、旧Word或过去的完整章节作为新写作输入，不能用Hermes作者会话、协议fixture或本地UUID替代。来源、数值和专业边界不因手动交接而放宽。
+
+R2先保持完整六节Schema：claims的许可ID不是必须填满的配额，每条claim覆盖所指段落全部事实及真实来源；假设不能标SUPPORTED；技术ID留元数据，正文用读者语言和合法槽。模型只写本请求的全新draft，引擎严格校验后原子发布response/完成回执，禁止修补旧失败JSON。具体边界见上述指引。新版Skill不含或安装引擎，动作不可用仍须停止CLI，不能将开发机验证冒充宿主成功。
 
 下文report/project-report是保留的**legacy确定性报告导出**，不代表AI2.0运行时生成。不要将旧入口外层SUCCESS转述成模型研究或四文件通过。当前原生路径仍是本地候选，实际WorkBuddy专家安装、连接器环境继承和无旧稿生成均未验证。
 

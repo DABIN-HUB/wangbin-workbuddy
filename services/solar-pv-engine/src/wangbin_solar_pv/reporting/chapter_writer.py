@@ -10,6 +10,7 @@ from .chapter_result_schema import result_schema
 from .claim_validator import validate_chapter, SLOT
 from .evidence_pack_builder import build_pack
 from .llm_provider import ModelConfig
+from .host_output import PROTOCOL as DELIVERY_PROTOCOL, GUIDANCE, verify_publication, require_active
 
 
 def _now():
@@ -51,8 +52,11 @@ def _upstream(store, state, chapter, model, registry, config, cache):
     return dependencies
 
 
-def prepare(workspace, run_name, model, registry, chapter_id, config, allowed_source_ids, scenario_bundle=None):
+def prepare(workspace, run_name, model, registry, chapter_id, config, allowed_source_ids, scenario_bundle=None,
+            *, host_delivery=None):
     _id(run_name)
+    if host_delivery not in (None, DELIVERY_PROTOCOL):
+        raise ContractError('HOST_DELIVERY_PROTOCOL_REQUIRED')
     cfg = config.to_dict()
     pack = build_pack(model, registry, chapter_id, allowed_source_ids, scenario_bundle)
     chapter = registry.chapter(chapter_id)
@@ -64,6 +68,8 @@ def prepare(workspace, run_name, model, registry, chapter_id, config, allowed_so
     store = type(workspace)(root)
     # Shared run lock covers initialization, reservation and request publication.
     with store.lock('state.json'):
+        if host_delivery:
+            require_active(store)
         if store.path('state.json').exists():
             state, old_hash = store.read('state.json')
             if state['binding'] != binding:
@@ -91,6 +97,8 @@ def prepare(workspace, run_name, model, registry, chapter_id, config, allowed_so
                    'decision_gate': 'DEFER_ONLY_PENDING_PROFESSIONAL_REVIEW',
                    'execution_state': 'AWAITING_AUTHORIZED_HOST',
                    'semantic_review': 'PENDING_REVIEW'}
+        if host_delivery is not None:
+            request.update(host_delivery=host_delivery, writing_guidance=list(GUIDANCE))
         request['request_hash'] = digest(request)
         if len(dumps(request).encode('utf-8')) > cfg['max_request_bytes']:
             raise ContractError('MODEL_CONTEXT_BUDGET_EXCEEDED')
@@ -107,6 +115,8 @@ def _request(store, request_id, model, registry, config, _cache=None):
     request, _ = store.read(request_id + '-request.json')
     if request['request_hash'] != digest({k: v for k, v in request.items() if k != 'request_hash'}):
         raise ContractError('CHAPTER_REQUEST_HASH')
+    if request.get('host_delivery') not in (None, DELIVERY_PROTOCOL):
+        raise ContractError('HOST_DELIVERY_PROTOCOL_REQUIRED')
     state, _ = store.read('state.json')
     if (request['binding'] != state['binding'] or request['generation_run_id'] != state['generation_run_id']
             or not any(r['request_id'] == request_id and r['request_hash'] == request['request_hash']
@@ -135,6 +145,11 @@ def accept(store, request_id, response, model, registry, config):
             raise ContractError('CHAPTER_ATTEMPT_ALREADY_CLOSED')
         try:
             request, pack = _request(store, request_id, model, registry, config)
+            if request.get('host_delivery'):
+                require_active(store)
+                publication = verify_publication(store, request)
+                if publication['response_hash'] != digest(response):
+                    raise ContractError('HOST_PUBLICATION_CHANGED')
             if _now() > datetime.fromisoformat(request['expires_at']):
                 raise ContractError('MODEL_REQUEST_EXPIRED')
             if len(dumps(response).encode('utf-8')) > config.max_output_bytes:
@@ -164,9 +179,15 @@ def accept(store, request_id, response, model, registry, config):
             raise
 
 
-def resume(store, request_id, model, registry, config, _cache=None):
+def resume(store, request_id, model, registry, config, _cache=None, *, _inspection=False):
     request, pack = _request(store, request_id, model, registry, config, _cache)
     accepted, _ = store.read(request_id + '-result.json')
+    if request.get('host_delivery'):
+        if not _inspection:
+            require_active(store)
+        publication = verify_publication(store, request)
+        if publication['output_hash'] != accepted.get('chapter_output_hash'):
+            raise ContractError('HOST_PUBLICATION_CHANGED')
     keys = ('request_hash', 'generation_run_id', 'report_spec_version', 'prompt_version', 'model_id', 'chapter_id', 'dependency_hash')
     if (any(accepted.get(key) != request[key] for key in keys) or accepted['identity'] != model.identity
             or accepted.get('llm_integration') != 'HOST_DECLARED_NOT_INDEPENDENTLY_VERIFIED'):

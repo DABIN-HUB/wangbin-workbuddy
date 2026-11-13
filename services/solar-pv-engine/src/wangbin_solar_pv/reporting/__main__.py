@@ -50,6 +50,11 @@ def main(argv=None):
                 raise ContractError('CHAPTER_ARGUMENTS_REQUIRED')
             if args.command not in {'evaluate', 'compare'} and not all((args.canonical, args.workspace, args.run, args.model)):
                 raise ContractError('CHAPTER_ARGUMENTS_REQUIRED')
+            if args.command in {'prepare', 'accept', 'resume'}:
+                workspace = Workspace(args.workspace)
+                target = workspace.path(args.run, json_only=False)
+                if target.exists() and Workspace(target).path('host-authorization.json').exists():
+                    raise ContractError('HOST_NATIVE_ENTRY_REQUIRED')
             canonical = args.canonical.absolute()
             result_data, _ = Workspace(canonical.parent).read(canonical.name)
             model = ReportModel.from_result(result_data, catalog)
