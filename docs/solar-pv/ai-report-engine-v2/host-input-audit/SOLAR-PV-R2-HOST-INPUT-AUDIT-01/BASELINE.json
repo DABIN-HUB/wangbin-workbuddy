@@ -1,0 +1,360 @@
+{
+  "task_id": "SOLAR-PV-R2-HOST-INPUT-AUDIT-01",
+  "schema_version": "host-input-audit-baseline/1",
+  "author_snapshot_state": "FROZEN_FOR_INDEPENDENT_QA_PENDING_MANAGER_EVIDENCE",
+  "repository": "F:\\ideaWorkSpace\\wangbin-workbuddy",
+  "branch": "main",
+  "source_baseline_head": "71ba9b8b2ed6ba7d96ad6619a29a44875d2a6c9a",
+  "origin_main_at_recorded_preflight": "71ba9b8b2ed6ba7d96ad6619a29a44875d2a6c9a",
+  "audit_dir_absence_check": {
+    "at": "2026-11-13T14:41:13.833219+08:00",
+    "existed": false,
+    "initial_tracked_untracked_cached_clean": true,
+    "evidence": "Initial live terminal transcript; repeated git values in git-preflight.json"
+  },
+  "git_preflight": {
+    "path": ".runtime\\solar-pv\\SOLAR-PV-R2-HOST-INPUT-AUDIT-01\\git-preflight.json",
+    "bytes": 6026,
+    "sha256": "5d5067a25755e223b4645b2fa15fc418fcccdab9227dd296421ea9edd3f4839f",
+    "entries": 10
+  },
+  "protected_tracked": {
+    "path": ".runtime\\solar-pv\\SOLAR-PV-R2-HOST-INPUT-AUDIT-01\\protected-tracked-before.json",
+    "bytes": 239721,
+    "sha256": "23868171723852bf7275b686854dfbe1cb6315a2be84e3f3a5707fc5987c6eae",
+    "entries": 1242
+  },
+  "protected_originals_dist": {
+    "path": ".runtime\\solar-pv\\SOLAR-PV-R2-HOST-INPUT-AUDIT-01\\protected-originals-before.json",
+    "bytes": 35287,
+    "sha256": "1be692d2c889950c244101397863d9b84627a2baffb62cb8fa89e590fb8fe753",
+    "entries": 170
+  },
+  "protected_r8_r13_metadata_index": {
+    "path": ".runtime\\solar-pv\\SOLAR-PV-R2-HOST-INPUT-AUDIT-01\\protected-r8-r13-index-before.json",
+    "bytes": 466291,
+    "sha256": "017da0eb14ded6729fdb42c824eba88a4e34d16c403c06fa0b03c727faf2fc16",
+    "entries": 2638
+  },
+  "protection_scope_note": "All tracked pre-existing files hashed; task originals and dist hashed; R8-R13 separately indexed by exact path/size/mtime. R8-R13 index is metadata, not a new content-hash proof. Other worktrees enumerated only, never traversed or modified.",
+  "protected_tracked_bytes": 613683280,
+  "archives": [
+    {
+      "path": ".runtime/solar-pv/r2-client-552-20261113-132354-review.zip",
+      "bytes": 2253964,
+      "sha256": "94376cd68e227de2288c08aac74b94b4398db48dad6dc716921cf85971540cd0",
+      "expected_sha256": "94376cd68e227de2288c08aac74b94b4398db48dad6dc716921cf85971540cd0",
+      "outer_matches": true,
+      "sidecar": {
+        "path": ".runtime/solar-pv/r2-client-552-20261113-132354-review.zip.sha256",
+        "bytes": 108,
+        "sha256": "459ee274f370dc841f038f857f7c2ff156dfbded4d7dcad197547e4f8c4f0b74"
+      },
+      "sidecar_matches": true,
+      "member_count": 74,
+      "unique_members": true,
+      "casefold_unique": true,
+      "crc_bad_member": null,
+      "manifest_candidates": [
+        "candidate-metadata/wangbin-solar-pv-prestudy-0.1.3-host-protocol-r2-20261113-101239.zip.manifest.json",
+        "MANIFEST.json"
+      ]
+    },
+    {
+      "path": "dist/wangbin-solar-pv-prestudy-0.1.3-host-protocol-r2-20261113-101239.zip",
+      "bytes": 214276,
+      "sha256": "7054c670e66ad3caeab73a1ad8e9b35fd3c85f340b345aa9976e501b3250bbc9",
+      "expected_sha256": "7054c670e66ad3caeab73a1ad8e9b35fd3c85f340b345aa9976e501b3250bbc9",
+      "outer_matches": true,
+      "sidecar": {
+        "path": "dist/wangbin-solar-pv-prestudy-0.1.3-host-protocol-r2-20261113-101239.zip.sha256",
+        "bytes": 135,
+        "sha256": "21f27885d95682c7a89ca5ea5730f436515248e8fe17edb709e03a8b725da65a"
+      },
+      "sidecar_matches": true,
+      "member_count": 21,
+      "unique_members": true,
+      "casefold_unique": true,
+      "crc_bad_member": null,
+      "manifest_candidates": [
+        "wangbin-solar-pv-prestudy/manifest.json",
+        "wangbin-solar-pv-prestudy/references/baseline/00-baseline-manifest.json"
+      ],
+      "external_manifest_identity": {
+        "path": "dist/wangbin-solar-pv-prestudy-0.1.3-host-protocol-r2-20261113-101239.zip.manifest.json",
+        "bytes": 4689,
+        "sha256": "8086655eb911b7a7ce160b6af50ab8157687b655cb635ab5e9aeb4f64b79fdc8"
+      }
+    }
+  ],
+  "archive_manifest_verification": [
+    {
+      "kind": "review",
+      "payload_count": 73,
+      "all_member_hashes_match": true,
+      "manifest_failures": [],
+      "missing": [],
+      "extra": []
+    },
+    {
+      "kind": "skill",
+      "payload_count": 21,
+      "all_member_hashes_match": true,
+      "manifest_failures": [],
+      "missing": [],
+      "extra": []
+    }
+  ],
+  "review_local_payloads_match_archive": true,
+  "old_result": {
+    "path": ".runtime\\solar-pv\\r2-client-552-20261113-132354\\RESULT.md",
+    "bytes": 9987,
+    "sha256": "1defe44c8fb891986db08026145d2be0d9fba7425afdb3488ca11911c29a9d6f"
+  },
+  "installed_root": "C:\\Users\\wangbin\\.workbuddy-ai\\skills\\wangbin-solar-pv-prestudy",
+  "installed_member_count": 21,
+  "installed_historical_and_live_all_match": true,
+  "repo_skill_members_all_match": true,
+  "freeze": [
+    {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\docs\\solar-pv\\40-ai-report-engine-2.0-requirements-frozen.md",
+      "bytes": 12534,
+      "sha256": "c56270033d4b1cc0419d865c89fd229df6e68a66d99d50fea51178c1cb1882ad",
+      "normalized_sha256": "5b538c5deb84ef31ded60216ed5bb6222ba4bbfe44d8d6a4928905d7db6e5732",
+      "expected_normalized_sha256": "5b538c5deb84ef31ded60216ed5bb6222ba4bbfe44d8d6a4928905d7db6e5732",
+      "normalized_matches": true
+    },
+    {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\services\\solar-pv-engine\\src\\wangbin_solar_pv\\reporting\\specs\\report-spec.json",
+      "bytes": 565867,
+      "sha256": "52ef2a761294ce4a01768da44b42b3be8f258ba02c488e331f16face397fe78b",
+      "normalized_sha256": "59e379906f6b83d91a76179f14fdc00e5c0dc9346ef5d272bbcf04da90df7532",
+      "expected_normalized_sha256": "59e379906f6b83d91a76179f14fdc00e5c0dc9346ef5d272bbcf04da90df7532",
+      "normalized_matches": true
+    },
+    {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\docs\\solar-pv\\ai-report-engine-v2\\acceptance-matrix.json",
+      "bytes": 98474,
+      "sha256": "f27aa834afc199658b831c1adfa267bc4e952fe3367f2cfd97467eaaf59fb9a3",
+      "normalized_sha256": "d0dd39b4398e283aa99028470742cdd2859e25a14920feda7aceaccdba0c4dcf",
+      "expected_normalized_sha256": "d0dd39b4398e283aa99028470742cdd2859e25a14920feda7aceaccdba0c4dcf",
+      "normalized_matches": true
+    }
+  ],
+  "baseline_catalog_checks": [
+    {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\docs\\solar-pv\\00-original-user-baseline.md",
+      "bytes": 35790,
+      "sha256": "4af609040ca4e800b16d561b86a8a33c54226d175581b54aa00110158c5d09f2",
+      "normalized_sha256": "4af609040ca4e800b16d561b86a8a33c54226d175581b54aa00110158c5d09f2",
+      "expected": "4af609040ca4e800b16d561b86a8a33c54226d175581b54aa00110158c5d09f2",
+      "matches": true
+    },
+    {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\docs\\solar-pv\\00-baseline-manifest.json",
+      "bytes": 977,
+      "sha256": "33845de976ec13345320b79ff7045e86a39bf2194a427b5cd28169238d1defec",
+      "normalized_sha256": "33845de976ec13345320b79ff7045e86a39bf2194a427b5cd28169238d1defec",
+      "expected": "33845de976ec13345320b79ff7045e86a39bf2194a427b5cd28169238d1defec",
+      "matches": true
+    },
+    {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\docs\\solar-pv\\01-product-requirements.md",
+      "bytes": 9273,
+      "sha256": "2bbda5ab6d34e2b21c8b8806335986522d75de3a90e8c2e677d4c2ae8075357c",
+      "normalized_sha256": "2bbda5ab6d34e2b21c8b8806335986522d75de3a90e8c2e677d4c2ae8075357c",
+      "expected": "2bbda5ab6d34e2b21c8b8806335986522d75de3a90e8c2e677d4c2ae8075357c",
+      "matches": true
+    },
+    {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\docs\\solar-pv\\03-input-data-dictionary.md",
+      "bytes": 215547,
+      "sha256": "fcc1eac5641f941adbd6fd4fab216050344b2ae4e0590d8e9549682117ab8148",
+      "normalized_sha256": "fcc1eac5641f941adbd6fd4fab216050344b2ae4e0590d8e9549682117ab8148",
+      "expected": "fcc1eac5641f941adbd6fd4fab216050344b2ae4e0590d8e9549682117ab8148",
+      "matches": true
+    },
+    {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\docs\\solar-pv\\03-input-fields.json",
+      "bytes": 593148,
+      "sha256": "393140cc57b5934041c3fece2c9c185c03c7876afaa3403ce317d795d6112a1b",
+      "normalized_sha256": "393140cc57b5934041c3fece2c9c185c03c7876afaa3403ce317d795d6112a1b",
+      "expected": "393140cc57b5934041c3fece2c9c185c03c7876afaa3403ce317d795d6112a1b",
+      "matches": true
+    },
+    {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\docs\\solar-pv\\05-formulas.json",
+      "bytes": 490989,
+      "sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331",
+      "normalized_sha256": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331",
+      "expected": "d9d601c2cb2b1d6e18e552261c8cdbf9669ddbd8825addad2fa9c6f405c1a331",
+      "matches": true
+    },
+    {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\docs\\solar-pv\\05-formula-extensions.json",
+      "bytes": 40985,
+      "sha256": "14bb789c908f4f883910fd517fd2cf55cf0719739f9fdd84e4dc61b111252007",
+      "normalized_sha256": "14bb789c908f4f883910fd517fd2cf55cf0719739f9fdd84e4dc61b111252007",
+      "expected": "14bb789c908f4f883910fd517fd2cf55cf0719739f9fdd84e4dc61b111252007",
+      "matches": true
+    },
+    {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\docs\\solar-pv\\05-field-bindings.json",
+      "bytes": 222309,
+      "sha256": "4ef6171f063f402963d61edc9647c7565c9ec9338099f62424a77e3507521533",
+      "normalized_sha256": "4ef6171f063f402963d61edc9647c7565c9ec9338099f62424a77e3507521533",
+      "expected": "4ef6171f063f402963d61edc9647c7565c9ec9338099f62424a77e3507521533",
+      "matches": true
+    },
+    {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\docs\\solar-pv\\06-glossary.json",
+      "bytes": 157126,
+      "sha256": "fa29129d43f54a9b84ef6915e7bca99baa7a2a9a16ddab16beb3edec2e4d3ea5",
+      "normalized_sha256": "fa29129d43f54a9b84ef6915e7bca99baa7a2a9a16ddab16beb3edec2e4d3ea5",
+      "expected": "fa29129d43f54a9b84ef6915e7bca99baa7a2a9a16ddab16beb3edec2e4d3ea5",
+      "matches": true
+    },
+    {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\docs\\solar-pv\\06-glossary-extensions.json",
+      "bytes": 14387,
+      "sha256": "108f2a0fc11e07286a571bdf4a9a1c2ba63e1e9deae81558c4407bb1f9b85b61",
+      "normalized_sha256": "108f2a0fc11e07286a571bdf4a9a1c2ba63e1e9deae81558c4407bb1f9b85b61",
+      "expected": "108f2a0fc11e07286a571bdf4a9a1c2ba63e1e9deae81558c4407bb1f9b85b61",
+      "matches": true
+    },
+    {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\docs\\solar-pv\\07-category-boundaries.md",
+      "bytes": 31298,
+      "sha256": "ee935418c0a7ef55544f6f97fddf71bcb62f6b906d0c19256b871f8d02b086a8",
+      "normalized_sha256": "ee935418c0a7ef55544f6f97fddf71bcb62f6b906d0c19256b871f8d02b086a8",
+      "expected": "ee935418c0a7ef55544f6f97fddf71bcb62f6b906d0c19256b871f8d02b086a8",
+      "matches": true
+    },
+    {
+      "path": "F:\\ideaWorkSpace\\wangbin-workbuddy\\docs\\solar-pv\\08-baseline-contract.json",
+      "bytes": 11331,
+      "sha256": "b3616e8ca7deab31b41118f0ffd0a8202c763c54371a9a6949e5d97bdecb140c",
+      "normalized_sha256": "b3616e8ca7deab31b41118f0ffd0a8202c763c54371a9a6949e5d97bdecb140c",
+      "expected": "b3616e8ca7deab31b41118f0ffd0a8202c763c54371a9a6949e5d97bdecb140c",
+      "matches": true
+    }
+  ],
+  "counts": {
+    "chapters": 18,
+    "chapter_sections": 100,
+    "appendices": 13,
+    "appendix_sections": 26,
+    "fields": 469,
+    "formulas": 89,
+    "bindings": 281,
+    "terms_keys": {
+      "06-glossary.json": [
+        "schema_version",
+        "methodology_version",
+        "phase",
+        "document_date",
+        "method_status",
+        "engine_status",
+        "numerical_validation_status",
+        "standard_verification_status",
+        "provenance",
+        "integration_contract",
+        "term_count",
+        "minimum_baseline_abbreviations",
+        "terms"
+      ],
+      "06-glossary-extensions.json": [
+        "schema_version",
+        "scope",
+        "terms"
+      ]
+    },
+    "matrix_entries": 126,
+    "spec_protected_counts": {
+      "chapters": 18,
+      "sections": 100,
+      "appendices": 13,
+      "appendix_sections": 26,
+      "fields": 469,
+      "formulas": 89,
+      "bindings": 281,
+      "glossary": 189
+    },
+    "terms": 189
+  },
+  "requests": [
+    {
+      "case": "industrial_rooftop",
+      "path": ".runtime\\solar-pv\\r2-client-552-20261113-132354\\workspaces\\industrial_rooftop\\roof-primary\\CH08-1-request.json",
+      "file_sha256": "d48b0bfad84b303d7f7978d6c9e53f78aba424541992f509240df8a09928bae1",
+      "bytes": 343018,
+      "request_hash": "6fe43c192678ffcaad656378a180b5aa6a8d8aea898b2432817c110becef3dd3",
+      "created_at": "2026-11-13T05:32:14.577456+00:00",
+      "expires_at": "2026-11-13T06:32:14.577476+00:00",
+      "expired_at_this_read": true,
+      "checks": {
+        "request_hash_valid": true,
+        "evidence_hash_valid": true,
+        "binding_pack_identity_equal": true,
+        "canonical_identity_equal": true,
+        "grant_source_ids_equal_binding": true,
+        "grant_config_equal_binding": true,
+        "pack_spec_equal_binding": true,
+        "no_draft": true
+      }
+    },
+    {
+      "case": "utility_scale_ground",
+      "path": ".runtime\\solar-pv\\r2-client-552-20261113-132354\\workspaces\\utility_scale_ground\\ground-primary\\CH08-1-request.json",
+      "file_sha256": "976ce58137f5aee380de765584df59d78d4777e993cc9f1ddd7dc912d616df6a",
+      "bytes": 343904,
+      "request_hash": "a459085535f3dd633f55ad5a6c1915f176fb3087ad51b1f59628cfccd91d57b8",
+      "created_at": "2026-11-13T05:43:26.397189+00:00",
+      "expires_at": "2026-11-13T06:43:26.397208+00:00",
+      "expired_at_this_read": true,
+      "checks": {
+        "request_hash_valid": true,
+        "evidence_hash_valid": true,
+        "binding_pack_identity_equal": true,
+        "canonical_identity_equal": true,
+        "grant_source_ids_equal_binding": true,
+        "grant_config_equal_binding": true,
+        "pack_spec_equal_binding": true,
+        "no_draft": true
+      }
+    }
+  ],
+  "detailed_original_verification": {
+    "path": ".runtime\\solar-pv\\SOLAR-PV-R2-HOST-INPUT-AUDIT-01\\exact-original-verification.json",
+    "bytes": 43200,
+    "sha256": "0c1d1796c3904c1f7fc36689be312aea4bc3c74962f95ae9e4dfda0511496677",
+    "entries": 9
+  },
+  "source_symbols": "See exact-original-verification.json#/source_symbols; complete named modules read in full. Large JSON frozen files structurally parsed with Decimal, no float serialization.",
+  "historical_gates": {
+    "WORKBUDDY_552_CLIENT_VERIFIED": "PASS",
+    "WORKBUDDY_R2_SKILL_IMPORTED": "PASS",
+    "WORKBUDDY_R2_HOST_NEW_ROOF_CH08": "BLOCKED_NO_DRAFT",
+    "WORKBUDDY_R2_HOST_NEW_GROUND_CH08": "NOT_TESTED_BLOCKED_BY_STOP_GATE",
+    "ROOF_JSON_SCHEMA_VALID": "NOT_TESTED_NO_DRAFT",
+    "GROUND_JSON_SCHEMA_VALID": "NOT_TESTED_NO_DRAFT",
+    "ROOF_STRICT_CHAPTER_VALID": "NOT_TESTED_NO_DRAFT",
+    "GROUND_STRICT_CHAPTER_VALID": "NOT_TESTED_NO_DRAFT",
+    "INSTALLED_R2_ENGINE_AND_DEPENDENCIES": "UNVERIFIED_BLOCKED",
+    "WORKBUDDY_R2_PUBLISH_ACCEPT_RESUME_DOCX": "BLOCKED_NOT_EXECUTED",
+    "WORKBUDDY_R2_HOST_E2E": "BLOCKED",
+    "INDEPENDENT_QA": "PARTIAL_PREVIOUS_EXECUTED_UNCHANGED",
+    "PROFESSIONAL_SEMANTIC_REVIEW": "NOT_TESTED",
+    "PHASE_D_CONTENT_REVIEW": "USER_REVIEW_REQUIRED",
+    "R2_REAL_MODEL_CONTENT_ACCEPTANCE": "BLOCKED_NOT_PASS",
+    "TRUSTED_ENGINE_INSTALL": "BLOCKED_UNVERIFIED",
+    "WORKBUDDY_INSTALLED_HOST_E2E": "BLOCKED"
+  },
+  "independent_qa": "NOT_RUN_PENDING",
+  "official_and_ui_addendum": {
+    "official": "PENDING_MANAGER_EVIDENCE",
+    "manager_live_ui": "5.5.2 audit UI observed; exact and broad run search zero matches; PARTIAL_TRACE; provider coverage/root cause UNKNOWN",
+    "screenshot_index": ".runtime/solar-pv/SOLAR-PV-R2-HOST-INPUT-AUDIT-01/manager-ui-index.json"
+  },
+  "postcommit_receipt": ".runtime/solar-pv/SOLAR-PV-R2-HOST-INPUT-AUDIT-01/author-final-state.json"
+}
