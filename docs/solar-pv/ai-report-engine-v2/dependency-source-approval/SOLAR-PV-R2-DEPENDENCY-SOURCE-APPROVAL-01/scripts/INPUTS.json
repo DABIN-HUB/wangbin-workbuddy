@@ -1,0 +1,9 @@
+{
+  "schema": "frozen-input-anchor/1",
+  "path": ".runtime/solar-pv/SOLAR-PV-R2-DEPENDENCY-SOURCE-APPROVAL-01/frozen-inputs.json",
+  "bytes": 10435732,
+  "sha256": "171656d7edd77345ba25edc333c2450db000dbbc38fdd30242531ecbad19f5e9",
+  "items": 177,
+  "source_head": "177951690bab2f0a11a75be15e2204be4820409c",
+  "local_only_raw": true
+}

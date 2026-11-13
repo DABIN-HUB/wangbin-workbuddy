@@ -1,0 +1,3 @@
+# Task-local immutable evidence/document bytes only.
+* -text
+scripts/* -text
