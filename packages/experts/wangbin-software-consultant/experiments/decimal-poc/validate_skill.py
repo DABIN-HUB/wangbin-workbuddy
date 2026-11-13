@@ -2,6 +2,7 @@
 import hashlib
 from pathlib import Path
 import re
+import subprocess
 import unicodedata
 
 import yaml
@@ -37,6 +38,11 @@ assert "@references/input-output-contract.md" in body
 assert "scripts/estimator.py" in body
 script = SKILL / "scripts" / "estimator.py"
 assert script.read_bytes() == (HERE / "estimator.py").read_bytes()
+committed_license = subprocess.run(
+    ["git", "show", "HEAD:packages/experts/wangbin-software-consultant/LICENSE"],
+    cwd=HERE, capture_output=True, check=True).stdout
+assert committed_license and (SKILL / "LICENSE").read_bytes().replace(b"\r\n", b"\n") == committed_license
+assert (HERE.parent.parent / "LICENSE").read_bytes().replace(b"\r\n", b"\n") == committed_license
 assert not any(token in script.read_text(encoding="utf-8") for token in (
     "requests", "urllib", "socket", "subprocess", "eval(", "exec(", "os.system", "shell=True"))
 print("SKILL_SOURCE_VALIDATION PASS; YAML safe_load; 6 normalized examples; 5 headings; script SHA256=" +
