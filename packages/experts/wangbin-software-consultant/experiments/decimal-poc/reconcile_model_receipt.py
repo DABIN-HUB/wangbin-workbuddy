@@ -18,15 +18,18 @@ def file_sha(p):
 
 
 def check(input_path, output_path, *, case, anchor, approval="none"):
-    request = json.loads(input_path.read_text(encoding="utf-8"))
+    input_bytes = input_path.read_bytes()
+    input_hash = hashlib.sha256(input_bytes).hexdigest()
+    request = json.loads(input_bytes.decode("utf-8"))
     errors = compare(request, case, anchor, approval)
-    report = {"input": str(input_path), "input_sha256": file_sha(input_path),
+    report = {"input": str(input_path), "input_sha256": input_hash,
               "output": str(output_path), "output_sha256": None, "anchor_sha256": digest(anchor),
               "case": case, "source_errors": errors[:], "errors": errors}
     if errors:
         return report
-    receipt = json.loads(output_path.read_text(encoding="utf-8"))
-    report["output_sha256"] = file_sha(output_path)
+    receipt_bytes = output_path.read_bytes()
+    receipt = json.loads(receipt_bytes.decode("utf-8"))
+    report["output_sha256"] = hashlib.sha256(receipt_bytes).hexdigest()
     def equal(label, actual, expected):
         if actual != expected:
             errors.append(f"{label}: {actual!r} != {expected!r}")
@@ -39,7 +42,7 @@ def check(input_path, output_path, *, case, anchor, approval="none"):
     for key in ("scope_version", "previous_scope_version"):
         equal(key, receipt.get(key), request.get(key))
     equal("scope_changed", receipt.get("scope_changed"), request.get("scope_changed", False))
-    equal("input_sha256", receipt.get("input_sha256"), file_sha(input_path))
+    equal("input_sha256", receipt.get("input_sha256"), input_hash)
     script = Path(__file__).resolve().parent / "skill-preview" / "wangbin-estimate-calculator" / "scripts" / "estimator.py"
     equal("script_sha256", receipt.get("script_sha256"), file_sha(script))
     equal("pricing_mode", receipt.get("pricing_mode"), request["pricing"]["mode"])

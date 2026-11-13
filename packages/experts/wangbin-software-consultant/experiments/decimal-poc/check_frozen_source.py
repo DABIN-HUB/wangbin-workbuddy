@@ -30,9 +30,10 @@ def compare(request, case, anchor, approval="none"):
     price, variant = CASES[case]
     changed = variant == "delete-S2-v2"
     equal("approval", approval, "delete-S2-v2" if changed else "none")
-    if digest(anchor) != V1_SHA:
+    anchor_bytes = Path(anchor).read_bytes()
+    if hashlib.sha256(anchor_bytes).hexdigest() != V1_SHA:
         return errors + ["SOURCE frozen v1 anchor hash mismatch"]
-    original = json.loads(Path(anchor).read_text(encoding="utf-8"))
+    original = json.loads(anchor_bytes.decode("utf-8"))
     version = "synthetic-v2" if changed else "synthetic-v1"
     equal("scope_version", request.get("scope_version"), version)
     equal("previous_scope_version", request.get("previous_scope_version"), "synthetic-v1" if changed else None)

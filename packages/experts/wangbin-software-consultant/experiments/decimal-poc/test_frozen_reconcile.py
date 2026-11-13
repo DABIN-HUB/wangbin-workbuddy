@@ -61,8 +61,14 @@ class SourceAndPrice(unittest.TestCase):
         for case in ("WB-02", "WB-03", "WB-04"):
             with self.subTest(case=case):
                 request = EVIDENCE / (case + "-input.json")
-                receipt = EVIDENCE / (case + "-expected.json")
-                self.assertEqual(check(request, receipt, case=case, anchor=V1)["errors"], [])
+                # Frozen old receipts retain their old script identity; do not rewrite them.
+                historical = EVIDENCE / (case + "-expected.json")
+                self.assertTrue(any("script_sha256" in error for error in check(request, historical, case=case, anchor=V1)["errors"]))
+                with tempfile.TemporaryDirectory() as temporary:
+                    receipt = Path(temporary) / "receipt.json"
+                    run = subprocess.run([sys.executable, str(SCRIPT), str(request), "-o", str(receipt)], capture_output=True)
+                    self.assertEqual(run.returncode, 0, run.stderr)
+                    self.assertEqual(check(request, receipt, case=case, anchor=V1)["errors"], [])
         item = self.request()
         item["pricing"]["unit_price"] = "1350"
         self.assertTrue(compare(item, "WB-02", V1))
