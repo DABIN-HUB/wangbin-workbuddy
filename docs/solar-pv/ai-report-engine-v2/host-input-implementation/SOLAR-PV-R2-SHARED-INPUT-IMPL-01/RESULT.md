@@ -1,6 +1,10 @@
-# SOLAR-PV-R2-SHARED-INPUT-IMPL-01 · developer源码候选
+# SOLAR-PV-R2-SHARED-INPUT-IMPL-01 · R1独立QA后测试整改候选
 
-**实现已落地，双案NOT_AI本地生命周期已真实走通；开发侧总裁定 PARTIAL，非发布wip候选。** 独立quality尚未执行；未执行风险专项见VALIDATION，不用作者结论代替QA。两次生命周期组合批TIMEOUT原证保留，拆成无冗余但完整链的批次最终3通过；不是将超时改成PASS。
+**当前仍为 PARTIAL / 非发布wip / NOT_AI / NOT_HOST_E2E。** 独立R1已完成：审查提交 `44c26c972ca1a23eab6f56888d9ed014e8df5367`，134个唯一pytest用例通过及独立边界探针通过；原32秒未接受过期组合probe为TIMEOUT/124，不判PASS。R1未确认生产逻辑缺陷，唯一必验阻断QAI-R1-01仍待闭合。完整原文/身份/命令见QA_INDEX，原报告不改。
+
+本次只追加两个屋顶正式测试：首次native publish过期拒绝；有效期publish后native/core accept过期拒绝。每例独立新NOT_AI授权及生产prepare-r2-shared，不使用参数化双案；第二例只将本例新建且已验证的published run原字节分支，隔离两条accept的失败封口，不改期限/hash、不冒充新授权、不删除failure。**作者未执行这两个新测试，状态NOT_TESTED_PENDING_INDEPENDENT_QA**；不将静态语法/快照/Git检查当产品测试通过。生产与Skill七文件相对R1原字节不变，新的八文件集合见 `RUN/developer-source-snapshot-r2.json`；新增测试差异与整改交接见 `RUN/developer-fix-r2.diff`、`RUN/developer-fix-report-r2.md`。本轮不封装、不审核最终共享payload。
+
+以下开发首轮结果为历史实测，R1新增结论与整改待验状态优先；两次开发生命周期组合TIMEOUT原证保留，最终拆批3通过不改写原超时。
 
 ## 实现与身份
 
@@ -10,7 +14,7 @@
 
 共享pool平坦、只替换完全相同对象/数组；数字用显式$number保留原词法，不经float重格式化。S索引不进入正式引用。固定资源上限与先计量后复制阻断缓存深度77反例；不复制offline_view_audit整份脚本，不接类型行、不改领域权限生产者/validator/Schema。
 
-源码/测试/Skill八文件原字节树SHA256 `c5fe505dcd32b6d18d2553dc8d8d4dde419d1d7abce1ad9345b308e1722bc22f`，算法与逐件SHA见RUN/developer-source-snapshot.json（含未改wrapper）。这是源码文件集合SHA，不是Git tree对象。实际commit与最终Git读回见RUN/developer-final-state.json，避免自引用。冻结后不再改生产/测试；quality只复核固定字节，若有实质发现再由manager协调唯一writer。
+R1被审源码/测试/Skill八文件原字节集合SHA256 `c5fe505dcd32b6d18d2553dc8d8d4dde419d1d7abce1ad9345b308e1722bc22f`，算法与逐件SHA见RUN/developer-source-snapshot.json（含未改wrapper）。当前测试整改候选另存RUN/developer-source-snapshot-r2.json，只有测试文件变化；不是Git tree对象。首轮commit/status原证RUN/developer-final-state.json保留，新commit/status另存RUN/developer-final-state-r2.json，避免自引用。当前冻结后等待quality对改变的测试及相应风险独立复验。
 
 ## 实测新表示
 
@@ -24,10 +28,10 @@
 ## 验证、保护与未完成
 
 - codec-risks：35通过（两案重seal、QA-F01四类、语法/资源/预算等）；最终small gates：12通过（含原wrapper回归）；双案新生产生命周期批：3通过。各批重叠不相加。JUnit与真实命令见VALIDATION；full repository/财务/Office完全未执行。
-- developer预算420s；最终实测按RUN/commands求和，两个超时已计入，不移植历史账本。因组合生命周期重复验证过重，开发预算接近上限，保存的source_lifecycle_failure_guards未执行，默认legacy完整byte/hash/严格输出全组、初次派生故障注入、未接受过期与授权变异专项尚未跑，不判PASS。
+- 开发首轮预算420s、实测409.14940179884434368s（原冻结记录）；source_lifecycle_failure_guards等开发未跑项已由R1独立QA按其原文范围补验，包括legacy四组byte/hash、strict、先验证再派生/真实初次崩溃与授权变异。唯一未闭合的必验覆盖为共享模式未接受过期publish/accept；新增两个正式测试待quality首跑，不能把原409s当本轮剩余预算。全轮900s含所有角色与最终保护/封装；此次不重跑昂贵生命周期。
 - 1674项基线保护逐字节核对，只有5项授权既有源码/Skill变更，无意外；已安装22文件全hash不变（21包载荷+元信息）；规格LF SHA不变。旧审计/原请求/canonical/dist原件无变化。R8–R13继续仅继承元信息口径，不说成全内容hash证明。
 - 卫生--check真实exit0；无本轮生成物入Git，未删除旧资产，净删除0文件/0B、释放空间0。新增tracked只授权源码/测试及本轮必要文档；当前dist完整、忽略且未替换。早期pytest默认系统临时目录证据未清，后续使用本RUN basetemp；不清未知缓存。最终status与文件计数由final-state读回。
-- **本地共享实现QA=PENDING_INDEPENDENT_REVIEW；SOURCE_REVIEW_CANDIDATE=PARTIAL；NOT_AI/NOT_HOST_E2E。** manager随后派quality，归档/脱敏payload确认也未完成。本轮没有新wheel或Skill候选，不编造SHA或安装成功。
+- **本地共享实现R1独立QA=PARTIAL_NOT_AI_NOT_HOST_E2E；QAI-R1-01=TESTS_ADDED_PENDING_INDEPENDENT_QA；SOURCE_REVIEW_CANDIDATE=PARTIAL。** QAI-R1-02是已有完整独立诊断的建议，未扩大源码；最终payload/脱敏确认仍未完成。本轮没有新wheel或Skill候选，不编造SHA或安装成功。
 
 ## 继承门禁（逐值）
 
@@ -54,4 +58,4 @@ THIS_AUDIT_INDEPENDENT_QA = PARTIAL
 
 候选终期现金合法重绑定、SCENARIO_COMPARISON BLOCKED/ranking空、基准独立交易费实付缺口、会计盈利/经营现金/股东回收裁定、PDF公式复制检索/真实资料/专业签审、同canonical五身份正式四文件、STATIC_SNAPSHOT披露、全仓回归/Expert/发布均不关闭，不移AFTER_V2。Phase D仍双案CH05/08/10/14/15/16/17/18，本轮仅CH08输入；无宿主新内容/CH10或16解锁。
 
-下一条件：先独立quality复核上述固定源码与剩余风险，实质问题整改再验；manager完成已审payload与SOURCE/REVIEW ONLY归档。受信R2构件依赖、精确Skill替换、官方支持输入路径与一次全新屋顶CH08分别另批，地面仍受屋顶停止门限制。本轮未模型/网络外发/安装/构建/打包/财务重算/新客户端任务/push。
+下一条件：quality对r2冻结候选的两个新增测试分别有界首跑，不扩大原32秒单命令上限，不重跑昂贵全量；仅在真实完成后追加新独立结论。manager随后处理固定payload审阅与SOURCE/REVIEW ONLY归档，本作者不处理。受信R2构件依赖、精确Skill替换、官方支持输入路径与一次全新屋顶CH08分别另批，地面仍受屋顶停止门限制。本次未模型/网络外发/安装/构建/打包/财务重算/新客户端任务/push；历史门禁逐值不变。

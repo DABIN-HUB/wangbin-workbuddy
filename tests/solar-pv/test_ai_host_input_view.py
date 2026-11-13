@@ -288,3 +288,87 @@ def test_flat_limits_and_cache_defensive_copy(monkeypatch):
     with pytest.raises(ContractError, match='HOST_INPUT_POOL_LIMIT'): c.expand(v)
     with pytest.raises(ContractError): c.build_view(b' ' * (c.MAX_BYTES + 1))
     with pytest.raises(ContractError): c.build_view([])
+
+
+@pytest.fixture
+def roof_native_clock(tmp_path, catalog, registry, monkeypatch):
+    """Fresh NOT_AI roof grant; control time, never request/hash/expiry bytes."""
+    from wangbin_solar_pv.report_export import ReportModel
+    from wangbin_solar_pv.serialization import loads
+    from wangbin_solar_pv.reporting import host_output
+    raw = (ROOT / 'tests/fixtures/solar-pv/phase7l-r2-delivery/industrial_rooftop/canonical.json').read_bytes()
+    roof = ReportModel.from_result(loads(raw), catalog)
+    clock = {'now': datetime.now(timezone.utc)}
+    class Clock(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return clock['now'].astimezone(tz) if tz is not None else clock['now'].replace(tzinfo=None)
+    monkeypatch.setattr(session, 'datetime', Clock)
+    monkeypatch.setattr(host_output, 'datetime', Clock)
+    monkeypatch.setattr(writer, '_now', lambda: clock['now'])
+    return (*native.__wrapped__(tmp_path, roof, catalog, registry), clock)
+
+
+def test_shared_unaccepted_expiry_rejects_first_native_publish(roof_native_clock):
+    """QAI-R1-01: one roof run; first publish after expiry cannot publish."""
+    ws, run, cfg, roof, registry, clock = roof_native_clock
+    run('prepare-r2-shared')
+    store = HostWorkspace(ws.root / 'native')
+    request = store.read('CH08-1-request.json')[0]
+    original = store.path('CH08-1-request.json').read_bytes()
+    reserved = store.read('state.json')[0]['requests']
+    assert request['input_view_policy'] == codec().POLICY
+    assert len(reserved) == cfg.max_requests == cfg.max_attempts_per_chapter == 1
+    make_draft(store, request)
+    clock['now'] = datetime.fromisoformat(request['expires_at']) + timedelta(seconds=1)
+    with pytest.raises(ContractError) as rejected:
+        run('publish', 'CH08-1')
+    assert rejected.value.code == 'MODEL_REQUEST_EXPIRED'
+    assert store.path('CH08-1-request.json').read_bytes() == original
+    assert store.read('state.json')[0]['requests'] == reserved
+    failure = store.read('CH08-1-failure.json')[0]
+    assert (failure['code'], failure['status']) == ('MODEL_REQUEST_EXPIRED', 'FAILED')
+    for suffix in ('response', 'publication-intent', 'publication', 'result', 'host-record'):
+        assert not store.path('CH08-1-' + suffix + '.json').exists()
+
+
+def test_shared_unaccepted_expiry_rejects_native_and_core_accept(roof_native_clock, tmp_path):
+    """QAI-R1-01: publish while valid, then reject both acceptance entrypoints."""
+    from shutil import copytree, ignore_patterns
+    ws, run, cfg, roof, registry, clock = roof_native_clock
+    run('prepare-r2-shared')
+    store = HostWorkspace(ws.root / 'native')
+    request = store.read('CH08-1-request.json')[0]
+    original = store.path('CH08-1-request.json').read_bytes()
+    reserved = store.read('state.json')[0]['requests']
+    assert request['input_view_policy'] == codec().POLICY
+    assert len(reserved) == cfg.max_requests == cfg.max_attempts_per_chapter == 1
+    response = make_draft(store, request)
+    assert clock['now'] < datetime.fromisoformat(request['expires_at'])
+    assert run('publish', 'CH08-1')['status'] == 'PUBLISHED_NOT_ACCEPTED'
+    assert not store.path('CH08-1-result.json').exists()
+    assert not store.path('CH08-1-failure.json').exists()
+    published = {suffix: store.path('CH08-1-' + suffix + '.json').read_bytes()
+                 for suffix in ('response', 'publication')}
+    # Branch only this test's fresh, fully validated, published run BEFORE closure.
+    # The copy is NOT a new authorization: all request/binding/expiry bytes stay intact.
+    # Independent branches avoid deleting a failure or getting ALREADY_CLOSED instead.
+    copytree(store.root, tmp_path / 'core-accept', ignore=ignore_patterns('*.host-lock'))
+    core_store = HostWorkspace(tmp_path / 'core-accept')
+    clock['now'] = datetime.fromisoformat(request['expires_at']) + timedelta(seconds=1)
+    for target, invoke in (
+        (store, lambda: run('accept', 'CH08-1')),
+        (core_store, lambda: writer.accept(core_store, 'CH08-1', response, roof, registry, cfg)),
+    ):
+        assert target.path('CH08-1-request.json').read_bytes() == original
+        with pytest.raises(ContractError) as rejected:
+            invoke()
+        assert rejected.value.code == 'MODEL_REQUEST_EXPIRED'
+        assert not target.path('CH08-1-result.json').exists()
+        assert not target.path('CH08-1-host-record.json').exists()
+        assert target.path('CH08-1-request.json').read_bytes() == original
+        assert target.read('state.json')[0]['requests'] == reserved
+        failure = target.read('CH08-1-failure.json')[0]
+        assert (failure['code'], failure['status']) == ('MODEL_REQUEST_EXPIRED', 'FAILED')
+        for suffix, raw in published.items():
+            assert target.path('CH08-1-' + suffix + '.json').read_bytes() == raw

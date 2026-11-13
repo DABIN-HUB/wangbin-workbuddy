@@ -1,5 +1,20 @@
 # 验证与可复跑索引
 
+## R1独立QA与本次r2待验增量（当前状态）
+
+完整R1原文/COMMANDS/provenance见QA_INDEX。R1独立134唯一pytest通过、边界探针通过；未接受过期组合probe仍TIMEOUT/124。source_lifecycle_failure_guards、legacy四组byte/hash、strict、grant/policy/canonical变异、首次基础失败与真实派生崩溃已按R1原报告范围实测，不再笼统标为独立QA未执行。
+
+QAI-R1-01仅追加 `tests/solar-pv/test_ai_host_input_view.py` 两例：
+
+1. `test_shared_unaccepted_expiry_rejects_first_native_publish`：屋顶只读canonical快照+新NOT_AI授权，经生产prepare-r2-shared；测试时钟expires_at+1，首次native publish拒MODEL_REQUEST_EXPIRED。断言request原字节和唯一reservation不变，无response/publication-intent/publication/result/host-record，failure明确FAILED及过期码。
+2. `test_shared_unaccepted_expiry_rejects_native_and_core_accept`：独立新授权生产prepare、有效期native publish；本例已新建published run原字节复制到受控同test临时分支（不复制历史请求为新授权，不改期限/hash，不删failure），供native/core accept各自经过真实验证链并独立失败封口。时钟过期后两条均须MODEL_REQUEST_EXPIRED；两分支无result/host-record，request/reservation/published response与publication原字节不变，failure明确。
+
+两个新例均为 **NOT_TESTED_PENDING_INDEPENDENT_QA**，作者只做语法/快照/Git静态检查，未执行pytest/昂贵生命周期。两例共用未参数化的roof_native_clock与既有native/make_draft真实fixture；不请求model双案fixture，不替换生产验证函数。新增源码差异只含测试，生产与Skill原SHA不变。新冻结RUN/developer-source-snapshot-r2.json、整改报告RUN/developer-fix-report-r2.md、测试diff RUN/developer-fix-r2.diff。
+
+quality分别使用现成 `.venv/Scripts/python.exe -B -m pytest -p no:cacheprovider` 执行上述完整nodeid（文件::函数），每条recorder role=quality、独名label、timeout=32（不放大），各自新JUnit及RUN下独名--basetemp，并以--input绑定r2快照、测试和相关源码。不得组合成原长probe或重复运行旧昂贵生命周期；真实TIMEOUT/FAIL完整保留，不预填PASS。保留quality至少95s、manager至少55s的全轮验证预算。
+
+## 开发首轮账本（历史，以下未执行指开发侧当时状态）
+
 运行根 `RUN=.runtime/solar-pv/SOLAR-PV-R2-SHARED-INPUT-IMPL-01`。所有执行原命令、输入hash、解释器、时间、退出、stdout/stderr在 `RUN/commands/developer-*.json/.stdout/.stderr`。pytest有独名JUnit；两个超时没有完整JUnit，不能从进度`.`推断最终计数。根现成venv源码测试不是安装验证；conftest显式源码路径，不设置PYTHONPATH或下载依赖。
 
 ## 实际批次
@@ -33,14 +48,14 @@
 - new_native_lifecycle：双案真实新prepare，NOT_AI协议fixture，仅本地链路，不执行金融计算或Office。
 - cached_upstream_must_revalidate_shared_request：最小mock仅断言cache dispatch必须进入公共_request；不是领域权限证明。
 - flat_limits_and_cache_defensive_copy：pool/输入限额、缓存对象隔离。
-- **source_lifecycle_failure_guards：已保存、developer未执行（预算止损），NOT_TESTED**。真实新授权屋顶生命周期，重新seal view+manifest之后各入口、缺失/半写、锁/模式/预算、accepted过期后恢复、cache变更、取消。quality可独立执行此用例；若失败不得写已通过。
+- **source_lifecycle_failure_guards：首轮developer未执行，R1独立quality已实测1通过**。真实新授权屋顶生命周期，重新seal view+manifest之后各入口、缺失/半写、锁/模式/预算、accepted过期后恢复、cache变更、取消。保留开发未执行事实及R1独立回执，不重复执行。
 
-## 独立quality建议（总任务预算不超过900s）
+## 首轮独立quality建议（历史；已执行结果以上方R1索引为准）
 
 每个命令仍经record_command角色quality，独名label/input/JUnit/--basetemp，timeout<=120s。不要全仓pytest。优先运行未执行的source_lifecycle_failure_guards（单例可能接近120s），再按风险选择codec重seal/资源与原test_ai_host_output_r2的strict拒绝/预算，及既有R2默认路径最小回归。双案正向已有完整JUnit，不需机械重复全部昂贵开会话链。原fixture不跑财务；不选择test_real_native_cli_roundtrip，因为它生成DOCX。
 
-## 仍未完成的开发侧专项
+## 首轮开发未执行专项与R1后续状态
 
-默认legacy完整byte/hash边界生产回归、真实初次派生崩溃及先验证再派生的故障注入、未接受结果过期publish/accept、grant/policy变异的生产复跑，以及完整原R2输出strict专项未在developer剩余预算中执行。本轮不能仅凭源码阅读把这些项判PASS。最终本地提交为wip源码候选，等待quality与manager据实收口；不能当可安装或release-ready。
+默认legacy完整byte/hash边界生产回归、真实初次派生崩溃及先验证再派生的故障注入、未接受结果过期publish/accept、grant/policy变异生产复跑及原R2输出strict专项，首轮developer均未在剩余预算中执行。R1现已独立补验其中除未接受过期组合以外的上述范围，具体边界/结果严格以完整QA原文为准，不把诊断probe冒充正式pytest。QAI-R1-02正式化建议本次不扩大；QAI-R1-01两个新增正式测试待quality首跑。当前本地提交仍wip源码候选，不能当可安装或release-ready。
 
 早期pytest使用系统默认临时目录（原失败保留，不扩大清理未知pytest缓存）；后续均显式--basetemp到本RUN。未删除历史资产。当前run中失败/超时目录保留证据，不当可丢弃缓存清理。
