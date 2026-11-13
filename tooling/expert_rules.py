@@ -58,8 +58,20 @@ def validate_prompt_expert(source: Path, *, name: str, version: str, category: s
     for key in ("displayName", "profession"):
         if front.get(key) != meta[key]:
             raise ValueError(f"agent {key} differs from plugin.json")
-    if "skills" in front or "dependencies" in meta or "skills" in meta or "tools" in front:
+    if any(key in front or key in meta for key in ("tools", "dependencies", "runtime", "mcpServers")):
         raise ValueError("expert must not declare external tool/runtime dependencies")
+    if "skills" in front or "skills" in meta:
+        if name != "wangbin-software-consultant" or meta.get("skills") != ["./skills/wangbin-estimate-calculator"] or front.get("skills") != ["wangbin-estimate-calculator"]:
+            raise ValueError("unapproved expert skills")
+        skill = source / "skills" / "wangbin-estimate-calculator"
+        allowed = {"SKILL.md", "scripts/estimator.py", "references/input-output-contract.md", "LICENSE"}
+        actual = {p.relative_to(skill).as_posix() for p in skill.rglob("*") if p.is_file()}
+        if actual != allowed or any(not (skill / rel).resolve().is_relative_to(source.resolve()) for rel in allowed):
+            raise ValueError("missing or unexpected bundled skill asset")
+        skill_text = (skill / "SKILL.md").read_text(encoding="utf-8")
+        skill_front = re.match(r"\A---\s*\n(.*?)\n---\s*\n", skill_text, re.DOTALL)
+        if skill_front is None or yaml.safe_load(skill_front.group(1)).get("name") != "wangbin-estimate-calculator":
+            raise ValueError("bundled skill identity mismatched")
     avatar = (source / members[2]).read_bytes()
     if len(avatar) > 500_000 or avatar[:16] != b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR":
         raise ValueError("avatar must be a PNG smaller than 500 KB")

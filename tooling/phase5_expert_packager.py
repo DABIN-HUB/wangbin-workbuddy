@@ -34,13 +34,16 @@ def validate_source(source: Path) -> dict[str, object]:
 def build(root: Path) -> dict[str, object]:
     root = root.resolve(strict=True)
     source = root / "packages" / "experts" / NAME
-    validate_source(source)
+    meta = validate_source(source)
+    members = list(MEMBERS)
+    if meta.get("skills"):
+        members.extend("skills/wangbin-estimate-calculator/" + rel for rel in ("SKILL.md", "scripts/estimator.py", "references/input-output-contract.md", "LICENSE"))
     output = root / "dist"
     output.mkdir(exist_ok=True)
     destination = output / f"{NAME}-{VERSION}-expert-candidate.zip"
     expected: dict[str, bytes] = {}
     with zipfile.ZipFile(destination, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
-        for rel in sorted(MEMBERS):
+        for rel in sorted(members):
             data = (source / rel).read_bytes()
             member = f"{NAME}/{rel}"
             expected[member] = data

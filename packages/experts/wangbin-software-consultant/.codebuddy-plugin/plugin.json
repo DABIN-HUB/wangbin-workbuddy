@@ -6,7 +6,9 @@
     "name": "wangbin",
     "email": "958070007@qq.com"
   },
-  "agents": ["./agents/wangbin-software-consultant.md"],
+  "agents": [
+    "./agents/wangbin-software-consultant.md"
+  ],
   "expertType": "agent",
   "agentName": "wangbin-software-consultant",
   "displayName": {
@@ -29,15 +31,41 @@
   },
   "plugin": "wangbin-software-consultant",
   "tags": [
-    {"en": "Requirements", "zh": "需求分析"},
-    {"en": "Project Estimation", "zh": "项目估算"},
-    {"en": "Budget Planning", "zh": "预算规划"}
+    {
+      "en": "Requirements",
+      "zh": "需求分析"
+    },
+    {
+      "en": "Project Estimation",
+      "zh": "项目估算"
+    },
+    {
+      "en": "Budget Planning",
+      "zh": "预算规划"
+    }
   ],
   "quickPrompts": [
-    {"en": "Help scope my business software project and estimate effort and budget", "zh": "帮我梳理企业软件需求，并估算实施工作量与预算"},
-    {"en": "Compare an MVP, standard and custom implementation", "zh": "比较最小版本、标准版和完整定制版的工作量与预算"},
-    {"en": "Draft a software requirements specification from my description", "zh": "根据我的描述生成软件需求说明书和待确认清单"}
+    {
+      "en": "Help scope my business software project and estimate effort and budget",
+      "zh": "帮我梳理企业软件需求，并估算实施工作量与预算"
+    },
+    {
+      "en": "Compare an MVP, standard and custom implementation",
+      "zh": "比较最小版本、标准版和完整定制版的工作量与预算"
+    },
+    {
+      "en": "Draft a software requirements specification from my description",
+      "zh": "根据我的描述生成软件需求说明书和待确认清单"
+    }
   ],
   "license": "MIT",
-  "keywords": ["enterprise software", "requirements", "scoping", "estimation"]
+  "keywords": [
+    "enterprise software",
+    "requirements",
+    "scoping",
+    "estimation"
+  ],
+  "skills": [
+    "./skills/wangbin-estimate-calculator"
+  ]
 }

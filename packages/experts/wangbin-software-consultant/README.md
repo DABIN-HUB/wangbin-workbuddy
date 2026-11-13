@@ -39,3 +39,8 @@
 [3] https://open.workbuddy.cn/docs/onboarding
 [4] https://open.workbuddy.cn/docs/monetization
 [5] https://open.workbuddy.cn/docs/service-categories-individual
+
+
+## 包内计算集成候选
+
+正式候选增加包内 wangbin-estimate-calculator Skill 与预加载绑定，仍由系统分配工具权限。仅本地结构/算术可测；原生加载与实际工具回执未验证。来源、范围和回退边界见 docs/decimal-integration.md（开发说明不进入运行包）。旧独立 Skill 不替换。

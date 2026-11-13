@@ -25,7 +25,7 @@ def test_expert_schema_and_prompt_are_self_contained():
     assert meta["defaultInitPrompt"] == meta["quickPrompts"][0]
     for section in ("已确认", "合理假设", "待确认", "MVP", "标准", "完整定制", "前端", "后端", "数据库", "接口", "测试", "部署", "沟通", "第三方", "维护", "验收", "单体", "Modbus", "OPC UA", "IEC104", "MQTT"):
         assert section in prompt
-    assert not set(meta).intersection({"skills", "dependencies", "runtime", "mcpServers", "tools"})
+    assert not set(meta).intersection({"dependencies", "runtime", "mcpServers", "tools"})
     assert "不要求登录其他系统" in prompt
     assert "每轮最多三个" in prompt
 

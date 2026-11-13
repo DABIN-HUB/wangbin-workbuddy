@@ -23,7 +23,8 @@ def test_official_agent_entry_and_old_rules_preserved():
     body = AGENT.read_text(encoding="utf-8")
     for legacy in ("不要求登录其他系统", "每轮最多三个", "已确认", "合理假设", "待确认", "变更记录", "MVP", "单体", "Modbus", "33000/54000", "第三方费未知", "不索取客户名单"):
         assert legacy in body
-    assert meta.get("skills") is None and "skills:" not in body.split("---", 2)[1]
+    assert meta.get("skills") == ["./skills/wangbin-estimate-calculator"]
+    assert "skills:" in body.split("---", 2)[1]
 
 
 def test_all_old_scenarios_and_focus_are_intact():
