@@ -65,3 +65,29 @@ def test_formal_script_receipt_bytes_and_rejected_input(tmp_path):
     source.write_bytes(payload)
     duplicate = subprocess.run([sys.executable, "-B", str(script), str(source), "-o", str(receipt)], capture_output=True)
     assert duplicate.returncode == 2 and receipt.read_bytes() == data
+
+
+def test_independent_qa_high_precision_counterexample(tmp_path):
+    import subprocess
+    import sys
+    script = SOURCE / "skills/wangbin-estimate-calculator/scripts/estimator.py"
+    source = SOURCE / "tests/fixtures/precision-boundary.input.json"
+    receipt = tmp_path / "exact.json"
+    run = subprocess.run([sys.executable, "-B", str(script), str(source), "-o", str(receipt)], capture_output=True)
+    assert run.returncode == 0, run.stderr
+    result = json.loads(receipt.read_bytes())
+    assert result["tiers"]["MVP"]["B"]["low"] == "123456789012345678901234567893.4"
+    assert result["tiers"]["MVP"]["B"]["high"] == "123456789012345678901234567893.4"
+
+
+def test_precision_budget_rejects_without_receipt(tmp_path):
+    import subprocess
+    import sys
+    script = SOURCE / "skills/wangbin-estimate-calculator/scripts/estimator.py"
+    data = json.loads((SOURCE / "tests/fixtures/precision-boundary.input.json").read_bytes())
+    data["work_packages"][0]["roles"]["FE"]["low"] = "1e-100001"
+    source = tmp_path / "outside.json"; source.write_text(json.dumps(data), encoding="utf-8")
+    receipt = tmp_path / "outside-receipt.json"
+    run = subprocess.run([sys.executable, "-B", str(script), str(source), "-o", str(receipt)], capture_output=True)
+    assert run.returncode == 2 and not receipt.exists()
+    assert b"precision budget exceeded" in run.stderr

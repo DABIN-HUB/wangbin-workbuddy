@@ -63,7 +63,7 @@ class SourceAndPrice(unittest.TestCase):
                 request = EVIDENCE / (case + "-input.json")
                 # Frozen old receipts retain their old script identity; do not rewrite them.
                 historical = EVIDENCE / (case + "-expected.json")
-                self.assertTrue(any("script_sha256" in error for error in check(request, historical, case=case, anchor=V1)["errors"]))
+                self.assertEqual(check(request, historical, case=case, anchor=V1)["errors"], [])
                 with tempfile.TemporaryDirectory() as temporary:
                     receipt = Path(temporary) / "receipt.json"
                     run = subprocess.run([sys.executable, str(SCRIPT), str(request), "-o", str(receipt)], capture_output=True)

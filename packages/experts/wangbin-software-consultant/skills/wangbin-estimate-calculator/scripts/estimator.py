@@ -1,6 +1,7 @@
 """Standalone structured-input Decimal effort oracle; not wired into the Expert."""
 import argparse
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal, InvalidOperation, localcontext, Inexact, Rounded, DecimalException
+from functools import wraps
 import hashlib
 import json
 import os
@@ -46,6 +47,39 @@ def fmt(value):
     return format(value, "f")
 
 
+
+def exact_arithmetic(function):
+    """Size context from decimal operands; never return a rounded success receipt."""
+    @wraps(function)
+    def wrapped(data):
+        def budget(value):
+            if isinstance(value, dict):
+                return sum(budget(v) for v in value.values())
+            if isinstance(value, list):
+                return sum(budget(v) for v in value)
+            if isinstance(value, (str, Decimal)):
+                try:
+                    number = Decimal(value)
+                except InvalidOperation:
+                    return 0
+                if number.is_finite():
+                    parts = number.as_tuple()
+                    return len(parts.digits) + abs(parts.exponent) + 1
+            return 0
+        precision = max(28, 3 * budget(data) + 32)
+        if precision > 100000:
+            raise ValueError("input: exact arithmetic precision budget exceeded")
+        with localcontext() as context:
+            context.prec = precision
+            context.traps[Inexact] = True
+            context.traps[Rounded] = True
+            try:
+                return function(data)
+            except DecimalException as exc:
+                raise ValueError("input: cannot compute exactly within arithmetic limits") from exc
+    return wrapped
+
+@exact_arithmetic
 def estimate_branches(data):
     """Five explicit member sets; neither StandardB nor FullA inherits the other."""
     fields(data, ("scope_version", "work_packages", "buffers", "pricing", "outside_fees"),
@@ -189,6 +223,7 @@ def estimate_branches(data):
             if mode == "reference" else None}
 
 
+@exact_arithmetic
 def estimate(data):
     if isinstance(data, dict) and isinstance(data.get("work_packages"), list) and any(
             isinstance(row, dict) and "membership" in row for row in data["work_packages"]):

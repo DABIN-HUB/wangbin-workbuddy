@@ -325,11 +325,11 @@ def main(argv=None):
             raise ValueError("input/output: symbolic link or missing input refused")
         if args.input.resolve() == args.output.resolve() or not args.output.parent.is_dir():
             raise ValueError("output: input overwrite or missing output directory refused")
-        input_bytes = args.input.read_bytes()
-        data = json.loads(input_bytes.decode("utf-8"), parse_float=Decimal,
-                          parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)))
+        with args.input.open(encoding="utf-8") as stream:
+            data = json.load(stream, parse_float=Decimal,
+                             parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)))
         result = estimate(data)
-        result["input_sha256"] = hashlib.sha256(input_bytes).hexdigest()
+        result["input_sha256"] = hashlib.sha256(args.input.read_bytes()).hexdigest()
         result["script_sha256"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
         # Exclusive create: never truncate input, old results, or evidence. Remove only
         # an incomplete file created by this invocation if writing fails.
