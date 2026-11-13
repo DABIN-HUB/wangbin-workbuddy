@@ -11,3 +11,9 @@
 源码仅当前唯一目录与 `expert/software-consultant`；必要授权文档精确暂存、检查、普通 commit/push，读回 origin 完整 SHA，无变更不空提交。证据、运行配置和账号信息不入 Git；交付区沿用 `F:/ideaWorkSpace/wangbin-workbuddy-delivery/experts/wangbin-software-consultant/calc-workbuddy-552-e2e-01/`。
 
 公开上架、审核、扩大可见范围、付费购买、其他产品、Expert ZIP、正式 Expert 修改、P02 修复/回归和 MES 不在本次授权内。P02 `t_e6210c95` 继续 BLOCKED，MES `t_2affd306` 只依赖 P02、不启动。安装、运行、数值/范围、独立 QA 和发布各凭实证，授权/卡片/配置不冒充 WorkBuddy 已安装运行。
+
+## 2026-11-13 后续本产品开发授权（不改历史结论）
+
+项目所有者的后续完整指令见 `C:/Users/wangbin/AppData/Local/hermes/profiles/wb-manager/attachments/pasted_content_2026-11-13_14-11-38-145_c825b9.txt`，权威追加门禁见团队 `team/policies/wangbin-estimate-calculator-private-test-authorization.md` 的同日补充节及其已提交 SHA。只在 `wangbin-software-consultant` 唯一产品树和既有 `expert/software-consultant` 分支生效。本文件上文“正式 Expert 修改、P02 修复/回归不在授权内”被本节**仅针对新 P02-R6 与计算集成交付批次**替代，不追溯旧会话。允许开发正式顾问业务缺陷、必要本产品计算集成/本地候选和独立 QA：一次集中实现及一次独立全量适用 QA，最多两次真实缺陷驱动的集中修复复验；计算器实验旧 `1/1` 账不清零。
+
+已私有导入启用的四文件 Skill 原包不重复安装、不静默替换；原 CALC 三卡原位延续，从与 21:31 非冻结示例隔离的**新**客户端测试会话开始真实 `WB-05-unchanged`，逐案记录/读回旧 checkpoint。21:31 示例来源未知，不是冻结 PASS。未核实的安装后脚本身份/原始工具事件不得伪装客户端通过。P02 `t_e6210c95` 在所有适用独立 QA 真通过之前仍 BLOCKED，MES `t_2affd306` 仍依赖 P02 而不得提前启动；只有通过门禁才按既有冻结依赖推进。其他产品、Expert ZIP 上传、公开提审/发布、可见范围扩大、购买/收费、真实平台及工具拒绝仍禁止；不能以本地通过冒充平台运行或发布。参与角色须在旧 Worker 停止后的安全边界重新读取提交的团队/产品授权和冻结合同，并记录真实 task/run/session、规则提交/blob/SHA、产品 HEAD、候选 SHA；旧配置文件被读回不等于旧 Worker 已重新加载。
