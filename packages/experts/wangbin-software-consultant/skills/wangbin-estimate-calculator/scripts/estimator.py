@@ -5,6 +5,7 @@ from functools import wraps
 import hashlib
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -123,7 +124,10 @@ def estimate_branches(data):
         text(row["function"], where + ".function")
         source = text(row["source"], where + ".source")
         if not ("ASSUMED" in source or "SYNTHETIC" in source or
-                "turn " in source or "话轮" in source or "line " in source):
+                "turn " in source or "话轮" in source or "line " in source or
+                (re.fullmatch(r'[^\\/:*?"<>|\x00-\x1f]+:[1-9][0-9]*', source) and
+                 source.rsplit(":", 1)[0] == source.rsplit(":", 1)[0].strip() and
+                 source.rsplit(":", 1)[0] not in (".", ".."))):
             raise ValueError(where + ".source: require traceable turn/line or ASSUMED/SYNTHETIC")
         if row["scope_version"] != version:
             raise ValueError(where + ": scope version mismatch; change requires new snapshot")
