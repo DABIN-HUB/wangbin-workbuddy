@@ -356,6 +356,16 @@ def estimate(data):
             "outside_fees": "UNKNOWN; inquire separately", "labor_is_complete_total": False}
 
 
+def unique_json_object(pairs):
+    """Reject ambiguous snapshots instead of silently selecting a last value."""
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("input: duplicate JSON object field")
+        result[key] = value
+    return result
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("input", type=Path)
@@ -369,7 +379,7 @@ def main(argv=None):
         if args.input.resolve() == args.output.resolve() or not args.output.parent.is_dir():
             raise ValueError("output: input overwrite or missing output directory refused")
         input_bytes = args.input.read_bytes()
-        data = json.loads(input_bytes.decode("utf-8"), parse_float=Decimal,
+        data = json.loads(input_bytes.decode("utf-8"), object_pairs_hook=unique_json_object, parse_float=Decimal,
                           parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)))
         result = estimate(data)
         result["input_sha256"] = hashlib.sha256(input_bytes).hexdigest()
