@@ -75,6 +75,8 @@ def _parser():
     project.add_argument("--terminal-source", help="可选已授权终期来源事实JSON；须同时提供原始来源字节")
     project.add_argument("--terminal-document", help="终期无处置来源原文字节；仅支持单一NO_DISPOSITION来源")
     project.add_argument("--trading-fee-payment-source", help="可选交易费支付来源JSON；原始字节上限64 KiB")
+    project.add_argument("--dated-event-carrier", help="可选版本化日期现金事件JSON；须与原始CSV成对提供")
+    project.add_argument("--dated-source-csv", help="独立日期现金事件原始CSV字节；上限1 MiB")
     project.add_argument("--output", required=True, help="单层新建私有项目目录，不覆盖")
     source_xlsx = commands.add_parser("source-xlsx", help="Phase4 F04资料来源与假设清单；只生成DRAFT_PARTIAL私有XLSX")
     source_xlsx.add_argument("--result", required=True, help="已验证canonical JSON")
@@ -192,6 +194,8 @@ def main(argv=None):
                 raise ContractError("BUNDLE_BUDGET")
             if bool(args.terminal_source) != bool(args.terminal_document):
                 raise ContractError("PROJECT_TERMINAL_SOURCE_PAIR_REQUIRED")
+            if bool(args.dated_event_carrier) != bool(args.dated_source_csv):
+                raise ContractError("DATED_CASH_SOURCE_PAIR_REQUIRED")
             terminal_source = workspace.read(args.terminal_source)[0] if args.terminal_source else None
             source_documents = None
             if terminal_source is not None:
@@ -211,6 +215,14 @@ def main(argv=None):
                     trading_fee_source_bytes = source_stream.read(64 * 1024 + 1)
                 if len(trading_fee_source_bytes) > 64 * 1024:
                     raise ContractError("TRADING_FEE_SOURCE_SIZE_LIMIT")
+            dated_event_carrier = workspace.read(args.dated_event_carrier)[0] if args.dated_event_carrier else None
+            dated_source_bytes = None
+            if args.dated_source_csv:
+                source_path = workspace.path(args.dated_source_csv, json_only=False)
+                with source_path.open("rb") as source_stream:
+                    dated_source_bytes = source_stream.read(1024 * 1024 + 1)
+                if len(dated_source_bytes) > 1024 * 1024:
+                    raise ContractError("DATED_CASH_SOURCE_SIZE_LIMIT")
             receipt = run_project(workspace.read(args.input)[0], workspace.read(args.methods)[0],
                                   bundle_dir=workspace.path(args.bundle, json_only=False),
                                   catalog=catalog, budget=BundleBudget(**budget_data),
@@ -219,7 +231,8 @@ def main(argv=None):
                                   generation_result_hash=args.generation_hash,
                                   scenario_controls=workspace.read(args.scenarios)[0] if args.scenarios else None,
                                   terminal_source=terminal_source, source_documents=source_documents,
-                                  trading_fee_source_bytes=trading_fee_source_bytes)
+                                  trading_fee_source_bytes=trading_fee_source_bytes,
+                                  dated_event_carrier=dated_event_carrier, dated_source_bytes=dated_source_bytes)
             print(dumps({"status": receipt["status"],
                          "canonical_result_hash": receipt["canonical_result_hash"],
                          "receipt_hash": receipt["receipt_hash"],

@@ -15,6 +15,7 @@ from ..serialization import digest, dumps
 from ..timeseries_private import local_target
 from .break_even_execution import _target, validate_price_selector
 from .break_even_replay import _derive, _verify_bundles
+from .dated_cash_events import validate_dated_cash_events
 from .financial_metrics import evaluate
 from .input_contract import validate_export
 from .result_contract import seal_result, validate_result
@@ -56,6 +57,61 @@ def _record(result, catalog, metric_id, formula_id, values, unit, period, *, opt
     else:
         _metric(result, catalog, metric_id, formula_id, None, unit, period,
                 status=outcome["status"], reason=outcome["reason"], details=outcome.get("details"))
+    return outcome
+
+
+def _record_sourced_dated_npv(result, catalog, exported, methods, financial,
+                             carrier, raw, basis, cash, terminal_date):
+    """Consume an independently bound event table, not the year-end vector."""
+    dated = validate_dated_cash_events(
+        carrier, raw, exported=exported, methods=methods, financial=financial,
+        scenario_id=result["scenario_id"],
+        cashflow_basis={"项目税前": "pre_tax", "项目税后": "post_tax"}[basis],
+        selected_cash_flow=cash, terminal_date=terminal_date)
+    result["source_snapshot"]["phase3e_dated_cash"] = {
+        "schema_version": dated.carrier["schema_version"],
+        "source_sha256": dated.source_sha256, "carrier_hash": dated.carrier_hash,
+        "binding": dated.carrier["binding"],
+        "event_source": dated.carrier["event_source"],
+        "rate_source": dated.carrier["rate_source"],
+    }
+    result["source_snapshot_id"] = digest(result["source_snapshot"])
+    payload = result["inputs"]["identity_payload"]
+    payload.update(source_snapshot_id=result["source_snapshot_id"],
+                   dated_cash_source_sha256=dated.source_sha256,
+                   dated_cash_carrier_hash=dated.carrier_hash)
+    result["input_hash"] = digest(payload)
+    result["inputs"]["used_sources"] = sorted(set(result["inputs"].get("used_sources", [])) | set(dated.source_ids))
+    result["evidence"]["phase3e-dated-cash-events"] = {
+        "scope": ("SYNTHETIC_SOURCE_BOUND_NOT_REAL_PROJECT" if methods.data_mode == "SYNTHETIC"
+                  else "SOURCE_BOUND_NOT_RELEASE_VERIFIED"),
+        "source_sha256": dated.source_sha256, "carrier_hash": dated.carrier_hash,
+        "day_count": methods.require("time.day_count"),
+        "day_count_source": methods.evidence(["time.day_count"])["time.day_count"],
+        "discount_rate": dated.discount_rate,
+        "cashflow_basis": basis,
+        "events": [{"event_id": event["event_id"], "date": event["date"],
+                    "period": event["period"], "amount": event["amount"],
+                    "source_id": event["source_id"], "year_fraction": fraction}
+                   for event, fraction in zip(dated.carrier["events"], dated.year_fractions)],
+    }
+    result["results"]["metrics"] = [metric for metric in result["results"]["metrics"]
+                                   if metric["metric_id"] != "financial.phase3e.dated-npv"]
+    outcome = _record(result, catalog, "financial.phase3e.dated-npv", "F-DATED-NPV", {
+        "finance.cash_event_ids": [event["event_id"] for event in dated.carrier["events"]],
+        "finance.dated_cash_flows": list(dated.amounts),
+        "finance.cash_event_year_fraction": list(dated.year_fractions),
+        "finance.selected_discount_rate": dated.discount_rate,
+        "finance.cash_flow_basis": basis,
+    }, result["currency"], "DATED_EVENTS")
+    if outcome["status"] != "CALCULATED":
+        raise ContractError("DATED_CASH_NPV_NOT_CALCULATED")
+    result["evidence"]["phase3e-financial"]["dated_npv"] = outcome["value"]
+    result["evidence"]["phase3e-financial"]["dated_cash_events"] = "SOURCE_BOUND"
+    for finding in result["findings"]:
+        if "blocked_formula_ids" in finding:
+            finding["blocked_formula_ids"] = [item for item in finding["blocked_formula_ids"]
+                                             if item != "F-DATED-NPV"]
     return outcome
 
 
@@ -258,8 +314,11 @@ def calculate_phase3e(financial_result, methods, catalog):
 
 def calculate_sourced_project_npv(carrier, source_documents, exported, methods, bundle,
                                  generation, settlement, financial, catalog, *, basis_control=None,
-                                 original_export=None, original_bundle=None, trading_fee_source_bytes=None):
-    """Calculate only sourced, year-end unlevered project metrics; other gates stay blocked."""
+                                 original_export=None, original_bundle=None, trading_fee_source_bytes=None,
+                                 dated_event_carrier=None, dated_source_bytes=None):
+    """Calculate sourced project metrics; dated events require independent bytes."""
+    if (dated_event_carrier is None) != (dated_source_bytes is None):
+        raise ContractError("DATED_CASH_SOURCE_PAIR_REQUIRED")
     bound = bind_terminal_candidate(carrier, source_documents, exported, methods, bundle,
                                     generation, settlement, financial, catalog,
                                     trading_fee_source_bytes=trading_fee_source_bytes)
@@ -389,6 +448,10 @@ def calculate_sourced_project_npv(carrier, source_documents, exported, methods, 
     }, result["currency"], span)
     if npv["status"] != "CALCULATED":
         raise ContractError("PROJECT_NPV_NOT_CALCULATED")
+    if dated_event_carrier is not None:
+        _record_sourced_dated_npv(result, catalog, exported, methods, financial,
+                                  dated_event_carrier, dated_source_bytes, chosen, selected,
+                                  bound.source["terminal_date"])
     cumulative = _record(result, catalog, "financial.phase3e.cumulative_cash_flow",
                          "F-CUMULATIVE-CASH-FLOW", {
                              "finance.selected_cash_flow": selected,
@@ -454,7 +517,8 @@ def calculate_sourced_project_npv(carrier, source_documents, exported, methods, 
     result["evidence"]["phase3e-financial"]["project_discount_rate"] = rate["value"]
     result["evidence"]["phase3e-financial"]["project_npv"] = npv["value"]
     result["findings"].append({"code": "SOURCED_PROJECT_NPV_SYNTHETIC_ONLY",
-                               "status": "PARTIAL", "unimplemented": ["EQUITY_CASH_FLOW", "DATED_NPV", "BREAK_EVEN_ROOT"]})
+                               "status": "PARTIAL", "unimplemented": (["EQUITY_CASH_FLOW", "BREAK_EVEN_ROOT"]
+                               if dated_event_carrier is not None else ["EQUITY_CASH_FLOW", "DATED_NPV", "BREAK_EVEN_ROOT"])})
     # Source JSON sorts evidence object keys on readback. Phase 3E metric
     # references are sets in meaning, so canonicalize their order here only;
     # do not touch sealed 3D metrics or the original no-source execution path.

@@ -99,3 +99,7 @@ def test_sourced_irr_calculates_only_with_complete_declared_domain():
     assert multiple["status"] == "UNDEFINED" and multiple["value"] is None
     assert multiple["reason"] == "MULTIPLE_ROOTS"
     assert multiple["details"]["root_count"] == 2
+    assert len(multiple["details"]["roots"]) == 2
+    assert all(abs(root - target) <= IRR["irr.root_tolerance"]
+               for root, target in zip(multiple["details"]["roots"], (D("0.1"), D("0.2"))))
+    assert multiple["details"]["domain"] == {"minimum": D("0"), "maximum": D("1")}

@@ -54,7 +54,8 @@ def _prepare_cases(controls, original, methods, catalog):
 
 def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, run_id,
                 generation_dir=None, generation_result_hash=None, scenario_controls=None,
-                terminal_source=None, source_documents=None, trading_fee_source_bytes=None):
+                terminal_source=None, source_documents=None, trading_fee_source_bytes=None,
+                dated_event_carrier=None, dated_source_bytes=None):
     """Run and publish a single, source-bound BASE project calculation.
 
     An externally pinned 3B trace is read-only; the real 3C consumer verifies
@@ -67,6 +68,10 @@ def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, ru
         raise ContractError("PROJECT_EXECUTION_CONTEXT")
     if (terminal_source is None) != (source_documents is None):
         raise ContractError("PROJECT_TERMINAL_SOURCE_PAIR_REQUIRED")
+    if (dated_event_carrier is None) != (dated_source_bytes is None):
+        raise ContractError("DATED_CASH_SOURCE_PAIR_REQUIRED")
+    if dated_event_carrier is not None and terminal_source is None:
+        raise ContractError("DATED_CASH_TERMINAL_SOURCE_REQUIRED")
     original = validate_export(exported, catalog).export
     config = MethodConfig.from_dict(methods.to_dict() if isinstance(methods, MethodConfig) else methods)
     pv_type = original["project"]["pv_type"]
@@ -75,6 +80,8 @@ def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, ru
     if pv_type not in config.to_dict()["pv_types"]:
         raise ContractError("METHOD_CONFIG_CATEGORY")
     prepared, blocked = _prepare_cases(scenario_controls, original, config, catalog)
+    if dated_event_carrier is not None and any(item.scenario_id != "BASE" for item in prepared):
+        raise ContractError("DATED_CASH_SOURCE_SCENARIO_UNSUPPORTED")
     if trading_fee_source_bytes is not None and any(item.scenario_id != "BASE" for item in prepared):
         raise ContractError("TRADING_FEE_SOURCE_SCENARIO_UNSUPPORTED")
     root = workspace.path(run_id, json_only=False)
@@ -135,6 +142,8 @@ def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, ru
                 row.get("transaction_cost_cash_paid") is None
                 for row in financial["evidence"]["financial-ledger"]["annual"][1:]
             )
+            if dated_event_carrier is not None and fee_payment_missing:
+                raise ContractError("DATED_CASH_UPSTREAM_LEDGER_INCOMPLETE")
             if terminal_source is not None and not isinstance(terminal_source, dict):
                 raise ContractError("PROJECT_TERMINAL_SOURCE_INVALID")
             if terminal_source is None or fee_payment_missing:
@@ -159,7 +168,9 @@ def run_project(exported, methods, *, bundle_dir, catalog, budget, workspace, ru
                            }}
                 result = calculate_sourced_project_npv(carrier, source_documents, original, config,
                                                        bundle, generation, settlement, financial, catalog,
-                                                       trading_fee_source_bytes=trading_fee_source_bytes)
+                                                       trading_fee_source_bytes=trading_fee_source_bytes,
+                                                       dated_event_carrier=dated_event_carrier,
+                                                       dated_source_bytes=dated_source_bytes)
             validate_result(result, catalog)
             write_phase3e_bundle(result, root / "3e")
             stages["3E"] = {"result_hash": result["result_hash"], "reuse": False}
