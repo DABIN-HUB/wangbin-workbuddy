@@ -95,7 +95,11 @@ def estimate_branches(data):
     fields(data["buffers"], ("low", "high", "source"), where="buffers")
     rates = {s: number(data["buffers"][s], "buffers." + s, maximum=Decimal("1"))
              for s in ("low", "high")}
-    text(data["buffers"]["source"], "buffers.source")
+    buffer_source = text(data["buffers"]["source"], "buffers.source")
+    if buffer_source.strip().casefold() in {
+            "unknown", "unconfirmed", "not confirmed", "pending", "tbd",
+            "未知", "待确认", "未确认"}:
+        raise ValueError("buffers.source: confirmed or explicit assumed basis required")
     fields(data["pricing"], ("mode",), ("unit_price", "source"), "pricing")
     price = data["pricing"]
     mode = price["mode"]
