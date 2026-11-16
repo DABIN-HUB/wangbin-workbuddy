@@ -65,19 +65,29 @@ def _check_financial(result, settlement_hash, exported, methods, catalog):
 
 
 def replay_financial_candidate(control, original_export, methods, original_bundle, generation_dir, candidate_price, *,
-                               catalog, budget, workspace, run_name):
-    """Public replay always calculates both originals, without caller cache."""
+                               catalog, budget, workspace, run_name,
+                               original_trading_fee_source_bytes=None, candidate_trading_fee_source_bytes=None):
+    """Replay with separately supplied, sealed-3C-bound payment sources.
+
+    Neither source is inferred or rebound. Missing sources retain the ledger
+    missing-payment behavior. Callers must supply each role independently.
+    """
     return _replay_financial_candidate(control, original_export, methods, original_bundle,
                                        generation_dir, candidate_price, catalog=catalog,
                                        budget=budget, workspace=workspace, run_name=run_name,
-                                       original_revenue=None, original_financial=None)
+                                       original_revenue=None, original_financial=None,
+                                       original_trading_fee_source_bytes=original_trading_fee_source_bytes,
+                                       candidate_trading_fee_source_bytes=candidate_trading_fee_source_bytes)
 
 
 def _replay_financial_candidate(control, original_export, methods, original_bundle, generation_dir, candidate_price, *,
-                                catalog, budget, workspace, run_name, original_revenue, original_financial):
+                                catalog, budget, workspace, run_name, original_revenue, original_financial,
+                                original_trading_fee_source_bytes=None, candidate_trading_fee_source_bytes=None):
     """Publish both 3D ledgers only after their scenario identities validate."""
     if (original_revenue is None) != (original_financial is None):
         raise ContractError("BREAK_EVEN_ORIGINAL_CACHE_INCOMPLETE")
+    if original_financial is not None and original_trading_fee_source_bytes is not None:
+        raise ContractError("BREAK_EVEN_CACHED_FEE_SOURCE_UNSUPPORTED")
     method = MethodConfig.from_dict(methods.to_dict() if isinstance(methods, MethodConfig) else methods)
     replay = _replay_price_candidate(control, original_export, method, original_bundle, generation_dir,
                                      candidate_price, catalog=catalog, budget=budget, workspace=workspace,
@@ -92,9 +102,11 @@ def _replay_financial_candidate(control, original_export, methods, original_bund
         if original_hash == candidate_hash or replay.original_input_hash != original_export["input_hash"]:
             raise ContractError("BREAK_EVEN_SETTLEMENT_IDENTITY_MISMATCH")
         if original_financial is None:
-            original_financial = calculate_financial_ledger(original_export, method, replay.original_revenue, catalog=catalog)
+            original_financial = calculate_financial_ledger(original_export, method, replay.original_revenue, catalog=catalog,
+                trading_fee_source_bytes=original_trading_fee_source_bytes)
         candidate_financial = calculate_financial_ledger(replay.candidate_export, method, replay.candidate_revenue,
-                                                          catalog=catalog)
+                                                          catalog=catalog,
+                                                          trading_fee_source_bytes=candidate_trading_fee_source_bytes)
         _check_financial(original_financial, original_hash, original_export, method, catalog)
         _check_financial(candidate_financial, candidate_hash, replay.candidate_export, method, catalog)
         if (original_financial["result_hash"] == candidate_financial["result_hash"]
