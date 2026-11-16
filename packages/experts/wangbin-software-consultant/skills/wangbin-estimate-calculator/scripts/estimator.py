@@ -130,8 +130,10 @@ def estimate_branches(data):
         ident = text(row["id"], where + ".id")
         text(row["function"], where + ".function")
         source = text(row["source"], where + ".source")
-        if not ("ASSUMED" in source or "SYNTHETIC" in source or
-                "turn " in source or "话轮" in source or "line " in source or
+        if not (re.search(r"\b(?:ASSUMED(?:_CONDITIONAL)?|SYNTHETIC)\b", source) or
+                re.search(r"\bturn\s+[1-9][0-9]*\b", source) or
+                re.search(r"(?:第\s*[1-9][0-9]*\s*(?:个)?(?:话轮|轮)|话轮\s*[1-9][0-9]*)(?![0-9])", source) or
+                re.search(r'[^\s\\/:*?"<>|]+\s+line\s+[1-9][0-9]*\b', source) or
                 (re.fullmatch(r'[^\\/:*?"<>|\x00-\x1f]+:[1-9][0-9]*', source) and
                  source.rsplit(":", 1)[0] == source.rsplit(":", 1)[0].strip() and
                  source.rsplit(":", 1)[0] not in (".", ".."))):

@@ -9,7 +9,7 @@ SOURCE = Path(__file__).resolve().parents[1]
 SCRIPT = SOURCE / "skills/wangbin-estimate-calculator/scripts/estimator.py"
 
 @pytest.mark.parametrize("locator,valid", [
-    ("requirements.md:42", True), ("需求说明.md:1", True),
+    ("pipeline confirmed",False),("return confirmed",False),("已确认话轮",False),("turn 0",False),("turn -1",False),("requirements.md line unknown",False),("第0话轮",False),("ASSUMED_CONDITIONAL interface",True),("用户第2轮确认",True),("话轮 2",True),("requirements.md:42", True), ("需求说明.md:1", True),
     ("requirements.md line 42", True), ("turn 2", True),
     ("第2话轮", True), ("ASSUMED example", True), ("SYNTHETIC fixture", True),
     ("已确认", False), ("requirements.md:0", False),
