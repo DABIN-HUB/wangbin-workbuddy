@@ -80,6 +80,26 @@ def exact_arithmetic(function):
                 raise ValueError("input: cannot compute exactly within arithmetic limits") from exc
     return wrapped
 
+def fixed_price_source(value):
+    """Reject an explicitly unresolved source; do not authenticate free text."""
+    source = text(value, "pricing.source")
+    state = " ".join(source.strip().casefold().split()).rstrip(".。!！")
+    if (
+        re.fullmatch(
+            r"(?:(?:(?:fixed )?(?:price|pricing|unit price|rate)(?: source| basis)?)(?: is|:)?\s*)?"
+            r"(?:unknown|unconfirmed|not(?: yet)? confirmed|pending|tbd|not approved)",
+            state,
+        )
+        or re.fullmatch(
+            r"(?:(?:固定单价|人天单价|单价|价格|报价)(?:来源|依据)?(?:为|是|[:：])?\s*)?"
+            r"(?:未知|尚未确认|未确认|待确认|未批准|未获批准|待批准|未获授权)",
+            state,
+        )
+    ):
+        raise ValueError("pricing.source: fixed price requires a user-supplied price source")
+    return source
+
+
 @exact_arithmetic
 def estimate_branches(data):
     """Five explicit member sets; neither StandardB nor FullA inherits the other."""
@@ -113,7 +133,7 @@ def estimate_branches(data):
         if set(price) != {"mode", "unit_price", "source"}:
             raise ValueError("fixed price needs unit_price and source")
         unit = number(price["unit_price"], "pricing.unit_price")
-        text(price["source"], "pricing.source")
+        fixed_price_source(price["source"])
     elif set(price) != {"mode"}:
         raise ValueError("reference/refused cannot supply a price")
     fields(data["outside_fees"], ("status",), where="outside_fees")
@@ -266,7 +286,7 @@ def estimate(data):
         if set(pricing) != {"mode", "unit_price", "source"}:
             raise ValueError("fixed price needs unit_price and source")
         unit = number(pricing["unit_price"], "pricing.unit_price")
-        text(pricing["source"], "pricing.source")
+        fixed_price_source(pricing["source"])
     elif set(pricing) != {"mode"}:
         raise ValueError("reference/refused cannot supply a price")
     fields(data["outside_fees"], ("status",), where="outside_fees")
