@@ -96,9 +96,12 @@ def estimate_branches(data):
     rates = {s: number(data["buffers"][s], "buffers." + s, maximum=Decimal("1"))
              for s in ("low", "high")}
     buffer_source = text(data["buffers"]["source"], "buffers.source")
-    if buffer_source.strip().casefold() in {
-            "unknown", "unconfirmed", "not confirmed", "pending", "tbd",
-            "未知", "待确认", "未确认"}:
+    # Match a whole missing-basis statement, never a token in a material name.
+    buffer_state = " ".join(buffer_source.strip().casefold().split()).rstrip(".。!！")
+    if (re.fullmatch(r"(?:(?:buffer(?: source| basis)?)(?: is|:)?\s*)?"
+                     r"(?:unknown|unconfirmed|not(?: yet)? confirmed|pending|tbd)", buffer_state) or
+            re.fullmatch(r"(?:(?:缓冲来源|缓冲依据|缓冲)(?:为|是|[:：])?)?"
+                         r"(?:未知|尚未确认|待确认|未确认)", buffer_state)):
         raise ValueError("buffers.source: confirmed or explicit assumed basis required")
     fields(data["pricing"], ("mode",), ("unit_price", "source"), "pricing")
     price = data["pricing"]
