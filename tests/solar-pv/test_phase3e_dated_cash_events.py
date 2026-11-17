@@ -197,3 +197,22 @@ def test_independent_rate_and_event_source_ids_cannot_collide():
     carrier, raw, export, methods, financial = _case()
     carrier["rate_source"]["source_id"] = carrier["event_source"]["source_id"]
     _reject("DATED_CASH_SOURCE_ID_CONFLICT", carrier, raw, export, methods, financial)
+
+
+def test_large_cancelling_cash_events_cannot_hide_a_small_unreconciled_amount():
+    carrier, raw, export, methods, financial = _case()
+    extra = (("large", "100000000000000000000000000000"),
+             ("small", "0.01"),
+             ("large-offset", "-100000000000000000000000000000"))
+    events = [{"event_id": event_id, "date": "2025-06-30", "period": "OPERATING_YEAR_1",
+               "amount": D(amount), "source_id": "SYNTHETIC-dated-events"}
+              for event_id, amount in extra]
+    carrier["events"][1:1] = events
+    insert = b"".join(f"EVENT,{event_id},2025-06-30,OPERATING_YEAR_1,{amount},SYNTHETIC-dated-events\n".encode()
+                      for event_id, amount in extra)
+    raw = raw.replace(b"EVENT,year-1", insert + b"EVENT,year-1")
+    source_hash = sha256(raw).hexdigest()
+    carrier["source_content_sha256"] = source_hash
+    carrier["event_source"]["source_content_sha256"] = source_hash
+    carrier["rate_source"]["source_content_sha256"] = source_hash
+    _reject("DATED_CASH_LEDGER_RECONCILIATION", carrier, raw, export, methods, financial)

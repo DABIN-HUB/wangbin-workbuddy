@@ -196,7 +196,7 @@ def validate_dated_cash_events(carrier, source_bytes, *, exported, methods, fina
     seen = set()
     dates = []
     amounts = []
-    period_totals = [Decimal(0) for _ in selected_cash_flow]
+    period_amounts = [[] for _ in selected_cash_flow]
     period_counts = [0 for _ in selected_cash_flow]
     base_date = _parsed_date(expected["evaluation_date"])
     last_date = _parsed_date(terminal_date)
@@ -228,10 +228,15 @@ def validate_dated_cash_events(carrier, source_bytes, *, exported, methods, fina
             raise ContractError("DATED_CASH_EVENT_PERIOD")
         dates.append(event_date)
         amounts.append(event["amount"])
-        period_totals[index] += event["amount"]
+        period_amounts[index].append(event["amount"])
         period_counts[index] += 1
     if not all(period_counts) or not any(d == last_date for d in dates):
         raise ContractError("DATED_CASH_PERIOD_COVERAGE")
+    # Each source token is at most 80 characters; allow the maximum event
+    # count to grow the integer part without rounding away a small event.
+    with localcontext() as ctx:
+        ctx.prec = 80 + len(str(MAX_EVENTS))
+        period_totals = [sum(values, Decimal(0)) for values in period_amounts]
     if any(observed != expected_amount for observed, expected_amount in zip(period_totals, selected_cash_flow)):
         raise ContractError("DATED_CASH_LEDGER_RECONCILIATION")
     with localcontext() as ctx:
