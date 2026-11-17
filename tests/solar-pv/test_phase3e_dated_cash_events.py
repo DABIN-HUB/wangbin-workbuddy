@@ -2,6 +2,7 @@
 from copy import deepcopy
 from datetime import date
 from decimal import Decimal as D, localcontext
+from fractions import Fraction
 from hashlib import sha256
 
 import pytest
@@ -252,3 +253,46 @@ def test_large_cancelling_cash_events_cannot_hide_a_small_unreconciled_amount():
     carrier["event_source"]["source_content_sha256"] = source_hash
     carrier["rate_source"]["source_content_sha256"] = source_hash
     _reject("DATED_CASH_LEDGER_RECONCILIATION", carrier, raw, export, methods, financial)
+
+
+@pytest.mark.parametrize("order", ((0, 1, 2), (2, 0, 1), (1, 2, 0)))
+def test_maximum_token_precision_cancellation_preserves_subcent_residual(order):
+    carrier, raw, export, methods, financial = _case()
+    extra = (("large", "9" * 79),
+             ("residual", "0." + "0" * 77 + "1"),
+             ("large-offset", "-" + "9" * 79))
+    ordered = [extra[index] for index in order]
+    assert all(len(amount) <= 80 for _, amount in ordered)
+    assert sum((Fraction(amount) for _, amount in ordered), Fraction(0)) == Fraction(1, 10 ** 78)
+    carrier["events"][1:1] = [
+        {"event_id": event_id, "date": "2025-06-30", "period": "OPERATING_YEAR_1",
+         "amount": D(amount), "source_id": "SYNTHETIC-dated-events"}
+        for event_id, amount in ordered]
+    lines = b"".join(
+        f"EVENT,{event_id},2025-06-30,OPERATING_YEAR_1,{amount},SYNTHETIC-dated-events\n".encode()
+        for event_id, amount in ordered)
+    raw = raw.replace(b"EVENT,year-1", lines + b"EVENT,year-1")
+    source_hash = sha256(raw).hexdigest()
+    carrier["source_content_sha256"] = source_hash
+    for key in ("event_source", "rate_source"):
+        carrier[key]["source_content_sha256"] = source_hash
+    _reject("DATED_CASH_LEDGER_RECONCILIATION", carrier, raw, export, methods, financial)
+
+
+def test_exact_maximum_scale_cancellation_reconciles_without_rounding():
+    carrier, raw, export, methods, financial = _case()
+    extra = (("large", "9" * 79), ("large-offset", "-" + "9" * 79))
+    assert sum((Fraction(amount) for _, amount in extra), Fraction(0)) == 0
+    carrier["events"][1:1] = [
+        {"event_id": event_id, "date": "2025-06-30", "period": "OPERATING_YEAR_1",
+         "amount": D(amount), "source_id": "SYNTHETIC-dated-events"}
+        for event_id, amount in extra]
+    lines = b"".join(
+        f"EVENT,{event_id},2025-06-30,OPERATING_YEAR_1,{amount},SYNTHETIC-dated-events\n".encode()
+        for event_id, amount in extra)
+    raw = raw.replace(b"EVENT,year-1", lines + b"EVENT,year-1")
+    source_hash = sha256(raw).hexdigest()
+    carrier["source_content_sha256"] = source_hash
+    for key in ("event_source", "rate_source"):
+        carrier[key]["source_content_sha256"] = source_hash
+    assert _validate(carrier, raw, export, methods, financial).source_sha256 == source_hash

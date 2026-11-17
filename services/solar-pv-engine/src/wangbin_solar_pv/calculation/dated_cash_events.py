@@ -135,6 +135,25 @@ def _year_fraction(start, end, convention):
     return total
 
 
+def _exact_decimal_sum(values):
+    """Sum fixed-point Decimal values without losing an extreme-scale residual."""
+    if not values:
+        return Decimal(0)
+    scale = max(0, max(-value.as_tuple().exponent for value in values))
+    total = 0
+    for value in values:
+        sign, digits, exponent = value.as_tuple()
+        coefficient = 0
+        for digit in digits:
+            coefficient = coefficient * 10 + digit
+        total += (-coefficient if sign else coefficient) * 10 ** (exponent + scale)
+    if total == 0:
+        return Decimal(0)
+    sign = 1 if total < 0 else 0
+    digits = tuple(int(digit) for digit in str(abs(total)))
+    return Decimal((sign, digits, -scale))
+
+
 def validate_dated_cash_events(carrier, source_bytes, *, exported, methods, financial,
                                scenario_id, cashflow_basis, selected_cash_flow, terminal_date):
     """Fail closed on provenance, exact CSV bytes and every selected annual total."""
@@ -232,11 +251,7 @@ def validate_dated_cash_events(carrier, source_bytes, *, exported, methods, fina
         period_counts[index] += 1
     if not all(period_counts) or not any(d == last_date for d in dates):
         raise ContractError("DATED_CASH_PERIOD_COVERAGE")
-    # Each source token is at most 80 characters; allow the maximum event
-    # count to grow the integer part without rounding away a small event.
-    with localcontext() as ctx:
-        ctx.prec = 80 + len(str(MAX_EVENTS))
-        period_totals = [sum(values, Decimal(0)) for values in period_amounts]
+    period_totals = [_exact_decimal_sum(values) for values in period_amounts]
     if any(observed != expected_amount for observed, expected_amount in zip(period_totals, selected_cash_flow)):
         raise ContractError("DATED_CASH_LEDGER_RECONCILIATION")
     with localcontext() as ctx:
