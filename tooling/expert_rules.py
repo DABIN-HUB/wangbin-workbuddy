@@ -33,6 +33,8 @@ def validate_prompt_expert(source: Path, *, name: str, version: str, category: s
         raise ValueError("agentName, agent path or avatar path mismatched")
     if meta["categoryId"] != category:
         raise ValueError("expert category mismatched")
+    if meta.get("license") != "MIT" or not (source / "LICENSE").read_text(encoding="utf-8").startswith("MIT License\n"):
+        raise ValueError("expert license identity mismatched")
     if not isinstance(meta["author"], dict) or not all(meta["author"].get(key) for key in ("name", "email")):
         raise ValueError("author name/email required")
     for key in ("displayName", "profession", "displayDescription", "defaultInitPrompt"):

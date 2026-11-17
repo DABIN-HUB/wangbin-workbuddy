@@ -1,4 +1,4 @@
-"""Build the independent, prompt-only WorkBuddy expert candidate."""
+"""Build this one Expert's local candidate; platform loading remains unverified."""
 from __future__ import annotations
 
 import hashlib
@@ -7,7 +7,7 @@ import zipfile
 from pathlib import Path
 
 NAME = "wangbin-software-consultant"
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 MEMBERS = (
     ".codebuddy-plugin/plugin.json",
     "agents/wangbin-software-consultant.md",
@@ -31,7 +31,8 @@ def validate_source(source: Path) -> dict[str, object]:
     return validate_prompt_expert(source, name=NAME, version=VERSION, category="12-IndustryConsultant")
 
 
-def build(root: Path) -> dict[str, object]:
+def build(root: Path, *, source_commit: str | None = None) -> dict[str, object]:
+    """Build from a caller-controlled clean source tree, without replacing archives."""
     root = root.resolve(strict=True)
     source = root / "packages" / "experts" / NAME
     meta = validate_source(source)
@@ -41,6 +42,10 @@ def build(root: Path) -> dict[str, object]:
     output = root / "dist"
     output.mkdir(exist_ok=True)
     destination = output / f"{NAME}-{VERSION}-expert-candidate.zip"
+    sidecar = output / f"{destination.name}.sha256"
+    manifest = output / f"{NAME}-{VERSION}-expert-manifest.json"
+    if any(path.exists() for path in (destination, sidecar, manifest)):
+        raise FileExistsError("candidate version already exists; preserve immutable release and use an empty dist")
     expected: dict[str, bytes] = {}
     with zipfile.ZipFile(destination, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for rel in sorted(members):
@@ -62,14 +67,15 @@ def build(root: Path) -> dict[str, object]:
         "version": VERSION,
         "status": "PASS",
         "status_scope": "local_schema_and_archive_integrity_only",
-        "workbuddy_install": "BLOCKED",
-        "workbuddy_dialogue": "BLOCKED",
+        "source_commit": source_commit or "NOT_VERIFIED",
+        "workbuddy_install": "NOT_TESTED_VALIDATION_WAIVED",
+        "workbuddy_dialogue": "NOT_TESTED_VALIDATION_WAIVED",
         "zip": str(destination),
         "sha256": digest(destination.read_bytes()),
         "members": [{"path": name, "size": len(data), "sha256": digest(data)} for name, data in expected.items()],
     }
-    (output / f"{destination.name}.sha256").write_bytes(f"{result['sha256']}  {destination.name}\n".encode("ascii"))
-    (output / f"{NAME}-{VERSION}-expert-manifest.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    sidecar.write_bytes(f"{result['sha256']}  {destination.name}\n".encode("ascii"))
+    manifest.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return result
 
 

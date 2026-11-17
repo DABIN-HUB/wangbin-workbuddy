@@ -59,7 +59,7 @@ def test_zip_members_are_exact_and_source_identical():
     original = {f"{NAME}/{rel}": old_bytes(rel) for rel in MEMBERS}
     identity = json.loads(original[f"{NAME}/.codebuddy-plugin/plugin.json"])
     assert (identity["name"], identity["version"], identity["agents"]) == (
-        NAME, VERSION, [f"./agents/{NAME}.md"])
+        NAME, "1.0.0", [f"./agents/{NAME}.md"])
     assert set(original) == {f"{NAME}/{rel}" for rel in MEMBERS}
     memory = io.BytesIO()
     with zipfile.ZipFile(memory, "w", compression=zipfile.ZIP_DEFLATED) as candidate:

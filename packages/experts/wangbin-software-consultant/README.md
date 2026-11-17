@@ -1,6 +1,16 @@
-# 软件需求与报价专家 · 1.0.0
+# 软件需求与报价专家 · 1.1.0
 
-独立 WorkBuddy Expert 候选；无需 Python、MCP、CLI、Docker、数据库或外部 API。仅通过 WorkBuddy 模型对话处理用户提供的文字。不同于仓库中的文档助手，不解析 PDF/Word/Excel，也不生成 Word/PDF 下载文件。平台解析/召唤/模型表现尚未经真实 WorkBuddy 验证。
+本地 Expert 候选：唯一 manifest 指向的 Agent 正文包含七领域及 O-01~O-14 十四项按需 Markdown 交付规则。先交用户指定的一项完整可审阅文本，同版共享项目/需求 ID、事实来源、计量单位、范围与费用；不把纯标题或未写出的成果称为已交付。无需额外服务；包内可选 Decimal Skill 只有在实际授予调用权限、输入合法且回执有效时才用于核算。未取得调用回执时只能标人工示意及待独立复核，不能称已通过平台确定性验证。没有 Office/图片生成及真实文件打开证据时仅给 Markdown/Mermaid 文本。
+
+## 结构与加载边界
+
+官方 Expert 结构和 manifest 的 `agents` 相对路径见 https://open.workbuddy.cn/docs/expert；本包 manifest 指向 `./agents/wangbin-software-consultant.md`。源码中的 `docs/`、`tests/` 不进入 ZIP，也不主张 README 或相对 references 会自动注入运行上下文。manifest 的 `skills` 声明本包的四文件估算 Skill，官方文档列为可选，但本账号实际预加载、权限、模型对话、文件导出和平台安装均 **NOT_TESTED（USER_ACCEPTED / VALIDATION_WAIVED）**；本地结构验收不等于平台 PASS。包内 MIT 许可只覆盖实际随包分发并有分发权的本 Expert 资产和计算 Skill，不替其他仓库文件授予许可；权利/图标归属仍需发布前由权利人复核。
+
+## 使用与限制
+
+在当前会话基于用户授权的脱敏文字澄清需求、选型、设计、报价、交付文本和验收计划；没有客户生产数据库、支付、设备、后台或跨会话持久化。报价按受控范围/工作包及已批准的示意参数计算，外部未知费待询价，不冒充市场行情或正式合同。自然语言交互不要求用户填写 JSON/CLI。案例/测试留在源码目录且不入 ZIP；旧 1.0.0 ZIP 保留不覆盖，新 1.1.0 候选从精确已提交快照另行构建并记录源 HEAD、ZIP 和逐成员哈希。非官方部署、审核、收费或发布回执均不得宣称已获得。
+
+本包不运行独立后台、MCP、数据库或外部 API；若平台授权包内 Skill，则可进行有限确定性人工费核算。未获授权时仅对话输出文本。平台解析、召唤和模型表现未经 WorkBuddy 真实验证。
 
 ## 用户能得到什么
 
@@ -14,7 +24,7 @@
 
 本 Expert 目录中的发布资产按目录内 `LICENSE` 采用 MIT 授权；该授权仅覆盖本候选包内的 Expert 资产，不扩展或重新声明仓库其他目录、历史文档引擎或任何未随包分发的专有代码。`plugin.json` 的 `license=MIT` 与该范围一致；正式发布前仍应由权利人确认授权范围。
 
-`plugin.json` 的 `expertType=agent`、`agentName`、`agents` 相互对应；`displayName`/`profession` 双语；`defaultInitPrompt` 与第一条 `quickPrompts` 两种语言完全一致；分类 `12-IndustryConsultant`。Agent Markdown 带有名称、描述、双语显示名/职业的 frontmatter，不声明 `skills`、`dependencies`、`tools` 或外部运行时。图形头像为原创 512×512 PNG，与旧文档专家不是同一图形。目录根层级为 `wangbin-software-consultant/{.codebuddy-plugin,agents,avatars,README.md,LICENSE}`；官方专家示例采用这一结构，**是否在目标账号私有上传界面接受 ZIP 尚未实测**。[1]
+`plugin.json` 的 `expertType=agent`、`agentName`、`agents` 相互对应；双语名称与提示一致。Agent frontmatter 声明包内估算 Skill（平台实际加载 NOT_TESTED），不声明外部服务。头像为 512×512 PNG，使用权需权利人于发布前复核。ZIP 包含本 Expert 根、Agent、头像、README、LICENSE 和四份 Skill 文件；官方示例仅证明基础布局，目标账号导入仍未测试。[1]
 
 公开入驻说明存在个人主体认证，但没有保证本账号已获得此 Expert 的提交权限；须本人登录核实。[3]
 
@@ -26,7 +36,7 @@
 
 ## 研发与验收
 
-包内有四项运行资产和一份授权声明：`.codebuddy-plugin/plugin.json`、`agents/wangbin-software-consultant.md`、`avatars/expert.png`、`README.md`、`LICENSE`。独立质量场景与结构测试保存在 `tests/`（不打入 ZIP）；`tooling/phase5_expert_packager.py` 只读取本专家路径，并在 `dist/` 生成独立候选和侧车哈希。全局 `dist/` 仍忽略，Phase 1～4 历史文件不被更新。测试分静态结构/算术基线、模拟模型对话及真实 WorkBuddy 对话：后者必须在授权的私有环境人工执行，否则保持 BLOCKED。详见 `reports/phase5-software-consultant.md`。
+包内五项基础资产加四份已声明估算 Skill 文件。独立质量场景与结构测试保存在 `tests/`，不进入 ZIP；`tooling/phase5_expert_packager.py` 只适用于当前 Expert，并在隔离的 `dist/` 生成候选与 SHA/manifest。测试分静态结构/算术、本地模型和真实 WorkBuddy：后二者只有对应实际证据才记 PASS，本次平台验证 USER_ACCEPTED/VALIDATION_WAIVED，不重试客户端。
 
 ## 使用边界
 
