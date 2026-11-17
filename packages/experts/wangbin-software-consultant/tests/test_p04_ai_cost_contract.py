@@ -36,3 +36,15 @@ def test_exact_cost_and_missing_price_boundary():
     assert model_cost(0, 0, 2, 8) == (Decimal(0), Decimal(0))
     # Price is UNKNOWN, never silently substituted by the frozen fictional example.
     assert "币种或单位缺失/冲突时不套用此例" in ai_contract()
+
+
+def test_frozen_n_ai_05_short_prompt_requires_conditional_role_wbs_and_days():
+    part = ai_contract()
+    assert '用户只问“token 单价和 GPU/API 比较”' in part
+    first = part.split("**N-AI-05 成本选型首答闭环：**", 1)[1].split("\n\n", 1)[0]
+    for term in ("条件化费用公式", "同轮", "业务/产品", "AI 工程师", "后端/数据", "QA/安全", "运维", "前置", "可观察测试", "low_days/high_days", "示意情景", "AI-API-1", "AI-GPU-1", "人天", "互斥", "待询价", "币种", "计价版本", "不选定赢家"):
+        assert term in first
+    assert "1+2+2+1+1=7 至 2+3+3+2+2=12 人天" in first
+    assert "1+3+2+1+1=8 至 2+5+3+2+2=14 人天" in first
+    assert sum((1, 2, 2, 1, 1)) == 7 and sum((2, 3, 3, 2, 2)) == 12
+    assert sum((1, 3, 2, 1, 1)) == 8 and sum((2, 5, 3, 2, 2)) == 14

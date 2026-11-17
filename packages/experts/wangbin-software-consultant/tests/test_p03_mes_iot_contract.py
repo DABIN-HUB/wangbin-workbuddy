@@ -34,3 +34,13 @@ def test_sample_capacity_is_math_not_site_sizing():
     assert f"500×100÷5={rate:,.0f} 点值/秒" in iot
     assert f"{rate:,.0f}×86400={rate*86400:,.0f} 点值/日" in iot
     assert "纯示意" in iot
+
+
+def test_frozen_n_mes_05_short_prompt_requires_both_rates_without_hardware_guarantee():
+    prompt = "500 台×100 点/5秒"
+    iot = _section("## 5E. 工业 IoT 与 MES 关联", "## 5F. WMS 仓储作业咨询")
+    assert f"用户只给“{prompt}”时" in iot
+    assert "本轮同时写出 10,000 点值/秒和 864,000,000 点值/日" in iot
+    assert "不因用户没写“每天”就省略日点值" in iot
+    assert "全天连续、所有点同频" in iot
+    assert "不能推出 GB、CPU 核数或网关台数" in iot
