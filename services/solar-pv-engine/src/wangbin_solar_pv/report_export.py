@@ -803,7 +803,20 @@ def _debt_source_state(model: ReportModel) -> str:
     if type(ratio) not in {int, float, Decimal}:
         return "UNKNOWN"
     value = Decimal(str(ratio))
-    return "NO_DEBT" if value == 0 else "HAS_DEBT" if value > 0 else "UNKNOWN"
+    if value > 0:
+        return "HAS_DEBT"
+    schedule = normalized.get("finance.debt_schedule")
+    parameters = model.result.get("source_snapshot", {}).get("methods", {}).get("parameters", {})
+    basis = parameters.get("debt.drawdown_basis", {}).get("value")
+    opening_principal = parameters.get("debt.opening_principal", {}).get("value")
+    opening_interest = parameters.get("debt.opening_interest_payable", {}).get("value")
+    if schedule:
+        return "HAS_DEBT"
+    if opening_principal not in (None, 0) or opening_interest not in (None, 0):
+        return "HAS_DEBT"
+    if value == 0 and basis == "NO_DEBT_DECLARED":
+        return "NO_DEBT"
+    return "UNKNOWN"
 
 
 def _dscr_reader_note(model: ReportModel, debt_state: str) -> str:

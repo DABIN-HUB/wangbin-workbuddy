@@ -3,6 +3,7 @@ from copy import deepcopy
 import pytest
 from test_ai_report_engine import catalog, registry, model, protocol_fixture
 from wangbin_solar_pv.errors import ContractError
+from wangbin_solar_pv.report_export import _debt_source_state
 from wangbin_solar_pv.reporting.evidence_pack_builder import build_pack, source_ids
 from wangbin_solar_pv.reporting.claim_validator import validate_chapter, render_text
 from wangbin_solar_pv.reporting.reader_display import fact_display
@@ -34,6 +35,14 @@ def test_no_debt_is_not_missing_or_zero_dscr(model, registry):
     assert dscr['value'] is None and dscr['status'] == 'UNDEFINED' and dscr['reason'] == 'ZERO_DEBT_SERVICE'
     assert pack['facts']['metric:financial.phase3e.cfads']['status'] == 'BLOCKED_MISSING_INPUT'
     assert fact_display({**debt, 'value': None}) == ('尚无可用结果', '')
+
+
+def test_report_debt_state_does_not_waive_an_explicit_debt_schedule(model):
+    no_debt = deepcopy(model)
+    assert _debt_source_state(no_debt) == 'NO_DEBT'
+    contradictory = deepcopy(model)
+    contradictory.result['inputs']['normalized']['finance.debt_schedule'] = [{'drawdown': 1}]
+    assert _debt_source_state(contradictory) == 'HAS_DEBT'
 
 
 def test_bound_target_fields_and_terminal_records(model, registry):
