@@ -70,7 +70,8 @@ _EXECUTOR_FILES = (
     "financial_ledger.py", "terminal_binding.py", "phase3e.py",
     "financial_metrics.py", "method_config.py", "tariffs.py",
     "costs.py", "generation_evidence.py", "result_contract.py",
-    "input_contract.py",
+    "input_contract.py", "trading_fee_payment.py",
+    "schema/trading-fee-payment.schema.json",
 )
 
 
@@ -238,12 +239,16 @@ class ProjectNpvSession:
             validate_result(result, self.catalog)
         if _bounded_read(self.root / "session.json", MAX_JSON_BYTES, Meter(self.budget)) != self._session_receipt:
             raise ContractError("BREAK_EVEN_SESSION_SOURCE_CHANGED")
-        for name, expected in self._original_published.items():
+        for name, expected in (("original-3c", self.original_revenue),
+                               ("original-3d", self.original_financial),
+                               ("original-3e", self.original_result)):
             target = self.root / name
             required = ({"result.json", "receipt.json"} if name == "original-3c"
                         else {"result.json", "result.sha256"})
             if _file_hashes(target, self.budget, required) != self._original_file_hashes[name]:
                 raise ContractError("BREAK_EVEN_SESSION_SOURCE_CHANGED")
+            if loads(_bounded_read(target / "result.json", MAX_JSON_BYTES, Meter(self.budget))) != expected:
+                raise ContractError("BREAK_EVEN_ORIGINAL_CACHE_IDENTITY")
         if _npv(self.original_result, self.catalog) != self.original_npv:
             raise ContractError("BREAK_EVEN_ORIGINAL_CACHE_IDENTITY")
         for fid in self.original_bundle.dataset_ids:

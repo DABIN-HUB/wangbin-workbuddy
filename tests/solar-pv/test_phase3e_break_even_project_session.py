@@ -1,6 +1,11 @@
 """Independent SYNTHETIC root witness and fail-closed formal certificate."""
+from copy import deepcopy
+from hashlib import sha256
 from decimal import Decimal as D, localcontext
 from inspect import signature
+from pathlib import Path
+from threading import Lock
+from types import SimpleNamespace
 
 import pytest
 
@@ -8,6 +13,7 @@ from test_phase3e_financial_candidate_replay import _build_financial_case, _fee_
 from test_phase3e_terminal_binding import _carrier
 from test_phase3e_terminal_npv import NO_DOC
 from wangbin_solar_pv.calculation.break_even_certification import certify_project_root_set
+import wangbin_solar_pv.calculation.break_even_project_session as project_session
 from wangbin_solar_pv.calculation.break_even_project_session import ProjectNpvSession
 from wangbin_solar_pv.calculation.break_even_replay import replay_price_candidate
 from wangbin_solar_pv.calculation.break_even_financial_replay import replay_financial_candidate
@@ -15,11 +21,11 @@ from wangbin_solar_pv.calculation.financial_ledger import calculate_financial_le
 from wangbin_solar_pv.calculation.financial_metrics import evaluate
 from wangbin_solar_pv.calculation.phase3e import write_phase3e_bundle
 from wangbin_solar_pv.calculation.revenue import calculate_rooftop
-from wangbin_solar_pv.calculation.result_contract import validate_result
+from wangbin_solar_pv.calculation.result_contract import empty_result, result_hash, seal_result, validate_result
 from wangbin_solar_pv.errors import ContractError
 from wangbin_solar_pv.local_files import Workspace
-from wangbin_solar_pv.serialization import loads
-from wangbin_solar_pv.timeseries_bundle import read_bundle
+from wangbin_solar_pv.serialization import digest, dumps, loads
+from wangbin_solar_pv.timeseries_bundle import BundleBudget, read_bundle
 
 PROJECT = "SYNTHETIC-BC-INDEPENDENT-ROOT"
 DOCUMENT = NO_DOC.replace(b"SYNTHETIC-industrial_rooftop", PROJECT.encode("ascii"))
@@ -167,3 +173,91 @@ def test_in_place_source_or_control_changes_invalidate_original_cache(root_case)
     assert not session.workspace.path("root-witness-tampered-sidecar", json_only=False).exists()
     with pytest.raises(ContractError, match="BREAK_EVEN_CANDIDATE_PRICE"):
         session.evaluate(D(-1), run_name="root-witness-negative")
+
+
+@pytest.mark.parametrize("name", ("original-3c", "original-3d", "original-3e"))
+@pytest.mark.parametrize("mutation", ("in_place", "replacement"))
+def test_resealed_in_memory_original_cannot_return_unpublished_hash(tmp_path, monkeypatch, name, mutation):
+    # Exercise the real published-file pin without rerunning the multi-minute
+    # root witness. Results are valid and resealed; only NPV is stubbed because
+    # the minimal NOT_IMPLEMENTED results have no project NPV metric.
+    monkeypatch.setattr(project_session, "_npv", lambda *_: D(10))
+    session = object.__new__(ProjectNpvSession)
+    session.control = {"generation_result_hash": "generation"}
+    session.original_export = {"input_hash": "input"}
+    session.methods = SimpleNamespace(to_dict=lambda: {})
+    session.terminal_carrier = {"source_content_hash": "terminal"}
+    session.source_documents = {}
+    session.original_trading_fee_source_bytes = None
+    session.catalog = SimpleNamespace(formulas={}, fields={}, bindings={}, definition_version="test",
+                                      definition_hash="definition", baseline_hashes={}, definition_identity=lambda: None)
+    session.original_bundle = SimpleNamespace(content_hash="bundle", dataset_ids=(), base_export=session.original_export)
+    session.generation_dir = tmp_path / "generation"
+    session.generation_dir.mkdir()
+    (session.generation_dir / "result.json").write_text("{}", encoding="utf-8")
+    (session.generation_dir / "receipt.json").write_text("{}", encoding="utf-8")
+    session.budget = BundleBudget()
+    session._physical = project_session._physical_files(session.generation_dir, session.budget)
+    session._fingerprint = digest({
+        "control": session.control, "export": session.original_export,
+        "method": session.methods.to_dict(), "carrier": session.terminal_carrier,
+        "documents": {}, "original_trading_fee_source_sha256": None,
+        "catalog": {"formulas": session.catalog.formulas, "fields": session.catalog.fields,
+                    "bindings": session.catalog.bindings, "definition": session.catalog.definition_version},
+        "d3": session.original_bundle.content_hash,
+        "executor": project_session._executor_identity(),
+    })
+    session.root = tmp_path / "session"
+    session.root.mkdir()
+    session._original_published = {}
+    session._original_file_hashes = {}
+    for stage in ("original-3c", "original-3d", "original-3e"):
+        result = empty_result(project_id="SYNTHETIC-PIN", pv_type="industrial_rooftop",
+            evaluation_date="2024-12-31", currency="CNY", scenario_id="BASE",
+            input_hash="input", source_snapshot_id="snapshot", baseline_hashes={},
+            definition_version="test", definition_hash="definition")
+        result["evidence"]["stage"] = stage
+        result = seal_result(result)
+        validate_result(result, session.catalog)
+        folder = session.root / stage
+        folder.mkdir()
+        (folder / "result.json").write_text(dumps(result), encoding="utf-8")
+        if stage == "original-3c":
+            (folder / "receipt.json").write_text("{}", encoding="utf-8")
+        else:
+            (folder / "result.sha256").write_text(result["result_hash"], encoding="utf-8")
+        session._original_published[stage] = result
+        session._original_file_hashes[stage] = project_session._file_hashes(
+            folder, session.budget, {"result.json", "receipt.json"} if stage == "original-3c"
+            else {"result.json", "result.sha256"})
+    session.original_revenue = session._original_published["original-3c"]
+    session.original_financial = session._original_published["original-3d"]
+    session.original_result = session._original_published["original-3e"]
+    session.original_npv = D(10)
+    (session.root / "session.json").write_text("{}", encoding="utf-8")
+    session._session_receipt = (session.root / "session.json").read_bytes()
+    session.original_price = D("0.5")
+    session.price_min, session.price_max = D(0), D(2)
+    session.run_name = "session"
+    session._lock = Lock()
+    published_hash = session.original_result["result_hash"]
+    assert session.evaluate(session.original_price, run_name="published-original-lookup").original_result_hash == published_hash
+    memory_result = (deepcopy(session._original_published[name]) if mutation == "replacement"
+                     else session._original_published[name])
+    memory_result["evidence"]["resealed"] = True
+    memory_result["result_hash"] = result_hash(memory_result)
+    validate_result(memory_result, session.catalog)
+    if mutation == "replacement":
+        setattr(session, {"original-3c": "original_revenue", "original-3d": "original_financial",
+                          "original-3e": "original_result"}[name], memory_result)
+    assert memory_result["result_hash"] != loads(
+        (session.root / name / "result.json").read_bytes())["result_hash"]
+    with pytest.raises(ContractError, match="BREAK_EVEN_ORIGINAL_CACHE_IDENTITY"):
+        session.evaluate(session.original_price, run_name="unpublished-original-lookup")
+
+
+def test_session_executor_pins_trading_fee_validator_and_its_schema():
+    identity = project_session._executor_identity()
+    executor_dir = Path(project_session.__file__).parent
+    for relative in ("trading_fee_payment.py", "schema/trading-fee-payment.schema.json"):
+        assert identity[relative] == sha256((executor_dir / relative).read_bytes()).hexdigest()
