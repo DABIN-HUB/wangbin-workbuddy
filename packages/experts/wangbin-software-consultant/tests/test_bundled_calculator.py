@@ -31,8 +31,12 @@ def test_external_or_unbound_skill_rejected(tmp_path, value):
 def test_archive_is_deterministic_and_binds_formal_bytes(tmp_path):
     target = tmp_path / "packages/experts" / NAME
     shutil.copytree(SOURCE, target, ignore=shutil.ignore_patterns("__pycache__"))
-    first = build(tmp_path); second = build(tmp_path)
-    assert first["sha256"] == second["sha256"]
+    first = build(tmp_path)
+    existing = Path(str(first["zip"])).read_bytes()
+    with pytest.raises(FileExistsError, match="already exists"):
+        build(tmp_path)
+    assert Path(str(first["zip"])).read_bytes() == existing
+    assert first["sha256"] == hashlib.sha256(existing).hexdigest()
     assert len(first["members"]) == 9
     rows = {r["path"]: r for r in first["members"]}
     rel = "skills/wangbin-estimate-calculator/scripts/estimator.py"
