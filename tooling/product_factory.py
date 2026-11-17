@@ -296,18 +296,35 @@ def _files(source: Path, kind: str) -> list[Path]:
     # installable Expert assets. Keep the exception narrow for other Experts.
     approved_docs: set[str] = set()
     if kind == "Expert" and source.name == "wangbin-software-consultant":
-        allowed = allowed | {"docs"}
+        allowed = allowed | {"docs", "skills"}
         approved_docs = {"requirements.md", "traceability.csv", "acceptance-cases.md",
-                         "input-output-contract.md", "p01-r5-rate-policy-addendum.md",
+                         "input-output-contract.md", "decimal-integration.md", "p01-r5-rate-policy-addendum.md",
                          "p01-r7-s29-acceptance.md", "p01-r8-s10-s31-acceptance.md"}
+    approved_skill = {"SKILL.md", "scripts/estimator.py", "references/input-output-contract.md", "LICENSE"}
     for path in source.rglob("*"):
         rel = path.relative_to(source)
-        if source.is_symlink() or any((source / parent).is_symlink() for parent in path.relative_to(source).parents):
+        if source.is_symlink() or any((source / parent).is_symlink() for parent in rel.parents):
             raise ValueError(f"symlink ancestor: {rel}")
+        if path.is_symlink():
+            raise ValueError(f"symlink forbidden: {rel}")
+        # Only this Expert's prior Decimal research is retained in Git, never
+        # approved as runtime source or included in candidate payloads. Other
+        # experiments and paths still fail closed; secret scanning remains on
+        # the complete source tree during validation.
+        if (kind == "Expert" and source.name == "wangbin-software-consultant"
+                and (rel.parts[:2] == ("experiments", "decimal-poc")
+                     or (rel.parts == ("experiments",) and path.is_dir()))):
+            continue
         if rel.parts[0] not in allowed:
             raise ValueError(f"unapproved source path: {rel}")
         if rel.parts[0] == "docs" and len(rel.parts) > 1 and (len(rel.parts) != 2 or rel.name not in approved_docs):
             raise ValueError(f"unapproved source path: {rel}")
+        if rel.parts[0] == "skills" and len(rel.parts) > 1:
+            suffix = rel.parts[2:]
+            if (rel.parts[1] != "wangbin-estimate-calculator"
+                    or (path.is_file() and "/".join(suffix) not in approved_skill)
+                    or (path.is_dir() and suffix not in ((), ("scripts",), ("references",)))):
+                raise ValueError(f"unapproved expert skill path: {rel}")
         if path.is_symlink():
             raise ValueError(f"symlink forbidden: {rel}")
         if any(part.startswith(".") and not (kind == "Expert" and part == ".codebuddy-plugin") for part in rel.parts) or any(part.lower() in {"__pycache__", "tests", ".pytest_cache", "venv", "node_modules", "dist"} for part in rel.parts):

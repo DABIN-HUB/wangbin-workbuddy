@@ -39,6 +39,33 @@ def test_integration_cost_and_acceptance_boundaries():
     assert "不是现有可调用端点" in source
 
 
+def test_wms_quantities_must_be_evaluated_before_answer():
+    source = wms()
+    assert "原单未到货2件（10−8=2）" in source
+    assert "合格待上架2件（7−5=2）" in source
+    assert "破损1件另列拒收/隔离" in source
+    assert "不得仅因没有 Decimal/脚本权限就拒给结果" in source
+    assert "冻结批次不得预留/发运" in source
+    assert "系统未执行" in source
+    assert Decimal(10) - Decimal(8) == Decimal(7) - Decimal(5) == 2
+    assert Decimal(7) + Decimal(1) == Decimal(8)
+
+
+def test_factory_research_is_not_runtime_source(tmp_path):
+    from tooling.product_factory import _files
+
+    source = tmp_path / "wangbin-software-consultant"
+    (source / "experiments" / "decimal-poc").mkdir(parents=True)
+    (source / "experiments" / "decimal-poc" / "research.py").write_text("historical", encoding="utf-8")
+    (source / "README.md").write_text("runtime", encoding="utf-8")
+    assert [p.relative_to(source).as_posix() for p in _files(source, "Expert")] == ["README.md"]
+    (source / "experiments" / "other").mkdir()
+    (source / "experiments" / "other" / "unapproved.py").write_text("unsafe", encoding="utf-8")
+    import pytest
+    with pytest.raises(ValueError, match=r"unapproved source path: experiments[\\/]other"):
+        _files(source, "Expert")
+
+
 def test_wms_frd_mapping_without_relabeling_iot():
     with MATRIX.open(encoding="utf-8-sig", newline="") as f:
         rows = list(csv.DictReader(f))
