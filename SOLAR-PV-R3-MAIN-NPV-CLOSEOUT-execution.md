@@ -4,7 +4,7 @@
 - 范围：仅 `DABIN-HUB/wangbin-workbuddy` 光伏预可研计算与报告消费链
 - 执行时间：2026-11-17（UTC 记录见各回执目录）
 - 初始审阅基线：`main / 4e1b14092acbf8578e582ece39169682052888e7`
-- 最终本地源码：`main / 65046070e9126989156b925694ac2bdf5c43c672`
+- 软件最终本地源码（生产代码）：`main / 65046070e9126989156b925694ac2bdf5c43c672`
 - `origin/main`：仍为 `4e1b14092acbf8578e582ece39169682052888e7`
 - 同步状态：已完成本地提交，**未 push**；未执行 force push、merge、rebase、reset 或发布
 - 工作区保护：未修改未跟踪的 `uv.lock`；未导入旧 bundle，未清理历史 R2/R4–R13 原件
@@ -17,6 +17,8 @@
 2. `c551707` — `fix(solar): pin project session publication identity`
 3. `056185a2` — `fix(solar): distinguish no-debt DSCR applicability`
 4. `6504607` — `fix(solar): keep DSCR report state debt-aware`
+
+本报告为独立证据文档提交，不改变上述生产代码最终 SHA。
 
 最终工作区除受保护的未跟踪 `uv.lock` 外无未提交修改；`git diff --check` 通过。
 
@@ -99,4 +101,4 @@
 
 ## 5. 交付与停止状态
 
-软件整改和限定回归已在本地 `main` 收口，最终 SHA 为 `65046070e9126989156b925694ac2bdf5c43c672`。代码仍只在本地，未推送；产品发布状态仍为未发布，下一步若要推送或解除人工/真实工程门禁，必须取得新的明确授权和相应外部回执。
+软件整改和限定回归已在本地 `main` 收口，生产代码最终 SHA 为 `65046070e9126989156b925694ac2bdf5c43c672`；本报告作为独立证据文档另行提交。代码仍只在本地，未推送；产品发布状态仍为未发布，下一步若要推送或解除人工/真实工程门禁，必须取得新的明确授权和相应外部回执。
