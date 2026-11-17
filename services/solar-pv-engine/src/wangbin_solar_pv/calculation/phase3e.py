@@ -281,7 +281,27 @@ def calculate_phase3e(financial_result, methods, catalog):
     cfads = _record(result, catalog, "financial.phase3e.cfads", "F-CFADS", cfads_vectors, "CNY", "OPERATING_YEARS",
                     blocked_reason="BLOCKED_MISSING_INPUT" if cfads_missing else None,
                     blocked_details={"missing_field_ids": cfads_missing} if cfads_missing else None)
-    if vectors["debt_service"] is not None and any(value == 0 for value in vectors["debt_service"]):
+    # Applicability comes from an explicit no-debt declaration corroborated by
+    # the source plan and ledger, never from a zero denominator alone. CFADS
+    # can remain independently blocked in a genuinely unlevered project.
+    debt_parameters = result["source_snapshot"]["methods"]["parameters"]
+    no_debt = (
+        type(normalized.get("finance.debt_ratio")) in {int, float, Decimal}
+        and normalized["finance.debt_ratio"] == 0
+        and debt_parameters.get("debt.drawdown_basis", {}).get("value") == "NO_DEBT_DECLARED"
+        and normalized.get("finance.debt_schedule") == []
+        and debt_parameters.get("debt.opening_principal", {}).get("value") in (None, 0)
+        and debt_parameters.get("debt.opening_interest_payable", {}).get("value") == 0
+        and vectors["debt_service"] is not None
+        and all(value == 0 for value in vectors["debt_service"])
+        and all(row.get(key) == 0 for row in annual for key in
+                ("debt_drawdown", "principal_paid", "interest_paid", "finance_fees_paid"))
+        and all(row.get(key) == 0 for row in annual[1:] for key in
+                ("principal_due", "interest_accrued", "debt_balance_closing", "interest_payable_closing"))
+    )
+    if no_debt:
+        _metric(result, catalog, "financial.phase3e.dscr", "F-DSCR", None, "1", "OPERATING_YEARS", status="NOT_APPLICABLE", reason="NO_DEBT")
+    elif vectors["debt_service"] is not None and any(value == 0 for value in vectors["debt_service"]):
         _metric(result, catalog, "financial.phase3e.dscr", "F-DSCR", None, "1", "OPERATING_YEARS", status="UNDEFINED", reason="ZERO_DEBT_SERVICE", details={"zero_service_periods": [annual[index + 1]["period"] for index, value in enumerate(vectors["debt_service"]) if value == 0]})
     elif cfads["status"] == "CALCULATED":
         _record(result, catalog, "financial.phase3e.dscr", "F-DSCR", {"debt.cfads": cfads["value"], "debt.service_due": vectors["debt_service"]}, "1", "OPERATING_YEARS")

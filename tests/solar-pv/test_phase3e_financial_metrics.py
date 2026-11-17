@@ -1,12 +1,37 @@
 """Independent Decimal checks for the frozen Phase 3E formula kernels."""
 from decimal import Decimal, localcontext
+from pathlib import Path
 
 import pytest
 
+from wangbin_solar_pv.catalog import Catalog
 from wangbin_solar_pv.errors import ContractError
 from wangbin_solar_pv.calculation.financial_metrics import FORMULA_IDS, evaluate
+from wangbin_solar_pv.calculation.phase3e import calculate_phase3e
+from wangbin_solar_pv.calculation.result_contract import validate_result
+from wangbin_solar_pv.serialization import loads
 
 D = Decimal
+
+
+@pytest.mark.parametrize("category", ("industrial_rooftop", "utility_scale_ground"))
+def test_new_phase3e_no_debt_is_not_applicable_even_when_cfads_is_missing(category):
+    root = Path(__file__).resolve().parents[2] / "reports/solar-pv/phase7l-r2-full-cases" / category
+    catalog = Catalog()
+    financial = loads((root / "project/3d/result.json").read_bytes())
+    methods = loads((root / "methods.json").read_bytes())
+    assert financial["inputs"]["normalized"]["finance.debt_ratio"] == 0
+    assert financial["inputs"]["normalized"]["finance.debt_schedule"] == []
+    assert methods["parameters"]["debt.drawdown_basis"]["value"] == "NO_DEBT_DECLARED"
+    result = calculate_phase3e(financial, methods, catalog)
+    validate_result(result, catalog)
+    metrics = {metric["metric_id"]: metric for metric in result["results"]["metrics"]}
+    assert metrics["financial.phase3e.cfads"]["status"] == "BLOCKED_MISSING_INPUT"
+    dscr = metrics["financial.phase3e.dscr"]
+    assert dscr["status"] == "NOT_APPLICABLE"
+    assert dscr["reason"] == "NO_DEBT"
+    assert dscr["value"] is None
+    assert "zero_service_periods" not in dscr["details"]
 
 
 def test_all_phase3e_formula_ids_have_executable_kernels():
