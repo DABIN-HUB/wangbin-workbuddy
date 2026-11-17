@@ -4,7 +4,7 @@ from inspect import signature
 
 import pytest
 
-from test_phase3e_financial_candidate_replay import _build_financial_case
+from test_phase3e_financial_candidate_replay import _build_financial_case, _fee_source
 from test_phase3e_terminal_binding import _carrier
 from test_phase3e_terminal_npv import NO_DOC
 from wangbin_solar_pv.calculation.break_even_certification import certify_project_root_set
@@ -28,9 +28,12 @@ DOCUMENT = NO_DOC.replace(b"SYNTHETIC-industrial_rooftop", PROJECT.encode("ascii
 def _independent_npv(price):
     # Fixed independently before executing any candidate. The referenced
     # one-year model has 87,600 kWh export; self-use saving is 140,160 yuan.
+    # The separately declared 0.01 CNY/kWh fee is paid once in the same year;
+    # high synthetic opex keeps the project's income tax and VAT cash at zero.
     with localcontext() as ctx:
         ctx.prec = 100
-        return -D(1330) + (D(65700)*price + D(140160) - D(180000) + D(200))/D("1.1")
+        return -D(1330) + (D(65700)*price + D(140160) - D(180000)
+                           - D(87600)*D("0.01") + D(200))/D("1.1")
 
 
 @pytest.fixture(scope="module")
@@ -43,30 +46,49 @@ def root_case():
         baseline = calculate_rooftop(exported, methods, generation_dir=root/"generation",
             generation_result_hash=generation_hash, catalog=catalog,
             output_dir=root/"root-witness-original-3c", budget=budget, bundle=original)
-        ledger = calculate_financial_ledger(exported, methods, baseline, catalog=catalog)
+        original_fee = _fee_source(exported, methods, baseline, role="original")
+        ledger = calculate_financial_ledger(exported, methods, baseline, catalog=catalog,
+                                            trading_fee_source_bytes=original_fee)
         carrier = _carrier(exported, methods, original, generation, baseline, ledger,
                            terminal_date="2025-12-31", document=DOCUMENT)
+        # Each candidate owns a different derived P2/D3/3C identity. Pre-settle
+        # independently: neither the session nor 3D/3E may mint payment bytes.
+        with localcontext() as ctx:
+            ctx.prec = 100
+            reference_root = D(41979) / D(65700)
+        fee_sources = {}
+        for price, label in ((D(0), "zero"), (D(2), "two"), (reference_root, "reference")):
+            upstream = replay_price_candidate(control, exported, methods, original, root/"generation",
+                price, catalog=catalog, budget=budget, workspace=Workspace(root),
+                run_name="root-witness-fee-binding-" + label)
+            assert upstream.original_revenue["result_hash"] == baseline["result_hash"]
+            fee_sources[price] = _fee_source(upstream.candidate_export, methods,
+                                              upstream.candidate_revenue, role="candidate")
         session = ProjectNpvSession(control, exported, methods, original, root/"generation",
             carrier, {"SYNTHETIC-asset-clearance": DOCUMENT}, catalog=catalog,
-            budget=budget, workspace=Workspace(root), run_name="root-witness-session")
-        yield base, session
+            budget=budget, workspace=Workspace(root), run_name="root-witness-session",
+            original_trading_fee_source_bytes=original_fee)
+        yield base, session, fee_sources
 
 
 def test_declared_independent_project_has_real_full_chain_root_witness(root_case):
-    base, session = root_case
+    base, session, fee_sources = root_case
     root, catalog, _, _, _, _, _ = base
     assert session.control["project_id"] == PROJECT
     assert session.original_npv < 0
     assert abs(session.original_npv - _independent_npv(D("0.4"))) < D("1e-18")
-    low = session.evaluate(D(0), run_name="root-witness-zero")
-    high = session.evaluate(D(2), run_name="root-witness-two")
+    low = session.evaluate(D(0), run_name="root-witness-zero",
+                           candidate_trading_fee_source_bytes=fee_sources[D(0)])
+    high = session.evaluate(D(2), run_name="root-witness-two",
+                            candidate_trading_fee_source_bytes=fee_sources[D(2)])
     assert low.candidate_npv < 0 < high.candidate_npv
     assert abs(low.candidate_npv - _independent_npv(D(0))) < D("1e-18")
     assert abs(high.candidate_npv - _independent_npv(D(2))) < D("1e-18")
     with localcontext() as ctx:
         ctx.prec = 100
-        reference_root = D(4567) / D(7300)
-    at_root = session.evaluate(reference_root, run_name="root-witness-reference")
+        reference_root = D(41979) / D(65700)
+    at_root = session.evaluate(reference_root, run_name="root-witness-reference",
+                               candidate_trading_fee_source_bytes=fee_sources[reference_root])
     assert abs(at_root.candidate_npv) < D("1e-18")
     assert at_root.price == reference_root
     assert at_root.terminal_source_hash == low.terminal_source_hash == high.terminal_source_hash
@@ -80,6 +102,9 @@ def test_declared_independent_project_has_real_full_chain_root_witness(root_case
         assert receipt["phase3c_calculations"] == receipt["phase3d_calculations"] == receipt["phase3e_calculations"] == 1
         assert receipt["candidate_result_hash"] == result["result_hash"]
         annual = result["evidence"]["financial-ledger"]["annual"][1]
+        assert annual["transaction_cost_accrued"] == D(876)
+        assert annual["transaction_cost_cash_paid"] == D(876)
+        assert annual["transaction_cost_payable_closing"] == 0
         assert annual["income_tax_cash_paid_project"] == D(0)
         assert annual["cash_tax_total_project"] == D(0)
         assert annual["vat_credit_closing"] > 0
@@ -88,7 +113,7 @@ def test_declared_independent_project_has_real_full_chain_root_witness(root_case
 
 
 def test_original_price_is_reused_without_neighboring_fake_price(root_case):
-    _, session = root_case
+    _, session, _ = root_case
     before = session.counts
     original = session.evaluate(session.original_price, run_name="root-witness-original-lookup")
     assert original.candidate_npv == session.original_npv
@@ -97,7 +122,7 @@ def test_original_price_is_reused_without_neighboring_fake_price(root_case):
 
 
 def test_cannot_certify_unproven_executable_root_or_legacy_interpolation(root_case):
-    _, session = root_case
+    _, session, _ = root_case
     legacy = evaluate("F-BREAK-EVEN-PRICE", {
         "sensitivity.price_search_domain": [D(0), D(2)],
         "sensitivity.price_cash_flow_vector": {"prices": [D(0), D(2)],
@@ -122,7 +147,7 @@ def test_cannot_certify_unproven_executable_root_or_legacy_interpolation(root_ca
 
 
 def test_in_place_source_or_control_changes_invalidate_original_cache(root_case):
-    _, session = root_case
+    _, session, _ = root_case
     original = session.control["basis"]
     session.control["basis"] = "项目税前"
     try:

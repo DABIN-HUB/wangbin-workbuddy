@@ -97,7 +97,8 @@ class ProjectNpvSession:
 
     def __init__(self, control, original_export, methods, original_bundle,
                  generation_dir, terminal_carrier, source_documents, *,
-                 catalog, budget, workspace, run_name):
+                 catalog, budget, workspace, run_name,
+                 original_trading_fee_source_bytes=None):
         if (type(budget) is not BundleBudget or not isinstance(workspace, Workspace)
                 or not isinstance(original_bundle, TimeSeriesBundle)
                 or not isinstance(run_name, str)
@@ -108,6 +109,8 @@ class ProjectNpvSession:
             raise ContractError("BREAK_EVEN_SCRATCH_OUTSIDE_WORKSPACE")
         if not isinstance(source_documents, dict) or any(not isinstance(v, bytes) for v in source_documents.values()):
             raise ContractError("TERMINAL_SOURCE_BYTES_MISMATCH")
+        if original_trading_fee_source_bytes is not None and not isinstance(original_trading_fee_source_bytes, bytes):
+            raise ContractError("TRADING_FEE_SOURCE_BYTES_REQUIRED")
         self.control = deepcopy(control)
         self.original_export = deepcopy(original_export)
         self.methods = MethodConfig.from_dict(methods.to_dict() if isinstance(methods, MethodConfig) else methods)
@@ -115,6 +118,7 @@ class ProjectNpvSession:
         self.generation_dir = local_target(generation_dir)
         self.terminal_carrier = deepcopy(terminal_carrier)
         self.source_documents = dict(source_documents)
+        self.original_trading_fee_source_bytes = original_trading_fee_source_bytes
         self.catalog, self.budget, self.workspace = catalog, budget, workspace
         self.run_name = run_name
         self._lock = Lock()
@@ -134,6 +138,8 @@ class ProjectNpvSession:
         self._fingerprint = digest({"control": self.control, "export": self.original_export,
                                     "method": self.methods.to_dict(), "carrier": self.terminal_carrier,
                                     "documents": {k: sha256(v).hexdigest() for k, v in self.source_documents.items()},
+                                    "original_trading_fee_source_sha256": (sha256(self.original_trading_fee_source_bytes).hexdigest()
+                                        if self.original_trading_fee_source_bytes is not None else None),
                                     "catalog": {"formulas": catalog.formulas, "fields": catalog.fields,
                                                 "bindings": catalog.bindings, "definition": catalog.definition_version},
                                     "d3": original_bundle.content_hash,
@@ -159,7 +165,8 @@ class ProjectNpvSession:
                               original_bundle.content_hash, self.control["generation_result_hash"], catalog)
             t = perf_counter()
             self.original_financial = calculate_financial_ledger(
-                self.original_export, self.methods, self.original_revenue, catalog=catalog)
+                self.original_export, self.methods, self.original_revenue, catalog=catalog,
+                trading_fee_source_bytes=self.original_trading_fee_source_bytes)
             self._counts["original_3d"] += 1
             _check_financial(self.original_financial, self.original_revenue["result_hash"],
                              self.original_export, self.methods, catalog)
@@ -171,7 +178,8 @@ class ProjectNpvSession:
                 self.terminal_carrier, self.source_documents, self.original_export, self.methods,
                 original_bundle, generation, self.original_revenue, self.original_financial,
                 catalog, basis_control=self.control, original_export=self.original_export,
-                original_bundle=original_bundle)
+                original_bundle=original_bundle,
+                trading_fee_source_bytes=self.original_trading_fee_source_bytes)
             self.original_npv = _npv(self.original_result, catalog)
             self._counts["original_3e"] += 1
             write_phase3e_bundle(self.original_result, self.root / "original-3e")
@@ -218,6 +226,8 @@ class ProjectNpvSession:
         current = digest({"control": self.control, "export": self.original_export,
                           "method": self.methods.to_dict(), "carrier": self.terminal_carrier,
                           "documents": {k: sha256(v).hexdigest() for k, v in self.source_documents.items()},
+                          "original_trading_fee_source_sha256": (sha256(self.original_trading_fee_source_bytes).hexdigest()
+                              if self.original_trading_fee_source_bytes is not None else None),
                           "catalog": {"formulas": self.catalog.formulas, "fields": self.catalog.fields,
                                       "bindings": self.catalog.bindings, "definition": self.catalog.definition_version},
                           "d3": self.original_bundle.content_hash,
@@ -242,7 +252,7 @@ class ProjectNpvSession:
         if self.original_bundle.base_export != self.original_export:
             raise ContractError("BREAK_EVEN_SESSION_SOURCE_CHANGED")
 
-    def evaluate(self, price, *, run_name):
+    def evaluate(self, price, *, run_name, candidate_trading_fee_source_bytes=None):
         """Original price is read from the proven session, never a fake replay."""
         if not isinstance(price, Decimal) or not price.is_finite() or not self.price_min <= price <= self.price_max:
             raise ContractError("BREAK_EVEN_CANDIDATE_PRICE")
@@ -252,6 +262,8 @@ class ProjectNpvSession:
         with self._lock:
             self._check_pins()
             if price == self.original_price:
+                if candidate_trading_fee_source_bytes is not None:
+                    raise ContractError("BREAK_EVEN_CANDIDATE_FEE_SOURCE_NOT_APPLICABLE")
                 return ProjectNpvCandidate(price, self.original_npv, self.original_npv,
                     self.original_result["result_hash"], self.original_result["result_hash"],
                     self.terminal_carrier["source_content_hash"], self.control["generation_result_hash"],
@@ -268,7 +280,9 @@ class ProjectNpvSession:
                 self.original_bundle, self.generation_dir, price, self.terminal_carrier,
                 self.source_documents, catalog=self.catalog, budget=self.budget,
                 workspace=self.workspace, run_name=run_name,
-                original_cache=(self.original_revenue, self.original_financial, self.original_result))
+                original_cache=(self.original_revenue, self.original_financial, self.original_result),
+                original_trading_fee_source_bytes=self.original_trading_fee_source_bytes,
+                candidate_trading_fee_source_bytes=candidate_trading_fee_source_bytes)
             candidate_root = self.workspace.path(run_name, json_only=False)
             identity = candidate_root.stat().st_dev, candidate_root.stat().st_ino
             try:

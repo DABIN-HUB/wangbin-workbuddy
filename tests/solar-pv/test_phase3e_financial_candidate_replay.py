@@ -1,6 +1,7 @@
 """Independent SYNTHETIC Phase 2→D3→3B→3C→3D price and cash reference."""
 from copy import deepcopy
 from decimal import Decimal as D
+from hashlib import sha256
 import os
 from pathlib import Path
 from uuid import uuid4
@@ -13,11 +14,13 @@ from wangbin_solar_pv.catalog import Catalog
 from wangbin_solar_pv.calculation.break_even_financial_replay import (
     _check_financial, _check_settlement, replay_financial_candidate,
 )
+from wangbin_solar_pv.calculation.break_even_replay import replay_price_candidate
 from wangbin_solar_pv.calculation.energy_yield import calculate_rooftop as generate
 from wangbin_solar_pv.calculation.financial_ledger import calculate_financial_ledger
 from wangbin_solar_pv.calculation.input_contract import validate_export
 from wangbin_solar_pv.calculation.method_config import MethodConfig
 from wangbin_solar_pv.calculation.result_contract import seal_result, validate_result
+from wangbin_solar_pv.calculation.trading_fee_payment import validate_trading_fee_payment
 from wangbin_solar_pv.errors import ContractError
 from wangbin_solar_pv.intake import IntakeSession
 from wangbin_solar_pv.local_files import Workspace
@@ -169,6 +172,60 @@ def _build_financial_case(*, evaluation_date=None, project_rate=None,
         control = _control(exported, methods, bundle.content_hash, generation["result_hash"])
     return root, catalog, budget, exported, methods, control, generation["result_hash"]
 
+def _fee_source(exported, methods, settlement, *, role):
+    """Independent SYNTHETIC assumption bound to this exact P2/D3/3C role.
+
+    The amount is fixed from the upstream priced energy and declared tariff,
+    never copied from a 3D ledger or a 3E cash-flow vector.
+    """
+    assert exported["project"]["values"]["tariff.transaction_fee"]["value"] == D("0.01")
+    fee = next(m for m in settlement["results"]["metrics"]
+               if m["metric_id"] == "revenue.year.1")["details"]["ledger"]["transaction_cost"]
+    assert fee == D("87600") * D("0.01") == D("876")
+    binding = {
+        "project_id": exported["project"]["project_id"],
+        "pv_type": exported["project"]["pv_type"],
+        "currency": exported["project"]["values"]["project.currency"]["value"],
+        "scenario_id": "BASE",
+        "evaluation_years": exported["project"]["values"]["project.evaluation_years"]["value"],
+        "phase2_input_hash": exported["input_hash"],
+        "phase2_source_snapshot_id": exported["source_snapshot_id"],
+        "method_config_hash": methods.hash,
+        "d3_content_hash": settlement["source_snapshot"]["datasets"]["content_hash"],
+        "phase3c_result_hash": settlement["result_hash"],
+        "fee_treatment": "SEPARATE_LEDGER",
+        "fee_category": "SETTLEMENT_TRANSACTION_COST",
+        "fee_metric_path": "revenue.year.{year}.details.ledger.transaction_cost",
+    }
+    source = {
+        "schema_version": "solar-pv-trading-fee-payment/1.0.0",
+        "carrier_type": "TRADING_FEE_PAYMENT_SOURCE",
+        "source_nature": "SYNTHETIC", "source_status": "ASSUMED",
+        "intended_use": "SYNTHETIC_ANNUAL_FORECAST_ONLY", "payment_evidence": False,
+        "binding": binding,
+        "payment": {
+            "opening_payable": 0, "construction_fee": 0, "historical_arrears": 0,
+            "prepayments": 0, "refunds": 0, "other_offsets": 0,
+            "payment_rule": "CURRENT_YEAR_FULL_PAYMENT",
+            "payment_base": "CURRENT_YEAR_ACCRUED_TRANSACTION_COST",
+            "annual": [{"period": f"OPERATING_YEAR_{year}", "payment_fraction": 1}
+                       for year in range(1, binding["evaluation_years"] + 1)],
+        },
+        "source": {
+            "source_id": "SYNTHETIC-ONE-YEAR-FEE-" + settlement["result_hash"][:24],
+            "source_reference": "SYNTHETIC:one-year-trading-fee:" + role,
+            "source_location": "payment.opening_payable, payment.construction_fee, payment.annual",
+            "purpose": "Independent synthetic same-year full payment forecast; not a paid invoice or contract",
+            "disclaimer": "SYNTHETIC_ASSUMPTION_NOT_CONTRACT_OR_PAYMENT_RECORD",
+            "license_status": "AUTHORIZED",
+        },
+    }
+    raw = dumps(source).encode("utf-8")
+    checked = validate_trading_fee_payment(raw, exported=exported, methods=methods, settlement=settlement)
+    assert checked.source_sha256 == sha256(raw).hexdigest()
+    assert checked.payment_fractions == {"OPERATING_YEAR_1": D(1)}
+    return raw
+
 
 @pytest.fixture(scope="module")
 def financial_case():
@@ -178,8 +235,19 @@ def financial_case():
 def _execute(info, price, name):
     root, catalog, budget, exported, methods, control, _ = info
     with read_bundle(root / "original", catalog=catalog, budget=budget) as bundle:
+        # First settle both roles without a 3D/3E cash flow; only the actual
+        # derived P2, D3 and sealed 3C may define the candidate source bytes.
+        upstream = replay_price_candidate(control, exported, methods, bundle, root / "generation", price,
+                                          catalog=catalog, budget=budget, workspace=Workspace(root),
+                                          run_name=name + "-fee-binding")
+        original_fee = _fee_source(exported, methods, upstream.original_revenue, role="original")
+        candidate_fee = _fee_source(upstream.candidate_export, methods, upstream.candidate_revenue,
+                                    role="candidate")
+        assert original_fee != candidate_fee
         return replay_financial_candidate(control, exported, methods, bundle, root / "generation", price,
-                                          catalog=catalog, budget=budget, workspace=Workspace(root), run_name=name)
+                                          catalog=catalog, budget=budget, workspace=Workspace(root), run_name=name,
+                                          original_trading_fee_source_bytes=original_fee,
+                                          candidate_trading_fee_source_bytes=candidate_fee)
 
 
 def _annual(result):
@@ -210,6 +278,10 @@ def test_b1_cash_invoices_receivables_and_real_receipts(financial_case, replays)
             assert ledger["receivables_terminal_collection"] == 0
             assert ledger["self_use_avoided_expenditure"] > 0
             assert ledger["working_capital_release"] == D("200")
+            assert ledger["transaction_cost_accrued"] == D("876")
+            assert ledger["transaction_cost_cash_paid"] == D("876")
+            assert ledger["transaction_cost_payable_closing"] == 0
+            assert ledger["transaction_cost_payment_status"] == "SYNTHETIC_ASSUMED_SAME_YEAR"
         assert outcome.settlement.original_input_hash == exported["input_hash"]
         assert outcome.settlement.generation_result_hash == generation_hash
         assert outcome.settlement.original_bundle_hash != outcome.settlement.candidate_bundle_hash
@@ -218,6 +290,7 @@ def test_b1_cash_invoices_receivables_and_real_receipts(financial_case, replays)
         assert outcome.original_financial["inputs"]["upstream_settlement_result_hash"] == outcome.settlement.original_revenue["result_hash"]
         assert outcome.candidate_financial["inputs"]["upstream_settlement_result_hash"] == outcome.settlement.candidate_revenue["result_hash"]
         assert outcome.candidate_financial["source_snapshot"]["phase2"] == outcome.settlement.candidate_export["source_snapshot"]
+        assert outcome.original_financial["evidence"]["financial-ledger"]["trading_fee_payment"]["raw_sha256"] != outcome.candidate_financial["evidence"]["financial-ledger"]["trading_fee_payment"]["raw_sha256"]
         assert control["source"]["source_id"] in outcome.candidate_financial["inputs"]["used_sources"]
     assert first.candidate_financial["result_hash"] != second.candidate_financial["result_hash"]
     assert first.candidate_financial["source_snapshot_id"] != second.candidate_financial["source_snapshot_id"]
@@ -239,7 +312,8 @@ def test_b2_independent_vat_loss_income_tax_debt_and_cash(financial_case, replay
         for result, p in ((outcome.original_financial, D("0.4")), (outcome.candidate_financial, price)):
             construction, year = result["evidence"]["financial-ledger"]["annual"]
             sales = D("87600") * p
-            project_base = sales - D("100") - D("1000")
+            fee = D("87600") * D("0.01")
+            project_base = sales - D("100") - D("1000") - fee
             equity_base = project_base - D("56.5")
             expected_project_tax = max(D(0), project_base - D("34000")) * D("0.25")
             expected_equity_tax = max(D(0), equity_base - D("34000")) * D("0.25")
@@ -248,6 +322,9 @@ def test_b2_independent_vat_loss_income_tax_debt_and_cash(financial_case, replay
             assert construction["capex_accrued"] == construction["capex_cash_paid"] == D("1130")
             assert construction["debt_drawdown"] == D("565")
             assert construction["working_capital_increase"] == D("200")
+            assert year["transaction_cost_accrued"] == fee
+            assert year["transaction_cost_cash_paid"] == fee
+            assert year["transaction_cost_payable_opening"] == year["transaction_cost_payable_closing"] == 0
             assert year["taxable_income_project"] == project_base
             assert year["taxable_income_equity"] == equity_base
             assert year["tax_loss_project_closing"] == max(D(0), D("34000") - project_base)
@@ -268,6 +345,20 @@ def test_b2_independent_vat_loss_income_tax_debt_and_cash(financial_case, replay
             assert year["cash_tax_total"] == expected_equity_tax * D("0.5") + vat_paid
             assert year["cash_tax_total_project"] == expected_project_tax * D("0.5") + vat_paid
             assert year["phase3e_cashflow"] is None
+
+
+def test_payment_bytes_cannot_be_swapped_across_price_roles(financial_case, replays):
+    _, _, _, exported, methods, _, _ = financial_case
+    settlement = replays[0].settlement
+    original_raw = _fee_source(exported, methods, settlement.original_revenue, role="original")
+    candidate_raw = _fee_source(settlement.candidate_export, methods,
+                                settlement.candidate_revenue, role="candidate")
+    with pytest.raises(ContractError, match="TRADING_FEE_SOURCE_BINDING_MISMATCH"):
+        validate_trading_fee_payment(original_raw, exported=settlement.candidate_export,
+                                     methods=methods, settlement=settlement.candidate_revenue)
+    with pytest.raises(ContractError, match="TRADING_FEE_SOURCE_BINDING_MISMATCH"):
+        validate_trading_fee_payment(candidate_raw, exported=exported, methods=methods,
+                                     settlement=settlement.original_revenue)
 
 
 def test_mismatched_financial_inputs_and_method_hash_rejected(financial_case, replays):

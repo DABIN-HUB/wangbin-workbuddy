@@ -15,11 +15,13 @@ from time import perf_counter
 from ..errors import ContractError
 from ..serialization import digest, dumps, loads
 from ..timeseries_bundle import read_bundle
-from .break_even_financial_replay import _replay_financial_candidate
+from .break_even_financial_replay import _check_financial, _replay_financial_candidate
 from .break_even_replay import _remove_owned
+from .method_config import MethodConfig
 from .phase3e import calculate_sourced_project_npv, write_phase3e_bundle
 from .result_contract import validate_result
 from .terminal_disposition import validate_terminal_disposition
+from .trading_fee_payment import validate_trading_fee_payment
 
 
 @dataclass(frozen=True, slots=True)
@@ -52,7 +54,9 @@ def _npv(result, catalog):
 
 def calculate_price_project_npv(control, original_export, methods, original_bundle,
                                 generation_dir, candidate_price, terminal_carrier,
-                                source_documents, *, catalog, budget, workspace, run_name):
+                                source_documents, *, catalog, budget, workspace, run_name,
+                                original_trading_fee_source_bytes=None,
+                                candidate_trading_fee_source_bytes=None):
     """Return a verified NPV(p); never infer roots from a pair of candidates.
 
     The original carrier must bind to the re-executed original 3C/3D result.
@@ -62,13 +66,16 @@ def calculate_price_project_npv(control, original_export, methods, original_bund
     return _calculate_candidate(control, original_export, methods, original_bundle,
                                 generation_dir, candidate_price, terminal_carrier,
                                 source_documents, catalog=catalog, budget=budget,
-                                workspace=workspace, run_name=run_name, original_cache=None)
+                                workspace=workspace, run_name=run_name, original_cache=None,
+                                original_trading_fee_source_bytes=original_trading_fee_source_bytes,
+                                candidate_trading_fee_source_bytes=candidate_trading_fee_source_bytes)
 
 
 def _calculate_candidate(control, original_export, methods, original_bundle,
                          generation_dir, candidate_price, terminal_carrier,
                          source_documents, *, catalog, budget, workspace, run_name,
-                         original_cache):
+                         original_cache, original_trading_fee_source_bytes=None,
+                         candidate_trading_fee_source_bytes=None):
     """Private session seam; only an already authenticated original may be reused."""
     validate_terminal_disposition(terminal_carrier, source_documents)
     if original_cache is not None:
@@ -76,12 +83,29 @@ def _calculate_candidate(control, original_export, methods, original_bundle,
         validate_result(original_revenue, catalog)
         validate_result(original_financial, catalog)
         _npv(original, catalog)
+        method = MethodConfig.from_dict(methods.to_dict() if isinstance(methods, MethodConfig) else methods)
+        _check_financial(original_financial, original_revenue["result_hash"], original_export, method, catalog)
+        fee_source = (validate_trading_fee_payment(
+            original_trading_fee_source_bytes, exported=original_export, methods=method,
+            settlement=original_revenue, scenario_id=original_financial["scenario_id"])
+            if original_trading_fee_source_bytes is not None else None)
+        fee_snapshot = (None if fee_source is None else {
+            "contract": fee_source.contract, "raw_sha256": fee_source.source_sha256,
+            "contract_hash": fee_source.contract_hash})
+        fee_payload = (None if fee_source is None else {
+            "raw_sha256": fee_source.source_sha256, "contract_hash": fee_source.contract_hash,
+            "binding": fee_source.contract["binding"]})
         snapshot = original["source_snapshot"]["phase3e_terminal"]
         if (snapshot["binding"] != terminal_carrier["binding"]
                 or snapshot["source_content_hash"] != terminal_carrier["source_content_hash"]
                 or snapshot["basis_control_hash"] != digest(control)
                 or snapshot["phase3d_result_hash"] != original_financial["result_hash"]
-                or terminal_carrier["binding"]["phase3c_result_hash"] != original_revenue["result_hash"]):
+                or terminal_carrier["binding"]["phase3d_result_hash"] != original_financial["result_hash"]
+                or terminal_carrier["binding"]["phase3c_result_hash"] != original_revenue["result_hash"]
+                or original_financial["source_snapshot"].get("trading_fee_payment") != fee_snapshot
+                or original_financial["inputs"]["identity_payload"].get("trading_fee_payment") != fee_payload
+                or original["source_snapshot"].get("trading_fee_payment") != fee_snapshot
+                or original["inputs"]["identity_payload"].get("trading_fee_payment") != fee_payload):
             raise ContractError("BREAK_EVEN_ORIGINAL_CACHE_IDENTITY")
     started = perf_counter()
     replay = _replay_financial_candidate(
@@ -89,7 +113,9 @@ def _calculate_candidate(control, original_export, methods, original_bundle,
         candidate_price, catalog=catalog, budget=budget, workspace=workspace,
         run_name=run_name,
         original_revenue=None if original_cache is None else original_revenue,
-        original_financial=None if original_cache is None else original_financial)
+        original_financial=None if original_cache is None else original_financial,
+        original_trading_fee_source_bytes=(original_trading_fee_source_bytes if original_cache is None else None),
+        candidate_trading_fee_source_bytes=candidate_trading_fee_source_bytes)
     root = workspace.path(run_name, json_only=False)
     identity = root.stat().st_dev, root.stat().st_ino
     try:
@@ -99,7 +125,8 @@ def _calculate_candidate(control, original_export, methods, original_bundle,
                 terminal_carrier, source_documents, original_export, methods,
                 original_bundle, generation, replay.settlement.original_revenue,
                 replay.original_financial, catalog, basis_control=control,
-                original_export=original_export, original_bundle=original_bundle)
+                original_export=original_export, original_bundle=original_bundle,
+                trading_fee_source_bytes=original_trading_fee_source_bytes)
         original_npv = _npv(original, catalog)
         candidate_carrier = deepcopy(terminal_carrier)
         binding = candidate_carrier["binding"]
@@ -116,7 +143,8 @@ def _calculate_candidate(control, original_export, methods, original_bundle,
                 candidate_carrier, source_documents, replay.settlement.candidate_export,
                 methods, bundle, generation, replay.settlement.candidate_revenue,
                 replay.candidate_financial, catalog, basis_control=control,
-                original_export=original_export, original_bundle=original_bundle)
+                original_export=original_export, original_bundle=original_bundle,
+                trading_fee_source_bytes=candidate_trading_fee_source_bytes)
             candidate_npv = _npv(candidate, catalog)
         if (original["source_snapshot"]["phase3e_terminal"]["source_content_hash"]
                 != candidate["source_snapshot"]["phase3e_terminal"]["source_content_hash"]

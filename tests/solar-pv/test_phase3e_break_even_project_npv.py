@@ -1,9 +1,11 @@
 """Sourced one-price full-chain project NPV; no root claim from samples."""
 from decimal import Decimal as D, localcontext
+from hashlib import sha256
 
 import pytest
 
 from test_phase3e_terminal_binding import _carrier
+from test_phase3e_financial_candidate_replay import _fee_source
 from test_phase3e_terminal_npv import NO_DOC, npv_case
 from wangbin_solar_pv.calculation.break_even_project_npv import calculate_price_project_npv
 from wangbin_solar_pv.calculation.result_contract import validate_result
@@ -17,6 +19,9 @@ def test_one_candidate_recalculates_original_and_sourced_project_npv(npv_case):
     base, replay, _ = npv_case
     root, catalog, budget, exported, methods, control, generation_hash = base
     generation = loads((root / "generation" / "result.json").read_bytes())
+    original_fee = _fee_source(exported, methods, replay.settlement.original_revenue, role="original")
+    candidate_fee = _fee_source(replay.settlement.candidate_export, methods,
+                                replay.settlement.candidate_revenue, role="candidate")
     with read_bundle(root / "original", catalog=catalog, budget=budget) as original_bundle:
         carrier = _carrier(
             exported, methods, original_bundle, generation,
@@ -25,18 +30,22 @@ def test_one_candidate_recalculates_original_and_sourced_project_npv(npv_case):
         result = calculate_price_project_npv(
             control, exported, methods, original_bundle, root / "generation", D("0.6"),
             carrier, {"SYNTHETIC-asset-clearance": NO_DOC}, catalog=catalog, budget=budget,
-            workspace=Workspace(root), run_name="npv-callback-six")
+            workspace=Workspace(root), run_name="npv-callback-six",
+            original_trading_fee_source_bytes=original_fee,
+            candidate_trading_fee_source_bytes=candidate_fee)
     with localcontext() as ctx:
         ctx.prec = 28
         sale = D("87600") * D("0.6")
-        income_paid = max(D(0), sale - D("100") - D("1000") - D("34000")) * D("0.25") * D("0.5")
+        fee = D("87600") * D("0.01")
+        income_paid = max(D(0), sale - D("100") - D("1000") - fee - D("34000")) * D("0.25") * D("0.5")
         vat_paid = sale - sale / D("1.13") - D("143")
     with localcontext() as ctx:
         ctx.prec = 80
-        # Only the original physical 3B self-use evidence is price-invariant.
-        self_use = replay.candidate_financial["evidence"]["financial-ledger"]["annual"][1]["self_use_avoided_expenditure"]
+        # Independent physical self-use saving; not copied from the 3D cash ledger.
+        self_use = D("140160")
         expected = -D("1330") + (sale * D("0.75") + self_use
-                                  - D("113") - income_paid - vat_paid + D("200")) / D("1.1")
+                                  - D("113") - fee - income_paid - vat_paid + D("200")) / D("1.1")
+    assert replay.candidate_financial["evidence"]["financial-ledger"]["annual"][1]["self_use_avoided_expenditure"] == self_use
     assert abs(result.candidate_npv - expected) < D("1e-55")
     assert result.original_npv > 0 and result.candidate_npv > 0
     assert result.candidate_result_hash != result.original_result_hash
@@ -44,6 +53,9 @@ def test_one_candidate_recalculates_original_and_sourced_project_npv(npv_case):
     assert result.phase3b_result_hash == generation_hash
     assert result.phase3c_result_hash == replay.settlement.candidate_revenue["result_hash"]
     assert result.phase3d_result_hash == replay.candidate_financial["result_hash"]
+    bound = loads((root / "npv-callback-six" / "candidate-3d" / "result.json").read_bytes())
+    assert bound["evidence"]["financial-ledger"]["trading_fee_payment"]["raw_sha256"] == sha256(candidate_fee).hexdigest()
+    assert bound["evidence"]["financial-ledger"]["annual"][1]["transaction_cost_cash_paid"] == fee
     assert result.elapsed_seconds > 0
     receipt = loads((root / "npv-callback-six" / "phase3e" / "execution.json").read_bytes())
     assert receipt["candidate_price"] == D("0.6")

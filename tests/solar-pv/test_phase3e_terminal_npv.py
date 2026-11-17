@@ -5,7 +5,7 @@ from decimal import Decimal as D, localcontext
 
 import pytest
 
-from test_phase3e_financial_candidate_replay import _build_financial_case, _execute
+from test_phase3e_financial_candidate_replay import _build_financial_case, _execute, _fee_source
 from test_phase3e_terminal_binding import _carrier
 from wangbin_solar_pv.calculation.result_contract import validate_result
 from wangbin_solar_pv.errors import ContractError
@@ -38,6 +38,7 @@ def _calculation(base, replay, replay_name, candidate, *, override=None,
     export = replay.settlement.candidate_export if candidate else exported
     settlement = replay.settlement.candidate_revenue if candidate else replay.settlement.original_revenue
     financial = replay.candidate_financial if candidate else replay.original_financial
+    fee_source = _fee_source(export, methods, settlement, role="candidate" if candidate else "original")
     bundle_dir = root / replay_name / "candidate-d3" if candidate else root / "original"
     generation = loads((root / "generation" / "result.json").read_bytes())
     with read_bundle(root / "original", catalog=catalog, budget=budget) as original_bundle:
@@ -51,14 +52,15 @@ def _calculation(base, replay, replay_name, candidate, *, override=None,
             result = calculate_sourced_project_npv(
                 carrier, {"SYNTHETIC-asset-clearance": document if source_document is None else source_document}, export,
                 methods, bundle, generation, settlement, financial, catalog,
-                basis_control=control, original_export=exported, original_bundle=original_bundle)
+                basis_control=control, original_export=exported, original_bundle=original_bundle,
+                trading_fee_source_bytes=fee_source)
             if repeat_after_json:
                 roundtrip = lambda value: loads(dumps(value))
                 replayed = calculate_sourced_project_npv(
                     roundtrip(carrier), {"SYNTHETIC-asset-clearance": document}, roundtrip(export),
                     methods, bundle, roundtrip(generation), roundtrip(settlement), roundtrip(financial), catalog,
                     basis_control=roundtrip(control), original_export=roundtrip(exported),
-                    original_bundle=original_bundle)
+                    original_bundle=original_bundle, trading_fee_source_bytes=fee_source)
                 validate_result(replayed, catalog)
                 assert replayed["result_hash"] == result["result_hash"]
     validate_result(result, catalog)
@@ -84,18 +86,24 @@ def test_no_disposition_has_independent_decimal_cashflow_and_npv(npv_case):
         assert year["invoiced_gross"] == sale
         assert year["revenue_cash_receipts"] == sale * D("0.75")
         assert year["working_capital_release"] == D("200")
+        # Fee F is independently declared: 87,600 priced kWh × 0.01 CNY/kWh.
         # Phase 3D's approved tax schedule uses the default 28-digit Decimal
         # context; Phase 3E's frozen financial kernels then use 80 digits.
         with localcontext() as ctx:
             ctx.prec = 28
-            tax_base = sale - D("100") - D("1000")
+            fee = D("87600") * D("0.01")
+            tax_base = sale - D("100") - D("1000") - fee
             tax_paid = max(D(0), tax_base - D("34000")) * D("0.25") * D("0.5")
             vat_paid = sale - sale / D("1.13") - D("143")
+        assert year["transaction_cost_accrued"] == fee
+        assert year["transaction_cost_cash_paid"] == fee
+        assert year["transaction_cost_payable_closing"] == 0
+        assert year["taxable_income_project"] == tax_base
         assert year["cash_tax_total_project"] == tax_paid + vat_paid
         with localcontext() as ctx:
             ctx.prec = 80
             expected = [D("-1330"), sale * D("0.75") + year["self_use_avoided_expenditure"]
-                        - D("113") - tax_paid - vat_paid + D("200")]
+                        - D("113") - fee - tax_paid - vat_paid + D("200")]
             expected_npv = expected[0] + expected[1] / D("1.1")
         bridge = result["evidence"]["phase3e-terminal-reconciliation"]
         assert bridge["terminal_cash"] == [D(0), D(0)]
