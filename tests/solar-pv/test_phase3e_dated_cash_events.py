@@ -135,6 +135,42 @@ def test_wrong_raw_digest_blocks():
     _reject("DATED_CASH_SOURCE_HASH_MISMATCH", carrier, raw, export, methods, financial)
 
 
+def test_invalid_event_amount_token_blocks_with_number_error():
+    carrier, raw, export, methods, financial = _case()
+    raw = raw.replace(b"OPERATING_YEAR_1,30,", b"OPERATING_YEAR_1,not-a-number,")
+    content_hash = sha256(raw).hexdigest()
+    carrier["source_content_sha256"] = content_hash
+    for key in ("event_source", "rate_source"):
+        carrier[key]["source_content_sha256"] = content_hash
+    _reject("DATED_CASH_SOURCE_NUMBER", carrier, raw, export, methods, financial)
+
+
+def test_missing_independent_dated_rate_row_blocks():
+    carrier, raw, export, methods, financial = _case()
+    raw = raw.replace(b"RATE,,,DATED_DISCOUNT_RATE,0.1,SYNTHETIC-dated-rate\n", b"")
+    content_hash = sha256(raw).hexdigest()
+    carrier["source_content_sha256"] = content_hash
+    for key in ("event_source", "rate_source"):
+        carrier[key]["source_content_sha256"] = content_hash
+    _reject("DATED_CASH_SOURCE_ROW_COUNT", carrier, raw, export, methods, financial)
+
+
+def test_invalid_independent_dated_rate_token_blocks():
+    carrier, raw, export, methods, financial = _case()
+    raw = raw.replace(b"DATED_DISCOUNT_RATE,0.1,", b"DATED_DISCOUNT_RATE,not-a-rate,")
+    content_hash = sha256(raw).hexdigest()
+    carrier["source_content_sha256"] = content_hash
+    for key in ("event_source", "rate_source"):
+        carrier[key]["source_content_sha256"] = content_hash
+    _reject("DATED_CASH_SOURCE_NUMBER", carrier, raw, export, methods, financial)
+
+
+def test_old_dated_source_contract_version_blocks():
+    carrier, raw, export, methods, financial = _case()
+    carrier["schema_version"] = "solar-pv-dated-cash-events/0.9.0"
+    _reject("DATED_CASH_SOURCE_SCHEMA", carrier, raw, export, methods, financial)
+
+
 def test_wrong_cashflow_basis_blocks():
     carrier, raw, export, methods, financial = _case()
     carrier["binding"]["cashflow_basis"] = "pre_tax"
