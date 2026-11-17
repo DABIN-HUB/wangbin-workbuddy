@@ -64,7 +64,15 @@ def _rows(result, catalog, formula_map):
                record.get("source_kind"), _display(record.get("source_id")), record.get("status"),
                record.get("license_status"), _display(record.get("source_section_or_cell")),
                _display(record.get("effective_from")), _display(record.get("effective_to")),
-               _display(record.get("confidence_basis")), _display(record.get("reviewer"))]
+               _display(record.get("confidence_basis")), _display(record.get("reviewer")),
+               _display(record.get("source_url_or_attachment")), _display(record.get("location_status")),
+               _display(record.get("measurement_period")), _display(record.get("published_at")),
+               _display(record.get("retrieved_at")), _display(record.get("geography")),
+               _display(record.get("last_updated")), _display(record.get("original_unit")),
+               _display(record.get("economic_basis")), _display(record.get("formula_id")),
+               _display(record.get("formula_version")), dumps(record.get("upstream_instance_ids") or []),
+               dumps(record.get("transformation_rule_ids") or []), _display(record.get("sensitivity")),
+               _display(record.get("missing_reason"))]
         rows_by_sheet["输入台账"].append(row)
         if fid.startswith(("site.", "resource.")):
             rows_by_sheet["气象与地理来源"].append(row)
@@ -156,6 +164,11 @@ def _rows(result, catalog, formula_map):
         "变量-术语词典": ["类型", "冻结ID", "中文名", "单位", "章节", "版本/说明"],
         "资料授权说明": ["source_id", "许可状态", "来源类型", "敏感级", "核验状态", "远传", "访问说明"],
     }
+    trace_headers = ["原件或URL", "原件定位状态", "计量期间", "发布日期", "检索时间", "地区",
+                     "最后更新", "原始单位", "经济口径", "公式ID", "公式版本", "上游实例",
+                     "转换规则", "敏感级", "缺失原因"]
+    for sheet in ("输入台账", "气象与地理来源", "政策适用性", "设备与成本来源"):
+        headers[sheet].extend(trace_headers)
     for sheet in ("案例对标", "变更与复核记录", "政策适用性", "假设清单"):
         if not rows_by_sheet[sheet]:
             rows_by_sheet[sheet].append(["UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "无可核实来源；不填零"])

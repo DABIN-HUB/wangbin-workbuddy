@@ -111,6 +111,22 @@ def test_f04_private_draft_has_frozen_sheets_and_canonical_identity(tmp_path):
         assert workbook["变量-术语词典"][2][1].value == "变量/术语词典"
         assert workbook["冲突与缺口"].max_row > 9
         assert workbook["输入台账"].max_row > 9
+        ledger = workbook["输入台账"]
+        columns = {cell.value: cell.column - 1 for cell in ledger[9]}
+        for name in ("原件或URL", "原件定位状态", "计量期间", "发布日期",
+                     "检索时间", "地区", "最后更新", "原始单位", "经济口径",
+                     "公式ID", "公式版本", "上游实例", "转换规则", "敏感级", "缺失原因"):
+            assert name in columns
+        entries = {row[columns["instance_id"]].value: row for row in ledger.iter_rows(min_row=10)
+                   if row[columns["选用"]].value == "ACTIVE"}
+        for source in result["source_snapshot"]["phase2"]["records"]:
+            instance = source["field_instance_id"]
+            assert instance in entries
+            row = entries[instance]
+            assert row[columns["原件或URL"]].value == (source["source_url_or_attachment"] or "UNKNOWN")
+            assert row[columns["敏感级"]].value == (source["sensitivity"] or "UNKNOWN")
+            assert row[columns["上游实例"]].value == dumps(source.get("upstream_instance_ids") or [])
+            assert row[columns["转换规则"]].value == dumps(source.get("transformation_rule_ids") or [])
     finally:
         workbook.close()
     with pytest.raises(ContractError) as rejected:
