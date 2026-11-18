@@ -42,7 +42,7 @@
 | ERROR F4 | `test_phase3e_break_even_project_session.py::test_in_place_source_or_control_changes_invalidate_original_cache` | 同上 | 当前 PASS；同一 fixture/setup 根因 |
 | SKIPPED E2 | `test_phase3e_candidate_replay.py::test_workspace_rejects_real_symlink` | `Windows symlink privilege unavailable: 22`；原始断言未执行 | 环境门禁仍须独立检查 |
 
-上述异常原始堆栈在各 XML 对应 `<failure>`/`<error>` 文本中；F2/F3/F4 汇聚于旧 `phase3e.py` 的 `PROJECT_NPV_LEDGER_INCOMPLETE` 检查。本轮在当前 R3 HEAD 分别复跑原八个 nodeid：**8 PASS / 0 FAIL / 0 ERROR / 0 SKIP**。`0edef90..8a33c2` 源码 diff 可见 E3 旧参考税基没有扣除明确 `876` 交易费；现行测试在独立 `87600 × 0.01` 预设上扣一次交易费，并断言费用计提、支付、应付账款为零。F2/F3/F4 的旧 fixture 未向需现金闭合的入口提供原案/候选分别绑定的合成付款来源；当前真实入口携带各角色来源后恢复通过，无需再重复修改生产计算或冻结公式。当前专项由执行者复核原始 JUnit，不冒称为另一个独立 QA 角色的全套验收。
+上述异常原始堆栈在各 XML 对应 `<failure>`/`<error>` 文本中；F2/F3/F4 汇聚于旧 `phase3e.py` 的 `PROJECT_NPV_LEDGER_INCOMPLETE` 检查。本轮在当前 R3 HEAD 分别复跑原八个 nodeid：**8 PASS / 0 FAIL / 0 ERROR / 0 SKIP**。`0edef90..8a33c2` 源码 diff 可见 E3 旧参考税基没有扣除明确 `876` 交易费；现行测试在独立 `87600 × 0.01` 预设上扣一次交易费，并断言费用计提、支付、应付账款为零。F2/F3/F4 的旧 fixture 未向需现金闭合的入口提供原案/候选分别绑定的合成付款来源；当前真实入口携带各角色来源后恢复通过，无需再重复修改生产计算或冻结公式。历史 F4 的四个 ERROR 是同一 module-scoped `root_case()` fixture 失败的四份记录，error body SHA-256 均为 `05ea6fccb22074f2b7a058a2b3f171f4931e2492b448af6b8a5b74fe31ca9253`；不能算成四种独立业务逻辑缺陷。独立只读 QA 另行逐 nodeid、执行命令、源码头、时间、退出、JUnit 与日志哈希核验四批，并复查 E3/F2/F3/F4 源码归因，确认限定八项结论；独立 QA 没有再次执行测试，也**未验收全套 829/5071**。
 
 ## 3. 当前收集集合与实际回归
 
@@ -62,7 +62,35 @@
 | F3 | 02:51:40–03:32:37 | 0 | 1 PASS / 0 FAIL/ERROR/SKIP | `9066ab43478db8708f3f222399341fe6571ac43c4c014ecd9dee3d3167250035` |
 | F4 | 03:32:37–04:24:53 | 0 | 4 PASS / 0 FAIL/ERROR/SKIP | `a8ce610f0e137d8db65997506927f97258449af3e498a9f629ee2d0021bbf531` |
 
-本轮新节点覆盖矩阵 `.runtime/solar-pv/R4-current-node-collection-01/r4-targeted-coverage.json` SHA-256 `49661bdce4327f4dafbea33d8a6304f98c59dabee9dbc65c044254ecdf55f591`：旧 829 项中当前 8 项已复测通过，余 821 项未在本次八节点批次执行；新增 4242 项亦未纳入此批。**整个当前 5071 集合与旧 829 集合均无新源码全量 JUnit，REGRESSION_TESTS=PARTIAL/NOT_PASSED**，不能由收集退出 0 或历史 135 项限定回执推断全套 PASS。R3 135 项限定回执参见 `SOLAR-PV-R3-MAIN-NPV-CLOSEOUT-execution.md:72-88`；其源码头分批不同，不与本批新运行混算。
+本轮八节点定向矩阵 `.runtime/solar-pv/R4-current-node-collection-01/r4-targeted-coverage.json` SHA-256 `49661bdce4327f4dafbea33d8a6304f98c59dabee9dbc65c044254ecdf55f591` 保存了先前的批次身份。随后在报告提交 HEAD `209fb2ff25a06deb68859d6eda3fba4b2672b9cd` 串行执行历史文件分组 A、D、E1，均有独立 UTC 起止、解释器、文件清单、退出码、原始合并日志、JUnit 与 SHA-256 sidecar；三批的 XML 与日志哈希全部读回一致：
+
+| 批次 | UTC 起止（2026-11-18） | 退出 | 当前 JUnit 结果 | JUnit SHA-256 |
+|---|---|---:|---|---|
+| A | 05:16:13–05:18:48 | 0 | 598 PASS / 0 FAIL/ERROR/SKIP | `e9c1434b868b1a467f25fa63d71b074da4d690e86096273857fb8b9b92a3c25f` |
+| D | 05:18:48–05:28:14 | 0 | 149 PASS / 0 FAIL/ERROR/SKIP，另 4 subtests PASS | `62ab5c0f581d4212991186cc254cc7bb58fa00b4c5fc1868d78ac8b517c7c753` |
+| E1 | 05:28:14–05:30:42 | 0 | 17 PASS / 0 FAIL/ERROR/SKIP | `236e288d9af9a18e960a66573bbd667d0878d6ba8d80c93e9e4c9d7d9e653af7` |
+
+D 比原 143 个 XML 节点多 6 个当前新增节点；不是把旧 143 算成 149。随后 B、C、E2、F1、E3、F2、F3、F4 也按文件串行完成，所有批次均保存独立 UTC 起止、解释器、文件清单、退出码、原始合并日志、JUnit 与 SHA-256 sidecar，并逐份读回核对 XML/log 哈希：
+
+| 批次 | UTC 起止（2026-11-18） | 退出 | 当前 JUnit 结果 | JUnit SHA-256 |
+|---|---|---:|---|---|
+| B | 05:31:23–06:13:35 | 0 | 8 PASS | `83719eda5237dc772126f59b732476de5db1ba8a3565a1f63933acf36068532` |
+| C | 06:13:36–06:44:24 | 0 | 20 PASS | `2f1f2c35de51fb15026326e7e2e2a5bce6ff54213b3855da0be40d5179f03bdb` |
+| E2 | 06:44:24–07:29:52 | 0 | 12 PASS / 1 SKIPPED | `bad0737641ec8cfbcc7d39b3a290198753d8ca3072edc49ab35f65ef68592c24` |
+| F1 | 07:29:52–08:13:31 | 1 | 14 PASS / 2 FAIL | `b38d6bcc9b371bccdbea8efd40bb93333fac999bca845a18e879301e147f14b7` |
+| E3 | 08:13:31–09:04:06 | 0 | 6 PASS | `56e42361a7a3f0dca0b2a6bfe7ff539befca62c4afc43f5ae83792721b40bf32` |
+| F2 | 09:04:07–10:00:10 | 0 | 3 PASS | `fbdeb6b1b90d9b90d0f549de3c39434649574f2cba6c3ad06da1f13446ba2501` |
+| F3 | 10:00:10–10:41:58 | 0 | 2 PASS | `448532083d43639400bbbf8b8044e851840a559514189402896523517006afc7` |
+| F4 | 10:41:58–11:32:48 | 0 | 11 PASS | `92d82a8f1255b773f3bd7b45f27956bb12131b6d5acaaf7ccb8ef497a5a66963` |
+
+F1 的两个失败 nodeid 为：
+
+- `tests/solar-pv/test_phase3e_terminal_binding.py::test_real_candidate_identity_and_asset_coverage`
+- `tests/solar-pv/test_phase3e_terminal_binding.py::test_missing_year_end_method_blocks_cash_and_unproven_events_remain_blocked`
+
+两者均在 `_bind()` 调用 `bind_terminal_candidate()` 时传入默认 `trading_fee_source_bytes=None`，而当前 financial result 已声明 `trading_fee_payment`，生产入口按设计 fail-closed 抛出 `TRADING_FEE_SOURCE_BYTES_REQUIRED`。这不是把费用当零或删除门禁可以解决的问题；当前证据将其标为**测试调用链与已收紧来源合同不一致，待授权的测试/调用方适配**，本轮未修改测试，也未放宽生产校验，因此 F1 不计 PASS。
+
+按**不重复 nodeid**合并 11 个整文件批次（当前报告 HEAD `209fb2ff…`）：本轮选定范围共 **843 节点 = 历史 829 + 当前新增 14**，历史 829 项为 **826 PASS / 2 FAIL / 1 SKIPPED**，新增 14 项为 **14 PASS**，即选定范围合计 **840 PASS / 2 FAIL / 1 SKIPPED**。覆盖矩阵 `.runtime/solar-pv/R4-current-node-collection-01/r4-scoped-full-coverage.json` SHA-256 `8b107057a7511580d5a3a724ff103bee0709d0bf635d742425b20958e64d9400`；此前 8 个定向回执与整文件回执身份分开保留，整文件批次不与定向批次重复计数。当前 5071 节点全集中仍有 **4228 NOT_TESTED**。因此 `REGRESSION_TESTS=PARTIAL/NOT_PASSED`，不能由 840 个已执行通过、旧 8 项定向通过或任何批次退出 0 推断全套 PASS。R3 135 项限定回执参见 `SOLAR-PV-R3-MAIN-NPV-CLOSEOUT-execution.md:72-88`；其源码头分批不同，不与本批新运行混算。
 
 ## 4. SYNTHETIC 25 年日期来源
 
