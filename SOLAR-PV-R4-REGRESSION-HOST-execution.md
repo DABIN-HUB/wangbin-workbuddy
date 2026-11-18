@@ -83,14 +83,14 @@ D 比原 143 个 XML 节点多 6 个当前新增节点；不是把旧 143 算成
 | F3 | 10:00:10–10:41:58 | 0 | 2 PASS | `448532083d43639400bbbf8b8044e851840a559514189402896523517006afc7` |
 | F4 | 10:41:58–11:32:48 | 0 | 11 PASS | `92d82a8f1255b773f3bd7b45f27956bb12131b6d5acaaf7ccb8ef497a5a66963` |
 
-F1 的两个失败 nodeid 为：
+F1 的两个初始失败 nodeid 为：
 
 - `tests/solar-pv/test_phase3e_terminal_binding.py::test_real_candidate_identity_and_asset_coverage`
 - `tests/solar-pv/test_phase3e_terminal_binding.py::test_missing_year_end_method_blocks_cash_and_unproven_events_remain_blocked`
 
-两者均在 `_bind()` 调用 `bind_terminal_candidate()` 时传入默认 `trading_fee_source_bytes=None`，而当前 financial result 已声明 `trading_fee_payment`，生产入口按设计 fail-closed 抛出 `TRADING_FEE_SOURCE_BYTES_REQUIRED`。这不是把费用当零或删除门禁可以解决的问题；当前证据将其标为**测试调用链与已收紧来源合同不一致，待授权的测试/调用方适配**，本轮未修改测试，也未放宽生产校验，因此 F1 不计 PASS。
+两者均在 `_bind()` 调用 `bind_terminal_candidate()` 时传入默认 `trading_fee_source_bytes=None`，而当前 financial result 已声明 `trading_fee_payment`，生产入口按设计 fail-closed 抛出 `TRADING_FEE_SOURCE_BYTES_REQUIRED`。这不是把费用当零或删除门禁可以解决的问题；已用最小测试调用链修复传入按原案/候选角色生成的独立合成来源字节，未放宽生产校验。修复提交为 `57715cdbc5cb85e936df46a264906c7558ce83c0`。该提交后的最终 HEAD 上，两个受影响 nodeid 串行重跑：2026-11-18 12:13:12–12:39:06 UTC，退出 0，**2 PASS / 0 FAIL / 0 ERROR / 0 SKIP**；JUnit SHA-256 `a0d07062a7b1398298c1a9792e52fd5851bda15220d0f930e5c97393c9b6c347`，日志 SHA-256 `0f15b9948ebf868c61e93569d1416c5faa0bc23d73d6f3cea295c6dc9a61a81c`，两份 sidecar 均读回一致。结果含 1 个 `PytestRemovedIn10Warning`，不是失败项。
 
-按**不重复 nodeid**合并 11 个整文件批次（当前报告 HEAD `209fb2ff…`）：本轮选定范围共 **843 节点 = 历史 829 + 当前新增 14**，历史 829 项为 **826 PASS / 2 FAIL / 1 SKIPPED**，新增 14 项为 **14 PASS**，即选定范围合计 **840 PASS / 2 FAIL / 1 SKIPPED**。覆盖矩阵 `.runtime/solar-pv/R4-current-node-collection-01/r4-scoped-full-coverage.json` SHA-256 `8b107057a7511580d5a3a724ff103bee0709d0bf635d742425b20958e64d9400`；此前 8 个定向回执与整文件回执身份分开保留，整文件批次不与定向批次重复计数。当前 5071 节点全集中仍有 **4228 NOT_TESTED**。因此 `REGRESSION_TESTS=PARTIAL/NOT_PASSED`，不能由 840 个已执行通过、旧 8 项定向通过或任何批次退出 0 推断全套 PASS。R3 135 项限定回执参见 `SOLAR-PV-R3-MAIN-NPV-CLOSEOUT-execution.md:72-88`；其源码头分批不同，不与本批新运行混算。
+按**不重复 nodeid**合并 11 个整文件批次，再用最终 HEAD 上的 F1 两项定向修复回执替换对应失败状态：选定范围共 **843 节点 = 历史 829 + 当前新增 14**，历史 829 项当前为 **828 PASS / 1 SKIPPED**，新增 14 项为 **14 PASS**，即已执行选定范围合计 **842 PASS / 1 SKIPPED**。覆盖矩阵 `.runtime/solar-pv/R4-current-node-collection-01/r4-scoped-full-coverage.json` SHA-256 `8b107057a7511580d5a3a724ff103bee0709d0bf635d742425b20958e64d9400` 是初始整文件批次矩阵；F1 最终修复回执另存于 `.runtime/solar-pv/R4-F1-remediation-final-01/`。此前 8 个定向回执与整文件回执身份分开保留，整文件批次不与定向批次重复计数。当前 5071 节点全集中仍有 **4228 NOT_TESTED**，E2 symlink 节点仍因 Windows 权限 SKIPPED。因此 `REGRESSION_TESTS=PARTIAL/NOT_PASSED`，不能由 842 个已执行通过或历史 8 项定向通过推断全套 5071 PASS。R3 135 项限定回执参见 `SOLAR-PV-R3-MAIN-NPV-CLOSEOUT-execution.md:72-88`；其源码头分批不同，不与本批新运行混算。
 
 ## 4. SYNTHETIC 25 年日期来源
 
