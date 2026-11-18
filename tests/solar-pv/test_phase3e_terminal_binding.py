@@ -6,7 +6,7 @@ from hashlib import sha256
 
 import pytest
 
-from test_phase3e_financial_candidate_replay import _execute, financial_case
+from test_phase3e_financial_candidate_replay import _execute, _fee_source, financial_case
 from test_phase3e_terminal_disposition import _source
 from wangbin_solar_pv.calculation.terminal_disposition import VERSION
 
@@ -87,13 +87,15 @@ def bound_case(financial_case, replay_once):
     return info, carrier
 
 
-def _bind(info, carrier, *, export=None, settlement=None, financial=None, document=DOC):
+def _bind(info, carrier, *, export=None, settlement=None, financial=None, document=DOC, role="candidate"):
     from wangbin_solar_pv.calculation.terminal_binding import bind_terminal_candidate
     baseline, methods, bundle_dir, generation, current, ledger, catalog, budget = info
     with read_bundle(bundle_dir, catalog=catalog, budget=budget) as bundle:
         return bind_terminal_candidate(carrier, {"SYNTHETIC-asset-clearance": document},
                                        export or baseline, methods, bundle, generation,
-                                       settlement or current, financial or ledger, catalog)
+                                       settlement or current, financial or ledger, catalog,
+                                       trading_fee_source_bytes=_fee_source(
+                                           export or baseline, methods, settlement or current, role=role))
 
 
 def test_real_candidate_identity_and_asset_coverage(bound_case, financial_case, replay_once):
@@ -106,7 +108,7 @@ def test_real_candidate_identity_and_asset_coverage(bound_case, financial_case, 
     with read_bundle(original_info[2], catalog=original_info[6], budget=original_info[7]) as original_bundle:
         original_carrier = _carrier(original_info[0], original_info[1], original_bundle,
                                     original_info[3], original_info[4], original_info[5])
-    assert _bind(original_info, original_carrier).source_content_hash == bound.source_content_hash
+    assert _bind(original_info, original_carrier, role="original").source_content_hash == bound.source_content_hash
     assert original_carrier["binding"] != carrier["binding"]
     with pytest.raises(ContractError):
         _bind(info, original_carrier)
