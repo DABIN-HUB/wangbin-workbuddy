@@ -173,7 +173,11 @@ def _depreciation(inputs, assets, years, timing):
 def _debt(inputs, methods, capex, periods, years):
     ratio_value=ratio(_value(inputs,"finance.debt_ratio"),"finance.debt_ratio"); basis=_method(methods,"debt.drawdown_basis"); rows={p:{"drawdown":Decimal(0),"principal_due":Decimal(0),"fees_due":Decimal(0)} for p in periods}
     raw=inputs.optional("finance.debt_schedule") or []
-    opening_principal=nonnegative(_method(methods,"debt.opening_principal"),"debt.opening_principal")
+    # Older explicit no-debt method sets omit this optional zero balance. A
+    # present value still needs full method review, even on the no-debt path.
+    principal_method_present="debt.opening_principal" in methods.to_dict()["parameters"]
+    opening_principal=(nonnegative(_method(methods,"debt.opening_principal"),"debt.opening_principal")
+                       if principal_method_present or basis!="NO_DEBT_DECLARED" else Decimal(0))
     opening_interest=nonnegative(_method(methods,"debt.opening_interest_payable"),"debt.opening_interest_payable")
     for r in raw:
         y=int(_row(inputs,r,"finance.debt_schedule.date")[:4])-int(_value(inputs,"schedule.commissioning_date")[:4])+1; y=0 if y<1 else min(y,years); p=_period_for_year(y)

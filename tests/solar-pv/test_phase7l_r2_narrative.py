@@ -77,8 +77,8 @@ def test_not_applicable_distinct_from_unknown_and_category_isolation():
     roof = model("industrial_rooftop")
     assert claim(ground, "CH10.01")["claim_status"] == "NOT_APPLICABLE"
     assert claim(roof, "CH10.01")["claim_status"] != "NOT_APPLICABLE"
-    assert claim(roof, "CH16.07")["claim_status"] == "NOT_APPLICABLE"
-    assert "finance.debt_ratio" in claim(roof, "CH16.07")["supporting_input_field_ids"]
+    assert claim(roof, "CH16.07")["claim_status"] == "LIMITED_BY_MISSING_EVIDENCE"
+    assert "finance.cfads_definition" in claim(roof, "CH16.07")["supporting_input_field_ids"]
     assert claim(roof, "CH16.07")["source_ids"]
     assert "project.pv_type" in claim(ground, "CH10.01")["supporting_input_field_ids"]
     assert "屋面" not in claim(ground, "CH11.03")["central_claim"]

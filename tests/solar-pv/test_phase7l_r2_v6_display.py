@@ -65,7 +65,8 @@ def test_roof_age_and_zero_service_dscr_keep_distinct_meanings():
     assert _input_label("roof.remaining_life") == "屋顶条件·剩余使用年限"
     model = _model("industrial_rooftop")
     dscr = _professional_metric_rows(model, ("financial.phase3e.dscr",))[0]
-    assert dscr[1] == "数学上未定义" and "无债务" in dscr[3] and "不是0倍" in dscr[3]
+    assert dscr[1] == "数学上未定义"
+    assert dscr[3] == "债务依据尚未闭合；零偿债服务期DSCR未定义，不推定无债或0倍"
     assert model.metric("financial.phase3e.project_npv")["status"] == "CALCULATED"
     assert model.metric("npv")["status"] == "NOT_IMPLEMENTED"
     assert model.metric("npv")["reason"] == "OUTSIDE_PHASE3B"

@@ -369,6 +369,17 @@ def test_public_no_debt_chain_keeps_dscr_not_applicable_and_cfads_independent():
     assert _professional_metric_rows(model, ("financial.phase3e.dscr",))[0][1] == "不适用"
 
 
+def test_public_no_debt_chain_accepts_absent_optional_opening_principal():
+    exported, methods, settlement = _zero_ratio_export("industrial_rooftop")
+    methods = deepcopy(methods)
+    methods["parameters"]["debt.drawdown_basis"]["value"] = "NO_DEBT_DECLARED"
+    methods["parameters"].pop("debt.opening_principal")
+    validate_export(exported, Catalog())
+    financial = calculate_financial_ledger(exported, methods, settlement)
+    validate_result(financial, Catalog())
+    assert financial["evidence"]["financial-ledger"]["annual"][0]["debt_drawdown"] == 0
+
+
 def test_public_zero_ratio_without_no_debt_declaration_is_rejected():
     catalog = Catalog()
     exported, methods, settlement = _zero_ratio_export("industrial_rooftop")
