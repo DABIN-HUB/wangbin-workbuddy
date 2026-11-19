@@ -8,7 +8,7 @@ from consumption_case_support import atom, case, extend, parameter
 from wangbin_solar_pv.catalog import Catalog
 from wangbin_solar_pv.calculation.method_config import MethodConfig
 from wangbin_solar_pv.calculation.scenario_runner import prepare_scenario, prepare_scenarios, run_scenario
-from wangbin_solar_pv.calculation.sensitivity import scenario_calculation_graph
+from wangbin_solar_pv.calculation.sensitivity import scenario_calculation_graph, validate_factor
 from wangbin_solar_pv.errors import ContractError
 from wangbin_solar_pv.local_files import Workspace
 from wangbin_solar_pv.serialization import digest, dumps
@@ -128,6 +128,41 @@ def test_loan_rate_and_discount_rate_are_bound_to_different_stages():
         prepared = prepare_scenario(_control(export, methods, changes=[_input(export, factor, fid, value)]), export, methods, catalog)
         assert prepared.input_export["project"]["values"][fid]["value"] == value
         assert prepared.input_export["project"]["values"][fid]["source_id"] == SOURCE["source_id"]
+
+
+def test_loan_interest_accepts_zero_ratio_with_explicit_debt_evidence():
+    catalog, export, methods = _fixture()
+    export = deepcopy(export)
+    export["project"]["values"]["finance.debt_ratio"]["value"] = D(0)
+    export["project"]["values"]["finance.debt_schedule"] = {"value": [{"row_id": "explicit-debt", "fields": {}}]}
+    config = methods.to_dict()
+    config["parameters"]["debt.drawdown_basis"] = parameter("debt.drawdown_basis", "EXPLICIT_RAW_SCHEDULE")
+    methods = MethodConfig.from_dict(config)
+    validate_factor("LOAN_INTEREST", "INPUT", "finance.loan_rate", None, D("0.07"), export, methods)
+
+
+def test_loan_interest_requires_debt_ratio_evidence():
+    catalog, export, methods = _fixture()
+    export = deepcopy(export)
+    export["project"]["values"].pop("finance.debt_ratio")
+    export["project"]["values"]["finance.debt_schedule"] = {"value": [{"row_id": "explicit-debt", "fields": {}}]}
+    config = methods.to_dict()
+    config["parameters"]["debt.drawdown_basis"] = parameter("debt.drawdown_basis", "EXPLICIT_RAW_SCHEDULE")
+    methods = MethodConfig.from_dict(config)
+    with pytest.raises(ContractError, match="BLOCKED_MISSING_INPUT"):
+        validate_factor("LOAN_INTEREST", "INPUT", "finance.loan_rate", None, D("0.07"), export, methods)
+
+
+def test_loan_interest_rejects_nonfinite_debt_ratio():
+    catalog, export, methods = _fixture()
+    export = deepcopy(export)
+    export["project"]["values"]["finance.debt_ratio"]["value"] = D("NaN")
+    export["project"]["values"]["finance.debt_schedule"] = {"value": [{"row_id": "explicit-debt", "fields": {}}]}
+    config = methods.to_dict()
+    config["parameters"]["debt.drawdown_basis"] = parameter("debt.drawdown_basis", "EXPLICIT_RAW_SCHEDULE")
+    methods = MethodConfig.from_dict(config)
+    with pytest.raises(ContractError, match="BLOCKED_MISSING_INPUT"):
+        validate_factor("LOAN_INTEREST", "INPUT", "finance.loan_rate", None, D("0.07"), export, methods)
 
 
 def test_curtailment_changes_one_physical_row_not_other_losses():

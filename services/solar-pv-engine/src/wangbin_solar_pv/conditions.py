@@ -75,14 +75,19 @@ def condition_state(rule_id, project, catalog):
         truth = _export(project)
     elif rule_id == "IN-C06":
         ratio = known(project, "finance.debt_ratio")
-        schedule = known(project, "finance.debt_schedule")
+        schedule_record = project.values.get("finance.debt_schedule", {})
+        schedule = (schedule_record.get("value")
+                    if schedule_record.get("status") in {"VERIFIED", "UNVERIFIED", "ASSUMED"}
+                    else None)
         amounts = []
         if isinstance(schedule, list):
             for row in schedule:
                 for name in ("drawdown", "principal", "interest", "fees"):
                     rec = row.get("fields", {}).get("finance.debt_schedule." + name, {})
                     amounts.append(rec.get("value") if rec.get("status") in {"VERIFIED", "UNVERIFIED"} else None)
-        if any(isinstance(v, (int, float, Decimal)) and not isinstance(v, bool) and v > 0 for v in amounts):
+        if isinstance(schedule, list) and schedule:
+            truth = "T"
+        elif any(isinstance(v, (int, float, Decimal)) and not isinstance(v, bool) and v > 0 for v in amounts):
             truth = "T"
         elif isinstance(ratio, (int, float, Decimal)) and ratio > 0:
             truth = "T"

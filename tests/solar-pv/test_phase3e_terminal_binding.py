@@ -130,19 +130,44 @@ def test_mutated_claim_cannot_spoof_current_result(bound_case, field):
         _bind(info, bad)
 
 
-def test_resealed_mismatched_upstream_and_incomplete_asset_cover_rejected(bound_case):
+def test_resealed_mismatched_upstream_rejected(bound_case):
     from wangbin_solar_pv.calculation.result_contract import seal_result
     info, carrier = bound_case
     bad = deepcopy(info[5])
     bad["inputs"]["upstream_settlement_result_hash"] = "1" * 64
     with pytest.raises(ContractError):
         _bind(info, carrier, financial=seal_result(bad))
+
+
+def test_source_without_asset_declaration_is_rejected(bound_case):
+    info, carrier = bound_case
+    unsupported_document = (
+        b"SYNTHETIC-asset no additional recovery tax_treatment=NO_DISPOSITION_TAX "
+        b"working_capital_treatment=LEDGER_ALREADY_RECOVERED 2027-12-31"
+    )
+    bad = deepcopy(carrier)
+    bad["source"]["no_disposition"]["source"]["source_content_sha256"] = sha256(
+        unsupported_document
+    ).hexdigest()
+    bad["source_content_hash"] = digest(bad["source"])
+    with pytest.raises(ContractError, match="TERMINAL_ZERO_DECLARATION_UNSUPPORTED"):
+        _bind(info, bad, document=unsupported_document)
+
+
+def test_ledger_asset_scope_mismatch_is_rejected(bound_case):
+    info, carrier = bound_case
     bad = deepcopy(carrier)
     bad["source"]["covered_asset_ids"] = ["not-in-ledger"]
     bad["source"]["no_disposition"]["covered_asset_ids"] = ["not-in-ledger"]
+    bad["source"]["no_disposition"]["source"]["source_section_or_cell"] = "not-in-ledger"
+    document = (
+        b"asset_id=not-in-ledger not-in-ledger no additional recovery tax_treatment=NO_DISPOSITION_TAX "
+        b"working_capital_treatment=LEDGER_ALREADY_RECOVERED 2027-12-31"
+    )
+    bad["source"]["no_disposition"]["source"]["source_content_sha256"] = sha256(document).hexdigest()
     bad["source_content_hash"] = digest(bad["source"])
-    with pytest.raises(ContractError):
-        _bind(info, bad)
+    with pytest.raises(ContractError, match="TERMINAL_ASSET_SCOPE_MISMATCH"):
+        _bind(info, bad, document=document)
 
 
 def test_missing_year_end_method_blocks_cash_and_unproven_events_remain_blocked(bound_case):

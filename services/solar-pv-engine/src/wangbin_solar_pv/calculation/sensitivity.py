@@ -5,6 +5,8 @@ field being present is not evidence that the current production chain uses it.
 """
 from __future__ import annotations
 
+from decimal import Decimal
+
 from ..errors import ContractError
 from .calculation_graph import CalculationGraph, CalculationNode
 
@@ -34,6 +36,16 @@ def _row(export, parent, row_id):
     if len(matches) != 1:
         raise ContractError("SCENARIO_ROW_ID")
     return matches[0]["fields"]
+
+
+def _debt_evidence(export, methods):
+    values = export["project"]["values"]
+    schedule = values.get("finance.debt_schedule")
+    parameters = methods.to_dict().get("parameters", {})
+    return bool(isinstance(schedule, dict) and schedule.get("value")) or any(
+        parameters.get(parameter_id, {}).get("value") not in (None, 0)
+        for parameter_id in ("debt.opening_principal", "debt.opening_interest_payable")
+    )
 
 
 def validate_factor(factor, kind, name, row_id, value, export, methods):
@@ -79,10 +91,24 @@ def validate_factor(factor, kind, name, row_id, value, export, methods):
             if not isinstance(rule, dict) or rule.get("status") not in {"VERIFIED", "ASSUMED", "UNVERIFIED"} or rule.get("license_status") != "AUTHORIZED":
                 raise ContractError("SCENARIO_NEGATIVE_PRICE_RULE_REQUIRED")
     elif factor == "LOAN_INTEREST":
-        if not values.get("finance.debt_ratio") or values["finance.debt_ratio"]["value"] <= 0:
+        basis = methods.require("debt.drawdown_basis")
+        evidence = _debt_evidence(export, methods)
+        ratio_record = values.get("finance.debt_ratio")
+        ratio_value = ratio_record.get("value") if isinstance(ratio_record, dict) else None
+        ratio_is_finite_exact = (
+            type(ratio_value) is int
+            or (isinstance(ratio_value, Decimal) and ratio_value.is_finite())
+        )
+        if (not isinstance(ratio_record, dict)
+                or ratio_record.get("status") in {"UNKNOWN", "CONFLICT"}
+                or not ratio_is_finite_exact):
             raise ContractError("BLOCKED_MISSING_INPUT", "finance.debt_ratio")
-        if methods.require("debt.drawdown_basis") == "NO_DEBT_DECLARED":
+        if basis == "NO_DEBT_DECLARED":
+            if evidence:
+                raise ContractError("DEBT_BASIS_EVIDENCE_CONFLICT")
             raise ContractError("SCENARIO_FACTOR_NOT_CONSUMED")
+        if ratio_value == 0 and not evidence:
+            raise ContractError("DEBT_BASIS_NO_DEBT_REQUIRED")
     elif factor == "PROJECT_DISCOUNT" and not values.get("finance.project_discount_rate"):
         raise ContractError("BLOCKED_MISSING_INPUT", "finance.project_discount_rate")
 

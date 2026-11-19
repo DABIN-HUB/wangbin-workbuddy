@@ -38,7 +38,7 @@ R2先保持完整六节Schema：claims的许可ID不是必须填满的配额，�
 
 下文report/project-report是保留的**legacy确定性报告导出**，不代表AI2.0运行时生成。不要将旧入口外层SUCCESS转述成模型研究或四文件通过。当前原生路径仍是本地候选，实际WorkBuddy专家安装、连接器环境继承和无旧稿生成均未验证。
 
-本 Skill ZIP 是提示词、契约、冻结定义和路由脚本包，不会自动安装 Python、pip 依赖或光伏计算引擎。推荐在 WorkBuddy 中同时安装配套 CLI Connector `wangbin-solar-pv-cli`；Connector 使用 WorkBuddy 托管的 Python runtime 和隔离虚拟环境安装已审阅的 `wangbin-solar-pv-input==0.3.1` 与 `wangbin-document-cli==1.2.0`。如果 Connector 未安装或状态不是 `LOCAL_READY`，不得声称已完成计算。
+本 Skill ZIP 是提示词、契约、冻结定义和路由脚本包，不会自动安装 Python、pip 依赖或光伏计算引擎。推荐在 WorkBuddy 中同时安装配套 CLI Connector `wangbin-solar-pv-cli`；Connector 使用 WorkBuddy 托管的 Python runtime 和隔离虚拟环境安装已审阅的 `wangbin-solar-pv-input==0.3.2` 与 `wangbin-document-cli==1.2.0`。如果 Connector 未安装或状态不是 `LOCAL_READY`，不得声称已完成计算。
 
 普通 Skill 独立运行只在宿主环境已经提供 `wangbin_solar_pv`、`wangbin_document_engine` 及下述依赖时成立；Skill 不依赖开发者 Git 仓库、IDE 或本地 `PYTHONPATH`。WorkBuddy 平台安装、依赖解析和 Connector 获取来源在本候选中仍为 `NOT_TESTED`。
 

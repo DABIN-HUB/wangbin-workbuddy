@@ -6,7 +6,7 @@
 
 - WorkBuddy 最低版本：5.0.0。
 - WorkBuddy 托管 Python runtime：3.12。
-- `init` 使用隔离环境安装固定的 `jsonschema==4.26.0`、`wangbin-document-cli==1.2.0`、`wangbin-solar-pv-input==0.3.1`、`openpyxl==3.1.5`、`python-docx==1.2.0`、`pdfminer.six==20260107`、`defusedxml==0.7.1`、`tzdata==2026.5` 和 `markitdown[pdf,docx,xlsx,pptx]==0.1.9`。
+- `init` 使用隔离环境安装固定的 `jsonschema==4.26.0`、`wangbin-document-cli==1.2.0`、`wangbin-solar-pv-input==0.3.2`、`openpyxl==3.1.5`、`python-docx==1.2.0`、`pdfminer.six==20260107`、`defusedxml==0.7.1`、`tzdata==2026.5` 和 `markitdown[pdf,docx,xlsx,pptx]==0.1.9`。
 - `auth/status` 只检查当前解释器、两个固定包版本和新宿主协议入口，满足时返回 `LOCAL_READY`；这里没有外部账号，auth不是登录或资料处理授权，不生成凭据。`unAuth` 明确返回 `NO_EXTERNAL_CREDENTIALS_TO_REVOKE`，不删除用户资料、环境或已接受结果。平台是否接受此无凭据生命周期须私有安装验证，当前未验证。
 - 用户项目资料只在授权的本地工作区处理，不自动上传第三方服务。
 

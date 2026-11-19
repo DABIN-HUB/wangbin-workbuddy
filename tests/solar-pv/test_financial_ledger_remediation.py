@@ -10,8 +10,10 @@ from wangbin_solar_pv.errors import ContractError
 from wangbin_solar_pv.intake import IntakeSession
 from wangbin_solar_pv.models import ProjectData
 from wangbin_solar_pv.serialization import loads
-from wangbin_solar_pv.calculation.financial_ledger import calculate_financial_ledger
+from wangbin_solar_pv.calculation.financial_ledger import _debt, _periods, calculate_financial_ledger
 from wangbin_solar_pv.calculation.input_contract import validate_export
+from wangbin_solar_pv.calculation.method_config import MethodConfig
+from wangbin_solar_pv.calculation.energy_inputs import EnergyInputs
 from wangbin_solar_pv.calculation.result_contract import validate_result
 
 CASES = Path(__file__).resolve().parents[2] / "reports" / "solar-pv" / "phase3d-cases"
@@ -208,3 +210,86 @@ def test_explicit_construction_fee_payment_reaches_3e_vector():
     rows = calculate_financial_ledger(IntakeSession(project, catalog).export(), methods, settlement)["evidence"]["financial-ledger"]["annual"]
     assert rows[0]["finance_fees_paid"] == Decimal(25)
     assert _ledger_vectors(rows)["fees"][0] == Decimal(25)
+
+
+def _zero_ratio_export(kind):
+    exported, methods, settlement = updated_replacement_export(kind)
+    catalog = Catalog()
+    project = ProjectData.from_dict(exported["project"], catalog)
+    ratio_record = project.values["finance.debt_ratio"]
+    ratio_record["value"] = ratio_record["original_value"] = Decimal(0)
+    return IntakeSession(project, catalog).export(), methods, settlement
+
+
+def _zero_ratio_schedule_export(kind):
+    from wangbin_solar_pv.provenance import make_record
+    exported, methods, settlement = _zero_ratio_export(kind)
+    methods = deepcopy(methods)
+    methods["parameters"]["debt.drawdown_basis"]["value"] = "EXPLICIT_RAW_SCHEDULE"
+    catalog = Catalog()
+    project = ProjectData.from_dict(exported["project"], catalog)
+    row_id = "SYNTHETIC-zero-ratio-debt"
+    facts = {"row_id": row_id, "date": "2025-12-01", "drawdown": Decimal(10),
+             "principal": Decimal(0), "interest": Decimal(0), "fees": Decimal(0),
+             "dscr_covenant": Decimal("1.2")}
+    basis = {"currency": "CNY", "price_year": 2025, "tax_basis": "inclusive", "price_basis": "nominal"}
+    fields = {}
+    for name, value in facts.items():
+        fid = "finance.debt_schedule." + name
+        fields[fid] = make_record(catalog, fid, value, source_kind="ASSUMPTION",
+            source_id="SYNTHETIC-zero-ratio-debt", source_url_or_attachment="SYNTHETIC:zero-ratio-debt",
+            source_section_or_cell=fid, field_instance_id=row_id + "-" + name,
+            confidence_basis="Fictional debt evidence retained when ratio is zero",
+            license_status="AUTHORIZED",
+            economic_basis=basis if catalog.fields[fid]["unit"] == "currency" else None,
+            assumption={"reason": "Explicit synthetic debt evidence", "method": "Forecast payment",
+                        "maturity_ceiling": "L1", "noncritical": False, "decision_invariant": False})
+    parent = project.values["finance.debt_schedule"]
+    parent["value"] = [{"row_id": row_id, "fields": fields}]
+    parent["original_value"] = deepcopy(parent["value"])
+    return IntakeSession(project, catalog).export(), methods, settlement
+
+
+def test_zero_ratio_explicit_schedule_is_debt_evidence():
+    exported, methods, settlement = _zero_ratio_schedule_export("industrial_rooftop")
+    inputs = EnergyInputs(exported, MethodConfig.from_dict(methods), Catalog())
+    debt = _debt(inputs, inputs.methods, {"initial_total": Decimal(0)}, _periods(25), 25)
+    assert debt["has_debt"] is True
+    assert debt["rows"]["CONSTRUCTION"]["drawdown"] == Decimal(10)
+
+
+def test_zero_ratio_no_debt_basis_conflicts_with_schedule():
+    exported, methods, settlement = _zero_ratio_schedule_export("industrial_rooftop")
+    methods["parameters"]["debt.drawdown_basis"]["value"] = "NO_DEBT_DECLARED"
+    inputs = EnergyInputs(exported, MethodConfig.from_dict(methods), Catalog())
+    with pytest.raises(ContractError, match="DEBT_BASIS_EVIDENCE_CONFLICT"):
+        _debt(inputs, inputs.methods, {"initial_total": Decimal(0)}, _periods(25), 25)
+
+
+def test_zero_ratio_without_no_debt_basis_is_blocked():
+    exported, methods, settlement = _zero_ratio_export("industrial_rooftop")
+    methods = deepcopy(methods)
+    methods["parameters"]["debt.drawdown_basis"]["value"] = "EXPLICIT_RAW_SCHEDULE"
+    inputs = EnergyInputs(exported, MethodConfig.from_dict(methods), Catalog())
+    with pytest.raises(ContractError, match="DEBT_BASIS_NO_DEBT_REQUIRED"):
+        _debt(inputs, inputs.methods, {"initial_total": Decimal(0)}, _periods(25), 25)
+
+
+def test_zero_ratio_opening_principal_is_not_silently_discarded():
+    exported, methods, settlement = _zero_ratio_export("industrial_rooftop")
+    methods = deepcopy(methods)
+    methods["parameters"]["debt.drawdown_basis"]["value"] = "EXPLICIT_RAW_SCHEDULE"
+    methods["parameters"]["debt.opening_principal"]["value"] = Decimal(100)
+    inputs = EnergyInputs(exported, MethodConfig.from_dict(methods), Catalog())
+    with pytest.raises(ContractError, match="DEBT_OPENING_PRINCIPAL_REPAYMENT_UNSPECIFIED"):
+        _debt(inputs, inputs.methods, {"initial_total": Decimal(0)}, _periods(25), 25)
+
+
+def test_zero_ratio_opening_interest_remains_debt_evidence():
+    exported, methods, settlement = _zero_ratio_export("industrial_rooftop")
+    methods = deepcopy(methods)
+    methods["parameters"]["debt.drawdown_basis"]["value"] = "EXPLICIT_RAW_SCHEDULE"
+    methods["parameters"]["debt.opening_interest_payable"]["value"] = Decimal(10)
+    inputs = EnergyInputs(exported, MethodConfig.from_dict(methods), Catalog())
+    debt = _debt(inputs, inputs.methods, {"initial_total": Decimal(0)}, _periods(25), 25)
+    assert debt["has_debt"] is True

@@ -46,6 +46,22 @@ def test_explicit_debt_plan_overrides_zero_ratio_and_is_not_waived():
     assert require("finance.loan_rate","L2",p,CAT)["requirement"]=="REQUIRED"
 
 
+def test_nonempty_zero_value_debt_plan_is_still_debt_evidence():
+    _,state,require=api();p=project("full_export",0)
+    put_rows(p,CAT,"finance.debt_schedule",[row(CAT,"finance.debt_schedule","loan",{"date":"2027-01-01","drawdown":0})])
+    assert state("IN-C06",p,CAT)["truth"]=="T"
+    assert require("finance.loan_rate","L2",p,CAT)["requirement"]=="REQUIRED"
+
+
+def test_assumed_nonempty_debt_plan_is_still_debt_evidence():
+    _,state,require=api();p=project("full_export",0)
+    put_rows(p,CAT,"finance.debt_schedule",[
+        row(CAT,"finance.debt_schedule","loan",{"date":"2027-01-01","drawdown":0},status="ASSUMED")
+    ],status="ASSUMED")
+    assert state("IN-C06",p,CAT)["truth"]=="T"
+    assert require("finance.loan_rate","L2",p,CAT)["requirement"]=="REQUIRED"
+
+
 def test_fixed_and_market_prices_are_alternatives_not_both_waived():
     _,_,require=api();p=project("full_export",0)
     assert require("tariff.periods","L2",p,CAT)["requirement"]=="PENDING_CONDITION"

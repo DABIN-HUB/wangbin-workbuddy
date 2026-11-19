@@ -16,7 +16,7 @@ def main(argv=None):
         from .host_session import PROTOCOL_VERSION
         ready = (sys.version_info >= (3, 12) and sys.version_info < (3, 15)
                  and version('wangbin-document-cli') == '1.2.0'
-                 and version('wangbin-solar-pv-input') == '0.3.1'
+                 and version('wangbin-solar-pv-input') == '0.3.2'
                  and PROTOCOL_VERSION == 'native-host-session/2.0')
     except (ImportError, PackageNotFoundError):
         ready = False

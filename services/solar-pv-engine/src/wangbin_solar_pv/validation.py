@@ -224,10 +224,10 @@ def validate_project(project, catalog):
     grace, term = _value(project,"finance.grace_years"), _value(project,"finance.loan_years")
     if isinstance(grace,int) and isinstance(term,int) and grace > term:
         result.append(Issue("GRACE_EXCEEDS_TERM","finance.grace_years","宽限期不能超过贷款期限"))
-    if _value(project,"finance.debt_ratio") == 0 and _rows(project,"finance.debt_schedule"):
-        debt_amounts = [row_value(row,"finance.debt_schedule."+name) for row in _rows(project,"finance.debt_schedule") for name in ("drawdown","principal","interest","fees")]
-        if any(isinstance(v,(int,float,Decimal)) and v != 0 for v in debt_amounts):
-            result.append(Issue("ZERO_DEBT_WITH_SCHEDULE","finance.debt_ratio","无债务声明与债务计划冲突"))
+    # A zero ratio is not sufficient to classify the project as debt-free.
+    # Method-bound ledger validation must see an explicit schedule and reject
+    # only a conflicting NO_DEBT_DECLARED basis; input validation cannot infer
+    # that method basis from the project export alone.
     start, end = _value(project,"schedule.construction_start"), _value(project,"schedule.commissioning_date")
     if isinstance(start,str) and isinstance(end,str) and start > end:
         result.append(Issue("SCHEDULE_ORDER","schedule.commissioning_date","投产日不能早于建设开始日"))

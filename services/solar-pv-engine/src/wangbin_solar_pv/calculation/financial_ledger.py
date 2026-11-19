@@ -173,15 +173,22 @@ def _depreciation(inputs, assets, years, timing):
 def _debt(inputs, methods, capex, periods, years):
     ratio_value=ratio(_value(inputs,"finance.debt_ratio"),"finance.debt_ratio"); basis=_method(methods,"debt.drawdown_basis"); rows={p:{"drawdown":Decimal(0),"principal_due":Decimal(0),"fees_due":Decimal(0)} for p in periods}
     raw=inputs.optional("finance.debt_schedule") or []
+    opening_principal=nonnegative(_method(methods,"debt.opening_principal"),"debt.opening_principal")
+    opening_interest=nonnegative(_method(methods,"debt.opening_interest_payable"),"debt.opening_interest_payable")
     for r in raw:
         y=int(_row(inputs,r,"finance.debt_schedule.date")[:4])-int(_value(inputs,"schedule.commissioning_date")[:4])+1; y=0 if y<1 else min(y,years); p=_period_for_year(y)
         rows[p]["drawdown"]+=nonnegative(_row(inputs,r,"finance.debt_schedule.drawdown"),"finance.debt_schedule.drawdown"); rows[p]["fees_due"]+=nonnegative(_row(inputs,r,"finance.debt_schedule.fees"),"finance.debt_schedule.fees")
         rows[p]["raw_principal"] = rows[p].get("raw_principal",Decimal(0))+nonnegative(_row(inputs,r,"finance.debt_schedule.principal"),"finance.debt_schedule.principal")
     if basis=="NO_DEBT_DECLARED" and ratio_value!=0: raise ContractError("DEBT_BASIS_RATIO_CONFLICT")
+    debt_evidence=bool(raw) or opening_principal!=0 or opening_interest!=0
+    if basis=="NO_DEBT_DECLARED" and debt_evidence: raise ContractError("DEBT_BASIS_EVIDENCE_CONFLICT")
     if basis=="CAPEX_PROPORTIONAL_SCENARIO":
         for p in periods: rows[p]["drawdown"]=capex["initial_total"]*ratio_value if p=="CONSTRUCTION" else Decimal(0)
     if basis=="EXPLICIT_RAW_SCHEDULE" and ratio_value>0 and not any(x["drawdown"] for x in rows.values()): raise ContractError("DEBT_DRAWdown_MISSING")
-    if ratio_value==0: return {"rows":rows,"has_debt":False,"opening":Decimal(0)}
+    if ratio_value==0 and not debt_evidence:
+        if basis=="NO_DEBT_DECLARED": return {"rows":rows,"has_debt":False,"opening":Decimal(0)}
+        raise ContractError("DEBT_BASIS_NO_DEBT_REQUIRED")
+    if opening_principal!=0: raise ContractError("DEBT_OPENING_PRINCIPAL_REPAYMENT_UNSPECIFIED")
     repayment=_value(inputs,"finance.repayment_method"); total=sum((x["drawdown"] for x in rows.values()),Decimal(0)); loan_years=int(_value(inputs,"finance.loan_years")); grace=int(_value(inputs,"finance.grace_years")); rate=ratio(_value(inputs,"finance.loan_rate"),"finance.loan_rate")
     eligible=[y for y in range(1,years+1) if y>grace]
     if repayment=="custom_schedule":
@@ -194,7 +201,7 @@ def _debt(inputs, methods, capex, periods, years):
         n=min(loan_years,len(eligible)); payment=total*rate*(1+rate)**n/((1+rate)**n-1) if rate else total/n; balance=total
         for y in eligible[:n]: rows[f"OPERATING_YEAR_{y}"]["principal_due"]=max(Decimal(0),payment-balance*rate); balance-=rows[f"OPERATING_YEAR_{y}"]["principal_due"]
     else: raise ContractError("REPAYMENT_METHOD_NOT_SUPPORTED")
-    return {"rows":rows,"has_debt":True,"opening":nonnegative(_method(methods,"debt.opening_principal"),"debt.opening_principal"),"rate":rate}
+    return {"rows":rows,"has_debt":True,"opening":opening_principal,"rate":rate}
 
 def _income_tax_schedule(base, loss, payable, prepaid, income_rate, loss_fraction, payment_fraction, tax_basis):
     used=min(loss,max(Decimal(0),base))*loss_fraction
