@@ -99,10 +99,17 @@ def _junit(path: Path) -> dict:
     if not suites or tree.tag not in {"testsuites", "testsuite"} or any(s.tag != "testsuite" for s in suites):
         raise GateError("invalid JUnit suite structure")
     cases: dict[str, dict] = {}
+    declared_tests = 0
+    unrepresented_tests = 0
     for suite in suites:
         children = list(suite)
-        if len(children) > MAX_CASES or int(suite.get("tests", "-1")) != sum(c.tag == "testcase" for c in children):
+        explicit_cases = sum(c.tag == "testcase" for c in children)
+        suite_tests = int(suite.get("tests", "-1"))
+        if (len(children) > MAX_CASES or suite_tests < explicit_cases
+                or suite_tests > MAX_CASES):
             raise GateError("JUnit suite count mismatch")
+        declared_tests += suite_tests
+        unrepresented_tests += suite_tests - explicit_cases
         for case in children:
             if case.tag != "testcase" or not case.get("classname") or not case.get("name"):
                 raise GateError("unexpected JUnit case")
@@ -119,7 +126,13 @@ def _junit(path: Path) -> dict:
             count = sum(any(child.tag == tag for child in case) for case in children if case.tag == "testcase")
             if int(suite.get(key, "-1")) != count:
                 raise GateError(f"JUnit {key} count mismatch")
+    if tree.tag == "testsuites":
+        for key in ("tests", "failures", "errors", "skipped"):
+            declared = tree.get(key)
+            if declared is not None and int(declared) != sum(int(suite.get(key, "-1")) for suite in suites):
+                raise GateError(f"JUnit root {key} count mismatch")
     return {"sha256": hashlib.sha256(raw).hexdigest(), "cases": cases,
+            "declared_tests": declared_tests, "unrepresented_tests": unrepresented_tests,
             "skips": {name: case["reason"] for name, case in cases.items()
                       if case["outcome"] == "skipped"},
             "counts": {key: sum(v["outcome"] == key for v in cases.values())
@@ -128,9 +141,22 @@ def _junit(path: Path) -> dict:
 
 def _node_id(junit_id: str) -> str:
     module, separator, test = junit_id.partition("::")
-    if not separator or not module.startswith("tests.solar-pv."):
+    match = re.fullmatch(r"tests\.solar-pv\.(test_[^.]+)(?:\.(.+))?", module)
+    if not separator or not match:
         raise GateError(f"unexpected solar JUnit ID: {junit_id}")
-    return "tests/solar-pv/" + module.removeprefix("tests.solar-pv.") + ".py::" + test
+    class_path = match.group(2)
+    return ("tests/solar-pv/" + match.group(1) + ".py::"
+            + (class_path.replace(".", "::") + "::" if class_path else "") + test)
+
+
+def _node_cases(cases: dict[str, dict]) -> dict[str, dict]:
+    nodes = {}
+    for name, case in cases.items():
+        node = _node_id(name)
+        if node in nodes:
+            raise GateError(f"duplicate normalized JUnit node: {node}")
+        nodes[node] = case
+    return nodes
 
 
 def _write(path: Path, data: dict) -> None:
@@ -217,6 +243,8 @@ def _run(args: argparse.Namespace) -> int:
             summary = _junit(out / "junit.xml")
             receipt["junit"] = {"path": "junit.xml", "sha256": summary["sha256"],
                                 "counts": summary["counts"], "test_count": len(summary["cases"]),
+                                "declared_tests": summary["declared_tests"],
+                                "unrepresented_tests": summary["unrepresented_tests"],
                                 "skips": summary["skips"]}
         except (GateError, ValueError, ET.ParseError) as exc:
             receipt["evidence_error"] = str(exc)
@@ -288,7 +316,9 @@ def _verify(args: argparse.Namespace) -> int:
         if (result["sha256"] != report["sha256"] or
                 result["counts"] != report.get("counts") or
                 result["skips"] != report.get("skips") or
-                len(result["cases"]) != report.get("test_count")):
+                len(result["cases"]) != report.get("test_count") or
+                result["declared_tests"] != report.get("declared_tests") or
+                result["unrepresented_tests"] != report.get("unrepresented_tests")):
             raise GateError("JUnit receipt mismatch")
         if result["counts"]["failure"] or result["counts"]["error"]:
             raise GateError("JUnit contains failures or errors")
@@ -297,7 +327,7 @@ def _verify(args: argparse.Namespace) -> int:
     wb = check_junit(workbuddy, args.workbuddy)
     if any(name.startswith("tests.solar-pv.") for name in wb["cases"]):
         raise GateError("workbuddy L3 unexpectedly includes solar cases")
-    solar_by_node = {_node_id(name): case for name, case in pv["cases"].items()}
+    solar_by_node = _node_cases(pv["cases"])
     missing = sorted(set(ids) - solar_by_node.keys())
     # Exact parameter suffixes are part of IDs. A skipped case is covered but not passed.
     if missing:
@@ -308,13 +338,19 @@ def _verify(args: argparse.Namespace) -> int:
     historical_path = ROOT / historical["path"]
     if _junit(historical_path)["sha256"] != historical["sha256"]:
         raise GateError("historical L2 JUnit checksum mismatch")
-    result = {"schema": "solar-pv-l2-from-l3-coverage/1", "verdict": "COVERED_WITH_SKIPS" if any(
-        case["outcome"] == "skipped" for case in covered.values()) else "COVERED_ALL_PASSED",
+    verdict = ("COVERED_WITH_SKIPS" if pv["skips"] or wb["skips"] else
+               "COVERED_WITH_UNREPRESENTED_TESTS" if pv["unrepresented_tests"] or wb["unrepresented_tests"]
+               else "COVERED_ALL_PASSED")
+    result = {"schema": "solar-pv-l2-from-l3-coverage/1", "verdict": verdict,
         "identity": solar["identity_before"], "conditions": solar["conditions"],
         "l2_collected_count": len(ids), "l2_covered": covered,
         "solar_l3_junit": pv["sha256"], "solar_l3_counts": pv["counts"],
+        "solar_l3_declared_tests": pv["declared_tests"],
+        "solar_l3_unrepresented_tests": pv["unrepresented_tests"],
         "solar_l3_skips": pv["skips"],
         "workbuddy_l3_junit": wb["sha256"], "workbuddy_l3_counts": wb["counts"],
+        "workbuddy_l3_declared_tests": wb["declared_tests"],
+        "workbuddy_l3_unrepresented_tests": wb["unrepresented_tests"],
         "workbuddy_l3_skips": wb["skips"],
         "l2_standalone_executed": False,
         "historical_l2_seconds_avoided_if_repeated": historical["elapsed_seconds"],
@@ -340,8 +376,8 @@ def _audit_archive(args: argparse.Namespace) -> int:
         reports[tier] = _junit(ROOT / entry["path"])
         if reports[tier]["sha256"] != entry["sha256"]:
             raise GateError(f"archived {tier} JUnit checksum mismatch")
-    old = {_node_id(name): outcome for name, outcome in reports["l2"]["cases"].items()}
-    final = {_node_id(name): outcome for name, outcome in reports["solar_l3"]["cases"].items()}
+    old = _node_cases(reports["l2"]["cases"])
+    final = _node_cases(reports["solar_l3"]["cases"])
     missing = sorted(old.keys() - final.keys())
     result = {"schema": "solar-pv-historical-id-overlap/1",
               "verdict": "HISTORICAL_ID_MATCH_ONLY" if not missing else "HISTORICAL_ID_MISSING",

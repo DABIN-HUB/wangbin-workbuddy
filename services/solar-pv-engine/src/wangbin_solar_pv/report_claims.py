@@ -1616,10 +1616,19 @@ def _project_narrative(model: Any, item_id: str, judgment: str,
             return (f'屋面项目首年预测经济收益{fmt(revenue)}元来自当前自用节费及余电销售边界，'
                     '并非另有逐时市场交易或补贴收入。没有合同及执行依据的其他收益不计入基准；'
                     '购电价格与余电结算价格的变化应分别更新对应收入分项。')
-    if item_id == 'CH14.05' and get('finance.debt_ratio') == 0:
-        return ('当前合成融资方案明确不安排债务，建设期资本支出按项目资金计划列示，'
-                '不能从投资额推算建设期贷款利息，也不能把未列利息当成实际融资条件已落实。'
-                '如后续采用借款，应依据提款时点、利率及还款合同重算资金成本。')
+    if item_id == 'CH14.05':
+        from .report_export import _debt_source_state
+        debt_state = _debt_source_state(model)
+        if debt_state == 'NO_DEBT':
+            return ('当前合成融资方案明确不安排债务，建设期资本支出按项目资金计划列示，'
+                    '不能从投资额推算建设期贷款利息，也不能把未列利息当成实际融资条件已落实。'
+                    '如后续采用借款，应依据提款时点、利率及还款合同重算资金成本。')
+        if debt_state == 'HAS_DEBT':
+            ratio = get('finance.debt_ratio')
+            return ('本次融资比例虽为零，仍存在显式债务来源；不能推定无债务。' if ratio == 0 else
+                    '本次存在债务来源；') + ('建设期利息须依据提款时点、利率及还款合同核对，'
+                                        '不能把未列利息当成实际偿付已落实。')
+        return '债务依据尚未闭合；建设期利息和融资偿付路径不能仅由融资比例推定。'
     if item_id == 'CH16.01':
         row = model.metric('revenue.year.1') or {}
         ledger = row.get('details', {}).get('ledger', {}) if row.get('status') == 'CALCULATED' else {}
@@ -2274,7 +2283,8 @@ def build_claim(model: Any, item_id: str, title: str, question: str, reasoning_r
                                  and model.result.get("maturity", {}).get("real_project") == "VERIFIED"):
         judgment = "即使测算与资料核对完成，投资建议仍须经过独立专业审查和决策授权。"
     no_storage = _source_value(normalized, records, 'project.has_storage') is False
-    no_debt = _source_value(normalized, records, 'finance.debt_ratio') == 0
+    from .report_export import _debt_source_state
+    no_debt = _debt_source_state(model) == 'NO_DEBT'
     not_applicable = ((ground and _source_value(normalized, records, 'project.pv_type') == 'utility_scale_ground'
                        and item_id in {"CH10.01", "CH10.03"})
                       or (no_storage and item_id == "CH10.06")

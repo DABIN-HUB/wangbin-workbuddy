@@ -221,7 +221,7 @@ def _zero_ratio_export(kind):
     return IntakeSession(project, catalog).export(), methods, settlement
 
 
-def _zero_ratio_schedule_export(kind):
+def _zero_ratio_schedule_export(kind, *, drawdown=Decimal(10)):
     from wangbin_solar_pv.provenance import make_record
     exported, methods, settlement = _zero_ratio_export(kind)
     methods = deepcopy(methods)
@@ -229,7 +229,7 @@ def _zero_ratio_schedule_export(kind):
     catalog = Catalog()
     project = ProjectData.from_dict(exported["project"], catalog)
     row_id = "SYNTHETIC-zero-ratio-debt"
-    facts = {"row_id": row_id, "date": "2025-12-01", "drawdown": Decimal(10),
+    facts = {"row_id": row_id, "date": "2025-12-01", "drawdown": drawdown,
              "principal": Decimal(0), "interest": Decimal(0), "fees": Decimal(0),
              "dscr_covenant": Decimal("1.2")}
     basis = {"currency": "CNY", "price_year": 2025, "tax_basis": "inclusive", "price_basis": "nominal"}
@@ -293,3 +293,85 @@ def test_zero_ratio_opening_interest_remains_debt_evidence():
     inputs = EnergyInputs(exported, MethodConfig.from_dict(methods), Catalog())
     debt = _debt(inputs, inputs.methods, {"initial_total": Decimal(0)}, _periods(25), 25)
     assert debt["has_debt"] is True
+
+
+def test_zero_ratio_explicit_debt_public_chain_dscr_report_does_not_claim_no_debt():
+    from wangbin_solar_pv.calculation.phase3e import calculate_phase3e
+    from wangbin_solar_pv.report_export import ReportModel, _item_evidence, _professional_metric_rows
+    from wangbin_solar_pv.report_appendix_findings import appendix_finding
+    from wangbin_solar_pv.report_claims import _source_value
+
+    catalog = Catalog()
+    exported, methods, settlement = _zero_ratio_schedule_export("industrial_rooftop", drawdown=Decimal(1200))
+    validate_export(exported, catalog)
+    plan = exported["project"]["values"]["finance.debt_schedule"]
+    assert plan["status"] == "UNVERIFIED"
+    assert all(field["status"] == "ASSUMED" for field in plan["value"][0]["fields"].values())
+    financial = calculate_financial_ledger(exported, methods, settlement)
+    annual = financial["evidence"]["financial-ledger"]["annual"]
+    assert annual[0]["debt_drawdown"] == Decimal(1200)
+    assert any(row["principal_paid"] == row["interest_paid"] == 0 for row in annual[1:])
+    result = calculate_phase3e(financial, methods, catalog)
+    model = ReportModel.from_result(result, catalog)
+    dscr = model.metric("financial.phase3e.dscr")
+    assert dscr["status"] == "UNDEFINED" and dscr["reason"] == "ZERO_DEBT_SERVICE"
+    row = _professional_metric_rows(model, ("financial.phase3e.dscr",))[0]
+    assert row[1] == "数学上未定义"
+    assert "存在应偿本息为零的期间" in row[3]
+    assert "本项目无债务" not in row[3]
+    funding = _item_evidence(model, "industrial_rooftop", "CH14", "建设期利息与资金进度", item_no=5)
+    coverage = _item_evidence(model, "industrial_rooftop", "CH16", "DSCR与债务条件", item_no=7)
+    assert "明确不安排债务" not in funding["central_claim"]
+    assert coverage["state"] != "NOT_APPLICABLE"
+    schedule_record = next(row for row in model.result["source_snapshot"]["phase2"]["records"]
+                           if row["field_id"] == "finance.debt_schedule")
+    assert "finance.debt_schedule" in funding["supporting_input_field_ids"]
+    assert schedule_record["source_id"] in funding["source_ids"]
+    assert schedule_record["field_instance_id"] in funding["field_instance_ids"]
+    for item_id in ("APP07.01", "APP07.02"):
+        text = appendix_finding(model, item_id, str, _source_value)
+        assert "本次明确无债务" not in text
+        assert "若新增融资" not in text
+
+
+def test_public_financial_chain_rejects_no_debt_basis_with_debt_evidence():
+    exported, methods, settlement = _zero_ratio_schedule_export("industrial_rooftop")
+    validate_export(exported, Catalog())
+    methods["parameters"]["debt.drawdown_basis"]["value"] = "NO_DEBT_DECLARED"
+    with pytest.raises(ContractError, match="DEBT_BASIS_EVIDENCE_CONFLICT"):
+        calculate_financial_ledger(exported, methods, settlement)
+
+
+def test_public_financial_chain_blocks_undefined_opening_principal_repayment():
+    exported, methods, settlement = _zero_ratio_export("industrial_rooftop")
+    validate_export(exported, Catalog())
+    methods = deepcopy(methods)
+    methods["parameters"]["debt.drawdown_basis"]["value"] = "EXPLICIT_RAW_SCHEDULE"
+    methods["parameters"]["debt.opening_principal"]["value"] = Decimal(100)
+    with pytest.raises(ContractError, match="DEBT_OPENING_PRINCIPAL_REPAYMENT_UNSPECIFIED"):
+        calculate_financial_ledger(exported, methods, settlement)
+
+
+def test_public_no_debt_chain_keeps_dscr_not_applicable_and_cfads_independent():
+    from wangbin_solar_pv.calculation.phase3e import calculate_phase3e
+    from wangbin_solar_pv.report_export import ReportModel, _professional_metric_rows
+
+    catalog = Catalog()
+    exported, methods, settlement = _zero_ratio_export("industrial_rooftop")
+    methods = deepcopy(methods)
+    methods["parameters"]["debt.drawdown_basis"]["value"] = "NO_DEBT_DECLARED"
+    validate_export(exported, catalog)
+    financial = calculate_financial_ledger(exported, methods, settlement)
+    model = ReportModel.from_result(calculate_phase3e(financial, methods, catalog), catalog)
+    dscr = model.metric("financial.phase3e.dscr")
+    assert dscr["status"] == "NOT_APPLICABLE" and dscr["reason"] == "NO_DEBT"
+    assert model.metric("financial.phase3e.cfads")["status"] == "BLOCKED_MISSING_INPUT"
+    assert _professional_metric_rows(model, ("financial.phase3e.dscr",))[0][1] == "不适用"
+
+
+def test_public_zero_ratio_without_no_debt_declaration_is_rejected():
+    catalog = Catalog()
+    exported, methods, settlement = _zero_ratio_export("industrial_rooftop")
+    validate_export(exported, catalog)
+    with pytest.raises(ContractError, match="DEBT_BASIS_NO_DEBT_REQUIRED"):
+        calculate_financial_ledger(exported, methods, settlement)

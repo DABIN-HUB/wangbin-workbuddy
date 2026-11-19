@@ -141,6 +141,33 @@ def test_loan_interest_accepts_zero_ratio_with_explicit_debt_evidence():
     validate_factor("LOAN_INTEREST", "INPUT", "finance.loan_rate", None, D("0.07"), export, methods)
 
 
+def test_public_loan_interest_zero_ratio_schedule_recalculates_financial_layers():
+    from test_financial_ledger_remediation import _zero_ratio_schedule_export
+    from wangbin_solar_pv.calculation.financial_ledger import calculate_financial_ledger
+    from wangbin_solar_pv.calculation.phase3e import calculate_phase3e
+    from wangbin_solar_pv.calculation.input_contract import validate_export
+
+    catalog = Catalog()
+    exported, method_data, settlement = _zero_ratio_schedule_export(
+        "industrial_rooftop", drawdown=D(1200))
+    methods = MethodConfig.from_dict(method_data)
+    validate_export(exported, catalog)
+    original = calculate_financial_ledger(exported, methods, settlement)
+    change = _input(exported, "LOAN_INTEREST", "finance.loan_rate", D("0.07"))
+    prepared = prepare_scenario(_control(exported, methods, changes=[change]), exported, methods, catalog)
+    assert prepared.input_export["input_hash"] != exported["input_hash"]
+    assert prepared.input_export["source_snapshot_id"] != exported["source_snapshot_id"]
+    assert prepared.input_export["project"]["values"]["finance.loan_rate"]["source_id"] == SOURCE["source_id"]
+    assert scenario_calculation_graph(catalog, "industrial_rooftop", prepared.methods).affected_by(
+        prepared.changed_field_ids) == ["3D", "3E"]
+    financial = calculate_financial_ledger(prepared.input_export, prepared.methods, settlement)
+    phase3e = calculate_phase3e(financial, prepared.methods, catalog)
+    assert financial["evidence"]["financial-ledger"]["annual"][1]["interest_accrued"] != \
+        original["evidence"]["financial-ledger"]["annual"][1]["interest_accrued"]
+    assert next(metric for metric in phase3e["results"]["metrics"]
+                if metric["metric_id"] == "financial.phase3e.dscr")["reason"] == "ZERO_DEBT_SERVICE"
+
+
 def test_loan_interest_requires_debt_ratio_evidence():
     catalog, export, methods = _fixture()
     export = deepcopy(export)

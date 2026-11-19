@@ -810,11 +810,16 @@ def _debt_source_state(model: ReportModel) -> str:
     basis = parameters.get("debt.drawdown_basis", {}).get("value")
     opening_principal = parameters.get("debt.opening_principal", {}).get("value")
     opening_interest = parameters.get("debt.opening_interest_payable", {}).get("value")
-    if schedule:
-        return "HAS_DEBT"
     if opening_principal not in (None, 0) or opening_interest not in (None, 0):
         return "HAS_DEBT"
-    if value == 0 and basis == "NO_DEBT_DECLARED":
+    if isinstance(schedule, list) and schedule:
+        return ("HAS_DEBT" if _source_value(normalized, records, "finance.debt_schedule") is not None
+                else "UNKNOWN")
+    if schedule != []:
+        return "UNKNOWN"
+    dscr = model.metric("financial.phase3e.dscr") or {}
+    if (value == 0 and basis == "NO_DEBT_DECLARED" and
+            dscr.get("status") == "NOT_APPLICABLE" and dscr.get("reason") == "NO_DEBT"):
         return "NO_DEBT"
     return "UNKNOWN"
 
@@ -1845,9 +1850,12 @@ def _professional_metric_rows(model: ReportModel, metric_ids: tuple[str, ...],
         elif status == "UNDEFINED":
             display, note = "数学上未定义", "当前现金流/评价边界下无有效数值"
             if metric_id == "financial.phase3e.dscr" and metric.get("reason") == "ZERO_DEBT_SERVICE":
+                debt_state = _debt_source_state(model)
                 note = ("本项目无债务，每期应偿本息为零；DSCR无定义，不是0倍" if
-                        model.result["inputs"].get("normalized", {}).get("finance.debt_ratio") == 0 else
-                        "存在应偿本息为零的期间；该期DSCR无定义，不是0倍")
+                        debt_state == "NO_DEBT" else
+                        "存在应偿本息为零的期间；该期DSCR无定义，不是0倍" if
+                        debt_state == "HAS_DEBT" else
+                        "债务依据尚未闭合；零偿债服务期DSCR未定义，不推定无债或0倍")
         else:
             display, note = "状态待核对", "当前结果状态未知；不可当作不适用"
         unit = _metric_unit(metric)
@@ -3154,8 +3162,12 @@ def _write_docx(model: ReportModel, output: Path, display_name: str, pv_type: st
             if item_id == "APP07.02":
                 dscr = model.metric("financial.phase3e.dscr")
                 if dscr and dscr.get("status") == "UNDEFINED" and dscr.get("reason") == "ZERO_DEBT_SERVICE":
-                    document.add_paragraph("本项目债务服务为零，DSCR在原计算契约中为未定义而非0倍；"
-                                           "无债务事实与零分母状态同时成立，不将其改写为已计算或其他口径的不适用。")
+                    debt_state = _debt_source_state(model)
+                    document.add_paragraph(
+                        ("本项目无债务；" if debt_state == "NO_DEBT" else
+                         "本项目有债务但存在零偿债服务期；" if debt_state == "HAS_DEBT" else
+                         "债务依据尚未闭合，存在零偿债服务期；")
+                        + "DSCR在该期未定义而非0倍，不将零分母改写为已达标。")
             if item_id == "APP10.01":
                 explanations = {
                     "NO_REAL_PROJECT_VERIFICATION": ("真实工程条件未验证", "取得权属、现场工程和接网原件"),

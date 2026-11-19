@@ -23,6 +23,11 @@ def appendix_finding(model: Any, item_id: str, fmt: Callable[[Any], str], source
     first = annual[1] if len(annual) > 1 and annual[1].get('period') == 'OPERATING_YEAR_1' else {}
     flows = metric('financial.phase3e.project_cash_flow')
     break_even = model.metric('financial.phase3e.break-even-price')
+    if item_id in {'APP07.01', 'APP07.02'}:
+        from .report_export import _debt_source_state
+        debt_state = _debt_source_state(model)
+    else:
+        debt_state = 'UNKNOWN'
     scenario_id = result.get('scenario_id')
     has_scenario_evidence = bool(scenario_id and scenario_id != 'BASE') or any(
         row.get('status') == 'CALCULATED' and row.get('metric_id', '').startswith('sensitivity.')
@@ -66,9 +71,15 @@ def appendix_finding(model: Any, item_id: str, fmt: Callable[[Any], str], source
                       if metric('financial.phase3e.equity-investor-cash-flow') is None else
                       '投资者现金流已有计算值；须逐期核实股东出资、融资及实际分配与项目现金流的差异。'),
         'APP07.01': ('本次明确无债务，合同债务服务不存在，DSCR不适用；不能将零偿债额解释为已达标。'
-                      if get('finance.debt_ratio') == 0 else '须逐期将合同还本付息和可供偿债现金配对后评价DSCR。'),
-        'APP07.02': ('债务比例输入为零；零分母使本次DSCR未定义而非零倍，若新增融资应重建本息日程。'
-                      if get('finance.debt_ratio') == 0 else '有债务项目逐期核查债务服务分母；零分母期不得填零倍。'),
+                      if debt_state == 'NO_DEBT' else
+                      '须逐期将合同还本付息和可供偿债现金配对后评价DSCR。'
+                      if debt_state == 'HAS_DEBT' else
+                      '债务依据尚未闭合；须先核对借款安排与偿债日程，不推定存在合同或偿债覆盖达标。'),
+        'APP07.02': ('本次明确无债务，DSCR不适用；若新增融资应重建本息日程。'
+                      if debt_state == 'NO_DEBT' else
+                      '有债务项目逐期核查债务服务分母；零分母期不得填零倍。'
+                      if debt_state == 'HAS_DEBT' else
+                      '债务依据尚未闭合；零分母不能推定无债务、0倍或已达标。'),
         'APP08.01': ('已有不同情景的测算线索，但单个结果不能证明各因素及组合影响均已分别计算；'
                      '须逐项核对改变的条件与对应结果。' if has_scenario_evidence else
                      '本次未取得独立的单因素及组合结果；资源、价格和造价变化的影响不得从现有结果外推。'),

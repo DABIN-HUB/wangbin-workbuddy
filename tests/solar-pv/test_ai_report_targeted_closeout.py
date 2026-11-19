@@ -37,12 +37,9 @@ def test_no_debt_is_not_missing_or_zero_dscr(model, registry):
     assert fact_display({**debt, 'value': None}) == ('尚无可用结果', '')
 
 
-def test_report_debt_state_does_not_waive_an_explicit_debt_schedule(model):
-    no_debt = deepcopy(model)
-    assert _debt_source_state(no_debt) == 'NO_DEBT'
-    contradictory = deepcopy(model)
-    contradictory.result['inputs']['normalized']['finance.debt_schedule'] = [{'drawdown': 1}]
-    assert _debt_source_state(contradictory) == 'HAS_DEBT'
+def test_historical_undefined_dscr_does_not_establish_no_debt(model):
+    assert model.metric('financial.phase3e.dscr')['reason'] == 'ZERO_DEBT_SERVICE'
+    assert _debt_source_state(model) == 'UNKNOWN'
 
 
 def test_bound_target_fields_and_terminal_records(model, registry):
