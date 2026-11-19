@@ -53,7 +53,7 @@
       ]
     },
     {
-      "active_version": "1.1.1",
+      "active_version": "1.1.2",
       "category": "12-IndustryConsultant",
       "development": "Existing local candidate",
       "id": "wangbin-software-consultant",
@@ -95,6 +95,15 @@
           "sha256": "UNKNOWN",
           "source": "packages/experts/wangbin-software-consultant",
           "version": "1.1.1"
+        },
+        {
+          "archive_evidence": "UNKNOWN",
+          "candidate": "UNKNOWN",
+          "date": "2026-11-19",
+          "published_at": "UNKNOWN",
+          "sha256": "UNKNOWN",
+          "source": "packages/experts/wangbin-software-consultant",
+          "version": "1.1.2"
         }
       ]
     },
