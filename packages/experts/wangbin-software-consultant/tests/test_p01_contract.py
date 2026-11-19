@@ -18,7 +18,7 @@ FOCUS = ("S02", "S10", "S12", "S13", "S14", "S17", "S23", "S27", "S28", "S29", "
 
 def test_official_agent_entry_and_old_rules_preserved():
     """The manifest's agent is a documented entry; other files are not assumed loaded."""
-    meta = validate_prompt_expert(SOURCE, name="wangbin-software-consultant", version="1.1.0", category="12-IndustryConsultant")
+    meta = validate_prompt_expert(SOURCE, name="wangbin-software-consultant", version="1.1.1", category="12-IndustryConsultant")
     assert meta["agents"] == ["./agents/wangbin-software-consultant.md"]
     body = AGENT.read_text(encoding="utf-8")
     for legacy in ("不要求登录其他系统", "每轮最多三个", "已确认", "合理假设", "待确认", "变更记录", "MVP", "单体", "Modbus", "33000/54000", "第三方费未知", "不索取客户名单"):

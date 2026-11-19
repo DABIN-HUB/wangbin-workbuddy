@@ -7,7 +7,7 @@ import zipfile
 from pathlib import Path
 
 NAME = "wangbin-software-consultant"
-VERSION = "1.1.0"
+VERSION = "1.1.1"
 MEMBERS = (
     ".codebuddy-plugin/plugin.json",
     "agents/wangbin-software-consultant.md",
