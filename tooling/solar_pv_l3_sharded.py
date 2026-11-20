@@ -1,8 +1,8 @@
-"""Bounded *prototype* for auditing disjoint solar-PV pytest processes.
+"""Preserve the R7 prototype; gate R8 formal file shards separately.
 
-No full-tree mode and no replacement for ``l3-solar``/``verify``. Each selected
-file is collected once, then executed in its own fresh process. The existing
-bundle memory budget and its lifetime high-water check are not changed.
+Neither mode replaces ``l3-solar``/``verify``. The R8 full entry is blocked
+until independent resource and input-identity admission can be established.
+The existing bundle memory budget and its lifetime high-water check are unchanged.
 """
 from __future__ import annotations
 
@@ -257,7 +257,320 @@ def _run(files: list[str], out: Path, timeout: int) -> int:
             json.dumps(summary, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
 
 
+# R8 mode is deliberately separate from the R7 prototype. In particular none
+# of _run/_execute/_select or their CLI arguments change.
+def _formal_prerequisites(pandoc: Path) -> dict:
+    from .solar_pv_l3_sharded_verify import LIMIT
+    if os.name != 'nt':
+        raise GateError('formal OS Job Object gate requires Windows')
+    if not pandoc.is_absolute() or not pandoc.is_file() or pandoc.is_symlink():
+        raise GateError('absolute, regular Pandoc executable required')
+    if _sha(pandoc) != '81b551129ae36faa420e07223390252547af92e00e2cc570bc57fee61ccbc623':
+        raise GateError('Pandoc exe bytes differ from authorized R8 identity')
+    version = subprocess.run([str(pandoc), '--version'], capture_output=True, text=True,
+                             timeout=20, check=True).stdout.splitlines()[0]
+    if version != 'pandoc 3.14':
+        raise GateError('Pandoc version mismatch')
+    if any(os.environ.get(key) for key in ('PYTEST_ADDOPTS', 'PYTEST_PLUGINS', 'PYTHONPATH')):
+        raise GateError('uncontrolled pytest selection or Python import environment')
+    import psutil
+    if psutil.__version__ != '7.2.2':
+        raise GateError('psutil runtime version not pinned to audited environment')
+    if LIMIT != 512 * 1024 * 1024:
+        raise GateError('OS resource limit drift')
+    return {'path': str(pandoc), 'sha256': _sha(pandoc), 'version': version}
+
+
+def _unlinked_input(name: str) -> Path:
+    path = ROOT
+    for part in Path(name).parts:
+        path = path / part
+        if path.is_symlink() or getattr(path.lstat(), 'st_file_attributes', 0) & 0x400:
+            raise GateError(f'linked formal input: {name}')
+    if not path.is_file() or not path.resolve().is_relative_to(ROOT.resolve()):
+        raise GateError(f'missing or escaped formal input: {name}')
+    return path
+
+
+def _formal_identity() -> dict:
+    # R7's executable surface excludes archived report fixtures. R8 binds the
+    # tracked report bytes too; no historical receipt is modified.
+    from .solar_pv_regression import _git
+    identity = _identity()
+    names = [os.fsdecode(item) for item in _git('ls-files', '-z', 'reports/solar-pv').split(b'\0') if item]
+    reports = {}
+    for name in names:
+        reports[name] = _sha(_unlinked_input(name))
+    identity['report_inputs'] = reports
+    identity['report_sha256'] = hashlib.sha256(json.dumps(reports, sort_keys=True,
+                                                        separators=(',', ':')).encode()).hexdigest()
+    # These historical test inputs are ignored by Git; a Git-only inventory
+    # would silently miss their mutation or absence. This is not a claim that
+    # every dynamic/ignored input in the entire suite has been inventoried.
+    historical = 'r2-client-552-20261113-132354/workspaces'
+    fixture_names = (
+        f'.runtime/solar-pv/{historical}/industrial_rooftop/roof-primary/CH08-1-request.json',
+        f'.runtime/solar-pv/{historical}/utility_scale_ground/ground-primary/CH08-1-request.json',
+    )
+    fixtures = {}
+    for name in fixture_names:
+        fixtures[name] = _sha(_unlinked_input(name))
+    identity['ignored_fixture_inputs'] = fixtures
+    identity['ignored_fixture_sha256'] = hashlib.sha256(json.dumps(
+        fixtures, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+    return identity
+
+
+def _job_guard():
+    """Kernel hard private-commit limit for entire process tree; no sampling substitute.
+
+    Accounting catches children that exit between samples. Job creation/assignment
+    errors block rather than silently falling back to observing the launcher.
+    """
+    from ctypes import wintypes
+    from .solar_pv_l3_sharded_verify import LIMIT
+    class Basic(ctypes.Structure):
+        _fields_ = [('user_time', ctypes.c_int64), ('job_time', ctypes.c_int64),
+                    ('flags', wintypes.DWORD), ('min_ws', ctypes.c_size_t),
+                    ('max_ws', ctypes.c_size_t), ('active', wintypes.DWORD),
+                    ('affinity', ctypes.c_size_t), ('priority', wintypes.DWORD),
+                    ('scheduling', wintypes.DWORD)]
+    class IO(ctypes.Structure):
+        _fields_ = [(key, ctypes.c_uint64) for key in ('reads', 'writes', 'other',
+                     'read_bytes', 'written_bytes', 'other_bytes')]
+    class Extended(ctypes.Structure):
+        _fields_ = [('basic', Basic), ('io', IO), ('process_limit', ctypes.c_size_t),
+                    ('job_limit', ctypes.c_size_t), ('peak_process', ctypes.c_size_t),
+                    ('peak_job', ctypes.c_size_t)]
+    class Accounting(ctypes.Structure):
+        _fields_ = [('total_user', ctypes.c_int64), ('total_kernel', ctypes.c_int64),
+                    ('this_user', ctypes.c_int64), ('this_kernel', ctypes.c_int64),
+                    ('total_page_faults', wintypes.DWORD), ('total_processes', wintypes.DWORD),
+                    ('active_processes', wintypes.DWORD), ('terminated_processes', wintypes.DWORD)]
+    dll = ctypes.WinDLL('kernel32', use_last_error=True)
+    dll.CreateJobObjectW.argtypes = (ctypes.c_void_p, wintypes.LPCWSTR)
+    dll.CreateJobObjectW.restype = wintypes.HANDLE
+    dll.SetInformationJobObject.argtypes = (wintypes.HANDLE, ctypes.c_int,
+                                            ctypes.c_void_p, wintypes.DWORD)
+    dll.SetInformationJobObject.restype = wintypes.BOOL
+    dll.QueryInformationJobObject.argtypes = (wintypes.HANDLE, ctypes.c_int,
+                                              ctypes.c_void_p, wintypes.DWORD, ctypes.c_void_p)
+    dll.QueryInformationJobObject.restype = wintypes.BOOL
+    dll.AssignProcessToJobObject.argtypes = (wintypes.HANDLE, wintypes.HANDLE)
+    dll.AssignProcessToJobObject.restype = wintypes.BOOL
+    dll.TerminateJobObject.argtypes = (wintypes.HANDLE, wintypes.UINT)
+    dll.CloseHandle.argtypes = (wintypes.HANDLE,)
+    handle = dll.CreateJobObjectW(None, None)
+    if not handle:
+        raise GateError(f'CreateJobObjectW failed: {ctypes.get_last_error()}')
+    limits = Extended()
+    limits.basic.flags = 0x100 | 0x200 | 0x2000  # process, job, kill-on-close
+    limits.process_limit = LIMIT
+    limits.job_limit = LIMIT
+    if not dll.SetInformationJobObject(handle, 9, ctypes.byref(limits), ctypes.sizeof(limits)):
+        error = ctypes.get_last_error()
+        dll.CloseHandle(handle)
+        raise GateError(f'SetInformationJobObject failed: {error}')
+    return dll, handle, Extended, Accounting
+
+
+def _formal_process(command: list[str], directory: Path, timeout: int,
+                    identity: dict, conditions: dict, pandoc: dict, kind: str) -> dict:
+    from .solar_pv_l3_sharded_verify import LIMIT
+    from ctypes import wintypes
+    import psutil
+    directory.mkdir(exist_ok=False)
+    tmp, base = directory / 'workspace-tmp', directory / 'pytest-basetemp'
+    tmp.mkdir()
+    env = os.environ.copy()
+    env.update({'TMPDIR': str(tmp), 'TMP': str(tmp), 'TEMP': str(tmp),
+                'PYTHONPATH': conditions['pythonpath'], 'PYTHONDONTWRITEBYTECODE': '1',
+                'WANGBIN_SOLAR_PV_PANDOC': pandoc['path']})
+    entry = {'schema': 'solar-pv-l3-sharded-process/1', 'kind': kind, 'command': command,
+             'scratch': {'TMPDIR': str(tmp), 'basetemp': str(base)},
+             'pandoc': pandoc, 'identity_before': _formal_identity(), 'conditions_before': _conditions(),
+             'started_utc': datetime.now(timezone.utc).isoformat(), 'timed_out': False,
+             'resource': {'enforcement': 'OS_JOB_MEMORY_HARD_LIMIT', 'limit_bytes': LIMIT,
+                          'max_current_bytes': 0, 'max_lifetime_peak_bytes': 0,
+                          'actual_child_observed': False, 'complete_tree_accounting': False,
+                          'guard_error': None}}
+    proc = None
+    job = None
+    seen = {}
+    try:
+        if entry['identity_before'] != identity or entry['conditions_before'] != conditions:
+            raise GateError('frozen input/environment drift before process')
+        dll, job, Extended, Accounting = _job_guard()
+        with ((directory / 'stdout.log').open('xb') as stdout,
+              (directory / 'stderr.log').open('xb') as stderr):
+            proc = subprocess.Popen(command, cwd=ROOT, env=env, stdout=stdout,
+                                    stderr=stderr, creationflags=0x4)  # CREATE_SUSPENDED
+            if not dll.AssignProcessToJobObject(job, proc._handle):
+                raise GateError(f'AssignProcessToJobObject failed: {ctypes.get_last_error()}')
+            # CPython Popen closes ht. A suspended process has exactly one
+            # thread. Open it by TID only after it belongs to the hard-limited job.
+            tids = psutil.Process(proc.pid).threads()
+            if len(tids) != 1:
+                raise GateError('suspended process thread identity ambiguous')
+            dll.OpenThread.argtypes = (wintypes.DWORD, wintypes.BOOL, wintypes.DWORD)
+            dll.OpenThread.restype = wintypes.HANDLE
+            thread = dll.OpenThread(0x0002, False, tids[0].id)
+            if not thread:
+                raise GateError('cannot open suspended child thread')
+            try:
+                dll.ResumeThread.argtypes = (wintypes.HANDLE,)
+                dll.ResumeThread.restype = wintypes.DWORD
+                if dll.ResumeThread(thread) != 1:
+                    raise GateError('cannot resume hard-limited child')
+            finally:
+                dll.CloseHandle(thread)
+            deadline = time.monotonic() + timeout
+            while True:
+                try:
+                    parent = psutil.Process(proc.pid)
+                    processes = [parent, *parent.children(recursive=True)]
+                    current = 0
+                    for process in processes:
+                        try:
+                            mem = process.memory_info()
+                            key = (process.pid, process.create_time())
+                            seen[key] = max(seen.get(key, 0), mem.rss,
+                                            getattr(mem, 'peak_wset', mem.rss))
+                            current += mem.rss
+                            if process.pid != proc.pid and 'python' in process.name().lower():
+                                entry['resource']['actual_child_observed'] = True
+                        except (psutil.NoSuchProcess, psutil.AccessDenied):
+                            entry['resource']['guard_error'] = 'process lost/denied during sample'
+                    entry['resource']['max_current_bytes'] = max(entry['resource']['max_current_bytes'], current)
+                    entry['resource']['max_lifetime_peak_bytes'] = sum(seen.values())
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    if proc.poll() is None or not any(pid == proc.pid for pid, _ in seen):
+                        entry['resource']['guard_error'] = 'launcher lost before tree accounting'
+                if time.monotonic() >= deadline and proc.poll() is None:
+                    entry['timed_out'] = True
+                    break
+                if proc.poll() is not None:
+                    break
+                time.sleep(0.05)
+            accounting, ext = Accounting(), Extended()
+            if not dll.QueryInformationJobObject(job, 1, ctypes.byref(accounting), ctypes.sizeof(accounting), None):
+                raise GateError('OS job accounting unavailable')
+            if not dll.QueryInformationJobObject(job, 9, ctypes.byref(ext), ctypes.sizeof(ext), None):
+                raise GateError('OS job peak unavailable')
+            entry['resource']['total_job_processes'] = accounting.total_processes
+            entry['resource']['peak_job_private_commit_bytes'] = ext.peak_job
+            entry['resource']['complete_tree_accounting'] = accounting.total_processes == len(seen)
+            if (entry['timed_out'] or entry['resource']['guard_error']
+                    or accounting.active_processes != 0
+                    or not entry['resource']['complete_tree_accounting']
+                    or not entry['resource']['actual_child_observed']
+                    or entry['resource']['max_current_bytes'] > LIMIT
+                    or entry['resource']['max_lifetime_peak_bytes'] > LIMIT
+                    or ext.peak_job > LIMIT):
+                raise GateError('timeout, incomplete OS process tree or 512MiB limit exceeded')
+            entry['exit_code'] = proc.wait(timeout=5)
+    except (OSError, ValueError, psutil.Error, GateError) as exc:
+        entry['error'] = str(exc)
+    finally:
+        if job:
+            dll.TerminateJobObject(job, 1) if proc and proc.poll() is None else None
+            dll.CloseHandle(job)
+        if proc:
+            try:
+                entry['exit_code'] = proc.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                proc.kill()
+                entry['exit_code'] = proc.wait()
+        entry['finished_utc'] = datetime.now(timezone.utc).isoformat()
+        entry['identity_after'], entry['conditions_after'] = _formal_identity(), _conditions()
+        for name in ('stdout', 'stderr'):
+            path = directory / f'{name}.log'
+            if path.exists():
+                entry[f'{name}_sha256'] = _sha(path)
+        xml = directory / 'junit.xml'
+        if xml.exists():
+            entry['junit_sha256'] = _sha(xml)
+        (directory / 'receipt.json').write_text(json.dumps(entry, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+    return entry
+
+
+def _formal_run(out: Path, pandoc_path: Path, timeout: int, selected: list[str]) -> int:
+    from .solar_pv_l3_sharded_verify import verify, _collection, _hash, _xml
+    if not 10 <= timeout <= 14400:
+        raise GateError('formal per-file timeout must be 10..14400 seconds')
+    if not selected:
+        # B1 is a development deliverable. Hard-block B3 until the independent
+        # B2 reviewer proves physical-working-set coverage and wheel bytes.
+        raise GateError('formal full BLOCKED: B2 OS working-set/wheel-byte admission not established')
+    out = out.resolve()
+    if out.exists() or out == ROOT or ROOT in out.parents:
+        raise GateError('formal evidence requires a new private directory outside repository')
+    pandoc = _formal_prerequisites(pandoc_path)
+    files = sorted(p.relative_to(ROOT).as_posix() for p in (ROOT / 'tests/solar-pv').glob('test_*.py'))
+    if selected:
+        if not 2 <= len(selected) <= 3 or sorted(set(selected)) != sorted(selected) or any(f not in files for f in selected):
+            raise GateError('smoke accepts 2-3 distinct complete test files only')
+        files = sorted(selected)
+    identity, conditions = _formal_identity(), _conditions()
+    out.mkdir(parents=True, exist_ok=False)
+    summary = {'schema': 'solar-pv-l3-sharded/1', 'mode': 'smoke' if selected else 'full',
+               'verdict': 'INCOMPLETE', 'identity': identity, 'conditions': conditions,
+               'pandoc': pandoc, 'files': files, 'collected_ids': [], 'collection_sha256': None,
+               'shards': [], 'process_timeout_seconds': timeout}
+    try:
+        folder = out / 'collect'
+        selection = files if selected else ['tests/solar-pv']
+        command = [sys.executable, '-m', 'pytest', *selection, '-q', '-ra', '-p', 'no:cacheprovider',
+                   f'--basetemp={folder / "pytest-basetemp"}', '--collect-only']
+        receipt = _formal_process(command, folder, timeout, identity, conditions, pandoc, 'collect')
+        if receipt.get('error') or receipt.get('exit_code') != 0:
+            raise GateError('collection process failed; raw receipt retained')
+        ids = _collection((folder / 'stdout.log').read_bytes())
+        if sorted({n.split('::')[0] for n in ids}) != files:
+            raise GateError('collection file inventory does not match complete scope')
+        summary['collected_ids'] = ids
+        summary['collection_sha256'] = _hash('\n'.join(ids).encode())
+        for index, name in enumerate(files):
+            folder = out / f'shard-{index:03d}'
+            command = [sys.executable, '-m', 'pytest', name, '-q', '-ra', '-p', 'no:cacheprovider',
+                       f'--basetemp={folder / "pytest-basetemp"}', f'--junitxml={folder / "junit.xml"}']
+            receipt = _formal_process(command, folder, timeout, identity, conditions, pandoc, 'shard')
+            summary['shards'].append(folder.name)
+            if receipt.get('error') or receipt.get('exit_code') != 0 or 'junit_sha256' not in receipt:
+                raise GateError(f'failed shard: {name}; raw receipt retained')
+            parsed = _xml((folder / 'junit.xml').read_bytes())
+            if list(parsed) != [n for n in ids if n.split('::')[0] == name]:
+                raise GateError(f'shard IDs differ from frozen collection: {name}')
+        # Only an independent reparse of every raw artifact can mark completed.
+        summary['verdict'] = 'SMOKE_ONLY' if selected else 'FULL_ALL_PASSED'
+    except (GateError, OSError, ValueError, ET.ParseError) as exc:
+        summary['error'] = str(exc)
+    finally:
+        (out / 'summary.json').write_text(json.dumps(summary, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+    if summary.get('error'):
+        return 2
+    try:
+        result = verify(out)
+        return 0 if result['verdict'] == summary['verdict'] else 2
+    except (GateError, OSError, ValueError, ET.ParseError):
+        return 2
+
+
 def main(argv: list[str] | None = None) -> int:
+    if argv is None:
+        argv = sys.argv[1:]
+    if argv and argv[0] == 'full':
+        formal = argparse.ArgumentParser(description='R8 formal L3; new immutable external evidence')
+        formal.add_argument('--out', type=Path, required=True)
+        formal.add_argument('--pandoc', type=Path, required=True)
+        formal.add_argument('--timeout', type=int, default=7200)
+        formal.add_argument('--smoke-select', action='append', default=[])
+        args = formal.parse_args(argv[1:])
+        try:
+            return _formal_run(args.out, args.pandoc, args.timeout, args.smoke_select)
+        except (GateError, OSError, ValueError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
+            print(f'BLOCKED: {exc}', file=sys.stderr)
+            return 2
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--select", action="append", required=True,
                         help="repeat for 2-3 explicit small solar-PV test files")
