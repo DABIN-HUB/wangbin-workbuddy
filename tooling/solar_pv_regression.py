@@ -99,8 +99,10 @@ def _junit(path: Path) -> dict:
     if not suites or tree.tag not in {"testsuites", "testsuite"} or any(s.tag != "testsuite" for s in suites):
         raise GateError("invalid JUnit suite structure")
     cases: dict[str, dict] = {}
+    solar_nodes: set[str] = set()
     declared_tests = 0
     unrepresented_tests = 0
+    element_counts = {"failure": 0, "error": 0, "skipped": 0}
     for suite in suites:
         children = list(suite)
         explicit_cases = sum(c.tag == "testcase" for c in children)
@@ -116,14 +118,41 @@ def _junit(path: Path) -> dict:
             name = case.get("classname") + "::" + case.get("name")
             if name in cases or len(cases) >= MAX_CASES:
                 raise GateError("duplicate or excessive JUnit case IDs")
+            if name.startswith("tests.solar-pv."):
+                normalized = _node_id(name)
+                if normalized in solar_nodes:
+                    raise GateError(f"duplicate normalized JUnit node: {normalized}")
+                solar_nodes.add(normalized)
+            if any(child.tag not in {"skipped", "failure", "error", "properties",
+                                         "system-out", "system-err"} for child in case):
+                raise GateError("unexpected JUnit testcase child")
+            if any(child.tag == "properties" and
+                   any(property_.tag != "property" or len(property_)
+                       for property_ in child)
+                   for child in case):
+                raise GateError("unexpected JUnit testcase property")
+            if any(child.tag != "properties" and len(child) for child in case):
+                raise GateError("unexpected nested JUnit testcase element")
             outcomes = [child for child in case if child.tag in {"skipped", "failure", "error"}]
-            if len(outcomes) > 1:
-                raise GateError("ambiguous JUnit outcome")
+            # unittest subtests can produce several failure elements on the
+            # same testcase. Keep every one; only mixed or repeated non-failure
+            # statuses are ambiguous at testcase granularity.
+            if len(outcomes) > 1 and {child.tag for child in outcomes} != {"failure"}:
+                raise GateError("incompatible JUnit outcomes")
             outcome = outcomes[0].tag if outcomes else "passed"
             cases[name] = {"outcome": outcome,
                            "reason": (outcomes[0].get("message") or "") if outcomes else ""}
+            for child in outcomes:
+                element_counts[child.tag] += 1
+            if outcome in {"failure", "error"}:
+                cases[name]["outcomes"] = [{"tag": child.tag,
+                                            "message": child.get("message") or "",
+                                            "type": child.get("type") or "",
+                                            "text": child.text or ""}
+                                           for child in outcomes]
         for key, tag in (("failures", "failure"), ("errors", "error"), ("skipped", "skipped")):
-            count = sum(any(child.tag == tag for child in case) for case in children if case.tag == "testcase")
+            count = sum(child.tag == tag for case in children if case.tag == "testcase"
+                        for child in case)
             if int(suite.get(key, "-1")) != count:
                 raise GateError(f"JUnit {key} count mismatch")
     if tree.tag == "testsuites":
@@ -135,6 +164,7 @@ def _junit(path: Path) -> dict:
             "declared_tests": declared_tests, "unrepresented_tests": unrepresented_tests,
             "skips": {name: case["reason"] for name, case in cases.items()
                       if case["outcome"] == "skipped"},
+            "element_counts": element_counts,
             "counts": {key: sum(v["outcome"] == key for v in cases.values())
                        for key in ("passed", "skipped", "failure", "error")}}
 
@@ -243,6 +273,7 @@ def _run(args: argparse.Namespace) -> int:
             summary = _junit(out / "junit.xml")
             receipt["junit"] = {"path": "junit.xml", "sha256": summary["sha256"],
                                 "counts": summary["counts"], "test_count": len(summary["cases"]),
+                                "element_counts": summary["element_counts"],
                                 "declared_tests": summary["declared_tests"],
                                 "unrepresented_tests": summary["unrepresented_tests"],
                                 "skips": summary["skips"]}
@@ -316,6 +347,8 @@ def _verify(args: argparse.Namespace) -> int:
         if (result["sha256"] != report["sha256"] or
                 result["counts"] != report.get("counts") or
                 result["skips"] != report.get("skips") or
+                ("element_counts" in report and
+                 result["element_counts"] != report["element_counts"]) or
                 len(result["cases"]) != report.get("test_count") or
                 result["declared_tests"] != report.get("declared_tests") or
                 result["unrepresented_tests"] != report.get("unrepresented_tests")):
