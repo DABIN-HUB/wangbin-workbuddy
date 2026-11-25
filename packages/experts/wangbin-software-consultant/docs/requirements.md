@@ -1,5 +1,13 @@
 # 软件需求与报价专家｜FRD-1.0 需求工程映射
 
+## 当前原始需求冻结入口（2026-11-25）
+
+- [用户指定的完整原始需求冻结基线 v1.0](../../../../docs/wangbin-software-consultant-original-requirements-v1.0.md)：保留原附件全部 191 行、来源 SHA-256、73 条 ORI-ID 映射及两轮共十三项已确认细化需求；§6 记录第二批授权和实施边界。
+- [当前分支实现盘点（2026-11-25）](../../../../docs/wangbin-software-consultant-implementation-audit-2026-11-25.md)：区分已提交咨询规则、第一批和第二批工作树增量、实际计算代码及验收证据；§8 为第二批独立静态复审后的当前状态，§§1–7 保留历史盘点。原始三档与后续五档增强分别管理；交付以文字/Markdown 为边界，平台测试不纳入此次任务。
+- 上述是当前用户确认范围的入口。下文保留原 FRD 工程映射、历史工作树/授权背景及未关闭的追踪账本，不把旧实施阶段描述视为当前实现状态；不删除历史要求或批量关闭 PENDING。新文档存放于仓库根 `docs/`，不增加产品打包白名单成员。
+
+## 历史 FRD 工程映射（保留原记录）
+
 > 产品类型 Expert；产品 ID `wangbin-software-consultant`；外显名「软件需求与报价专家」；唯一工作树 `F:/ideaWorkSpace/wangbin-workbuddy-software-consultant`；分支 `expert/software-consultant`；T01 基线 `67d0fe8cfa5d71b53cc46d79bbaec620638dd1e0`。本文是冻结要求的实施映射，**不改写 FRD**。逐 ID 机器矩阵见 [`traceability.csv`](traceability.csv)，输入输出见 [`input-output-contract.md`](input-output-contract.md)，86 条案例见 [`acceptance-cases.md`](acceptance-cases.md)。所有实施/独立模型 QA 当前 `PENDING`，平台能力未验证。
 
 ## 权威来源与读入顺序
