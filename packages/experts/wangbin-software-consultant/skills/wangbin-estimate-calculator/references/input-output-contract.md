@@ -1,4 +1,48 @@
-# wangbin-estimate-calculator 0.1.0｜输入、输出与失败合同（技术候选）
+# wangbin-estimate-calculator｜版本化输入、输出与失败合同
+
+## 现行增强合同 2.0（第四批 B4-B01～06，所有者 Q16～Q31）
+
+同一正式 Expert 的包内 Python 标准库 Decimal CLI，不是另一产品。此节定义本批新增路径；下列历史 0.1.0 合同原文仍用于无 `schema_version` 的旧输入版本，不把旧版限制套到新路径。用户输入自然语言，Agent 整理内部 JSON；有授权执行及有效回执才称实际覆盖值已核算。计算器不证明业务范围、来源真实性、估时合理、接口获权、排期可行或平台安装。禁止读取其他数据、外部网络、自动采购、汇率/税率推断、交易或持久化项目后台。
+
+### 2.0-A 输入结构（严格封闭 JSON）
+
+`schema_version` 必须是字符串 `"2.0"`；存在该键而值不支持时拒绝，不回退。缺失该键沿用旧 `estimate` 四档 `tier`/五档 `membership` 分流，旧有效输出形状与公式不变。所有对象仅接受以下定义字段；必需字段缺失属于非法输入，业务数据未知用明确状态表达。数字均为非负有限 Decimal 字符串（非 JSON number/bool），精确运算，超精度预算或舍入异常拒绝；low≤base≤high（仅比较已知相邻/端点）。不以数值文本冒充来源。
+
+**来源文本的 2.0 封闭格式**（仅本版本）：有据输入的 `source` 统一填写 `TURN:<正整数>`（例如 `TURN:3`，明确对话话轮）、`FILE:<文件定位名>:<正整数>`（例如 `FILE:requirements.md:12`，明确文件行），或 `SYNTHETIC: <具体依据>`、`ASSUMED: <具体依据>`、`ASSUMED_CONDITIONAL: <具体依据>`（明确合成、假设或条件依据；冒号后一个空格和非空单行实际依据）。话轮及行号为无前导零的正整数；文件定位名非空，无首尾空白、冒号或控制字符，不能仅为 `.` 或 `..`；脚本不读取所指文件。已知/明确不适用值、包及费用来源、至少一类覆盖已完整或已明确不适用的 coverage 使用上述格式；单纯数字、无定位的自由文本、空依据、纯状态占位和明确否定许可的占位陈述均不构成有据来源。UNKNOWN 值（及两类覆盖均 PARTIAL）的 `source` 可用非空说明表达缺口。混合补价的 `permission_source` 必须单独采用 `AUTHORIZED: TURN:<正整数>` 或 `AUTHORIZED: FILE:<文件定位名>:<正整数>`，只在确有当前角色补价许可时填写；普通来源、假设、未知或否定许可不满足。格式校验不认证材料、自然语言含义或实际用户授权；调用端仍须依据真实来源和最新许可构造输入，不能把有格式的字符串当作授权证明，也不能把假设提升为确认事实。
+
+- 顶层必需：`schema_version, scope_version, quote_version, request, role_catalog, work_packages, coverage, buffers, pricing, fees`；可选 `previous_scope_version, scope_changed`（沿用旧版变更配对约束）、`reported`。版本均非空字符串，所有当前工作包/费用的 `scope_version` 与顶层一致；改单价可保留范围版但须新报价版/新输入快照。脚本不自行读取或改写历史。
+- `request` 必需 `mode,money`，`money` 为 `none/labor/external/all`，分别表示不报任何金额、只人工、只外费、两者均允许。`mode=full` 固定五档；`mode=tiers` 另须 `tiers` 非空且无重复的正式档位 ID；`mode=scope` 另须 `scope_id`（非空且不是五档名）、`package_ids`（明确的无重复 ID 列表），可选 `role_ids` 非空唯一角色 ID 过滤列表。各模式不接受其他模式字段。局部的 `package_ids` 允许明确空集，未知范围通过 coverage PARTIAL 表达，不造成员；引用不存在的实际 ID 属结构错误。目标键为所请求档位或 scope_id。
+- `role_catalog` 为 `{id,name}` 列表，稳定唯一角色 ID、非空名称，空目录仅在无角色工作时合法；同名角色须明确统一身份（按 trim/casefold 拒绝重复名称或冲突 ID）；不固定角色列数或自动猜同义词。Agent 规范常用 PM/BA/UI/FE/BE/DB/QA/OPS/集成/AI/OT 等角色和项目专项。实际角色可扩展，不能因同一人跨角色就把不同分派任务抹掉。
+- `work_packages` 为 `{id,function,source,scope_version,assignments_complete,assignments}` 列表，`assignments_complete` 布尔，表示本次所请求适用分派是否已穷尽（scope 角色过滤时明确所求边界）；每条 `assignments` 为 `{id,role,effort}`，`id` 是全快照唯一分派任务，`role` 引用目录；一个包/角色可有多个任务。`effort` 是下述情景值对象。空分派只有显式完整不适用任务或未完整覆盖的真实包才有意义。重复完全相同包或同包同 ID 任务只计一次，冲突内容或跨包复用同一分派 ID 拒绝。每包 `source` 为可定位用户/文件或明示合成/示意来源。档位模式每包还必需 `membership`，须恰为 M/S/F/I 四种完整成员集之一（见下表），不能只因为查询单档删掉真实成员标签；scope 模式不需要也不虚构 membership，允许可据的原成员保留但若提供须为合法全集。全档计算如声称有基础开发且范围完整须有真实 M；范围未全则可空/部分，不以缺包伪造完整。局部仅处理指定包/角色；其他已声明包、来源不得被算入请求范围。
+- `coverage` 是目标键→`{work,external,source}`，键集与所求目标完全一致。`work` 为 `COMPLETE/PARTIAL/NOT_APPLICABLE`，表示输入者对该目标的工作包覆盖声明；N/A 须有来源且无实际适用分派；`external` 同三状态，表示目标的全部所需外部费用覆盖（N/A 须无需独立计入的外费且有依据）。COMPLETE 是声明而非引擎认证客户范围；任一输入或上游子项未知仍阻止完整计算。不能把缺少费用行当作 N/A；如果 COMPLETE 且没有独立有据费用行，必须明确 N/A（已含人工/明确排除/历史项不作为独立外费）。对未请求外费可声明 PARTIAL，不因此阻断人工/人天。
+
+对每个所求目标（包含 scope 的角色过滤），若无任何适用任务（空包集/空分派/全部任务明确 N/A/仅有未请求角色），不能声明 `coverage.work=COMPLETE`；已确认所求范围没有工作且适用分派已完整时使用 `NOT_APPLICABLE`，尚不清楚或分派未闭合时用 `PARTIAL`，否则拒绝矛盾输入。实际适用的有据 `"0"` 或 UNKNOWN 任务仍为适用任务，不把它们视为无工作；有其他适用任务的目标内，已确认单个包在所求角色范围无分派仍可独立为 N/A，不影响目标的实际工作核算。
+
+**情景值对象**：`{low,high,base?}`，low/high 必需，base 缺省表示无独立基准。每个值为 `{status,source,value?}`，status 为 `CONFIRMED/ASSUMED/ASSUMED_CONDITIONAL/SYNTHETIC/UNKNOWN/NOT_APPLICABLE`。已知四类须 value 为合法 Decimal 字符串、有上述可定位或明确依据来源，不能把明确未知、未批准来源作为已知；UNKNOWN 或 NOT_APPLICABLE 不给数值（可明确 null），有说明来源。NOT_APPLICABLE 用于确知整项不适用，各情景一致，非零数值不得与之混用；明确适用且耗时/价格为零用有据的 `"0"`。缺 base 不阻断 low/high。尚未确定任何数值时以 UNKNOWN 表示，不能擅填中点或零。缓冲率限 [0,1]。固定价格/明确固定外费可按其真实同值依据适用所有情景，独立基准人天和缓冲依据仍各自必需。
+
+- `buffers` 为 `{default,overrides?}`，default 是情景值对象，overrides 为所求档位名→完整情景值对象，仅档位模式可用。档未提供 override 则使用 default；档已显式覆盖时逐情景采用该档状态（缺 base 为未知，不悄悄回填）；全档同一情景各角色共享该缓冲。无适用工作时不硬造缓冲影响；真实未知不能默认为零。不自动为 B/Full 增加率。
+- `pricing` 必需 `mode,tax_basis`；`tax_basis=INCLUDED/EXCLUDED/UNKNOWN` 仅描述人工价格税口径。mode=`refused/reference/fixed/role/mixed`。`refused` 不附价格；`reference` 可选独立 `base` 值对象，固定沿用低 1000、高 1500，缺 base 不取中点；`fixed` 必需 `rate` 为单个值对象（固定价独立来源）；`role` 必需 `rates` 对象，键为真实角色 ID，值为下述 rate 对象；`mixed` 必需 `rates, fallback, fallback_roles, permission_source`，fallback 为明确授权的统一固定价或参考价，fallback_roles 为非空、唯一且不与 rates 重叠的角色 ID，permission_source 为明确补价依据。其余缺价角色保持未知。角色 `rate` 为 `{kind:"fixed",value}` 单个值对象，或 `{kind:"range",values}` 情景值对象；fallback 另允许 `{kind:"reference",base?}`。全请求同一价格快照，按角色各自单价和适用档风险计算；如不同档有不同实际人工计价合同，分独立请求/报价版。不补造批准/默认价格。`reference` 与显式 fallback reference 仅在真实 R5 允许时采用；拒参考价但有实际固定/角色价按有效价计。`money=none` 不计算/返回任何货币值；`external` 禁人工；`labor` 禁外费及项目总价；`all` 且 pricing refused 只可计算有据外费，完整人工/总价不成立。未经许可的货币数据即使在输入也不得通过回执泄露（不回显 pricing/fees 原文）。
+- `fees` 为 `{id,account_id,description,source,scope_version,targets,work_package_ids,interface_only,category,period,currency,tax_basis,cost_state,disposition,calculation,period_count?}` 列表。`targets` 是非空唯一所求目标 ID 集合（各请求只带实际所求目标），`work_package_ids` 是唯一真实包 ID 关联列表，项目级费用可为空；每个适用目标须包含全部声明关联包；实际 I 专属费用以 `interface_only=true` 或关联 I 包认定，在档位模式只能进 B 两档。`id` 完全相同重复仅一次，冲突拒绝；同一个 `account_id` 的不同金额/套餐可用于不相交目标，但一个目标内不允许重复独立计费，不因档位高低累计外费。`category=third_party/deployment/service/maintenance/tax`，`period=once/month/year`（deployment 一次性），`currency` 为原始大写三字母币种代码（人工 CNY 统一；仅语法验证，不换汇），`tax_basis=INCLUDED/EXCLUDED/UNKNOWN/SEPARATE`（tax 行必须 SEPARATE，其他不许 SEPARATE），`cost_state=PLANNED/INCURRED/COMMITTED/UNKNOWN`，`disposition=quote/included_in_labor/excluded`，显式限定本版计价范围，不按历史状态推断付款或节省；已含人工的费用可追踪但不重复加价，excluded 行保留依据不入总计，included_in_labor 需真实包关联。若用户确认整个计费项目不适用，使用全情景 N/A；来源保留，不填历史欠款或抵扣。
+- `calculation` 为 `{mode:"amount",amount}` 或 `{mode:"quantity_price",quantity,unit_price,unit}`，其中 amount/quantity/unit_price 都是情景值对象，unit 为有据计费单位；按给定对应情景乘积，不自动推导数量单价或基准。单个计费项目有多个方案金额可分相同 account_id 的不相交目标行。`period_count` 可选情景值对象，仅 month/year，表示按该单位已明确计费的期数（允许有依据的小数期，不从日期/天数私自折算）；每期金额与指定期限金额分别列，未知期数不阻断每期，不把期限或维护加入一次性价。明确不适用须与数量/单价计算一致，不用一个未知操作数及另一个零掩盖所缺依据；若需要手算完整已知外费固定值，用真实同值低高、基准有固定依据时可同值。
+- 可选 `reported` 为所求目标→可选的 `B,R,E,labor,roles` 声称值，前四为情景键→严格 Decimal 字符串，`roles` 角色 ID→同样的 B 情景声称值；只对已完整可核的相同范围/情景比较，缺口不得声称完整，任何不符拒绝。无 reported 则按内部唯一行、角色和校核；用户表示的业务完整性不由它认证。
+
+### 2.0-B 核算语义与回执
+
+五档成员固定 `M=(MVP,StandardA,StandardB,FullA,FullB)`、`S=(StandardA,StandardB,FullA,FullB)`、`I=(StandardB,FullB)`、`F=(FullA,FullB)`；成员列表次序不决定包含关系。按唯一 WBS/任务 ID 自下而上核所有适用角色和各请求目标；相同值不代表可合并摘要。独立分派任务值为 B 的唯一底账，角色/包视图只汇总一次。scope 的角色过滤是实际所求范围，不能把部分称项目完整。每情景分别算，合法未知不会抹去有据的其他角色/情景/方案。一个合计若部分已知返回明确小计和缺口；若无任何可核值则 BLOCKED，而非 0；只有完整覆盖声明及实际成员/数值闭合才能返回完整数值。不适用与零区分。
+
+`B=Σ适用分派基础人天`、`R=B×该档该情景 r`、`E=B+R`；逐角色按相同 r 得 E_role，再 `C=Σ(E_role×相应有依据人民币单价)`，不能采用无来源平均价。B 部分已知且 r/价格可用时只算这些相同实际分派对应的 R/E/C 有据小计；缺 r 只留 B，缺价只留有据价的角色费用。每情景范围有效性和数据状态独立；已知零、N/A 按实际适用性解释。参考价低/高是原 R5 1000/1500，输出参考价对实际使用的贡献声明逐字保留（见历史合同），不能借模式名称冒用未实际许可。
+
+外费逐行计算后按实际目标、币种、税基、计费周期及类别分组。独立部署只算未含人工部分；分别列一次性/每月/每年/指定期数（各期间计算口径独立），不把持续费或已含/排除行叠加进一次性报价。金额和数量×单价、期数均严格按低/基准/高配对。若某行未知或外费覆盖不完整，相关汇总仅有据小计，不能把缺少其他费用当零。已明确 N/A 的外费覆盖可作为无独立外费依据。显式税额独立分组，禁止推税率或自动把不同税基合并；有已明确一致未税或含税金额可输出对应口径的汇总，独立税额/混合或未知税基未证成统一总价时只列分组及条件。跨币种分别列实际金额，绝不求一个人民币总价。只有 money=all、人工费及所需一次性外费按所求范围完整、币种和已知税基一致且无重复费用时才给统一一次性总价；scope 只称所求范围金额，不称全项目。若仅人工价被拒但请求外费，实际已核外费继续独立交付；若只要人天则不输出/计算任何金额。维护、支付、实际已付款及 TCO 不在自动综合财务核算范围。
+
+回执使用 `schema_version,scope_version,quote_version,previous_scope_version,scope_changed,request,status,results,reference_notice`；CLI 再附 `input_sha256,script_sha256`，不覆盖旧结果。`results` 精确按所求目标键，每目标保留有效包/任务/角色 ID、声明 coverage、实际使用的各情景缓冲、逐包/任务/角色 B 与适用 R/E/获准 C、汇总 `B,R,E,labor`（情景值指标，未获许可的 labor 为 NOT_REQUESTED 或 BLOCKED 并无金额）、`fees`（获准的费行、状态、归属、来源、计算及分组小计）、`one_time_total`（各情景金额指标及可核统一币种/税基，未求/未闭合为 null 指标；周期费不进入）。角色列和、包行和、唯一分派总和的完整值/有据小计须一致；不将这些视图再相加。每一数值指标采用 `{status,value,known_subtotal,missing}`，status=`COMPLETE/PARTIAL/BLOCKED/NOT_APPLICABLE/NOT_REQUESTED`，value 仅完整或明确 N/A 时有闭合语义，部分和 blocked 的完整值 null；known_subtotal 仅有实际贡献依据才是 Decimal 字符串，不能以缺失值补零。应保留来源/示意状态（实际贡献的原值及 source，或可追溯到回执中列明的对应原输入项），不可把示意数字当确认事实。金额禁止时不回显任意未获准价格/外费值。顶层/目标 status 表示所请求且有依据的范围，缺必要数据为 PARTIAL/BLOCKED，而可选未提供的基准和未请求费用不应把完整低高工作量错标失败；每指标状态仍独立。若所有有效输入不足以算任何所求值，结构合法时照常产生 BLOCKED 诊断回执；非法输入/格式/冲突非零且不新建成功回执。0 退出仅表示结构有效并成功写回，不意味所有指标完整或业务/平台认证。
+
+**状态汇总的独立基准规则**：low/high 始终分别核算并参与状态汇总；缺省的可选 base 本身不使完整低高退化。适用输入显式给出 base（含 UNKNOWN）即纳入相关所求指标状态：实际选中分派的 effort.base 影响 B/R/E，实际采用的 buffer.base 影响 R/E，获准人工费的相关 E 基准或所选角色区间价/参考价的 base 影响 labor；固定价可用于实际有据基准但单个固定值并不主动请求 base。获准且独立计价的适用外费，金额或数量/单价显式 base 影响相应金额组；已提供 `period_count` 的周期费，其金额或期数显式 base 参与该行期限金额状态；未给可选期数不使每期金额失败。只在 money=all 时，所求人工费基准或适用独立一次性外费金额基准影响统一一次性总价状态，周期费基准不参与该总价。未选角色/包、全项不适用、未获准费用及已含/排除费用不触发基准要求。显式基准需要的其他同范围基准依据缺失则该指标保留缺口，不自动补值；有据基准即使低高都未知也参与 fees/目标/顶层状态（有实际小计为 PARTIAL，不是 BLOCKED）；完全没有可核值才 BLOCKED，无实际适用项且已明确不适用为 NOT_APPLICABLE。各已核情景的数值及其独立状态保持不变。
+
+`results` 另给可比较的有向父子差量（仅双目标实际请求时，StandardA−MVP、StandardB−StandardA、FullA−StandardA、FullB−FullA、FullB−StandardB）；独立成员纯 B 差量根据新增唯一分派 ID 核，父/子覆盖未闭合时不能称完整，按实际有据差量列未知。若不同风险率，分解 E 差量为新增工作在子档率下的 E，加共同基础 B×(子率−父率)；仅双档完整且可复核时给完整数字，明确风险影响，不强说非负；外费差异依实际同口径明细/金额，不从成员假设。scope 或单档未包含父档时不构造差量。
+
+CLI 继续使用 `python scripts/estimator.py <明确的输入.json> -o <新的回执.json>`；仅标准库，严格重复 JSON 字段检查、精度上限、路径/独占创建和失败处理保留。新增错误文本只用受控字段路径及原因，不回显实际客户自由文本或金额。程序不读取未指定文件；同一输入/脚本哈希识别回执，不把旧回执当新输入结果。
+
+## 历史 0.1.0 合同（无显式 schema_version 输入；保留原文）
 
 仅服务于 `wangbin-software-consultant` 的 Decimal 辅助实验；不是正式新产品或原 Expert 安装包。用户只需自然语言；**模型先整理经确认或显式假设的受限 JSON，再真实调用脚本**，JSON 是内部工具输入，不是普通用户必填表。本文随候选 Skill ZIP `references/input-output-contract.md` 打包，供 `SKILL.md` 以 `@references/input-output-contract.md` 引用；任何运行环境工具权限须实际验证。依据 FRD-1.0 §6.6 E-07（SHA-256 `bf1821da43f23e372d8782775617054d39163ac630be3f40c11f4a429cbb682d`）、产品 `docs/input-output-contract.md`、`docs/p01-r5-rate-policy-addendum.md` §1/§3 S30、用户 CALC-SKILL-01 授权及原 POC 四文件。本文是**待实现合同**，不是当前 POC 已支持的 schema。
 
