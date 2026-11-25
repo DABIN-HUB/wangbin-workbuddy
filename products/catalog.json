@@ -53,17 +53,17 @@
       ]
     },
     {
-      "active_version": "1.1.2",
+      "active_version": "1.2.0",
       "category": "12-IndustryConsultant",
-      "development": "Existing local candidate",
+      "development": "1.2.0 source; local candidate verification pending",
       "id": "wangbin-software-consultant",
       "maintenance": "UNKNOWN",
       "name": "Software Consultant",
       "published_at": "UNKNOWN",
-      "review_evidence": "User report only; no platform receipt",
-      "review_status": "USER_REPORTED_SUBMITTED",
+      "review_evidence": "1.2.0 has no platform receipt; prior user-reported submission is historical and version attribution remains unverified",
+      "review_status": "NOT_TESTED",
       "scenario": "Requirements and estimation",
-      "status": "SUBMITTED",
+      "status": "DEVELOPING",
       "target_users": "Small businesses",
       "test_path": "packages/experts/wangbin-software-consultant/tests/test_expert_candidate.py",
       "type": "Expert",
@@ -104,6 +104,15 @@
           "sha256": "UNKNOWN",
           "source": "packages/experts/wangbin-software-consultant",
           "version": "1.1.2"
+        },
+        {
+          "archive_evidence": "UNKNOWN",
+          "candidate": "UNKNOWN",
+          "date": "2026-11-25",
+          "published_at": "UNKNOWN",
+          "sha256": "UNKNOWN",
+          "source": "packages/experts/wangbin-software-consultant",
+          "version": "1.2.0"
         }
       ]
     },

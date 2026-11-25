@@ -1,6 +1,10 @@
 # 正式包内 Decimal 集成说明
 
-## 第四批现行源码与计算合同
+## 第五批分发身份与核验边界
+
+Q32～Q34 见根 [冻结基线 §9](../../../../docs/wangbin-software-consultant-original-requirements-v1.0.md)：Expert 1.2.0、同 ID 包内 Skill 0.2.0、计算合同仍为 2.0。正式脚本、Agent、当前技术合同及旧兼容规则均保留第四批已核对实现。第五批从封板 Git blob 字节构建九成员本地候选并允许实际解压后有限合成 CLI；独立归档验证及真实回执身份在根实现盘点 §11 登记。工作树 CRLF 脚本 SHA 与 Git/归档 LF SHA 分别保留，不把不同字节身份的回执混用。旧独立 Skill 不替换；没有模型、宿主权限或平台执行证据则仍 NOT_TESTED。
+
+## 第四批源码与计算合同（历史 1.1.2）
 
 正式包保留四文件 Skill 布局、原 Expert 1.1.2 manifest/catalog 及旧独立实验；Q16～Q31 见根 [冻结基线 §8](../../../../docs/wangbin-software-consultant-original-requirements-v1.0.md)，新版显式 `schema_version="2.0"` 合同在包内 [references/input-output-contract.md](../skills/wangbin-estimate-calculator/references/input-output-contract.md)。无版本字段旧两条路径保留实际兼容输出。新版核全部适用角色/唯一任务、三个情景、实际所求档位或局部、各档实际缓冲、许可人工费及有据外费。按指标完整/部分/待核/不适用/未请求状态及回执实际覆盖交付；未知不当零，非法冲突拒绝，权限拒绝不能绕路。费用按真实独立成本、档位、周期/币种/税基，非财务结算、税率或汇率引擎；不自动将完整工作量变成完整总价。仅 Q28 有限本地合成调用可验证新版的有限算术/异常与旧兼容，不构成模型/平台通过；证据见根实现盘点 §10。版本分发和工程交付 A 尚待单独确认。
 

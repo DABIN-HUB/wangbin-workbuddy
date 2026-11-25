@@ -1,6 +1,6 @@
 # 软件需求与报价专家｜当前分支功能实现盘点（2026-11-25）
 
-> **第四批 B 核心计算增强（限定源码交付）：** 前三批已完成限定源码/文档交付，第三批提交与精确远端基线 `b72f6876165e550582cd1c613a8571a28fe2c4c9`。Q16=C，Q17～Q31 已确认并授权 B4-B01～B4-B06；六项源码增量、独立静态复审及 Q28 有限合成 CLI 核验已通过，详见 §10；§§1–9 为历史记录，不是未开发清单。原始咨询范围的已识别业务缺口已补齐。自动化回归、模型/平台及下一阶段 A 打包仍未验收，不冒称最终 FRD 或发布门禁通过。
+> **第五批 A 工程交付收口（当前实施）：** 前四批限定交付已完成，第四批提交与实际远端基线 `212dcd9c402abcfbd4beaa98f7d4fc75621afdbb`。原始咨询范围的已识别缺口已补齐；第四批计算合同 2.0 的独立静态复审及 Q28 有限合成 CLI 证据见 §10。Q32～Q34 已确认且所有者明确授权 B4-A01～B4-A05：Expert 1.2.0、包内 Skill 0.2.0、新本地候选及解压包有限核验，实际工程证据见 §11。未完成的正式回归、模型/平台、权利和发布门禁仍不冒称 PASS。§§1–10 为历史记录，不是未开发清单。
 
 **历史盘点结论（第二批前）：** 产品主体咨询能力已经写入正式源码。七领域、十二阶段入口和十四类文字成果都有规则；第一批统一评审稿与复用差量已在工作树补齐。原始需求尚不能称全部完成，明确的剩余业务缺口是菜单导航、个人级排期（含交期不可达处理）。未发现必须在此两项开发前再次询问用户的新增实质选择。当前判断须读 §8、§9，而非沿用本段旧状态。
 
@@ -305,3 +305,27 @@ StandardB−StandardA 实际低情景 B 增量 1、子档新增 E=1.2、共同�
 ### 10.7 限定交付结论与保留门禁
 
 B4-B01～06 源码、合同、独立静态复审及 Q28 有限合成验证已完成。`traceability.csv` 仅补充 G-05/E-06/E-07/E-10/O-11 五条 evidence 的源码和上述有限证据定位；原 155 个最终状态均 PENDING，86 个原业务案例、自动化回归、真实模型及 WorkBuddy 平台验证未执行，发布门禁 BLOCKED。未分发新版本、未构建 ZIP，manifest/catalog 仍为 1.1.2；本批不自动开展 Q16 后续工程 A。最终选择性 Git 提交、普通 push 及实际远端 SHA 读回按根规范 §8 执行，提交内不预写自身 SHA 或尚未发生的远端成功回执。
+
+## 11. 第五批 A 工程交付收口
+
+### 11.1 授权、基线及现行边界
+
+所有者确认 Q32～Q34 并明确授权第五批，见冻结基线 §9。实施前实际 `expert/software-consultant` 本地及 `origin` 精确远端 ref 均为 `212dcd9c402abcfbd4beaa98f7d4fc75621afdbb`，暂存区、跟踪工作树无差异，原 `uv.lock` SHA 与 §10.1 一致。第四批正式计算器工作树 CRLF SHA `88688f49eaf2dde32df4b13e922e6f4563d475bce3d5e217957184f295a53ec9`、Git LF SHA `5b74142d47f1661855cafecb36f79f2b8b6ab7c90ab621ab010a92e764645e3c`，Agent/2.0 技术合同用 §10.3 身份保护；不改变计算语义、R5、旧实验、验收案例、测试、许可证或其他产品。新版本三个目标文件（ZIP、sidecar、manifest）实施前不存在、dist 未跟踪且实际路径已忽略。
+
+| 旧证据（本地 dist，保留不变） | 字节 | 实测 SHA-256 |
+|---|---:|---|
+| wangbin-software-consultant-1.0.0-expert-candidate.zip | 13567 | `577f3089d2f4707178f44ba1e5c395a99853bb9558f3e8c0e752a0e6ba2e30de` |
+| wangbin-software-consultant-1.0.0-expert-candidate.zip.sha256 | 121 | `29b911e142d8c25733e51647e33a3c38a572ed14efcfa05016a175e3ab4d48ee` |
+| wangbin-software-consultant-1.0.0-expert-manifest.json | 1374 | `4734e385041b2a4cb16b0cb77a91dbad8fd0ed4d6bdd24e751254ff12b5f0b6f` |
+
+旧 ZIP 实测、catalog、sidecar 与旧 manifest 记录一致。旧 catalog 顶层为 `active_version=1.1.2`、`status=SUBMITTED`、`review_status=USER_REPORTED_SUBMITTED`、`review_evidence="User report only; no platform receipt"`、`development="Existing local candidate"`。仅保留为历史用户报告，未核实所指实际版本/平台回执，既不推定是 1.0.0，也不附会到 1.2.0；四个旧版本登记对象原样保留。新 1.2.0 只能先登记开发/NOT_TESTED、候选未知，核验后填真实归档；不得继承提交或发布资格。
+
+本批限 B4-A01 分发身份同步、A02 本产品打包器、A03 登记状态、A04 九成员本地包/双入口复现/实际解压合成 CLI、A05 独立审查与追踪/Git 交付。已知 `tests/test_p01_contract.py:21` 固定 1.1.2 严格版本断言与新版不适配（静态发现，未运行），按 Q34 保留原件；不放松正式校验，不编写、修改或运行测试。`tooling/product_factory.py:652–656` 的 release-check 隐式调用 test_product，禁止本阶段执行。仅局部归档/计算验证，不进行真实模型、上传、安装、平台操作或发布。现行分发元数据和技术合同分别绑定，预写的任务内容不是实际核验回执。
+
+### 11.2 分发源码、独立静态审查和封板前核验
+
+Q32 三身份已同步，manifest 仅更新版本，包内同 ID Skill 更新 0.2.0 和分发说明，Agent/计算器/2.0 技术合同与第四批对应字节不变。专用打包器 `deleg_036df09c` 实现 220 行：实际 Git commit 与九项普通 blob 验证、规范 blob 字节打包、独占创建/失败回滚、通用 verify 所需 manifest 字段，平台状态 NOT_TESTED。脚本 CRLF SHA `f42266ba31deb90a095b8b966549a3ead7ae89f5ce0a3c9627e5bf51368c81b1`、LF SHA `614226c2e91e82be9d0182a28da2cbe6868142c6310004489074844eb6e40e94`；内存编译及 diff check 通过。
+
+独立 `deleg_fdccd32f` 两任务：A02 专用打包器规范及质量 `STATIC_REVIEW_PASS_WITH_CONDITIONS`（实际运行尚未验证），A01/A03、文档及保护项限定静态 PASS。实施条件是同一 LF Git blob 的两个独立空 dist、manifest 形状允许不同、最终专用 manifest 的实际 commit/blob 验证不得用通用 verify 替代；通用 verify 还须实际登记相符的候选路径和哈希。发现另一历史测试 `tests/test_bundled_calculator.py:31–43` 使用无 Git 来源的 `build(tmp_path)` 且直接比较工作树物理字节，与新精确源码来源及规范字节合同不适配；与 §11.1 的固定版本测试一起原样保留、不执行，留待另行授权的回归维护，不是本批要求执行的测试。独立审查未发现阻断限定封板的问题，未运行构建/CLI 或测试。协调者复核 ten-file 工作树：审查任务 2 的 catalog 摘要 SHA 混用了两种 byte basis 的片段，实测 raw `5f070cf756e8914b11477249c946e9f1744dda4f5f7a08ad76d78cae7b64a109`、LF `bc5f3381b8ae16d8f96769e22c4437d62f7bdf7494a3d4a748d78bfcebc9495f`；完整实际 diff 仍为该任务所审阅的目标对象增量，四旧版本及所有其他产品对象完全相同，不把错误摘要指纹当证据。最终登记后须独立查新身份。
+
+封板前实际本地源码检查：Python 3.14.9、PyYAML 6.0.3；仅将九项获准规范化运行成员和当前 catalog 写入自建隔离目录，执行实际 `validate_source` 与 `validate_product` 两入口均成功（后者 `status=PASS, findings=[]`），未构建 ZIP、未运行计算器/测试。该目录已清理。随后封板源码提交用于绑定实际 Git blob；候选包和最终目录核验另行登记，不预写成功或远端状态。

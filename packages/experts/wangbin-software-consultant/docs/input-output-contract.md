@@ -2,6 +2,10 @@
 
 来源：冻结 FRD `bf1821da43f23e372d8782775617054d39163ac630be3f40c11f4a429cbb682d` §§2–8、§10，执行补充 SHA-256 `59e9071aa74521d43f05aca67fca27c168db827d39434ad9aed1a65237b02497` §6。**P01-R5 报价许可及 S12/S30/S13 新验收的权威补充**：[`p01-r5-rate-policy-addendum.md`](p01-r5-rate-policy-addendum.md)，依据用户 R5 正式授权 §3–4/7；仅替代 R4 临时“沉默不可默认参考价”的规则，不改 FRD 原文件及历史判定。合同是未来 Expert 对用户的可观察行为，不强制用户提供机器字段或 JSON。未提供的数值为 UNKNOWN 而非 0。
 
+## 第五批分发身份（不改变咨询合同）
+
+[冻结基线 §9](../../../../docs/wangbin-software-consultant-original-requirements-v1.0.md) 确认 Expert 1.2.0、包内 Skill 0.2.0 与计算合同 2.0 的分发边界。下述第四批增强仍为有效咨询规则，旧版兼容保留；Q34 的本地候选及解压后有限算术核验不增加客户业务能力、不改变金额许可、文字输出或验收逻辑，也不证明真实平台行为。具体候选及证据见根实现盘点 §11。
+
 ## 第四批现行增强覆盖（B4-B01～06）
 
 用户批准 [冻结基线 §8](../../../../docs/wangbin-software-consultant-original-requirements-v1.0.md) Q16～Q31 后授权第四批。技术输入输出与失败口径以包内 [2.0-A/B](../skills/wangbin-estimate-calculator/references/input-output-contract.md) 为准，取代下节第三批补充中关于当前四角色/低高/仅五档/有限价格和外费的旧技术限制；原 0.1.0 无版本输入兼容保持。当前咨询继续从完整唯一 WBS、真实角色与分派任务出发，按 full/tiers/scope 实际所求、事实来源及显式 coverage 交付低/基准/高 B/R/E、角色价格及获准 C，合法缺失输出有据部分，非法冲突非零拒绝。独立基准与明确风险、单价均须有据；同档共享缓冲，不自动提高风险；允许有据的档位独立覆盖并分清成员 B 差量与风险影响。

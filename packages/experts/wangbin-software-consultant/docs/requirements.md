@@ -2,8 +2,8 @@
 
 ## 当前原始需求冻结入口（2026-11-25）
 
-- [用户指定的完整原始需求冻结基线 v1.0](../../../../docs/wangbin-software-consultant-original-requirements-v1.0.md)：保留原附件全部 191 行、来源 SHA-256、73 条 ORI-ID、Q1～Q15 历史决定；§6 为第二批授权，§7 为第三批授权与 Git 基线，§8 为所有者确认 Q16～Q31 后授权的第四批 B4-B01～06 核心计算增强及实施顺序。
-- [当前分支实现盘点（2026-11-25）](../../../../docs/wangbin-software-consultant-implementation-audit-2026-11-25.md)：区分正式源码、已提交增量、静态审查和运行证据；§§1–9 为前三批历史记录，第四批见 §10。当前增强计算以 [包内技术合同 2.0](../skills/wangbin-estimate-calculator/references/input-output-contract.md) 为准；原始三档与批准五档独立成员分别管理，文字/Markdown 边界不变。仅 Q28 允许有限本地合成输入 CLI 核验，不编写或运行自动化测试、不打包或操作平台。
+- [用户指定的完整原始需求冻结基线 v1.0](../../../../docs/wangbin-software-consultant-original-requirements-v1.0.md)：保留原附件全部 191 行、来源 SHA-256、73 条 ORI-ID、Q1～Q31 历史决定和阶段授权；§8 为第四批核心计算增强，§9 为所有者确认 Q32～Q34 后授权第五批 B4-A01～05 工程交付收口。
+- [当前分支实现盘点（2026-11-25）](../../../../docs/wangbin-software-consultant-implementation-audit-2026-11-25.md)：区分正式源码、已提交增量、静态审查和运行证据；§§1–10 为前四批历史记录，当前第五批见 §11。Expert 1.2.0 内含 Skill 0.2.0，当前增强计算仍以 [包内技术合同 2.0](../skills/wangbin-estimate-calculator/references/input-output-contract.md) 为准；原始三档与批准五档独立成员分别管理，文字/Markdown 边界不变。Q34 允许本地归档核验和解压包有限合成输入 CLI，不编写、修改或运行自动化测试、不执行模型或平台操作。历史固定版本测试待以后授权维护，保留原件。
 - 上述是当前用户确认范围的入口。下文保留原 FRD 工程映射、历史工作树/授权背景及未关闭的追踪账本，不把旧实施阶段描述视为当前实现状态；不删除历史要求或批量关闭 PENDING。新文档存放于仓库根 `docs/`，不增加产品打包白名单成员。
 
 ## 历史 FRD 工程映射（保留原记录）

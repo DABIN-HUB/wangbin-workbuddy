@@ -13,7 +13,7 @@ examples_en:
   - "Check the role totals and labor estimate for my supplied purchasing and inventory tasks."
   - "Compare the standard scope with and without a conditional finance interface."
   - "Recalculate the full scope effort after I remove a work package, without showing a price."
-version: 0.1.0
+version: 0.2.0
 author: 星核实验室 StarCore Lab
 ---
 
@@ -37,4 +37,4 @@ author: 星核实验室 StarCore Lab
 
 ## Limits / 限制
 
-只验证实际输入结构及可核算的算术，不提取客户文件、不证明包完整、估时合理或接口可用；不自动排程、生成市场价格、兑换货币、推税率、签约/支付、推断真实财务结算或构建 TCO 引擎。无权限或无有效回执只能明确人工复核及缺口，不模拟执行或绕过拒绝。2.0 指新增计算合同，分发身份仍待后续工程交付；本地有限合成输入回执不证明 WorkBuddy 加载、模型遵从、平台安装或发布。用户成果始终为文字/Markdown。
+只验证实际输入结构及可核算的算术，不提取客户文件、不证明包完整、估时合理或接口可用；不自动排程、生成市场价格、兑换货币、推税率、签约/支付、推断真实财务结算或构建 TCO 引擎。无权限或无有效回执只能明确人工复核及缺口，不模拟执行或绕过拒绝。0.2.0 是 Expert 1.2.0 内的 Skill 分发身份，2.0 是现行计算合同；旧无版本输入兼容保留。本地有限合成输入回执不证明 WorkBuddy 加载、模型遵从、平台安装或发布。用户成果始终为文字/Markdown。
