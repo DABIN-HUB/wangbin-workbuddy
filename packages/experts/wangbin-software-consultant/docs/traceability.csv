@@ -3,7 +3,7 @@ G-01,FRD-1.0.md:L40,P01-T01,wb-developer,"S02,S12,S13,S30",PENDING: source diff 
 G-02,FRD-1.0.md:L41,P01-T01,wb-developer,"S02,S12,S13,S30",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 G-03,FRD-1.0.md:L42,P01-T01,wb-developer,"S02,S12,S13,S30",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 G-04,FRD-1.0.md:L71,P01-T02,wb-developer,"S02,S12,S13,S30",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
-G-05,FRD-1.0.md:L72;R5-addendum:§1-4,P01-T02;P01-R5,wb-developer,"S02,S12,S13,S30",PENDING: R5 permission truth table and historic R4 verdict preserved; independent R5 model QA and result SHA/commit NOT_TESTED,PENDING
+G-05,FRD-1.0.md:L72;R5-addendum:§1-4,P01-T02;P01-R5,wb-developer,"S02,S12,S13,S30",PENDING: R5 permission truth table and historic R4 verdict preserved; independent R5 model QA and result SHA/commit NOT_TESTED; source-only third-batch Agent L109/113/161/598 price permission; identity in implementation-audit §9,PENDING
 G-06,FRD-1.0.md:L73,P01-T02,wb-developer,"S02,S12,S13,S30",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 G-07,FRD-1.0.md:L74,P01-T02,wb-developer,"S02,S12,S13,S30",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 G-08,FRD-1.0.md:L75,P01-T02,wb-developer,"S02,S12,S13,S30",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
@@ -23,11 +23,11 @@ S-08,FRD-1.0.md:L124-L137,P01-T03,wb-developer,"N-X-11,N-ERP-01",PENDING: source
 L-01,FRD-1.0.md:L143-L160,P01-T02,wb-developer,"N-X-07,N-ERP-06",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 L-02,FRD-1.0.md:L150,P01-T02,wb-developer,"N-X-07,N-ERP-06",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 L-03,FRD-1.0.md:L151,P01-T02,wb-developer,"N-X-07,N-ERP-06",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
-L-04,FRD-1.0.md:L152,P01-T02,wb-developer,"N-X-07,N-ERP-06",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
+L-04,FRD-1.0.md:L152,P01-T02,wb-developer,"N-X-07,N-ERP-06",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence; source-only third-batch Agent L103/161/186 requested scope and tier rules; identity in implementation-audit §9,PENDING
 L-05,FRD-1.0.md:L153,P01-T02,wb-developer,"N-X-07,N-ERP-06",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 L-06,FRD-1.0.md:L154,P01-T02,wb-developer,"N-X-07,N-ERP-06",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 L-07,FRD-1.0.md:L155,P01-T02,wb-developer,"N-X-07,N-ERP-06",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
-L-08,FRD-1.0.md:L156,P01-T02,wb-developer,"N-X-07,N-ERP-06",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
+L-08,FRD-1.0.md:L156,P01-T02,wb-developer,"N-X-07,N-ERP-06",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence; source-only third-batch Agent L211/558/562–567 all-role WBS and resource schedule; identity in implementation-audit §9,PENDING
 L-09,FRD-1.0.md:L157,P01-T02,wb-developer,"N-X-07,N-ERP-06",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 L-10,FRD-1.0.md:L158,P01-T02,wb-developer,"N-X-07,N-ERP-06",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 L-11,FRD-1.0.md:L159,P01-T02,wb-developer,"N-X-07,N-ERP-06",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
@@ -38,7 +38,7 @@ D01-03,FRD-1.0.md:L195,P02-T01,wb-developer,N-ERP-02,PENDING: source diff + inde
 D01-04,FRD-1.0.md:L207,P02-T01,wb-developer,N-ERP-03,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D01-05,FRD-1.0.md:L221,P02-T01,wb-developer,N-ERP-04,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D01-06,FRD-1.0.md:L236,P02-T01,wb-developer,N-ERP-04,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
-D01-07,FRD-1.0.md:L242,P02-T01,wb-developer,N-ERP-05,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
+D01-07,FRD-1.0.md:L242,P02-T01,wb-developer,N-ERP-05,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence; source-only third-batch Agent L43/70/283/558 ERP role WBS and independent tier totals; identity in implementation-audit §9,PENDING
 D01-08,FRD-1.0.md:L256,P02-T01,wb-developer,N-ERP-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D01-09,FRD-1.0.md:L260,P02-T01,wb-developer,N-ERP-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D01-10,FRD-1.0.md:L264,P02-T01,wb-developer,N-ERP-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
@@ -48,7 +48,7 @@ D02-03,FRD-1.0.md:L282,P02-T02,wb-developer,N-OA-02,PENDING: source diff + indep
 D02-04,FRD-1.0.md:L294,P02-T02,wb-developer,N-OA-03,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D02-05,FRD-1.0.md:L298,P02-T02,wb-developer,N-OA-04,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D02-06,FRD-1.0.md:L311,P02-T02,wb-developer,N-OA-04,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
-D02-07,FRD-1.0.md:L315,P02-T02,wb-developer,N-OA-05,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
+D02-07,FRD-1.0.md:L315,P02-T02,wb-developer,N-OA-05,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence; source-only Agent L25/331/333/558/562–567 OA WBS and scoped estimate; identity in implementation-audit §9,PENDING
 D02-08,FRD-1.0.md:L326,P02-T02,wb-developer,N-OA-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D02-09,FRD-1.0.md:L330,P02-T02,wb-developer,N-OA-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D02-10,FRD-1.0.md:L334,P02-T02,wb-developer,N-OA-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
@@ -58,7 +58,7 @@ D03-03,FRD-1.0.md:L359,P02-T03,wb-developer,N-CRM-02,PENDING: source diff + inde
 D03-04,FRD-1.0.md:L371,P02-T03,wb-developer,N-CRM-03,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D03-05,FRD-1.0.md:L375,P02-T03,wb-developer,N-CRM-04,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D03-06,FRD-1.0.md:L389,P02-T03,wb-developer,N-CRM-04,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
-D03-07,FRD-1.0.md:L393,P02-T03,wb-developer,N-CRM-05,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
+D03-07,FRD-1.0.md:L393,P02-T03,wb-developer,N-CRM-05,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence; source-only third-batch Agent L369/558 CRM role WBS and scoped estimate; identity in implementation-audit §9,PENDING
 D03-08,FRD-1.0.md:L402,P02-T03,wb-developer,N-CRM-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D03-09,FRD-1.0.md:L406,P02-T03,wb-developer,N-CRM-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D03-10,FRD-1.0.md:L410,P02-T03,wb-developer,N-CRM-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
@@ -68,7 +68,7 @@ D04-03,FRD-1.0.md:L435,P03-T01,wb-developer,N-MES-02,PENDING: source diff + inde
 D04-04,FRD-1.0.md:L447,P03-T01,wb-developer,N-MES-03,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D04-05,FRD-1.0.md:L451,P03-T01,wb-developer,N-MES-04,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D04-06,FRD-1.0.md:L465,P03-T01,wb-developer,N-MES-04,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
-D04-07,FRD-1.0.md:L471,P03-T01,wb-developer,N-MES-05,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
+D04-07,FRD-1.0.md:L471,P03-T01,wb-developer,N-MES-05,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence; source-only third-batch Agent L397/430/558 MES-IoT role WBS and scoped estimate; identity in implementation-audit §9,PENDING
 D04-08,FRD-1.0.md:L485,P03-T01,wb-developer,N-MES-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D04-09,FRD-1.0.md:L489,P03-T01,wb-developer,N-MES-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D04-10,FRD-1.0.md:L493,P03-T01,wb-developer,N-MES-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
@@ -78,7 +78,7 @@ D05-03,FRD-1.0.md:L518,P03-T04,wb-developer,N-WMS-02,PENDING: source diff + inde
 D05-04,FRD-1.0.md:L530,P03-T04,wb-developer,N-WMS-03,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D05-05,FRD-1.0.md:L534,P03-T04,wb-developer,N-WMS-04,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D05-06,FRD-1.0.md:L549,P03-T04,wb-developer,N-WMS-04,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
-D05-07,FRD-1.0.md:L553,P03-T04,wb-developer,N-WMS-05,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
+D05-07,FRD-1.0.md:L553,P03-T04,wb-developer,N-WMS-05,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence; source-only third-batch Agent L468/558 WMS role WBS and scoped estimate; identity in implementation-audit §9,PENDING
 D05-08,FRD-1.0.md:L563,P03-T04,wb-developer,N-WMS-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D05-09,FRD-1.0.md:L567,P03-T04,wb-developer,N-WMS-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D05-10,FRD-1.0.md:L571,P03-T04,wb-developer,N-WMS-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
@@ -88,7 +88,7 @@ D06-03,FRD-1.0.md:L596,P04-T01,wb-developer,N-ECOM-02,PENDING: source diff + ind
 D06-04,FRD-1.0.md:L609,P04-T01,wb-developer,N-ECOM-03,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D06-05,FRD-1.0.md:L613,P04-T01,wb-developer,N-ECOM-04,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D06-06,FRD-1.0.md:L629,P04-T01,wb-developer,N-ECOM-04,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
-D06-07,FRD-1.0.md:L633,P04-T01,wb-developer,N-ECOM-05,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
+D06-07,FRD-1.0.md:L633,P04-T01,wb-developer,N-ECOM-05,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence; source-only third-batch Agent L498/558 ECOM role WBS and scoped estimate; identity in implementation-audit §9,PENDING
 D06-08,FRD-1.0.md:L643,P04-T01,wb-developer,N-ECOM-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D06-09,FRD-1.0.md:L647,P04-T01,wb-developer,N-ECOM-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D06-10,FRD-1.0.md:L651,P04-T01,wb-developer,N-ECOM-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
@@ -98,7 +98,7 @@ D07-03,FRD-1.0.md:L675,P04-T02,wb-developer,N-AI-02,PENDING: source diff + indep
 D07-04,FRD-1.0.md:L687,P04-T02,wb-developer,N-AI-03,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D07-05,FRD-1.0.md:L691,P04-T02,wb-developer,N-AI-04,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D07-06,FRD-1.0.md:L707,P04-T02,wb-developer,N-AI-04,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
-D07-07,FRD-1.0.md:L713,P04-T02,wb-developer,N-AI-05,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
+D07-07,FRD-1.0.md:L713,P04-T02,wb-developer,N-AI-05,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence; source-only third-batch Agent L33/532/558 AI-SaaS role WBS and scoped estimate; identity in implementation-audit §9,PENDING
 D07-08,FRD-1.0.md:L724,P04-T02,wb-developer,N-AI-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D07-09,FRD-1.0.md:L728,P04-T02,wb-developer,N-AI-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 D07-10,FRD-1.0.md:L732,P04-T02,wb-developer,N-AI-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
@@ -107,11 +107,11 @@ E-02,FRD-1.0.md:L754,P05-T01,wb-developer,N-X-08,PENDING: source diff + independ
 E-03,FRD-1.0.md:L773,P05-T02,wb-developer,S16,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 E-04,FRD-1.0.md:L790,P05-T02,wb-developer,N-X-05,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 E-05,FRD-1.0.md:L802,P05-T02,wb-developer,N-ERP-03,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
-E-06,FRD-1.0.md:L820;execution-supplement.txt:§6,P05-T03,wb-developer,N-ERP-05,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
-E-07,FRD-1.0.md:L837;execution-supplement.txt:§6;R5-addendum:§1-3,P05-T04;P01-R5,wb-developer,"S12,S13,S30,S31,N-X-12",PENDING: R5 default illustrative rate and B/E/C rules frozen; independent R5 model QA NOT_TESTED,PENDING
+E-06,FRD-1.0.md:L820;execution-supplement.txt:§6,P05-T03,wb-developer,N-ERP-05,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence; source-only third-batch Agent L90/122/159/558 all-role unique WBS; identity in implementation-audit §9,PENDING
+E-07,FRD-1.0.md:L837;execution-supplement.txt:§6;R5-addendum:§1-3,P05-T04;P01-R5,wb-developer,"S12,S13,S30,S31,N-X-12",PENDING: R5 default illustrative rate and B/E/C rules frozen; independent R5 model QA NOT_TESTED; source-only third-batch Agent L15–17/90/109/113/118/126/161/164/558/598 independent tier arithmetic and bounded receipt claims; identity in implementation-audit §9,PENDING
 E-08,FRD-1.0.md:L852,P05-T05,wb-developer,"N-MES-05,N-X-09",PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 E-09,FRD-1.0.md:L868,P05-T05,wb-developer,N-ERP-06,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
-E-10,FRD-1.0.md:L46;R5-addendum:§3,P05-T08;P01-R5,wb-developer,"S13,N-X-07",PENDING: purchasing removal and inventory+customer current-scope re-estimation frozen; model QA NOT_TESTED,PENDING
+E-10,FRD-1.0.md:L46;R5-addendum:§3,P05-T08;P01-R5,wb-developer,"S13,N-X-07",PENDING: purchasing removal and inventory+customer current-scope re-estimation frozen; model QA NOT_TESTED; source-only third-batch Agent L87/120/134/152/162/603 current-scope recalculation; identity in implementation-audit §9,PENDING
 O-01,FRD-1.0.md:L47,P01-T04,wb-developer,N-X-07,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 O-02,FRD-1.0.md:L896,P01-T04,wb-developer,N-X-07,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 O-03,FRD-1.0.md:L897,P01-T04,wb-developer,N-X-07,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
@@ -121,8 +121,8 @@ O-06,FRD-1.0.md:L900,P05-T06,wb-developer,N-X-07,PENDING: source diff + independ
 O-07,FRD-1.0.md:L901,P05-T06,wb-developer,N-X-07,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 O-08,FRD-1.0.md:L902,P05-T06,wb-developer,N-X-08,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 O-09,FRD-1.0.md:L903,P05-T06,wb-developer,N-X-07,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
-O-10,FRD-1.0.md:L904,P05-T03,wb-developer,N-X-07,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
-O-11,FRD-1.0.md:L905,P05-T04,wb-developer,N-X-07,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
+O-10,FRD-1.0.md:L904,P05-T03,wb-developer,N-X-07,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence; source-only third-batch Agent L211/558/562–567/597 requested scope and all-role resource schedule; identity in implementation-audit §9,PENDING
+O-11,FRD-1.0.md:L905,P05-T04,wb-developer,N-X-07,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence; source-only third-batch Agent L15–17/38/126/161/164/212/598 independent member estimate and receipt boundary; identity in implementation-audit §9,PENDING
 O-12,FRD-1.0.md:L906,P05-T05,wb-developer,N-X-09,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 O-13,FRD-1.0.md:L907,P05-T06,wb-developer,N-X-07,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING
 O-14,FRD-1.0.md:L47,P05-T06,wb-developer,N-X-10,PENDING: source diff + independent QA prompt/response + result SHA/commit; no execution evidence,PENDING

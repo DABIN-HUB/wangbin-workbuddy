@@ -89,7 +89,7 @@ git ls-files --others --ignored --exclude-standard
 3. 提交消息说明真实内容，如 `feat(skill): ...`、`fix(expert): ...`、`test(...): ...`、`chore(repo): remove obsolete artifacts`。不创建空提交，不修改先前已确认的提交历史，不自动 amend/rebase。
 4. 测试失败时不能提交并标记为可用/通过；若为保护重要阶段工作而需要记录失败状态，可以用**显式 `wip:` 或 `test: record failing baseline` 非发布提交**，同时写清失败项、阻断原因及未完成门禁；不自动发布或合并。
 5. 提交后必读 `git rev-parse HEAD`、`git status --short --untracked-files=all`、`git diff --check`；确认暂存区为空、已跟踪工作树无意外修改、无无用未跟踪文件、dist仍被忽略。
-6. **默认禁止自动 `push`、`merge`、上传WorkBuddy、安装、平台审核、发布、部署、远端删除或推进未经批准的下一阶段。** 仅本产品 [CALC-PRIVATE-AUTH-2026-11-13](docs/wangbin-estimate-calculator-private-test-authorization.md) 指定四文件 Skill 包的私有导入/启用/测试及已授权独立分支普通 push 为例外；须读该记录、团队权威授权与新运行实证，其他产品、公开发布和真实强制限制不变。 默认由用户手动 push；上述专项获准普通 push 后也必须读取精确远端完整 SHA，不以本地提交冒充已推送。
+6. **默认禁止自动 `push`、`merge`、上传WorkBuddy、安装、平台审核、发布、部署、远端删除或推进未经批准的下一阶段。** 既有 [CALC-PRIVATE-AUTH-2026-11-13](docs/wangbin-estimate-calculator-private-test-authorization.md) 指定四文件 Skill 包的私有导入/启用/测试及已授权独立分支普通 push 例外保持不变；该专项执行前仍须读取其授权、团队权威规则与新运行实证。另有所有者确认的 [软件需求与报价专家 Q14/Q15](docs/wangbin-software-consultant-original-requirements-v1.0.md#7-第三批授权与-git-交付)：仅 `wangbin-software-consultant` 在已核实的 `expert/software-consultant` 分支，对完成且经授权静态/适用门禁及独立审查的自有变更执行选择性暂存、本地 commit 和向 `origin` 同名分支的普通 fast-forward push，不再逐轮问是否推送；push 前核实目标、远端旧 SHA、待传提交范围及凭据安全，push 后读取该精确远端 ref 的完整 SHA。远端漂移、拒绝或安全门禁失败即停止，不擅自 merge、rebase、force push、换远端或绕过限制。仅源码/文档阶段按用户明确批准的限定检查交付，未运行的测试、dist、平台及发布仍如实保留未验证/阻断状态；不是测试或发布门禁豁免。其他产品/分支仍默认由用户手动 push；不扩大既有私测、平台操作、发布或部署权限，不以本地提交冒充远端读回。
 7. 必须保留可复现性和必要证据，不把“Git完全没有未跟踪文件”变成误删用户资料的借口；真实无法清理的异常要列出具体路径与原因，阶段验收只能 PARTIAL。
 
 ## 9. 多 Agent / Dots 团队协作
