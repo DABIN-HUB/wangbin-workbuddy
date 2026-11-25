@@ -21,8 +21,13 @@ def _scope_valid(text):
 
 def test_s10_current_turn_candidates_and_lost_acceptance_controls():
     assert "集团 ERP/MES/CRM 预算不足的当轮分支" in AGENT
-    assert "明确未获接受" in AGENT and "不承诺任何一路万元内可行" in AGENT
-    assert "外部费" in AGENT or "许可、接口、云" in AGENT
+    section = AGENT.split("**集团 ERP/MES/CRM 预算不足的当轮分支：**", 1)[1].split("**单价与缓冲的变更事实", 1)[0]
+    assert "明确未获接受" in section
+    assert "没有可核实的范围/WBS 不承诺任何一路在原约束内可行" in section
+    assert "人民币 10,000 元不足以完成全集团 ERP/MES/CRM 集成" in section
+    assert "money=none 或相关金额未获准时不复述一万元、不算不报金额" in section
+    assert "在**本轮**提出至少两条不同的" in section
+    assert "许可、接口、云及人工费均需独立核实，未知不填零" in section
     good = "路线 A：仅当库存优先，保留单仓出入库，延期跨组织库存，不能验收跨仓汇总。路线 B：若销售优先，保留线索跟进，延期生产派工，不能验收生产闭环。"
     assert _scope_valid(good)
     assert not _scope_valid("先确认核心流程和预算，下轮我将提供缩围方案。")
@@ -41,9 +46,16 @@ def _update_rate(old, new, base=("30", "45"), risk=("0.10", "0.20")):
 
 def test_s31_old_and_new_rate_are_both_preserved():
     assert "单价与缓冲的变更事实先于重算" in AGENT
-    assert "本轮由 1000→1200" in AGENT
-    assert "不把本轮刚写入的现值误认为上一轮已有" in AGENT
-    assert "单轮用户直接说" in AGENT and "若只改缓冲" in AGENT
+    section = AGENT.split("**单价与缓冲的变更事实先于重算：**", 1)[1].split("## 4. 交付物", 1)[0]
+    assert "原固定价 1000、本轮改为 1200 且允许显示金额时" in section
+    assert "记录旧价 1000→1200、原人工费 33000/54000 元与新人工费 39600/64800 元分别已过期/当前" in section
+    assert "不把本轮刚写入的现值误认为上一轮已有" in section
+    assert "单轮明确给定旧→新价也须记录变更" in section
+    assert "只改价不改 B/r/R/E 或范围" in section
+    assert "不能假定旧价 1000 或套用历史人天" in section
+    assert "若只改缓冲 r 而未改 p" in section
+    assert "保持 B/范围/单价不变，重算 E 及获准 C" in section
+    assert "不复述或计算禁止的金额" in section
     got = _update_rate("1000", "1200")
     assert got["base"] == (Decimal(30), Decimal(45))
     assert got["effort"] == (Decimal(33), Decimal(54))

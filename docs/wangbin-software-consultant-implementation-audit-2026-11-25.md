@@ -1,6 +1,6 @@
 # 软件需求与报价专家｜当前分支功能实现盘点（2026-11-25）
 
-> **第五批 A 工程交付收口（本地候选已核验）：** 前四批限定交付已完成，第四批提交与实际远端基线 `212dcd9c402abcfbd4beaa98f7d4fc75621afdbb`。原始咨询范围的已识别缺口已补齐；第四批计算合同 2.0 的独立静态复审及 Q28 有限合成 CLI 证据见 §10。Q32～Q34 授权的 Expert 1.2.0、包内 Skill 0.2.0、本地候选及实际解压包有限核验已完成，源码封板 `e376395df4e09267ef494f4e421fc49d4fbdb6dd`，工程证据见 §11。最终证据登记与 Git 交付分别绑定实际身份。正式回归、模型/平台、权利和发布门禁仍未通过。§§1–10 为历史记录，不是未开发清单。
+> **第六批本地质量收口（独立回归通过）：** 前五批限定交付已完成，第五批正式候选 Expert 1.2.0/Skill 0.2.0/计算合同 2.0、源提交 `e376395df4e09267ef494f4e421fc49d4fbdb6dd` 及第五批实际远端 `49ef65e4e5b8dd9d052f64f5e6f5c1a3098cc4e3`。Q35～Q37 限定回归、历史测试适配及独立复审通过，最终补强快照 307/307，生产源码和候选未改，实测见 §12；不新增真实模型/平台/发布授权，155 项最终验收仍 PENDING。§§1–11 为历史记录。
 
 **历史盘点结论（第二批前）：** 产品主体咨询能力已经写入正式源码。七领域、十二阶段入口和十四类文字成果都有规则；第一批统一评审稿与复用差量已在工作树补齐。原始需求尚不能称全部完成，明确的剩余业务缺口是菜单导航、个人级排期（含交期不可达处理）。未发现必须在此两项开发前再次询问用户的新增实质选择。当前判断须读 §8、§9，而非沿用本段旧状态。
 
@@ -369,3 +369,69 @@ Q32 三身份已同步，manifest 仅更新版本，包内同 ID Skill 更新 0.
 ### 11.5 限定收口与剩余门禁
 
 B4-A01～04 的版本、源码、登记路径、静态及归档/解压限定本地证据已具备；本节及 P-06 账本新增工程证据用于 A05 收口。不更改 155 个最终 PENDING 状态。保留两处旧测试静态不适配、原 86 个未运行案例和全部正式回归/真实模型/WorkBuddy 安装对话 NOT_TESTED；历史提交报告不继承到新版本，许可权利及正式发布仍 BLOCKED。catalog 保持 DEVELOPING/NOT_TESTED，只登记真实本地候选及 SHA。后续证据提交不修改任何九成员，候选来源仍是 §11.3 源提交；最终普通 push 与远端实测 SHA 在 Git 交付后另行报告，不在提交中预写自身身份。第五批完成后停止开发，只读确定下一阶段是否有获准范围。
+
+## 12. 第六批本地质量收口
+
+### 12.1 授权、保护和实际回归基线
+
+第五批实际交付 HEAD/远端 `49ef65e4e5b8dd9d052f64f5e6f5c1a3098cc4e3`。所有者确认 Q35～37 且明确开始本批，详见冻结基线 §10；静态盘点 20 个既有 Python 测试模块、61 个测试函数、5 个案例/fixture 文件，不是 pytest 实际收集数。锁定 §11.1、§11.3 六个历史/当前候选文件，大小/SHA 全部一致；当前 ZIP 九成员均与源提交及第五批最终提交 blob 完全相同。原 `uv.lock` SHA `075a1bbb8689d1299323f64d19100a83fab3648b94c5b8fa23758d7ed7b13517`。项目 `.venv` 实测 Python 3.12.0/pytest 8.4.2/PyYAML 6.0.3（默认 Hermes Python 3.14.9/pytest 9.2.0 与项目锁定测试环境不同，不更改任何环境）。
+
+实际未修改测试基线：从上述真实提交精确导出 60 个获准跟踪文件（产品九成员、docs、20 个测试模块及 5 个数据文件、两个已引用历史合成 fixture、根规则/项目配置/产品登记/必要 tooling、根 `test_product_factory.py`），当前目录与 pytest basetemp 均在唯一自建 scratch 下；历史 git show 以进程级 Git 目录与工作树定位，不复制无关工作树/凭据。根 `tests/conftest.py` 会生成不相关文档 fixture，本次隔离文件集不包含它，两个直接相关选择均不需要它的 fixture。用项目 `.venv/Scripts/python.exe -B -m pytest -q -ra -p no:cacheprovider --basetemp=<unique> --junitxml=<unique> packages/experts/wangbin-software-consultant/tests tests/test_product_factory.py::test_legacy_expert_validator_rejects_overlong_name tests/test_product_factory.py::test_phase5_validator_remains_callable_when_loaded_as_script`，仅两个根工厂用例，未执行全库、release-check、真实模型或平台。禁止将 scope 之外的选择描述为执行覆盖。
+
+实际 pytest 退出 1，26.02 秒，JUnit 200 个用例（186 PASS、14 FAIL、0 ERROR、0 SKIPPED）；原 stdout SHA `f3ff2a5d445e812e761101573df4ac2a3c7fb38c4c14f49b4be846c5504afc77`，JUnit SHA `4ed45cf449f1f19b47bf65157f75938c8722acdb79edb08e3d559888a08bcc05`。原失败结果独立保留在自建临时目录直至本批核对/清理，不提交含环境信息的原始日志。不把外层审计脚本成功退出当 pytest PASS。
+
+| 实际基线失败位置 | 数量 | 初步定位（待逐项语义裁定） |
+|---|---:|---|
+| test_bundled_calculator.py | 1 | 已知旧 build(tmp_path) 无实际 Git 来源 |
+| test_p01_contract.py | 1 | 已知固定旧 1.1.2 版本断言 |
+| test_expert_candidate.py | 1 | 旧 Agent 登录限制文本断言 |
+| test_fix2_oa_schedule_units.py | 1 | 排期示例边界文本 |
+| test_industry_method_20.py | 1 | MTH-14 缓冲规则文本 |
+| test_p01_r3_focus.py / test_p01_r4_separation.py | 2 | 固定价优先、工作量与计价阶段断言 |
+| test_p01_r6_s29_gap.py | 2 | S29 从旧标题定位失败 |
+| test_p01_r8_s10_s31.py | 2 | S10 不承诺预算、S31 历史变价例 |
+| test_p03_wms_contract.py | 1 | Decimal 文本口径 |
+| test_p04_ai_cost_contract.py | 2 | N-AI-05 解算与 WBS 标识 |
+
+以上真实失败不是已确认为 14 个生产缺陷；必须按冻结新旧规则、实际代码及测试意义逐项裁定，保留有效失败证据和既有覆盖后再回归。三路独立文件所有权实施 B6-Q01～03，生产代码未为迎合历史断言而提前修改。
+
+### 12.2 B6-Q01～03 测试实现与首轮完整回归
+
+`deleg_a331e80d` 三路实际交付：11 个既有测试模块适配、1 个新增 `tests/test_estimator_v2_contract.py`（807 行、24 个静态测试函数/99 个实际用例）；其他 9 个既有模块及 5 个原数据文件不动。作者逐项识别 14 个历史失败均为测试合同/章节/文字/适用条件已过时，现行正式规则中有相应等价或获批替代约束；独立复核仍需确认，不预宣称未有其他缺陷。关键适配：固定 1.2.0、保留 1.0.0 历史源重放、从真实源 commit 核九成员、对现有包实际验哈希/CRC/manifest，两个空目录重建一致，正式解压调用旧及 2.0 路径；历史登录限制、真实排期下界、风险/金额许可、S29/S10/S31、WMS 与 N-AI-05 保留有效规则。计算 2.0 新增全角色/唯一任务、五档及局部、基准/未知/N/A、缓冲及差量、所有计价及金额许可、费用账目/周期/币种/税基、来源与失败、十进制精度、旧两条路径，以独立算术和真实 CLI 断言。
+
+作者有限执行证据（不同选集，不累加称完整回归）：新 2.0 测试 99 PASS，JUnit SHA `dc5c8ae56cfa3824d1dd5f14d3655b182308c3dffc4f41fe071e77954d61e565`；版本/归档模块 32 PASS，JUnit SHA `1c1ec3b181732fcd8c9f510e832f535112eff7e14960fc326f0252bf31a02670`；历史断言 77 PASS/2 deselected，JUnit SHA `e080fb397ea444bdaecb23d60edeed1c26bd2b3a2cacfc5dea075590bb92ac07`（两个排除项由父任务随后完整执行）。三份 JUnit 已读取核对实际计数和 SHA。归档作者首次 31 PASS/1 FAIL：Python 3.12 同成员压缩字节与原 3.14 候选不同；修订测试区分现有不可变包的真实原始 hash 与同测试环境双入口的字节可复现，不改变成员/来源/归档完整性断言。作者实测两入口重建 SHA `ead09f5f84692d3f09652d5b1b145ddee9996677bfd125f67fd3b867640051d1`，不替换原交付 ZIP。原作者专项失败不改写为通过。
+
+首次完整候选回归（父任务实测）：同 §12.1 的固定环境与根工厂两用例、独立 61 文件规范 LF 快照，inventory SHA `1437d6976acd5db62ef39898a4cf2d4899bc206a5ca99e7326c68ffb99cc7381`；只加入新测试并更新 11 个测试文件及 requirements。实际 pytest 退出 0，55.60 秒、301 PASS/0 FAIL/0 ERROR/0 SKIPPED，stdout SHA `add8ceb439e3670899abbc34a4eb03a1e54483ff6dbe01d6949dbaceb3771eb3`，JUnit SHA `ed50342122d79903a6d7371dc890d8c9ac031918d2fa48982809134790b13a38`；对两份实际 JUnit 的唯一 classname/name 集核对，原 200 项全部保留，新增 101 项（2 个归档、99 个 2.0），无旧用例消失。所有 61 文件已逐个按 Git 文本 LF/PNG 原字节与当前工作树对照。正式 Agent、计算器、包内 2.0 技术合同和公共工具均未改，当前候选九成员仍完全匹配。父任务结果不替代独立质量复审或独立实际执行。已派独立冷读测试语义/归档合同及独立隔离执行相同快照；最终判定待新证据。
+
+### 12.3 独立初审、限定覆盖补强与实际复验
+
+`deleg_c783d646` 三任务分别给出：历史 11 个测试模块及归档合同 PASS、2.0 预期独立性 PASS 但覆盖 CHANGES_REQUIRED、对 §12.2 精确 61 文件快照独立实测 301 PASS/0 FAIL/0 ERROR/0 SKIPPED，退出0、57.25 秒，JUnit SHA `342a732eee2e9ad5944fe7ccb1bf4d902332d8613e1fcf29164ada6b75d89084`（实际回执 SHA/唯一数已核对），stdout SHA `3bbba0285d9f3354b266047278d43e8e258e2f09476b7fefa525a5362e996aba`（独立执行报告）。审查者未发现改弱历史有效业务断言，父任务额外核证历史 200 项仍保留；所有历史原函数保留、历史模块新增两函数。独立算术复核 MVP/StandardA/StandardB/FullA/FullB 的 B 分别为 14/18/23.5、19/25/32.5、23/31/40.5、25/35.5/48.5、29/41.5/56.5，预期非生产计算函数或旧回执循环 oracle。
+
+| 初审项 | 限定补强处理 |
+|---|---|
+| R01 | 新增三参数独立触发：仅 buffer.base、仅角色区间价 base、仅参考价 base；先无任何 base 的完整低高对照，再要求 PARTIAL、相关 base BLOCKED、独立低高精确结果保持。 |
+| R02 | 原四种 money 测试扩大到两个真实目标及 low/base/high；按目标、角色、包及唯一任务逐一核禁止人工费指标和 prices 不出现；拒外费则 rows/groups/差量为空；获准外费核金额及差量、合计许可逐情景核。 |
+| R03 | 追加原 C02-R1 的 PENDING_CONFIRMATION、UNMAPPED/NEEDS_CONFIRMATION、UNKNOWN/TO_BE_QUOTED 三个纯状态来源反例；原合法来源正例及否定许可、reported 断言不移除。 |
+
+历史候选测试仅修正 `test_expert_candidate.py` 的旧 ZIP 不存在注释，明确只是历史 Git 源重放，不转写为实际旧 ZIP 回归。仅两文件相对初稿变化，未改任何生产文件。新 2.0 测试 882 行、25 静态函数，LF/raw SHA `ac5076906a1cb1de88d621f131622a4b170683416e6d8d9baf3e2c70123322e2`；历史测试文件 LF SHA `df0fb00d4fe300250da101946d8bad95e448f33ac272eb9642cc035e20480c22`。最终补强候选 `candidate-b` 61 文件 inventory SHA `f11ca5a4451e3bfb28893666d5e52a89d7dfab35b889fd1b6a8c60dd8ff84f8e`。父任务实际完整回归 307 PASS/0 FAIL/0 ERROR/0 SKIPPED，退出 0、57.06 秒，stdout SHA `0257ecdd5b1f7bab77c361c40ece759d3b2326c43223f1d6d62feb97324d275f`，JUnit SHA `e811abdebd714f22a26718a9e659b3bf28fc4c7911cadc07bc446a85b94deaab`。原始 200 个测试 ID 全部保留；相对 301 初稿净增 6（新增三个 base 和三个来源，三个原参数自动 ID 因位置顺延而重命名，其语义及断言不删）；仍未发现需修改生产代码的实际合同缺陷。此为作者/协调者已实测，不代表补强独立复审完成，已派针对 R01～03 和精确 307 快照的独立复验。
+
+### 12.4 最终独立 QA
+
+`deleg_e3c30ef8` 两独立任务：R01～R03 全部 CLOSED、限定静态 PASS，候选 B 与 A 的 61 文件仅两测试文件变化且其余 59 一致；在另一隔离目录使用固定项目环境实际执行完全一致的 candidate-b。实际 pytest 退出 0、58.11 秒（执行外层耗时 58.64 秒），307 个唯一用例 307 PASS/0 FAIL/0 ERROR/0 SKIPPED/0 TIMEOUT，其中本产品 305 项、直接相关根工厂 2 项；回执、JUnit、case ID 集、stdout 均由协调者实际核对 SHA，独立 JUnit 与父任务最终 307 项身份完全一致、基线 200 项全保留。原始记录保留区分两次执行，不把多轮通过数相加。
+
+| 最终独立原始证据 | SHA-256 |
+|---|---|
+| receipt.json | `5a7013145e24bf4a32d1681c7ff3aa837232dc5ff535593ec744d1b914a6cf58` |
+| junit.xml | `8a4b583a4c9c439a4674733e93430257e83cb400528f9e1de0b205cab4050395` |
+| case-ids.json | `51db554c3b05937f01de840839bcfe8dfa72921d6dc955dcc050e0bf0c17e030` |
+| stdout.txt | `c03025e7374ebba29366a65d932ab3e2ae0467f90a91f6817877c73013fc8e48` |
+
+独立验收范围不含真实模型/WorkBuddy；原 1.0.0 ZIP 源重放不是实际平台回归，独立候选归档回归使用已存在 1.2.0 本地三文件和真实已知历史 Git 对象。没有这些前提的远端新克隆不得声称可无条件全绿。当前实际本地候选未改且无包内生产源码变更，不触发 Q37 新版确认。仅更新已测本产品 catalog `status=TESTED`（本地），`review_status=NOT_TESTED`/发布 UNKNOWN、各版本对象保持；追加 G-05/E-06/E-07/E-10/O-11/P-06 六条 evidence（不改历史前缀及任何最终 PENDING）。最终登记后再用相同测试/生产身份执行实际回归，核对提交文件及源/包保护；Git 最终 SHA 及远端读回在实际交付后报告。
+
+### 12.5 最终登记后验证及本批退出边界
+
+登记后从实际交付工作树再导出同 61 文件；相对独立 candidate-b 仅 `products/catalog.json` 和 `docs/traceability.csv` 的证据登记字节变化（LF SHA 分别 `65dd6aaba4f19485328279ec3689a68aebabec5a939b0462e4b331bb64d20c44`、`90f0bede5a67d01d2d1de1b8223ded1b74f5686902f06b0a70ef2bb6d90cf152`）。delivery inventory SHA `dcc5615a069e89726599e94ee5b14d813687ccb593543dde31dfc2403022a134`；相同固定环境、范围和独立 basetemp 实际回归退出 0、54.88 秒，307 PASS/0 FAIL/0 ERROR/0 SKIPPED，stdout SHA `2ab6fafce238e2fe8a6e9f9393811979fde6cababd2b80ab65df7b8bd118b08e`、JUnit SHA `1db02c569c6f8f20985d39c9b2f62103ecd385d00e50aaeeef2483e7a4efeca4`；与独立 QA 307 项 ID 一致，所有 61 文件在执行前后不变。21 个专属测试模块包含全部原 20 个模块及新 2.0 模块，净增 107 个实际用例（2 归档、105 计算合同 2.0）。14 个原实际失败由过时断言/测试接口维护关闭，独立初审 R01～03 由有效新增断言关闭；未发现要求改变正式业务源码的生产缺陷。
+
+B6-Q01～Q04 的限定实现与实际回归及独立审查 PASS。B6-Q05 按本节登记及最终选择性 Git 交付完成；不把回归 PASS 当成已执行 86 个真实模型场景，不将源规则断言当实际模型行为，155 条最终验收 PENDING、平台 NOT_TESTED、许可权利及发布 BLOCKED。已知回归运行依赖本地三件套和历史 Git 对象、产品工厂通用单文件测试入口不等于本批完整覆盖、跨 Python 压缩环境不保证相同 ZIP 字节；均为明确边界而非本批未实现业务要求。第六批后停止开发，仅只读审查遗留；不自动新发版、平台操作或开展第七批。原始临时日志/回执属于本地受控核验记录，不把环境信息及生成物提交，持久范围/计数/哈希以本节为准。
+
+交付卫生核验：本批实际删除自建 scratch 中 21 个已核实隔离源/pytest basetemp 目录及其 3998 个文件，共 79711444 字节；拒绝 link/reparse point，不触及仓库源码、历史候选或用户文件。必要原始回执仍在本地临时 scratch（受其正常清理生命周期约束），不入 Git。正式归档六文件实测与历史 SHA 一致、dist 忽略，原 uv.lock 未变；无已跟踪文件净删除。第六批仅 12 个测试文件（11 修改/1 新增）、5 个需求/审计/登记文件进入最终交付。

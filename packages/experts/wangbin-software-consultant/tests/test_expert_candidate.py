@@ -26,7 +26,9 @@ def test_expert_schema_and_prompt_are_self_contained():
     for section in ("已确认", "合理假设", "待确认", "MVP", "标准", "完整定制", "前端", "后端", "数据库", "接口", "测试", "部署", "沟通", "第三方", "维护", "验收", "单体", "Modbus", "OPC UA", "IEC104", "MQTT"):
         assert section in prompt
     assert not set(meta).intersection({"dependencies", "runtime", "mcpServers", "tools"})
-    assert "不要求登录其他系统" in prompt
+    # The natural-language entry forbids requiring the USER to log in;
+    # authorized internal calculator use is not a customer prerequisite.
+    assert "不要求用户登录其他系统、安装软件、运行脚本、连接器或联系销售" in prompt
     assert "每轮最多三个" in prompt
 
 
@@ -44,10 +46,10 @@ def test_invalid_agent_name_is_rejected(tmp_path: Path):
 def test_zip_members_are_exact_and_source_identical():
     """Replay 1.0.0 source identity from its immutable Git baseline, NOT a historical release ZIP.
 
-    The historical ZIP is absent, and the Phase 5 report describes four members
-    while the committed packager declares five. Never rebuild the old dist name
-    from today's changed Agent, or mistake this in-memory replay for that ZIP.
-    Historical release ZIP byte/hash comparison remains NOT_TESTED.
+    The historical Phase 5 report describes four members while the committed
+    packager declares five. This test does not inspect the historical delivery
+    ZIP retained in dist. Never rebuild its name from today's changed Agent, or
+    mistake this in-memory source replay for an actual release ZIP comparison.
     """
     baseline = "67d0fe8cfa5d71b53cc46d79bbaec620638dd1e0"
     def old_bytes(rel: str) -> bytes:

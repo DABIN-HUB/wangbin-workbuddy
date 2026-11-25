@@ -13,8 +13,19 @@ def test_finite_quote_precedence_and_no_framework_exemption():
     assert "不以审批细则、现有系统或第三方价格未知" in body
     assert "只有连这样有界的场景都不能构建时" in body
     assert "1000～1500 元/人天" in body
-    assert "用户给固定单价时只用该单价" in body
-    assert "不等待额外的 shell/计算器授权" in body
+    # CLR-Q20/29 retain fixed-price precedence while respecting the
+    # latest monetary permission and allowing authorized role pricing.
+    policy = body.split("**统一决策顺序", 1)[1].split("**S12 / 有界 OA", 1)[0]
+    assert "用户有效固定价/逐角色固定或区间价优先" in policy
+    assert "指定价来源未知/未确认/未批准、角色缺价不默换参考" in policy
+    assert "未给价且未拒绝可按 R5 reference" in policy
+    assert "只要人天/不要金额→money=none 所有费用不算不报" in policy
+    # Retain the no-tool/no-delay guard, not a mandate to execute without
+    # approval: short reliable arithmetic is allowed, other gaps disclosed.
+    assert "已有逐行数值不准以估时待评审、无工具或第三方费未知拒绝加总" in policy
+    header = body.split("# 软件需求与报价专家", 1)[0]
+    assert "若有据数值、许可及单位已齐且可用少量短算式可靠复核，给可见算式与实际数值" in header
+    assert "否则给条件式与具体缺口，不模拟成功、重试被阻工具或绕过审批" in header
 
 
 def test_r3_reference_arithmetic_is_additive_and_rate_changes_only_fee():

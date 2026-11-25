@@ -55,7 +55,7 @@
     {
       "active_version": "1.2.0",
       "category": "12-IndustryConsultant",
-      "development": "1.2.0 local candidate verified; bounded extracted CLI checks passed; formal regression and platform NOT_TESTED",
+      "development": "1.2.0 immutable local candidate verified; scoped local regression 307 passed including independent QA; model and WorkBuddy runtime NOT_TESTED",
       "id": "wangbin-software-consultant",
       "maintenance": "UNKNOWN",
       "name": "Software Consultant",
@@ -63,7 +63,7 @@
       "review_evidence": "1.2.0 has no platform receipt; prior user-reported submission is historical and version attribution remains unverified",
       "review_status": "NOT_TESTED",
       "scenario": "Requirements and estimation",
-      "status": "DEVELOPING",
+      "status": "TESTED",
       "target_users": "Small businesses",
       "test_path": "packages/experts/wangbin-software-consultant/tests/test_expert_candidate.py",
       "type": "Expert",
