@@ -1,6 +1,6 @@
 # 软件需求与报价专家｜当前分支功能实现盘点（2026-11-25）
 
-> **第五批 A 工程交付收口（当前实施）：** 前四批限定交付已完成，第四批提交与实际远端基线 `212dcd9c402abcfbd4beaa98f7d4fc75621afdbb`。原始咨询范围的已识别缺口已补齐；第四批计算合同 2.0 的独立静态复审及 Q28 有限合成 CLI 证据见 §10。Q32～Q34 已确认且所有者明确授权 B4-A01～B4-A05：Expert 1.2.0、包内 Skill 0.2.0、新本地候选及解压包有限核验，实际工程证据见 §11。未完成的正式回归、模型/平台、权利和发布门禁仍不冒称 PASS。§§1–10 为历史记录，不是未开发清单。
+> **第五批 A 工程交付收口（本地候选已核验）：** 前四批限定交付已完成，第四批提交与实际远端基线 `212dcd9c402abcfbd4beaa98f7d4fc75621afdbb`。原始咨询范围的已识别缺口已补齐；第四批计算合同 2.0 的独立静态复审及 Q28 有限合成 CLI 证据见 §10。Q32～Q34 授权的 Expert 1.2.0、包内 Skill 0.2.0、本地候选及实际解压包有限核验已完成，源码封板 `e376395df4e09267ef494f4e421fc49d4fbdb6dd`，工程证据见 §11。最终证据登记与 Git 交付分别绑定实际身份。正式回归、模型/平台、权利和发布门禁仍未通过。§§1–10 为历史记录，不是未开发清单。
 
 **历史盘点结论（第二批前）：** 产品主体咨询能力已经写入正式源码。七领域、十二阶段入口和十四类文字成果都有规则；第一批统一评审稿与复用差量已在工作树补齐。原始需求尚不能称全部完成，明确的剩余业务缺口是菜单导航、个人级排期（含交期不可达处理）。未发现必须在此两项开发前再次询问用户的新增实质选择。当前判断须读 §8、§9，而非沿用本段旧状态。
 
@@ -329,3 +329,43 @@ Q32 三身份已同步，manifest 仅更新版本，包内同 ID Skill 更新 0.
 独立 `deleg_fdccd32f` 两任务：A02 专用打包器规范及质量 `STATIC_REVIEW_PASS_WITH_CONDITIONS`（实际运行尚未验证），A01/A03、文档及保护项限定静态 PASS。实施条件是同一 LF Git blob 的两个独立空 dist、manifest 形状允许不同、最终专用 manifest 的实际 commit/blob 验证不得用通用 verify 替代；通用 verify 还须实际登记相符的候选路径和哈希。发现另一历史测试 `tests/test_bundled_calculator.py:31–43` 使用无 Git 来源的 `build(tmp_path)` 且直接比较工作树物理字节，与新精确源码来源及规范字节合同不适配；与 §11.1 的固定版本测试一起原样保留、不执行，留待另行授权的回归维护，不是本批要求执行的测试。独立审查未发现阻断限定封板的问题，未运行构建/CLI 或测试。协调者复核 ten-file 工作树：审查任务 2 的 catalog 摘要 SHA 混用了两种 byte basis 的片段，实测 raw `5f070cf756e8914b11477249c946e9f1744dda4f5f7a08ad76d78cae7b64a109`、LF `bc5f3381b8ae16d8f96769e22c4437d62f7bdf7494a3d4a748d78bfcebc9495f`；完整实际 diff 仍为该任务所审阅的目标对象增量，四旧版本及所有其他产品对象完全相同，不把错误摘要指纹当证据。最终登记后须独立查新身份。
 
 封板前实际本地源码检查：Python 3.14.9、PyYAML 6.0.3；仅将九项获准规范化运行成员和当前 catalog 写入自建隔离目录，执行实际 `validate_source` 与 `validate_product` 两入口均成功（后者 `status=PASS, findings=[]`），未构建 ZIP、未运行计算器/测试。该目录已清理。随后封板源码提交用于绑定实际 Git blob；候选包和最终目录核验另行登记，不预写成功或远端状态。
+
+### 11.3 实际归档与源码绑定
+
+源码封板 `e376395df4e09267ef494f4e421fc49d4fbdb6dd`（父提交 `212dcd9c402abcfbd4beaa98f7d4fc75621afdbb`，10 文件、252 行新增、56 行删除）；精确暂存成员、内存编译和限定凭据扫描通过。Q34 双入口使用从此提交导出的相同 20 个获准 Git blob（九成员及 11 个工具/登记依赖）在两个独立空 dist 构建；专用入口 `python -B -m tooling.phase5_expert_packager --source-repo <实际仓库> --source-commit <上述完整SHA>`，通用入口 `python -B -m tooling.products validate/package/verify --id wangbin-software-consultant`（三个独立子命令）。两次真实构建及通用验证均退出 0，ZIP 字节完全一致。对专用 manifest 按实际候选路径及哈希在隔离 catalog 登记后，通用 verify 也退出 0。专用入口对原隔离目录再次构建正确拒绝，三个已有文件哈希均不变。实际 manifest 名为 `.zip.manifest.json`，保留专用真实源码字段；不再另造旧式命名的重复清单。
+
+| 本地 dist 文件 | 字节 | SHA-256 |
+|---|---:|---|
+| wangbin-software-consultant-1.2.0-expert-candidate.zip | 164569 | `d42eaa2090eb07660cbb6f712ae506a2f731e5fd62035d5ccd58fec0f236bd47` |
+| wangbin-software-consultant-1.2.0-expert-candidate.zip.manifest.json | 2546 | `59a7f5001637a0ba1d3537e7aa3c61d9e891d26f0ea557e31a8badb9e672c318` |
+| wangbin-software-consultant-1.2.0-expert-candidate.zip.sha256 | 121 | `95407556349acc880f29cb7ee6f0992730e0d4c7799ac689eea9e400992cd1dd` |
+
+正式本地 dist 经排他写入，实测 SHA、sidecar、CRC、九成员及提交 blob 字节一一相同，三个路径均实际被 Git 忽略。manifest `source_byte_basis=verified_git_blob_bytes`，`status_scope=local_schema_and_archive_integrity_only`，`workbuddy_install=NOT_TESTED`、`workbuddy_dialogue=NOT_TESTED`、`platform=BLOCKED`。成员路径（均含 `wangbin-software-consultant/` 根前缀）：
+
+| 成员 | 字节 | SHA-256 |
+|---|---:|---|
+| .codebuddy-plugin/plugin.json | 2325 | `f9a4607119d96f5de3903a48cb15077446d3f53e2ff02637b5f845171dbbd385` |
+| LICENSE | 1064 | `506377ce49d410995b6e7d11b9cd5fd6ea5d3b560a193f779b32e337367937a6` |
+| README.md | 8594 | `4663388886b5ca2a0247d9abc2422a8ac110c3447aaf2bf2d277c06bd2a64501` |
+| agents/wangbin-software-consultant.md | 289172 | `74c300dde64ad8cac660e0cb1b204a9aed3185f9c29149ae720b459eec998acb` |
+| avatars/expert.png | 3786 | `0834624d4c36a00f97e7634e1fe1ff3537cca2e63757871004f9f04d8d035114` |
+| skills/wangbin-estimate-calculator/LICENSE | 1064 | `506377ce49d410995b6e7d11b9cd5fd6ea5d3b560a193f779b32e337367937a6` |
+| skills/wangbin-estimate-calculator/SKILL.md | 6536 | `76fa6a32b4a5d0f8b9c1d55a4e101b783abeb26229ac98022e620bf833834603` |
+| skills/wangbin-estimate-calculator/references/input-output-contract.md | 29221 | `664e043a88139fdd857b1184dc12756d5c287cf3614b10c4278fed8bafe72f92` |
+| skills/wangbin-estimate-calculator/scripts/estimator.py | 65313 | `5b74142d47f1661855cafecb36f79f2b8b6ab7c90ab621ab010a92e764645e3c` |
+
+### 11.4 Q34 实际解压候选 CLI（仅合成输入）
+
+从实际专用 ZIP 解压九成员到独立临时目录，逐项核对 manifest；不使用工作树脚本，清除 subprocess 的 PYTHONPATH/PYTHONHOME，使用 Python 3.14.9、解压脚本绝对路径及临时 cwd 执行 `python -B <extracted-estimator.py> <synthetic-input.json> -o <new-receipt.json>`。实际脚本 SHA 为 §11.3 的包内 LF SHA。实际两次成功、一次合法拒绝，临时解压及输入/回执已清理，非自动化回归，不保存客户资料或虚构模型回执。
+
+| 合成调用 | 退出码 | 实际输入 SHA-256 | 实际回执 SHA-256 / 观察 |
+|---|---:|---|---|
+| scope-money，SYN-PACK-V1/Q1 | 0 | `1ccbbbcfce56c3c5368df43054adb4bdfb5f03ed70bd2fa7b3fde35121881b5c` | `a63d82a1a95ee79fc36eed552c329e73e1ab6f9658a1274dd4a01619641ad379`，COMPLETE |
+| scope-no-money，SYN-PACK-V1/Q2 | 0 | `691f0ceca11c3e683aaa09768566c15cbc3a0ce0939eb317efe5bb095bdfea6e` | `da7d9e85f27eb47104eceb1e1f90211960215a10cfca2939241ba4acf86d7dc6`，COMPLETE；labor/fees/one_time_total 均 NOT_REQUESTED，禁止金额未出现在回执 |
+| unsupported-version（9.9） | 2 | `7ce04aaf27934a3e7d76c5802bd386177a38139a259e60dc5f488d6a90b75858` | INPUT_ERROR: schema_version: unsupported version；没有成功回执 |
+
+首案合成两角色 FE/PM，三个情景基础人天分别为 2/3/4 和 1/1.5/2，缓冲 10%/15%/20%，固定单价 100、一次性同税基外费 20 元，真实输出 B=3/4.5/6、R=0.3/0.675/1.2、E=3.3/5.175/7.2、人工费=330/517.5/720，一次性合计=350/537.5/740；与独立 Decimal 核对相符。仅证明所列合成范围计算及金额拒绝/版本拒绝，不是实际客户报价。成功回执均核输入及脚本身份；最终 dist ZIP SHA 与实际解压运行对象一致。
+
+### 11.5 限定收口与剩余门禁
+
+B4-A01～04 的版本、源码、登记路径、静态及归档/解压限定本地证据已具备；本节及 P-06 账本新增工程证据用于 A05 收口。不更改 155 个最终 PENDING 状态。保留两处旧测试静态不适配、原 86 个未运行案例和全部正式回归/真实模型/WorkBuddy 安装对话 NOT_TESTED；历史提交报告不继承到新版本，许可权利及正式发布仍 BLOCKED。catalog 保持 DEVELOPING/NOT_TESTED，只登记真实本地候选及 SHA。后续证据提交不修改任何九成员，候选来源仍是 §11.3 源提交；最终普通 push 与远端实测 SHA 在 Git 交付后另行报告，不在提交中预写自身身份。第五批完成后停止开发，只读确定下一阶段是否有获准范围。

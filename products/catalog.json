@@ -55,7 +55,7 @@
     {
       "active_version": "1.2.0",
       "category": "12-IndustryConsultant",
-      "development": "1.2.0 source; local candidate verification pending",
+      "development": "1.2.0 local candidate verified; bounded extracted CLI checks passed; formal regression and platform NOT_TESTED",
       "id": "wangbin-software-consultant",
       "maintenance": "UNKNOWN",
       "name": "Software Consultant",
@@ -106,11 +106,11 @@
           "version": "1.1.2"
         },
         {
-          "archive_evidence": "UNKNOWN",
-          "candidate": "UNKNOWN",
+          "archive_evidence": "dist/wangbin-software-consultant-1.2.0-expert-candidate.zip",
+          "candidate": "dist/wangbin-software-consultant-1.2.0-expert-candidate.zip",
           "date": "2026-11-25",
           "published_at": "UNKNOWN",
-          "sha256": "UNKNOWN",
+          "sha256": "d42eaa2090eb07660cbb6f712ae506a2f731e5fd62035d5ccd58fec0f236bd47",
           "source": "packages/experts/wangbin-software-consultant",
           "version": "1.2.0"
         }
