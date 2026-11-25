@@ -1,5 +1,7 @@
 # 软件需求与报价专家｜当前分支功能实现盘点（2026-11-25）
 
+> **第七批统一回归与可复现性（独立 QA 通过）：** 已按 Q38～47 实现并实际验证 B7-E01～E05 的工程能力，371 项完整回归、深路径独立复验、缺失/恢复/冲突场景及独立静态终审通过；正式 Git 提交与最终远端验收见 §13 后续登记。产品包内九成员及历史/当前候选保持原身份，平台 NOT_TESTED、155 条最终验收 PENDING、许可及发布未通过。
+
 > **第六批本地质量收口（独立回归通过）：** 前五批限定交付已完成，第五批正式候选 Expert 1.2.0/Skill 0.2.0/计算合同 2.0、源提交 `e376395df4e09267ef494f4e421fc49d4fbdb6dd` 及第五批实际远端 `49ef65e4e5b8dd9d052f64f5e6f5c1a3098cc4e3`。Q35～Q37 限定回归、历史测试适配及独立复审通过，最终补强快照 307/307，生产源码和候选未改，实测见 §12；不新增真实模型/平台/发布授权，155 项最终验收仍 PENDING。§§1–11 为历史记录。
 
 **历史盘点结论（第二批前）：** 产品主体咨询能力已经写入正式源码。七领域、十二阶段入口和十四类文字成果都有规则；第一批统一评审稿与复用差量已在工作树补齐。原始需求尚不能称全部完成，明确的剩余业务缺口是菜单导航、个人级排期（含交期不可达处理）。未发现必须在此两项开发前再次询问用户的新增实质选择。当前判断须读 §8、§9，而非沿用本段旧状态。
@@ -435,3 +437,76 @@ B4-A01～04 的版本、源码、登记路径、静态及归档/解压限定本�
 B6-Q01～Q04 的限定实现与实际回归及独立审查 PASS。B6-Q05 按本节登记及最终选择性 Git 交付完成；不把回归 PASS 当成已执行 86 个真实模型场景，不将源规则断言当实际模型行为，155 条最终验收 PENDING、平台 NOT_TESTED、许可权利及发布 BLOCKED。已知回归运行依赖本地三件套和历史 Git 对象、产品工厂通用单文件测试入口不等于本批完整覆盖、跨 Python 压缩环境不保证相同 ZIP 字节；均为明确边界而非本批未实现业务要求。第六批后停止开发，仅只读审查遗留；不自动新发版、平台操作或开展第七批。原始临时日志/回执属于本地受控核验记录，不把环境信息及生成物提交，持久范围/计数/哈希以本节为准。
 
 交付卫生核验：本批实际删除自建 scratch 中 21 个已核实隔离源/pytest basetemp 目录及其 3998 个文件，共 79711444 字节；拒绝 link/reparse point，不触及仓库源码、历史候选或用户文件。必要原始回执仍在本地临时 scratch（受其正常清理生命周期约束），不入 Git。正式归档六文件实测与历史 SHA 一致、dist 忽略，原 uv.lock 未变；无已跟踪文件净删除。第六批仅 12 个测试文件（11 修改/1 新增）、5 个需求/审计/登记文件进入最终交付。
+
+## 13. 第七批统一回归与工程可复现性
+
+已确认 Q38=A、Q39=B、Q40=B、Q41=A、Q42～47=B，实施授权和 AC-01～20 见同一原始需求冻结 §11。第七批限定本 Expert 与最小公共工厂接入，保持业务和包内源码。实际开发前核实仓库 `F:/ideaWorkSpace/wangbin-workbuddy`、分支 `expert/software-consultant`、本地 HEAD 和实际 origin 同名 ref 同为 `b769a198becefba616dccb18bf4b40f168067e9c`，空暂存/跟踪 diff，唯一原未跟踪 uv.lock SHA `075a1bbb8689d1299323f64d19100a83fab3648b94c5b8fa23758d7ed7b13517`。原历史及当前六归档实际核验：1.0.0 ZIP `577f3089d2f4707178f44ba1e5c395a99853bb9558f3e8c0e752a0e6ba2e30de`、实际旧 `-expert-manifest.json` `4734e385041b2a4cb16b0cb77a91dbad8fd0ed4d6bdd24e751254ff12b5f0b6f`、旧 `.zip.sha256` `29b911e142d8c25733e51647e33a3c38a572ed14efcfa05016a175e3ab4d48ee`；1.2.0 三件套 SHA 见 §11 和冻结 §11，核验一致。旧 manifest 实际命名与新版不同，不修改。参考环境实际 Python 3.12.0、pytest 8.4.2、PyYAML 6.0.3。61 个第六批原测试依赖路径可核实；`tests/conftest.py` 含无关文档 fixture 生成，限定根两用例不需该 hook，禁止将它引入无关测试执行。
+
+### 13.1 实施安排及独立门禁
+
+- B7-E02/E03：独立 stdlib 支撑准备/候选/历史校验模块，显式准备才允许获准依赖安装或限定 origin 历史获取；按精确原件身份恢复缺失文件、不覆盖；增加专项合成回归。
+- B7-E03：拆分原组合归档用例成旧 ID 的独立双入口重建及新原件验证，继续真实解压校验旧与 2.0 两路径；按依赖前提分别执行，不改弱原断言。
+- B7-E01/E02/E04：专属回归编排器、源快照/范围绑定及分组选择、公共产品工厂最小接入、完整回执和失败判定。不得复制未经筛选的工作树、读受保护 SQL/凭据、运行其他产品业务测试或真实相似度/发布扫描；准备与正常离线回归分离。原 307 用例身份或经证明的拆分语义完整保留。
+- B7-E05：先从精确第六批提交独立回归比照基线，再进行开发测试、隔离新环境、原件缺失/恢复/冲突、历史缺失/恢复、回归不完整和实际最终全范围验证；独立静态及实际 QA 后登记、清理自有生成物、选择性 commit/push/实际 ref 核验。源码变化需重新验证；原件和正式 9 成员保持。不能用准备中或委派消息作为实测结果。
+
+`deleg_39a5774e` 分派三路独立文件所有权实施及一路精确第六批基线实际回归。三路作者交付已返回，独立基线任务使用冻结 b769a19 和 61 文件规范快照实际 307 PASS/0 FAIL/0 ERROR/0 SKIPPED，pytest 退出 0，63.25 秒（外层回执 63.859 秒）；307 ID 与第六批最终完全一致，原 200 ID 保留。已实际核对原始证据 SHA 并排他复制至 `.runtime/wangbin-software-consultant/b7-baseline-b769a19/`：receipt `0a934780ce1b4ae269ac09320b155b54ea5e152509723c7c111f2ab46e1bc1d6`、JUnit `f729cde01c081fe4784b10fc27fb5f139ddaaa0a7fdc2ac4fbaebd7a8b9dbe2b`、case IDs `8aba44d02b2273b7f8fe6a3182438a0df1fb65d4cd4e4de12b8f37bd86ac6b6c`；保护文件及快照不变。
+
+### 13.2 首次实际集成证据（非最终验收）
+
+作者分别报告支撑专项 13/13、拆分归档齐全 14/14（缺原件直接 pytest 13 PASS/1 FAIL，仅原件项失败）、执行器专项 10/10。协调者实际显式创建 `.runtime/wangbin-software-consultant/venv` 独立 Python 3.12.0 环境，固定七个必要依赖 pytest 8.4.2、PyYAML 6.0.3、colorama 0.4.6、iniconfig 2.3.1、packaging 26.3、pluggy 1.7.0、Pygments 2.21.0；安装退出 0，准备状态 PASS，实际准备回执 SHA `d27cf506d7ae7bddb18901baf41d745dea41fa99b387eddd05db83bdf066f377`。没有改原 .venv/uv.lock。
+
+首次真实统一产品 CLI 使用新环境，执行 116.52 秒，退出 1，实际 collected=331、selected=331、passed=309、failed=22、errors=0、skipped=0、timeout=0；另有一个计划中的旧新增 ID 已更名而未实际收集（unexecuted=1），全部原 307 ID 仍收集。回执 `.runtime/wangbin-software-consultant/r-5mjfffqn/receipt.json` SHA `3e9af22386d0853ef808ec400f04d2c24d34f8040f638bd6e702a3e51c36bb76`。实际原件、历史、封板/来源、独立双入口重建、两种包内运行均 PASS，双重建 SHA `ead09f5f84692d3f09652d5b1b145ddee9996677bfd125f67fd3b867640051d1` 与原件身份分开。22 个失败均来自历史 `test_fixed_price_source.py`：实际 Git stderr `Filename too long`，发生于新执行器的深层隔离目录中直接调用历史 git show，而非估算语义断言；另支撑作者晚期拆分/更名需同步新增 ID 清单（原 307 不删）。保留真实失败，待针对路径/依赖清单最小修正及独立审查后复验。`deleg_ed3d85ba` 两路独立静态审查返回 BLOCKED/CHANGES_REQUIRED，审查对象 SHA 已核，非最终验收。
+
+### 13.3 独立初审及限定修正任务
+
+| 缺口 | 来源/原因 | 修正及复验要求 |
+|---|---|---|
+| R01 | 实测计划新增旧 ID 缺失 | 同步新增 ID，保留 307 真实旧 ID |
+| R02 | 开发模式跨根执行器/实际加载 support 及前后身份未闭合 | 绑定实际 supervisor、support 和所记录的同一快照及模式，记录开发 dirty、正式真实 commit 和前后身份 |
+| R03 | 重建、包内运行和原件来源耦合，实际 CLI 回执被清理 | 独立封板源码绑定、原件绑定、重建、重建运行、原件运行；持久保留必要实际合成 CLI 回执与 manifest/sidecar、归档身份，分别裁定 |
+| R04 | 同一 case 断言失败及 teardown error 会丢失失败统计 | 唯一用例状态与真实阶段统计分列，专项反证 |
+| R05 | 只读历史读取的环境清理丢失离线约束；首次新环境 22 项 Git 深路径失败 | 明确真实历史 repo/精确 blob 读取，命令级长路径及 no-lazy-fetch/离线约束，包含专用 packager 调用链，不改实际生产包字节 |
+| R06 | 恢复回滚异常被静默省略 | 真实登记回滚失败和残留，不删除非本操作创建文件，保持 FAIL |
+| R07 | 历史固定价对比或原件验证阻断时包含的独立当前 CLI/catalog 断言也被阻断 | 增加独立当前 CLI 语义及 catalog 身份验证；既有原 307 及归档断言不删 |
+
+`deleg_1b76cf26` 三路独立文件所有权修正；原初稿及实际失败证据保留。修正后作者执行器专项 20/20（receipt SHA `a2a7a5b08696fe96b24698f4a7ff81035a7a033cee3d0718a231502fd1b3738e` 已核）、支撑专项 18/18（receipt SHA `fa53cd8963cfa27506190f5ad59afdc2136b3ccd23170176275bed1ce58febb7` 已核）；历史/独立当前 CLI 作者报告 96/96、缺历史及原件时独立 23/23、缺原件但有封板时独立重建/运行/catalog 3/3（不同选集，不相加）。协调者从确切 66 文件快照实际 collection 370 个唯一 node ID，原 307 全部保留，新 63；仅调整新增清单旧更名项及新用例，清单实际 SHA `1338462855522bbf29f1d0563cb13156617e9eb6f6a98bdba51e23af72a70587`，无历史项移除。
+
+### 13.4 修正版完整统一入口实测
+
+协调者使用新独立 venv 实际执行 `python -m tooling.products test --id wangbin-software-consultant`，160.57 秒，退出 0，370 collected/370 selected/370 PASS/0 FAIL/0 ERROR/0 SKIPPED/0 DESELECTED/0 未执行/0 TIMEOUT；实际快照 66 文件身份及持久证据 18 文件 SHA 全部核验，所有 11 门禁 PASS：snapshot, environment, history, original, source_binding（当前封板九成员）, original_source_binding, regression, rebuild, rebuilt_runtime, original_runtime, cleanup。完整回执 `.runtime/wangbin-software-consultant/r-ggj9oppa/receipt.json` SHA `ee6b1dd2cdfaaf1f77d3ea535e215d059572643eec6fe9d990cff6e877dd5c37`，snapshot SHA `d629484a7b65ab247a096301847ee1d9a4f7062ad85d22886120fd703779c59e`。两独立重建 ZIP `ead09f5f84692d3f09652d5b1b145ddee9996677bfd125f67fd3b867640051d1`；原件 `d42eaa2090eb07660cbb6f712ae506a2f731e5fd62035d5ccd58fec0f236bd47`。实际四份合成 CLI 回执和必要 manifest/sidecar 持久保留，临时源码/ZIP清理。实际当前 repo 显式 `prepare-history` 退出0，三个历史组 PASS、`fetched=false`（真实前提已齐、没有实际网络 fetch），回执 SHA `c3f0aa6966f39f20b666379af352ab4a6c29052685a96b859cba8db23f584eee`；有限合成浅仓显式获取场景属于专项测试，不冒称真实 origin 缺失已发生。
+
+供工程人员使用的入口（Windows Python 3.12，根目录或明确受控 root）：
+
+```text
+python -m tooling.consultant_regression prepare-env --python <Python3.12解释器路径>
+<独立venv解释器> -m tooling.products test --id wangbin-software-consultant
+<独立venv解释器> -m tooling.consultant_regression run --mode formal --commit <完整实际SHA>
+python -m tooling.consultant_regression prepare-history
+python -m tooling.consultant_regression restore-original --source-dir <明确可信本地三件套目录>
+```
+
+常规运行默认不联网，正式验证使用明确真实提交；`prepare-env`、`prepare-history`、`restore-original` 为彼此独立的显式准备操作，不自动执行，原件不存在则仅执行独立允许测试并保留阻断。`deleg_efb4701a` 已派最终限定静态复审及两路真实异目录/缺失/恢复独立回归。当前370项协调者通过不替代独立 QA 或正式提交验证。
+
+### 13.5 异目录独立 QA 发现及最终限定补强
+
+`deleg_efb4701a` 的静态复审确认 66/66 文件、18/18 持久证据、307 原 ID 和 63 新 ID 全体一致，R01/R04～R07 CLOSED；R02 仍将已知执行器身份冲突归为 BLOCKED，R03 共享封板 fixture 仍将当前源码冲突传导至独立原件和历史重建，需进一步分离。实际异目录验证：无原件 352 PASS/17 ERROR/1 BLOCKED，恢复真实三件套 3 文件 PASS，重复恢复 3 文件保留 PASS；恢复后 353 PASS/17 ERROR。原件和重建/运行等独立门禁已通过，17 个 error 均为合成 Git fixture `git add` 的深路径限制。回执 SHA：缺原件 `a14848aaf5302cb9634585ab48cf79f654fddbb0ccdefd1486a6b70c72e27914`、恢复 `0a4f82fa6a7c23e2dc94e2838535fee33722c878de44c486820a770f91d287bc`、恢复后 `f97ad76ffbc4477bb2d0bc6a9435084817e6572e17ee913e81e79ae58e0593df`。双缺失独立 QA 首两轮 326 PASS/17 ERROR/27 BLOCKED；第三轮仅使用一次性隔离 HOME 长路径配置后实测 343 PASS/27 BLOCKED/0 FAIL/ERROR/SKIP/TIMEOUT，执行器退出1、pytest退出0（回执 SHA `be947485942979a29d5441e9aa461c10b0899c8c5d93c27d6000c595feaee138`）。27 阻断项准确，当前固定价独立22项及 catalog PASS；真实历史仍缺失。合成原件同尺寸哈希冲突及恢复拒绝 PASS，目标无写入/覆盖。全部上述失败和限定通过证据保留，不把临时 HOME 配置绕行当成正式可移植性通过。
+
+最终补强只改五个候选文件：已知执行器/正式源身份不匹配使用明确 IdentityConflict→FAIL；不可获取的前提保留 BLOCKED；加强原有冲突专项断言、单列当前快照九成员封板断言 `test_current_snapshot_matches_sealed_bytes`，共享历史候选 fixture 只消费真实冻结 Git blob，使原件/重建/两类包内运行不因当前源码身份不符而假 FAIL；新断言依赖 sealed history。合成 Git 测试 helper 一律显式命令级 `core.longpaths=true`，不改用户/临时 HOME 或全局配置。原 307 ID 及前 63 新 ID 保留，新增独立封板用例1，实际全收集一致。强化身份断言实测红灯三项（另一个最小 synthetic fixture 的整体状态断言不适用，已限制为正确的环境 gate BLOCKED，源绑定缺成员仍 FAIL），保留红灯回执 SHA `df7fc016d2670bed3ef43355ebb2835a303fcfe4fe3e25be40fff380642cdc1f`。
+
+新候选用真实统一入口实测155.63秒，退出0，371 collected/selected/PASS、0 FAIL/ERROR/SKIPPED/DESELECTED/未执行/TIMEOUT，原307+64新增 ID 精确一致。66文件及18持久证据已读回复核；snapshot SHA `42d4c9c0f75628dd1219ff7b5818c1be7084ae2f72bef4f1272f11e472b5a3e8`，receipt `.runtime/wangbin-software-consultant/r-rwl9fbj8/receipt.json` SHA `00415a5ccbdd179f7e17eddaa64e8cf431c876157417572ffbd5aed039cf9a4f`，11个门禁全 PASS。已派 `deleg_4f420f1f` 复验静态边界及深路径异目录完整、无原件/恢复、双缺失及当前源冲突隔离场景；371 协调者结果不是最终独立 QA 或正式提交回执。
+
+### 13.6 最终独立复审与异目录实测关闭
+
+`deleg_4f420f1f` 限定静态终审 PASS，R01～R07 全部 CLOSED；核验修正版 66 文件、18 证据及全部 371 ID；相对 370 候选仅 §13.5 所列五文件变化。实际异目录深路径 80 字符（此前 63），没有用户或临时 HOME Git 配置绕行；独立实测及原始回执读回：
+
+| 场景 | 实测结果/整体状态 | 回执 SHA-256 |
+|---|---|---|
+| 历史齐备、原件缺失 | 370 PASS/1 BLOCKED，退出1 | `e1b6e5a5f9d5bc5ab4b79bd81623a42fb1c1df062709ec0029b1c1a5294550ad` |
+| 显式原件恢复及重复恢复 | 实际恢复3文件、再次调用保留3文件，均退出0，无覆盖 | 独立 summary `d9fe3191c7d258ceb10791a4f82ce0beabedb4b0efc170beba8da04bf285176d` |
+| 恢复后独立完整回归 | 371 PASS，0 FAIL/ERROR/SKIP/TIMEOUT/未执行，11门禁PASS，退出0 | `2270cdd834b4ed8044220e34a1b7bcf818f2d07428748ec7c5a8308f702ce00f` |
+| 受控副本当前源码封板冲突（非交付源码） | 370 PASS/1 FAIL，source_binding FAIL，原件及两种重建/运行各自 PASS，退出1 | `fd68dbb6a19ed4ac774bb09819ba27607c71566298162e30a0de8ce34d2ec404` |
+| 无真实历史且无原件 | 343 PASS/28 BLOCKED，0 FAIL/ERROR/SKIP/TIMEOUT，pytest 0、产品CLI 1，离线受控 | `148a962c9efa285daa719639ebbe4aeec6ba6e920e9b4ab4b11bc45752b9948f` |
+
+前四场景必要原始证据在 `.runtime/wangbin-software-consultant/qa-independent-deep-q7-exp95zut/`（独立核验88文件）；最后一场景在 `.runtime/wangbin-software-consultant/qa-b7-deep-no-home-j8y04fr8/`（独立读回裁定 SHA `86b585b44e4454264c30c9c55cfe738ff24f1b356458d043fb026e0ac3d5bb41`）。协调者实读五个回执并核对完整独立回归的66源文件、371 node IDs、18证据 SHA；原 307 项全部保留。冲突副本的首次外层超时和双缺失外层脚本计数断言错误已保留，后者经真实原事件读回裁定（22 当前 CLI、另2项独立性/catalog，合计24）而非更改业务测试。此为规定的负向场景正确非PASS，不是最终完整回归失败。所有自建隔离源已按各 QA 回执清理，源仓、原件、uv.lock 保持，必要回执本地持久保存。真实 origin 历史对象当前本来齐备；实际缺失后获取用独立合成浅仓库实测，不声称曾对真实远端执行补 fetch。不同系统或跨 Python 压缩字节相同仍未验证。
+
+B7-E01～E05 实现、既定 AC-01～20 限定本地验收、独立复审均通过；最终登记仅改本产品 catalog development、P-06 evidence 及 requirements 导航，平台和155最终状态不动。最终登记后实测统一入口 371/371、退出0、173.88 秒、11门禁 PASS，原测试 ID 集与 §13.6 独立一致；相对独立候选仅 `products/catalog.json`、本产品 `docs/requirements.md`、`docs/traceability.csv` 登记字节变化，其余63个依赖文件不变。回执 `.runtime/wangbin-software-consultant/r-ap99lh4t/receipt.json` SHA `6c1b6b0bb3d09291999cda427ad89058fb25fcf3946b270f1a9b48962a5dc36d`，snapshot SHA `ebf14b8a47ea64e855bf97034e90760f114c17936ba19a1350f846a7918d6d6b`；66个实际文件身份复核通过。选择性提交后使用正式明确提交模式核验实际源与证据，再普通 push 和远端读回；本段不预写不存在的最终提交/远端。

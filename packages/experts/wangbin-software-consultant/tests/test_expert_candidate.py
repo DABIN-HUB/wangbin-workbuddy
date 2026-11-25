@@ -3,15 +3,15 @@ from __future__ import annotations
 
 import io
 import json
+import os
 import shutil
-import subprocess
 import zipfile
 from decimal import Decimal
 from pathlib import Path
 
 import pytest
 
-from tooling.phase5_expert_packager import MEMBERS, NAME, VERSION, build, validate_source
+from tooling.phase5_expert_packager import MEMBERS, NAME, VERSION, build, validate_source, _historical_blob
 
 ROOT = Path(__file__).resolve().parents[4]
 SOURCE = ROOT / "packages" / "experts" / NAME
@@ -52,11 +52,9 @@ def test_zip_members_are_exact_and_source_identical():
     mistake this in-memory source replay for an actual release ZIP comparison.
     """
     baseline = "67d0fe8cfa5d71b53cc46d79bbaec620638dd1e0"
+    repo = Path(os.environ.get("WANGBIN_CONSULTANT_TEST_SOURCE_REPO", ROOT)).resolve(strict=True)
     def old_bytes(rel: str) -> bytes:
-        return subprocess.run(
-            ["git", "show", f"{baseline}:packages/experts/{NAME}/{rel}"],
-            cwd=ROOT, check=True, capture_output=True,
-        ).stdout
+        return _historical_blob(repo, baseline, f"packages/experts/{NAME}/{rel}")
 
     original = {f"{NAME}/{rel}": old_bytes(rel) for rel in MEMBERS}
     identity = json.loads(original[f"{NAME}/.codebuddy-plugin/plugin.json"])

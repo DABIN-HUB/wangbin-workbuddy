@@ -63,6 +63,8 @@ def main() -> int:
     except (ValueError, OSError, KeyError) as exc:
         parser.exit(2, f"error: {exc}\n")
     print(json.dumps(result, ensure_ascii=False, indent=2))
+    if args.command == "test" and args.id == "wangbin-software-consultant":
+        return 0 if result.get("status") == "PASS" else 1
     if args.command == "similarity-check":
         return 1
     return 0 if result.get("status", "PASS") not in {"FAIL", "BLOCKED"} else 1

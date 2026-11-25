@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 from tooling import product_factory
-from tooling.phase5_expert_packager import build, validate_source, NAME
+from tooling.phase5_expert_packager import build, validate_source, NAME, _historical_blob
 
 ROOT = Path(__file__).resolve().parents[4]
 SOURCE = Path(__file__).resolve().parents[1]
@@ -19,6 +19,8 @@ SOURCE_REL = f"packages/experts/{NAME}"
 # the production packager. Test-only changes must not change these nine blobs.
 SEALED_COMMIT = "e376395df4e09267ef494f4e421fc49d4fbdb6dd"
 SEALED_SHA256 = "d42eaa2090eb07660cbb6f712ae506a2f731e5fd62035d5ccd58fec0f236bd47"
+SEALED_MANIFEST_SHA256 = "59a7f5001637a0ba1d3537e7aa3c61d9e891d26f0ea557e31a8badb9e672c318"
+SEALED_SIDECAR_SHA256 = "95407556349acc880f29cb7ee6f0992730e0d4c7799ac689eea9e400992cd1dd"
 CANDIDATE_NAME = f"{NAME}-1.2.0-expert-candidate.zip"
 SCRIPT = "skills/wangbin-estimate-calculator/scripts/estimator.py"
 MEMBERS = (
@@ -42,13 +44,7 @@ def _copy_members(target):
 
 
 def _git_blob(repo, commit, rel):
-    env = {k: v for k, v in os.environ.items() if not k.upper().startswith("GIT_")}
-    run = subprocess.run(
-        ["git", "--no-replace-objects", "-c", "core.longpaths=true", "show", f"{commit}:{SOURCE_REL}/{rel}"],
-        cwd=repo, env=env, capture_output=True,
-    )
-    assert run.returncode == 0, run.stderr
-    return run.stdout
+    return _historical_blob(repo, commit, f"{SOURCE_REL}/{rel}")
 
 
 @pytest.fixture
@@ -59,12 +55,19 @@ def canonical_candidate():
     for rel in MEMBERS:
         sealed = _git_blob(repo, SEALED_COMMIT, rel)
         assert _git_blob(repo, baseline, rel) == sealed, rel
+        expected[f"{NAME}/{rel}"] = sealed
+    return repo, expected
+
+
+def test_current_snapshot_matches_sealed_bytes(canonical_candidate):
+    # A current-source mismatch fails this separate gate, not the independent
+    # historical reconstruction or original-candidate runtime evidence.
+    _, expected = canonical_candidate
+    for rel in MEMBERS:
         checkout = (SOURCE / rel).read_bytes()
         if rel != "avatars/expert.png":
             checkout = checkout.replace(bytes((13, 10)), bytes((10,)))
-        assert checkout == sealed, rel
-        expected[f"{NAME}/{rel}"] = sealed
-    return repo, expected
+        assert checkout == expected[f"{NAME}/{rel}"], rel
 
 
 def _materialize(root, expected):
@@ -119,6 +122,28 @@ def test_external_or_unbound_skill_rejected(tmp_path, value):
     with pytest.raises(ValueError, match="skills"):
         validate_source(copy)
 
+def test_original_candidate_identity_and_runtime(tmp_path, canonical_candidate):
+    repo, expected = canonical_candidate
+    candidate_root = Path(os.environ.get("WANGBIN_CONSULTANT_TEST_CANDIDATE_ROOT", repo))
+    sealed_archive, sealed_manifest, sealed_existing = _assert_archive(candidate_root, expected, SEALED_SHA256)
+    manifest_path = sealed_archive.with_name(sealed_archive.name + ".manifest.json")
+    sidecar_path = sealed_archive.with_name(sealed_archive.name + ".sha256")
+    assert hashlib.sha256(sealed_existing[manifest_path]).hexdigest() == SEALED_MANIFEST_SHA256
+    assert hashlib.sha256(sealed_existing[sidecar_path]).hexdigest() == SEALED_SIDECAR_SHA256
+    assert sealed_manifest["source_commit"] == SEALED_COMMIT
+    assert sealed_manifest["source_byte_basis"] == "verified_git_blob_bytes"
+    assert sealed_manifest["workbuddy_install"] == sealed_manifest["workbuddy_dialogue"] == "NOT_TESTED"
+    _assert_candidate_runtime(tmp_path, sealed_archive, expected)
+    assert all(path.read_bytes() == data for path, data in sealed_existing.items())
+
+
+def test_original_catalog_identity():
+    catalog = product_factory.get_product(ROOT, NAME)
+    assert catalog["active_version"] == "1.2.0"
+    registered = next(v for v in catalog["versions"] if v["version"] == "1.2.0")
+    assert registered["sha256"] == SEALED_SHA256 and registered["candidate"] == f"dist/{CANDIDATE_NAME}"
+
+
 def test_archive_is_deterministic_and_binds_formal_bytes(tmp_path, canonical_candidate):
     repo, expected = canonical_candidate
     dedicated = tmp_path / "dedicated"
@@ -129,27 +154,15 @@ def test_archive_is_deterministic_and_binds_formal_bytes(tmp_path, canonical_can
     shutil.copyfile(ROOT / "products/catalog.json", generic / "products/catalog.json")
     assert not (dedicated / "dist").exists() and not (generic / "dist").exists()
 
-    # The actual delivered archive is immutable. Compression output can differ
-    # between the original 3.14 and the fixed 3.12 QA runtime even when every
-    # member is identical; check the historical hash against the real artifact,
-    # and require both independent builds here to have identical archive bytes.
-    sealed_archive, sealed_manifest, sealed_existing = _assert_archive(repo, expected, SEALED_SHA256)
-    assert sealed_manifest["source_commit"] == SEALED_COMMIT
-    assert sealed_manifest["source_byte_basis"] == "verified_git_blob_bytes"
-    assert sealed_manifest["workbuddy_install"] == sealed_manifest["workbuddy_dialogue"] == "NOT_TESTED"
-    catalog = product_factory.get_product(generic, NAME)
-    assert catalog["active_version"] == "1.2.0"
-    registered = next(v for v in catalog["versions"] if v["version"] == "1.2.0")
-    assert registered["sha256"] == SEALED_SHA256 and registered["candidate"] == f"dist/{CANDIDATE_NAME}"
-
+    # Compression may differ from the historical archive; both new archives
+    # must independently match the sealed blobs and each other's bytes.
     first = build(dedicated, source_repo=repo, source_commit=SEALED_COMMIT)
     archive, manifest, existing = _assert_archive(dedicated, expected, first["sha256"])
     assert first["source_commit"] == manifest["source_commit"] == SEALED_COMMIT
     assert manifest["source_byte_basis"] == "verified_git_blob_bytes"
     assert manifest["workbuddy_install"] == manifest["workbuddy_dialogue"] == "NOT_TESTED"
     assert first["checkout_crlf_normalized_members"] == []
-    assert first["members"] == manifest["members"] == sealed_manifest["members"]
-    assert manifest["payload_snapshot_sha256"] == sealed_manifest["payload_snapshot_sha256"]
+    assert first["members"] == manifest["members"]
     with pytest.raises(FileExistsError, match="already exists"):
         build(dedicated, source_repo=repo, source_commit=SEALED_COMMIT)
     assert all(path.read_bytes() == data for path, data in existing.items())
@@ -165,6 +178,21 @@ def test_archive_is_deterministic_and_binds_formal_bytes(tmp_path, canonical_can
     assert all(path.read_bytes() == data for path, data in generic_existing.items())
     assert "source_commit" not in other_manifest  # canonical proof above, not a generic manifest claim
 
+
+def test_rebuilt_candidate_runtime(tmp_path, canonical_candidate):
+    repo, expected = canonical_candidate
+    dedicated = tmp_path / "dedicated"
+    _materialize(dedicated, expected)
+    assert not (dedicated / "dist").exists()
+    built = build(dedicated, source_repo=repo, source_commit=SEALED_COMMIT)
+    archive, manifest, existing = _assert_archive(dedicated, expected, built["sha256"])
+    assert manifest["source_commit"] == SEALED_COMMIT
+    _assert_candidate_runtime(tmp_path, archive, expected)
+    assert all(path.read_bytes() == data for path, data in existing.items())
+
+
+def _assert_candidate_runtime(tmp_path, archive, expected):
+
     prompt = expected[f"{NAME}/agents/{NAME}.md"].decode("utf-8")
     for rule in ("回执缺失", "input_sha256", "未作确定性工具验证",
                  "来源真实性、授权、估时合理性、业务完整性、复用、分摊、排期可行性与平台安装不由脚本认证",
@@ -174,7 +202,7 @@ def test_archive_is_deterministic_and_binds_formal_bytes(tmp_path, canonical_can
     # Actual package entry, not a checkout script or model claim. The nine
     # members above exclude the experimental verifier and all test fixtures.
     extracted = tmp_path / "extracted"
-    with zipfile.ZipFile(sealed_archive) as zipped:
+    with zipfile.ZipFile(archive) as zipped:
         zipped.extractall(extracted)
     script = extracted / NAME / SCRIPT
     assert script.read_bytes() == expected[f"{NAME}/{SCRIPT}"]
@@ -220,13 +248,12 @@ def test_archive_is_deterministic_and_binds_formal_bytes(tmp_path, canonical_can
     result2 = json.loads(receipt2.read_bytes())
     assert result2["schema_version"] == "2.0" and result2["request"] == request["request"]
     assert result2["input_sha256"] == hashlib.sha256(payload2).hexdigest()
-    assert result2["script_sha256"] == result["script_sha256"]
+    assert result2["script_sha256"] == hashlib.sha256(expected[f"{NAME}/{SCRIPT}"]).hexdigest()
     assert set(result2["results"]) == {"fiction"}
     scope = result2["results"]["fiction"]
     assert scope["B"]["low"]["value"] == "2" and scope["B"]["high"]["value"] == "4"
     assert scope["E"]["low"]["value"] == "2.2" and scope["E"]["high"]["value"] == "4.8"
     assert all(scope["labor"][s]["value"] is None for s in ("low", "high"))
-    assert all(path.read_bytes() == data for path, data in sealed_existing.items())
 
 
 def test_package_rejects_uncommitted_member_bytes(tmp_path, canonical_candidate):

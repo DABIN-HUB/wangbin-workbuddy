@@ -75,11 +75,31 @@ def _git(repo: Path, *args: str) -> bytes:
     # The named repository, not an inherited Git directory/worktree override,
     # determines which original objects are examined.
     env = {key: value for key, value in os.environ.items() if not key.upper().startswith("GIT_")}
-    run = subprocess.run(["git", "--no-replace-objects", "-c", "core.longpaths=true", *args],
+    # No lazy fetching, even on a partial clone with a protocol-specific allow.
+    env.update(GIT_NO_LAZY_FETCH="1", GIT_ALLOW_PROTOCOL="", GIT_TERMINAL_PROMPT="0")
+    run = subprocess.run(["git", "--no-replace-objects", "-c", "core.longpaths=true",
+                          "-c", "protocol.allow=never", *args],
                          cwd=repo, env=env, capture_output=True)
     if run.returncode != 0:
         raise ValueError(f"cannot verify source repository: git {args[0]} failed")
     return run.stdout
+
+
+def _historical_blob(repo: Path, commit: str, path: str) -> bytes:
+    """Read one exact, locally available regular blob from an explicit repository."""
+    repo = repo.resolve(strict=True)
+    top = Path(_git(repo, "rev-parse", "--show-toplevel").decode("utf-8").strip()).resolve(strict=True)
+    if top != repo or not re.fullmatch(r"[0-9a-f]{40}", commit) or _git(repo, "cat-file", "-t", commit).strip() != b"commit":
+        raise ValueError("historical read requires an explicit repository and exact commit")
+    entry = _git(repo, "ls-tree", "-z", "--full-tree", commit, "--", path)
+    metadata, name = entry.removesuffix(b"\0").split(b"\t", 1)
+    mode, kind, oid = metadata.split()
+    if name != path.encode("utf-8") or kind != b"blob" or mode not in (b"100644", b"100755"):
+        raise ValueError("historical member must be a regular committed blob")
+    raw = _git(repo, "cat-file", "blob", oid.decode("ascii"))
+    if hashlib.sha1(f"blob {len(raw)}\0".encode("ascii") + raw).hexdigest().encode("ascii") != oid:
+        raise ValueError("historical blob identity mismatch")
+    return raw
 
 
 def _verified_payload(root: Path, source_repo: Path | None, source_commit: str | None) -> tuple[str, dict[str, bytes], list[str]]:

@@ -55,7 +55,7 @@
     {
       "active_version": "1.2.0",
       "category": "12-IndustryConsultant",
-      "development": "1.2.0 immutable local candidate verified; scoped local regression 307 passed including independent QA; model and WorkBuddy runtime NOT_TESTED",
+      "development": "1.2.0 immutable candidate verified; scoped unified regression 371 passed with independent relocated QA and prerequisite/identity gates; model and WorkBuddy runtime NOT_TESTED",
       "id": "wangbin-software-consultant",
       "maintenance": "UNKNOWN",
       "name": "Software Consultant",

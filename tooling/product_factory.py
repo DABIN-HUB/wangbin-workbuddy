@@ -384,6 +384,9 @@ def validate_product(root: Path, product_id: str) -> dict:
 
 def test_product(root: Path, product_id: str) -> dict:
     item = get_product(root, product_id)
+    if product_id == "wangbin-software-consultant":
+        from .consultant_regression import run
+        return run(root)
     test_path = item.get("test_path")
     if not _source(root, item).is_dir() or not test_path:
         return {"id": product_id, "status": "NOT_TESTED", "reason": "source or product-specific test absent"}
