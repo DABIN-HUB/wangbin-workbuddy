@@ -451,6 +451,17 @@
     "packages/experts/wangbin-software-consultant/tests/test_consultant_regression.py::test_current_unsealed_registration_does_not_pass",
     "packages/experts/wangbin-software-consultant/tests/test_consultant_regression.py::test_current_wrong_historical_commit_cannot_be_current_seal",
     "packages/experts/wangbin-software-consultant/tests/test_consultant_regression.py::test_current_and_historical_prerequisites_are_independent",
-    "packages/experts/wangbin-software-consultant/tests/test_consultant_regression.py::test_current_package_evidence_requires_current_archive_paths"
+    "packages/experts/wangbin-software-consultant/tests/test_consultant_regression.py::test_current_package_evidence_requires_current_archive_paths",
+    "packages/experts/wangbin-software-consultant/tests/test_consultant_regression_support.py::test_current_history_preparation_rechecks_delivery_dependencies[still_missing-delivery]",
+    "packages/experts/wangbin-software-consultant/tests/test_consultant_regression_support.py::test_current_history_preparation_rechecks_delivery_dependencies[still_missing-delivery_catalog]",
+    "packages/experts/wangbin-software-consultant/tests/test_consultant_regression_support.py::test_current_history_preparation_rechecks_delivery_dependencies[recovered-delivery]",
+    "packages/experts/wangbin-software-consultant/tests/test_consultant_regression_support.py::test_current_history_preparation_rechecks_delivery_dependencies[recovered-delivery_catalog]",
+    "packages/experts/wangbin-software-consultant/tests/test_bundled_calculator.py::test_current_122_snapshot_matches_registered_seal",
+    "packages/experts/wangbin-software-consultant/tests/test_bundled_calculator.py::test_current_122_archive_is_deterministic",
+    "packages/experts/wangbin-software-consultant/tests/test_bundled_calculator.py::test_current_122_rebuilt_runtime",
+    "packages/experts/wangbin-software-consultant/tests/test_bundled_calculator.py::test_current_122_original_runtime",
+    "packages/experts/wangbin-software-consultant/tests/test_bundled_calculator.py::test_current_122_rejects_uncommitted_bytes",
+    "packages/experts/wangbin-software-consultant/tests/test_consultant_regression.py::test_122_pending_registration_and_prerequisites",
+    "packages/experts/wangbin-software-consultant/tests/test_consultant_regression_support.py::test_122_history_and_pinned_prior_catalog"
   ]
 }

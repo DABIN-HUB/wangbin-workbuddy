@@ -14,8 +14,8 @@ from pathlib import Path
 import yaml
 
 NAME = "wangbin-software-consultant"
-VERSION = "1.2.1"
-SUPPORTED_VERSIONS = ("1.2.0", VERSION)
+VERSION = "1.2.2"
+SUPPORTED_VERSIONS = ("1.2.0", "1.2.1", VERSION)
 SKILL_NAME = "wangbin-estimate-calculator"
 SKILL_VERSION = "0.2.0"
 SOURCE = f"packages/experts/{NAME}"

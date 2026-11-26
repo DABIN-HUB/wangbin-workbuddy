@@ -281,7 +281,7 @@ def test_wrong_remote_refuses_preparation_without_fetch(synthetic, monkeypatch):
     repo, _, _ = synthetic
     monkeypatch.setattr(support, 'LEGACY_COMMIT', '0' * 40)
     _git(repo, 'remote', 'add', 'origin', 'https://example.invalid/not-authorized.git')
-    result = support.prepare_history(repo)
+    result = support.prepare_history(repo, version='1.2.0')
     assert result['status'] == 'FAIL'
     assert not (repo / '.git' / 'FETCH_HEAD').exists()
     assert _git(repo, 'remote', 'get-url', 'origin') == b'https://example.invalid/not-authorized.git'
@@ -300,13 +300,84 @@ def test_explicit_fetch_of_synthetic_authorized_branch_preserves_refs(synthetic,
     head = _git(clone, 'rev-parse', 'HEAD')
     assert support.inspect_history(clone)['sealed']['status'] == 'BLOCKED'
     assert _git(clone, 'show-ref') == before
-    result = support.prepare_history(clone)
+    result = support.prepare_history(clone, version='1.2.0')
     assert result['status'] == 'PASS', result
     assert result['fetched'] is True
     assert _git(clone, 'show-ref') == before
     assert _git(clone, 'rev-parse', 'HEAD') == head
     assert not (clone / '.git' / 'FETCH_HEAD').exists()
     assert not _git(clone, 'status', '--porcelain')
+
+
+@pytest.mark.parametrize('missing', ['delivery', 'delivery_catalog'])
+@pytest.mark.parametrize('recovered', [False, True], ids=['still_missing', 'recovered'])
+def test_current_history_preparation_rechecks_delivery_dependencies(synthetic, monkeypatch, missing, recovered):
+    repo, _, _ = synthetic
+    catalog = repo / 'products/catalog.json'
+    catalog.parent.mkdir()
+    catalog.write_text(json.dumps({'products': [{'id': support.NAME, 'active_version': '1.2.0',
+        'versions': [{'version': '1.2.0', 'candidate': f'dist/{support.CANDIDATE_NAME}',
+                      'sha256': support.ORIGINAL_IDENTITIES[support.CANDIDATE_NAME][1]}]}]}), encoding='utf-8')
+    _git(repo, 'add', '--', 'products/catalog.json')
+    _git(repo, 'commit', '-qm', 'synthetic historical delivery')
+    delivery = _git(repo, 'rev-parse', 'HEAD').decode()
+    catalog_oid = _git(repo, 'rev-parse', 'HEAD:products/catalog.json').decode()
+    monkeypatch.setattr(support, 'HISTORICAL_DELIVERY', delivery, raising=False)
+    _git(repo, 'remote', 'add', 'origin', support.ORIGIN)
+    unavailable = ('cat-file', '-t', delivery) if missing == 'delivery' else ('cat-file', 'blob', catalog_oid)
+    actual_git = support._git
+    missing_now = True
+
+    def ordinary_unavailability(root, *args, **kwargs):
+        nonlocal missing_now
+        if kwargs.get('explicit_fetch'):
+            # Simulate only the recovery outcome; never contact the remote.
+            missing_now = not recovered
+            return subprocess.CompletedProcess(args, 0, b'', b'')
+        if missing_now and args == unavailable:
+            return subprocess.CompletedProcess(args, 1, b'', b'SYNTHETIC unavailable object')
+        return actual_git(root, *args, **kwargs)
+
+    monkeypatch.setattr(support, '_git', ordinary_unavailability)
+    result = support.prepare_history(repo)
+    expected = 'PASS' if recovered else 'BLOCKED'
+    assert result['status'] == expected
+    assert result['fetched'] is True
+    assert result['history'][missing]['status'] == expected
+    assert result['history'] == support.inspect_history(repo, version='1.2.1')
+    assert {k: v['status'] for k, v in support.inspect_history(repo).items()} == {'legacy': 'PASS', 'price': 'PASS', 'sealed': 'PASS'}
+    if recovered:
+        assert support.prepare_history(repo)['fetched'] is False
+
+
+def test_122_history_and_pinned_prior_catalog(tmp_path, monkeypatch):
+    root = Path(os.environ.get("WANGBIN_CONSULTANT_TEST_SOURCE_REPO", Path(__file__).resolve().parents[4]))
+    history = support.inspect_history(root, version="1.2.2")
+    assert all(v["status"] == "PASS" for v in history.values())
+    assert {"prior_121_seal", "prior_121_delivery", "prior_121_catalog"} <= history.keys()
+    catalog = json.loads(support._git(root, "show", "977358c17c1e38ff35a7a1357cecf6b15805a70c:products/catalog.json").stdout)
+    prior = support.inspect_prior_121(root, catalog, directory=tmp_path)
+    assert prior["source_binding"] == "PASS" and prior["integrity"] == "BLOCKED" and prior["status"] == "BLOCKED"
+    item = next(p for p in catalog["products"] if p["id"] == support.NAME)
+    next(v for v in item["versions"] if v["version"] == "1.2.1")["sha256"] = "0" * 64
+    assert support.inspect_prior_121(root, catalog, directory=tmp_path)["status"] == "FAIL"
+    assert not list(tmp_path.iterdir())
+    # Use an isolated wrong sidecar; do not alter any real original.
+    sidecar = tmp_path / (support.PRIOR_121_NAME + '.sha256')
+    sidecar.write_bytes(b'fictional invalid sidecar')
+    item = next(p for p in catalog["products"] if p["id"] == support.NAME)
+    next(v for v in item["versions"] if v["version"] == "1.2.1")["sha256"] = support.PRIOR_121_IDENTITIES[support.PRIOR_121_NAME][1]
+    corrupt = support.inspect_prior_121(root, catalog, directory=tmp_path)
+    assert corrupt['integrity'] == corrupt['status'] == 'FAIL'
+    assert corrupt['source_binding'] == 'PASS'
+    assert sidecar.read_bytes() == b'fictional invalid sidecar'
+    # Missing committed objects must remain blocked; the existing explicit
+    # preparation route must inspect the same complete set after recovery.
+    monkeypatch.setattr(support, 'PRIOR_121_DELIVERY', '0' * 40)
+    missing = support.inspect_history(root, version='1.2.2')
+    assert missing['prior_121_delivery']['status'] == missing['prior_121_catalog']['status'] == 'BLOCKED'
+    assert set(missing) == set(history)
+    assert support.inspect_prior_121(root, catalog, directory=tmp_path)['source_binding'] == 'BLOCKED'
 
 
 def test_missing_interpreter_readonly_and_preparation(synthetic):

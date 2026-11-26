@@ -20,6 +20,15 @@ SOURCE = f'packages/experts/{NAME}'
 LEGACY_COMMIT = '67d0fe8cfa5d71b53cc46d79bbaec620638dd1e0'
 PRICE_COMMIT = '5a3de264eb84a4aac66e8d8f390b8ab7255f3d8b'
 SEALED_COMMIT = 'e376395df4e09267ef494f4e421fc49d4fbdb6dd'
+HISTORICAL_DELIVERY = 'bb603c8a8d55cd6795f51efabfd5436db0606896'
+PRIOR_121_SEAL = '7d58e65c80f603c4cdf295a6f2722d48a903568a'
+PRIOR_121_DELIVERY = '977358c17c1e38ff35a7a1357cecf6b15805a70c'
+PRIOR_121_NAME = f'{NAME}-1.2.1-expert-candidate.zip'
+PRIOR_121_IDENTITIES = {
+    PRIOR_121_NAME: (167106, '27294e72c36a345af178fff0a9c4f224778f7f1588e6e96ec6a4e14ae0a9a926'),
+    PRIOR_121_NAME + '.manifest.json': (2546, 'd73d4e16ed15b95e406b04d8689ddd20284a20a52ddd4a79f64f080aadd788bd'),
+    PRIOR_121_NAME + '.sha256': (121, '3345fbab71330987e1abd72615072368b4e2629d0650284e503ce78a33f59f96'),
+}
 LEGACY_MEMBERS = ('.codebuddy-plugin/plugin.json', f'agents/{NAME}.md',
                   'avatars/expert.png', 'README.md', 'LICENSE')
 ESTIMATOR = 'skills/wangbin-estimate-calculator/scripts/estimator.py'
@@ -97,7 +106,7 @@ def _repo(root: Path) -> Path:
     return root
 
 
-def _history_payload(root: Path, commit: str, members: tuple[str, ...]) -> tuple[dict, dict[str, bytes]]:
+def _history_payload(root: Path, commit: str, members: tuple[str, ...], *, source: str = SOURCE) -> tuple[dict, dict[str, bytes]]:
     result = {'commit': commit, 'status': 'PASS', 'missing': [], 'reason': '', 'blobs': {}}
     payload = {}
     try:
@@ -116,7 +125,7 @@ def _history_payload(root: Path, commit: str, members: tuple[str, ...]) -> tuple
         if hashlib.sha1(f'commit {len(content.stdout)}\0'.encode() + content.stdout).hexdigest() != commit:
             result.update(status='FAIL', reason='commit object identity mismatch')
             return result, payload
-        paths = [f'{SOURCE}/{rel}' for rel in members]
+        paths = [f'{source}/{rel}' if source else rel for rel in members]
         tree = _git(root, 'ls-tree', '-z', '--full-tree', commit, '--', *paths)
         if tree.returncode:
             result.update(status='BLOCKED', reason='required tree objects unavailable', missing=paths)
@@ -145,7 +154,7 @@ def _history_payload(root: Path, commit: str, members: tuple[str, ...]) -> tuple
             if hashlib.sha1(f'blob {len(raw)}\0'.encode() + raw).hexdigest() != oid:
                 result.update(status='FAIL', reason='Git blob object identity mismatch')
                 continue
-            payload[f'{NAME}/{rel}'] = raw
+            payload[f'{NAME}/{rel}' if source else rel] = raw
             result['blobs'][path] = {'oid': oid, 'size': len(raw), 'sha256': _sha(raw)}
         if result['status'] != 'PASS' and not result['reason']:
             result['reason'] = 'required path absent from commit' if result['status'] == 'FAIL' else 'required blob unavailable'
@@ -156,15 +165,72 @@ def _history_payload(root: Path, commit: str, members: tuple[str, ...]) -> tuple
     return result, payload
 
 
-def inspect_history(root: Path) -> dict[str, dict]:
-    return {key: _history_payload(root, commit, members)[0] for key, commit, members in (
+def _historical_delivery(root: Path) -> dict[str, dict]:
+    delivery = _history_payload(root, HISTORICAL_DELIVERY, CANDIDATE_MEMBERS)[0]
+    path = 'products/catalog.json'
+    checked, payload = _history_payload(root, HISTORICAL_DELIVERY, (path,), source='')
+    catalog = {'commit': HISTORICAL_DELIVERY, 'status': checked['status']}
+    if checked['status'] == 'BLOCKED':
+        catalog['reason'] = 'historical catalog object unavailable'
+    elif checked['status'] == 'FAIL':
+        catalog['reason'] = 'historical catalog identity mismatch'
+    else:
+        try:
+            raw = payload[path]
+            catalog['sha256'] = _sha(raw)
+            item, = (p for p in json.loads(raw)['products'] if p['id'] == NAME)
+            entry, = (v for v in item['versions'] if v['version'] == '1.2.0')
+            if (item['active_version'] != '1.2.0' or entry['candidate'] != f'dist/{CANDIDATE_NAME}' or
+                    entry['sha256'] != ORIGINAL_IDENTITIES[CANDIDATE_NAME][1]):
+                raise ValueError('historical catalog identity mismatch')
+        except (ValueError, KeyError, TypeError):
+            catalog.update(status='FAIL', reason='historical catalog identity mismatch')
+    return {'delivery': delivery, 'delivery_catalog': catalog}
+
+
+def _prior_121_history(root: Path) -> tuple[dict, dict | None]:
+    seal, expected = _history_payload(root, PRIOR_121_SEAL, CANDIDATE_MEMBERS)
+    delivery, delivered = _history_payload(root, PRIOR_121_DELIVERY, CANDIDATE_MEMBERS)
+    if seal['status'] == delivery['status'] == 'PASS' and expected != delivered:
+        delivery.update(status='FAIL', reason='1.2.1 registration differs from seal')
+    path = 'products/catalog.json'
+    checked, payload = _history_payload(root, PRIOR_121_DELIVERY, (path,), source='')
+    catalog = {'commit': PRIOR_121_DELIVERY, 'status': checked['status']}
+    registered = None
+    if checked['status'] == 'PASS':
+        try:
+            raw = payload[path]
+            item, = (p for p in json.loads(raw)['products'] if p['id'] == NAME)
+            entry, = (v for v in item['versions'] if v['version'] == '1.2.1')
+            relative = f'dist/{PRIOR_121_NAME}'
+            if (item['active_version'] != '1.2.1' or entry['source_commit'] != PRIOR_121_SEAL or
+                    entry['source'] != SOURCE or entry['candidate'] != relative or
+                    entry['archive_evidence'] != relative or entry['sha256'] != PRIOR_121_IDENTITIES[PRIOR_121_NAME][1]):
+                raise ValueError('prior registered identity mismatch')
+            catalog['sha256'] = _sha(raw)
+            registered = entry
+        except (ValueError, KeyError, TypeError):
+            catalog.update(status='FAIL', reason='1.2.1 historical catalog identity mismatch')
+    return {'prior_121_seal': seal, 'prior_121_delivery': delivery, 'prior_121_catalog': catalog}, registered
+
+
+def inspect_history(root: Path, *, version: str = '1.2.0') -> dict[str, dict]:
+    history = {key: _history_payload(root, commit, members)[0] for key, commit, members in (
         ('legacy', LEGACY_COMMIT, LEGACY_MEMBERS), ('price', PRICE_COMMIT, (ESTIMATOR,)),
         ('sealed', SEALED_COMMIT, CANDIDATE_MEMBERS))}
+    if version in ('1.2.1', '1.2.2'):
+        history.update(_historical_delivery(root))
+    elif version != '1.2.0':
+        raise ValueError('unsupported consultant history version')
+    if version == '1.2.2':
+        history.update(_prior_121_history(root)[0])
+    return history
 
 
-def prepare_history(root: Path) -> dict:
+def prepare_history(root: Path, *, version: str = '1.2.1') -> dict:
     """Explicit, ref-limited fetch; no repo refs, FETCH_HEAD or working tree updates."""
-    history = inspect_history(root)
+    # The registered current source seal is a separate local verification gate.
+    history = inspect_history(root, version=version)
     state = _status(*(v['status'] for v in history.values()))
     if state != 'BLOCKED':
         return {'status': state, 'history': history, 'fetched': False}
@@ -190,7 +256,7 @@ def prepare_history(root: Path) -> dict:
             # negotiation may then transfer nothing; refetch only the approved ref.
             args.append('--refetch')
         run = _git(root, *args, 'origin', REF, timeout=300, explicit_fetch=True)
-        after = inspect_history(root)
+        after = inspect_history(root, version=version)
         status = _status(*(v['status'] for v in after.values()))
         if run.returncode:
             status = _status(status, 'BLOCKED')
@@ -201,12 +267,13 @@ def prepare_history(root: Path) -> dict:
         return {'status': 'BLOCKED', 'history': history, 'fetched': False, 'reason': type(exc).__name__}
 
 
-def _read_original(directory: Path) -> tuple[dict, dict[str, bytes]]:
+def _read_original(directory: Path, *, identities=None) -> tuple[dict, dict[str, bytes]]:
+    identities = ORIGINAL_IDENTITIES if identities is None else identities
     result = {'status': 'PASS', 'files': {}, 'missing': [], 'reason': ''}
     raw = {}
     try:
         directory = _safe(directory, directory=True, missing=True)
-        for name, (size, sha) in ORIGINAL_IDENTITIES.items():
+        for name, (size, sha) in identities.items():
             path = _safe(directory / name, missing=True)
             try:
                 info = path.stat()
@@ -236,26 +303,32 @@ def _read_original(directory: Path) -> tuple[dict, dict[str, bytes]]:
     return result, raw
 
 
-def _inspect_original(root: Path, directory: Path) -> tuple[dict, dict[str, bytes]]:
-    result, files = _read_original(directory)
+def _inspect_original(root: Path, directory: Path, *, version='1.2.0') -> tuple[dict, dict[str, bytes]]:
+    if version == '1.2.0':
+        name, identities, commit = CANDIDATE_NAME, ORIGINAL_IDENTITIES, SEALED_COMMIT
+    elif version == '1.2.1':
+        name, identities, commit = PRIOR_121_NAME, PRIOR_121_IDENTITIES, PRIOR_121_SEAL
+    else:
+        raise ValueError('unsupported original version')
+    result, files = _read_original(directory, identities=identities)
     integrity = result['status']
-    sealed, expected = _history_payload(root, SEALED_COMMIT, CANDIDATE_MEMBERS)
+    sealed, expected = _history_payload(root, commit, CANDIDATE_MEMBERS)
     binding = _status(integrity, sealed['status'])
     if integrity == 'PASS':
         try:
-            sha = ORIGINAL_IDENTITIES[CANDIDATE_NAME][1]
-            if files[CANDIDATE_NAME + '.sha256'] != f'{sha}  {CANDIDATE_NAME}\n'.encode('ascii'):
+            sha = identities[name][1]
+            if files[name + '.sha256'] != f'{sha}  {name}\n'.encode('ascii'):
                 raise ValueError('sidecar mismatch')
-            manifest = json.loads(files[CANDIDATE_NAME + '.manifest.json'])
-            required = {'id': NAME, 'name': NAME, 'version': '1.2.0', 'source': SOURCE,
-                        'source_commit': SEALED_COMMIT, 'source_byte_basis': 'verified_git_blob_bytes',
-                        'archive': f'dist/{CANDIDATE_NAME}', 'sha256': sha, 'status': 'PASS',
+            manifest = json.loads(files[name + '.manifest.json'])
+            required = {'id': NAME, 'name': NAME, 'version': version, 'source': SOURCE,
+                        'source_commit': commit, 'source_byte_basis': 'verified_git_blob_bytes',
+                        'archive': f'dist/{name}', 'sha256': sha, 'status': 'PASS',
                         'status_scope': 'local_schema_and_archive_integrity_only', 'scope': 'local archive integrity only',
                         'platform': 'BLOCKED', 'workbuddy_install': 'NOT_TESTED', 'workbuddy_dialogue': 'NOT_TESTED'}
             if any(manifest.get(k) != v for k, v in required.items()):
                 raise ValueError('manifest identity mismatch')
             names = sorted(f'{NAME}/{rel}' for rel in CANDIDATE_MEMBERS)
-            with zipfile.ZipFile(io.BytesIO(files[CANDIDATE_NAME])) as archive:
+            with zipfile.ZipFile(io.BytesIO(files[name])) as archive:
                 if archive.namelist() != names or archive.testzip() is not None:
                     raise ValueError('ZIP member set or CRC mismatch')
                 payload = {member: archive.read(member) for member in names}
@@ -273,7 +346,7 @@ def _inspect_original(root: Path, directory: Path) -> tuple[dict, dict[str, byte
     if binding == 'BLOCKED' and not result['reason']:
         result['reason'] = 'sealed historical objects unavailable'
     result.update(status=_status(integrity, binding), integrity=integrity, source_binding=binding,
-                  seal=sealed, source_commit=SEALED_COMMIT, sha256=ORIGINAL_IDENTITIES[CANDIDATE_NAME][1])
+                  seal=sealed, source_commit=commit, sha256=identities[name][1])
     return result, files
 
 
@@ -281,16 +354,37 @@ def inspect_candidate(root: Path) -> dict:
     return _inspect_original(root, Path(root) / 'dist')[0]
 
 
-def inspect_current(root: Path, rows: dict, catalog: dict) -> dict:
-    """1.2.1 only: registered real source seal and original archive are separate gates."""
-    result = {'version': '1.2.1', 'source_commit': 'UNKNOWN', 'source_binding': 'BLOCKED',
+def inspect_prior_121(root: Path, catalog: dict, *, directory=None) -> dict:
+    """Check the immutable prior registration and all three original bytes."""
+    history, entry = _prior_121_history(root)
+    result, _ = _inspect_original(root, Path(root) / 'dist' if directory is None else directory, version='1.2.1')
+    binding = _status(*(v['status'] for v in history.values()))
+    if result['integrity'] == 'PASS':
+        binding = _status(binding, result['source_binding'])
+    try:
+        item, = (p for p in catalog['products'] if p['id'] == NAME)
+        selected, = (v for v in item['versions'] if v['version'] == '1.2.1')
+        if entry is not None and selected != entry:
+            raise ValueError('selected prior registration differs from pinned catalog')
+    except (ValueError, TypeError, KeyError):
+        binding = 'FAIL'
+        result['reason'] = 'selected prior registration differs from pinned catalog'
+    result.update(source_binding=binding, status=_status(result['integrity'], binding))
+    return result
+
+
+def inspect_current(root: Path, rows: dict, catalog: dict, *, version='1.2.1') -> dict:
+    """Registered real source seal and original archive are separate gates."""
+    if version not in ('1.2.1', '1.2.2'):
+        raise ValueError('unsupported current version')
+    result = {'version': version, 'source_commit': 'UNKNOWN', 'source_binding': 'BLOCKED',
               'integrity': 'BLOCKED', 'archive_binding': 'BLOCKED', 'status': 'BLOCKED'}
-    name = f'{NAME}-1.2.1-expert-candidate.zip'
+    name = f'{NAME}-{version}-expert-candidate.zip'
     relative = f'dist/{name}'
     try:
         item, = (p for p in catalog['products'] if p['id'] == NAME)
-        entry, = (v for v in item['versions'] if v['version'] == '1.2.1')
-        if item['active_version'] != '1.2.1' or entry['source'] != SOURCE or entry['candidate'] != relative:
+        entry, = (v for v in item['versions'] if v['version'] == version)
+        if item['active_version'] != version or entry['source'] != SOURCE or entry['candidate'] != relative:
             raise ValueError('current registered identity mismatch')
         commit = result['source_commit'] = entry['source_commit']
         sha = result['sha256'] = entry['sha256']
@@ -311,9 +405,9 @@ def inspect_current(root: Path, rows: dict, catalog: dict) -> dict:
             if any(rows.get(path, {}).get('canonical_sha256') != blob['sha256'] for path, blob in seal['blobs'].items()):
                 result['source_binding'] = 'FAIL'
             if seal['status'] == 'PASS':
-                if json.loads(expected[f'{NAME}/.codebuddy-plugin/plugin.json'])['version'] != '1.2.1':
+                if json.loads(expected[f'{NAME}/.codebuddy-plugin/plugin.json'])['version'] != version:
                     result['source_binding'] = 'FAIL'
-                historical, old = _history_payload(root, SEALED_COMMIT, CANDIDATE_MEMBERS)
+                historical, old = _history_payload(root, PRIOR_121_SEAL if version == '1.2.2' else SEALED_COMMIT, CANDIDATE_MEMBERS)
                 result['unchanged_members'] = historical['status']
                 # The owner approved changes to exactly three packaged members.
                 for rel in set(CANDIDATE_MEMBERS) - {'.codebuddy-plugin/plugin.json', f'agents/{NAME}.md', 'README.md'}:
@@ -339,7 +433,7 @@ def inspect_current(root: Path, rows: dict, catalog: dict) -> dict:
                 raise ValueError('current sidecar mismatch')
             if '.manifest.json' in files:
                 manifest = json.loads(files['.manifest.json'])
-                required = {'id': NAME, 'name': NAME, 'version': '1.2.1', 'source': SOURCE,
+                required = {'id': NAME, 'name': NAME, 'version': version, 'source': SOURCE,
                             'source_byte_basis': 'verified_git_blob_bytes', 'archive': relative,
                             'sha256': sha, 'status': 'PASS', 'status_scope': 'local_schema_and_archive_integrity_only',
                             'scope': 'local archive integrity only', 'platform': 'BLOCKED',

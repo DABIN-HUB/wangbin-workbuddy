@@ -314,6 +314,38 @@ def test_current_unsealed_registration_does_not_pass(tmp_path):
     assert not (tmp_path / "dist").exists()
 
 
+def test_122_pending_registration_and_prerequisites(tmp_path):
+    from tooling import consultant_regression as runner
+    from tooling import consultant_regression_support as support
+    catalog = _current_catalog()
+    item = catalog["products"][0]
+    item["active_version"] = "1.2.2"
+    item["versions"][0].update(version="1.2.2", candidate=f"dist/{NAME}-1.2.2-expert-candidate.zip")
+    current = support.inspect_current(tmp_path, {}, catalog, version="1.2.2")
+    assert current["status"] == current["source_binding"] == current["integrity"] == current["archive_binding"] == "BLOCKED"
+    prefix = f"{runner.SOURCE}/tests/test_bundled_calculator.py::test_current_"
+    ids = [prefix + version + "_" + suffix for version in ("121", "122") for suffix in ("rebuilt_runtime", "original_runtime")]
+    assert set(runner._current_prerequisites(current, ids, version="1.2.2")) == set(ids[2:])
+    assert set(runner._current_prerequisites({"source_binding": "PASS", "status": "BLOCKED"}, ids, version="1.2.2")) == {ids[3]}
+    assert not runner._current_prerequisites({"source_binding": "PASS", "status": "PASS"}, ids, version="1.2.2")
+    # Distinct evidence paths: a passing prior test must never substantiate 1.2.2.
+    snapshot, output = tmp_path / "s", tmp_path / "evidence"
+    output.mkdir()
+    test = "test_current_122_archive_is_deterministic"
+    directory = snapshot / "tmp-run" / (test[:30] + "0")
+    directory.mkdir(parents=True)
+    for label in ("dedicated", "generic"):
+        for rel in runner.CURRENT_FILES:
+            target = directory / label / rel
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(b"fictional prior evidence")
+    result = {"gates": {}, "cases": {prefix + "122_archive_is_deterministic": {"status": "PASS"}}}
+    runner._package_evidence(snapshot, output, result, current=True, version="1.2.2")
+    assert result["gates"]["current_rebuild"] == "FAIL"
+    assert result["gates"]["prior_121_rebuild"] == "BLOCKED"
+    assert not (tmp_path / "dist").exists()
+
+
 def test_current_wrong_historical_commit_cannot_be_current_seal():
     from tooling import consultant_regression_support as support
     repo = Path(os.environ.get("WANGBIN_CONSULTANT_TEST_SOURCE_REPO", ROOT))
@@ -340,6 +372,20 @@ def test_current_and_historical_prerequisites_are_independent():
     assert runner._current_prerequisites({"source_binding": "PASS", "status": "PASS"}, ids) == {}
     history = dict.fromkeys(("price", "sealed", "legacy", "delivery"), {"status": "PASS"})
     assert set(runner._prerequisites(history, {"status": "BLOCKED"}, ids)) == {ids[0]}
+
+    # With 1.2.1 now historical, only its snapshot comparison needs the 1.2.0 seal.
+    history.update(dict.fromkeys(("delivery_catalog", "prior_121_seal", "prior_121_delivery", "prior_121_catalog"), {"status": "PASS"}))
+    prior = {"source_binding": "PASS", "status": "PASS"}
+    for status in ("BLOCKED", "FAIL"):
+        history["sealed"] = {"status": status}
+        blockers = runner._prerequisites(history, {"status": "PASS"}, ids)
+        blockers.update(runner._current_prerequisites(prior, ids, version="1.2.1"))
+        assert set(blockers) == {ids[0], ids[1]}
+    history["sealed"] = {"status": "PASS"}
+    assert runner._prerequisites(history, {"status": "PASS"}, ids) == {}
+    for key in ("price", "legacy", "delivery", "delivery_catalog"):
+        unavailable = dict(history, **{key: {"status": "BLOCKED"}})
+        assert runner._prerequisites(unavailable, {"status": "PASS"}, ids[1:]) == {}
 
 
 def test_current_package_evidence_requires_current_archive_paths(tmp_path):

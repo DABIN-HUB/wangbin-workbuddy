@@ -53,14 +53,14 @@
       ]
     },
     {
-      "active_version": "1.2.1",
-      "category": "12-IndustryConsultant",
-      "development": "1.2.1 immutable candidate and formal local regression 381/381 verified in current coordinator session; standalone real-model business acceptance and independent final QA pending. 1.2.0 immutable historical candidate and 371-case local regression retained",
+      "active_version": "1.2.2",
+            "category": "12-IndustryConsultant",
+            "development": "1.2.2 source amendment pending sealed candidate and applicable independent regression and business acceptance; historical 1.2.0 and 1.2.1 candidates and evidence retained",
       "id": "wangbin-software-consultant",
       "maintenance": "UNKNOWN",
       "name": "Software Consultant",
       "published_at": "UNKNOWN",
-      "review_evidence": "1.2.1 NOT_TESTED on WorkBuddy; prior user-reported submission is historical and version attribution remains unverified",
+      "review_evidence": "1.2.2 NOT_TESTED on WorkBuddy; prior version evidence is historical",
       "review_status": "NOT_TESTED",
       "scenario": "Requirements and estimation",
       "status": "DEVELOPING",
@@ -123,6 +123,16 @@
           "source": "packages/experts/wangbin-software-consultant",
           "source_commit": "7d58e65c80f603c4cdf295a6f2722d48a903568a",
           "version": "1.2.1"
+        },
+        {
+          "archive_evidence": "UNKNOWN",
+          "candidate": "dist/wangbin-software-consultant-1.2.2-expert-candidate.zip",
+          "date": "2026-11-26",
+          "published_at": "UNKNOWN",
+          "sha256": "UNKNOWN",
+          "source": "packages/experts/wangbin-software-consultant",
+          "source_commit": "UNKNOWN",
+          "version": "1.2.2"
         }
       ]
     },
