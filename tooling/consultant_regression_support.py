@@ -9,6 +9,7 @@ import hashlib
 import io
 import json
 import os
+import re
 from pathlib import Path
 import stat
 import subprocess
@@ -278,6 +279,93 @@ def _inspect_original(root: Path, directory: Path) -> tuple[dict, dict[str, byte
 
 def inspect_candidate(root: Path) -> dict:
     return _inspect_original(root, Path(root) / 'dist')[0]
+
+
+def inspect_current(root: Path, rows: dict, catalog: dict) -> dict:
+    """1.2.1 only: registered real source seal and original archive are separate gates."""
+    result = {'version': '1.2.1', 'source_commit': 'UNKNOWN', 'source_binding': 'BLOCKED',
+              'integrity': 'BLOCKED', 'archive_binding': 'BLOCKED', 'status': 'BLOCKED'}
+    name = f'{NAME}-1.2.1-expert-candidate.zip'
+    relative = f'dist/{name}'
+    try:
+        item, = (p for p in catalog['products'] if p['id'] == NAME)
+        entry, = (v for v in item['versions'] if v['version'] == '1.2.1')
+        if item['active_version'] != '1.2.1' or entry['source'] != SOURCE or entry['candidate'] != relative:
+            raise ValueError('current registered identity mismatch')
+        commit = result['source_commit'] = entry['source_commit']
+        sha = result['sha256'] = entry['sha256']
+        if commit != 'UNKNOWN' and (not isinstance(commit, str) or not re.fullmatch(r'[0-9a-f]{40}', commit)):
+            result['source_binding'] = 'FAIL'
+            result['reason'] = 'malformed registered source commit'
+            result['status'] = 'FAIL'
+            return result
+        if sha != 'UNKNOWN' and (not isinstance(sha, str) or not re.fullmatch(r'[0-9a-f]{64}', sha)):
+            raise ValueError('malformed registered ZIP identity')
+        if entry['archive_evidence'] not in ('UNKNOWN', relative):
+            raise ValueError('current archive locator mismatch')
+        expected = {}
+        if commit != 'UNKNOWN':
+            seal, expected = _history_payload(root, commit, CANDIDATE_MEMBERS)
+            result['seal'] = seal
+            result['source_binding'] = seal['status']
+            if any(rows.get(path, {}).get('canonical_sha256') != blob['sha256'] for path, blob in seal['blobs'].items()):
+                result['source_binding'] = 'FAIL'
+            if seal['status'] == 'PASS':
+                if json.loads(expected[f'{NAME}/.codebuddy-plugin/plugin.json'])['version'] != '1.2.1':
+                    result['source_binding'] = 'FAIL'
+                historical, old = _history_payload(root, SEALED_COMMIT, CANDIDATE_MEMBERS)
+                result['unchanged_members'] = historical['status']
+                # The owner approved changes to exactly three packaged members.
+                for rel in set(CANDIDATE_MEMBERS) - {'.codebuddy-plugin/plugin.json', f'agents/{NAME}.md', 'README.md'}:
+                    path = f'{NAME}/{rel}'
+                    if path in old and expected[path] != old[path]:
+                        result['unchanged_members'] = 'FAIL'
+                result['source_binding'] = _status(result['source_binding'], result['unchanged_members'])
+        # Never accept an unregistered archive as an original, even if present.
+        if sha == 'UNKNOWN' or entry['archive_evidence'] == 'UNKNOWN':
+            result['reason'] = 'current archive identity not registered'
+        else:
+            directory = _safe(Path(root) / 'dist', directory=True, missing=True)
+            paths = {suffix: _safe(directory / (name + suffix), missing=True) for suffix in ('', '.sha256', '.manifest.json')}
+            files = {}
+            for suffix, path in paths.items():
+                if path.is_file():
+                    raw = path.read_bytes()
+                    files[suffix] = raw
+            result['files'] = {relative + suffix: {'size': len(raw), 'sha256': _sha(raw)} for suffix, raw in files.items()}
+            if '' in files and _sha(files['']) != sha:
+                raise ValueError('registered ZIP hash mismatch')
+            if '.sha256' in files and files['.sha256'] != f'{sha}  {name}\n'.encode('ascii'):
+                raise ValueError('current sidecar mismatch')
+            if '.manifest.json' in files:
+                manifest = json.loads(files['.manifest.json'])
+                required = {'id': NAME, 'name': NAME, 'version': '1.2.1', 'source': SOURCE,
+                            'source_byte_basis': 'verified_git_blob_bytes', 'archive': relative,
+                            'sha256': sha, 'status': 'PASS', 'status_scope': 'local_schema_and_archive_integrity_only',
+                            'scope': 'local archive integrity only', 'platform': 'BLOCKED',
+                            'workbuddy_install': 'NOT_TESTED', 'workbuddy_dialogue': 'NOT_TESTED'}
+                if any(manifest.get(k) != v for k, v in required.items()) or (commit != 'UNKNOWN' and manifest.get('source_commit') != commit):
+                    raise ValueError('current manifest identity mismatch')
+            if len(files) == 3:
+                names = sorted(f'{NAME}/{rel}' for rel in CANDIDATE_MEMBERS)
+                with zipfile.ZipFile(io.BytesIO(files[''])) as archive:
+                    if archive.namelist() != names or archive.testzip() is not None:
+                        raise ValueError('current ZIP member set or CRC mismatch')
+                    payload = {member: archive.read(member) for member in names}
+                index_rows = [{'path': path, 'size': len(raw), 'sha256': _sha(raw)} for path, raw in payload.items()]
+                index = (json.dumps({'members': index_rows}, ensure_ascii=False, indent=2, sort_keys=True) + '\n').encode()
+                if manifest.get('members') != index_rows or manifest.get('payload_snapshot_sha256') != _sha(index):
+                    raise ValueError('current manifest member mismatch')
+                result['integrity'] = 'PASS'
+                if result.get('seal', {}).get('status') == 'PASS':
+                    result['archive_binding'] = 'PASS' if payload == expected else 'FAIL'
+            else:
+                result['reason'] = 'registered current artifact set incomplete'
+    except (ValueError, TypeError, AttributeError, KeyError, OSError, zipfile.BadZipFile, RuntimeError) as exc:
+        result['integrity'] = result['archive_binding'] = 'FAIL'
+        result['reason'] = str(exc)
+    result['status'] = _status(result['source_binding'], result['integrity'], result['archive_binding'])
+    return result
 
 
 def _file_identity(info: os.stat_result) -> dict:

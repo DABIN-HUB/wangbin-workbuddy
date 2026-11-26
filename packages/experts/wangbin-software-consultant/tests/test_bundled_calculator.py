@@ -18,6 +18,7 @@ SOURCE_REL = f"packages/experts/{NAME}"
 # Immutable fifth-batch delivery identity, not HEAD or a version inferred from
 # the production packager. Test-only changes must not change these nine blobs.
 SEALED_COMMIT = "e376395df4e09267ef494f4e421fc49d4fbdb6dd"
+HISTORICAL_DELIVERY = "bb603c8a8d55cd6795f51efabfd5436db0606896"
 SEALED_SHA256 = "d42eaa2090eb07660cbb6f712ae506a2f731e5fd62035d5ccd58fec0f236bd47"
 SEALED_MANIFEST_SHA256 = "59a7f5001637a0ba1d3537e7aa3c61d9e891d26f0ea557e31a8badb9e672c318"
 SEALED_SIDECAR_SHA256 = "95407556349acc880f29cb7ee6f0992730e0d4c7799ac689eea9e400992cd1dd"
@@ -50,7 +51,8 @@ def _git_blob(repo, commit, rel):
 @pytest.fixture
 def canonical_candidate():
     repo = Path(os.environ.get("WANGBIN_CONSULTANT_TEST_SOURCE_REPO", ROOT)).resolve(strict=True)
-    baseline = os.environ.get("WANGBIN_CONSULTANT_TEST_SOURCE_COMMIT", SEALED_COMMIT)
+    active = product_factory.get_product(ROOT, NAME)["active_version"]
+    baseline = HISTORICAL_DELIVERY if active == "1.2.1" else os.environ.get("WANGBIN_CONSULTANT_TEST_SOURCE_COMMIT", SEALED_COMMIT)
     expected = {}
     for rel in MEMBERS:
         sealed = _git_blob(repo, SEALED_COMMIT, rel)
@@ -62,9 +64,10 @@ def canonical_candidate():
 def test_current_snapshot_matches_sealed_bytes(canonical_candidate):
     # A current-source mismatch fails this separate gate, not the independent
     # historical reconstruction or original-candidate runtime evidence.
-    _, expected = canonical_candidate
+    repo, expected = canonical_candidate
+    active = product_factory.get_product(ROOT, NAME)["active_version"]
     for rel in MEMBERS:
-        checkout = (SOURCE / rel).read_bytes()
+        checkout = _git_blob(repo, HISTORICAL_DELIVERY, rel) if active == "1.2.1" else (SOURCE / rel).read_bytes()
         if rel != "avatars/expert.png":
             checkout = checkout.replace(bytes((13, 10)), bytes((10,)))
         assert checkout == expected[f"{NAME}/{rel}"], rel
@@ -78,16 +81,17 @@ def _materialize(root, expected):
         path.write_bytes(data)
 
 
-def _assert_archive(root, expected, expected_sha256):
-    archive = root / "dist" / CANDIDATE_NAME
+def _assert_archive(root, expected, expected_sha256, version="1.2.0"):
+    candidate_name = f"{NAME}-{version}-expert-candidate.zip"
+    archive = root / "dist" / candidate_name
     sidecar = archive.with_name(archive.name + ".sha256")
     manifest = archive.with_name(archive.name + ".manifest.json")
     raw = archive.read_bytes()
     assert hashlib.sha256(raw).hexdigest() == expected_sha256
     assert sidecar.read_bytes() == f"{expected_sha256}  {archive.name}\n".encode("ascii")
     data = json.loads(manifest.read_bytes())
-    assert data["id"] == NAME and data["version"] == "1.2.0"
-    assert data["source"] == SOURCE_REL and data["archive"] == f"dist/{CANDIDATE_NAME}"
+    assert data["id"] == NAME and data["version"] == version
+    assert data["source"] == SOURCE_REL and data["archive"] == f"dist/{candidate_name}"
     assert data["sha256"] == expected_sha256 and data["platform"] == "BLOCKED"
     assert data["scope"] == "local archive integrity only"
     rows = [{"path": name, "sha256": hashlib.sha256(payload).hexdigest(), "size": len(payload)}
@@ -139,9 +143,13 @@ def test_original_candidate_identity_and_runtime(tmp_path, canonical_candidate):
 
 def test_original_catalog_identity():
     catalog = product_factory.get_product(ROOT, NAME)
-    assert catalog["active_version"] == "1.2.0"
+    repo = Path(os.environ.get("WANGBIN_CONSULTANT_TEST_SOURCE_REPO", ROOT)).resolve(strict=True)
+    historical = json.loads(_historical_blob(repo, HISTORICAL_DELIVERY, "products/catalog.json"))
+    old = next(p for p in historical["products"] if p["id"] == NAME)
+    assert old["active_version"] == "1.2.0"
     registered = next(v for v in catalog["versions"] if v["version"] == "1.2.0")
     assert registered["sha256"] == SEALED_SHA256 and registered["candidate"] == f"dist/{CANDIDATE_NAME}"
+    assert registered == next(v for v in old["versions"] if v["version"] == "1.2.0")
 
 
 def test_archive_is_deterministic_and_binds_formal_bytes(tmp_path, canonical_candidate):
@@ -151,12 +159,12 @@ def test_archive_is_deterministic_and_binds_formal_bytes(tmp_path, canonical_can
     _materialize(dedicated, expected)
     _materialize(generic, expected)
     (generic / "products").mkdir()
-    shutil.copyfile(ROOT / "products/catalog.json", generic / "products/catalog.json")
+    (generic / "products/catalog.json").write_bytes(_historical_blob(repo, HISTORICAL_DELIVERY, "products/catalog.json"))
     assert not (dedicated / "dist").exists() and not (generic / "dist").exists()
 
     # Compression may differ from the historical archive; both new archives
     # must independently match the sealed blobs and each other's bytes.
-    first = build(dedicated, source_repo=repo, source_commit=SEALED_COMMIT)
+    first = build(dedicated, source_repo=repo, source_commit=SEALED_COMMIT, version="1.2.0")
     archive, manifest, existing = _assert_archive(dedicated, expected, first["sha256"])
     assert first["source_commit"] == manifest["source_commit"] == SEALED_COMMIT
     assert manifest["source_byte_basis"] == "verified_git_blob_bytes"
@@ -164,7 +172,7 @@ def test_archive_is_deterministic_and_binds_formal_bytes(tmp_path, canonical_can
     assert first["checkout_crlf_normalized_members"] == []
     assert first["members"] == manifest["members"]
     with pytest.raises(FileExistsError, match="already exists"):
-        build(dedicated, source_repo=repo, source_commit=SEALED_COMMIT)
+        build(dedicated, source_repo=repo, source_commit=SEALED_COMMIT, version="1.2.0")
     assert all(path.read_bytes() == data for path, data in existing.items())
 
     # Independent factory entry, in a separate initially empty output root.
@@ -184,7 +192,7 @@ def test_rebuilt_candidate_runtime(tmp_path, canonical_candidate):
     dedicated = tmp_path / "dedicated"
     _materialize(dedicated, expected)
     assert not (dedicated / "dist").exists()
-    built = build(dedicated, source_repo=repo, source_commit=SEALED_COMMIT)
+    built = build(dedicated, source_repo=repo, source_commit=SEALED_COMMIT, version="1.2.0")
     archive, manifest, existing = _assert_archive(dedicated, expected, built["sha256"])
     assert manifest["source_commit"] == SEALED_COMMIT
     _assert_candidate_runtime(tmp_path, archive, expected)
@@ -262,7 +270,92 @@ def test_package_rejects_uncommitted_member_bytes(tmp_path, canonical_candidate)
     readme = tmp_path / SOURCE_REL / "README.md"
     readme.write_bytes(readme.read_bytes() + b"Fictional review note.")
     with pytest.raises(ValueError, match="source differs from committed blob"):
-        build(tmp_path, source_repo=repo, source_commit=SEALED_COMMIT)
+        build(tmp_path, source_repo=repo, source_commit=SEALED_COMMIT, version="1.2.0")
+    assert not (tmp_path / "dist").exists()
+
+
+@pytest.fixture
+def current_candidate():
+    repo = Path(os.environ.get("WANGBIN_CONSULTANT_TEST_SOURCE_REPO", ROOT)).resolve(strict=True)
+    catalog = product_factory.get_product(ROOT, NAME)
+    assert catalog["active_version"] == "1.2.1"
+    entry = next(v for v in catalog["versions"] if v["version"] == "1.2.1")
+    commit = entry["source_commit"]
+    expected = {f"{NAME}/{rel}": _git_blob(repo, commit, rel) for rel in MEMBERS}
+    assert json.loads(expected[f"{NAME}/.codebuddy-plugin/plugin.json"])["version"] == "1.2.1"
+    return repo, entry, expected
+
+
+def test_current_121_snapshot_matches_registered_seal(current_candidate):
+    repo, _, expected = current_candidate
+    for rel in MEMBERS:
+        checkout = (SOURCE / rel).read_bytes()
+        if rel != "avatars/expert.png":
+            checkout = checkout.replace(bytes((13, 10)), bytes((10,)))
+        assert checkout == expected[f"{NAME}/{rel}"], rel
+        if rel not in (".codebuddy-plugin/plugin.json", f"agents/{NAME}.md", "README.md"):
+            assert checkout == _git_blob(repo, SEALED_COMMIT, rel), rel
+
+
+def test_current_121_archive_is_deterministic(tmp_path, current_candidate):
+    repo, entry, expected = current_candidate
+    dedicated, generic = tmp_path / "dedicated", tmp_path / "generic"
+    for target in (dedicated, generic):
+        _materialize(target, expected)
+        assert not (target / "dist").exists()
+    (generic / "products").mkdir()
+    shutil.copyfile(ROOT / "products/catalog.json", generic / "products/catalog.json")
+    first = build(dedicated, source_repo=repo, source_commit=entry["source_commit"])
+    archive, manifest, existing = _assert_archive(dedicated, expected, first["sha256"], "1.2.1")
+    assert first["source_commit"] == manifest["source_commit"] == entry["source_commit"]
+    assert manifest["source_byte_basis"] == "verified_git_blob_bytes"
+    assert manifest["workbuddy_install"] == manifest["workbuddy_dialogue"] == "NOT_TESTED"
+    assert first["checkout_crlf_normalized_members"] == []
+    assert first["members"] == manifest["members"]
+    with pytest.raises(FileExistsError, match="already exists"):
+        build(dedicated, source_repo=repo, source_commit=entry["source_commit"])
+    assert all(path.read_bytes() == data for path, data in existing.items())
+    second = product_factory.package_product(generic, NAME)
+    other, other_manifest, generic_existing = _assert_archive(generic, expected, first["sha256"], "1.2.1")
+    assert second["sha256"] == first["sha256"] and second["members"] == manifest["members"]
+    assert other.read_bytes() == archive.read_bytes()
+    assert product_factory.verify_package(generic, NAME)["status"] == "PASS"
+    product_factory.package_product(generic, NAME)
+    assert all(path.read_bytes() == data for path, data in generic_existing.items())
+    assert "source_commit" not in other_manifest
+
+
+def test_current_121_rebuilt_runtime(tmp_path, current_candidate):
+    repo, entry, expected = current_candidate
+    dedicated = tmp_path / "dedicated"
+    _materialize(dedicated, expected)
+    assert not (dedicated / "dist").exists()
+    built = build(dedicated, source_repo=repo, source_commit=entry["source_commit"])
+    archive, manifest, existing = _assert_archive(dedicated, expected, built["sha256"], "1.2.1")
+    assert manifest["source_commit"] == entry["source_commit"]
+    _assert_candidate_runtime(tmp_path, archive, expected)
+    assert all(path.read_bytes() == data for path, data in existing.items())
+
+
+def test_current_121_original_runtime(tmp_path, current_candidate):
+    repo, entry, expected = current_candidate
+    root = Path(os.environ.get("WANGBIN_CONSULTANT_TEST_CANDIDATE_ROOT", repo))
+    archive, manifest, existing = _assert_archive(root, expected, entry["sha256"], "1.2.1")
+    assert entry["archive_evidence"] == entry["candidate"] == f"dist/{archive.name}"
+    assert manifest["source_commit"] == entry["source_commit"]
+    assert manifest["source_byte_basis"] == "verified_git_blob_bytes"
+    assert manifest["workbuddy_install"] == manifest["workbuddy_dialogue"] == "NOT_TESTED"
+    _assert_candidate_runtime(tmp_path, archive, expected)
+    assert all(path.read_bytes() == data for path, data in existing.items())
+
+
+def test_current_121_rejects_uncommitted_bytes(tmp_path, current_candidate):
+    repo, entry, expected = current_candidate
+    _materialize(tmp_path, expected)
+    readme = tmp_path / SOURCE_REL / "README.md"
+    readme.write_bytes(readme.read_bytes() + b"Fictional review note.")
+    with pytest.raises(ValueError, match="source differs from committed blob"):
+        build(tmp_path, source_repo=repo, source_commit=entry["source_commit"])
     assert not (tmp_path / "dist").exists()
 
 
@@ -274,6 +367,16 @@ def test_candidate_source_version_mismatch(tmp_path):
     config.write_text(json.dumps(meta), encoding="utf-8")
     with pytest.raises(ValueError, match="identity, version or type mismatched"):
         validate_source(tmp_path / NAME)
+
+
+def test_candidate_explicit_version_is_strict(tmp_path):
+    copy = tmp_path / NAME
+    _copy_members(copy)
+    assert validate_source(copy)["version"] == "1.2.1"
+    with pytest.raises(ValueError, match="identity, version or type mismatched"):
+        validate_source(copy, version="1.2.0")
+    with pytest.raises(ValueError, match="unsupported"):
+        validate_source(copy, version="1.2.2")
 
 
 def test_formal_script_receipt_bytes_and_rejected_input(tmp_path):

@@ -14,7 +14,8 @@ from pathlib import Path
 import yaml
 
 NAME = "wangbin-software-consultant"
-VERSION = "1.2.0"
+VERSION = "1.2.1"
+SUPPORTED_VERSIONS = ("1.2.0", VERSION)
 SKILL_NAME = "wangbin-estimate-calculator"
 SKILL_VERSION = "0.2.0"
 SOURCE = f"packages/experts/{NAME}"
@@ -48,19 +49,21 @@ def _unlinked(path: Path) -> None:
             raise ValueError("linked candidate or source path")
 
 
-def validate_source(source: Path) -> dict[str, object]:
+def validate_source(source: Path, *, version: str = VERSION) -> dict[str, object]:
     """Keep strict shared Expert rules and require this version's bundled Skill."""
     try:
         from tooling.expert_rules import validate_prompt_expert
     except ModuleNotFoundError:  # Direct `python tooling/phase5_expert_packager.py` execution.
         from expert_rules import validate_prompt_expert
 
+    if version not in SUPPORTED_VERSIONS:
+        raise ValueError("unsupported Expert candidate version")
     source = source.absolute()
     for rel in CANDIDATE_MEMBERS:
         _unlinked(source / rel)
         if not (source / rel).is_file():
             raise ValueError(f"missing or non-regular expert asset: {rel}")
-    meta = validate_prompt_expert(source, name=NAME, version=VERSION, category="12-IndustryConsultant")
+    meta = validate_prompt_expert(source, name=NAME, version=version, category="12-IndustryConsultant")
     if meta.get("skills") != [f"./skills/{SKILL_NAME}"]:
         raise ValueError("required bundled expert skills missing")
     skill = (source / f"skills/{SKILL_NAME}/SKILL.md").read_text(encoding="utf-8")
@@ -180,13 +183,14 @@ def _publish(artifacts: tuple[tuple[Path, bytes], ...]) -> None:
         raise
 
 
-def build(root: Path, *, source_commit: str | None = None, source_repo: Path | None = None) -> dict[str, object]:
+def build(root: Path, *, source_commit: str | None = None, source_repo: Path | None = None,
+          version: str = VERSION) -> dict[str, object]:
     """Build once from a verified commit, optionally in an isolated byte snapshot."""
     root = root.absolute()
     _unlinked(root)
     root = root.resolve(strict=True)
     commit, expected, normalized = _verified_payload(root, source_repo, source_commit)
-    validate_source(root / SOURCE)
+    validate_source(root / SOURCE, version=version)
     out = io.BytesIO()
     with zipfile.ZipFile(out, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for member, data in sorted(expected.items()):
@@ -202,14 +206,14 @@ def build(root: Path, *, source_commit: str | None = None, source_repo: Path | N
     output = root / "dist"
     output.mkdir(exist_ok=True)
     _unlinked(output)
-    destination = output / f"{NAME}-{VERSION}-expert-candidate.zip"
+    destination = output / f"{NAME}-{version}-expert-candidate.zip"
     sidecar = output / f"{destination.name}.sha256"
     manifest = output / f"{destination.name}.manifest.json"
     members = [{"path": name, "size": len(data), "sha256": digest(data)} for name, data in sorted(expected.items())]
     result = {
         "id": NAME,
         "name": NAME,
-        "version": VERSION,
+        "version": version,
         "status": "PASS",
         "status_scope": "local_schema_and_archive_integrity_only",
         "scope": "local archive integrity only",
@@ -236,5 +240,6 @@ if __name__ == "__main__":
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--source-repo", type=Path)
     parser.add_argument("--source-commit")
+    parser.add_argument("--version", choices=SUPPORTED_VERSIONS, default=VERSION)
     args = parser.parse_args()
-    print(json.dumps(build(args.root, source_repo=args.source_repo, source_commit=args.source_commit), ensure_ascii=False, indent=2))
+    print(json.dumps(build(args.root, source_repo=args.source_repo, source_commit=args.source_commit, version=args.version), ensure_ascii=False, indent=2))

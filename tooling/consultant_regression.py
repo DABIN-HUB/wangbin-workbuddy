@@ -21,11 +21,14 @@ NAME = "wangbin-software-consultant"
 SOURCE = f"packages/experts/{NAME}"
 BASELINE = f"{SOURCE}/tests/fixtures/regression-baseline.json"
 SEALED_COMMIT = "e376395df4e09267ef494f4e421fc49d4fbdb6dd"
+HISTORICAL_DELIVERY = "bb603c8a8d55cd6795f51efabfd5436db0606896"
 RUNTIME = f".runtime/{NAME}"
 ARCHIVE = f"dist/{NAME}-1.2.0-expert-candidate.zip"
 ORIGINAL = {ARCHIVE: "d42eaa2090eb07660cbb6f712ae506a2f731e5fd62035d5ccd58fec0f236bd47",
             ARCHIVE + ".manifest.json": "59a7f5001637a0ba1d3537e7aa3c61d9e891d26f0ea557e31a8badb9e672c318",
             ARCHIVE + ".sha256": "95407556349acc880f29cb7ee6f0992730e0d4c7799ac689eea9e400992cd1dd"}
+CURRENT_ARCHIVE = f"dist/{NAME}-1.2.1-expert-candidate.zip"
+CURRENT_FILES = (CURRENT_ARCHIVE, CURRENT_ARCHIVE + ".sha256", CURRENT_ARCHIVE + ".manifest.json")
 ROOT_NODES = ("tests/test_product_factory.py::test_legacy_expert_validator_rejects_overlong_name",
               "tests/test_product_factory.py::test_phase5_validator_remains_callable_when_loaded_as_script")
 COUNT_KEYS = ("collected", "selected", "passed", "failed", "errors", "skipped", "deselected", "unexecuted", "timeout")
@@ -405,6 +408,25 @@ def _sealed_source_binding(rows, sealed, members):
     return "PASS" if all(f"{SOURCE}/{member}" in blobs for member in members) else "FAIL"
 
 
+def _historical_delivery(root, support):
+    delivery = support._history_payload(root, HISTORICAL_DELIVERY, support.CANDIDATE_MEMBERS)[0]
+    catalog = {"commit": HISTORICAL_DELIVERY, "status": "BLOCKED"}
+    try:
+        _commit(root, HISTORICAL_DELIVERY)
+        raw = _blob(root, HISTORICAL_DELIVERY, "products/catalog.json")
+        catalog["sha256"] = digest(raw)
+        item, = (p for p in json.loads(raw)["products"] if p["id"] == NAME)
+        entry, = (v for v in item["versions"] if v["version"] == "1.2.0")
+        if item["active_version"] != "1.2.0" or entry["candidate"] != ARCHIVE or entry["sha256"] != ORIGINAL[ARCHIVE]:
+            raise ValueError("historical catalog identity mismatch")
+        catalog["status"] = "PASS"
+    except subprocess.SubprocessError:
+        catalog.update(status="BLOCKED", reason="historical catalog object unavailable")
+    except (ValueError, KeyError, TypeError):
+        catalog.update(status="FAIL", reason="historical catalog identity mismatch")
+    return {"delivery": delivery, "delivery_catalog": catalog}
+
+
 def _prerequisites(history, candidate, baseline):
     result = {}
     for node in baseline:
@@ -413,12 +435,28 @@ def _prerequisites(history, candidate, baseline):
             gate = history["price"]
         elif node.endswith("test_expert_candidate.py::test_zip_members_are_exact_and_source_identical"):
             gate = history["legacy"]
-        elif node.endswith(("test_current_snapshot_matches_sealed_bytes", "test_archive_is_deterministic_and_binds_formal_bytes", "test_rebuilt_candidate_runtime", "test_package_rejects_uncommitted_member_bytes", "test_original_candidate_identity_and_runtime")):
+        elif node.endswith(("test_current_snapshot_matches_sealed_bytes", "test_archive_is_deterministic_and_binds_formal_bytes", "test_rebuilt_candidate_runtime", "test_package_rejects_uncommitted_member_bytes", "test_original_candidate_identity_and_runtime", "test_current_wrong_historical_commit_cannot_be_current_seal")):
             gate = history["sealed"]
             if gate["status"] == "PASS" and node.endswith("test_original_candidate_identity_and_runtime"):
                 gate = candidate
         if gate is not None and gate["status"] != "PASS":
             result[node] = "failed or missing required history/original prerequisite"
+        if "delivery" in history and node.endswith(("test_current_snapshot_matches_sealed_bytes", "test_archive_is_deterministic_and_binds_formal_bytes", "test_rebuilt_candidate_runtime", "test_package_rejects_uncommitted_member_bytes", "test_original_candidate_identity_and_runtime")) and history["delivery"]["status"] != "PASS":
+            result[node] = "failed or missing historical seventh-batch delivery prerequisite"
+        if "delivery_catalog" in history and node.endswith(("test_original_catalog_identity", "test_archive_is_deterministic_and_binds_formal_bytes")) and history["delivery_catalog"]["status"] != "PASS":
+            result[node] = "failed or missing historical catalog prerequisite"
+    return result
+
+
+def _current_prerequisites(current, baseline):
+    result = {}
+    for node in baseline:
+        if "/test_bundled_calculator.py::test_current_121_" not in node:
+            continue
+        if current["source_binding"] != "PASS":
+            result[node] = "failed or missing current registered source seal"
+        elif node.endswith("test_current_121_original_runtime") and current["status"] != "PASS":
+            result[node] = "failed or missing current registered archive prerequisite"
     return result
 
 
@@ -428,18 +466,25 @@ def _case_gate(cases, suffix):
     return "PASS" if status == "PASS" else "BLOCKED" if status in {"BLOCKED", "NOT_EXECUTED"} else "FAIL"
 
 
-def _package_evidence(snapshot, output, result):
+def _package_evidence(snapshot, output, result, *, current=False):
     """Read back exact test-owned archives/CLI receipts before discarding scratch."""
     tests = {"rebuild": "test_archive_is_deterministic_and_binds_formal_bytes",
              "rebuilt_runtime": "test_rebuilt_candidate_runtime",
              "original_runtime": "test_original_candidate_identity_and_runtime"}
+    archive_paths = {name: tuple(ORIGINAL) for name in tests}
+    if current:
+        new_tests = {"current_rebuild": "test_current_121_archive_is_deterministic",
+                     "current_rebuilt_runtime": "test_current_121_rebuilt_runtime",
+                     "current_original_runtime": "test_current_121_original_runtime"}
+        tests.update(new_tests)
+        archive_paths.update({name: CURRENT_FILES for name in new_tests})
     for name, test in tests.items():
         result["gates"][name] = _case_gate(result["cases"], test)
     evidence = {}
     result["package_evidence"] = evidence
     temp = safe_path(snapshot, "tmp-run")
     if not temp.is_dir():
-        for name in ("rebuild", "rebuilt_runtime", "original_runtime"):
+        for name in tests:
             if result["gates"][name] == "PASS":
                 result["gates"][name] = "FAIL"
         return
@@ -454,11 +499,12 @@ def _package_evidence(snapshot, output, result):
         if len(dirs) != 1:
             raise ValueError("ambiguous package test evidence directory")
         directory = safe_path(temp, dirs[0].name)
-        files = [] if name == "rebuild" else ["fictional-receipt.json", "fictional-v2-receipt.json"]
-        if name == "rebuild":
-            files.extend(f"{entry}/{rel}" for entry in ("dedicated", "generic") for rel in ORIGINAL)
-        elif name == "rebuilt_runtime":
-            files.extend(f"dedicated/{rel}" for rel in ORIGINAL)
+        kind = name.removeprefix("current_")
+        files = [] if kind == "rebuild" else ["fictional-receipt.json", "fictional-v2-receipt.json"]
+        if kind == "rebuild":
+            files.extend(f"{entry}/{rel}" for entry in ("dedicated", "generic") for rel in archive_paths[name])
+        elif kind == "rebuilt_runtime":
+            files.extend(f"dedicated/{rel}" for rel in archive_paths[name])
         identities = {}
         for rel in files:
             path = safe_path(directory, rel)
@@ -476,8 +522,9 @@ def _package_evidence(snapshot, output, result):
         evidence[name] = identities
         if result["gates"][name] == "PASS" and set(identities) != set(files):
             result["gates"][name] = "FAIL"
-        if name == "rebuild" and result["gates"][name] == "PASS":
-            if identities["dedicated/" + ARCHIVE]["sha256"] != identities["generic/" + ARCHIVE]["sha256"]:
+        if kind == "rebuild" and result["gates"][name] == "PASS":
+            archive = archive_paths[name][0]
+            if identities["dedicated/" + archive]["sha256"] != identities["generic/" + archive]["sha256"]:
                 result["gates"][name] = "FAIL"
 
 
@@ -510,7 +557,7 @@ def _gate(value):
 def run(root, *, mode="development", commit=None, python=None, timeout=600):
     """Execute only the approved product snapshot. Formal requires an exact commit."""
     root = Path(root).absolute()
-    result = {"id": NAME, "version": "1.2.0", "mode": mode, "commit": None, "status": "BLOCKED", "returncode": 1,
+    result = {"id": NAME, "version": "UNKNOWN", "mode": mode, "commit": None, "status": "BLOCKED", "returncode": 1,
               "scope": "local regression only; no platform/release acceptance", "counts": dict.fromkeys(COUNT_KEYS, 0),
               "case_counts": _case_counts({}), "phase_counts": _phase_counts(),
               "pytest_outcomes": _pytest_outcomes(_phase_counts(), None, None, [], []),
@@ -550,9 +597,37 @@ def run(root, *, mode="development", commit=None, python=None, timeout=600):
         environment = support.inspect_environment(python)
         history = support.inspect_history(root)
         original = support.inspect_candidate(root)
+        # Read selection from the isolated selected snapshot, never the live catalog.
+        # Tiny synthetic executor tests have no catalog in their explicit allowlist.
+        current = None
+        if "products/catalog.json" in rows:
+            catalog = json.loads(_regular(snapshot, "products/catalog.json"))
+            item, = (p for p in catalog["products"] if p["id"] == NAME)
+            result["version"] = item["active_version"]
+            if result["version"] not in ("1.2.0", "1.2.1"):
+                raise ValueError("unsupported active consultant version")
+            if result["version"] == "1.2.1":
+                history.update(_historical_delivery(root, support))
+                historical_rows = {path: {"canonical_sha256": row["sha256"]} for path, row in history["delivery"]["blobs"].items()}
+                historical_binding = (_sealed_source_binding(historical_rows, history["sealed"], support.CANDIDATE_MEMBERS)
+                                      if history["delivery"]["status"] == "PASS" else history["delivery"]["status"])
+                current = support.inspect_current(root, rows, catalog)
+                result["current"] = current
+                result["gates"].update(current_source_binding=current["source_binding"],
+                                       current_original=current["integrity"], current_archive_binding=current["archive_binding"],
+                                       current_rebuild="BLOCKED", current_rebuilt_runtime="BLOCKED", current_original_runtime="BLOCKED")
+                if current["status"] == "PASS":
+                    for rel in CURRENT_FILES:
+                        raw = _regular(root, rel)
+                        if digest(raw) != current["files"][rel]["sha256"]:
+                            raise ValueError("current original identity changed during snapshot creation")
+                        target = safe_path(snapshot, rel)
+                        target.parent.mkdir(parents=True, exist_ok=True)
+                        with target.open("xb") as stream:
+                            stream.write(raw)
         result.update(environment=environment, history=history, original=original)
         result["gates"].update(environment=_gate(environment), original=_gate(original.get("integrity")),
-                               source_binding=_sealed_source_binding(rows, history["sealed"], support.CANDIDATE_MEMBERS),
+                               source_binding=historical_binding if current is not None else _sealed_source_binding(rows, history["sealed"], support.CANDIDATE_MEMBERS),
                                original_source_binding=_gate(original.get("source_binding")),
                                history="FAIL" if any(_gate(g) == "FAIL" for g in history.values()) else
                                "PASS" if all(_gate(g) == "PASS" for g in history.values()) else "BLOCKED")
@@ -574,11 +649,14 @@ def run(root, *, mode="development", commit=None, python=None, timeout=600):
             child_env = {"GIT_DIR": git_dir, "WANGBIN_CONSULTANT_TEST_CANDIDATE_ROOT": str(snapshot),
                          "WANGBIN_CONSULTANT_TEST_SOURCE_REPO": str(root), "WANGBIN_CONSULTANT_TEST_SOURCE_COMMIT": SEALED_COMMIT,
                          "TMP": str(snapshot), "TEMP": str(snapshot), "TMPDIR": str(snapshot)}
-            tests = execute_cases(snapshot, evidence, python, selectors, _prerequisites(history, original, required),
+            blockers = _prerequisites(history, original, required)
+            if current is not None:
+                blockers.update(_current_prerequisites(current, required))
+            tests = execute_cases(snapshot, evidence, python, selectors, blockers,
                                   timeout=timeout, env=child_env, baseline=required)
             result.update({k: v for k, v in tests.items() if k not in {"status", "returncode"}})
             result["gates"]["regression"] = tests["status"]
-            _package_evidence(snapshot, evidence, result)
+            _package_evidence(snapshot, evidence, result, current=current is not None)
         else:
             result["cases"] = {node: {"status": "BLOCKED", "reason": "required independent environment unavailable"} for node in required}
             result["counts"]["unexecuted"] = len(required)
@@ -593,7 +671,14 @@ def run(root, *, mode="development", commit=None, python=None, timeout=600):
             raise ValueError("orchestrator identity drift during execution")
         if support.inspect_environment(python) != environment:
             raise ValueError("environment status changed during execution")
-        if support.inspect_history(root) != history or support.inspect_candidate(root) != original:
+        after_history = support.inspect_history(root)
+        if current is not None:
+            after_history.update(_historical_delivery(root, support))
+            if support.inspect_current(root, rows, catalog) != current:
+                raise ValueError("current seal or original identity changed during execution")
+            if current["status"] == "PASS" and any(digest(_regular(snapshot, rel)) != current["files"][rel]["sha256"] for rel in CURRENT_FILES):
+                raise ValueError("current snapshot original identity changed during execution")
+        if after_history != history or support.inspect_candidate(root) != original:
             raise ValueError("history or original identity changed during execution")
         if _git(root, "rev-parse", "HEAD").decode().strip() != head:
             raise ValueError("HEAD drift during execution")

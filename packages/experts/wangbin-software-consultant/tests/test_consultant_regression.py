@@ -298,3 +298,65 @@ def test_package_gates_and_retained_receipts_are_independent(tmp_path):
                 retained = evidence / identity["retained"]
                 assert retained.read_bytes() == b"{}\n"
                 assert runner.digest(retained.read_bytes()) == identity["sha256"]
+
+
+def _current_catalog():
+    return {"products": [{"id": NAME, "active_version": "1.2.1", "versions": [
+        {"version": "1.2.1", "source": f"packages/experts/{NAME}",
+         "candidate": f"dist/{NAME}-1.2.1-expert-candidate.zip", "archive_evidence": "UNKNOWN",
+         "source_commit": "UNKNOWN", "sha256": "UNKNOWN"}]}]}
+
+
+def test_current_unsealed_registration_does_not_pass(tmp_path):
+    from tooling import consultant_regression_support as support
+    current = support.inspect_current(tmp_path, {}, _current_catalog())
+    assert current["status"] == current["source_binding"] == current["integrity"] == current["archive_binding"] == "BLOCKED"
+    assert not (tmp_path / "dist").exists()
+
+
+def test_current_wrong_historical_commit_cannot_be_current_seal():
+    from tooling import consultant_regression_support as support
+    repo = Path(os.environ.get("WANGBIN_CONSULTANT_TEST_SOURCE_REPO", ROOT))
+    catalog = _current_catalog()
+    entry = catalog["products"][0]["versions"][0]
+    entry["source_commit"] = support.SEALED_COMMIT
+    historical = support.inspect_history(repo)["sealed"]
+    assert historical["status"] == "PASS"
+    rows = {path: {"canonical_sha256": row["sha256"]} for path, row in historical["blobs"].items()}
+    current = support.inspect_current(repo, rows, catalog)
+    assert current["status"] == current["source_binding"] == "FAIL"
+    assert current["integrity"] == "BLOCKED"
+
+
+def test_current_and_historical_prerequisites_are_independent():
+    from tooling import consultant_regression as runner
+    prefix = f"{runner.SOURCE}/tests/test_bundled_calculator.py::"
+    ids = [prefix + name for name in ("test_original_candidate_identity_and_runtime",
+        "test_current_121_snapshot_matches_registered_seal", "test_current_121_archive_is_deterministic",
+        "test_current_121_rebuilt_runtime", "test_current_121_original_runtime", "test_current_121_rejects_uncommitted_bytes")]
+    pending = {"source_binding": "BLOCKED", "status": "BLOCKED"}
+    assert set(runner._current_prerequisites(pending, ids)) == set(ids[1:])
+    assert set(runner._current_prerequisites({"source_binding": "PASS", "status": "BLOCKED"}, ids)) == {ids[4]}
+    assert runner._current_prerequisites({"source_binding": "PASS", "status": "PASS"}, ids) == {}
+    history = dict.fromkeys(("price", "sealed", "legacy", "delivery"), {"status": "PASS"})
+    assert set(runner._prerequisites(history, {"status": "BLOCKED"}, ids)) == {ids[0]}
+
+
+def test_current_package_evidence_requires_current_archive_paths(tmp_path):
+    from tooling import consultant_regression as runner
+    snapshot, evidence = tmp_path / "s", tmp_path / "evidence"
+    evidence.mkdir()
+    test = "test_current_121_archive_is_deterministic"
+    directory = snapshot / "tmp-run" / (test[:30] + "0")
+    directory.mkdir(parents=True)
+    case = f"{runner.SOURCE}/tests/test_bundled_calculator.py::{test}"
+    result = {"gates": {}, "cases": {case: {"status": "PASS"}}}
+    # Historical paths alone cannot substantiate a current rebuild.
+    for entry in ("dedicated", "generic"):
+        for rel in runner.ORIGINAL:
+            path = directory / entry / rel
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(b"fictional historical evidence")
+    runner._package_evidence(snapshot, evidence, result, current=True)
+    assert result["gates"]["current_rebuild"] == "FAIL"
+    assert result["gates"]["rebuild"] == "BLOCKED"

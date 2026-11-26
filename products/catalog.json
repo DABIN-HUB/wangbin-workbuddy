@@ -53,17 +53,17 @@
       ]
     },
     {
-      "active_version": "1.2.0",
+      "active_version": "1.2.1",
       "category": "12-IndustryConsultant",
-      "development": "1.2.0 immutable candidate verified; scoped unified regression 371 passed with independent relocated QA and prerequisite/identity gates; model and WorkBuddy runtime NOT_TESTED",
+      "development": "1.2.1 authorized source repair; source seal, candidate archive and current regression pending. 1.2.0 immutable historical candidate and 371-case local regression retained",
       "id": "wangbin-software-consultant",
       "maintenance": "UNKNOWN",
       "name": "Software Consultant",
       "published_at": "UNKNOWN",
-      "review_evidence": "1.2.0 has no platform receipt; prior user-reported submission is historical and version attribution remains unverified",
+      "review_evidence": "1.2.1 NOT_TESTED on WorkBuddy; prior user-reported submission is historical and version attribution remains unverified",
       "review_status": "NOT_TESTED",
       "scenario": "Requirements and estimation",
-      "status": "TESTED",
+      "status": "DEVELOPING",
       "target_users": "Small businesses",
       "test_path": "packages/experts/wangbin-software-consultant/tests/test_expert_candidate.py",
       "type": "Expert",
@@ -113,6 +113,16 @@
           "sha256": "d42eaa2090eb07660cbb6f712ae506a2f731e5fd62035d5ccd58fec0f236bd47",
           "source": "packages/experts/wangbin-software-consultant",
           "version": "1.2.0"
+        },
+        {
+          "archive_evidence": "UNKNOWN",
+          "candidate": "dist/wangbin-software-consultant-1.2.1-expert-candidate.zip",
+          "date": "2026-11-26",
+          "published_at": "UNKNOWN",
+          "sha256": "UNKNOWN",
+          "source": "packages/experts/wangbin-software-consultant",
+          "source_commit": "UNKNOWN",
+          "version": "1.2.1"
         }
       ]
     },

@@ -441,6 +441,16 @@
     "packages/experts/wangbin-software-consultant/tests/test_fixed_price_source.py::test_current_fixed_source_cli[reference-None-False-fixture_branches_synthetic.json]",
     "packages/experts/wangbin-software-consultant/tests/test_fixed_price_source.py::test_current_fixed_source_cli[reference-None-False-fixture_synthetic.json]",
     "packages/experts/wangbin-software-consultant/tests/test_fixed_price_source.py::test_current_fixed_source_cli[refused-None-False-fixture_branches_synthetic.json]",
-    "packages/experts/wangbin-software-consultant/tests/test_fixed_price_source.py::test_current_fixed_source_cli[refused-None-False-fixture_synthetic.json]"
+    "packages/experts/wangbin-software-consultant/tests/test_fixed_price_source.py::test_current_fixed_source_cli[refused-None-False-fixture_synthetic.json]",
+    "packages/experts/wangbin-software-consultant/tests/test_bundled_calculator.py::test_candidate_explicit_version_is_strict",
+    "packages/experts/wangbin-software-consultant/tests/test_bundled_calculator.py::test_current_121_snapshot_matches_registered_seal",
+    "packages/experts/wangbin-software-consultant/tests/test_bundled_calculator.py::test_current_121_archive_is_deterministic",
+    "packages/experts/wangbin-software-consultant/tests/test_bundled_calculator.py::test_current_121_rebuilt_runtime",
+    "packages/experts/wangbin-software-consultant/tests/test_bundled_calculator.py::test_current_121_original_runtime",
+    "packages/experts/wangbin-software-consultant/tests/test_bundled_calculator.py::test_current_121_rejects_uncommitted_bytes",
+    "packages/experts/wangbin-software-consultant/tests/test_consultant_regression.py::test_current_unsealed_registration_does_not_pass",
+    "packages/experts/wangbin-software-consultant/tests/test_consultant_regression.py::test_current_wrong_historical_commit_cannot_be_current_seal",
+    "packages/experts/wangbin-software-consultant/tests/test_consultant_regression.py::test_current_and_historical_prerequisites_are_independent",
+    "packages/experts/wangbin-software-consultant/tests/test_consultant_regression.py::test_current_package_evidence_requires_current_archive_paths"
   ]
 }
