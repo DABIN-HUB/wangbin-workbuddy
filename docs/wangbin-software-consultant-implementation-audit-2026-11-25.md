@@ -639,3 +639,13 @@ B8-QUOTE-02-a01 T3实测177.102秒、两层退出0、5对工具调用结果。�
 所有者明确要求使用当前已登录Codex的会话，不另登录，授权见§12.3。本轮直接冷读8个工程适配文件实际diff、专属打包器/历史及当前检查调用链、测试及登记；本地运行不依赖新模型子代理。当前会话实际为 `gpt-6.2-sol` / `openai-codex`，原生用量查询UTC 05:20:05.124702+00:00周使用24%，不改变配置或费用设置。原失败工程独立复审继续保留为未完成，以下为当前会话协调者实查，不冒称独立工程复审PASS。
 
 实际开发模式 `python -B -m tooling.consultant_regression run --mode development --timeout 600`（第七批受控独立venv的Python3.12）退出1；回执 `.runtime/wangbin-software-consultant/r-92xte87b/receipt.json` SHA `d534910817d73e997b4228ac449349382b6b8682bd3af875859aa8c4e5dde7f6`，登记381、实际收集381、选中376、376 PASS、0 FAIL/ERROR/SKIP/TIMEOUT、5 BLOCKED（依赖真实1.2.1源码封板及归档的五个包测试）；历史、旧原件、历史源码绑定、旧双入口重建、旧解包运行、环境、快照和清理各实际PASS。实际收集、要求、回执的381 ID集合一致，留存证据文件哈希读回一致。其余新门禁依真实新版封板/原件证据阻断，不能算成失败或通过。当前源代码以非发布、本地工作中封板提交提供真实待构建身份，完成新候选归档和登记后再执行正式模式，不以该开发运行或旧版结果充当新版完整验收；本地封板不等于正式交付、远端推送或授权发布。
+
+真实本地非发布封板 `7d58e65c80f603c4cdf295a6f2722d48a903568a`，父提交 `bb603c8a8d55cd6795f51efabfd5436db0606896`，15个明确授权文件正常提交，实际提交blob与暂存逐字节一致，选择性secret scanner模式检查无发现，原uv.lock未暂存、原六归档及Skill字节不变。封板后从同一真实Git提交九成员分别导出至两个无dist的受控新目录，使用参考Python3.12实际执行专属和登记通用打包入口：ZIP字节相等、两个九成员均与真实Git blob完全一致、CRC正常、通用隔离verify PASS。仅独占创建新的1.2.1正式本地三件套，未覆盖历史候选。真实独立目录构建记录 `.runtime/wangbin-software-consultant/b8-121-verified-build-0ttp54ja/build-evidence.json` SHA `fe81ffa9b602bdebc11e90a5c415e9f35f387e87bca6fe4e9d3a1a58daa40f84`。
+
+| 本地1.2.1三件套（dist） | 字节 | SHA-256 |
+|---|---:|---|
+| `wangbin-software-consultant-1.2.1-expert-candidate.zip` | 167106 | `27294e72c36a345af178fff0a9c4f224778f7f1588e6e96ec6a4e14ae0a9a926` |
+| 同ZIP `.sha256` | 121 | `3345fbab71330987e1abd72615072368b4e2629d0650284e503ce78a33f59f96` |
+| 同ZIP `.manifest.json` | 2546 | `d73d4e16ed15b95e406b04d8689ddd20284a20a52ddd4a79f64f080aadd788bd` |
+
+实际读回新三件套一致；独立当前校验函数 `inspect_current` 对实际封板、拟登记的已测ZIP身份及九成员实际返回source_binding、integrity、archive_binding均PASS。登记真实值后执行正式回归；catalog状态仍DEVELOPING，未声称新版真实模型或平台验收、独立最终QA、push及发布。旧候选1.0.0与1.2.0六件三件套哈希实查不变。

@@ -55,7 +55,7 @@
     {
       "active_version": "1.2.1",
       "category": "12-IndustryConsultant",
-      "development": "1.2.1 authorized source repair; source seal, candidate archive and current regression pending. 1.2.0 immutable historical candidate and 371-case local regression retained",
+      "development": "1.2.1 local source seal and immutable candidate built and verified; formal current regression, standalone business acceptance and final QA pending. 1.2.0 immutable historical candidate and 371-case local regression retained",
       "id": "wangbin-software-consultant",
       "maintenance": "UNKNOWN",
       "name": "Software Consultant",
@@ -115,13 +115,13 @@
           "version": "1.2.0"
         },
         {
-          "archive_evidence": "UNKNOWN",
+          "archive_evidence": "dist/wangbin-software-consultant-1.2.1-expert-candidate.zip",
           "candidate": "dist/wangbin-software-consultant-1.2.1-expert-candidate.zip",
           "date": "2026-11-26",
           "published_at": "UNKNOWN",
-          "sha256": "UNKNOWN",
+          "sha256": "27294e72c36a345af178fff0a9c4f224778f7f1588e6e96ec6a4e14ae0a9a926",
           "source": "packages/experts/wangbin-software-consultant",
-          "source_commit": "UNKNOWN",
+          "source_commit": "7d58e65c80f603c4cdf295a6f2722d48a903568a",
           "version": "1.2.1"
         }
       ]
