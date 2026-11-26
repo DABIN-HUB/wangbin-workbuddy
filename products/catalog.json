@@ -55,7 +55,7 @@
     {
       "active_version": "1.2.1",
       "category": "12-IndustryConsultant",
-      "development": "1.2.1 local source seal and immutable candidate built and verified; formal current regression, standalone business acceptance and final QA pending. 1.2.0 immutable historical candidate and 371-case local regression retained",
+      "development": "1.2.1 immutable candidate and formal local regression 381/381 verified in current coordinator session; standalone real-model business acceptance and independent final QA pending. 1.2.0 immutable historical candidate and 371-case local regression retained",
       "id": "wangbin-software-consultant",
       "maintenance": "UNKNOWN",
       "name": "Software Consultant",

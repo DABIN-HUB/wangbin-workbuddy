@@ -649,3 +649,7 @@ B8-QUOTE-02-a01 T3实测177.102秒、两层退出0、5对工具调用结果。�
 | 同ZIP `.manifest.json` | 2546 | `d73d4e16ed15b95e406b04d8689ddd20284a20a52ddd4a79f64f080aadd788bd` |
 
 实际读回新三件套一致；独立当前校验函数 `inspect_current` 对实际封板、拟登记的已测ZIP身份及九成员实际返回source_binding、integrity、archive_binding均PASS。登记真实值后执行正式回归；catalog状态仍DEVELOPING，未声称新版真实模型或平台验收、独立最终QA、push及发布。旧候选1.0.0与1.2.0六件三件套哈希实查不变。
+
+### 14.15 1.2.1 当前会话正式本地验证（2026-11-26）
+
+归档登记正常本地提交 `977358c17c1e38ff35a7a1357cecf6b15805a70c`，父提交真实封板 `7d58e65c80f603c4cdf295a6f2722d48a903568a`；仅catalog本产品登记和两份状态文档，九个包成员Git blob保持。以同一受控Python3.12实际执行 `python -B -m tooling.consultant_regression run --mode formal --commit 977358c17c1e38ff35a7a1357cecf6b15805a70c --timeout 540`，退出0，224.657秒（外层实测），完整381/381 PASS、0 FAIL/ERROR/SKIP/DESELECTED/BLOCKED/TIMEOUT/NOT_EXECUTED。17项门禁全部PASS，包含历史11项与新版源码绑定、正式归档、归档来源、双入口重建、重建包/正式原件解包实际CLI六项。回执 `.runtime/wangbin-software-consultant/r-xfvefud2/receipt.json` SHA `021018e2ba5890e610333486dbe71834db5c31ee8ca79c37e9e8c84312ea1d25`，协调者逐个核对381实际ID（覆盖原371）、66个真实Git依赖blob、28个持久回执文件哈希、6组新旧包证据，均一致。新版尚未进行实际独立业务模型代表试验；本次是当前会话工程验证，不是另一个独立工程审查会话的PASS，也不替代第八批全部真实模型、对照和155项最终业务证据。原S26及缺历史材料的局部阻断保持，原155仍PENDING。旧两版六件归档、Skill和计算器、uv.lock保持。本地工程验证已获得实际完整PASS，记录提交后再绑定实际最终HEAD复核；本阶段非发布，不以本地提交冒充已push，不触发WorkBuddy或许可发布。
