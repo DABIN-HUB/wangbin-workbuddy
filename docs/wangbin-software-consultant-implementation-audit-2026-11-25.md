@@ -771,3 +771,15 @@ B8-CHANGE-01-R1-a01 t01真实新独立session `local-17b6673cf852ef613c6b99be6be
 ### 14.37 最终修订独立复审与本地源码封板准入（2026-11-26）
 
 独立 `b8-122-s29-source-rereview.json` SHA `dac5a02fe2e82921bb8b694fba72d94ba0b321daa23a7bfad799f1ffda87d84b`，静态规格及质量PASS，唯一恢复“逐项”两字，0发现；三问筛选、S29原业务职责、金额权限保持。报告明确要求同一最终源码的已授权可分离回归实际成功方可封板。协调者已核本报告、九正式及九工程文件、原16个受保护归档/证据、§14.36实际387 PASS/0 FAIL/5待建依赖BLOCKED回执及其所有关联证据；独立批准的源码/工程与该回归66文件快照中65个非状态记录文件 raw SHA一致，唯产品requirements.md仅追加进度记录。封板准入条件满足，限定15个已授权修改文件进入实际本地非发布源码封板；旧版原件及回执保护，排除未跟踪uv.lock、dist及原始运行证据。仍须实际从封板SHA独立双入口构建、九成员绑定与登记、最终完整回归及独立业务验收。此处尚不宣称新提交或包已生成，不开展平台或发布。
+
+### 14.38 1.2.2 真实封板与独立归档构建（2026-11-26）
+
+实际本地非发布封板 `3b7c9aa120b7e6a9544dfc50a2fec4427f273ec3`，parent `a4fa0c17ee6cee0273b3cb4558b93e78add4ba26`，15文件白名单，限定新增行凭证模式扫描无异常、暂存与commit blob逐项核对；`b8-122-source-seal.json` SHA `8d960dc8a0b1552dd2925925ce005dcfe5fb596d77432068fe5b9424dfe60d8c`。与121封板比较仅三正式成员变化、其余六成员Git字节不变。首次构建启动为shell EOF退出2，实查未启动Python、无新包/构建回执、Git未变；改用受控scratch编排脚本后，使用原独立Python 3.12.0/PyYAML6.0.3/zlib1.2.13，两个空归档目的地从同一真实封板精确regular Git blobs独立执行专属packager及产品CLI package，两个入口及各自产品verify实际均退出0。九成员、CRC、manifest、sidecar及封板字节全核，两ZIP逐字节一致，独占创建新本地归档三件，不覆盖任何历史归档。
+
+- ZIP `dist/wangbin-software-consultant-1.2.2-expert-candidate.zip`，168273字节，SHA `12f70c3b181da48d16202e5b844d153e86cc813d77957645b38f8a5f37bcc914`。
+- 专属来源manifest SHA `1525a967aba88336ea59890912a8d6102a544b05e8f0c0fdb753b7da53a35038`，sidecar SHA `b891dc585930ee1bdef888353d7ee70c6c142cef604dbe4e57954dcfbde33991`。
+- `b8-122-build-iw6ucs6y/build-receipt.json` SHA `236da27289d7e9b57205a08c6d162679a877e27a6261442165388f3b345d7c27`，双入口构建/verify原输出及双manifest、sidecar保留，两个自有临时快照共76文件和目录清理；原九历史原件及七证据哈希实核未变。只登记对应1.2.2三身份字段为真实封板、ZIP路径和SHA，其余版本及产品记录不变。当前仍须完成登记后开发全量、独立最终工程复核、正式提交回归及真实业务；没有push、平台或发布操作。
+
+### 14.39 登记后实际完整开发回归（2026-11-26）
+
+后台 `proc_c28bb7e94015` 实际使用产品独立venv执行 `-B -m tooling.consultant_regression run --mode development --timeout 540`，197.770秒退出0，UTC10:05:08.040290+00:00 记录完成。实际回执 `r-vk_owng0/receipt.json` SHA `f6a2b09870d0388c672205d7e03dbbc2fc89701c4e115caf31e2e04b96b08bf9`；开发快照 SHA `269c3a1b4d4825149e62b6ebe7ea7dc460e0fc07af0fa8d808fd3ec789a06fe5`，base HEAD即真实122封板 `3b7c9aa120b7e6a9544dfc50a2fec4427f273ec3`；当前候选绑定真实ZIP SHA `12f70c3b181da48d16202e5b844d153e86cc813d77957645b38f8a5f37bcc914`。392收集/选择/通过、失败/错误/跳过/取消选择/未执行/超时全部0，22门禁均PASS；实际required/collected/selected/cases四ID集合一致，历史385及新增7完整保留。协调者核66文件快照（本段追加进度以前）全部raw SHA、38关联证据文件、三旧版原件和历史保护证据、新归档三件，全部匹配；九包运行及重建证据组可定位。`b8-122-registered-dev-5dsp5_4s/coordinator-run.json` SHA `7d2e30360f95bc778065fe4eadb887f96adcb165cb6e3f89184b5a5a914b789d`、stdout SHA `33e01299d0302820dac09b0f5e2279d0b4d872a72a3206eb5c99a978c8d06651`。登记后的catalog raw SHA `91fd60dc0cd012db2a9d13b183801359075a9c8995bbf994b5d4d15633a81cc7`，相对封板仅新122三个身份字段变化；正式九成员及全部已审工程逻辑/断言不变。现仅三登记/记录文件未提交，历史uv.lock排除。独立工程收口复审和登记提交及正式模式回归仍待，不把开发模式升级为最终交付提交或真实业务PASS。额度观测UTC10:05:45.363535+00:00周33%，仍使用现有账户、未新增费用或操作平台。

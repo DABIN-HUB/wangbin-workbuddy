@@ -125,13 +125,13 @@
           "version": "1.2.1"
         },
         {
-          "archive_evidence": "UNKNOWN",
+          "archive_evidence": "dist/wangbin-software-consultant-1.2.2-expert-candidate.zip",
           "candidate": "dist/wangbin-software-consultant-1.2.2-expert-candidate.zip",
           "date": "2026-11-26",
           "published_at": "UNKNOWN",
-          "sha256": "UNKNOWN",
+          "sha256": "12f70c3b181da48d16202e5b844d153e86cc813d77957645b38f8a5f37bcc914",
           "source": "packages/experts/wangbin-software-consultant",
-          "source_commit": "UNKNOWN",
+          "source_commit": "3b7c9aa120b7e6a9544dfc50a2fec4427f273ec3",
           "version": "1.2.2"
         }
       ]
